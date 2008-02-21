@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Macro file defining a collection of ant macros concerned with managing JBoss
+ $Revision: 1.30 $
+ $State: Exp $
+ $Date: 2007/11/23 20:59:04 $
+ $Source: /home/bob/CVSRepository/development/BuildJBossMacros.xml,v $
+-->
+
+<project default="dummy" name="BuildJBossMacros.xml">
+
+	<target name="dummy"/>
+  
+  <target name="_install.jboss" unless="jbosspresent">
+    <check-repository-visible-macro/>
+
+    <!-- Get the jboss zip into the cache -->
+    <get-repository-file name="jboss-${version}.zip"/>
+
+    <!-- Unpack the cached zip into the dev tree -->
+    <mkdir dir="./deploy"/>
+    <unzip overwrite="yes" dest="./deploy" src="${cache.dir}/jboss-${version}.zip"/>
+    <exec os="Mac OS X" executable="chmod" dir="./deploy/jboss/bin">
+      <arg line="775 run.sh"/>
+    </exec>
+  </target>
+  
+  <!-- Macro to install jboss in a development tree.   -->
+  <!-- @param version The version of jboss to install. -->
+  <macrodef name="install-jboss-macro">
+    <attribute name="version" />
+    <sequential>
+      <available file="${jboss.dir}/bin/run.sh" property="jbosspresent" />
+      <antcall target="_install.jboss">
+        <param name="version" value="@{version}"/>
+      </antcall>  
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to uninstall jboss in a development tree.   -->
+  <!-- @param version The version of jboss to uninstall. -->
+  <macrodef name="uninstall-jboss-macro">
+    <attribute name="version" />
+    <sequential>
+      <!-- Delete the installed tree -->
+      <delete dir="${jboss.dir}" failonerror="no"/>
+    </sequential>
+  </macrodef>
+
+	<target name="_start-jboss-if-jboss-running=false" unless="jboss-running">
+	  <exec dir="${jboss.dir}/bin"  executable="${jboss.dir}/bin/run.sh"/>
+  </target>
+  
+	<target name="_start-jboss-if-jboss-running=true" if="jboss-running">
+		<echo level="info" message="JBoss can't start jboss, it is already running!"/>
+	</target>
+
+  <!-- Macro to start the jboss server if it isn't running already. -->
+  <macrodef name="start-jboss-macro">
+    <sequential>
+      <set-jboss-running-property-macro/>
+      <antcall target="_start-jboss-if-jboss-running=true"/>
+      <antcall target="_start-jboss-if-jboss-running=false"/>
+    </sequential>
+  </macrodef>
+  
+	<target name="_stop-jboss-if-jboss-running=true" if="jboss-running">
+    <java jar="${jboss.dir}/bin/shutdown.jar" fork="yes" dir="${project.dir}">
+      <arg value="-S"/>
+    </java>
+  </target>
+  
+	<target name="_stop-jboss-if-jboss-running=false" unless="jboss-running">
+		<echo level="info" message="Jboss can't be stopped - it isn't running!"/>
+	</target>
+
+  <!-- Macro to stop jboss if it is running. -->
+  <macrodef name="stop-jboss-macro">
+    <sequential>
+      <set-jboss-running-property-macro/>
+      <antcall target="_stop-jboss-if-jboss-running=true"/>
+      <antcall target="_stop-jboss-if-jboss-running=false"/>
+    </sequential>
+  </macrodef>
+  
+  <target name="_kick-jboss-if-jboss-running=true" if="jboss-running">
+    <!-- touch the application.xml to force jboss to scan -->
+    <touch file="${ear.dir}/META-INF/application.xml"/>
+    
+    <taskdef name="jmx" classname="org.jboss.ant.JMX">
+      <classpath>
+        <fileset dir="${jboss.dir}/client" includes="*.jar"/>
+      </classpath>
+    </taskdef>
+
+    <!-- tell jboss to take a look -->
+    <jmx adapterName="jmx/rmi/RMIAdaptor" serverURL="jnp://localhost:1099">
+      <invoke target="jboss.deployment:flavor=URL,type=DeploymentScanner" operation="scan"/>
+    </jmx>
+  </target>
+  
+  <target name="_kick-jboss-if-jboss-running=false" unless="jboss-running">
+  	  <echo level="info" message="Doesn't look like jboss is running, so I can't kick the server"/>
+  </target>
+  
+  <!-- Macro to force jboss to rescan the deployment directory and takeup any changes. -->
+  <!-- In our dev environment jboss is configured _not_ to automatically scan for      -->
+  <!-- changes in it's deploy directory. So we have to tell it to scan, which is       -->
+  <!-- what this macro does.                                                           -->
+  <!-- You might ask why we do it this way? Well, because we're building into an       -->
+  <!-- exploded ear file, a build  is likely to be altering class files, descriptors   -->
+  <!-- individually. If JBoss is left to it's default behaviour it might scan part     -->
+  <!-- way through a build and only pick up part of the picture.                       -->
+  <macrodef name="kick-jboss-macro">
+    <sequential>
+      <set-jboss-running-property-macro/>
+      <antcall target="_kick-jboss-if-jboss-running=true"/>
+      <antcall target="_kick-jboss-if-jboss-running=false"/>
+    </sequential>
+  </macrodef>
+
+  <!-- Under a cruise control build we upload the results of the relese to the project wide repository -->
+  <target name="_release-jboss-domain-type=cruisecontrol">
+    <zip basedir="${deploy.dir}" destfile="${cache.dir}/${ant.project.name}-${major.version}-${minor.version}-${label}.dar"/>
+
+    <ftp action="put" userid="${ftp.user}" password="${ftp.password}" remotedir="${ftp.dir}" server="${ftp.server}" verbose="yes">
+       fileset dir="${cache.dir}" includes="${ant.project.name}-${major.version}-${minor.version}-${label}.dar"/>
+     </ftp>
+  </target>
+  
+  <!-- For a local 'developer' build, we simply put a SNAPSHOT copy of the .dar in the local cache dir for other projects to use -->
+  <target name="_release-jboss-domain-type=developer">
+    <zip basedir="${deploy.dir}" destfile="${cache.dir}/${ant.project.name}-snapshot.dar"/>
+  </target>
+  
+  <!-- Macro to "release" the current project's jboss domain. -->
+  <macrodef name="release-jboss-domain-macro">
+		<sequential>
+      <antcall target="_release-jboss-domain-type=${build.type}"/>
+		</sequential>
+  </macrodef>
+
+  <!-- Macro which sets the ${jboss-running} to true if jboss is running -->
+  <macrodef name="set-jboss-running-property-macro">
+    <sequential>
+      <condition property="jboss-running">
+				<and>
+					<socket server="localhost" port="8080"/>
+					<socket server="localhost" port="1099"/>
+				</and>
+			</condition>
+    </sequential>
+  </macrodef>
+
+	<target name="_reset-portal-if-jboss-running=false" unless="jboss-running">
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
+  		  drop table ${dbname}.jbp_context;
+  		  drop table ${dbname}.jbp_instance;
+  		  drop table ${dbname}.jbp_instance_per_user;
+  		  drop table ${dbname}.jbp_instance_security;
+  		  drop table ${dbname}.jbp_instance_security_actions;
+  		  drop table ${dbname}.jbp_object_node;
+  		  drop table ${dbname}.jbp_object_node_sec;
+  		  drop table ${dbname}.jbp_object_node_sec_actions;
+  		  drop table ${dbname}.jbp_page;
+  		  drop table ${dbname}.jbp_portal;
+  		  drop table ${dbname}.jbp_portal_mode;
+  		  drop table ${dbname}.jbp_portal_object;
+  		  drop table ${dbname}.jbp_portal_object_props;
+  		  drop table ${dbname}.jbp_portal_window_state;
+  		  drop table ${dbname}.jbp_portlet_state;
+  		  drop table ${dbname}.jbp_portlet_state_entry;
+  		  drop table ${dbname}.jbp_portlet_state_entry_value;
+  		  drop table ${dbname}.jbp_window;
+  		  drop table ${dbname}.jbp_role_membership;
+  		  drop table ${dbname}.jbp_roles;
+  		  drop table ${dbname}.jbp_user_prop;
+  		  drop table ${dbname}.jbp_users;
+  	  </sql>
+  </target>
+  
+	<target name="_reset-portal-if-jboss-running=true" if="jboss-running">
+		<echo message="The portal cannot be reset while jboss is running."/>
+	</target>
+  
+  <macrodef name="reset-portal-macro">
+	  <sequential>
+			<set-jboss-running-property-macro/>
+      <antcall target="_reset-portal-if-jboss-running=true"/>
+      <antcall target="_reset-portal-if-jboss-running=false"/>
+	  </sequential>
+	</macrodef>
+  
+  <macrodef name="configuration-macro">
+    <attribute name="username"/>
+    <attribute name="password"/>
+    <attribute name="operation"/>
+    <attribute name="factory" default="${java.naming.factory.initial}"/>
+    <attribute name="provider" default="${java.naming.provider.url}"/>
+		<sequential>
+
+		  <java fork="yes" classname="com.ail.core.configure.ConfigurationAntTasks">
+	      <classpath>
+					<dirset dir="${ear.dir}" includes="core.jar"/>
+					<fileset dir="${ear.lib}" includes="*.jar"/>
+					<dirset dir="${ear.dir}" includes="*.jar"/>
+					<dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes"/>
+					<fileset dir="${jboss.dir}" includes="lib/endorsed/xercesImpl.jar"/>
+					<fileset dir="${jboss.dir}" includes="client/jbossall-client.jar"/>
+	      </classpath>
+		    <arg value="username=@{username}"/>
+		    <arg value="password=@{password}"/>
+		    <arg value="operation=@{operation}"/>
+		    <arg value="provider=@{provider}"/>
+		    <arg value="factory=@{factory}"/>
+		  </java>
+		</sequential>
+  </macrodef>
+  
+  <!-- Macro to udpate jboss' CMS with content from the source tree -->
+  <macrodef name="build-cms-macro">
+    <attribute name="toSpace" default="/app:company_home"/>
+    <attribute name="username"/>
+    <attribute name="password"/>
+		<sequential>
+		  <property name="cms-stamp-file" value="${test.dir}/cms-timestamp-file"/>
+	    <taskdef name="cmsuploader" classname="com.ail.core.configure.CmsUploaderAntTask">
+	      <classpath>
+          <dirset dir="${ear.dir}" includes="core.jar"/>
+          <fileset dir="${ear.lib}" includes="*.jar"/>
+          <dirset dir="${ear.dir}" includes="*.jar"/>
+          <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes"/>
+          <fileset dir="${jboss.dir}">
+            <include name="lib/endorsed/xercesImpl.jar"/>
+            <include name="server/default/deploy/jboss-portal.sar/lib/*.jar"/>
+          </fileset>
+	      </classpath>
+	    </taskdef>
+
+			<cmsuploader host="localhost" toSpace="/app:company_home" username="admin" password="admin">
+			  <fileset dir="." includes="**/*" excludes="Build.xml,alfresco.log,**/ContentDetails.xml">
+			    <depend targetdir="${test.dir}">
+			    		<mapper type="merge" to="cms-stamp-file"/>
+			    </depend>
+		   	</fileset>
+			</cmsuploader>
+
+			<touch file="${test.dir}/cms-stamp-file"/>
+		</sequential>
+  </macrodef>
+    
+  <macrodef name="clean-cms-macro">
+      <sequential>
+			<delete file="${test.dir}/cms-stamp-file"/>
+      </sequential>
+  </macrodef>
+</project> 

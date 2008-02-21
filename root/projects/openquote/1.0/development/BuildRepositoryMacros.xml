@@ -1,0 +1,48 @@
+<!--
+ This file defines ant macros related to repository manipulations
+ $Revision: 1.41 $
+ $State: Exp $
+ $Date: 2007/11/23 20:59:04 $
+ $Source: /home/bob/CVSRepository/development/BuildCommon.xml,v $
+-->
+
+<project name="BuildRepository.xml" default="dummy">
+  <target name="dummy" />
+
+	<target name="_repo.install.file.fetch" unless="exists">
+	  <mkdir dir="${cache.dir}/${group}/${artifact}/${version}"/>
+    <get src="http://${repo}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" dest="${cache.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}"/>
+	</target>
+  
+	<target name="_repo.install.file.install">
+		<copy file="${cache.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" todir="${dest}"/>
+	</target>
+
+	<target name="_repo.install.file">
+	  <echo message="Processing: ${group}/${artifact}/${version}/${artifact}-${version}.${type}"/>
+		<available file="${cache.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" property="exists"/>
+		<antcall target="_repo.install.file.fetch"/>
+		<antcall target="_repo.install.file.install"/>
+  </target>
+  
+	<macrodef name="repo-get-macro">
+  	<attribute name="repo"/>
+    <attribute name="group"/>
+    <attribute name="artifact"/>
+    <attribute name="version"/>
+  	<attribute name="type"/>
+    <attribute name="dest"/>
+    <sequential>
+			<antcall target="_repo.install.file" inheritall="false">
+		  	<param name="repo" value="@{repo}"/>
+		    <param name="group" value="@{group}" />
+		    <param name="artifact" value="@{artifact}"/>
+		    <param name="version" value="@{version}" />
+		  	<param name="type" value="@{type}" />
+		    <param name="dest" value="@{dest}" />
+			  <param name="cache.dir" value="${cache.dir}"/>
+      </antcall>
+    </sequential>
+  </macrodef>
+</project>
+
