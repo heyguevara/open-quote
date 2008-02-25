@@ -12,14 +12,12 @@
 	<target name="dummy"/>
   
   <target name="_install.jboss" unless="jbosspresent">
-    <check-repository-visible-macro/>
-
     <!-- Get the jboss zip into the cache -->
-    <get-repository-file name="jboss-${version}.zip"/>
+    <repo-get-macro repo="localhost/repo" group="jboss" artifact="jboss-ail" version="${version}" type="zip"/>
 
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="./deploy"/>
-    <unzip overwrite="yes" dest="./deploy" src="${cache.dir}/jboss-${version}.zip"/>
+    <unzip overwrite="yes" dest="./deploy" src="${repo.dir}/jboss/jboss-ail/${version}/jboss-ail-${version}.zip"/>
     <exec os="Mac OS X" executable="chmod" dir="./deploy/jboss/bin">
       <arg line="775 run.sh"/>
     </exec>

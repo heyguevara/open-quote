@@ -11,13 +11,14 @@
   <!-- set global properties for this build -->
   <property environment="env" />
   <property name="cache.dir" value="${development.dir}/cache" />
+  <property name="repo.dir" value="${development.dir}/repo" />
   <property name="domain.dir" value="${basedir}/domain/jboss" />
   <property name="lib" value="${basedir}/jars" />
   <property name="tmp" value="${build.dir}/tmp" />
   <property name="build.number.file" value="${basedir}/Build.number" />
   <property name="list" value="" />
   <property name="keystore" value="${basedir}/../development/data/keystore" />
-  <property name="copyfilter.dir" value="${ear.dir}/lib" />
+  <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
   <property name="serverBaseUrl" value="localhost:8080" />
   <property name="java.naming.factory.initial" value="org.jnp.interfaces.NamingContextFactory" />
@@ -34,6 +35,8 @@
   <property name="build.type" value="developer"/> 
   
   <target name="dummy" />
+
+  <classfileset includes="${development.dir}/lib/*.jar" />
 
   <!-- Convert the named property from a windows style path to unix style -->
   <!-- e.g. "c:\my\folder\file.txt" -> "c:/my/folder/file.txt"            -->   
@@ -95,46 +98,6 @@
     </sequential>
   </macrodef>
 
-  <target name="ftp.repository.file.into.cache.if" unless="noftpserver">
-    <mkdir dir="${cache.dir}" />
-    <ftp action="get" userid="${ftp.user}" password="${ftp.password}" remotedir="${ftp.dir}" server="${ftp.server}" verbose="yes" newer="yes" passive="yes">
-      <fileset dir="${cache.dir}" includes="${name}" />
-    </ftp>
-  </target>
-
-  <target name="no.ftp.server.warning" if="noftpserver">
-    <echo level="warning" message="FTP server isn't visible. Relying on cached files." />
-  </target>
-
-  <!-- Copy a cached file into another directory -->
-  <target name="copy.cached.file.to.dest.docopy=true">
-    <copy file="${cache.dir}/${name}" todir="${dir}" />
-  </target>
-  <target name="copy.cached.file.to.dest.docopy=false"/>
-
-  <!-- Fetch a named file from the repository, using a local cache to speed up future gets.  -->
-  <!-- If the 'dir' attribute isn't specified, the file is just copied into the local cache. -->
-  <!-- @param name The name of the file to copy.                                             -->
-  <!-- @param dir The directory to copy the file to.                                         -->
-  <macrodef name="get-repository-file">
-    <attribute name="name" />
-    <attribute name="dir" default="" />
-    <sequential>
-
-      <!-- This will copy the remote file into the local cache if it can see the repository -->
-      <antcall target="ftp.repository.file.into.cache.if">
-        <param name="name" value="@{name}" />
-      </antcall>
-
-      <!-- If 'dir' was specified, copy the cache file to it -->
-      <if-macro property="docopy" condition="defined" arg1="@{dir}"/>
-      <antcall target="copy.cached.file.to.dest.docopy=${docopy}">
-        <param name="name" value="@{name}" />
-        <param name="dir" value="@{dir}" />
-      </antcall>
-    </sequential>
-  </macrodef>
-
   <!-- Macro to truncate the file copy filter -->
   <macrodef name="truncate-filter-macro">
     <sequential>
@@ -142,51 +105,6 @@
     </sequential>
   </macrodef>
   
-	<!-- Check if the repository server is visible. If it isn't    -->
-  <!-- then set the 'noftpserver' property, and output a warning -->
-  <macrodef name="check-repository-visible-macro">
-		<sequential>
-      <!-- set a property if we can see the ftp server -->
-      <waitfor timeoutproperty="noftpserver" maxwait="500">
-        <socket server="gus" port="21" />
-      </waitfor>
-      <antcall target="no.ftp.server.warning"/>
-	  </sequential>
-	</macrodef>
-  
-  <!-- Get a list of jars (or other files) from the repository into the local ./lib folder. -->
-  <!-- @param libs-list A collection of get-lib-macro elements.                             -->
-  <macrodef name="get-libs-macro">
-    <element name="libs-list" optional="no"/>
-    <element name="options" optional="yes"/>
-    <attribute name="todir" default="${ear.dir}/lib" />
-    <sequential>
-      <check-repository-visible-macro/>
-      <property name="get.libs.macro.todir" value="@{todir}" />
-      <unixify-path-macro property="get.libs.macro.todir"/>
-      <mkdir dir="${copyfilter.dir}" />
-      <options/>
-      <libs-list />
-    </sequential>
-  </macrodef>
-
-  <!-- Fetch an individual jar (or other file) into the local ./lib folder and add its details -->
-  <!-- to the lib's filter file.                                                               -->
-  <!-- @param name Short name for the file.                                                    -->
-  <!-- @param jarname Full name for the file as it appears in the repository.                  -->
-  <!-- @param todir destination to copy jar into - default to the ear's lib folder.            -->
-  <macrodef name="get-lib-macro">
-    <attribute name="name" />
-    <attribute name="jarname" />
-    <sequential>
-      <!-- get the file from the repository, and copy into ./lib -->
-      <get-repository-file dir="${get.libs.macro.todir}" name="@{jarname}" />
-
-      <!-- write a line to the filter -->
-      <echo file="${copyfilter.file}" append="yes" message="@{name}=lib/@{jarname}${line.separator}" />
-    </sequential>
-  </macrodef>
-
   <!-- Macro which sets the ${mysql-running} to true if mysql is running -->
   <macrodef name="set-mysql-running-property-macro">
     <sequential>
