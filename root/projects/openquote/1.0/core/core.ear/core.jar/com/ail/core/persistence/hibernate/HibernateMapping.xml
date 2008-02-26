@@ -1,0 +1,100 @@
+<?xml version="1.0"?> 
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+    <class name="com.ail.core.Type" table="core_Type">
+        <id name="systemId" column="systemId" type="long">
+            <generator class="native"/>
+        </id>
+        <version name='serialVersion' column='versionId' type='long'/>
+        <list name="attribute" cascade="all">
+            <key column="parentSystemId"/>
+            <index column='rank'/>
+            <one-to-many class="com.ail.core.Attribute"/>
+        </list>
+        
+        <joined-subclass name='com.ail.core.Attribute' table='core_Attribute'>
+            <key column="systemId"/>
+            <property name='id' column='id' type='string'/>
+            <property name='value' column='value' type='string'/>
+            <property name='format' column='format' type='string'/>
+            <property name='unit' column='unit' type='string'/>
+        </joined-subclass>
+        
+        <joined-subclass name="com.ail.core.configure.Component" table="core_configure_Component">
+            <key column="systemId"/>
+            <property name="name" column="name" type="string"/>
+            
+            <joined-subclass name="com.ail.core.configure.Parameter" table="core_configure_Parameter">
+                <key column="systemId"/>
+                <property name="value" column="value" type="text"/>
+            </joined-subclass>            
+
+            <joined-subclass name="com.ail.core.configure.Group" table="core_configure_Group">
+                <key column="systemId"/>
+                <list name="parameter" cascade="all">
+                    <key column="parentSystemId"/>
+                    <index column='rank'/>
+                    <one-to-many class="com.ail.core.configure.Parameter"/>
+                </list>
+                <list name="group" cascade="all">
+                    <key column="parentSystemId"/>
+                    <index column='rank'/>
+                    <one-to-many class="com.ail.core.configure.Group"/>
+                </list>             
+            </joined-subclass>
+        </joined-subclass>
+
+
+        <joined-subclass name="com.ail.coretest.addressbook.Address" table="address">
+            <key column="systemId"/>
+            <property name="line1" column="line1" type="string"/>
+            <property name="line2" column="line2" type="string"/>
+            <property name="line3" column="line3" type="string"/>
+            <property name="line4" column="line4" type="string"/>
+            <property name="postcode" column="postcode" type="string"/>
+        </joined-subclass>
+        
+        <joined-subclass name="com.ail.coretest.addressbook.AddressBook" table="addressbook">
+            <key column="systemId"/>
+            <any name="me" meta-type="string" id-type="long" cascade="all">
+                <meta-value value="PER" class="com.ail.coretest.addressbook.Person"/>
+                <meta-value value="ORG" class="com.ail.coretest.addressbook.Organisation"/>
+                <meta-value value="CMP" class="com.ail.coretest.addressbook.Company"/>
+                <column name="mePartyType"/>
+                <column name="mePartyId"/>					
+            </any>
+            
+            <list name="party" cascade="all">
+                <key column="parentSystemId"/>
+                <index column='rank'/>
+                <one-to-many class="com.ail.coretest.addressbook.Party"/>
+            </list>
+        </joined-subclass>
+        
+        <joined-subclass name="com.ail.coretest.addressbook.Party" table="party">
+            <key column="systemId"/>
+            <many-to-one name="address" column="addressId" cascade="all"/>            
+            
+            <joined-subclass name="com.ail.coretest.addressbook.Person" table="person">
+                <key column="systemId"/>
+                <property name="firstName" column="firstname" type="string"/>
+                <property name="surname" column="surname" type="string"/>                
+            </joined-subclass>
+            
+            <joined-subclass name="com.ail.coretest.addressbook.Organisation" table="organisation">
+                <key column="systemId"/>
+                <property name="name" column="name" type="string"/>
+            </joined-subclass>
+        </joined-subclass>
+    </class>
+
+    <!-- Note: query by id (as opposed to systemId) _HAS_ to be a SQL query because -->
+    <!-- hibernate queries (HQL) assume that id always means primary key.           -->
+    
+    <query name="get.attribute.by.unit">
+        from com.ail.core.Attribute as attr where attr.unit = ?
+    </query> 
+</hibernate-mapping> 

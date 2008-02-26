@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ConfigureService" 
+   targetNamespace="http://com.ail.core.configure.server"
+   xmlns:tns="http://com.ail.core.configure.server"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   
+   <types/>
+
+   <message name="invokeServiceXMLRequest">
+      <part name="String_1" type="xsd:string"/>
+   </message>
+   <message name="invokeServiceXMLResponse">
+      <part name="result" type="xsd:string"/>
+   </message>
+   
+   <portType name="ServerEndpoint">
+      <operation name="invokeServiceXML" parameterOrder="String_1">
+         <input message="tns:invokeServiceXMLRequest"/>
+         <output message="tns:invokeServiceXMLResponse"/>
+      </operation>
+   </portType>
+   
+   <binding name="ConfigureEndpointSoapBinding" type="tns:ServerEndpoint">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="invokeServiceXML">
+         <soap:operation soapAction=""/>
+         <input>
+            <soap:body use="literal" namespace="http://com.ail.core.configure.server"/>
+         </input>
+         <output>
+            <soap:body use="literal" namespace="http://com.ail.core.configure.server"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="ConfigureService">
+      <port name="ConfigureEndpointPort" binding="tns:ConfigureEndpointSoapBinding">
+         <soap:address location="http://this.value.is.replaced.by.jboss"/>
+      </port>
+   </service>
+</definitions>

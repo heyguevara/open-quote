@@ -1,0 +1,18 @@
+.iconbar {
+	padding:0;
+	text-align: center;
+}
+
+.texteditor {
+    width: 100%;
+}
+
+input {
+    font-family: tahoma,verdana,arial,helvetica,sans-serif;
+    font-size: 12px;
+}
+
+textarea {
+    font-family: tahoma,verdana,arial,helvetica,sans-serif;
+    font-size: 12px;
+}

@@ -1,0 +1,17 @@
+<contentDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/ContentDetails.xsd">
+    <space>
+        <description>Space for publically visible content.</description>
+    </space>
+    <content file="Welcome.html">
+        <mimeType>text/html</mimeType>
+        <encoding>UTF-8</encoding>
+        <description>Home page shown to all visitors who come in to the default URL.</description>
+        <aspect>{http://www.alfresco.org/model/application/1.0}inlineeditable</aspect>
+        <aspect>{http://www.alfresco.org/model/content/1.0}versionable</aspect>
+        <property>
+            <name>{http://www.alfresco.org/model/application/1.0}editInline</name>
+            <value>true</value>
+        </property>
+    </content>
+</contentDetails>

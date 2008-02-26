@@ -1,0 +1,26 @@
+<asset assetTypeId='VehicleAsset' xsi:type="java:com.ail.insurance.policy.Asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <attribute id="make" value="?" format="choice"/>
+    <attribute id="model" value="?" format="choice"/>
+    <attribute id="cc" value="0" format="number,####"/>
+    <attribute id="bodytype" value="?" format="choice,-1#?|1#Salon|2#Coupe|3#Convertable"/>
+    <attribute id="year" value="" format="date,yyyy"/>
+    <attribute id="registration" value="" format="string,10"/>
+    <attribute id="datebought" value="" format="date,dd/MM/yyyy"/>
+    <attribute id="cost" value="0" format="currency" unit="GBP"/>
+    <attribute id="value" value="0" format="currency" unit="GBP"/>
+    <attribute id="lefthanddrive" value="No" format="yesorno"/>
+    <attribute id="registeredinproposersname" value="Yes" format="yesorno"/>
+    <attribute id="ownedbyproposer" value="Yes" format="yesorno"/>
+    <attribute id="driventoandfromwork" value="Yes" format="yesorno"/>
+    <attribute id="modified" value="No" format="yesorno"/>
+    <attribute id="modification" value="?" format="choice,-1#?|1#Increased power|2#Left hand drive conversion|3#Other"/>
+    <attribute id="securitydevice" value="Yes" format="yesorno"/>
+    <attribute id="keptatproposersaddress" value="Yes" format="yesorno"/>
+    <attribute id="storedingarage" value="Yes" format="yesorno"/>
+    <attribute id="garageofsolidconstruction" value="Yes" format="yesorno"/>
+    <attribute id="alarm" value="No" format="yesorno">
+        <attribute id="type" value="?" format="choice,-1#?|1#Cat1|2#Cat2|3#Cat3|4#Other"/>
+        <attribute id="make" value="" format="string"/>
+        <attribute id="model" value="" format="string"/>
+    </attribute>
+</asset>

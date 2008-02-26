@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision: 1.6 $
+ $State: Exp $
+ $Date: 2006/10/04 21:30:38 $
+ $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestCoreHibernatePersistenceDefaultConfig.xml,v $
+-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+  <name>Default Service Invocation Configuration</name>
+  <timeout>600000</timeout>
+  <who>factory</who>
+  <version>$Revision: 1.6 $</version>
+
+  <types>
+    <!--====================================-->
+    <!--   Define the component's services  -->
+    <!--====================================-->
+    <service name="CreateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
+    </service>
+    <service name="UpdateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
+    </service>
+    <service name="LoadService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
+    </service>
+    <service name="QueryService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
+    </service>
+    <service name="OpenSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
+    </service>
+    <service name="CloseSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
+    </service>
+    
+    <!--=======================================================================-->
+    <!-- Bind the default core services (above) to Commands used by Core.class -->
+    <!--=======================================================================-->
+    <command name="TestCreateCommand" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommand">
+      <parameter name="Service">CreateService</parameter>
+    </command>
+    <command name="TestUpdateCommand" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommand">
+      <parameter name="Service">UpdateService</parameter>
+    </command>
+    <command name="TestLoadCommand" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommand">
+      <parameter name="Service">LoadService</parameter>
+    </command>
+    <command name="TestQueryCommand" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommand">
+      <parameter name="Service">QueryService</parameter>
+    </command>
+    <command name="TestOpenSessionCommand" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommand">
+      <parameter name="Service">OpenSessionService</parameter>
+    </command>
+    <command name="TestCloseSessionCommand" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommand">
+      <parameter name="Service">CloseSessionService</parameter>
+    </command>
+  </types>
+</configuration>
