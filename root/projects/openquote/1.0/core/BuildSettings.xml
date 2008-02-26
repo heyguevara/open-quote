@@ -3,7 +3,6 @@
  This ant include file defines settings that are specific to this project, and imports
  settings that are common to all projects.
  $Revision: 1.7 $
- $Author: richarda $
  $State: Exp $
  $Date: 2007/02/06 21:44:38 $
  $Source: /home/bob/CVSRepository/projects/core/BuildSettings.xml,v $
