@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.5.3 
+Created-By: 1.4.1_06-b01 (Sun Microsystems Inc.)
+Built-By: Applied Industrial Logic
+Class-Path: insurance.jar commercial.jar core.jar @castor.jar@ @commons-jxpath.jar@ @commons-beanutils.jar@ @commons-collections.jar@ @commons-validator.jar@

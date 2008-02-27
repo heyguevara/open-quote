@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file defines the default configuration used by the Quotation EJB component.
+ $Revision: 1.4 $
+ $State: Exp $
+ $Date: 2006/10/04 22:03:13 $
+ $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/quotation-ejb.jar/com/ail/insurance/quotation/QuotationDefaultConfig.xml,v $
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>Quotation EJB configuration</name>
+    <timeout>5000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.4 $</version>
+    <types>
+        <!-- Assess risk binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="AssessRiskService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.assessrisk.AssessRiskService</parameter>
+        </service>
+        <!-- Calculate Premium binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="CalculatePremiumService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.calculatepremium.CalculatePremiumService</parameter>
+        </service>
+        <!-- Calculate Tax binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="CalculateTaxService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.calculatetax.CalculateTaxService</parameter>
+        </service>
+        <!-- Calculate Commission binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="CalculateCommissionService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.calculatecommission.CalculateCommissionService</parameter>
+        </service>
+        <!-- Calculate Brokerage binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="CalculateBrokerageService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageService</parameter>
+        </service>
+        <!-- Calculate Management Charge binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="CalculateManagementChargeService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeService</parameter>
+        </service>
+        <!-- Add Quote Number binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="AddQuoteNumberService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService</parameter>
+        </service>
+        <!-- Add Policy Number binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="AddPolicyNumberService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService</parameter>
+        </service>
+        <!-- Enforce Compliance binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="EnforceComplianceService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.enforcecompliance.EnforceComplianceService</parameter>
+        </service>
+        <!-- Generate Document  binding -->
+        <service builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" name="GenerateDocumentService">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.generatedocument.GenerateDocumentService</parameter>
+        </service>
+        
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.enforcecompliance.EnforceComplianceCommand" name="EnforceCompliance">
+            <parameter name="Service">EnforceComplianceService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand" name="AddQuoteNumber">
+            <parameter name="Service">AddPolicyNumberService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand" name="AddQuoteNumber">
+            <parameter name="Service">AddQuoteNumberService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeCommand" name="CalculateManagementCharge">
+            <parameter name="Service">CalculateManagementChargeService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessRiskCommand" name="AssessRisk">
+            <parameter name="Service">AssessRiskService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand" name="CalculatePremium">
+            <parameter name="Service">CalculatePremiumService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculateTaxCommand" name="CalculateTax">
+            <parameter name="Service">CalculateTaxService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculateCommissionCommand" name="CalculateCommission">
+            <parameter name="Service">CalculateCommissionService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageCommand" name="CalculateBrokerage">
+            <parameter name="Service">CalculateBrokerageService</parameter>
+        </command>
+        <command builder="ClassBuilder" key="com.ail.insurance.quotation.generatedocument.GenerateDocumentCommand" name="GenerateDocument">
+            <parameter name="Service">GenerateDocumentService</parameter>
+        </command>
+    </types>
+</configuration>
