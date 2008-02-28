@@ -1,4 +1,11 @@
 		<div id="sidebar" >
+
+			<div class="sidebox">	
+						
+				<h1>What is Open Source?</h1>
+				<p>What does it mean and how can it help your business?<br/><a href="opensource.php">Find out here »</a></p>	
+				
+			</div>
 			
 			<div class="sidebox">	
 						

@@ -12,6 +12,9 @@
 				<p>
 				<a href="http://oquote.wiki.sourceforge.net/">Wiki</a> - General project information.
 				</p>
+				<p>
+				<a href="http://opensource.org/licenses/gpl-3.0.html">The GNU General Public License (GPL)</a> - OpenQuote licence.
+				</p>
 				
 				<h3>Free Support</h3>
 				<p>

@@ -1,8 +1,8 @@
 <div id="footer"><div id="footer-content">
 	
 		<div class="col float-left">
-			<h1>Site &amp; Project Host</h1>
-			<a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=215808&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
+			<h1>Project Host</h1>
+			<?php include("http://oquote.sourceforge.net/sourceforgelogo.php"); ?>
 		</div>
 		
 		<div class="col float-left">
@@ -22,6 +22,8 @@
 		      <a href="http://validator.w3.org/check/referer"><strong>XHTML</strong></a>
 		</p>
 		
+		<p><a href="http://www.opensource.org/docs/definition.php"> <img src="http://opensource.org/trademarks/osi-certified/web/osi-certified-60x50.png" alt="Open Source (OSI) Certified" border="0" width="60" height="50"  class="float-right" ></a></p>
+
 		<ul>						
 			<li><a href="index.php"><strong>Home</strong></a></li>
 			<li><a href="sitemap.php"><strong>Sitemap</strong></a></li>
