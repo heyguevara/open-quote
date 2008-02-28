@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
- Ant build file to deploy the jboss domain. The commercial projects domain build simply
- unpacks the core projects dar (domain archive) and overlays the specifics of this 
+ Ant build file to deploy the jboss domain. The insurance project's domain build simply
+ unpacks the commercial project's dar (domain archive) and overlays the specifics of this 
  projects domain.
  $Revision: 1.3 $
  $State: Exp $
