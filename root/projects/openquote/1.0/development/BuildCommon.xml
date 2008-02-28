@@ -10,7 +10,6 @@
 <project name="BuildCommon.xml" default="dummy">
   <!-- set global properties for this build -->
   <property environment="env" />
-  <property name="cache.dir" value="${development.dir}/cache" />
   <property name="repo.dir" value="${development.dir}/repo" />
   <property name="domain.dir" value="${basedir}/domain/jboss" />
   <property name="lib" value="${basedir}/jars" />

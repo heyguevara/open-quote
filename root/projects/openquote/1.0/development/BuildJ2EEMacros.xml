@@ -216,7 +216,6 @@
   <!-- files are left alone.                                                     -->
   <target name="_delete-exploded-jar-overlay=true">
     <_set_output_dir_property_macro/>
-    <echo message="basedir: ${basedir}, output.dir: ${output.dir}"/>
     <delete failonerror="no">
       <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml">
         <present targetdir="${basedir}">
@@ -320,15 +319,14 @@
   </macrodef>
 
   <target name="_install-base-domain" unless="domainpresent">
-    <check-repository-visible-macro/>
-
     <!-- Get the jboss zip into the cache -->
-    <get-repository-file name="${dar}-${version}.dar"/>
+    <repo-get-macro group="ail" artifact="${dar}" version="${version}-build.${build}" repo="localhost/repo" type="dar"/>
 
     <!-- Determin the whether we want to use the *-snapshot file, or the repository's latest.  -->
     <!-- We'll use which ever is newer on the filesystem                                       -->
-    <condition property="dar.src" value="${cache.dir}/${dar}-snapshot.dar" else="${cache.dir}/${dar}-${version}.dar">
-      <uptodate srcfile="${cache.dir}/${dar}-${version}.dar" targetfile="${cache.dir}/${dar}-snapshot.dar"/>
+    <condition property="dar.src" value="${repo.dir}/ail/${dar}/${version}/${dar}-${version}-snapshot.dar" 
+																	 else="${repo.dir}/ail/${dar}/${version}-build.${build}/${dar}-${version}-build.${build}.dar">
+      <uptodate srcfile="${repo.dir}/ail/${dar}/${version}-build.${build}/${dar}-${version}-build.${build}.dar" targetfile="${repo.dir}/ail/${dar}/${version}/${dar}-${version}-snapshot.dar"/>
     </condition>
 
     <!-- Unpack the cached zip into the dev tree -->
@@ -346,11 +344,13 @@
   <macrodef name="install-base-domain-macro">
     <attribute name="dar" />
     <attribute name="version"/>
+    <attribute name="build"/>
     <sequential>
       <available file="${deploy.dir}/deploy/bsh-deployer.xml" property="domainpresent" />
       <antcall target="_install-base-domain">
         <param name="dar" value="@{dar}"/>
         <param name="version" value="@{version}"/>
+        <param name="build" value="@{build}"/>
       </antcall>
     </sequential>
   </macrodef>
