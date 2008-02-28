@@ -62,7 +62,7 @@ public interface QueryArg extends CommandArg {
      * Getter returning the results of the query
      * @return list of results from the query 
 	 */
-    List<Object> getResultsListRet();
+    List<?> getResultsListRet();
     
     /**
      * Setter for the list of query results

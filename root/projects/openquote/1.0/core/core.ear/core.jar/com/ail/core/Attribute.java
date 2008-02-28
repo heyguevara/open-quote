@@ -471,7 +471,7 @@ public class Attribute extends Type implements Identified {
         }
         
         if (isChoiceType()) {
-            String options=getFormatOption("options");
+            getFormatOption("options");
         }
         
         return false;

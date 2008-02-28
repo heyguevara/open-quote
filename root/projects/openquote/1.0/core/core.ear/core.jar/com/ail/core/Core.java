@@ -558,7 +558,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * @inheritDoc
      */
-    public List<Object> query(String queryName, Object... queryArgs) {
+    public List<?> query(String queryName, Object... queryArgs) {
         try {
             QueryCommand command=(QueryCommand)newCommand("Query");
             command.setQueryNameArg(queryName);

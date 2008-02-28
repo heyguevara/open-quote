@@ -20,7 +20,6 @@ package com.ail.core.persistence;
 import javax.ejb.CreateException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
-import javax.sql.DataSource;
 
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
@@ -40,7 +39,6 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;
     private SessionContext ctx = null;
-	private DataSource ds = null;
 
     public PersistenceServerBean() {
         versionEffectiveDate = new VersionEffectiveDate();

@@ -33,6 +33,7 @@ import org.exolab.castor.xml.ValidationException;
  * @date $Date: 2005/07/16 10:23:26 $
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/CommonsValidatorFunctions.java,v $
  **/
+@SuppressWarnings("deprecation")
 public class CommonsValidatorFunctions {
 
 	/**
@@ -532,7 +533,7 @@ public class CommonsValidatorFunctions {
 	 * 							Otherwise <code>true</code> is returned.
 	 * throws ValidationException
 	 */
-	public static boolean validateRequiredIf(Object bean, Field field, Validator validator) throws ValidationException{
+    public static boolean validateRequiredIf(Object bean, Field field, Validator validator) throws ValidationException{
 		Object form = validator.getResource(Validator.BEAN_KEY);
 
 		// get value to test

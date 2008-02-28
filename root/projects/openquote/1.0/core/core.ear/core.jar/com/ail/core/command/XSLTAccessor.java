@@ -17,10 +17,8 @@
 
 package com.ail.core.command;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.net.URL;
 import java.security.Principal;
 
 import javax.xml.transform.Source;
@@ -124,30 +122,6 @@ public class XSLTAccessor extends Accessor implements ConfigurationOwner {
         }
         
         return transformer;
-    }
-
-    /**
-     * The script may be local (the value of the script property), or remote (loaded using the
-     * url property). This methof will return the script no matter where it is.
-     * @return A String representing the beanshell script
-     */
-    private String getScriptOrUrlContent() {
-        if (getUrl()!=null) {
-            try {
-                return Functions.loadUrlContentAsString(new URL(getUrl()));
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-                throw new CommandInvocationError("Failed to load command script from "+getUrl());
-            }
-            
-        }
-        else if (getScript()!=null) {
-            return getScript();
-        }
-        else {
-            throw new CommandInvocationError("No script or url property was defined");
-        }
     }
 
     public String getUrl() {

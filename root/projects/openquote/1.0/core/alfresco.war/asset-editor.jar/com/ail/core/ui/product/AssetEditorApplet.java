@@ -22,7 +22,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.StringBufferInputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -69,12 +68,11 @@ public class AssetEditorApplet extends JApplet {
     public JSplitPane splitPane = null;
     public JPanel editorPanel = null;
     
-    private String editorType = null;
-    
     public void init() {
         makeFrame();
     }
 
+    @SuppressWarnings("unused")
     private class EditorPanel extends JPanel {
 
         public EditorPanel() {
@@ -238,7 +236,6 @@ public class AssetEditorApplet extends JApplet {
     public void makeFrame() {
 
         try {
-            EditorPanel editorPanel = new EditorPanel();
             JSObject win = JSObject.getWindow(this);
 //            if ("asset".equals(editorType)) {
 //                getContentPane().add("Center", editorPanel);
@@ -258,6 +255,7 @@ public class AssetEditorApplet extends JApplet {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private Document getAssetDocument() throws Exception {
 
         try {
@@ -271,14 +269,8 @@ public class AssetEditorApplet extends JApplet {
                 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document assetDocument = builder.parse(new StringBufferInputStream(assetXml));
+            Document assetDocument = builder.parse(new java.io.StringBufferInputStream(assetXml));
             
-            if (assetDocument != null && assetDocument.getDocumentElement() != null) {
-                //JOptionPane.showMessageDialog(this, assetDocument.getDocumentElement().getNodeName());
-                if ("asset".equals(assetDocument.getDocumentElement().getNodeName())) {
-                    editorType = "asset";
-                }
-            }
             return assetDocument;
 
         }

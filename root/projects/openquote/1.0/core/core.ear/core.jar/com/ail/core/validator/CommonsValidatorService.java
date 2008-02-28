@@ -45,6 +45,7 @@ import com.ail.core.command.CommandArg;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/CommonsValidatorService.java,v $
  * @stereotype service
  */
+@SuppressWarnings("deprecation")
 public class CommonsValidatorService extends Service {
     private ValidatorArg args = null;
     private Core core = null;

@@ -85,8 +85,6 @@ public class GetNamespacesService extends Service {
      * Fetch the namespace collection from the Configuration handler.
      */
 	public void invoke() {
-        GetNamespacesArgImp arg=(GetNamespacesArgImp)getArgs();
-        
         args.setNamespaces(ConfigurationHandler.getInstance().getNamespaces());
     }
 }

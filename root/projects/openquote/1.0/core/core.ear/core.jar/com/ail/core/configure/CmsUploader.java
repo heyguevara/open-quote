@@ -155,7 +155,7 @@ public class CmsUploader {
                 FileInputStream ins=new FileInputStream(file);
                 ins.read(buff);
                 ins.close();
-                Content content=contentService.write(workingCopyReference, Constants.PROP_CONTENT, buff, format);
+                contentService.write(workingCopyReference, Constants.PROP_CONTENT, buff, format);
                 
                 // Now check the working copy in with a description of the change made that will be recorded in the version history
                 Predicate predicate = new Predicate(new Reference[]{workingCopyReference}, null, null);
@@ -262,7 +262,7 @@ public class CmsUploader {
             String child=spacePath.substring(spacePath.lastIndexOf("/cm:")+4);
             String description=querySpaceDetails(folderPath, "description");
             
-            Node n1=cmsCreateSpace(spaceParent, folderParent);
+            cmsCreateSpace(spaceParent, folderParent);
             
             // The folder doesn't exist, so we'll create it. First: create the parent reference
             String childsQname=Constants.createQNameString(Constants.NAMESPACE_CONTENT_MODEL, toQname(child));
@@ -275,7 +275,7 @@ public class CmsUploader {
             CMLCreate create = new CMLCreate("1", parentReference, null, null, null, Constants.TYPE_FOLDER, properties);
             CML cml = new CML();
             cml.setCreate(new CMLCreate[]{create});
-            UpdateResult[] res=WebServiceFactory.getRepositoryService().update(cml);
+            WebServiceFactory.getRepositoryService().update(cml);
             
             System.out.println("cmsCreateSpace: created '"+spaceParent+"/"+child+"'");
 

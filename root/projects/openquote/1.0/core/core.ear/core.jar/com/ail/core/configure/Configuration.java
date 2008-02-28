@@ -174,6 +174,7 @@ public class Configuration extends Group {
         // real destination (e.g. addGroup()). This ret list is only referenced by
         // castor.
 		ArrayList<Group> ret=new ArrayList<Group>() {
+            @SuppressWarnings("unused")
             public synchronized void addElement(Group o) {
                 addGroup(o);
                 super.add(o);

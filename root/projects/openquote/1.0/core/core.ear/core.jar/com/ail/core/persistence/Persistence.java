@@ -23,9 +23,9 @@ import com.ail.core.Type;
 import com.ail.core.VersionException;
 
 /**
- * Core persistence implemetation interface.
+ * Core persistence implementation interface.
  * This interface describes the methods that the Core must expose in order
- * to support persistence. The methods exposed also desribe the contract
+ * to support persistence. The methods exposed also describe the contract
  * between this package and the Core - this package provides a Service
  * implementation for each.
  * @version $Revision: 1.4 $
@@ -43,7 +43,7 @@ public interface Persistence {
 
 	/**
      * Query persistent storage for the collection of objects returned by a 
-     * query. The query iteself is referenced by name only. This name is
+     * query. The query itself is referenced by name only. This name is
      * interpreted by the underlying persistence engine and resolved to an
      * actual query. 
      * @param queryName The name of the query to be executed.
@@ -51,11 +51,11 @@ public interface Persistence {
 	 * @return The results of the query.
      * @throws VersionException The version argument is either badly defined, or relates to a version that does not exist.
      */
-	List<Object> query(String queryName, Object... queryArgs);
+	List<?> query(String queryName, Object... queryArgs);
 
     /**
      * Query persistent storage for the single object returned by a 
-     * query. The query iteself is referenced by name only. This name is
+     * query. The query itself is referenced by name only. This name is
      * interpreted by the underlying persistence engine and resolved to an
      * actual query. 
      * @param queryName The name of the query to be executed.
@@ -77,7 +77,7 @@ public interface Persistence {
     /**
      * Update the persistent copy of an object from its in memory copy.
      * @param object The object to be written to persistent storage.
-     * @return The object as persisited.
+     * @return The object as persisted.
      */
     <T extends Type> T update(T object);
 

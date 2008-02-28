@@ -70,8 +70,6 @@ public class TestXMLString extends TestCase {
 
     private XMLString xml2;
 
-    private XMLString xml3;
-
     public TestXMLString(String name) {
         super(name);
     }

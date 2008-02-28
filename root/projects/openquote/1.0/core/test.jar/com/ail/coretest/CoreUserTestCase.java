@@ -16,6 +16,17 @@
  */
 package com.ail.coretest;
 
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URL;
+import java.security.Principal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Properties;
+
+import junit.framework.TestCase;
+
 import com.ail.core.Core;
 import com.ail.core.CoreUser;
 import com.ail.core.CoreUserImpl;
@@ -25,17 +36,6 @@ import com.ail.core.configure.AbstractConfigurationLoader;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.ConfigurationResetError;
-import junit.framework.TestCase;
-
-import java.io.InputStream;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-import java.net.URL;
-import java.security.Principal;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.util.Properties;
 
 /**
  * This class should be extended by any test that needs to act like a core user. I
@@ -146,7 +146,7 @@ public class CoreUserTestCase extends TestCase implements CoreUser, Configuratio
         try {
             // load the <name>DefaultConfig resource into an XMLString
             URL inputUrl=this.getClass().getResource(name+"DefaultConfig.xml");
-            InputStream inStream=inputUrl.openStream();
+            inputUrl.openStream();
 
             XMLString factoryConfigXML=new XMLString(inputUrl);
 

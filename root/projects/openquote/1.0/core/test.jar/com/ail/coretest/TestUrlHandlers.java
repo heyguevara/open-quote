@@ -97,7 +97,7 @@ public class TestUrlHandlers extends TestCase {
         url=new URL("classpath://com.ail.coretest/TestUrlContentThatDoesNotExist.xml");
         
         try {
-            InputStream in=url.openStream();
+            url.openStream();
             fail("Open a resource that doesn't exist!");
         }
         catch(FileNotFoundException e) {

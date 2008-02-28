@@ -34,7 +34,7 @@ public class QueryArgImp extends CommandArgImp implements QueryArg {
     static final long serialVersionUID = 1199346453402049909L;
 
     private Object[] queryArgumentsArg=null;
-    private List<Object> resultsListRet;
+    private List<?> resultsListRet;
     private Type uniqueResultsRet;
     private String queryNameArg;
     
@@ -54,7 +54,7 @@ public class QueryArgImp extends CommandArgImp implements QueryArg {
         return queryNameArg;
     }
 
-    public List<Object> getResultsListRet() {
+    public List<?> getResultsListRet() {
         return resultsListRet;
     }
 

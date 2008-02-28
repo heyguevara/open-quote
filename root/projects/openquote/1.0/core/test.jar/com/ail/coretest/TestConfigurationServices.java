@@ -20,7 +20,6 @@ package com.ail.coretest;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import junit.framework.Test;
@@ -278,7 +277,6 @@ public class TestConfigurationServices extends CoreUserTestCase {
         assertNotNull(pcc.getCarRet());
 
         ZipInputStream zis=new ZipInputStream(new ByteArrayInputStream(pcc.getCarRet()));
-        ZipEntry ze;
         assertEquals("com.ail.core.Core", zis.getNextEntry().getName());
         assertEquals("TestNamespace", zis.getNextEntry().getName());
         zis.close();

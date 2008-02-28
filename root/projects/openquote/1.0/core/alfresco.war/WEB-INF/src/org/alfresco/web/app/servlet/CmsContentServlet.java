@@ -48,6 +48,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  */
+@SuppressWarnings("deprecation")
 public class CmsContentServlet extends HttpServlet {
     private static final long serialVersionUID = -4558907921887235966L;
     private static String storeValue = "workspace://SpacesStore";

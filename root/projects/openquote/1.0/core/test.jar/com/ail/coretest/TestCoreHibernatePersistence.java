@@ -217,9 +217,6 @@ public class TestCoreHibernatePersistence extends CoreUserTestCase {
     public void testHibernateCreateFailMissingObject() throws Exception {
         getCore().newCommand("TestOpenSessionCommand").invoke();
 
-        // set up object
-        Attribute attr = new Attribute();
-
         CreateCommand command = (CreateCommand) getCore().newCommand("TestCreateCommand");
 
         try {
@@ -471,7 +468,6 @@ public class TestCoreHibernatePersistence extends CoreUserTestCase {
     public void testCorePersistenceMethods() throws Exception {
         Attribute attr1;
         Attribute attr2;
-        Attribute attr3;
         
         {
             getCore().openPersistenceSession();
@@ -497,7 +493,7 @@ public class TestCoreHibernatePersistence extends CoreUserTestCase {
             attr2.setValue("22");
             attr2.setId("NEWATTR");
             
-            attr3=getCore().update(attr2);
+            getCore().update(attr2);
             
             assertEquals("NEWATTR", attr2.getId());
             assertEquals("22", attr2.getValue());
@@ -528,7 +524,7 @@ public class TestCoreHibernatePersistence extends CoreUserTestCase {
                 getCore().create(new Attribute("ATTR", "Val "+i, "string", "inch"));
             }
 
-            List<Object> l=getCore().query("get.attribute.by.unit", "inch");
+            List<?> l=getCore().query("get.attribute.by.unit", "inch");
             
             assertEquals(100, l.size());
             
@@ -566,13 +562,13 @@ public class TestCoreHibernatePersistence extends CoreUserTestCase {
     /**
      * Test the persistence of a deep hierarchy. Actually not all that deep, but deep enough to proove the point.
      * The configure system defines a class hierarchy which is used to hold configurations. It's more or less
-     * a copybook implementation of the composite pattern. We'll play with two types here: Parameter and Group;
+     * a copy-book implementation of the composite pattern. We'll play with two types here: Parameter and Group;
      * Both extend Component, and Component extends Type in common with all other model types in the system. Group
      * contains a list of Parameters, and a list of Groups.
      * 
      * <ol>
      * <li>Create an in memory instance of a Group, with on Parameter in it.</li>
-     * <li>Create a persistence session, store the instnace, get it's id, close the session.</li>
+     * <li>Create a persistence session, store the instance, get it's id, close the session.</li>
      * <li>Create a new session, load the object using it's id, check the content of the instance, close the session.</li>
      * <li>Create another session, load the object again, and delete it, then close the session</li>
      * <li>Create a session, try to load the object using it's id again and try to check it's content. close the session. Fail if this works!</li>

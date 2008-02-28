@@ -62,7 +62,7 @@ public class QueryCommand extends Command implements QueryArg {
         return args.getQueryNameArg();
     }
 
-    public List<Object> getResultsListRet() {
+    public List<?> getResultsListRet() {
         return args.getResultsListRet();
     }
 

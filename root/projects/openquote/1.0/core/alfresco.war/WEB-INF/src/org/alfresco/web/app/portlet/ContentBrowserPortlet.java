@@ -49,12 +49,10 @@ import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.cmr.security.AuthenticationService;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.transaction.TransactionService;
-import org.apache.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
 
+@SuppressWarnings("deprecation")
 public class ContentBrowserPortlet extends GenericPortlet {
-    private static Logger log = Logger.getLogger(ContentBrowserPortlet.class);
-
     private String indexpage;
     private static String storeValue = "workspace://SpacesStore";
     private static String rootPath = "/app:company_home";

@@ -87,8 +87,6 @@ public class GetNamespacesHistoryService extends Service {
      * Fetch the namespace collection from the Configuration handler.
      */
 	public void invoke() throws PreconditionException, PostconditionException {
-        GetNamespacesHistoryArgImp arg=(GetNamespacesHistoryArgImp)getArgs();
-        
         if (args.getNamespaceArg()==null) {
             throw new PreconditionException("args.getNamespaceArg()==null");
         }

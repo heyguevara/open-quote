@@ -132,4 +132,8 @@ public class ServerDeligate {
     public CatalogCarArg catalogCar(CatalogCarArg arg) throws Exception  {
         return configureServer().catalogCar(arg);
     }
+
+    public Principal getUser() {
+        return user;
+    }
 }

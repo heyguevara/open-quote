@@ -102,7 +102,6 @@ public class PackageCarService extends com.ail.core.Service {
             XMLString config=null;
             ByteArrayOutputStream baos=new ByteArrayOutputStream();
             ZipOutputStream zos=new ZipOutputStream(baos);
-            ZipEntry ze=null;
             
             for(Iterator<String> it=args.getNamespacesArg().iterator() ; it.hasNext() ; ) {
                 namespace=it.next();

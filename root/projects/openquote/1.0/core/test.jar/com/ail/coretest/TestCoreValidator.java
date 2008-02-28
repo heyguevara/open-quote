@@ -52,7 +52,7 @@ import org.apache.commons.validator.ValidatorUtil;
  * @date $Date: 2005/12/18 17:01:18 $
  * @source $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestCoreValidator.java,v $
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked","deprecation"})
 public class TestCoreValidator extends CoreUserTestCase {
 
     /**
@@ -119,7 +119,7 @@ public class TestCoreValidator extends CoreUserTestCase {
 	 * Test direct access to the validator
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
     public void testCommonsValidatorFail() throws Exception {
 		// set up key & value
 		String key = "TestForm";

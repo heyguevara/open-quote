@@ -78,7 +78,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     }
 
     /**
-     * Create a core proxy with a specific configration namespace and version effective date.
+     * Create a core proxy with a specific configuration namespace and version effective date.
      * @param namespace configuration namespace to be used.
      * @param ved version effective date.
      * @param securityPrincipal Security principal to apply.
@@ -199,8 +199,8 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     /**
      * Output a message to the Warning logging channel.
 	 * Messages written to this channel indicate that something unexpected
-     * occured, but that it was dealt with and is not thought (by the developer)
-     * to be if great importence.
+     * occurred, but that it was dealt with and is not thought (by the developer)
+     * to be if great importance.
      * @param message The text of the message to be output.
      */
     public void logWarning(String message, Throwable cause) {
@@ -275,7 +275,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     /**
      * Reset the configuration for a named class. This utility method can be used to reset
      * a named configuration owner to its factory default settings.
-     * @param configOwnerClassName The fully qualifed name of the class to reset the config for.
+     * @param configOwnerClassName The fully qualified name of the class to reset the config for.
      */
 	@SuppressWarnings("unchecked")
     public boolean resetConfiguration(String configOwnerClassName) {
@@ -377,10 +377,10 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     /**
      * Instantiate a type associated with a product. A product must define at least one type 
      * (see {@link #newProductType(String)}), but may define any number of additional types for 
-     * use during its lifecycle; this method is used to instantantiate specific types by name.<p>
+     * use during its lifecycle; this method is used to instantiate specific types by name.<p>
      * For example, a complex insurance product may define several different types to describe
      * the assets the product covers. A commercial combined product might define a stock asset, a
-     * vehicle asset, a safe asset, etc. Each of these is described within the product as a seperate
+     * vehicle asset, a safe asset, etc. Each of these is described within the product as a separate
      * named type. A client would use this method to instantiate these different types as and when 
      * they needed to be added to an instance of a commercial combined policy.
      * @param productName The product "owning" the type.
@@ -447,13 +447,13 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @return The results of the query.
      * @throws VersionException The version argument is either badly defined, or relates to a version that does not exist.
      */
-    public List<Object> query(String queryName, Object... queryArgs) {
+    public List<?> query(String queryName, Object... queryArgs) {
         return core.query(queryName, queryArgs);
     }
 
     /**
      * Query persistent storage for the single object returned by a 
-     * query. The query iteself is referenced by name only. This name is
+     * query. The query itself is referenced by name only. This name is
      * interpreted by the underlying persistence engine and resolved to an
      * actual query. 
      * @since 2.0
@@ -491,7 +491,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The group's name may be dot seperated indicating
+     * The group's name may be dot separated indicating
      * that the group is nested within other groups.
      * @param name The name of the group to be returned.
      * @return The configuration group, or null if one is not defined for this namespace and version effective date.
@@ -504,7 +504,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
 
     /**
      * Return the source of the configuration being used by this instance of core. As configurations optionally
-     * have "parent" configuration that they iinherit from, this method returns a collection of sources with
+     * have "parent" configuration that they inherit from, this method returns a collection of sources with
      * one element for each configuration in the hierarchy.
      * @return The sources from which the configuration was loaded.
      */

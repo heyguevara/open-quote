@@ -94,9 +94,6 @@ public class HibernateQueryService extends Service {
 	        throw new PreconditionException("args.getQueryArg()==null");
 	    }
 
-        // query records
-		Type object = null;
-		
         Session session=null;
         
         try {
