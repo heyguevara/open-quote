@@ -2,7 +2,7 @@
 	
 		<div class="col float-left">
 			<h1>Project Host</h1>
-			<?php include("http://oquote.sourceforge.net/sourceforgelogo.php"); ?>
+			<?php readfile("http://oquote.sourceforge.net/sourceforgelogo.html"); ?>
 		</div>
 		
 		<div class="col float-left">

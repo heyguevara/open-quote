@@ -7,8 +7,8 @@
 		
 				<h3>What is Open Source?</h3>
 				<p>Most open source software does not cost money to use. Some programs charge subscriptions for support, documentation, or premium versions, but most are usable without paying a fee.</p>
-
-				<p>Why should Open Source matter to insurance organisations? For the same reasons that it matters to all commercial organisations: because there is a solid <a href="http://opensource.org/advocacy/case_for_business.php" mce_href="http://opensource.org/advocacy/case_for_business.php" target="_blank">business case</a> for it - as described by the Open Source Initiative (OSI).</p>
+				<p>The name Open Source reflects a key principle of Open Source; the source code (program code) for the software is made freely available for anyone to look at, use, or  contribute to.</p>
+				<p>Why should Open Source matter to insurance organisations? For the same reasons that it matters to all commercial organisations: because there is a solid <a href="http://opensource.org/advocacy/case_for_business.php" mce_href="http://opensource.org/advocacy/case_for_business.php" target="_blank">business case</a> for it - read the business case put forward by the Open Source Initiative (OSI) <a href="http://opensource.org/advocacy/case_for_business.php" mce_href="http://opensource.org/advocacy/case_for_business.php" target="_blank">here</a>.</p>
 				
 				<p>More information from these on-line resources should prove useful:</p>
 
