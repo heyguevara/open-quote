@@ -21,6 +21,7 @@
         <dirset dir="${ear.dir}" includes="*.jar" />
         <fileset dir="${ear.dir}/../jboss-portal.sar/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${jboss.dir}/client" includes="jbossall-client.jar" />
         <fileset dir="${jboss.dir}/server/default/lib" includes="servlet-api.jar" />
       </javac-classpath>

@@ -7,8 +7,8 @@
  $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/Build.xml,v $
 -->
 
-<project default="build" name="core:core.ear/core.jar">
-  <import file="../..//BuildSettings.xml"/>
+<project default="build" name="core:core.ear/lib/core.jar">
+  <import file="../../..//BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">
     <delete-exploded-jar-macro/>

@@ -20,6 +20,7 @@
         <dirset dir="${ear.dir}" includes="*.jar" />
         <fileset dir="${test.dir}/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${java.home}/lib" includes="plugin.jar" />
         <fileset dir="${jboss.dir}">
           <include name="client/jbossall-client.jar" />

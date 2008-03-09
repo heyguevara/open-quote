@@ -16,7 +16,7 @@
   </target>
 
   <target name="_build">
-    <ant dir="./core.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./lib/core.jar" antfile="Build.xml" target="_build" />
     <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />
