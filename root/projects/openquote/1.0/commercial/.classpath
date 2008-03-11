@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="commercial.jar/" kind="src" path="commercial.ear"/>
-	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/commercial.ear/commercial.jar" path="commercial.ear/commercial.jar"/>
+	<classpathentry excluding="lib/commercial.jar/" kind="src" path="commercial.ear"/>
+	<classpathentry kind="src" path="commercial.ear/lib/commercial.jar"/>
 	<classpathentry kind="src" output="deploy/test/test.jar" path="test.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="deploy/test/lib/commons-logging-1.1-dev.jar"/>
@@ -22,7 +22,6 @@
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/lib/commons-dbcp-1.0.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/lib/c3p0-0.8.2.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/lib/bvfl-1.0.jar"/>
-	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/core.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/lib/endorsed/xalan.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/lib/commons-jxpath-1.2.jar"/>
@@ -33,5 +32,6 @@
 	<classpathentry kind="lib" path="deploy/jboss/server/default/lib/mysql-connector-java-3.1.12-bin.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="deploy/test/lib/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/commercial.ear/lib/core.jar"/>
 	<classpathentry kind="output" path="deploy/classes"/>
 </classpath>
