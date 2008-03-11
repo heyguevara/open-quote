@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="acceptance-ejb.jar/|configure-server-ejb.jar/|core.jar/|insurance.jar/|quotation-ejb.jar/|rmt-ejb.jar/|subrogation-ejb.jar/" kind="src" path="insurance.ear"/>
-	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/insurance.ear/insurance.jar" path="insurance.ear/insurance.jar"/>
+	<classpathentry excluding="acceptance-ejb.jar/|configure-server-ejb.jar/|core.jar/|insurance.jar/|quotation-ejb.jar/|rmt-ejb.jar/|subrogation-ejb.jar/|lib/insurance.jar/" kind="src" path="insurance.ear"/>
+	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/insurance.ear/lib/insurance.jar" path="insurance.ear/lib/insurance.jar"/>
 	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/insurance.ear/configure-server-ejb.jar" path="insurance.ear/configure-server-ejb.jar"/>
 	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/insurance.ear/acceptance-ejb.jar" path="insurance.ear/acceptance-ejb.jar"/>
 	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/insurance.ear/quotation-ejb.jar" path="insurance.ear/quotation-ejb.jar"/>
 	<classpathentry kind="src" output="deploy/jboss/server/default/deploy/insurance.ear/subrogation-ejb.jar" path="insurance.ear/subrogation-ejb.jar"/>
 	<classpathentry kind="src" output="deploy/test/test.jar" path="test.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/commercial.jar"/>
-	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/core.jar" sourcepath="/core/core.ear/core.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/lib/proxool-0.7.2.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/lib/odmg-3.0.jar"/>
@@ -65,5 +63,7 @@
 	<classpathentry kind="lib" path="deploy/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="deploy/test/lib/mysql-connector-java-3.1.11.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/lib/log4j.jar"/>
+	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/lib/commercial.jar"/>
+	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/insurance.ear/lib/core.jar"/>
 	<classpathentry kind="output" path="deploy/classes"/>
 </classpath>

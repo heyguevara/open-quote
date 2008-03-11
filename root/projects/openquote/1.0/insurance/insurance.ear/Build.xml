@@ -16,7 +16,7 @@
   </target>
 
   <target name="_build">
-    <ant dir="./insurance.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./lib/insurance.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./acceptance-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />

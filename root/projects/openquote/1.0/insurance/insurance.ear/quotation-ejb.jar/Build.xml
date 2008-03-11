@@ -18,6 +18,7 @@
     <compile-exploded-ejb-jar-macro>
       <javac-classpath>
         <dirset dir="${ear.dir}" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${java.home}/lib" includes="plugin.jar" />
         <fileset dir="${jboss.dir}">
