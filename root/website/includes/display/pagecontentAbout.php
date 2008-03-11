@@ -5,7 +5,6 @@
 			
 				<h1>About</h1>
 				
-			
 				<h3>OpenQuote</h3>
 				<p>OpenQuote is an <a href="opensource.php">open source</a> system designed to produce insurance quotations  using the Internet.  OpenQuote can be configured to work for any line of business, it uses business rules (risk evaluation and rates) that can be set up in a Microsoft Excel spreadsheet.  Many different insurance products can be run and controlled from OpenQuote at any one time.</p>
 				<p>The system can be made available to brokers and proposers, quotes can be made and saved for the broker or proposer to return to at a later date. OpenQuote can issue quotation documentation to the broker or proposer and keep the Underwriter informed about all quotations and when they are accepted.</p>
@@ -37,6 +36,19 @@
 					<li>Automatic screen generation</li>
 					<li>Product inheritance for faster time to market</li>
 					<li>XML to aide policy administration system integration</li>
+				</ul>				
+								
+				<h3>Technical Summary</h3>
+				<ul>					
+					<li>J2EE server side system (Java 2 Enterprise Edition)</li>
+					<li>MySql database</li>
+					<li>Alfresco document management</li>
+					<li>JBoss application server</li>
+					<li>JBoss Portal for user interface presentation</li>
+					<li>Drools rule engine for business rules (rating, validation, risk assessment etc.)</li>
+					<li>FOP (Formatting Objects Processor) document production (Quotation PDF)</li>
+					<li>Web browser accessed user interface</li>
+					<li>Operating Systems: Windows, Linux, OS X, Solaris, Unix compatible</li>
 				</ul>				
 				
 			</div>

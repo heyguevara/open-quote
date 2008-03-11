@@ -12,7 +12,7 @@
 				<a href="http://ail-ltd.co.uk:8080/portal/portal/developer">Product Configuration</a> - User:davy  Password:davy
 				</p>
 				<p>
-				<a href="http://ail-ltd.co.uk:8080/portal/portal/administrator">Adminstration</a> - User:adam  Password:adam
+				<a href="http://ail-ltd.co.uk:8080/portal/portal/administrator">Administration</a> - User:adam  Password:adam
 				</p>
 								
 			</div>

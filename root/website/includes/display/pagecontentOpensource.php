@@ -26,7 +26,7 @@
  
 				<h3>OpenQuote Licence</h3>
 		
-				<p>OpenQuote is disributed under the <a href="http://opensource.org/licenses/gpl-3.0.html" mce_href="http://opensource.org/licenses/gpl-3.0.html" target="_blank">The GNU General Public License (GPL)</a>, a licence that has been approved by the <a href="http://opensource.org/" mce_href="http://opensource.org/" target="_blank">OSI</a>.</p>
+				<p>OpenQuote is distributed under the <a href="http://opensource.org/licenses/gpl-3.0.html" mce_href="http://opensource.org/licenses/gpl-3.0.html" target="_blank">The GNU General Public License (GPL)</a>, a licence that has been approved by the <a href="http://opensource.org/" mce_href="http://opensource.org/" target="_blank">OSI</a>.</p>
 				<p><b>Open Source Initiative Approved Open Source Software</b></p>
 				
 			</div>
