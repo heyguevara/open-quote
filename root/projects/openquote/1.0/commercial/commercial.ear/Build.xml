@@ -15,7 +15,7 @@
   </target>
 
   <target name="_build">
-    <ant dir="./commercial.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./lib/commercial.jar" antfile="Build.xml" target="_build" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
