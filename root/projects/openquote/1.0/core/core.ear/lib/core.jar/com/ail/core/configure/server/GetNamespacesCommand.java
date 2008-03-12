@@ -23,6 +23,7 @@ import com.ail.core.command.Command;
 import com.ail.core.command.CommandArg;
 
 /**
+ * Fetch a list of all the configuration namespaces known to the system. A collection of Strings is returned, one String for each namespace.
  * @version $Revision: 1.3 $
  * @state $State: Exp $
  * @date $Date: 2005/07/19 21:18:15 $
