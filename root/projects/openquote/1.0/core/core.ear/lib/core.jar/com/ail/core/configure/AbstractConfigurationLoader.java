@@ -68,19 +68,19 @@ import java.util.Properties;
  * <u>and</u> <code>java:comp/env/ConfigurationLoader.params</code> must be defined, and must
  * be Strings. The former is taken to be the full name of the class to instantiate and use as
  * the concrete loader. The latter is a semi-colon separated list of name=value parameters to
- * initialise the concrete loader.
+ * initialize the concrete loader.
  * </li>
  *
  * <li>
  * The class resource file <code>loader.properties</code>. This property file
  * must as a minimum define the property <code>loaderClass</code> with a value
- * identifying the fully qualified class name of the implementation. Any additionl
+ * identifying the fully qualified class name of the implementation. Any additional
  * properties defined in the file will be passed to the concrete implementation.
- * For example, the JDBCConfigurationLoader expects a <code>driver</code> property to be.
+ * For example, the JDBCConfigurationLoader expects a <code>driver</code> property.
  * </li>
  * </ol>
  * Some (in fact most) of the concrete implementations require other parameters. See their
- * javadocs (from the @see list below) for more details.
+ * javadocs (from <b>See Also</b> below) for more details.
  * @see JDBCConfigurationLoader
  * @see EJBConfigurationLoader
  * @see ConnectionPoolConfigurationLoader

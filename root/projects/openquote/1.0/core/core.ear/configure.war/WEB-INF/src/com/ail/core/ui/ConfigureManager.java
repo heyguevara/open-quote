@@ -203,7 +203,7 @@ public class ConfigureManager {
         ConfigurationSummary selected=(ConfigurationSummary)getForm().getHistory().getRowData();
         getForm().setSelected(selected);        
 
-        // Make sure we get the specificed version configuration
+        // Make sure we get the specified version configuration
         core.setVersionEffectiveDate(new VersionEffectiveDate(selected.getValidFrom()));
 
         try {

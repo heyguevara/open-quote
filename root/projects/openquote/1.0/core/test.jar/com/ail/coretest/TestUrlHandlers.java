@@ -18,9 +18,12 @@
 package com.ail.coretest;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import com.ail.core.Functions;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -103,6 +106,57 @@ public class TestUrlHandlers extends TestCase {
         catch(FileNotFoundException e) {
             // This is what we want
         }
-        
+    }
+
+    /**
+     * Test raw access to the alfresco repository. This test uses the same method of access
+     * as the alfresco content URL handler uses.
+     * @throws Exception
+     */
+    public void testAlfrescoUrlAccess() throws Exception {
+        URL url=null;
+
+        // try to access the content without a ticket
+        try {
+            url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl");
+            Functions.loadUrlContentAsString(url);
+            fail("got content without a valid ticket");
+        }
+        catch(IOException e) {
+            assertTrue(e.getMessage().contains("response code: 500"));
+        }
+
+        // get a ticket for admin/admin
+        url=new URL("http://localhost:8080/alfresco/service/api/login?u=admin&pw=admin");
+        String rawTicketResponse=Functions.loadUrlContentAsString(url);        
+        assertTrue(rawTicketResponse.indexOf("<ticket>")>0);
+        String ticket=rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<"));
+
+        // try to access the content again, but with a ticket
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl&ticket="+ticket);
+        Functions.loadUrlContentAsString(url);
+    }
+
+    /**
+     * Test raw access to the alfresco repository. This test uses the same method of access
+     * as the alfresco content URL handler uses.
+     * @throws Exception
+     */
+    public void testProdctUrlAccess() throws Exception {
+        URL url=null;
+
+        // try to access the content that does not exist
+        try {
+            url=new URL("product://localhost:8080/Demo/Demo/ContentThatDoesNotExist.html");
+            Functions.loadUrlContentAsString(url);
+            fail("got content which doesn't exist!");
+        }
+        catch(IOException e) {
+            assertTrue(e.getMessage().contains("response code: 500"));
+        }
+
+        // try to access the content that does exist
+        url=new URL("product://localhost:8080/Demo/Demo/Welcome.html");
+        Functions.loadUrlContentAsString(url);
     }
 }

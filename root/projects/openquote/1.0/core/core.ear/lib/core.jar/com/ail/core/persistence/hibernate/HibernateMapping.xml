@@ -47,7 +47,7 @@
             </joined-subclass>
         </joined-subclass>
 
-
+<!-- 
         <joined-subclass name="com.ail.coretest.addressbook.Address" table="address">
             <key column="systemId"/>
             <property name="line1" column="line1" type="string"/>
@@ -89,6 +89,7 @@
                 <property name="name" column="name" type="string"/>
             </joined-subclass>
         </joined-subclass>
+-->
     </class>
 
     <!-- Note: query by id (as opposed to systemId) _HAS_ to be a SQL query because -->

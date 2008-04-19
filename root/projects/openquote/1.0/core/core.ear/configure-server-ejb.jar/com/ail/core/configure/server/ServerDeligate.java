@@ -28,7 +28,7 @@ import com.ail.core.Version;
 import com.ail.core.configure.finder.GetClassListArg;
 
 /**
- * This class acts as a business deligate to the ConfigureServer EJB.
+ * This class acts as a business delegate to the ConfigureServer EJB.
  * @version $Revision: 1.7 $
  * @state $State: Exp $
  * @date $Date: 2007/10/05 22:47:50 $
@@ -83,6 +83,10 @@ public class ServerDeligate {
 
     public void resetNamedConfiguration(String name) throws Exception {
         configureServer().resetNamedConfiguration(name);
+    }
+
+    public void resetAllConfigurations() throws Exception {
+        configureServer().resetNamedConfiguration("all");
     }
 
     public void clearConfigurationCache() throws Exception {

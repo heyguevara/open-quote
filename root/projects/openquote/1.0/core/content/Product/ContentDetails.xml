@@ -1,6 +1,0 @@
-<contentDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/ContentDetails.xsd">
-    <space>
-        <description>Spaces reserved for defining products.</description>
-    </space>
-</contentDetails>

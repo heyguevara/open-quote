@@ -22,6 +22,10 @@
     <kick-jboss-macro />
   </target>
 
+	<target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
+		<content-download-export-macro/>
+	</target>
+  
   <target name="ail: reset configurations" description="reset all the ail configurations">
 		<ail-reset-configurations-macro>
 			<paths>

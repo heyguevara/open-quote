@@ -14,29 +14,19 @@
   </target>
 
   <target name="_build">
-    <build-cms-macro toSpace="/app:company_home" username="admin" password="admin"/>
+    <build-bootstrap-content-macro basedir="./export_models.acp" />
+    <build-bootstrap-content-macro basedir="./export_spaces_archive.acp" />
+    <build-bootstrap-content-macro basedir="./export_spaces.acp" />
+    <build-bootstrap-content-macro basedir="./export_users.acp"  />
+    <build-bootstrap-content-macro basedir="./export_versions.acp" />
+    <build-bootstrap-content-macro basedir="./export_system.acp" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
     <antcall target="_build" />
   </target>
 
-  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <parallel>
-      <start-jboss-macro />
-      <sequential>
-        <waitfor maxwait="10" maxwaitunit="minute" checkevery="250">
-          <http url="http://localhost:8080/alfresco"/>
-        </waitfor>        
-        <antcall target="_build"/>
-        <stop-jboss-macro />
-      </sequential>
-    </parallel>
-  </target>
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place"/>
 
-  <target name="teardown" description="undo whatever setup did">
-  </target>
-
-	<target name="testuploader" description="test cms uploader">
-	</target>
+  <target name="teardown" description="undo whatever setup did"/>
 </project>

@@ -1,9 +1,0 @@
-<asset assetTypeId='DriverAsset' xsi:type="java:com.ail.insurance.policy.Asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <attribute id="name" value="" format="string,15"/>
-    <attribute id="dob" value="" format="date,dd/MM/yyyy"/>
-    <attribute id="sex" value="?" format="choice,-1#?|1#Male|2#Female"/>
-    <attribute id="occupation" value="?" format="choice,-1#?|1#Accountant|2#Commercial Travelers|3#Construction Site Worker|4#Doctor|5#Driving Tuition|6#Hotel Worker|7#Members of Armed Forces|8#Motor Sportsman|9#Nurse|10#Office Worker|11#Policeman|12#Racing and Gambling|13#Restaurant Staff|14#Student|15#Traveling Showman|16#Unemployed|17#Other"/>
-    <attribute id="licenseType" value="?"  format="choice,-1#?|1#Full|2#Provisional"/>
-    <attribute id="yearsLicenseHeld" value="0" format="number,##"/>
-    <attribute id="mainDriver" value="false" format="yesorno"/>
-</asset>

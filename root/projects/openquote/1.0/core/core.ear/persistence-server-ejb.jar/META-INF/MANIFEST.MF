@@ -12,12 +12,9 @@ Class-Path: lib/core.jar
   @commons-logging.jar@
   @commons-beanutils.jar@
   @commons-collections.jar@
-  @saxon.jar@
-  @saxon-xpath.jar@
   @commons-lang.jar@
   @c3p0.jar@
   @cglib.jar@
   @asm.jar@
   @commons-dbcp.jar@
   @commons-pool.jar@
-

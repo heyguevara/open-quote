@@ -28,7 +28,7 @@
         <!-- Echo all executed SQL to stdout --> 
         <property name="show_sql">false</property> 
         
-        <property name="hibernate.cglib.use_reflection_optimizer">false</property>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         
         <!-- Mappings for all classes come from one place -->
         <mapping resource="com/ail/core/persistence/hibernate/HibernateMapping.xml"/> 

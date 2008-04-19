@@ -265,11 +265,11 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 
     /**
      * Return the source of the configuration being used by this instance of core. As configurations optionally
-     * have "parent" configuration that they iinherit from, this method returns a collection of sources with
+     * have "parent" configuration that they inherit from, this method returns a collection of sources with
      * one element for each configuration in the hierarchy.
      * @param owner The configuration's owner
      * @param user The user asking for the source
-     * @param core The core being used - and who's source will be returend
+     * @param core The core being used - and who's source will be returned
      * @return The sources from which the configuration was loaded.
      */
     public Collection<String> getConfigurationSource() {

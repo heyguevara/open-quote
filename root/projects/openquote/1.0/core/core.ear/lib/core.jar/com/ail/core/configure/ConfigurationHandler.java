@@ -30,7 +30,7 @@ import java.util.*;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationHandler.java,v $
  */
 public class ConfigurationHandler {
-    /** The actual handler this class will deligate to. */
+    /** The actual handler this class will delegate to. */
     private static ConfigurationHandler instance = null;
 
 	/** This loader will be used to load/save configurations. */
@@ -69,11 +69,11 @@ public class ConfigurationHandler {
     }
 
 	/**
-     * This maintainence method resets the ConfigurationHandlers internal cache.
-     * There really isn't really much benifit in clearing the cache, unless the
+     * This method resets the ConfigurationHandlers internal cache.
+     * There really isn't really much benefit in clearing the cache, unless the
      * system has undergone many many configuration changes to the point where
      * the cache is holding too much memory hostage.<p>
-     * Aside from a performace hit, as configration records are loaded 'on demand'
+     * Aside from a performance hit, as configuration records are loaded 'on demand'
      * over time, resetting the cache will have no harmful side effects.
 	 */
 	public static void reset() {
@@ -85,13 +85,13 @@ public class ConfigurationHandler {
     }
 
     /**
-     * This maintanence method removes a specific namespace from the ConfigurationHandlers's
+     * This method removes a specific namespace from the ConfigurationHandlers's
      * internal cache. This may be useful especially when dealing with undefined namespaces: If
      * the configuration handler is asked to load a namespace but cannot find it, it caches the
      * fact that the namespace is unknown - this prevents it from hitting the database every time
      * the namespace is requested only to find it sill isn't there. However, there are times when
      * when the caller needs to force a reload - for example when a namespace is first create.<p>
-     * Removing a namespace from the cache only has a very small performace hit.
+     * Removing a namespace from the cache only has a very small performance hit.
      * @param namespace The namespace to remove from the cache.
      */
     public static void reset(String namespace) {
@@ -109,7 +109,7 @@ public class ConfigurationHandler {
     /**
      * Save (update/create) the configuration associated with the current namespace.
      * @param namespace The configuration namespace to save this config under.
-     * @param config The connfiguration to save.
+     * @param config The configuration to save.
      * @param core The instance of core making the request.
      */
     public void saveConfiguration(String namespace, Configuration config, Core core) {
@@ -137,7 +137,7 @@ public class ConfigurationHandler {
     /**
      * Save (update/create) the configuration associated with the current namespace.
      * @param owner The configuration owner.
-     * @param config The connfiguration to save.
+     * @param config The configuration to save.
      * @param core The instance of core making the request.
      */
 	public void saveConfiguration(ConfigurationOwner owner, Configuration config, Core core) {
@@ -206,7 +206,7 @@ public class ConfigurationHandler {
     
     /**
      * Find a specific configuration. Configurations are held by namespace and
-     * version effective date. This method manages a cache or previously loaded
+     * version effective date. This method manages a cache of previously loaded
      * configurations, which it uses in preference to making a DB round trip.
      * @param owner The Configuration owner (used to get the namespace).
      * @param core The instance of Core making the request.
@@ -288,9 +288,9 @@ public class ConfigurationHandler {
      * Fetch the named parameter from the current configuration.
      * The "current configuration" is defined by the namespace (from owner), and
      * the version effective date taken from core.
-     * The parameter name may be dot seperated indicating that the parameter is
+     * The parameter name may be dot separated indicating that the parameter is
      * nested within one or more groups.<p>
-     * The core's own configuration is used as a backstop. If the group being
+     * The core's own configuration is used as a back-stop. If the group being
      * searched for is not in the namespace defined by the configuration owner,
      * then the core's configuration is checked.
      * @param paramName The name of the parameter to retrieve.
@@ -322,8 +322,8 @@ public class ConfigurationHandler {
     }
 
     /**
-     * Get the value of a parameter by name. The name may be dot seperated to
-     * drill down through nested goups. The following two bits of code are exactly
+     * Get the value of a parameter by name. The name may be dot separated to
+     * drill down through nested groups. The following two bits of code are exactly
      * equivalent with the exception that the second will not fail with a NullPointerException is
      * "parameterName" is undefined:<br>
      * <code>
@@ -360,9 +360,9 @@ public class ConfigurationHandler {
      * Fetch the named group the from current configuration.
      * The "current configuration" is defined by the namespace (taken from
      * <code>owner</code>), and the versionEffectiveDate (taken from <code>
-     * core</code>). The group's name may be dot seperated indicating
+     * core</code>). The group's name may be dot separated indicating
      * that the group is nested within other groups.<p>
-     * The core's own configuration is used as a backstop. If the group being
+     * The core's own configuration is used as a back-stop. If the group being
      * searched for is not in the namespace defined by the configuration owner,
      * then the core's configuration is checked.
      * @param owner The configuration owner.
@@ -425,11 +425,11 @@ public class ConfigurationHandler {
 
 	/**
      * Return the source of the configuration being used by this instance of core. As configurations optionally
-     * have "parent" configuration that they iinherit from, this method returns a collection of sources with
+     * have a "parent" configuration that they inherit from, this method returns a collection of sources with
      * one element for each configuration in the hierarchy.
      * @param owner The configuration's owner
      * @param user The user asking for the source
-     * @param core The core being used - and who's source will be returend
+     * @param core The core being used - and who's source will be returned
      * @return The sources from which the configuration was loaded.
 	 */
     public Collection<String> getConfigurationSources(ConfigurationOwner owner, CoreUser user, Core core) {
@@ -458,7 +458,7 @@ public class ConfigurationHandler {
      * method returns a collection of namespaces with one element for each configuration in the hierarchy.
      * @param owner The configuration's owner
      * @param user The user asking for the source
-     * @param core The core being used - and who's source will be returend
+     * @param core The core being used - and who's source will be returned
      * @return The sources from which the configuration was loaded.
      */
     public Collection<String> getConfigurationNamespaceParent(ConfigurationOwner owner, CoreUser user, Core core) {

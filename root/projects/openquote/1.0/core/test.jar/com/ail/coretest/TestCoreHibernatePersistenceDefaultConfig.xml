@@ -12,9 +12,9 @@
   <version>$Revision: 1.6 $</version>
 
   <types>
-    <!--====================================-->
-    <!--   Define the component's services  -->
-    <!--====================================-->
+    <!--============================================-->
+    <!--   Define the (local) component's services  -->
+    <!--============================================-->
     <service name="CreateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
       <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
     </service>
@@ -33,7 +33,14 @@
     <service name="CloseSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
       <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
     </service>
-    
+
+    <!--============================================-->
+    <!--   Define the (remote) component's services  -->
+    <!--============================================-->
+    <service name='PersistenceService' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
+      <parameter name='JndiName'>PersistenceServer</parameter>
+    </service>
+        
     <!--=======================================================================-->
     <!-- Bind the default core services (above) to Commands used by Core.class -->
     <!--=======================================================================-->
@@ -55,5 +62,28 @@
     <command name="TestCloseSessionCommand" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommand">
       <parameter name="Service">CloseSessionService</parameter>
     </command>
+
+    <!--===================================================================================================-->
+    <!-- Bind remote persistence services to the PersistenceServce (in com/ail/core/CoreDefaultConfig.xml) -->
+    <!--===================================================================================================-->
+    <command name="TestCreateCommandRemote" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommand">
+      <parameter name="Service">PersistenceService</parameter>
+    </command>
+    <command name="TestUpdateCommandRemote" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommand">
+      <parameter name="Service">PersistenceService</parameter>
+    </command>
+    <command name="TestLoadCommandRemote" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommand">
+      <parameter name="Service">PersistenceService</parameter>
+    </command>
+    <command name="TestQueryCommandRemote" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommand">
+      <parameter name="Service">PersistenceService</parameter>
+    </command>
+    <command name="TestOpenSessionCommandRemote" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommand">
+      <parameter name="Service">PersistenceService</parameter>
+    </command>
+    <command name="TestCloseSessionCommandRemote" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommand">
+      <parameter name="Service">PersistenceService</parameter>
+    </command>
+
   </types>
 </configuration>

@@ -54,7 +54,7 @@ import java.util.Vector;
  * +---------------+---------------+------+-----+---------+-------+
  * | namespace     | varchar(255)  |      |     |         |       |
  * | manager       | varchar(255)  |      |     |         |       |
- * | configuration | mediumblob    |      |     |         |       |
+ * | configuration | longblob      |      |     |         |       |
  * | validfrom     | bigint(20)    |      |     | 0       |       |
  * | validto       | bigint(20)    | YES  |     | NULL    |       |
  * | who           | varchar(32)   |      |     |         |       |
@@ -87,7 +87,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
             throw new BootstrapConfigurationError("JDBC Driver Class ("+getLoaderParams().getProperty("driver")+") not found.");
         }
         catch(SQLException e) {
-            throw new BootstrapConfigurationError("Database access error:"+e);
+            throw new BootstrapConfigurationError("Database access error (driver:"+getLoaderParams().getProperty("driver")+", url:"+getLoaderParams().getProperty("url")+") "+e);
         }
     }
 

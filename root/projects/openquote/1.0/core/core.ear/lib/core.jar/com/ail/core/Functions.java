@@ -216,7 +216,7 @@ public class Functions {
     
     /**
      * Utility method which expands any variables it finds embedded in the passed in 
-     * the content against the model supplied, and writes the output to a specified writer.
+     * content against the model supplied, and writes the output to a specified writer.
      * @param writer Where the expanded output is written no.
      * @param content The String to read content from 
      * @param model The model to resolve variable references against

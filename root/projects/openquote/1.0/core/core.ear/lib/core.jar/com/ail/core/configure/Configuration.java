@@ -57,7 +57,7 @@ public class Configuration extends Group {
     private Date loadedAt=null;
     
     /** The URL that this configuration was loaded from at reset time. This
-     * will be a class resource URL for all the configrations reset from 
+     * will be a class resource URL for all the configurations reset from 
      * <code>*DefaultConfig.xml</code> files in the package hierarchy; or
      * for configs from CMS it'll be the URL of the CMS file. */
     private String source=null;
@@ -202,7 +202,7 @@ public class Configuration extends Group {
 
     /**
      * Get this configuration's timeout. The timeout specifies the number
-     * of milliseconde that can be allowed to elapse between when the
+     * of millisecond that can be allowed to elapse between when the
      * configuration was read from persistence, and when it becomes stale and
      * needs to be read again. The configuration system uses this setting to
      * ensure that the configuration is kept up to date, but at the same time
@@ -268,7 +268,7 @@ public class Configuration extends Group {
      * configuration to match the user's versionEffectiveDate. The validFrom
      * and validTo properties define the date range between which the configuration
      * is valid.
-     * @return The valid from date for this configuation.
+     * @return The valid from date for this configuration.
      */
     public VersionEffectiveDate getValidFrom() {
         return validFrom;
@@ -417,7 +417,7 @@ public class Configuration extends Group {
      * <p>Get the source of the configuration. The configuration loader may use
      * this property to store details of how the configuration was loaded, and
      * from where.</p>
-     * <p>This will be a class resource URL for all the configrations reset from 
+     * <p>This will be a class resource URL for all the configurations reset from 
      * <code>*DefaultConfig.xml</code> files in the package hierarchy; or
      * for configs from CMS it'll be the URL of the CMS file.</p>
      * @return A string describing the source from which configuration was loaded.
@@ -430,7 +430,7 @@ public class Configuration extends Group {
      * <p>Get the source of the configuration. The configuration loader may use
      * this property to store details of how the configuration was loaded, and
      * from where.</p>
-     * <p>This will be a class resource URL for all the configrations reset from 
+     * <p>This will be a class resource URL for all the configurations reset from 
      * <code>*DefaultConfig.xml</code> files in the package hierarchy; or
      * for configs from CMS it'll be the URL of the CMS file.</p>
      * @param source A string describing the source from which configuration was loaded.

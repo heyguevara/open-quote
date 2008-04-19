@@ -28,7 +28,7 @@ import com.ail.core.persistence.OpenSessionArg;
 import com.ail.core.persistence.UpdateException;
 
 /**
- * Implemention of the open session service for Hibernate
+ * Implementation of the open session service for Hibernate
  * 
  * @version $Revision: 1.1 $
  * @state $State: Exp $

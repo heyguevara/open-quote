@@ -15,7 +15,7 @@
   </target>
   
   <target name="_build">
-    <subant-macro target="_build" excludes="content/Build.xml"/>
+    <subant-macro target="_build"/>
     <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
   </target>
   
@@ -28,9 +28,8 @@
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <install-jboss-macro version="${jboss.version}"/>
     <subant-macro target="setup" includes="domain/Build.xml"/>
-    <subant-macro target="setup" excludes="domain/Build.xml, content/Build.xml"/>
+    <subant-macro target="setup" excludes="domain/Build.xml"/>
     <antcall target="_build"/>
-    <!--subant-macro target="setup" includes="content/Build.xml"/-->
   </target>
 
   <target name="teardown" description="undo whatever setup did">

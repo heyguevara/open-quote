@@ -141,7 +141,7 @@ public abstract class Service extends Type implements CoreUser, ConfigurationOwn
             URL inputUrl=this.getClass().getResource(name+"DefaultConfig.xml");
 
             if (inputUrl==null) {
-                inputUrl=new URL("http://localhost:8080/alfresco/cms/Product"+name.replace('.','/')+".xml");
+                inputUrl=new URL("product://localhost:8080"+name.replace('.','/')+".xml");
             }
             
             InputStream inStream=inputUrl.openStream();
@@ -156,7 +156,7 @@ public abstract class Service extends Type implements CoreUser, ConfigurationOwn
 	        Configuration factoryConfig=getCore().fromXML(Configuration.class, factoryConfigXML);
 
 	        // write details of where we loaded the config from back into the config so that
-            // anyone who uses this configuraiton in future can see where it came from.
+            // anyone who uses this configuration in future can see where it came from.
             factoryConfig.setSource(inputUrl.toExternalForm());
             
             // reset the configuration

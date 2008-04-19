@@ -17,9 +17,10 @@
 /* Copyright Applied Industrial Logic Limited 2002. All rights reserved. */
 package com.ail.core.ui;
 
-import java.util.Collection;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -29,6 +30,7 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.ConfigurationSummary;
 import com.ail.core.configure.server.GetNamespacesCommand;
+import com.ail.core.configure.server.GetNamespacesHistoryCommand;
 
 /**
  * Form (model) for the configure editor.
@@ -85,9 +87,27 @@ public class ConfigureForm {
     }
 
     public void refresh() throws Exception {
+        ConfigurationSummary latest=null;
+        Collection<ConfigurationSummary> list=new ArrayList<ConfigurationSummary>();
+        
+        // get a list of all the configuration namespaces
+        GetNamespacesHistoryCommand gnhc=(GetNamespacesHistoryCommand)core.newCommand("GetNamespacesHistory");
         GetNamespacesCommand gnc=(GetNamespacesCommand)core.newCommand("GetNamespaces");
         gnc.invoke();
-        setNamespaces(gnc.getNamespaces());
+        
+        // for each namespace, find the latest config and add it to the list
+        for(String ns: gnc.getNamespaces()) {
+            gnhc.setNamespaceArg(ns);
+            gnhc.invoke();
+            for(ConfigurationSummary gs: gnhc.getNamespacesRet()) {
+                if (latest==null || gs.getValidFrom().after(latest.getValidFrom())) {
+                    latest=gs;
+                }
+            }
+            list.add(latest);
+        }
+
+        setNamespaces(list);
     }
 
     public boolean getEditorDisabled() {
