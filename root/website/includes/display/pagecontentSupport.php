@@ -7,7 +7,7 @@
 			
 				<h3>Documentation</h3>
 				<p>
-				<a href="https://sourceforge.net/docman/?group_id=215808">Documentation</a> - User guides, installation instructions and developer documentation.
+				<a href="http://oquote.wiki.sourceforge.net/Documentation">Documentation</a> - User guides, installation instructions and developer documentation.
 				</p>
 				<p>
 				<a href="http://oquote.wiki.sourceforge.net/">Wiki</a> - General project information.
