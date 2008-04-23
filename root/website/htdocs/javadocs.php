@@ -1,5 +1,6 @@
 <?php
 $currentPage = "Javadocs";
 $includesPath = "../includes/";
-include($includesPath."display/pageNoSideMenu.php"); 
+$sideMenuExclude = true;
+include($includesPath."display/page.php"); 
 ?>

@@ -17,7 +17,9 @@ include($includesPath."display/pageheader.php");
 	<div id="content-wrap"><div id="content">		
 		
 <?php
-include($includesPath."display/pageside.php"); 
+if($sideMenuExclude==false){
+  include($includesPath."display/pageside.php"); 
+}
 ?>
 
 <?php
