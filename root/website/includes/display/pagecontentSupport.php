@@ -10,6 +10,9 @@
 				<a href="http://oquote.wiki.sourceforge.net/Documentation">Documentation</a> - User guides, installation instructions and developer documentation.
 				</p>
 				<p>
+				<a href="javadocs.php">Javadocs</a> - Developer Java documentation.
+				</p>
+				<p>
 				<a href="http://oquote.wiki.sourceforge.net/">Wiki</a> - General project information.
 				</p>
 				<p>
