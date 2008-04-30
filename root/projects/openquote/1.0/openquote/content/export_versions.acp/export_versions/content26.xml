@@ -1,0 +1,12 @@
+<asset assetTypeId='CoverageAsset' xsi:type="java:com.ail.insurance.policy.Asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <attribute id="death" value="" format="choice,options=-1#?|1#Not required|2#10000"/>
+    <attribute id="lossOfUse" value="?" format="choice,options=-1#?|1#75%|2#100%"/>
+    <attribute id="publicLiability" value="?" format="choice,options=-1#?|1#Not required|2#1.25m"/>
+    <attribute id="theft" value="?" format="choice,options=-1#?|1#Not required|2#10000"/>
+    <attribute id="personalInjury" value="?" format="choice,options=-1#?|1#Not required|2#12500"/>
+    <attribute id="dental" value="?" format="choice,options=-1#?|1#Not required|2#500"/>
+    <attribute id="stables" value="?" format="choice,options=-1#?|1#Not required|2#1250"/>
+    <attribute id="vetFees" value="?" format="choice,options=-1#?|1#Not required|2#1500|3#2500"/>
+    <attribute id="vetFeesExt" value="?" format="choice,options=-1#?|1#Not required|2#1500|3#2500"/>
+    <attribute id="saddlery" value="?" format="choice,options=-1#?|1#Not required|2#1000|3#1500"/>
+</asset>

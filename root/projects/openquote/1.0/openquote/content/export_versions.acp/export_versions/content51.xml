@@ -1,0 +1,4 @@
+<excess id="excess2" enabled="true" xsi:type="java:com.ail.insurance.policy.Excess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <title>Compulsory Fire and Theft Excess</title>
+    <amount amount="50.00" currency="GBP"/>
+</excess>

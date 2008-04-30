@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for the openquote openquote.ear project
+ $Revision: 1.8 $
+ $State: Exp $
+ $Date: 2007/02/18 18:23:51 $
+ $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/Build.xml,v $
+-->
+
+<project default="build" name="openquote:openquote.ear">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <subant-macro target="clean" />
+    <delete-ear-descriptors-macro overlay="true"/>
+  </target>
+
+  <target name="_build">
+    <ant dir="./lib/openquote.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./configure.war" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation.war" antfile="Build.xml" target="_build" />
+    <ant dir="./product-manager.war" antfile="Build.xml" target="_build" />
+    <ant dir="./content-browser.war" antfile="Build.xml" target="_build" />
+    <compile-ear-descriptors-macro overlay="true"/>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+    <kick-jboss-macro />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <echo file="${copyfilter.file}" append="yes">
+        major.version=${major.version}
+        minor.version=${minor.version}
+        dbname=${dbname}
+    </echo>
+
+    <delete-ear-descriptors-macro overlay="true"/>
+
+    <subant-macro target="setup" />
+	</target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${ear.dir}/lib" failonerror="no" />
+  </target>
+</project>
+
