@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
- Build file for the alfresco war project
- $Revision: 1.2 $
+ Build file for the configure war project
+ $Revision: 1.8 $
  $State: Exp $
- $Date: 2006/07/31 20:37:51 $
- $Source: /home/bob/CVSRepository/projects/core/alfresco.war/Build.xml,v $
+ $Date: 2006/12/07 21:18:19 $
+ $Source: /home/bob/CVSRepository/projects/core/core.ear/configure.war/Build.xml,v $
 -->
 
-<project default="build" name="core:alfresco.war">
-  <import file="../BuildSettings.xml" />
+<project default="build" name="core:core.ear/content-browser.war">
+  <import file="../../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <delete-exploded-war-macro overlay="true" />
+    <delete-exploded-war-macro />
   </target>
 
-  <target name="_build">    
-    <compile-exploded-war-macro overlay="true">
+  <target name="_build">
+    <compile-exploded-war-macro>
       <javac-classpath>
-        <fileset dir="${output.dir}/WEB-INF/lib" includes="*.jar" />
         <dirset dir="${ear.dir}" includes="*.jar" />
         <fileset dir="${ear.dir}/../jboss-portal.sar/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${jboss.dir}/client" includes="jbossall-client.jar" />
         <fileset dir="${jboss.dir}/server/default/lib" includes="servlet-api.jar" />
       </javac-classpath>
@@ -29,12 +29,12 @@
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
     <antcall target="_build" />
+    <kick-jboss-macro />
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <delete-exploded-war-macro overlay="true" />
   </target>
 
-  <target name="teardown" description="undo whatever setup did">
+  <target name="teardown" description="undo whatever setup did" depends="clean">
   </target>
 </project>

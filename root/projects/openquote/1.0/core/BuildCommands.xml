@@ -18,7 +18,7 @@
     <stop-jboss-macro />
   </target>
 
-  <target name="jboss: force scan" description="force jboss to scan 'deploy/' for changes">
+  <target name="jboss: force deployment scan" description="force jboss to scan 'deploy/' for changes">
     <kick-jboss-macro />
   </target>
 

@@ -47,7 +47,6 @@ import com.ail.core.CoreProxy;
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;com.ail.core.configure.ConfigurationReset
  * <br/><br/>
  * @version 1.0
- * @author randerson
  */
 public class ConfigurationReset {
 

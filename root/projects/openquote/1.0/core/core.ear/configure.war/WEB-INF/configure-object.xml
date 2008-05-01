@@ -10,30 +10,6 @@
             <page-name>Configure Editor</page-name>
             <properties/>
             <window>
-                <window-name>NavigationPortletWindow</window-name>
-                <instance-ref>NavigationPortletInstance</instance-ref>
-                <region>navigation</region>
-                <height>0</height>
-                <!-- keep portal and page properties for this window -->
-                <properties>
-                    <!-- use the window renderer from the emptyRenderer renderSet -->
-                    <property>
-                        <name>theme.windowRendererId</name>
-                        <value>emptyRenderer</value>
-                    </property>
-                    <!-- use the decoration renderer from the emptyRenderer renderSet -->
-                    <property>
-                        <name>theme.decorationRendererId</name>
-                        <value>emptyRenderer</value>
-                    </property>
-                    <!-- use the portlet renderer from the emptyRenderer renderSet -->
-                    <property>
-                        <name>theme.portletRendererId</name>
-                        <value>emptyRenderer</value>
-                    </property>
-                </properties>
-            </window>
-            <window>
                 <window-name>ConfigureWindow</window-name>
                 <instance-ref>ConfigurePortletInstance</instance-ref>
                 <!-- <default>true</default> -->
