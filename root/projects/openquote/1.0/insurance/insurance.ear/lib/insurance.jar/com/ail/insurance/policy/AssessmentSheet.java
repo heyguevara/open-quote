@@ -699,4 +699,25 @@ public class AssessmentSheet extends Type {
         that.setLockingActor(null);
         return that;
     }
+
+    /**
+     * When lines are added to the assessment sheet the caller may or may not give them 
+     * a specific priority (which is used to order the lines during processing). If the
+     * caller does not specify a priority, the current value of <code>autoPriority</code>
+     * is used for the added line. The autoPriority property is incremented each time it
+     * is used, thus meaning that lines have a priority defined by the order in which
+     * they are added to the sheet.
+     * @return the autoPriority
+     */
+    public int getAutoPriority() {
+        return autoPriority;
+    }
+
+    /**
+     * @see #getAutoPriority()
+     * @param autoPriority the autoPriority to set
+     */
+    public void setAutoPriority(int autoPriority) {
+        this.autoPriority = autoPriority;
+    }
 }

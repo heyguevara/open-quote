@@ -20,7 +20,7 @@ package com.ail.insurance.policy;
 import com.ail.core.Type;
 
 /**
- * An insured thing, of a thing about which information is collected and upon which risk (and other factors) are assessed.
+ * An insured thing, or a thing about which information is collected and upon which risk (and other factors) are assessed.
  * Generally an Asset represents a thing which is insured, for example a building in a household policy, or a driver
  * in a motor policy.
  * @version $Revision: 1.1 $

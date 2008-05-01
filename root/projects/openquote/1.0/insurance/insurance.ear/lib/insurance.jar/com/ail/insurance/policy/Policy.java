@@ -642,9 +642,13 @@ public class Policy extends Type {
     /**
      * Get the AssessmentSheet associated with this policy.
      *
-     * @return Assessment sheet
+     * @return Assessment sheet. An empty assessment sheet may be returned, but null is never returned.
      */
     public AssessmentSheet getAssessmentSheet() {
+        if (assessmentSheet==null) {
+            assessmentSheet=new AssessmentSheet();
+        }
+        
         return assessmentSheet;
     }
 
