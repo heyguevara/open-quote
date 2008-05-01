@@ -90,7 +90,7 @@
       <repo-get-macro dest="${get.libs.macro.todir}" repo="@{repo}" group="@{group}" artifact="@{artifact}" version="@{version}" type="@{type}" />
 
       <!-- write a line to the filter -->
-      <echo file="${copyfilter.file}" append="yes" message="@{artifact}.@{type}=${get.libs.macro.todir}/@{artifact}-@{version}.@{type}${line.separator}" />
+      <echo file="${copyfilter.file}" append="yes" message="@{artifact}.@{type}=lib/@{artifact}-@{version}.@{type}${line.separator}" />
     </sequential>
   </macrodef>
 

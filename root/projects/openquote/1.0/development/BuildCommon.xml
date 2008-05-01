@@ -124,8 +124,8 @@
         <paths/>
         <dirset dir="${ear.dir}" includes="*.jar"/>
         <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes"/>
-
         <fileset dir="${ear.lib}" includes="*.jar"/>
+        <dirset dir="${ear.lib}" includes="*.jar"/>
         <fileset dir="${test.dir}" includes="**/*.jar"/>
         <fileset dir="${jboss.dir}">
           <include name="lib/endorsed/xercesImpl.jar"/>
@@ -134,9 +134,6 @@
         </fileset>
       </path>
 
-      <property name="plop" refid="reset.classpath"/>
-      <echo message="classpath:${plop}"/>  
-        
       <java classname="com.ail.core.configure.ConfigurationReset" fork="yes" failonerror="yes" classpathref="reset.classpath">
 	      <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader"/>
 	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver"/>
@@ -147,7 +144,7 @@
 	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}"/>
         <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/> 
 	      <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl"/>
-	      
+	      <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler"/>
 				<configs/>
 	    </java>
     </sequential>

@@ -152,31 +152,10 @@
   </macrodef>
 
 	<target name="_reset-portal-if-jboss-running=false" unless="jboss-running">
-    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
-  		  drop table ${dbname}.jbp_context;
-  		  drop table ${dbname}.jbp_instance;
-  		  drop table ${dbname}.jbp_instance_per_user;
-  		  drop table ${dbname}.jbp_instance_security;
-  		  drop table ${dbname}.jbp_instance_security_actions;
-  		  drop table ${dbname}.jbp_object_node;
-  		  drop table ${dbname}.jbp_object_node_sec;
-  		  drop table ${dbname}.jbp_object_node_sec_actions;
-  		  drop table ${dbname}.jbp_page;
-  		  drop table ${dbname}.jbp_portal;
-  		  drop table ${dbname}.jbp_portal_mode;
-  		  drop table ${dbname}.jbp_portal_object;
-  		  drop table ${dbname}.jbp_portal_object_props;
-  		  drop table ${dbname}.jbp_portal_window_state;
-  		  drop table ${dbname}.jbp_portlet_state;
-  		  drop table ${dbname}.jbp_portlet_state_entry;
-  		  drop table ${dbname}.jbp_portlet_state_entry_value;
-  		  drop table ${dbname}.jbp_window;
-  		  drop table ${dbname}.jbp_role_membership;
-  		  drop table ${dbname}.jbp_roles;
-  		  drop table ${dbname}.jbp_user_prop;
-  		  drop table ${dbname}.jbp_users;
-  	  </sql>
-  </target>
+		<!-- Portal keeps all its settings in a hypersonc database. The server will recreate -->
+	  <!-- it on startup, so "resetting" is simply a case of deleting the database.        -->
+	  <delete dir="${jboss.dir}/server/default/data/portal" failonerror="no"/>
+	</target>
   
 	<target name="_reset-portal-if-jboss-running=true" if="jboss-running">
 		<echo message="The portal cannot be reset while jboss is running."/>
@@ -200,7 +179,7 @@
 
 		  <java fork="yes" classname="com.ail.core.configure.ConfigurationAntTasks">
 	      <classpath>
-					<dirset dir="${ear.dir}" includes="core.jar"/>
+					<dirset dir="${ear.lib}" includes="core.jar"/>
 					<fileset dir="${ear.lib}" includes="*.jar"/>
 					<dirset dir="${ear.dir}" includes="*.jar"/>
 					<dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes"/>
@@ -216,41 +195,69 @@
 		</sequential>
   </macrodef>
   
-  <!-- Macro to udpate jboss' CMS with content from the source tree -->
-  <macrodef name="build-cms-macro">
-    <attribute name="toSpace" default="/app:company_home"/>
-    <attribute name="username"/>
-    <attribute name="password"/>
-		<sequential>
-		  <property name="cms-stamp-file" value="${test.dir}/cms-timestamp-file"/>
-	    <taskdef name="cmsuploader" classname="com.ail.core.configure.CmsUploaderAntTask">
-	      <classpath>
-          <dirset dir="${ear.dir}" includes="core.jar"/>
-          <fileset dir="${ear.lib}" includes="*.jar"/>
-          <dirset dir="${ear.dir}" includes="*.jar"/>
-          <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes"/>
-          <fileset dir="${jboss.dir}">
-            <include name="lib/endorsed/xercesImpl.jar"/>
-            <include name="server/default/deploy/jboss-portal.sar/lib/*.jar"/>
-          </fileset>
-	      </classpath>
-	    </taskdef>
-
-			<cmsuploader host="localhost" toSpace="/app:company_home" username="admin" password="admin">
-			  <fileset dir="." includes="**/*" excludes="Build.xml,alfresco.log,**/ContentDetails.xml">
-			    <depend targetdir="${test.dir}">
-			    		<mapper type="merge" to="cms-stamp-file"/>
-			    </depend>
-		   	</fileset>
-			</cmsuploader>
-
-			<touch file="${test.dir}/cms-stamp-file"/>
+  <!-- Macro to "compile" content in alfresco's bootstrap content folder.                          -->
+  <!-- When Alfresco is first started (i.e. starts and finds it's repository empty), it creates a  -->
+  <!-- "bootstarp" repostory from the exported content archives it finds under WEB-INF. This macro -->
+  <!-- creates archives in that location.                                                          -->
+  <macrodef name="build-bootstrap-content-macro">
+    <attribute name="basedir"/>
+    <sequential>
+	    <property name="restore.dir" value="${deploy.dir}/deploy/alfresco.war/WEB-INF/classes/alfresco/extension/restore" />
+	    <mkdir dir="${restore.dir}" />
+	    <copy file="export_systeminfo.xml" todir="${restore.dir}" />
+      <copy file="restore-context.xml"  todir="${restore.dir}/.." />
+	    <zip basedir="@{basedir}" destfile="${restore.dir}/@{basedir}" />
 		</sequential>
   </macrodef>
-    
-  <macrodef name="clean-cms-macro">
-      <sequential>
-			<delete file="${test.dir}/cms-stamp-file"/>
-      </sequential>
+  
+	<macrodef name="_content-download-export-file-macro">
+  	<attribute name="filename"/>
+	  <sequential>
+	    <mkdir dir="${project.dir}/deploy/tmp/"/>
+			<get src="http://localhost:8080/alfresco/download/direct?path=/Company20Home/Guest%20Home/@{filename}.acp" dest="${project.dir}/deploy/tmp//@{filename}.acp"/>
+      <mkdir dir="${export.dir}/@{filename}.acp" />
+	    <unjar src="${project.dir}/deploy/tmp/@{filename}.acp" dest="${export.dir}/@{filename}.acp"/>
+			<!--xslt style="../development/OrderXMLElements.xsl" in="${export.dir}/@{filename}.acp/@{filename}.xml" out="${export.dir}/@{filename}.acp/@{filename}.xml.out">
+			  <classpath path="../development/build/lib/xalan-2.6.0.jar"/>
+			</xslt>
+			<move file="${export.dir}/@{filename}.acp/@{filename}.xml.out" tofile="${export.dir}/@{filename}.acp/@{filename}.xml" overwrite="yes"/-->
+	  </sequential>
+  </macrodef>
+  
+	<!-- The aim here is to download an alresco "whole repository" export, and put it into a form which will -->
+  <!-- make it easy to compare with the files under the project's content/ folder.                         -->
+  <!-- The process goes like this: Log into alfresco as admin and do a reository export, making sure to    -->
+  <!-- set the export's name to "export" and it's destination to "/Company Home/Guest Home". Once the      -->
+  <!-- export is finished (and it can take a few moments), you'll see the export files sitting in the      -->
+  <!-- "Guest Home" space.                                                                                 -->
+  <!-- Now you can use this macro do download and unpack the export (the .acp files are jars). Once you    -->
+  <!-- have, you can use your favorite directory diff tool (eclipse's "compare" is a good choice) to       -->
+  <!-- compare the new export with the old content/, and merge as necessary.                               -->
+  <macrodef name="content-download-export-macro">
+    <sequential>
+      <property name="export.dir" value="${project.dir}/deploy/export-content"/>
+			<delete dir="${export.dir}" failonerror="no"/>
+      <mkdir dir="${export.dir}"/>
+
+			<!-- download the export - i.e. download the syseteminfo file, and download and unpack the .acp files -->
+      <get src="http://localhost:8080/alfresco/download/direct?path=/Company20Home/Guest%20Home/export_systeminfo.xml" dest="${export.dir}/export_systeminfo.xml"/>
+      <_content-download-export-file-macro filename="export_models"/>
+			<_content-download-export-file-macro filename="export_spaces"/>
+			<_content-download-export-file-macro filename="export_users"/>
+			<_content-download-export-file-macro filename="export_versions"/>
+			<_content-download-export-file-macro filename="export_system"/>
+      
+			<!-- Copy forward resources from the existing content folder. We're not interested in the spaces_archive   -->
+      <!-- from alfresco, it holds deleted or old versions of artifacts - in the source tree SVN performes that  -->
+      <!-- function, so we can ignore the archite. Also copy forward restore-context.xml. Strictly speaking,     -->
+      <!-- this is not "content" at all, and does not belong in the export, but we want "deploy/export-content/" -->
+      <!-- to be easy to compare with "content/" so it needs to be included.                                     -->      
+      <copy todir="${export.dir}" >
+        <fileset dir="${project.dir}/content">
+          <include name="restore-context.xml"/>
+          <include name="export_spaces_archive.acp/**"/>
+        </fileset>
+      </copy>
+    </sequential>
   </macrodef>
 </project> 
