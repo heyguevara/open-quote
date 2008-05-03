@@ -35,7 +35,7 @@ import com.ail.core.configure.Type;
  * (derived from another type definition) as input using the 'extends' parameter.<p>
  * For example: in the configuration sample below "OtherVersion" defines an instance of
  * com.ail.core.Version and sets the source, state, date, etc properties on the instance.
- * The NewVersion type is basd on OtherVersion (see the "extends" parameter) and overrides
+ * The NewVersion type is based on OtherVersion (see the "extends" parameter) and overrides
  * the setting of the 'source' property. So an instance created by NewVersion will contain
  * all of the property settings defined in OtherVersion, but will have 'source' set to 
  * "orange and pineapple" rather than "Peach and mint".<p>
@@ -78,7 +78,6 @@ import com.ail.core.configure.Type;
  *   ]]&gt;&lt;/parameter&gt;
  * &lt;/type&gt;
  * </pre>
- * @author randerson
  */
 public class XSLTFactory extends AbstractFactory {
   /**

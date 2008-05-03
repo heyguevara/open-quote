@@ -32,7 +32,6 @@ import java.net.URLStreamHandler;
  * and a URL like: 'classpath://com.ail.core.configure/Configure.xsd' is translated
  * to <ul><code>getClass().getResource("/com/ail/core/configure/Configure.xsd")</code>.</ul>
  * 
- * @author randerson
  */
 public class Handler extends URLStreamHandler {
     
