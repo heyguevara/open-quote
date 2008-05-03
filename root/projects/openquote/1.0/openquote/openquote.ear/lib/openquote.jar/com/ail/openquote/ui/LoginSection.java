@@ -20,6 +20,8 @@ import static com.ail.openquote.ui.util.Functions.error;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,9 +36,13 @@ import javax.transaction.TransactionManager;
 import org.jboss.portal.common.transaction.TransactionException;
 import org.jboss.portal.common.transaction.TransactionManagerProvider;
 import org.jboss.portal.common.transaction.Transactions;
+import org.jboss.portal.identity.MembershipModule;
 import org.jboss.portal.identity.Role;
 import org.jboss.portal.identity.RoleModule;
+import org.jboss.portal.identity.User;
 import org.jboss.portal.identity.UserModule;
+import org.jboss.portal.identity.UserProfileModule;
+import org.jboss.portlet.JBossRenderRequest;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
@@ -81,7 +87,7 @@ public class LoginSection extends PageContainer {
     private String forwardToPageName=null;
     
     /** Name of portal for forward to if login succeeds */
-    private String forwardToPortalName="default";
+    private String forwardToPortalName;
     
     /** Javascript to reset the LoginSection to show the "Proposer Login".
      * @see SaveButtonAction */
@@ -156,6 +162,22 @@ public class LoginSection extends PageContainer {
 
     public void setForwardToPortalName(String forwardToPortalName) {
         this.forwardToPortalName = forwardToPortalName;
+    }
+    
+    /**
+     * Return the name of the portal to forward to following authentication. The rules are as follows:
+     * <ol>
+     * <li>If the pageflow specified a portal name (via {@link #setForwardToPageName()}), forward to it</li>
+     * <li>Forward to "quote"</li></ol>
+     * @param request
+     * @return
+     */
+    private String nameOfForwardToPortal(RenderRequest request) {
+        if (getForwardToPortalName()!=null) {
+            return getForwardToPortalName();
+        }
+        
+        return "quote";
     }
 
     @Override
@@ -259,25 +281,33 @@ public class LoginSection extends PageContainer {
             Quotation quote=(Quotation)model;
             String password=request.getParameter("password");
 
-//            UserModule userModule=(UserModule)request.getPortletSession().getPortletContext().getAttribute("UserModule");
+            // This assumes that the attributes ("UserModule" etc) have been injected into the session's context in 
+            // the jboss-portal.xml portal descriptor file.
+            UserModule userModule=(UserModule)request.getPortletSession().getPortletContext().getAttribute("UserModule");
+            UserProfileModule userProfileModule=(UserProfileModule)request.getPortletSession().getPortletContext().getAttribute("UserProfileModule");;
             RoleModule roleModule=(RoleModule)request.getPortletSession().getPortletContext().getAttribute("RoleModule");
+            MembershipModule membershipModule=(MembershipModule)request.getPortletSession().getPortletContext().getAttribute("MembershipModule");
 
             try {
                 tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
                 tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
 
-//                User user=userModule.createUser(quote.getUsername(), password, quote.getProposer().getEmailAddress());
-//                user.setEnabled(true);
-//                user.setFamilyName(quote.getProposer().getSurname());
-//                user.setGivenName(quote.getProposer().getFirstName());
+                User user=userModule.createUser(quote.getUsername(), password);
+                userProfileModule.setProperty(user, User.INFO_USER_ENABLED, true);
+                userProfileModule.setProperty(user, User.INFO_USER_NAME_FAMILY, quote.getProposer().getSurname());
+                userProfileModule.setProperty(user, User.INFO_USER_NAME_GIVEN, quote.getProposer().getFirstName());
+                userProfileModule.setProperty(user, User.INFO_USER_EMAIL_REAL, quote.getProposer().getEmailAddress());
+                userProfileModule.setProperty(user, User.INFO_USER_LOCALE, request.getLocale().toString());
+                userProfileModule.setProperty(user, User.INFO_USER_REGISTRATION_DATE, new Date());
 
                 Set<Role> roleSet = new HashSet<Role>();
                 Role role = roleModule.findRoleByName("Proposer");
                 roleSet.add(role);    
-//                roleModule.setRoles(user, roleSet);
+                membershipModule.assignRoles(user, roleSet);
 
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
-                response.sendRedirect("/portal/auth/portal/default/"+pageName+"/QuoteWindow?op=Save&action=1&username="+quote.getUsername()+"&password="+password);
+                String portalName=Functions.getOperationParameters(request).getProperty("portal");
+                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?op=Save&action=1&username="+quote.getUsername()+"&password="+password);
             }
             catch (Exception e) {
                 // TODO Send a support email
@@ -299,7 +329,8 @@ public class LoginSection extends PageContainer {
 
             try {
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
-                response.sendRedirect("/portal/auth/portal/default/"+pageName+"/QuoteWindow?op=Save&action=1&username="+username+"&password="+password);
+                String portalName=Functions.getOperationParameters(request).getProperty("portal");
+                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?op=Save&action=1&username="+username+"&password="+password);
             }
             catch (Exception e) {
                 // TODO Send a support email
@@ -317,9 +348,8 @@ public class LoginSection extends PageContainer {
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-
         Quotation quotation=(Quotation)model;
-        
+
         // Guess the username from the quotation or the proposer's email address.
         String usernameGuess=quotation.getUsername()!=null ? quotation.getUsername() : quotation.getProposer().getEmailAddress();
 
@@ -346,7 +376,7 @@ public class LoginSection extends PageContainer {
         w.printf(       "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a></td>");
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", loginButtonLabel, getForwardToPageName(), getForwardToPortalName());
+        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", loginButtonLabel, getForwardToPageName(), nameOfForwardToPortal(request));
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");
@@ -378,7 +408,7 @@ public class LoginSection extends PageContainer {
         w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.cpassword']", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s' value='Create & Save'/></td>", getForwardToPageName());
+        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='Create & Save'/></td>", getForwardToPageName(), nameOfForwardToPortal(request));
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");

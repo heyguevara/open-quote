@@ -1,6 +1,6 @@
 <portlet-app>
-   <portlet>
-       <portlet-name>QuotationPortlet</portlet-name>
+    <portlet>
+        <portlet-name>QuotationPortlet</portlet-name>
     </portlet>
     <service>
         <service-name>UserModule</service-name>
@@ -12,4 +12,14 @@
         <service-class>org.jboss.portal.identity.RoleModule</service-class>
         <service-ref>:service=Module,type=Role</service-ref>
     </service>
+    <service>
+        <service-name>UserProfileModule</service-name>
+        <service-class>org.jboss.portal.identity.UserProfileModule</service-class>
+        <service-ref>:service=Module,type=UserProfile</service-ref>
+    </service>
+   <service>
+      <service-name>MembershipModule</service-name>
+      <service-class>org.jboss.portal.identity.MembershipModule</service-class>
+      <service-ref>:service=Module,type=Membership</service-ref>
+   </service>
 </portlet-app>
