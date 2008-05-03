@@ -1,0 +1,67 @@
+﻿VERSION BUILD=6030318 RECORDER=FX
+TAB T=1
+URL GOTO=http://localhost:8080/portal/portal/quote/MotorPlus/QuoteWindow?action=e&windowstate=normal&mode=view
+TAG POS=1 TYPE=TD ATTR=TXT:Motor<SP>Plus<SP>-<SP>Online<SP>Motor<SP>Insurance
+TAG POS=1 TYPE=B ATTR=TXT:01898<SP>212221
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Welcome ATTR=NAME:op=Get<SP>A<SP>Quote:immediate=false&&VALUE:Get<SP>A<SP>Quote
+TAG POS=1 TYPE=SELECT FORM=NAME:Proposer ATTR=ID:title CONTENT=$Mr.
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:firstname CONTENT=Tim
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:surname CONTENT=Tester
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:address1 CONTENT=Tim<SP>House
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:address2 CONTENT=Tester<SP>Street
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:town CONTENT=Teserton
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:county CONTENT=Testex
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:postcode CONTENT=TX1<SP>1PX
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:phone CONTENT=01882<SP>881881
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:email CONTENT=tim@tester.com
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Proposer ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=TD ATTR=TXT:About<SP>Your<SP>Car(s)
+TAG POS=1 TYPE=TD ATTR=ID:header&&TXT:<BR><BR><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><BR><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><BR><BR><BR><BR><BR><BR><BR><SP><SP><SP><SP>if<SP>(typeof<SP>isModalLoaded<SP>!=<SP>'undefined'){<BR><SP><SP><SP><SP><SP><SP><SP><SP>document.write('<a<SP>href=\"#\"<SP>onclick=\"alertModal(\'login-modal\',\'login-modal-msg\');return<SP>false;\">Login</a>');<BR><SP><SP><SP><SP>}else{<BR><SP><SP><SP><SP><SP><SP><SP><SP>document.write('<a<SP>href=\"http://localhost:8080/portal/auth/portal/quote/MotorPlus\">Login</a>');<BR><SP><SP><SP><SP>}<BR><SP><SP><SP>//set<SP>the<SP>iframe<SP>src<SP>for<SP>login<SP>modal<SP>to<SP>requested<SP>URL<BR><SP><SP><SP>var<SP>iframeSrc<SP>=<SP>'http://localhost:8080/portal/auth/portal/quote/MotorPlus'<SP>+<SP>'?loginheight=0';<BR><SP><SP><SP>document.getElementById('loginIframe').src<SP>=<SP>iframeSrc;<BR>Login<BR><BR><BR><SP><SP><SP><SP><SP><SP><a<SP>href="http://localhost:8080/portal/auth/portal/quote/MotorPlus">Login</a><BR><BR><BR><BR><BR><BR><BR><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP>
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#make#] CONTENT=$AC
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#model#] CONTENT=$ACE
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cc#] CONTENT=2000
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#bodytype#] CONTENT=$Coupe
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#year#] CONTENT=2001
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#registration#] CONTENT=PP1<SP>1PX
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#datebought#] CONTENT=10/10/2003
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cost#] CONTENT=5000
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#value#] CONTENT=5
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#value#] CONTENT=5000
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Vehicles ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>car<SP>left<SP>hand<SP>drive?
+TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>car<SP>registered<SP>in<SP>your<SP>name?
+TAG POS=1 TYPE=TD ATTR=TXT:Are<SP>you<SP>the<SP>owner<SP>of<SP>the<SP>car?
+TAG POS=1 TYPE=TD ATTR=TXT:Will<SP>you<SP>drive<SP>the<SP>car<SP>to<SP>and<SP>from<SP>work?
+TAG POS=1 TYPE=TD ATTR=TXT:Has<SP>a<SP>security<SP>device<SP>been<SP>fitted?
+TAG POS=1 TYPE=TD ATTR=TXT:Do<SP>you<SP>keep<SP>the<SP>car<SP>at<SP>the<SP>proposers<SP>address?
+TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>car<SP>stored<SP>in<SP>a<SP>locked<SP>garage<SP>overnight?
+TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>garage<SP>of<SP>solid<SP>construction?
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Vehicle<SP>Details ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=TD ATTR=TXT:About<SP>The<SP>Drivers
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#dob#] CONTENT=01/09/1967
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#occupation#] CONTENT=$Accountant
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#licenseType#] CONTENT=$Full
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#yearsLicenseHeld#] CONTENT=20
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Drivers ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#refusedMotorInsurance#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#claimAccidentOrLoss#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#theft#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#motorConviction#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#otherConviction#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#previouslyInsured#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#claimingNoClaimsBonus#] CONTENT=$No
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:History ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=TD ATTR=TXT:Your<SP>Quotation:<SP>£209.90
+TAG POS=1 TYPE=LI ATTR=TXT:This<SP>quote<SP>is<SP>inclusive<SP>of<SP>Insurance<SP>Premium<SP>Tax<SP>at<SP>5%
+TAG POS=1 TYPE=TD ATTR=TXT:Comprehensive
+TAG POS=1 TYPE=TD ATTR=TXT:2<SP>May,<SP>2008
+TAG POS=1 TYPE=TD ATTR=TXT:1<SP>May,<SP>2009
+TAG POS=1 TYPE=TD ATTR=TXT:50.00
+TAG POS=2 TYPE=TD ATTR=TXT:50.00
+TAG POS=1 TYPE=TD ATTR=TXT:Tim<SP>Tester
+TAG POS=1 TYPE=TD ATTR=TXT:01/09/1967
+TAG POS=1 TYPE=TD ATTR=TXT:Accountant
+TAG POS=1 TYPE=TABLE ATTR=TXT:<SP><SP>Vehicle(s)MakeACModelACERegistrationPP1<SP>1PX
+TAG POS=1 TYPE=TD ATTR=TXT:AC
+TAG POS=1 TYPE=TD ATTR=TXT:ACE
+TAG POS=1 TYPE=TD ATTR=TXT:PP1<SP>1PX
