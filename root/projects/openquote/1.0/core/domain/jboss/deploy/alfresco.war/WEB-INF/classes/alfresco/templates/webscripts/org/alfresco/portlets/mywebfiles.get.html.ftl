@@ -28,6 +28,7 @@
             <#assign storeId=wp.properties["wca:avmstore"]>
             <#assign username=person.properties.userName>
             <#assign sandbox=avm.userSandboxStore(storeId, username)>
+            <#if avm.lookupStore(sandbox)?exists>
             <div class="webProjectRow">
                <div class="webProjectTitle">
                   <a class="webPreviewLink" href="${avm.websiteUserSandboxUrl(storeId, username)}" target="new"><img src="${url.context}/images/icons/website_large.gif" width=32 height=32 border=0><span class="websiteLink">${wp.name}</span></a>
@@ -41,7 +42,7 @@
                   </#if>
                </div>
                <div class="webProjectFiles"> <#-- marker class for dynamic click script -->
-                  <#assign moditems = avm.getModifiedItems(storeId, username, "ROOT")>
+                  <#assign moditems = avm.getModifiedItems(storeId, username, wp.properties["wca:defaultwebapp"])>
                   <div class="fileTitleRow">My Modified Items</div>
                   <div class="fileResources">
                   <#if moditems?size != 0>
@@ -72,6 +73,7 @@
                   </div>
                </div>
             </div>
+            </#if>
          </#if>
       </#list>
    </#list>

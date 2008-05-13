@@ -297,7 +297,6 @@
             <property name="wca:deployserverport">
                <title>Port</title>
                <type>d:int</type>
-               <mandatory enforced="true">true</mandatory>
             </property>
             <property name="wca:deployservername">
                <title>Display Name</title>
@@ -323,14 +322,22 @@
                <title>Source Path</title>
                <type>d:text</type>
             </property>
+            <property name="wca:deployexcludes">
+               <title>Excludes</title>
+               <type>d:text</type>
+            </property>
             <property name="wca:deployserverallocatedto">
                <title>Allocated To</title>
                <type>d:text</type>
+               <index enabled="true">
+                  <atomic>true</atomic>
+                  <stored>false</stored>
+                  <tokenised>false</tokenised>
+               </index>
             </property>
             <property name="wca:deployonapproval">
                <title>Deploy On Approval</title>
                <type>d:boolean</type>
-               <default>false</default>
             </property>
          </properties>
       </type>
@@ -445,6 +452,10 @@
             </property>
             <property name="wca:deploysourcepathused">
                <title>Source Path Used</title>
+               <type>d:text</type>
+            </property>
+            <property name="wca:deployexcludesused">
+               <title>Excludes Used</title>
                <type>d:text</type>
             </property>
             <property name="wca:deployserverurlused">

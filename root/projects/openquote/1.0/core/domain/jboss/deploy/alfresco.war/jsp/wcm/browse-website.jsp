@@ -140,7 +140,8 @@ actionListener="#{AVMBrowseBean.setupSandboxAction}" action="browseSandbox" />
 <td align=left><h:outputText value="#{msg.staging_sandbox}" styleClass="mainSubTitle" /></td>
 <td align=right>
 <a:actionLink id="actLinks" value="#{msg.check_links}" image="/images/icons/run_link_validation.gif"
-actionListener="#{DialogManager.setupParameters}" action="dialog:linkValidation">
+actionListener="#{DialogManager.setupParameters}" action="dialog:linkValidation"
+rendered="#{AVMBrowseBean.linkValidationEnabled}">
 <f:param name="store" value="#{AVMBrowseBean.stagingStore}" />
 <f:param name="webapp" value="#{AVMBrowseBean.webapp}" />
 <f:param name="mode" value="runReport" />
@@ -156,8 +157,10 @@ href="#{AVMBrowseBean.stagingPreviewUrl}" target="new" />
 actionListener="#{AVMBrowseBean.refreshSandbox}" image="/images/icons/reset.gif" />
 &nbsp;
 <a:actionLink id="actViewDeployReport" rendered="#{AVMBrowseBean.hasDeployBeenAttempted}" value="#{msg.deployment_report_action}"
-actionListener="#{AVMBrowseBean.setupSandboxAction}" action="dialog:viewDeploymentReport"
-image="/images/icons/deployment_report.gif"  />
+actionListener="#{DialogManager.setupParameters}" action="dialog:viewDeploymentReport"
+image="/images/icons/deployment_report.gif">
+<f:param name="store" value="#{AVMBrowseBean.stagingStore}" />
+</a:actionLink>
 
 <%-- Disabled action for GA
 <a:actionLink id="actSnap" value="#{msg.sandbox_snapshot}" image="/images/icons/create_snapshot.gif"

@@ -92,12 +92,16 @@ onkeyup="javascript:checkButtonState();" />
 <h:panelGrid columns="2" cellspacing="0" cellpadding="2" style="margin-left: 20px; margin-top: 6px;"
 rendered="#{DialogManager.bean.workflowListSize != 0}">
 <h:selectBooleanCheckbox id="links-chkbox" value="#{DialogManager.bean.validateLinks}" />
-<h:outputText value="#{msg.check_links}" escape="false" />
-<h:outputText value="&nbsp;" escape="false" />
-<h:outputText value="#{msg.check_links_info}" />
+<h:outputText value="#{msg.check_links}&nbsp;(#{msg.check_links_info})" escape="false" />
 </h:panelGrid>
 
-<h:panelGrid columns="1" cellpadding="2" style="padding-top:16px;padding-bottom:4px;"
+<h:panelGrid columns="2" cellspacing="0" cellpadding="2" style="margin-left: 20px; margin-top: 6px;"
+rendered="#{DialogManager.bean.workflowListSize != 0}">
+<h:selectBooleanCheckbox id="deploy-chkbox" value="#{DialogManager.bean.autoDeploy}" />
+<h:outputText value="#{msg.deploy_automatically}&nbsp;(#{msg.deploy_automatically_info})" escape="false" />
+</h:panelGrid>
+
+<h:panelGrid columns="1" cellpadding="2" style="padding-top:12px;padding-bottom:4px;"
 width="100%" rowClasses="wizardSectionHeading">
 <h:outputText value="&nbsp;#{msg.workflow}" escape="false" />
 </h:panelGrid>
@@ -237,12 +241,14 @@ altRowStyleClass="recordSetRowAlt" width="100%" pageSize="10" initialSortColumn=
 </f:facet>
 <f:facet name="small-icon">
 <h:panelGroup>
-<a:actionLink id="col10-icon1" value="#{r.name}" href="#{r.url}" target="new" image="#{r.icon}" showLink="false" styleClass="inlineAction" rendered="#{!r.deleted}" />
-<h:graphicImage id="col10-icon2" title="#{r.name}" url="#{r.icon}" styleClass="inlineAction" rendered="#{r.deleted}" />
+<a:actionLink id="col10-icon1" value="#{r.name}" href="#{r.url}" target="new" image="#{r.icon}" showLink="false"
+styleClass="inlineAction" rendered="#{!r.deleted && r.file}" />
+<h:graphicImage id="col10-icon2" title="#{r.name}" url="#{r.icon}" styleClass="inlineAction"
+rendered="#{r.deleted || !r.file}" style="vertical-align: -5px;"  />
 </h:panelGroup>
 </f:facet>
-<a:actionLink id="col10-name1" value="#{r.name}" href="#{r.url}" target="new" rendered="#{!r.deleted}" />
-<h:outputText id="col10-name2" value="#{r.name}" rendered="#{r.deleted}" />
+<a:actionLink id="col10-name1" value="#{r.name}" href="#{r.url}" target="new" rendered="#{!r.deleted && r.file}" />
+<h:outputText id="col10-name2" value="#{r.name}" rendered="#{r.deleted || !r.file}" />
 </a:column>
 
 <%-- Description column --%>

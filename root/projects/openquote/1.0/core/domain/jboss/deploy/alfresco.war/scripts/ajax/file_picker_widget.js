@@ -50,7 +50,9 @@ alfresco.FilePickerWidget = function(uploadId,
                                      cancel_callback,
                                      resize_callback,
                                      selectableTypes,
-                                     filterMimetypes)
+                                     filterMimetypes,
+                                     folderRestriction,
+                                     configSearchName)
 {
   this.uploadId = uploadId;
   this.node = node;
@@ -61,6 +63,8 @@ alfresco.FilePickerWidget = function(uploadId,
   this.resize_callback = resize_callback || function() {};
   this.selectableTypes = selectableTypes;
   this.filterMimetypes = filterMimetypes;
+  this.folderRestriction = folderRestriction;
+  this.configSearchName = configSearchName;
 }
 
 // static methods and properties
@@ -255,6 +259,14 @@ _navigateToNode: function(path)
   if (this.filterMimetypes)
   {
     params.filterMimetypes = this.filterMimetypes;
+  }
+  if (this.folderRestriction)
+  {
+  	req.content.folderRestriction = this.folderRestriction;
+  }
+  if (this.configSearchName)
+  {
+  	req.content.configSearchName = this.configSearchName;
   }
 
   alfresco.AjaxHelper.sendRequest("FilePickerBean.getFilePickerData",

@@ -40,13 +40,13 @@
 
 <%@ include file="admin-title.jsp" %>
 
-<h:form id="searchForm">
+<h:form id="searchForm" styleClass="nodeBrowserForm">
 
 <h:commandLink id="selectStores" action="#{AdminNodeBrowseBean.selectStores}">
 <h:outputText styleClass="mainSubText" value="Stores"/>
 </h:commandLink>
-<br>
-<br>
+<br/>
+<br/>
 
 <h:outputText styleClass="mainTitle" value="Search"/>
 
@@ -73,10 +73,10 @@
 </tr>
 </table>
 
-
+<br/>
 <h:outputText styleClass="mainTitle" value="Node Identifier"/>
 
-<table>
+<table cellpadding="4" cellspacing="0">
 <tr>
 <td><nobr><b>Primary Path:</b></nobr></td><td>
 <nobr>
@@ -102,10 +102,10 @@
 </tr>
 </table>
 
-<br>
+<br/>
 <h:outputText styleClass="mainTitle" value="Properties"/>
 
-<h:dataTable id="properties" border="1" value="#{AdminNodeBrowseBean.properties}" var="property">
+<h:dataTable id="properties" border="1" value="#{AdminNodeBrowseBean.properties}" var="property" styleClass="nodeBrowserTable">
 <h:column>
 <f:facet name="header">
 <h:outputText value="Name"/>
@@ -154,7 +154,7 @@
 </h:column>
 </h:dataTable>
 
-<br>
+<br/>
 <h:outputText styleClass="mainTitle" value="Aspects"/>
 
 <h:dataTable id="aspects" value="#{AdminNodeBrowseBean.aspects}" var="aspect">
@@ -163,7 +163,7 @@
 </h:column>
 </h:dataTable>
 
-<br>
+<br/>
 <h:outputText styleClass="mainTitle" value="Permissions"/>
 
 <table>
@@ -172,8 +172,7 @@
 </tr>
 </table>
 
-<br>
-<h:dataTable id="permissions" border="1" value="#{AdminNodeBrowseBean.permissions}" var="permission">
+<h:dataTable id="permissions" border="1" value="#{AdminNodeBrowseBean.permissions}" var="permission" styleClass="nodeBrowserTable">
 <h:column>
 <f:facet name="header">
 <h:outputText value="Assigned Permission"/>
@@ -194,10 +193,31 @@
 </h:column>
 </h:dataTable>
 
-<br>
+<h:dataTable id="storePermissionMasks" border="1" value="#{AdminNodeBrowseBean.storePermissionMasks}" var="permission" styleClass="nodeBrowserTable">
+<h:column>
+<f:facet name="header">
+<h:outputText value="Store Permission"/>
+</f:facet>
+<h:outputText value="#{permission.permission}"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="To Authority"/>
+</f:facet>
+<h:outputText value="#{permission.authority}"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Access"/>
+</f:facet>
+<h:outputText value="#{permission.accessStatus}"/>
+</h:column>
+</h:dataTable>
+
+<br/>
 <h:outputText styleClass="mainTitle" value="Children"/>
 
-<h:dataTable id="children" border="1" value="#{AdminNodeBrowseBean.children}" var="child">
+<h:dataTable id="children" border="1" value="#{AdminNodeBrowseBean.children}" var="child" styleClass="nodeBrowserTable">
 <h:column>
 <f:facet name="header">
 <h:outputText value="Child Name"/>
@@ -232,10 +252,10 @@
 </h:column>
 </h:dataTable>
 
-<br>
+<br/>
 <h:outputText styleClass="mainTitle" value="Associations"/>
 
-<h:dataTable id="assocs" border="1" value="#{AdminNodeBrowseBean.assocs}" var="assoc">
+<h:dataTable id="assocs" border="1" value="#{AdminNodeBrowseBean.assocs}" var="assoc" styleClass="nodeBrowserTable">
 <h:column>
 <f:facet name="header">
 <h:outputText value="To Node"/>
@@ -253,10 +273,10 @@
 </h:column>
 </h:dataTable>
 
-<br>
+<br/>
 <h:outputText styleClass="mainTitle" value="Parents"/>
 
-<h:dataTable id="parents" border="1" value="#{AdminNodeBrowseBean.parents}" var="parent">
+<h:dataTable id="parents" border="1" value="#{AdminNodeBrowseBean.parents}" var="parent" styleClass="nodeBrowserTable">
 <h:column>
 <f:facet name="header">
 <h:outputText value="Child Name"/>
@@ -284,6 +304,34 @@
 <h:outputText value="#{parent.typeQName}"/>
 </h:column>
 </h:dataTable>
+
+<br/>
+<h:panelGroup id="storePropsPanel" rendered="#{AdminNodeBrowseBean.inAVMStore}">
+
+<h:outputText styleClass="mainTitle" value="AVM Store Properties"/>
+
+<h:dataTable id="storeProperties" border="1" value="#{AdminNodeBrowseBean.AVMStoreProperties}" var="storeProp"
+styleClass="nodeBrowserTable">
+<h:column>
+<f:facet name="header">
+<h:outputText value="Name"/>
+</f:facet>
+<h:outputText value="#{storeProp.name}"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Value"/>
+</f:facet>
+<h:outputText value="#{storeProp.value}"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Type"/>
+</f:facet>
+<h:outputText value="#{storeProp.type}"/>
+</h:column>
+</h:dataTable>
+</h:panelGroup>
 
 </h:form>
 

@@ -230,6 +230,12 @@
       </property-sheet>
    </config>
 
+   <config evaluator="aspect-name" condition="attachable">
+      <property-sheet>
+         <show-association name="attachments" />
+      </property-sheet>
+   </config>
+
    <config evaluator="aspect-name" condition="app:inlineeditable">
       <property-sheet>
          <show-property name="app:editInline" converter="org.alfresco.faces.BooleanLabelConverter" />
@@ -516,6 +522,7 @@
          <show-property name="bpm:description" component-generator="TextAreaGenerator" read-only="true"/>
          <show-property name="wcmwf:label" read-only="true" />
          <show-property name="wcmwf:launchDate" read-only="true" />
+         <show-property name="wcmwf:autoDeploy" read-only="true" />
          <show-property name="bpm:status" />
          <show-property name="bpm:comment" component-generator="TextAreaGenerator" />
       </property-sheet>
@@ -528,6 +535,7 @@
          <show-property name="bpm:description" component-generator="TextAreaGenerator" read-only="true"/>
          <show-property name="wcmwf:label" read-only="true" />
          <show-property name="wcmwf:launchDate" read-only="true"/>
+         <show-property name="wcmwf:autoDeploy" read-only="true" />
          <show-property name="bpm:status" />
          <show-property name="bpm:comment" component-generator="TextAreaGenerator" />
          <separator name="sep2" display-label-id="wf_reviewers" component-generator="HeaderSeparatorGenerator" />
@@ -543,6 +551,7 @@
          <show-property name="bpm:description" component-generator="TextAreaGenerator" read-only="true"/>
          <show-property name="wcmwf:label" read-only="true" />
          <show-property name="wcmwf:launchDate" read-only="true"/>
+         <show-property name="wcmwf:autoDeploy" read-only="true" />
          <show-property name="bpm:status" />
          <show-property name="bpm:comment" component-generator="TextAreaGenerator" />
          <separator name="sep2" display-label-id="wf_reviewers" component-generator="HeaderSeparatorGenerator" />
@@ -571,6 +580,7 @@
          <show-property name="bpm:description" component-generator="TextAreaGenerator" read-only="true"/>
          <show-property name="wcmwf:label" read-only="true" />
          <show-property name="wcmwf:launchDate" read-only="true" />
+         <show-property name="wcmwf:autoDeploy" read-only="true" />
          <show-property name="bpm:comment" component-generator="TextAreaGenerator" />
          <separator name="sep2" display-label-id="wf_review_status" component-generator="HeaderSeparatorGenerator" />
          <show-property name="wcmwf:reviewType" read-only="true"/>
@@ -586,6 +596,7 @@
          <show-property name="bpm:description" component-generator="TextAreaGenerator" read-only="true"/>
          <show-property name="wcmwf:label" read-only="true" />
          <show-property name="wcmwf:launchDate" read-only="true" />
+         <show-property name="wcmwf:autoDeploy" read-only="true" />
          <show-property name="bpm:comment" component-generator="TextAreaGenerator" />
          <separator name="sep2" display-label-id="wf_review_status" component-generator="HeaderSeparatorGenerator" />
          <show-property name="wcmwf:reviewType" read-only="true"/>
@@ -601,6 +612,7 @@
          <show-property name="bpm:description" component-generator="TextAreaGenerator" read-only="true"/>
          <show-property name="wcmwf:label" read-only="true" />
          <show-property name="wcmwf:launchDate" read-only="true" />
+         <show-property name="wcmwf:autoDeploy" read-only="true" />
          <show-property name="bpm:comment" component-generator="TextAreaGenerator" />
          <separator name="sep2" display-label-id="wf_review_status" component-generator="HeaderSeparatorGenerator" />
          <show-property name="wcmwf:reviewType" read-only="true"/>

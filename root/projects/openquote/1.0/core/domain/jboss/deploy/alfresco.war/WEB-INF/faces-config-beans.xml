@@ -1302,6 +1302,10 @@
       <managed-bean-class>org.alfresco.web.bean.coci.CCProperties</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
+         <property-name>versionQueryService</property-name>
+         <value>#{VersionService}</value>
+      </managed-property>
+      <managed-property>
          <property-name>versionOperationsService</property-name>
          <value>#{CheckoutCheckinService}</value>
       </managed-property>
@@ -1313,6 +1317,56 @@
          <property-name>workflowService</property-name>
          <value>#{WorkflowService}</value>
       </managed-property>
+   </managed-bean>
+
+   <managed-bean>
+      <description>The bean that help with edit offline procedure.</description>
+      <managed-bean-name>EditOfflineDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.coci.EditOfflineDialog</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>browseBean</property-name>
+         <value>#{BrowseBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>navigator</property-name>
+         <value>#{NavigationBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>property</property-name>
+         <value>#{CCProperties}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>userPreferencesBean</property-name>
+         <value>#{UserPreferencesBean}</value>
+      </managed-property>  
+   </managed-bean>
+
+   <managed-bean>
+      <description>The bean that helps with edit online procedure and presents fiction online editing dialog.</description>
+      <managed-bean-name>EditOnlineDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.coci.EditOnlineDialog</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>browseBean</property-name>
+         <value>#{BrowseBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>navigator</property-name>
+         <value>#{NavigationBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>property</property-name>
+         <value>#{CCProperties}</value>
+      </managed-property>         
    </managed-bean>
 
    <managed-bean>
@@ -1351,6 +1405,27 @@
       </managed-property>
    </managed-bean>
 	
+   <managed-bean>
+      <description>The bean for the Upload a new versoin Screen.</description>
+      <managed-bean-name>UploadNewVersionDialog</managed-bean-name>
+      <managed-bean-class>
+         org.alfresco.web.bean.coci.UploadNewVersionDialog
+      </managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>property</property-name>
+         <value>#{CCProperties}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>navigator</property-name>
+         <value>#{NavigationBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+   </managed-bean>
+
    <managed-bean>
       <description>
          The bean that holds manage content rules state
@@ -2411,10 +2486,10 @@
 
    <managed-bean>
       <description>
-         The bean that backs up the Verify Broken Links Task Dialog
+         The bean that backs up the Manage Review Task Dialog
       </description>
-      <managed-bean-name>ManageLinkValidationTaskDialog</managed-bean-name>
-      <managed-bean-class>org.alfresco.web.bean.wcm.ManageLinkValidationTaskDialog</managed-bean-class>
+      <managed-bean-name>ManageReviewTaskDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.wcm.ManageReviewTaskDialog</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
          <property-name>nodeService</property-name>
@@ -3037,28 +3112,12 @@
          <value>#{NodeService}</value>
       </managed-property>
       <managed-property>
-         <property-name>fileFolderService</property-name>
-         <value>#{FileFolderService}</value>
-      </managed-property>
-      <managed-property>
          <property-name>searchService</property-name>
          <value>#{SearchService}</value>
       </managed-property>
       <managed-property>
-         <property-name>namespaceService</property-name>
-         <value>#{NamespaceService}</value>
-      </managed-property>
-      <managed-property>
-         <property-name>navigator</property-name>
-         <value>#{NavigationBean}</value>
-      </managed-property>
-      <managed-property>
          <property-name>browseBean</property-name>
          <value>#{BrowseBean}</value>
-      </managed-property>
-      <managed-property>
-         <property-name>contentService</property-name>
-         <value>#{ContentService}</value>
       </managed-property>
       <managed-property>
          <property-name>avmService</property-name>
@@ -3288,6 +3347,10 @@
          <property-name>formsService</property-name>
          <value>#{FormsService}</value>
       </managed-property>
+      <managed-property>
+         <property-name>avmBrowseBean</property-name>
+         <value>#{AVMBrowseBean}</value>
+      </managed-property>
    </managed-bean>
 
    <managed-bean>
@@ -3406,6 +3469,14 @@
       <managed-property>
          <property-name>searchService</property-name>
          <value>#{SearchService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>linkValidationService</property-name>
+         <value>#{LinkValidationService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>permissionService</property-name>
+         <value>#{PermissionService}</value>
       </managed-property>
    </managed-bean>
 
@@ -3560,6 +3631,23 @@
          <value>#{AVMBrowseBean}</value>
       </managed-property>
    </managed-bean>
+   
+   <managed-bean>
+      <description>
+         The bean that backs up the Delete Layered then browse AVM Folder Dialog
+      </description>
+      <managed-bean-name>DeleteLayeredFolderBrowseDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.wcm.DeleteLayeredFolderBrowseDialog</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>avmService</property-name>
+         <value>#{AVMLockingAwareService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>avmBrowseBean</property-name>
+         <value>#{AVMBrowseBean}</value>
+      </managed-property>
+   </managed-bean>
 
    <managed-bean>
       <description>
@@ -3592,6 +3680,27 @@
       </description>
       <managed-bean-name>CreateFolderDialog</managed-bean-name>
       <managed-bean-class>org.alfresco.web.bean.wcm.CreateFolderDialog</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>avmService</property-name>
+         <value>#{AVMLockingAwareService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>avmBrowseBean</property-name>
+         <value>#{AVMBrowseBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+   </managed-bean>
+   
+   <managed-bean>
+      <description>
+         The bean that backs up the Create Layered Folder Dialog
+      </description>
+      <managed-bean-name>CreateLayeredFolderDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.wcm.CreateLayeredFolderDialog</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
          <property-name>avmService</property-name>
@@ -4035,10 +4144,10 @@
 
    <managed-bean>
       <description>
-         The bean that backs up the Deploy Snapshot Dialog
+         The bean that backs up the Deploy Website Dialog
       </description>
-      <managed-bean-name>DeploySnapshotDialog</managed-bean-name>
-      <managed-bean-class>org.alfresco.web.bean.wcm.DeploySnapshotDialog</managed-bean-class>
+      <managed-bean-name>DeployWebsiteDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.wcm.DeployWebsiteDialog</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
          <property-name>avmBrowseBean</property-name>
@@ -4092,9 +4201,35 @@
       <managed-bean-class>org.alfresco.web.bean.wcm.ViewDeploymentReportDialog</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+   </managed-bean>
+   
+   <managed-bean>
+      <description>
+         The bean that backs up the Delete Deployment Reports Dialog
+      </description>
+      <managed-bean-name>DeleteDeploymentReportsDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.wcm.DeleteDeploymentReportsDialog</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+      <managed-property>
          <property-name>avmBrowseBean</property-name>
          <value>#{AVMBrowseBean}</value>
       </managed-property>
+   </managed-bean>
+   
+   <managed-bean>
+      <description>
+         The bean that backs up the Release Test Server Dialog
+      </description>
+      <managed-bean-name>ReleaseTestServerDialog</managed-bean-name>
+      <managed-bean-class>org.alfresco.web.bean.wcm.ReleaseTestServerDialog</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
          <property-name>nodeService</property-name>
          <value>#{NodeService}</value>
@@ -4535,10 +4670,6 @@
       <managed-bean-class>org.alfresco.web.forms.xforms.XFormsBean</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
       <managed-property>
-         <property-name>avmService</property-name>
-         <value>#{AVMLockingAwareService}</value>
-      </managed-property>
-      <managed-property>
          <property-name>avmBrowseBean</property-name>
          <value>#{AVMBrowseBean}</value>
       </managed-property>
@@ -4570,6 +4701,22 @@
       <managed-property>
          <property-name>avmBrowseBean</property-name>
          <value>#{AVMBrowseBean}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>searchService</property-name>
+         <value>#{SearchService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>dictionaryService</property-name>
+         <value>#{DictionaryService}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>contentService</property-name>
+         <value>#{ContentService}</value>
       </managed-property>
    </managed-bean>
 
@@ -5038,8 +5185,8 @@
    </managed-bean>
 
    <managed-bean>
-      <description>The bean for Edit Simple Workflow Screen.</description>
-      <managed-bean-name>EditSimpleWorkflowDialog</managed-bean-name>
+      <description>The bean for content Edit Simple Workflow Screen.</description>
+      <managed-bean-name>EditContentSimpleWorkflowDialog</managed-bean-name>
       <managed-bean-class>
          org.alfresco.web.bean.content.EditSimpleWorkflowDialog
       </managed-bean-class>
@@ -5055,8 +5202,8 @@
    </managed-bean>
 
    <managed-bean>
-      <description>The bean for Edit Simple Space Workflow Screen.</description>
-      <managed-bean-name>EditSimpleWorkflowDialog</managed-bean-name>
+      <description>The bean for space Edit Simple Space Workflow Screen.</description>
+      <managed-bean-name>EditSpaceSimpleWorkflowDialog</managed-bean-name>
       <managed-bean-class>
          org.alfresco.web.bean.spaces.EditSimpleWorkflowDialog
       </managed-bean-class>
@@ -5426,6 +5573,20 @@
    </managed-bean>
 
    <managed-bean>
+      <description>The bean for the Cancel Editing File Screen.</description>
+      <managed-bean-name>CancelEditingDialog</managed-bean-name>
+      <managed-bean-class>
+         org.alfresco.web.bean.coci.CancelEditingDialog
+      </managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>property</property-name>
+         <value>#{CCProperties}</value>
+      </managed-property>
+   </managed-bean>
+
+
+   <managed-bean>
       <description>The bean for the Working Copy Missing Screen.</description>
       <managed-bean-name>CCWorkingCopyMissingDialog</managed-bean-name>
       <managed-bean-class>
@@ -5451,6 +5612,23 @@
       </managed-property>
    </managed-bean>
    
+   <managed-bean>
+      <description>The bean for the Done-Editing File Screen(New commit dialog).</description>
+      <managed-bean-name>DoneEditingDialog</managed-bean-name>
+      <managed-bean-class>
+         org.alfresco.web.bean.coci.DoneEditingDialog
+      </managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+      <managed-property>
+         <property-name>property</property-name>
+         <value>#{CCProperties}</value>
+      </managed-property>
+      <managed-property>
+         <property-name>nodeService</property-name>
+         <value>#{NodeService}</value>
+      </managed-property>
+   </managed-bean>
+
    <managed-bean>
       <description>The bean for the Edit Search Screen.</description>
       <managed-bean-name>EditSearchDialog</managed-bean-name>

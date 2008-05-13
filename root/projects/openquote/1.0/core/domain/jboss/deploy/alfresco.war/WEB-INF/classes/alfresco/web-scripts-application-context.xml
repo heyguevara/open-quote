@@ -37,6 +37,7 @@
       <property name="fileFolderService" ref="fileFolderService" />
       <property name="searchService" ref="SearchService" />
       <property name="permissionService" ref="PermissionService" />
+      <property name="tenantDeployerService" ref="tenantAdminService" />
    </bean>
 
    <bean name="webscripts.store.repo.extension" parent="webscripts.repostore">
@@ -83,6 +84,8 @@
       <property name="personService" ref="personService" />
       <property name="fileFolderService" ref="fileFolderService" />
       <property name="searchService" ref="searchService" />
+      <property name="tenantDeployerService" ref="tenantAdminService" />
+      <property name="avmService" ref="AVMService" />
       <property name="companyHomeStore"><value>${spaces.store}</value></property>
       <property name="companyHomePath"><value>/${spaces.company_home.childname}</value></property>
    </bean>
@@ -101,21 +104,26 @@
       <property name="scriptService" ref="scriptService" />
    </bean>
  
-   <bean id="webscripts.container" class="org.alfresco.repo.web.scripts.RepositoryContainer">
+   <bean id="webscripts.container" class="org.alfresco.repo.web.scripts.RepositoryContainer" parent="webscripts.abstractcontainer">
       <property name="name"><value>Repository</value></property>
+      <property name="registryFactory">
+          <bean class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+             <property name="targetBeanName"><idref local="webscripts.registry.prototype"/></property>
+          </bean>
+      </property>
       <property name="transactionHelper" ref="retryingTransactionHelper" />
       <property name="permissionService" ref="permissionService" />
       <property name="authorityService" ref="authorityService" />
       <property name="repository" ref="webscripts.repo" />
       <property name="repositoryImageResolver" ref="webscripts.repo.imageresolver" />
-      <property name="registry" ref="webscripts.registry" />
-      <property name="formatRegistry" ref="webscripts.formatregistry" />
       <property name="templateProcessor" ref="webscripts.repo.templateprocessor" />
       <property name="scriptProcessor" ref="webscripts.repo.scriptprocessor" />
       <property name="descriptorService" ref="DescriptorService" />
-      <property name="searchPath" ref="webscripts.searchpath" />
-      <property name="configService" ref="web.config" />
+      <property name="tenantDeployerService" ref="tenantAdminService" />
+      <property name="webScriptsRegistryCache" ref="webScriptsRegistryCache"/>
    </bean>
+   
+   <bean id="webscripts.registry.prototype" parent="webscripts.registry" singleton="false"/>
 
 
    <!--                            -->
@@ -132,11 +140,13 @@
 
    <!--  JSR-168 Authenticator (Portal based) -->
    <bean id="webscripts.authenticator.jsr168" class="org.alfresco.repo.web.scripts.portlet.JSR168PortletAuthenticatorFactory">
-      <property name="authenticationService" ref="AuthenticationService" />
+      <property name="unprotAuthenticationService" ref="authenticationService" />
+      <property name="transactionService" ref="TransactionService" />
    </bean>
    <bean id="webscripts.authenticator.jsr168.webclient" class="org.alfresco.repo.web.scripts.portlet.WebClientPortletAuthenticatorFactory">
       <property name="repository" ref="webscripts.repo" />
       <property name="authenticationService" ref="AuthenticationService" />
+      <property name="transactionService" ref="TransactionService" />
    </bean>
 
    <!--  Facebook Authenticator -->

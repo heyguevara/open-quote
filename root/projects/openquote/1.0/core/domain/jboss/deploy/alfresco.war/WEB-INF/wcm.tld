@@ -208,6 +208,77 @@
          <required>false</required>
          <rtexprvalue>true</rtexprvalue>
       </attribute>
+      
+      <attribute>
+         <name>showPrevious</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>Flag to determine whether the previous reports should be shown</description>
+      </attribute>
+      
+      <attribute>
+         <name>dateFilter</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>The date filter for reducing the number of reports displayed</description>
+      </attribute>
+      
+      <attribute>
+         <name>attempt</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>The NodeRef of the deploymentattempt to show</description>
+      </attribute>
+   </tag>
+   
+   <tag>
+      <name>deploymentServers</name>
+      <tag-class>org.alfresco.web.ui.wcm.tag.DeploymentServersTag</tag-class>
+      <body-content>JSP</body-content>
+      <display-name>Deployment Servers</display-name>
+      <description>
+         Renders a list of deployment servers and allows new ones to be 
+         added and existing servers to be edited and removed
+      </description>
+      
+      <attribute>
+         <name>id</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>The component identifier for this component</description>
+      </attribute>
+      
+      <attribute>
+         <name>value</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>The list of deployment servers to show</description>
+      </attribute>
+      
+      <attribute>
+         <name>rendered</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      
+      <attribute>
+         <name>currentServer</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>The deployment server currently being added or edited</description>
+      </attribute>
+      
+      <attribute>
+         <name>inAddMode</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      
+      <attribute>
+         <name>addType</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
    </tag>
    
    <tag>
@@ -216,6 +287,20 @@
       <body-content>JSP</body-content>
       <display-name>Deploy Website</display-name>
       <description>Renders a list of servers to deploy to or show deployment progress for</description>
+      
+      <attribute>
+         <name>id</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>The component identifier for this component</description>
+      </attribute>
+
+      <attribute>
+         <name>rendered</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+         <description>Flag to determine whether component should be rendered</description>
+      </attribute>
       
       <attribute>
          <name>website</name>
@@ -239,17 +324,17 @@
       </attribute>
       
       <attribute>
-         <name>id</name>
+         <name>deployMode</name>
          <required>false</required>
          <rtexprvalue>true</rtexprvalue>
-         <description>The component identifier for this component</description>
+         <description>The type of servers being deployed to, 'live' or 'test'</description>
       </attribute>
-
+      
       <attribute>
-         <name>rendered</name>
+         <name>store</name>
          <required>false</required>
          <rtexprvalue>true</rtexprvalue>
-         <description>Flag to determine whether component should be rendered</description>
+         <description>The store being deployed</description>
       </attribute>
       
       <attribute>

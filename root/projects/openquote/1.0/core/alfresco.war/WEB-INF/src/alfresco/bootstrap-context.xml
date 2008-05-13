@@ -30,13 +30,19 @@
       <property name="localSessionFactory">
          <ref bean="&amp;sessionFactory"></ref>  <!-- inject the actual factory, not a session -->
       </property>
+       <property name="maximumStringLength">
+          <value>${system.maximumStringLength}</value>
+       </property>
+       <property name="hibernateMaxExecutions">
+          <value>${system.hibernateMaxExecutions}</value>
+       </property>
       <property name="updateSchema">
          <value>${db.schema.update}</value>
       </property>
       <property name="postCreateScriptUrls">
          <list>
-             <value>classpath:alfresco/dbscripts/create/2.1/${db.script.dialect}/AlfrescoPostCreate-2.1-FKIndexes.sql</value>
-             <value>classpath:alfresco/dbscripts/create/1.4/${db.script.dialect}/post-create-indexes-02.sql</value>
+             <value>classpath:alfresco/dbscripts/create/2.2/${db.script.dialect}/AlfrescoPostCreate-2.2-MappedFKIndexes.sql</value>
+             <value>classpath:alfresco/dbscripts/create/2.2/${db.script.dialect}/AlfrescoPostCreate-2.2-Extra.sql</value>
          </list>
       </property>
       <property name="validateUpdateScriptPatches">
@@ -48,14 +54,19 @@
             <ref bean="patch.schemaUpdateScript-V1.4-1" />
             <ref bean="patch.schemaUpdateScript-V1.4-2" />
             <ref bean="patch.db-V2.1-NotNullColumns" />
+             <ref bean="patch.db-V2.2-ACL" />
+             <ref bean="patch.db-V2.2-0-CreateMissingTables" />
+             <ref bean="patch.db-V2.2-1-DropIndexesAndConstraints" />
+             <ref bean="patch.db-V2.2-2-MoveQNames" />
+             <ref bean="patch.db-V2.2-3-PropTypes" />
          </list>
       </property>
        <property name="postUpdateScriptPatches">
           <list>
+             <ref bean="patch.db-V2.2-4-ExtraIndexesAndConstraints" />
+             <ref bean="patch.db-V2.2-5-MappedFKIndexes" />
              <ref bean="patch.db-V1.4-TxnCommitTimeIndex" />
-             <ref bean="patch.db-V2.1-FKIndexes" />
-             <ref bean="patch.db-V2.1-ExplicitIndexes" />
-             <ref bean="patch.db-V1.4-PerfIndexes02" />
+             <ref bean="patch.db-V2.0-ContentUrls" />
              <ref bean="patch.db-V2.1-JBPMData" />
              <ref bean="patch.db-V2.1-VersionColumns2" />
              <ref bean="patch.db-V2.1-JBPMProcessKey" />
@@ -90,11 +101,37 @@
        </property>
     </bean>
 
+    <!-- Load models -->
+   <bean id="dictionaryRepositoryBootstrap" class="org.alfresco.repo.dictionary.DictionaryRepositoryBootstrap">
+
+      <property name="dictionaryDAO" ref="dictionaryDAO"/>
+      <property name="contentService" ref="ContentService"/>      
+      <property name="searchService" ref="SearchService"/>
+      <property name="transactionService" ref="transactionComponent"/>
+      <property name="namespaceService" ref="namespaceService"/>
+      <property name="nodeService" ref="NodeService"/>
+      <property name="messageService" ref="messageService"/>
+      <property name="tenantDeployerService" ref="tenantAdminService"/>
+         
+      <property name="repositoryModelsLocations">
+         <list>
+            <ref bean="customModelsRepositoryLocation" />
+         </list>        
+      </property>
+         
+      <property name="repositoryMessagesLocations">
+         <list>
+            <ref bean="customMessagesRepositoryLocation" />
+         </list>        
+      </property>
+           
+   </bean>
+
     <!-- Bootstrap Files -->
     <bean id="systemInfoBootstrap" parent="systemInfoImporter">
     </bean>
 
-    <bean id="userBootstrap" parent="userStoreImporter">
+    <bean id="userBootstrap" parent="userStoreImporter" singleton="false">
         <property name="bootstrapViews">
             <list>
                 <props>
@@ -117,7 +154,7 @@
         </property>
     </bean>
 
-    <bean id="systemBootstrap" parent="systemStoreImporter">
+    <bean id="systemBootstrap" parent="systemStoreImporter" singleton="false">
         <property name="bootstrapViews">
             <list>
                 <props>
@@ -132,7 +169,7 @@
         </property>
     </bean>
 
-    <bean id="versionBootstrap" parent="versionStoreImporter">
+    <bean id="versionBootstrap" parent="versionStoreImporter" singleton="false">
         <property name="bootstrapViews">
             <list>
                 <props>
@@ -143,7 +180,7 @@
         </property>
     </bean>
 
-    <bean id="spacesArchiveBootstrap" parent="spacesArchiveStoreImporter">
+    <bean id="spacesArchiveBootstrap" parent="spacesArchiveStoreImporter" singleton="false">
         <property name="bootstrapViews">
             <list>
                 <props>
@@ -154,11 +191,11 @@
         </property>
     </bean>
 
-    <bean id="spacesModelsBootstrap" parent="storeImporter">
+    <bean id="spacesModelsBootstrap" parent="storeImporter" singleton="false">
     	<!-- NOOP for fresh bootstrap (will skip store creation) - provides ordering when performing a repo restore (bootstrap import) -->
     </bean>
     
-    <bean id="spacesBootstrap" parent="spacesStoreImporter">
+    <bean id="spacesBootstrap" parent="spacesStoreImporter" singleton="false">
         <property name="bootstrapViews">
             <list>
                 <props>

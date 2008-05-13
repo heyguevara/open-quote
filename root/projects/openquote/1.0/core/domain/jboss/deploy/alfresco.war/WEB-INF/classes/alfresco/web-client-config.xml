@@ -85,11 +85,14 @@
          <!-- minimum length for username and password -->
          <username-min-length>2</username-min-length>
          <password-min-length>3</password-min-length>
-		  
-		  <!-- Domain suffix appended to the CIFS URL host name -->
-          <!--
-  		  <cifs-url-suffix>.alfresco.org<cifs-url-suffix>
-	      -->
+
+         <!-- Domain suffix appended to the CIFS URL host name -->
+         <!--
+         <cifs-url-suffix>.alfresco.org<cifs-url-suffix>
+         -->
+         
+         <!-- Breadcrumb mode, can be either 'path' or 'location' -->
+         <breadcrumb-mode>path</breadcrumb-mode>
       </client>
    </config>
 
@@ -229,8 +232,10 @@
             <!-- this dashlet 'tasks-todo' is also shown by default for all users -->
             <dashlet id="tasks-todo" label-id="my_tasks_todo_title" description-id="my_tasks_todo_desc"
                   jsp="/jsp/workflow/tasks-todo-dashlet.jsp" allow-narrow="false" />
-            <dashlet id="tasks-active" label-id="tasks_active_title" description-id="tasks_active_desc"
+            <!-- Not enabled by default
+			<dashlet id="tasks-active" label-id="tasks_active_title" description-id="tasks_active_desc"
                   jsp="/jsp/workflow/tasks-active-dashlet.jsp" allow-narrow="false" />
+			-->
             <dashlet id="pooled-tasks" label-id="pooled_tasks_title" description-id="pooled_tasks_desc"
                   jsp="/jsp/workflow/pooled-tasks-todo-dashlet.jsp" allow-narrow="false" />
             <dashlet id="tasks-completed" label-id="my_tasks_completed_title" description-id="my_tasks_completed_desc"
@@ -473,4 +478,28 @@
       </property-sheet>
    </config>
 
+   <config evaluator="aspect-name" condition="blg:blogDetails">
+      <property-sheet>
+         <separator name="sepBlogDetails" display-label="Blog Details" component-generator="HeaderSeparatorGenerator" />         
+         <show-property name="blg:blogImplementation" component-generator="BlogSelectorGenerator"/>
+         <show-property name="blg:id" />         
+         <show-property name="blg:name" />
+         <show-property name="blg:description" />
+         <show-property name="blg:url" component-generator="LinkGenerator"/>
+         <show-property name="blg:userName" />
+         <show-property name="blg:password" />     
+      </property-sheet>
+   </config>   
+   
+   <config evaluator="aspect-name" condition="blg:blogPost">
+      <property-sheet>
+         <separator name="seprmTransferInstrustions" display-label="Blog Post Details" component-generator="HeaderSeparatorGenerator"  show-in-edit-mode="false"/> 
+         <show-property name="blg:postId" show-in-edit-mode="false"/>
+         <show-property name="blg:link" component-generator="LinkGenerator"  show-in-edit-mode="false"/>
+         <show-property name="blg:posted"  show-in-edit-mode="false"/>
+         <show-property name="blg:lastUpdate"  show-in-edit-mode="false"/>
+         <show-property name="blg:published"  show-in-edit-mode="false"/>             
+      </property-sheet>
+   </config>
+   
 </alfresco-config>

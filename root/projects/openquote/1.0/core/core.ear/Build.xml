@@ -80,7 +80,7 @@
         <get-lib-macro artifact="drools-compiler" group="drools" version="4.0.3" type="jar" repo="localhost/repo" />
         <get-lib-macro artifact="drools-decisiontables" group="drools" version="4.0.3" type="jar" repo="localhost/repo" />
         <get-lib-macro artifact="fop" group="fop" version="0.93" type="jar" repo="localhost/repo" />
-        <get-lib-macro artifact="hibernate" group="hibernate" version="3.2.1" type="jar" repo="localhost/repo" />
+        <get-lib-macro artifact="hibernate" group="hibernate" version="3.2.1-patched" type="jar" repo="localhost/repo" />
         <get-lib-macro artifact="hsqldb" group="hsqldb" version="1.7.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="itext" group="itext" version="1.2.mg" type="jar" repo="localhost/repo" />
         <get-lib-macro artifact="jaas" group="jaas" version="1.0" type="jar" repo="localhost/repo" />

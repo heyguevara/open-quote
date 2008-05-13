@@ -37,7 +37,6 @@
 	<classpathentry kind="lib" path="deploy/jboss/client/wsdl4j.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/jakarta-standard-taglib-1.1.2.jar"/>
 	<classpathentry kind="lib" path="deploy/test/lib/commons-logging-1.1-dev.jar"/>
-	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/commons-fileupload-1.0.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/core.ear/lib/bsh-2.0b4.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/core.ear/lib/cglib-2.1.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/core.ear/lib/asm-1.5.3.jar"/>
@@ -95,5 +94,7 @@
 	<classpathentry kind="lib" path="deploy/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/core.ear/lib/jlfgr-1.0.jar"/>
 	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/jboss-portal.sar/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-web-client.jar"/>
+	<classpathentry kind="lib" path="deploy/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/commons-io-1.1.jar"/>
 	<classpathentry kind="output" path="deploy/classes"/>
 </classpath>

@@ -167,6 +167,10 @@
          <dialog name="deleteAvmFolderBrowse" page="/jsp/dialog/delete.jsp" managed-bean="DeleteFolderBrowseDialog"
                  icon="/images/icons/delete_large.gif" title-id="delete_folder" 
                  description-id="delete_avm_folder_info" />
+                 
+         <dialog name="deleteLayeredFolderBrowse" page="/jsp/dialog/delete.jsp" managed-bean="DeleteLayeredFolderBrowseDialog"
+                 icon="/images/icons/delete_large.gif" title-id="delete_layered_folder" 
+                 description-id="delete_layered_folder_info" />
 
          <dialog name="promptForWebForm" page="/jsp/wcm/prompt-for-web-form.jsp" managed-bean="PromptForWebFormDialog"
                  icon="/images/icons/details_large.gif" title-id="prompt_for_web_form" 
@@ -175,6 +179,10 @@
          <dialog name="createAvmFolder" page="/jsp/wcm/create-folder-dialog.jsp" managed-bean="CreateFolderDialog"
                  icon="/images/icons/create_space_large.gif" title-id="create_folder" 
                  description-id="create_avm_folder_info" />
+                 
+         <dialog name="createLayeredFolder" page="/jsp/wcm/create-layered-folder-dialog.jsp" 
+                 managed-bean="CreateLayeredFolderDialog" icon="/images/icons/create_space_large.gif" 
+                 title-id="create_layered_folder" description-id="create_layered_folder_info" />
          
          <dialog name="editAvmFile" page="/jsp/wcm/edit-file.jsp" 
                  managed-bean="EditAvmFileDialog" icon="/images/icons/edit_large.gif"
@@ -270,20 +278,25 @@
                  icon="/images/icons/revert_all_large.gif" title-id="revert_all_title" 
                  description-id="revert_all_desc" />
                  
-         <dialog name="deploySnapshot" page="/jsp/wcm/deploy.jsp" managed-bean="DeploySnapshotDialog"
-                 icon="/images/icons/deploy_large.gif" title-id="deploy_title" 
-                 description-id="deploy_desc" />
+         <dialog name="deployWebsite" page="/jsp/wcm/deploy.jsp" managed-bean="DeployWebsiteDialog"
+                 icon="/images/icons/deploy_large.gif" />
                  
          <dialog name="viewDeploymentReport" page="/jsp/wcm/deployment-report.jsp" 
-                 managed-bean="ViewDeploymentReportDialog"
-                 title-id="deployment_report_title"
-                 icon="/images/icons/deployment_report_large.gif"  
-                 description-id="deployment_report_desc" show-ok-button="false" />
+                 managed-bean="ViewDeploymentReportDialog" icon="/images/icons/deployment_report_large.gif"  
+                 show-ok-button="false" />
                  
          <dialog name="monitorDeployment" page="/jsp/wcm/monitor-deployment.jsp" 
                  managed-bean="MonitorDeploymentDialog"
                  icon="/images/icons/deploy_large.gif" title-id="monitor_deployment_title" 
                  description-id="monitor_deployment_desc" show-ok-button="false" />
+                 
+         <dialog name="deleteDeploymentReports" page="/jsp/dialog/delete.jsp" 
+                 managed-bean="DeleteDeploymentReportsDialog" icon="/images/icons/delete_deploy_reports_large.gif"
+                 title-id="delete_all_deploy_reports" description-id="delete_reports_info" />
+                 
+         <dialog name="releaseTestServer" page="/jsp/dialog/delete.jsp" 
+                 managed-bean="ReleaseTestServerDialog" icon="/images/icons/release_server_large.gif"
+                 title-id="release_server_title" description-id="release_server_info" />
                  
          <dialog name="linkValidation" page="/jsp/wcm/link-validation.jsp" 
                  managed-bean="LinkValidationDialog"
@@ -340,20 +353,28 @@
                  description-id="modify_user_roles_description" />
          
          <dialog name="editHtmlInline" page="/jsp/content/edit-html-inline.jsp" managed-bean="CCEditHtmlInlineDialog"
-                 icon="/images/icons/edit_large.gif" title-id="editfile_description"
+                 icon="/images/icons/edit_online_large.gif" title-id="editfile_description"
                  description-id="editfileinline_description" />
          
          <dialog name="editTextInline" page="/jsp/content/edit-text-inline.jsp" managed-bean="CCEditTextInlineDialog"
-                 icon="/images/icons/edit_large.gif" title-id="editfile_description"
+                 icon="/images/icons/edit_online_large.gif" title-id="editfile_description"
                  description-id="editfileinline_description" />
          
          <dialog name="undoCheckoutFile" page="/jsp/coci/undocheckout-file.jsp" managed-bean="CCUndoCheckoutFileDialog"
                  icon="/images/icons/cancel_checkout_large.gif" title-id="undo_checkout_for"
                  description-id="undocheckoutfile_description" />
          
+         <dialog name="cancelEditing" page="/jsp/coci/cancel-editing-file.jsp" managed-bean="CancelEditingDialog"
+                 icon="/images/icons/cancel_editing_large.gif" title-id="cancel_editing_for"
+                 description-id="cancel_editing_file_description" />
+         
          <dialog name="checkoutFile" page="/jsp/coci/checkout-file.jsp" managed-bean="CCCheckoutFileDialog"
                  icon="/images/icons/check_out_large.gif" title-id="check_out"
-                  description-id="checkoutfile_description" />   
+                 description-id="checkoutfile_description" />
+         
+         <dialog name="editOfflineDialog" page="/jsp/coci/edit-offline-file.jsp" managed-bean="EditOfflineDialog"
+                 icon="/images/icons/edit_offline_large.gif" title-id="edit_doc_offline"
+                 show-ok-button="false"/>
          
          <dialog name="editFile" page="/jsp/content/edit-file.jsp" managed-bean="CCEditFileDialog"
                  icon="/images/icons/edit_large.gif" title-id="edit"
@@ -430,11 +451,11 @@
                  icon="/images/icons/preview_large.gif" title-id="apply_template"
                  description-id="apply_dashboard_info"  /> 
          
-         <dialog name="editSimpleWorkflow" page="/jsp/content/edit-simple-workflow.jsp" managed-bean="EditSimpleWorkflowDialog"
+         <dialog name="editContentSimpleWorkflow" page="/jsp/content/edit-simple-workflow.jsp" managed-bean="EditContentSimpleWorkflowDialog"
                  icon="/images/icons/edit_large.gif" title-id="modify_workflow_props"
                  description-id="editworkflow_description"  /> 
          
-         <dialog name="editSpaceSimpleWorkflow" page="/jsp/spaces/edit-simple-workflow.jsp" managed-bean="EditSimpleWorkflowDialog"
+         <dialog name="editSpaceSimpleWorkflow" page="/jsp/spaces/edit-simple-workflow.jsp" managed-bean="EditSpaceSimpleWorkflowDialog"
                  icon="/images/icons/edit_large.gif" title-id="modify_workflow_props"
                  description-id="editworkflow_description"  /> 
          
@@ -535,6 +556,9 @@
                  icon="/images/icons/check_in_large.gif" title-id="check_in"
                  description-id="checkinfile_description" />
                  
+         <dialog name="doneEditingFile" page="/jsp/coci/done-editing.jsp" managed-bean="DoneEditingDialog"
+                 icon="/images/icons/done_editing_large.gif" description-id="checkinfile_description" />
+                 
          <dialog name="previewSpace" page="/jsp/spaces/preview-space.jsp" managed-bean="SpacePreviewBean"
                  icon="/images/icons/preview_large.gif" title-id="preview_of" description-id="previewdocument_description" show-ok-button="false" />
                  
@@ -548,7 +572,9 @@
         <dialog name="manageContentUsers" page="/jsp/roles/manage-content-users.jsp" managed-bean="ContentUsersBean"
                  icon="/images/icons/users_large.gif" title-id="manage_content_users" description-id="manage_content_users_description" show-ok-button="false" 
                  actions-config-id="invite_content_user_menu" error-message-id="empty_message"/>                         
-                                 
+        
+        <dialog name="uploadVersion" page="/jsp/content/upload-new-version.jsp" managed-bean="UploadNewVersionDialog"
+                 icon="/images/icons/upload_new_version_large.gif" title-id="upload_new_version_of" />
       </dialogs>
    </config>
    
@@ -595,7 +621,16 @@
    <config evaluator="node-type" condition="wcmwf:reviewTask">
       <dialogs>
          <dialog name="manageTask" page="/jsp/wcm/manage-review-task-dialog.jsp"
-                 managed-bean="ManageLinkValidationTaskDialog" 
+                 managed-bean="ManageReviewTaskDialog" 
+                 icon="/images/icons/manage_workflow_task_large.gif" 
+                 description-id="manage_task_desc" />
+      </dialogs>
+   </config>
+   
+   <config evaluator="node-type" condition="wcmwf:parallelReviewTask">
+      <dialogs>
+         <dialog name="manageTask" page="/jsp/wcm/manage-review-task-dialog.jsp"
+                 managed-bean="ManageReviewTaskDialog" 
                  icon="/images/icons/manage_workflow_task_large.gif" 
                  description-id="manage_task_desc" />
       </dialogs>
@@ -604,7 +639,7 @@
    <config evaluator="node-type" condition="wcmwf:verifyBrokenLinksTask">
       <dialogs>
          <dialog name="manageTask" page="/jsp/wcm/manage-review-task-dialog.jsp"
-                 managed-bean="ManageLinkValidationTaskDialog" 
+                 managed-bean="ManageReviewTaskDialog" 
                  icon="/images/icons/manage_workflow_task_large.gif" 
                  description-id="manage_task_desc" />
       </dialogs>
@@ -612,7 +647,7 @@
    
    <config evaluator="node-type" condition="wcmwf:changeRequestTask">
       <dialogs>
-         <dialog name="manageTask" page="/jsp/wcm/manage-review-task-dialog.jsp"
+         <dialog name="manageTask" page="/jsp/wcm/manage-change-request-task-dialog.jsp"
                  managed-bean="ManageChangeRequestTaskDialog" 
                  icon="/images/icons/manage_workflow_task_large.gif" 
                  description-id="manage_task_desc" />

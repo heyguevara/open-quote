@@ -10,21 +10,39 @@
 		<property name="name">
 			<value>node</value>
 		</property>
-		<property name="transactionService">
-			<ref bean="transactionService"/>
-		</property>
+        <property name="issuerDAO">
+            <ref bean="issuerDAO"/>
+        </property>
+        <property name="issuerIDDAO">
+            <ref bean="issuerIDDAO"/>
+        </property>
+        <property name="transactionService">
+            <ref bean="transactionService"/>
+        </property>
 	</bean>
 
 	<bean id="layerIssuer" class="org.alfresco.repo.avm.Issuer" depends-on="avmDAOs" >
 		<property name="name">
 			<value>layer</value>
 		</property>
+		<property name="issuerDAO">
+		    <ref bean="issuerDAO"/>
+		</property>
+		<property name="issuerIDDAO">
+		    <ref bean="issuerIDDAO"/>
+		</property>
 		<property name="transactionService">
-			<ref bean="transactionService"/>
+		    <ref bean="transactionService"/>
 		</property>
 	</bean>
 
 	<!-- DAOs for persistent data types -->
+
+    <bean id="issuerIDDAO" class="org.alfresco.repo.avm.hibernate.IssuerIDDAOHibernate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
 
 	<!-- Issuers are not actual entities. More like pseudo entities. -->
 
@@ -83,6 +101,9 @@
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
+		<property name="qnameDAO">
+			<ref bean="qnameDAO"/>
+		</property>
 	</bean>
 
 	<bean id="avmAspectNameDAO" class="org.alfresco.repo.avm.hibernate.AVMAspectNameDAOHibernate">
@@ -103,12 +124,15 @@
 	   </property>
 	</bean>
 
-	<bean id="avmDAOs" class="org.alfresco.repo.avm.AVMDAOs">
+	<bean id="avmDAOs" class="org.alfresco.repo.avm.AVMDAOs" factory-method="Instance">
 		<property name="issuerDAO">
 			<ref bean="issuerDAO"/>
 		</property>
 		<property name="nodeDAO">
 			<ref bean="avmNodeDAO"/>
+		</property>
+		<property name="qnameDAO">
+			<ref bean="qnameDAO"/>
 		</property>
 		<property name="avmStoreDAO">
 			<ref bean="avmStoreDAO"/>
@@ -214,6 +238,9 @@
 	    <property name="purgeVersionTxnListener">
 		    <ref bean="purgeVersionTxnListener"/>
 		</property>
+		<property name="qnameDAO">
+		    <ref bean="qnameDAO"/>
+		</property>
 		<property name="avmStoreDAO">
 		    <ref bean="avmStoreDAO"/>
 		</property>
@@ -231,6 +258,9 @@
 		</property>
 		<property name="childEntryDAO">
 		    <ref bean="childEntryDAO"/>
+		</property>
+		<property name="dictionaryService">
+		    <ref bean="dictionaryService"/>
 		</property>
 	</bean>
 
@@ -348,4 +378,26 @@
 	    </property>
 	</bean>
 
+   <bean id="avmSessionSizeResourceInterceptor" class="org.alfresco.repo.transaction.TransactionResourceInterceptor" >
+      <property name="methodResourceManagers">
+         <list>
+            <ref bean="avmSessionSizeResourceManager"></ref>
+         </list>
+      </property>
+      <property name="elapsedTimeBeforeActivationMillis">
+         <value>500</value>
+      </property>
+      <property name="resourceManagerCallFrequencyMillis">
+         <value>250</value>
+      </property>
+   </bean>
+
+   <bean id="avmSessionSizeResourceManager" class="org.alfresco.repo.domain.hibernate.SessionSizeResourceManager">
+      <property name="sessionFactory">
+         <ref bean="sessionFactory" />
+      </property>
+      <property name="threshold">
+         <value>100</value>
+      </property>
+   </bean>
 </beans>

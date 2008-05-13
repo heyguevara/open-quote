@@ -209,9 +209,6 @@
         <property name="mimetypeService">
             <ref bean="mimetypeService" />
         </property>
-        <property name="transformerRegistry">
-            <ref bean="contentTransformerRegistry" />
-        </property>
         <property name="applicableTypes">
         	<list>
         		<value>{http://www.alfresco.org/model/content/1.0}content</value>
@@ -413,6 +410,9 @@
         <property name="ruleService">
             <ref bean="RuleService" />
         </property>
+        <property name="runtimeRuleService">
+            <ref bean="ruleService" />
+        </property>
         <property name="dictionaryService">
             <ref bean="DictionaryService" />
         </property>
@@ -496,7 +496,7 @@
     	</property>
     </bean>
     
-    <bean id="avm-deploy-snapshot" class="org.alfresco.repo.avm.actions.AVMDeploySnapshotAction" parent="action-executer">
+    <bean id="avm-deploy-website" class="org.alfresco.repo.avm.actions.AVMDeployWebsiteAction" parent="action-executer">
     	<property name="deploymentService">
     	    <ref bean="DeploymentService"/>
     	</property>
@@ -516,7 +516,7 @@
          <value>admin</value>
       </property>
       <property name="defaultAlfrescoRmiPort">
-         <value>50500</value>
+         <value>${alfresco.rmi.services.port}</value>
       </property>
       <property name="defaultReceiverRmiPort">
          <value>44100</value>

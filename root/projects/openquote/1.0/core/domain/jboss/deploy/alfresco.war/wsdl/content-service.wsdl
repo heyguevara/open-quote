@@ -52,6 +52,25 @@
             </complexType>
          </element>
          
+         
+         <element name="writeWithAttachment">
+            <complexType>
+               <sequence>
+                  <element name="node" type="cms:Reference"/>
+                  <element name="property" type="xsd:string"/>
+                  <element name="format" type="cms:ContentFormat"/>
+               </sequence>
+            </complexType>
+         </element>
+         
+         <element name="writeWithAttachmentResponse">
+            <complexType>
+               <sequence>
+                  <element name="content" type="content:Content"/>
+               </sequence>
+            </complexType>
+         </element>
+         
          <element name="clear">
             <complexType>
                <sequence>
@@ -65,6 +84,26 @@
             <complexType>
                <sequence>
                   <element name="content" type="content:Content" maxOccurs="unbounded" minOccurs="0"/>
+               </sequence>
+            </complexType>
+         </element>         
+         
+         <element name="transform">
+            <complexType>
+               <sequence>
+                  <element name="source" type="cms:Reference" />
+                  <element name="property" type="xsd:string" />
+                  <element name="destinationReference" type="cms:Reference"/>
+                  <element name="destinationProperty" type="xsd:string"/>
+                  <element name="destinationFormat" type="cms:ContentFormat"/>
+               </sequence>
+            </complexType>
+         </element>
+         
+         <element name="transformResponse">
+            <complexType>
+               <sequence>
+                  <element name="content" type="content:Content"/>
                </sequence>
             </complexType>
          </element>
@@ -114,12 +153,28 @@
       <wsdl:part element="content:writeResponse" name="parameters"/>
    </wsdl:message>
    
+   <wsdl:message name="writeWithAttachmentRequest">
+      <wsdl:part element="content:writeWithAttachment" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="writeWithAttachmentResponse">
+      <wsdl:part element="content:writeWithAttachmentResponse" name="parameters"/>
+   </wsdl:message>
+   
    <wsdl:message name="clearRequest">
       <wsdl:part element="content:clear" name="parameters"/>
    </wsdl:message>
    
    <wsdl:message name="clearResponse">
       <wsdl:part element="content:clearResponse" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="transformRequest">
+      <wsdl:part element="content:transform" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="transformResponse">
+      <wsdl:part element="content:transformResponse" name="parameters"/>
    </wsdl:message>
    
    <wsdl:message name="ContentFault">
@@ -139,10 +194,22 @@
          <wsdl:output message="content:writeResponse"/>
          <wsdl:fault message="content:ContentFault" name="ContentFault"/>
       </wsdl:operation>
+      <wsdl:operation name="writeWithAttachment">
+         <wsdl:documentation>Writes the attached content into the repository.</wsdl:documentation>
+         <wsdl:input message="content:writeWithAttachmentRequest"/>
+         <wsdl:output message="content:writeWithAttachmentResponse"/>
+         <wsdl:fault message="content:ContentFault" name="ContentFault"/>
+      </wsdl:operation>
       <wsdl:operation name="clear">
          <wsdl:documentation>Clears content from the repository.</wsdl:documentation>
          <wsdl:input message="content:clearRequest"/>
          <wsdl:output message="content:clearResponse"/>
+         <wsdl:fault message="content:ContentFault" name="ContentFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="transform">
+         <wsdl:documentation>Transforms content from one mimetype to another.</wsdl:documentation>
+         <wsdl:input message="content:transformRequest"/>
+         <wsdl:output message="content:transformResponse"/>
          <wsdl:fault message="content:ContentFault" name="ContentFault"/>
       </wsdl:operation>
    </wsdl:portType>
@@ -174,6 +241,19 @@
             <wsdlsoap:fault namespace="http://www.alfresco.org/ws/service/content/1.0" use="literal" name="ContentFault"/>
          </wsdl:fault>
       </wsdl:operation>
+      <wsdl:operation name="writeWithAttachment">
+         <wsdl:documentation>Writes attached content to the repository.</wsdl:documentation>
+         <wsdlsoap:operation soapAction="http://www.alfresco.org/ws/service/content/1.0/writeWithAttachment"/>
+         <wsdl:input>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="ContentFault">
+            <wsdlsoap:fault namespace="http://www.alfresco.org/ws/service/content/1.0" use="literal" name="ContentFault"/>
+         </wsdl:fault>
+      </wsdl:operation>
       <wsdl:operation name="clear">
          <wsdl:documentation>Clears content from the repository.</wsdl:documentation>
          <wsdlsoap:operation soapAction="http://www.alfresco.org/ws/service/content/1.0/clear"/>
@@ -186,7 +266,20 @@
          <wsdl:fault name="ContentFault">
             <wsdlsoap:fault namespace="http://www.alfresco.org/ws/service/content/1.0" use="literal" name="ContentFault"/>
          </wsdl:fault>
-      </wsdl:operation>      
+      </wsdl:operation>  
+      <wsdl:operation name="transform">
+         <wsdl:documentation>Transforms content from one mimetype to another.</wsdl:documentation>
+         <wsdlsoap:operation soapAction="http://www.alfresco.org/ws/service/content/1.0/transform"/>
+         <wsdl:input>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="ContentFault">
+            <wsdlsoap:fault namespace="http://www.alfresco.org/ws/service/content/1.0" use="literal" name="ContentFault"/>
+         </wsdl:fault>
+      </wsdl:operation>     
     </wsdl:binding>
 
    <wsdl:service name="ContentService">

@@ -28,6 +28,45 @@
    
    
    <!-- ===================================== -->
+   <!-- ID lookup for QName entities          -->
+   <!-- ===================================== -->
+
+   <!-- The cross-transaction shared cache for QName entities -->
+   
+   <bean name="qnameEntitySharedCache" class="org.alfresco.repo.cache.EhCacheAdapter">
+      <property name="cache">
+         <bean class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+            <property name="cacheManager">
+               <ref bean="internalEHCacheManager" />
+            </property>
+            <property name="cacheName">
+               <value>defaultCache</value>
+               <!--
+               <value>org.alfresco.cache.qnameEntityCache</value>
+               -->
+            </property>
+         </bean>
+      </property>
+   </bean>
+   
+   <!-- The transactional cache for QName entities -->
+   
+   <bean name="qnameEntityCache" class="org.alfresco.repo.cache.TransactionalCache">
+      <property name="sharedCache">
+         <ref bean="qnameEntitySharedCache" />
+      </property>
+      <property name="cacheManager" >
+         <ref bean="transactionalEHCacheManager" />
+      </property>
+      <property name="name">
+         <value>org.alfresco.cache.qnameEntityTransactionalCache</value>
+      </property>
+      <property name="maxCacheSize">
+         <value>100</value>
+      </property>
+   </bean>
+   
+   <!-- ===================================== -->
    <!-- Parent Associations lookup for nodes  -->
    <!-- ===================================== -->
 
@@ -386,6 +425,43 @@
        </property>
    </bean>
    
+	
+   <!-- ===================================== -->
+   <!-- ACL cache                      -->
+   <!-- ===================================== -->
+
+   <!-- The cross-transaction shared cache for Acls -->
+   
+   <bean name="aclSharedCache" class="org.alfresco.repo.cache.EhCacheAdapter">
+      <property name="cache">
+         <bean class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+            <property name="cacheManager">
+               <ref bean="internalEHCacheManager" />
+            </property>
+            <property name="cacheName">
+               <value>org.alfresco.cache.aclCache</value>
+            </property>
+         </bean>
+      </property>
+   </bean>
+   
+   <!-- The transactional cache for Node Ownership -->
+   
+   <bean name="aclCache" class="org.alfresco.repo.cache.TransactionalCache">
+      <property name="sharedCache">
+         <ref bean="aclSharedCache" />
+      </property>
+      <property name="cacheManager" >
+         <ref bean="transactionalEHCacheManager" />
+      </property>
+      <property name="name">
+         <value>org.alfresco.aclTransactionalCache</value>
+      </property>
+      <property name="maxCacheSize">
+         <value>10000</value>
+      </property>
+   </bean>
+	
    <!-- ===================================== -->
    <!-- Messages Caches                       -->
    <!-- ===================================== -->
@@ -613,6 +689,42 @@
       </property>
       <property name="name">
          <value>org.alfresco.prefixesTransactionalCache</value>
+      </property>
+      <property name="maxCacheSize">
+         <value>10</value>
+      </property>
+   </bean>
+   
+   <!-- ===================================== -->
+   <!-- Web Scripts Caches                    -->
+   <!-- ===================================== -->
+
+   <!-- The cross-transaction shared cache for In-Memory WebScripts Registry -->
+   
+   <bean name="webScriptsRegistrySharedCache" class="org.alfresco.repo.cache.EhCacheAdapter">
+      <property name="cache">
+         <bean class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+            <property name="cacheManager">
+               <ref bean="internalEHCacheManager" />
+            </property>
+            <property name="cacheName">
+               <value>org.alfresco.cache.webScriptsRegistryCache</value>
+            </property>
+         </bean>
+      </property>
+   </bean>
+   
+   <!-- The transactional cache for In-Memory WebScripts Registry -->
+   
+   <bean name="webScriptsRegistryCache" class="org.alfresco.repo.cache.TransactionalCache">
+      <property name="sharedCache">
+         <ref bean="webScriptsRegistrySharedCache" />
+      </property>
+      <property name="cacheManager" >
+         <ref bean="transactionalEHCacheManager" />
+      </property>
+      <property name="name">
+         <value>org.alfresco.webScriptsRegistryTransactionalCache</value>
       </property>
       <property name="maxCacheSize">
          <value>10</value>

@@ -42,6 +42,72 @@
             </params>
          </action>
 
+         <!-- Edit document offline action -->
+         <action id="edit_doc_offline">
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
+            <evaluator>org.alfresco.web.action.evaluator.EditDocOfflineEvaluator</evaluator>
+            <label-id>edit_doc_offline</label-id>
+            <image>/images/icons/edit_offline.gif</image>
+            <action-listener>#{EditOfflineDialog.setupContentAction}</action-listener>
+            <params>
+                <param name="id">#{actionContext.id}</param>
+            </params>
+         </action>
+
+         <!-- Download document -->
+         <action id="download_doc">
+             <evaluator>org.alfresco.web.action.evaluator.DownloadEvaluator</evaluator>
+             <label-id>download_doc</label-id>
+             <image>/images/icons/download_doc.gif</image>
+             <href>#{actionContext.url}</href>
+         </action>
+
+         <!-- Edit document online action via webdav -->
+         <action id="edit_doc_online_webdav">
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
+            <evaluator>org.alfresco.web.action.evaluator.EditDocOnlineWebDavEvaluator</evaluator>
+            <label-id>edit_doc_online</label-id>
+            <image>/images/icons/edit_online.gif</image>
+            <action-listener>#{EditOnlineDialog.handleWebdavEditing}</action-listener>
+            <params>
+                <param name="id">#{actionContext.id}</param>
+                <param name="webdavUrl">#{actionContext.webdavUrl}</param>
+            </params>
+         </action>
+
+         <!-- Edit document online action via cifs -->
+         <action id="edit_doc_online_cifs">
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
+            <evaluator>org.alfresco.web.action.evaluator.EditDocOnlineCIFSEvaluator</evaluator>
+            <label-id>edit_doc_online</label-id>
+            <image>/images/icons/edit_online.gif</image>
+            <action-listener>#{EditOnlineDialog.handleCifsEditing}</action-listener>
+            <params>
+                <param name="id">#{actionContext.id}</param>
+                <param name="cifsPath">#{actionContext.cifsPath}</param>
+            </params>
+         </action>
+
+          <!-- Edit document online action via http -->
+         <action id="edit_doc_online_http">
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
+            <evaluator>org.alfresco.web.action.evaluator.EditDocOnlineHttpEvaluator</evaluator>
+            <label-id>edit_doc_online</label-id>
+            <image>/images/icons/edit_online.gif</image>
+            <action-listener>#{EditOnlineDialog.handleHttpEditing}</action-listener>
+            <params>
+               <param name="id">#{actionContext.id}</param>
+            </params>
+         </action>
+
          <!-- Edit document action to open using normal HTTP access or inline Edit if set -->
          <action id="edit_doc_http">
             <permissions>
@@ -113,6 +179,29 @@
             <image>/images/icons/undo_checkout.gif</image>
             <action-listener>#{CCUndoCheckoutFileDialog.setupContentAction}</action-listener>
             <action>dialog:undoCheckoutFile</action>
+            <params>
+               <param name="id">#{actionContext.id}</param>
+            </params>
+         </action>
+         
+         <!-- Cancel editing document -->
+         <action id="cancel_editing_doc">
+            <evaluator>org.alfresco.web.action.evaluator.CancelEditingDocEvaluator</evaluator>
+            <label-id>cancel_editing</label-id>
+            <image>/images/icons/cancel_editing.gif</image>
+            <action-listener>#{CancelEditingDialog.setupContentAction}</action-listener>
+            <action>dialog:cancelEditing</action>
+            <params>
+               <param name="id">#{actionContext.id}</param>
+            </params>
+         </action>
+
+         <!-- Done-editing document -->
+         <action id="done_editing_doc">
+            <evaluator>org.alfresco.web.action.evaluator.DoneEditingDocEvaluator</evaluator>
+            <label-id>checkin</label-id>
+            <image>/images/icons/done_editing.gif</image>
+            <action-listener>#{DoneEditingDialog.handle}</action-listener>
             <params>
                <param name="id">#{actionContext.id}</param>
             </params>
@@ -206,8 +295,27 @@
             </params>
          </action>
 
+         <!-- Upload new version of document-->
+         <action id="upload_new_version">
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
+            <evaluator>org.alfresco.web.action.evaluator.UploadNewVersionEvaluator</evaluator>
+            <label-id>upload_new_version</label-id>
+            <image>/images/icons/upload_new_version.gif</image>
+            <action-listener>#{UploadNewVersionDialog.setupContentAction}</action-listener>
+            <action>dialog:uploadVersion</action>
+            <params>
+               <param name="id">#{actionContext.id}</param>
+            </params>
+         </action>
+
+
          <!-- 'Approve' workflow step for document -->
          <action id="approve_doc">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.ApproveDocEvaluator</evaluator>
             <label>#{actionContext["app:approveStep"]}</label>
             <image>/images/icons/approve.gif</image>
@@ -220,6 +328,9 @@
 
          <!-- 'Reject' workflow step for document -->
          <action id="reject_doc">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.RejectDocEvaluator</evaluator>
             <label>#{actionContext["app:rejectStep"]}</label>
             <image>/images/icons/reject.gif</image>
@@ -232,6 +343,9 @@
 
          <!-- 'Approve' workflow step for document details page -->
          <action id="approve_doc_details">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.ApproveDocEvaluator</evaluator>
             <label>#{actionContext.properties["app:approveStep"]}</label>
             <image>/images/icons/approve.gif</image>
@@ -244,6 +358,9 @@
 
          <!-- 'Reject' workflow step for document details page-->
          <action id="reject_doc_details">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.RejectDocEvaluator</evaluator>
             <label>#{actionContext.properties["app:rejectStep"]}</label>
             <image>/images/icons/reject.gif</image>
@@ -256,6 +373,9 @@
 
          <!-- 'Approve' workflow step for space -->
          <action id="approve_space">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.ApproveDocEvaluator</evaluator>
             <label>#{actionContext["app:approveStep"]}</label>
             <image>/images/icons/approve.gif</image>
@@ -268,6 +388,9 @@
 
          <!-- 'Reject' workflow step for space -->
          <action id="reject_space">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.RejectDocEvaluator</evaluator>
             <label>#{actionContext["app:rejectStep"]}</label>
             <image>/images/icons/reject.gif</image>
@@ -280,6 +403,9 @@
 
          <!-- 'Approve' workflow step for space details page -->
          <action id="approve_space_details">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.ApproveDocEvaluator</evaluator>
             <label>#{actionContext.properties["app:approveStep"]}</label>
             <image>/images/icons/approve.gif</image>
@@ -292,6 +418,9 @@
 
          <!-- 'Reject' workflow step for space details page-->
          <action id="reject_space_details">
+            <permissions>
+               <permission allow="true">WriteProperties</permission>
+            </permissions>
             <evaluator>org.alfresco.web.action.evaluator.RejectDocEvaluator</evaluator>
             <label>#{actionContext.properties["app:rejectStep"]}</label>
             <image>/images/icons/reject.gif</image>
@@ -594,21 +723,21 @@
                <param name="id">#{actionContext.id}</param>
             </params>
          </action>
-		
-		 <!-- Invite Space user action-->
-         <action id="ivite_user">
+      
+         <!-- Invite Space user action-->
+         <action id="invite_user">
             <label-id>invite</label-id>
             <image>/images/icons/invite.gif</image>
             <action>wizard:inviteSpaceUsers</action>
          </action>
-			
-		<!-- Invite Content user action-->
-         <action id="ivite_content_user">
+         
+         <!-- Invite Content user action-->
+         <action id="invite_content_user">
             <label-id>invite</label-id>
             <image>/images/icons/invite.gif</image>
             <action>wizard:inviteContentUsers</action>
-         </action>	
-			
+         </action>   
+         
          <!-- Import into Space -->
          <action id="import_space">
             <permissions>
@@ -638,7 +767,19 @@
          <action id="reapply-rules">
             <label-id>reapply_rules</label-id>
             <image>/images/icons/reapply_rules.gif</image>
-            <action-listener>#{RulesDialog.reapplyRules}</action-listener>
+            <action-listener>#{RulesDialog.reapplyRules}</action-listener>            
+            <params>
+               <param name="toChildren">False</param>
+            </params>            
+         </action>   
+               
+         <action id="reapply-rules-to-children">
+            <label-id>reapply_rules_to_children</label-id>
+            <image>/images/icons/reapply_rules.gif</image>
+            <action-listener>#{RulesDialog.reapplyRules}</action-listener>           
+            <params>
+               <param name="toChildren">True</param>
+            </params>
          </action>
 
          <!-- Ignore Inherited Rules -->
@@ -728,22 +869,7 @@
             <label-id>create_rule</label-id>
             <image>/images/icons/new_rule.gif</image>
             <action>wizard:createRule</action>
-         </action>
-         
-          <!-- ReApply Rules -->
-         <action id="reapply-rules">
-            <label-id>reapply_rules</label-id>
-            <image>/images/icons/reapply_rules.gif</image>
-            <action-listener>#{RulesDialog.reapplyRules}</action-listener>
-         </action>
-
-         <!-- Ignore Inherited Rules -->
-         <action id="ignore-inherited-rules">
-            <label>#{RulesDialog.ignoreInheritedRulesLabelId}</label>
-            <image>/images/icons/reapply_rules.gif</image>
-            <action-listener>#{RulesDialog.ignoreInheritedRules}</action-listener>
-         </action>
-         
+         </action>       
          
          <!-- Create a category -->
          <action id="add_category">
@@ -850,48 +976,6 @@
             </params>
          </action>
 
-         <action id="postBlog">
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>org.alfresco.module.blogIntegration.ui.PostBlogEvaluator</evaluator>
-            <label>Post To Blog</label>
-            <image>/images/icons/edit_icon.gif</image>
-		      <action-listener>#{org_alfresco_module_blogIntegration_BlogActionListener.executeScript}</action-listener>
-		      <params>
-		         <param name="id">#{actionContext.id}</param>
-         		<param name="action">post</param>
-      		</params>
-         </action>
-
-         <action id="updateBlog">
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>org.alfresco.module.blogIntegration.ui.UpdateBlogEvaluator</evaluator>
-            <label>Update Blog Post</label>
-            <image>/images/icons/edit_icon.gif</image>
-		      <action-listener>#{org_alfresco_module_blogIntegration_BlogActionListener.executeScript}</action-listener>
-		      <params>
-		         <param name="id">#{actionContext.id}</param>
-         		<param name="action">update</param>
-      		</params>
-         </action>
-
-         <action id="removeBlog">
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>org.alfresco.module.blogIntegration.ui.UpdateBlogEvaluator</evaluator>
-            <label>Remove Blog Post</label>
-            <image>/images/icons/edit_icon.gif</image>
-		      <action-listener>#{org_alfresco_module_blogIntegration_BlogActionListener.executeScript}</action-listener>
-		      <params>
-		         <param name="id">#{actionContext.id}</param>
-         		<param name="action">remove</param>
-      		</params>
-         </action>
-
          <!-- the 'action-group' elements define unique blocks of actions that reference the actions
               as defined above and can override or supply display elements for the group of actions -->
          <!-- the component is responsible for making the context Node object available with name
@@ -908,11 +992,27 @@
             <show-link>false</show-link>
             <style-class>inlineAction</style-class>
 
+            <action idref="upload_new_version" />
+            <action idref="edit_doc_online_webdav" />
+            <action idref="edit_doc_online_cifs" />
+            <action idref="edit_doc_online_http" />
+            <action idref="edit_doc_offline" />             
+            <action idref="done_editing_doc" />
+            <action idref="cancel_editing_doc" />
+            <action idref="download_doc" />
+            
+            <!-- Actions previously used for checkin/checkout -->
+            <!-- If old behaviour is required uncomment the --> 
+            <!-- actions below and comment out the ones above --> 		
+            
+            <!--        
             <action idref="edit_doc_http" />
             <action idref="edit_doc_webdav" />
             <action idref="edit_doc_cifs" />
             <action idref="checkout_doc" />
             <action idref="checkin_doc" />
+            -->
+
             <action idref="details_doc" />
             <action idref="delete_doc" />
 
@@ -934,23 +1034,27 @@
          <action-group id="document_browse_menu">
             <action idref="preview_doc" />
             <action idref="update_doc" />
-            <action idref="cancelcheckout_doc" />
+            <!-- Old Cancel Checkout action -->
+            <!--
+            <action idref="cancelcheckout_doc" /> 
+            -->
+            <action idref="checkout_doc" />
             <action idref="approve_doc" />
             <action idref="reject_doc" />
             <action idref="cut_node" />
             <action idref="copy_node" />
          </action-group>
-		
-		<!-- Action menu for Invite Space user in Manage invite users screen-->
+      
+         <!-- Action menu for Invite Space user in Manage invite users screen-->
          <action-group id="invite_user_menu">
-            <action idref="ivite_user"/>
+            <action idref="invite_user"/>
          </action-group>
          
          <!-- Action menu for Invite Content user in Manage invite users screen-->
          <action-group id="invite_content_user_menu">
-            <action idref="ivite_content_user"/>
+            <action idref="invite_content_user"/>
          </action-group>
-		
+      
          <!-- Actions for a space in the Browse screen -->
          <action-group id="space_browse">
             <show-link>false</show-link>
@@ -996,17 +1100,31 @@
 
          <!-- Actions Menu for Document Details screen -->
          <action-group id="doc_details_actions">
+            <action idref="upload_new_version" />
+            <action idref="edit_doc_online_http" />
+            <action idref="edit_doc_online_webdav" />
+            <action idref="edit_doc_online_cifs" />
+            <action idref="edit_doc_offline" />
             <action idref="checkout_doc" />
-            <action idref="checkin_doc" />
+            <action idref="done_editing_doc" />
+            <action idref="download_doc" />
+            <action idref="cancel_editing_doc" />
+
+            <!-- Actions previously used for checkin/checkout -->
+            <!-- If old behaviour is required uncomment the --> 
+            <!-- actions below and comment out the ones above -->
+
+            <!-- 
+            <action idref="checkout_doc" />       
+            <action idref="checkin_doc" />              
             <action idref="cancelcheckout_doc" />
+            <action idref="edit_doc_http" />
+            <action idref="edit_doc_webdav" />
+            <action idref="edit_doc_cifs" />  
+            -->
+            
             <action idref="approve_doc_details" />
             <action idref="reject_doc_details" />
-            <action idref="edit_doc_http" />
-            <!-- TODO: add these once the appropriate props (webdavUrl and cifsPath) are added
-                       to the node bean as resolvers (probably need to change valuebindings also)
-            <action idref="edit_doc_webdav" />
-            <action idref="edit_doc_cifs" />
-            -->
             <action idref="update_doc" />
             <action idref="cut_node" />
             <action idref="copy_node" />
@@ -1076,7 +1194,8 @@
 
          <!-- Actions Menu for Manage Rules screen -->
          <action-group id="rules_actions_menu">
-            <action idref="reapply-rules" />
+            <action idref="reapply-rules" />            
+            <action idref="reapply-rules-to-children" />
             <action idref="ignore-inherited-rules" />
          </action-group>
 
@@ -1127,23 +1246,17 @@
             <action idref="create_rule"/>
          </action-group> 
          
-         <!-- Actions Menu for Manage Rules screen -->
-         <action-group id="rules_actions_menu">
-            <action idref="reapply-rules" />
-            <action idref="ignore-inherited-rules" />
-         </action-group>
-         
-          <!-- Actions Menu for Manage Deleted Items screen -->
+         <!-- Actions Menu for Manage Deleted Items screen -->
          <action-group id="manage_deleted_items_menu">
             <action idref="recover_all_items" />
             <action idref="delete_all_items" />
          </action-group>
          
-          <!-- Action menu for Create user-->
+         <!-- Action menu for Create user-->
          <action-group id="create_user_menu">
             <action idref="create_user"/>
          </action-group>
-         
+
       </actions>
    </config>
 

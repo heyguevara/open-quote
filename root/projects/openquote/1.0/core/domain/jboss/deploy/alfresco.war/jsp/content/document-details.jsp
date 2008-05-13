@@ -193,7 +193,7 @@ styleClass="nodeWorkflowInfoTitle">
 <div style="padding: 4px"></div>
 </f:verbatim>
 <%-- list of translations --%>
-<a:richList id="TranslationList" viewMode="details" value="#{DialogManager.bean.translations}" var="r" styleClass="recordSet" headerStyleClass="recordSetHeader" rowStyleClass="recordSetRow" altRowStyleClass="recordSetRowAlt" width="100%"
+<a:richList id="TranslationList" viewMode="details" value="#{MultilingualManageDialog.translations}" var="r" styleClass="recordSet" headerStyleClass="recordSetHeader" rowStyleClass="recordSetRow" altRowStyleClass="recordSetRowAlt" width="100%"
 pageSize="10" initialSortColumn="Name" initialSortDescending="false">
 
 <%-- Name and icon columns --%>
@@ -225,7 +225,7 @@ pageSize="10" initialSortColumn="Name" initialSortDescending="false">
 Start the new edition wizard from this translation
 --%>
 <h:outputText id="space" value=" " />
-<a:actionLink id="new-edition-from" value="#{msg.new_edition}" action="wizard:newEditionFrom" actionListener="#{NewEditionWizard.skipFirstStep}" rendered="#{r.notEmpty && r.userHasRight}">
+<a:actionLink id="new-edition-from" value="#{msg.new_edition}" action="wizard:newEditionFrom" actionListener="#{NewEditionWizard.skipFirstStep}" rendered="#{r.userHasRight}">
 <f:param name="lang" value="#{r.language}" />
 </a:actionLink>
 </a:column>
@@ -254,7 +254,7 @@ expanded='#{DialogManager.bean.panels["ml-info-panel"]}' expandedActionListener=
 <%-- Action - Add Translation --%>
 <r:permissionEvaluator value="#{DialogManager.bean.document}" allow="Write" id="evalApply">
 <f:verbatim>
-<div style="padding: 16px"></f:verbatim><a:actionLink id="act-make-multilingual" value="#{msg.make_multilingual}" action="dialog:makeMultilingual" showLink="true" image="/images/icons/make_ml.gif" /><f:verbatim></div>
+<div style="padding: 16px"></f:verbatim><a:actionLink id="act-make-multilingual" value="#{msg.make_multilingual}" action="dialog:makeMultilingual" showLink="true" image="/images/icons/make_ml.gif" rendered="#{DialogManager.bean.locked == false && DialogManager.bean.workingCopy == false}"/><f:verbatim></div>
 </f:verbatim>
 </r:permissionEvaluator>
 </a:panel>
@@ -266,13 +266,13 @@ expanded='#{DialogManager.bean.panels["ml-info-panel"]}' expandedActionListener=
 <h:panelGroup id="workflow-panel-facets">
 <f:facet name="title">
 <r:permissionEvaluator value="#{DialogManager.bean.document}" allow="Write">
-<a:actionLink id="titleLink2" value="#{msg.title_edit_simple_workflow}" showLink="false" image="/images/icons/Change_details.gif" action="dialog:editSimpleWorkflow" rendered="#{DialogManager.bean.approveStepName != null}" />
+<a:actionLink id="titleLink2" value="#{msg.title_edit_simple_workflow}" showLink="false" image="/images/icons/Change_details.gif" action="dialog:editContentSimpleWorkflow" rendered="#{DialogManager.bean.approveStepName != null}" />
 </r:permissionEvaluator>
 </f:facet>
 </h:panelGroup>
 <a:panel label="#{msg.workflows}" id="workflow-panel" facetsId="dialog:dialog-body:workflow-panel-facets" progressive="true" border="white" bgcolor="white" titleBorder="lbgrey" expandedTitleBorder="dotted" titleBgcolor="white"
 expanded='#{DialogManager.bean.panels["workflow-panel"]}' expandedActionListener="#{DialogManager.bean.expandPanel}">
-<r:nodeWorkflowInfo id="workflow-info" value="#{EditSimpleWorkflowDialog.document}" />
+<r:nodeWorkflowInfo id="workflow-info" value="#{DialogManager.bean.document}" />
 </a:panel>
 
 <f:verbatim>
@@ -304,8 +304,11 @@ expanded='#{DialogManager.bean.panels["category-panel"]}' expandedActionListener
 <div style="padding: 4px"></div>
 </f:verbatim>
 
-<a:panel label="#{msg.version_history}" id="version-history-panel" progressive="true" border="white" bgcolor="white" titleBorder="lbgrey" expandedTitleBorder="dotted" titleBgcolor="white" rendered="#{DialogManager.bean.versionable}"
-expanded='#{DialogManager.bean.panels["version-history-panel"]}' expandedActionListener="#{DialogManager.bean.expandPanel}">
+<a:panel label="#{msg.version_history}" id="version-history-panel" progressive="true"
+border="white" bgcolor="white" titleBorder="lbgrey" expandedTitleBorder="dotted" titleBgcolor="white"
+rendered="#{DialogManager.bean.versionable && !NavigationBean.isGuest}"
+expanded='#{DialogManager.bean.panels["version-history-panel"]}'
+expandedActionListener="#{DialogManager.bean.expandPanel}">
 
 <a:richList id="versionHistoryList" viewMode="details" value="#{DialogManager.bean.versionHistory}" var="r" styleClass="recordSet" headerStyleClass="recordSetHeader" rowStyleClass="recordSetRow" altRowStyleClass="recordSetRowAlt" width="100%"
 pageSize="10" initialSortColumn="versionDate" initialSortDescending="true">
@@ -351,8 +354,8 @@ pageSize="10" initialSortColumn="versionDate" initialSortDescending="true">
 <h:outputText value="#{msg.actions}" />
 </f:facet>
 <a:actionLink id="view-version-props" value="#{msg.properties}" action="dialog:showVersionedDetails" actionListener="#{VersionedDocumentDetailsDialog.setBrowsingVersion}">
-<f:param name="id" value="#{DialogManager.bean.document.id}" />
-<f:param name="versionLabel" value="#{r.versionLabel}" />
+<f:param id="pm1" name="id" value="#{DialogManager.bean.document.id}" />
+<f:param id="pm2" name="versionLabel" value="#{r.versionLabel}" />
 </a:actionLink>
 <h:outputText id="space" value=" " />
 <a:actionLink id="view-link" value="#{msg.view}" href="#{r.url}" target="new" rendered="#{r.url != null}" />
@@ -361,8 +364,11 @@ pageSize="10" initialSortColumn="versionDate" initialSortDescending="true">
 <a:dataPager styleClass="pager" id="pager-version-history" />
 </a:richList>
 </a:panel>
-<a:panel label="#{msg.version_history}" id="no-version-history-panel" progressive="true" border="white" bgcolor="white" titleBorder="lbgrey" expandedTitleBorder="dotted" titleBgcolor="white" rendered="#{DialogManager.bean.versionable == false}"
-expanded='#{DialogManager.bean.panels["version-history-panel"]}' expandedActionListener="#{DialogManager.bean.expandPanel}">
+<a:panel label="#{msg.version_history}" id="no-version-history-panel" progressive="true" border="white"
+bgcolor="white" titleBorder="lbgrey" expandedTitleBorder="dotted" titleBgcolor="white"
+rendered="#{DialogManager.bean.versionable == false && !NavigationBean.isGuest}"
+expanded='#{DialogManager.bean.panels["version-history-panel"]}'
+expandedActionListener="#{DialogManager.bean.expandPanel}">
 <h:outputText id="no-history-msg" value="#{msg.not_versioned}<br/><br/>" escape="false" />
 <r:permissionEvaluator value="#{DialogManager.bean.document}" allow="Write" id="eval_ver">
 <a:actionLink id="make-versionable" value="#{msg.allow_versioning}" action="#{DialogManager.bean.applyVersionable}" rendered="#{DialogManager.bean.locked == false}" />

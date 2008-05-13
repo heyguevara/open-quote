@@ -34,6 +34,9 @@
       <property name="avmNodeDAO">
             <ref bean="avmNodeDAO"/>
       </property>
+      <property name="contentUrlDAO">
+      	  <ref bean="contentUrlDAO"/>
+      </property>
       <property name="transactionService" >
          <ref bean="transactionService" />
       </property>
@@ -145,16 +148,19 @@
       <property name="mimetypeService">
          <ref bean="mimetypeService" />
       </property>
+      <property name="dictionaryService">
+         <ref bean="dictionaryService" />
+      </property>
    </bean>
    
    <!-- Content Metadata Extracters -->
-   <bean id="extracter.PDFBox" class="org.alfresco.repo.content.metadata.PdfBoxMetadataExtracter" parent="baseMetadataExtracter" />
-   <bean id="extracter.Office" class="org.alfresco.repo.content.metadata.OfficeMetadataExtracter" parent="baseMetadataExtracter" />
-   <bean id="extracter.Mail" class="org.alfresco.repo.content.metadata.MailMetadataExtracter" parent="baseMetadataExtracter" />
-   <bean id="extracter.Html" class="org.alfresco.repo.content.metadata.HtmlMetadataExtracter" parent="baseMetadataExtracter" />
-   <bean id="extracter.MP3" class="org.alfresco.repo.content.metadata.MP3MetadataExtracter" parent="baseMetadataExtracter" />
-   <bean id="extracter.OpenDocument" class="org.alfresco.repo.content.metadata.OpenDocumentMetadataExtracter" parent="baseMetadataExtracter" />
-   <bean id="extracter.OpenOffice" class="org.alfresco.repo.content.metadata.OpenOfficeMetadataExtracter" parent="baseMetadataExtracter" >
+   <bean id="extracter.PDFBox"        class="org.alfresco.repo.content.metadata.PdfBoxMetadataExtracter"        parent="baseMetadataExtracter" />
+   <bean id="extracter.Office"        class="org.alfresco.repo.content.metadata.OfficeMetadataExtracter"        parent="baseMetadataExtracter" />
+   <bean id="extracter.Mail"          class="org.alfresco.repo.content.metadata.MailMetadataExtracter"          parent="baseMetadataExtracter" />
+   <bean id="extracter.Html"          class="org.alfresco.repo.content.metadata.HtmlMetadataExtracter"          parent="baseMetadataExtracter" />
+   <bean id="extracter.MP3"           class="org.alfresco.repo.content.metadata.MP3MetadataExtracter"           parent="baseMetadataExtracter" />
+   <bean id="extracter.OpenDocument"  class="org.alfresco.repo.content.metadata.OpenDocumentMetadataExtracter"  parent="baseMetadataExtracter" />
+   <bean id="extracter.OpenOffice"    class="org.alfresco.repo.content.metadata.OpenOfficeMetadataExtracter"    parent="baseMetadataExtracter" >
       <property name="connection">
          <ref bean="openOfficeConnection" />
       </property>
@@ -184,16 +190,16 @@
 
    <bean id="transformer.BinaryPassThrough"
          class="org.alfresco.repo.content.transform.BinaryPassThroughContentTransformer"
-         parent="baseContentTransformer" />
+         parent="baseContentTransformer" />     
 
    <bean id="transformer.PdfBox"
          class="org.alfresco.repo.content.transform.PdfBoxContentTransformer"
          parent="baseContentTransformer" >
       <property name="explicitTransformations">
          <list>
-            <bean class="org.alfresco.repo.content.transform.ContentTransformerRegistry$TransformationKey" >
-                <constructor-arg><value>application/pdf</value></constructor-arg>
-                <constructor-arg><value>text/plain</value></constructor-arg>
+         	<bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
+                <property name="sourceMimetype"><value>application/pdf</value></property>
+                <property name="targetMimetype"><value>text/plain</value></property>
             </bean>
          </list>
       </property>
@@ -204,7 +210,7 @@
          parent="baseContentTransformer" >
       <property name="explicitTransformations">
          <list>
-            <bean class="org.alfresco.repo.content.transform.ContentTransformerRegistry$TransformationKey" >
+            <bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
                 <constructor-arg><value>text/plain</value></constructor-arg>
                 <constructor-arg><value>application/pdf</value></constructor-arg>
             </bean>
@@ -221,9 +227,9 @@
          parent="baseContentTransformer" >
       <property name="explicitTransformations">
          <list>
-            <bean class="org.alfresco.repo.content.transform.ContentTransformerRegistry$TransformationKey" >
-                <constructor-arg><value>application/msword</value></constructor-arg>
-                <constructor-arg><value>text/plain</value></constructor-arg>
+            <bean class="org.alfresco.repo.content.transform.ExplictTransformationDetails" >
+                <property name="sourceMimetype"><value>application/msword</value></property>
+                <property name="targetMimetype"><value>text/plain</value></property>
             </bean>
          </list>
       </property>
@@ -232,6 +238,17 @@
    <bean id="transformer.HtmlParser"
          class="org.alfresco.repo.content.transform.HtmlParserContentTransformer"
          parent="baseContentTransformer" />
+         
+   <bean id="transformer.MediaWikiParser"
+         class="org.alfresco.repo.content.transform.MediaWikiContentTransformer"
+         parent="baseContentTransformer">
+      <property name="nodeService">
+         <ref bean="NodeService" />
+      </property>
+      <property name="fileFolderService">
+         <ref bean="FileFolderService" />
+      </property>
+   </bean>      
 
    <bean id="transformer.OpenOffice"
          class="org.alfresco.repo.content.transform.OpenOfficeContentTransformer"

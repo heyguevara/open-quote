@@ -218,7 +218,12 @@
 
     <bean id="linkValidationService" 
           class="org.alfresco.linkvalidation.LinkValidationServiceImpl"
-          lazy-init="true">
+          lazy-init="true"
+          init-method="register">
+
+        <property name="authenticationComponent">
+            <ref bean="authenticationComponent"/>
+        </property>
         <property name="attributeService">
             <ref bean="AttributeService"/>
         </property>
@@ -251,6 +256,12 @@
         </property>
         <property name="purgeStoreTxnListener">
             <ref bean="purgeStoreTxnListener"/>
+        </property>
+        <property name="sysAdminCache">
+            <ref bean="sysAdminCache"/>
+        </property>
+        <property name="repoServerMgmt">
+            <ref bean="RepoServerMgmt"/>
         </property>
 
         <!-- Poll interval to check getLatestSnapshotID (in milliseconds).  -->

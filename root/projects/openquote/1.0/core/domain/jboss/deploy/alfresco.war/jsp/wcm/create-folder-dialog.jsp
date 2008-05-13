@@ -101,6 +101,19 @@ onkeyup="javascript:checkButtonState();" onchange="javascript:checkButtonState()
 <td></td>
 <td>
 </f:verbatim>
+<h:outputText value="#{msg.title}:" />
+<f:verbatim>
+</td>
+<td>
+</f:verbatim>
+<h:inputText id="title" value="#{DialogManager.bean.title}" size="35" maxlength="1024" />
+<f:verbatim>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+</f:verbatim>
 <h:outputText value="#{msg.description}:" />
 <f:verbatim>
 </td>
