@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for the openquote community project.
+-->
+
+<project default="build" name="community">
+  <import file="./BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <subant-macro target="clean" />
+  </target>
+
+  <target name="_build">
+    <subant-macro target="_build" />
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <install-jboss-macro version="${jboss.version}" />
+    <install-base-domain-macro dar="openquote" version="${openquote.version}" build="${openquote.build}" name="openquote.ear" />
+    <delete file="${deploy.dir}/deploy/ail-persistence-ds.xml" />
+    <delete file="${deploy.dir}/deploy/ail-configure-ds.xml" />
+    <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-wsrp.sar" />
+
+    <antcall target="_build" />
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="./target" />
+  </target>
+
+  <target name="release" description="build this project's releasable outputs">
+    <!-- Do a clean build before we release -->
+    <antcall target="teardown" />
+    <antcall target="setup" />
+
+		<unexplode-jar-macro jar="${ear.dir}/lib/core.jar"/>
+		<unexplode-jar-macro jar="${ear.dir}/lib/commercial.jar"/>
+		<unexplode-jar-macro jar="${ear.dir}/lib/insurance.jar"/>
+		<unexplode-jar-macro jar="${ear.dir}/lib/openquote.jar"/>
+
+    <unexplode-jar-macro jar="${ear.dir}/acceptance-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/command-server-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/configure-server-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/persistence-server-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/product-manager-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/quotation-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/subrogation-ejb.jar"/>
+
+    <unexplode-jar-macro jar="${ear.dir}/configure.war"/>
+    <unexplode-jar-macro jar="${ear.dir}/content-browser.war"/>
+    <unexplode-jar-macro jar="${ear.dir}/product-manager.war"/>
+    <unexplode-jar-macro jar="${ear.dir}/quotation.war"/>
+
+    <unexplode-jar-macro jar="${ear.dir}"/>
+    
+    <unexplode-jar-macro jar="${deploy.dir}/deploy/alfresco.war"/>
+    
+		<!-- don't use the zip ant task - it forgets unix file permissions -->
+    <exec executable="zip">
+    	<arg line="-r ./target/openquote-community-${major.version}.${minor.version}.zip ${target}/openquote-community"/>
+	  </exec>
+  </target>
+</project>
