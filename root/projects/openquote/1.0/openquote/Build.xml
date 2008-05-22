@@ -40,14 +40,15 @@
       <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml"/>
       <delete file="${ear.dir}/content-browser.war/WEB-INF/content-browser-object.xml"/>
       <delete file="${ear.dir}/content-browser.war/WEB-INF/portlet-instances.xml"/>
-			<delete file="${deploy.dir}/deplo/ail-persistence-ds.xml"/>
-			<delete file="${deploy.dir}/deplo/ail-configure-ds.xml"/>
+			<delete file="${deploy.dir}/deploy/ail-persistence-ds.xml"/>
+			<delete file="${deploy.dir}/deploy/ail-configure-ds.xml"/>
       <delete file="${deploy.dir}/deploy/alfresco.war/WEB-INF/alfresco-object.xml"/>
       <delete file="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-news-samples.war/WEB-INF/default-object.xml"/>        
       <delete dir="${deploy.dir}/data/alf_data"/>
       <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-samples.war"/>
       <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.sar"/>
       <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.war"/>
+      <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-wsrp.sar"/>
       <delete dir="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-weather-samples.war"/>
       <delete dir="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-jsp-samples.war"/>
       
@@ -72,7 +73,7 @@
     <target name="teardown" description="undo whatever setup did">
         <uninstall-jboss-macro version="${jboss.version}"/>
         <subant-macro target="teardown"/>
-        <delete dir="${project.dir}/deploy" failonerror="false"/>
+        <delete dir="${target.dir}" failonerror="false"/>
     </target>
     
     <target name="release" description="build this project's releasable outputs">

@@ -8,8 +8,8 @@ SET !ENCRYPTION NO
 TAG POS=1 TYPE=INPUT:PASSWORD FORM=NAME:loginform ATTR=ID:j_password CONTENT=adam
 TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:loginform ATTR=NAME:login&&VALUE:Login
 FRAME F=0
-TAG POS=1 TYPE=TD ATTR=TXT:User<SP>portlet  
 TAG POS=1 TYPE=SPAN ATTR=TXT:Welcome<SP>to<SP>OpenQuote
+TAG POS=1 TYPE=SPAN ATTR=TXT:User<SP>portlet
 TAG POS=1 TYPE=SPAN ATTR=TXT:News<SP>Feeds
 TAG POS=1 TYPE=A ATTR=TXT:Configure<SP>Editor
 TAG POS=1 TYPE=SPAN ATTR=TXT:Configure<SP>Download<SP>Portlet
@@ -21,10 +21,6 @@ TAG POS=1 TYPE=A ATTR=TXT:Admin
 TAG POS=1 TYPE=A ATTR=TXT:Members
 TAG POS=1 TYPE=LI ATTR=ID:currentTab&&TXT:User<SP>Management
 TAG POS=1 TYPE=A ATTR=ID:_id1jbpns_2fadmin_2fMembers_2fIdentityAdminPortletWindowsnpbj:_id5jbpns_2fadmin_2fMembers_2fIdentityAdminPortletWindowsnpbj&&TXT:Role<SP>Management
-TAG POS=1 TYPE=A ATTR=TXT:WSRP
-TAG POS=1 TYPE=LI ATTR=ID:currentTab&&TXT:Consumers<SP>Configuration
-TAG POS=1 TYPE=A ATTR=ID:_id1jbpns_2fadmin_2fWSRP_2fWSRPConfigurationPortletWindowsnpbj:_id3jbpns_2fadmin_2fWSRP_2fWSRPConfigurationPortletWindowsnpbj&&TXT:Producer<SP>Configuration
-TAG POS=1 TYPE=LI ATTR=ID:currentTab&&TXT:Producer<SP>Configuration
 TAG POS=1 TYPE=A ATTR=TXT:Admin
 TAG POS=1 TYPE=LI ATTR=ID:currentTab&&TXT:Portal<SP>Objects
 TAG POS=1 TYPE=A ATTR=ID:_id2jbpns_2fadmin_2fdefault_2fAdminPortletWindowsnpbj:_id4jbpns_2fadmin_2fdefault_2fAdminPortletWindowsnpbj&&TXT:Portlet<SP>Instances

@@ -41,6 +41,13 @@
     <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache"/>    
   </target>
   
+  <target name="mysql: dump openquote database" description="dump the openquote database into target/MySqlDump.sql">
+    <exec command="mysqldump" output="${target}/MySqlDump.sql">
+      <arg value="--opt"/>
+      <arg value="${dbname}"/>
+    </exec>
+  </target>
+  
   <target name="grinder: start console" description="start The Grinder's console">
 		<start-grinder-console-macro/>	
 	</target>

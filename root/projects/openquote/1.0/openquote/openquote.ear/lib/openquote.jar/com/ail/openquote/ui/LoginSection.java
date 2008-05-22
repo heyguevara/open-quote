@@ -21,7 +21,6 @@ import static com.ail.openquote.ui.util.Functions.error;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +41,6 @@ import org.jboss.portal.identity.RoleModule;
 import org.jboss.portal.identity.User;
 import org.jboss.portal.identity.UserModule;
 import org.jboss.portal.identity.UserProfileModule;
-import org.jboss.portlet.JBossRenderRequest;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;

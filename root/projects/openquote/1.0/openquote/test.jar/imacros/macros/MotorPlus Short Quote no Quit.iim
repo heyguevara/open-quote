@@ -16,7 +16,6 @@ TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:phone CONTENT=01882<SP>88
 TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:email CONTENT=tim@tester.com
 TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Proposer ATTR=NAME:op=Next:immediate=false&&VALUE:Next
 TAG POS=1 TYPE=TD ATTR=TXT:About<SP>Your<SP>Car(s)
-TAG POS=1 TYPE=TD ATTR=ID:header&&TXT:<BR><BR><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><BR><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><BR><BR><BR><BR><BR><BR><BR><SP><SP><SP><SP>if<SP>(typeof<SP>isModalLoaded<SP>!=<SP>'undefined'){<BR><SP><SP><SP><SP><SP><SP><SP><SP>document.write('<a<SP>href=\"#\"<SP>onclick=\"alertModal(\'login-modal\',\'login-modal-msg\');return<SP>false;\">Login</a>');<BR><SP><SP><SP><SP>}else{<BR><SP><SP><SP><SP><SP><SP><SP><SP>document.write('<a<SP>href=\"http://localhost:8080/portal/auth/portal/quote/MotorPlus\">Login</a>');<BR><SP><SP><SP><SP>}<BR><SP><SP><SP>//set<SP>the<SP>iframe<SP>src<SP>for<SP>login<SP>modal<SP>to<SP>requested<SP>URL<BR><SP><SP><SP>var<SP>iframeSrc<SP>=<SP>'http://localhost:8080/portal/auth/portal/quote/MotorPlus'<SP>+<SP>'?loginheight=0';<BR><SP><SP><SP>document.getElementById('loginIframe').src<SP>=<SP>iframeSrc;<BR>Login<BR><BR><BR><SP><SP><SP><SP><SP><SP><a<SP>href="http://localhost:8080/portal/auth/portal/quote/MotorPlus">Login</a><BR><BR><BR><BR><BR><BR><BR><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP><SP>
 TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#make#] CONTENT=$AC
 TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#model#] CONTENT=$ACE
 TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cc#] CONTENT=2000
@@ -32,6 +31,7 @@ TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>car<SP>left<SP>hand<SP>drive?
 TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>car<SP>registered<SP>in<SP>your<SP>name?
 TAG POS=1 TYPE=TD ATTR=TXT:Are<SP>you<SP>the<SP>owner<SP>of<SP>the<SP>car?
 TAG POS=1 TYPE=TD ATTR=TXT:Will<SP>you<SP>drive<SP>the<SP>car<SP>to<SP>and<SP>from<SP>work?
+TAG POS=1 TYPE=TD ATTR=TXT:Have<SP>there<SP>been<SP>any<SP>changes<SP>to<SP>the<SP>original car?
 TAG POS=1 TYPE=TD ATTR=TXT:Has<SP>a<SP>security<SP>device<SP>been<SP>fitted?
 TAG POS=1 TYPE=TD ATTR=TXT:Do<SP>you<SP>keep<SP>the<SP>car<SP>at<SP>the<SP>proposers<SP>address?
 TAG POS=1 TYPE=TD ATTR=TXT:Is<SP>the<SP>car<SP>stored<SP>in<SP>a<SP>locked<SP>garage<SP>overnight?
@@ -54,12 +54,9 @@ TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:History ATTR=NAME:op=Next:immediate=false&
 TAG POS=1 TYPE=TD ATTR=TXT:Your<SP>Quotation:<SP>£209.90
 TAG POS=1 TYPE=LI ATTR=TXT:This<SP>quote<SP>is<SP>inclusive<SP>of<SP>Insurance<SP>Premium<SP>Tax<SP>at<SP>5%
 TAG POS=1 TYPE=TD ATTR=TXT:Comprehensive
-TAG POS=1 TYPE=TD ATTR=TXT:2<SP>May,<SP>2008
-TAG POS=1 TYPE=TD ATTR=TXT:1<SP>May,<SP>2009
 TAG POS=1 TYPE=TD ATTR=TXT:50.00
 TAG POS=2 TYPE=TD ATTR=TXT:50.00
 TAG POS=1 TYPE=TD ATTR=TXT:Tim<SP>Tester
-TAG POS=1 TYPE=TD ATTR=TXT:01/09/1967
 TAG POS=1 TYPE=TD ATTR=TXT:Accountant
 TAG POS=1 TYPE=TABLE ATTR=TXT:<SP><SP>Vehicle(s)MakeACModelACERegistrationPP1<SP>1PX
 TAG POS=1 TYPE=TD ATTR=TXT:AC
