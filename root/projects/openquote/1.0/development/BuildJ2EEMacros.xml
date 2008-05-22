@@ -334,7 +334,7 @@
     <unzip overwrite="yes" dest="${deploy.dir}" src="${dar.src}"/>
     <delete dir="${deploy.dir}" includes="**/loader.properties"/>
 
-    <move todir="${deploy.dir}/deploy/${ant.project.name}.ear">
+    <move todir="${deploy.dir}/deploy/${name}" >
       <fileset dir="${deploy.dir}/deploy/${dar}.ear"/>
     </move>
   </target>
@@ -345,12 +345,14 @@
     <attribute name="dar" />
     <attribute name="version"/>
     <attribute name="build"/>
+    <attribute name="name" default="${ant.project.name}.ear"/>
     <sequential>
       <available file="${deploy.dir}/deploy/bsh-deployer.xml" property="domainpresent" />
       <antcall target="_install-base-domain">
         <param name="dar" value="@{dar}"/>
         <param name="version" value="@{version}"/>
         <param name="build" value="@{build}"/>
+        <param name="name" value="@{name}"/>
       </antcall>
     </sequential>
   </macrodef>

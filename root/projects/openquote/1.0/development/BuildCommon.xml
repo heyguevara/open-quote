@@ -150,5 +150,15 @@
     </sequential>
   </macrodef>
 
+	<!-- replace an exploded jar folder with a jar file -->
+  <macrodef name="unexplode-jar-macro">
+    <attribute name="jar" />
+    <sequential>
+      <mkdir dir="${tmp}"/>
+      <jar basedir="@{jar}" destfile="${tmp}/tmp.jar"/>
+      <delete dir="@{jar}"/>
+      <move file="${tmp}/tmp.jar" tofile="@{jar}"/>
+    </sequential>
+  </macrodef>
 </project>
 

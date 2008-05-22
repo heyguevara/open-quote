@@ -16,9 +16,9 @@
     <repo-get-macro repo="localhost/repo" group="jboss" artifact="jboss-ail" version="${version}" type="zip"/>
 
     <!-- Unpack the cached zip into the dev tree -->
-    <mkdir dir="./deploy"/>
-    <unzip overwrite="yes" dest="./deploy" src="${repo.dir}/jboss/jboss-ail/${version}/jboss-ail-${version}.zip"/>
-    <exec os="Mac OS X" executable="chmod" dir="./deploy/jboss/bin">
+    <mkdir dir="${target.dir}"/>
+    <unzip overwrite="yes" dest="${target.dir}" src="${repo.dir}/jboss/jboss-ail/${version}/jboss-ail-${version}.zip"/>
+    <exec os="Mac OS X" executable="chmod" dir="${target.dir}/jboss/bin">
       <arg line="775 run.sh"/>
     </exec>
   </target>
@@ -213,10 +213,10 @@
 	<macrodef name="_content-download-export-file-macro">
   	<attribute name="filename"/>
 	  <sequential>
-	    <mkdir dir="${project.dir}/deploy/tmp/"/>
-			<get src="http://localhost:8080/alfresco/download/direct?path=/Company20Home/Guest%20Home/@{filename}.acp" dest="${project.dir}/deploy/tmp//@{filename}.acp"/>
+	    <mkdir dir="${target.dir}/tmp/"/>
+			<get src="http://localhost:8080/alfresco/download/direct?path=/Company20Home/Guest%20Home/@{filename}.acp" dest="${target.dir}/tmp//@{filename}.acp"/>
       <mkdir dir="${export.dir}/@{filename}.acp" />
-	    <unjar src="${project.dir}/deploy/tmp/@{filename}.acp" dest="${export.dir}/@{filename}.acp"/>
+	    <unjar src="${target.dir}/tmp/@{filename}.acp" dest="${export.dir}/@{filename}.acp"/>
 			<!--xslt style="../development/OrderXMLElements.xsl" in="${export.dir}/@{filename}.acp/@{filename}.xml" out="${export.dir}/@{filename}.acp/@{filename}.xml.out">
 			  <classpath path="../development/build/lib/xalan-2.6.0.jar"/>
 			</xslt>
@@ -235,7 +235,7 @@
   <!-- compare the new export with the old content/, and merge as necessary.                               -->
   <macrodef name="content-download-export-macro">
     <sequential>
-      <property name="export.dir" value="${project.dir}/deploy/export-content"/>
+      <property name="export.dir" value="${target.dir}/export-content"/>
 			<delete dir="${export.dir}" failonerror="no"/>
       <mkdir dir="${export.dir}"/>
 
