@@ -94,7 +94,7 @@ public class ContentBrowserPortlet extends GenericPortlet {
         resp.setContentType("text/html");
         resp.setTitle(path2Title(path));
 
-        String rawContent=Functions.loadUrlContentAsString(new URL(path));
+        String rawContent = fetchContent(path);
         StringBuffer processedContent = new StringBuffer();
         
         Matcher m = RELATIVE_URI_PATTERN.matcher(rawContent);
@@ -114,6 +114,29 @@ public class ContentBrowserPortlet extends GenericPortlet {
         m.appendTail(processedContent);
         
         resp.getWriter().write(processedContent.toString());
+    }
+
+    // Workaround for a bug in Alfresco 2.9.0 (C_dev 816) schema 124. In this version it appears that
+    // authentication of any content request depends on the alfresco web-client having a fully initialised
+    // JSF context, which it will only have when the /alfreso page has been opened. Attempting to make
+    // content requests otherwise results in an NPE in alfresco, and an IOException to the client
+    // (i.e. this portlet!). This method works around that by making a single attempt to open the alfresco
+    // page if we get an IOException. 
+    private String fetchContent(String path) throws IOException, MalformedURLException {       
+        try {
+            return Functions.loadUrlContentAsString(new URL(path));
+        }
+        catch(IOException re) {
+            try {
+                new URL(homePageProtocol, homePageHost, homePagePort, "/alfresco").openConnection().getContent();
+                Thread.sleep(1*1000);
+            }
+            catch (Exception e) {
+                // ignore this
+            }
+
+            return Functions.loadUrlContentAsString(new URL(path));
+        }
     }
 
     /**
