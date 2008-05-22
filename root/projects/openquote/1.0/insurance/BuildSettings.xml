@@ -23,12 +23,13 @@
 
   <!-- Figure out where everything is - everything's relative to project.dir -->
   <dirname property="project.dir" file="${ant.file.BuildSettings}" />
-  <property name="jboss.dir" value="${project.dir}/deploy/jboss" />
+  <property name="target.dir" value="${project.dir}/target"/>
+  <property name="jboss.dir" value="${target.dir}/jboss"/>
   <property name="deploy.dir" value="${jboss.dir}/server/default" />
   <property name="ear.dir" value="${deploy.dir}/deploy/${ear.name}" />
   <property name="ear.lib" value="${ear.dir}/lib" />
   <property name="development.dir" value="${project.dir}/../development" />
-  <property name="test.dir" value="${project.dir}/deploy/test" />
+  <property name="test.dir" value="${target.dir}/test" />
   <property name="dbname" value="insurance_${major.version}_${minor.version}" />
 
   <!-- Pull in the Common stuff - all projects us this. -->
