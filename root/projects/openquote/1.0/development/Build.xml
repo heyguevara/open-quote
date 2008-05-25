@@ -18,14 +18,14 @@
   </target>
 
   <target name="build">
-    <repo-get-macro repo="localhost/repo" group="alfresco" artifact="alfresco-web-services" version="1.4" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="bouncycastle" artifact="bouncycastle" version="1.29.mg" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="bsh" artifact="bsh" version="2.0b4" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="jaxrpc" artifact="jaxrpc" version="1.0" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="jboss" artifact="activation" version="1.0.2" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="sun" artifact="mail" version="1.3.1" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="sun" artifact="saaj" version="1.2" type="jar" dest="./build/lib" />
-    <repo-get-macro repo="localhost/repo" group="wss4j" artifact="wss4j" version="1.4.2_08-b03" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="alfresco" artifact="alfresco-web-services" version="1.4" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="bouncycastle" artifact="bouncycastle" version="1.29.mg" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="bsh" artifact="bsh" version="2.0b4" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="jaxrpc" artifact="jaxrpc" version="1.0" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="jboss" artifact="activation" version="1.0.2" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="sun" artifact="mail" version="1.3.1" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="sun" artifact="saaj" version="1.2" type="jar" dest="./build/lib" />
+    <repo-get-macro repo="repo.ail-ltd.com/repo" group="wss4j" artifact="wss4j" version="1.4.2_08-b03" type="jar" dest="./build/lib" />
     <repo-get-macro repo="repo1.maven.org/maven2" group="axis" artifact="axis" version="1.2" type="jar" dest="./build/lib" />
     <repo-get-macro repo="repo1.maven.org/maven2" group="axis" artifact="axis-ant" version="1.4" type="jar" dest="./build/lib" />
     <repo-get-macro repo="repo1.maven.org/maven2" group="bsf" artifact="bsf" version="2.3.0" type="jar" dest="./build/lib" />

@@ -36,13 +36,13 @@
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <get-libs-macro todir="${output.dir}/WEB-INF/lib">
       <libs-list>
-        <get-lib-macro artifact="jakarta-standard-taglib" group="jakarta" version="1.1.2" type="jar" repo="localhost/repo" />
+        <get-lib-macro artifact="jakarta-standard-taglib" group="jakarta" version="1.1.2" type="jar" repo="repo.ail-ltd.com/repo" />
         <get-lib-macro artifact="commons-jxpath" group="commons-jxpath" version="1.2" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-validator" group="commons-validator" version="1.1.4" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-fileupload" group="commons-fileupload" version="1.0" type="jar" repo="repo1.maven.org/maven2" />
-        <get-lib-macro artifact="commons-el" group="commons-el" version="1.0" type="jar" repo="localhost/repo" />
-        <get-lib-macro artifact="myfaces-api" group="myfaces" version="1.1.5" type="jar" repo="localhost/repo" />
-        <get-lib-macro artifact="myfaces-impl" group="myfaces" version="1.1.5" type="jar" repo="localhost/repo" />
+        <get-lib-macro artifact="commons-el" group="commons-el" version="1.0" type="jar" repo="repo.ail-ltd.com/repo" />
+        <get-lib-macro artifact="myfaces-api" group="myfaces" version="1.1.5" type="jar" repo="repo.ail-ltd.com/repo" />
+        <get-lib-macro artifact="myfaces-impl" group="myfaces" version="1.1.5" type="jar" repo="repo.ail-ltd.com/repo" />
         <get-lib-macro artifact="tomahawk" group="myfaces" version="1.1.1" type="jar" repo="repo1.maven.org/maven2" />
       </libs-list>
     </get-libs-macro>
