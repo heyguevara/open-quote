@@ -29,6 +29,7 @@
       <filterset>
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
+        <filter token="candidate.version" value="${candidate.version}" />
         <filter token="dbname" value="${dbname}" />
       </filterset>
     </copy>

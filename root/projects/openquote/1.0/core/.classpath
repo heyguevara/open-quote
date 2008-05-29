@@ -83,7 +83,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/hibernate-3.2.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-repository.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/spring-2.0.2.jar"/>
@@ -96,5 +95,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/commons-fileupload.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-web-client.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/commons-io-1.1.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/hibernate-3.2.1-patched.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

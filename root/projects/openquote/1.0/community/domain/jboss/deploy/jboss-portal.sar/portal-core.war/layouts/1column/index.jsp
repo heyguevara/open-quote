@@ -1,10 +1,10 @@
-<%@ page import="org.jboss.portal.server.PortalConstants"%>
+<%@ page import="org.jboss.portal.server.PortalConstants" %>
 <%@ taglib uri="/WEB-INF/theme/portal-layout.tld" prefix="p" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   <title>OpenQuote @major.version@.@minor.version@ RC2</title>
+   <title>OpenQuote @major.version@.@minor.version@@candidate.version@</title>
    <meta http-equiv="Content-Type" content="text/html;"/>
    <!-- to correct the unsightly Flash of Unstyled Content. -->
    <script type="text/javascript"></script>
@@ -35,16 +35,21 @@
             </tr>
          </table>
          <div id="content-container">
-            <!-- insert the content of the 'left' region of the page, and assign the css selector id 'regionA' -->
-            <p:region regionName='left' regionID='regionA'/>
-            <!-- insert the content of the 'center' region of the page, and assign the css selector id 'regionB' -->
-            <p:region regionName='center' regionID='regionB'/>
+            <table width="100%">
+              <tr>
+                <td valign="top">
+                  <!-- insert the content of the 'center' region of the page, and assign the css selector id 'regionB' -->
+                  <p:region regionName='center' regionID='center'/>
+                </td>
+              </tr>
+            </table>
             <hr class="cleaner"/>
-			      </div>
          </div>
       </div>
    </div>
+</div>
 
+<!-- TODO: Fix the auto jump in this tag -->
 <div id="footer-container" class="portal-copyright">Powered by
 <a class="portal-copyright" href="http://openquote.opensourceinsurance.org">OpenQuote Community</a><br/>
 </div>

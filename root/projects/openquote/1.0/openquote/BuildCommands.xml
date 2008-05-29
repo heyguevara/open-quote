@@ -42,9 +42,8 @@
   </target>
   
   <target name="mysql: dump openquote database" description="dump the openquote database into target/MySqlDump.sql">
-    <exec command="mysqldump" output="${target}/MySqlDump.sql">
-      <arg value="--opt"/>
-      <arg value="${dbname}"/>
+    <exec executable="sh" output="${target.dir}/MySqlDump.sql">
+      <arg line="-c mysqldump -u root -p bombay2000 --opt ${dbname}"/>
     </exec>
   </target>
   

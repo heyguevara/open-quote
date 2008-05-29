@@ -9,6 +9,7 @@
   <!-- Release version numbers (BTW the build number comes from cruise control.) -->
   <property name="major.version" value="1"/>
   <property name="minor.version" value="0"/>
+  <property name="candidate.version" value="RC2"/>
 
   <!-- Version of the insurance project to use for this project -->
   <property name="openquote.version" value="1.0"/>
@@ -19,7 +20,7 @@
 
   <!-- Figure out where everything is - everything's relative to project.dir -->
   <dirname property="project.dir" file="${ant.file.BuildSettings}"/>
-  <property name="target.dir" value="${project.dir}/target/openquote-community"/>
+  <property name="target.dir" value="${project.dir}/target/openquote-community-${major.version}.${minor.version}${candidate.version}"/>
   <property name="jboss.dir" value="${target.dir}/jboss"/>
   <property name="deploy.dir" value="${jboss.dir}/server/default"/>
   <property name="ear.dir" value="${deploy.dir}/deploy/${ear.name}"/>

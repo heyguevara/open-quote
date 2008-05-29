@@ -60,8 +60,8 @@
     <unexplode-jar-macro jar="${deploy.dir}/deploy/alfresco.war"/>
     
 		<!-- don't use the zip ant task - it forgets unix file permissions -->
-    <exec executable="zip">
-    	<arg line="-r ./target/openquote-community-${major.version}.${minor.version}.zip ${target}/openquote-community"/>
+    <exec executable="zip" dir="${target.dir}/..">
+    	<arg line="-r ./openquote-community-${major.version}.${minor.version}${candidate.version}.zip openquote-community-${major.version}.${minor.version}${candidate.version}"/>
 	  </exec>
   </target>
 </project>

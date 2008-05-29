@@ -1,4 +1,4 @@
-OpenQuote Community 1.0 RC1
+OpenQuote Community @major.version@.@minor.version@@candidate.version@1.0
 
 Please note this is a Release Candidate and not the final 1.0 release.
 
