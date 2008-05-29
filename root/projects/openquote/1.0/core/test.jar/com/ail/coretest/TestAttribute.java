@@ -114,4 +114,12 @@ public class TestAttribute extends TestCase {
        attr.setValue("Hello");
        assertTrue(attr.isInvalid());
     }
+
+    /**
+     * Test that commas in a format option list are seen as part of the option text itself, and not a format separator.
+     */
+    public void testChoiceOptionWithCommas() {
+        Attribute a=new Attribute("refdata", "?", "choice,options=-1#?|1#Salon|2#House, Boat|3#Convertible, ship");
+        assertEquals("-1#?|1#Salon|2#House, Boat|3#Convertible, ship", a.getFormatOption("options"));
+    }
 }

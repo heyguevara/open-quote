@@ -154,10 +154,9 @@
   <macrodef name="unexplode-jar-macro">
     <attribute name="jar" />
     <sequential>
-      <mkdir dir="${tmp}"/>
-      <jar basedir="@{jar}" destfile="${tmp}/tmp.jar"/>
+      <jar basedir="@{jar}" destfile="@{jar}.tmp"/>
       <delete dir="@{jar}"/>
-      <move file="${tmp}/tmp.jar" tofile="@{jar}"/>
+      <move file="@{jar}.tmp" tofile="@{jar}"/>
     </sequential>
   </macrodef>
 </project>
