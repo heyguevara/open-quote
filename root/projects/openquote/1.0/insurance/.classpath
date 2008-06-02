@@ -51,7 +51,6 @@
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/bouncycastle-1.29.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/castor-xml-1.1-ail.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/hibernate-3.2.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/itext-1.2.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/janino-2.5.10.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/jlfgr-1.0.jar"/>
@@ -65,5 +64,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/commercial.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/core.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/hibernate-3.2.1-patched.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
