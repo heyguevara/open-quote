@@ -105,9 +105,9 @@ public class Functions {
     public static String renderEnumerationAsOptions(String format, String selected) {
         StringBuffer ret=new StringBuffer();
 
-        String[] opts=format.split("[,|#]");
+        String[] opts=format.split("[|#]");
 
-        for(int i=2 ; i<opts.length ; i+=2) {
+        for(int i=1 ; i<opts.length ; i+=2) {
             if (opts[i].equals(selected)) {
                 ret.append("<option selected='yes'>"+opts[i]+"</option>");
             }
@@ -171,7 +171,7 @@ public class Functions {
             }
             else if (attr.isChoiceType()) {
                 if (attr.getFormatOption("type")==null) {
-                    w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormat(), attr.getValue()));
+                    w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
                 }
                 else {
                     onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
