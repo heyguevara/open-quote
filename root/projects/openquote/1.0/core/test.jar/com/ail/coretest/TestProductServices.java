@@ -277,6 +277,6 @@ public class TestProductServices extends CoreUserTestCase {
         // on where the test source has been checked-out to. We'll make do with checking just
         // the start and the end.
         assertTrue(getCore().getConfiguration().getSource().startsWith("file:"));
-        assertTrue(getCore().getConfiguration().getSource().endsWith("deploy/test/test.jar/com/ail/coretest/TestProductServicesDefaultConfig.xml"));
+        assertTrue(getCore().getConfiguration().getSource().endsWith("target/test/test.jar/com/ail/coretest/TestProductServicesDefaultConfig.xml"));
     }
 }

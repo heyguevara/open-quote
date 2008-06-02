@@ -181,7 +181,7 @@ public class TestGenerateDocument extends CoreUserTestCase {
                 String doc = generateDocument(config);
                 Timer.stop("gen test "+i);
             
-                out=new PrintWriter(new File("./deploy/test/TestGenerateDocument"+i+".pdf"));
+                out=new PrintWriter(new File("./target/test/TestGenerateDocument"+i+".pdf"));
                 out.print(doc);
                 out.close();
             }

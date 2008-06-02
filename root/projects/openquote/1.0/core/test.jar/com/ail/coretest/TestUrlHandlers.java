@@ -120,7 +120,7 @@ public class TestUrlHandlers extends TestCase {
         try {
             url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl");
             Functions.loadUrlContentAsString(url);
-            fail("got content without a valid ticket");
+            fail("got content even though we didn't pass a vaid ticket in");
         }
         catch(IOException e) {
             assertTrue(e.getMessage().contains("response code: 500"));
