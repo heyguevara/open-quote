@@ -99,7 +99,7 @@ public class Attribute extends Type implements Identified {
     private static Map<Thread,Type> referenceContext=Collections.synchronizedMap(new HashMap<Thread,Type>());
     transient private MessageFormat formatter;
     transient private String localFormat;
-    public static String YES_OR_NO_FORMAT="choice,-1#?|0#No|1#Yes";
+    public static String YES_OR_NO_FORMAT="choice,options=-1#?|0#No|1#Yes";
 
     /** The name of the facet - generally unique in a collection */
     private String id;
@@ -314,7 +314,7 @@ public class Attribute extends Type implements Identified {
         }
         else if (isYesornoType()) {
             // "yesorno" boils down to a choice: YES, NO, or '?' (neither)
-            formatter = new MessageFormat("{0,"+YES_OR_NO_FORMAT+"}");
+            formatter = new MessageFormat("{0,choice,-1#?|0#No|1#Yes}");
         }
         else if (isCurrencyType()) {
             if (unit != null && unit.matches("[A-Z]{3}?")) {
