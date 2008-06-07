@@ -2537,6 +2537,29 @@
                         <sys:store-identifier>SpacesStore</sys:store-identifier>
                       </view:properties>
                     </cm:content>
+                    <cm:content view:childName="cm:OpenQuote Project Links">
+                      <view:aspects>
+                        <cm:titled></cm:titled>
+                        <cm:auditable></cm:auditable>
+                        <sys:referenceable></sys:referenceable>
+                        <cm:author></cm:author>
+                        <app:inlineeditable></app:inlineeditable>
+                      </view:aspects>
+                      <view:properties>
+                        <app:editInline>true</app:editInline>
+                        <cm:description></cm:description>
+                        <cm:content>contentUrl=export_spaces/content116.html|mimetype=text/html|size=0|encoding=UTF-8|locale=en_US_</cm:content>
+                        <cm:title>OpenQuote Project Links</cm:title>
+                        <cm:author></cm:author>
+                        <cm:created>2008-04-01T08:00:01.914+01:00</cm:created>
+                        <cm:modifier>admin</cm:modifier>
+                        <cm:modified>2008-04-01T08:00:19.280+01:00</cm:modified>
+                        <cm:creator>admin</cm:creator>
+                        <sys:store-protocol>workspace</sys:store-protocol>
+                        <cm:name>OpenQuote Project Links</cm:name>
+                        <sys:store-identifier>SpacesStore</sys:store-identifier>
+                      </view:properties>
+                    </cm:content>
                     <cm:content view:childName="cm:Welcome Administrator">
                       <view:aspects>
                         <cm:titled></cm:titled>
