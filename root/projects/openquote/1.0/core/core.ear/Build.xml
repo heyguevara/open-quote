@@ -23,6 +23,7 @@
     <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure.war" antfile="Build.xml" target="_build" />
     <ant dir="./content-browser.war" antfile="Build.xml" target="_build" />
+    <ant dir="./news-reader.war" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro />
   </target>
 

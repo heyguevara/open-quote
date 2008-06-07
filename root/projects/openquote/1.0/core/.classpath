@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure-server-ws.jar/|configure.war/|configure.war/WEB-INF/src/|configure.war/WEB-INF/src/|configure.war/images/|configure.war/pages/|configure.wsr/|core.jar/|persistence-server-ejb.jar/|product-manager-ejb.jar/|test-ejb.jar/|lib/core.jar/|content-browser.war/|content-browser.war/WEB-INF/src/" kind="src" path="core.ear"/>
+	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure-server-ws.jar/|configure.war/|configure.war/WEB-INF/src/|configure.war/WEB-INF/src/|configure.war/images/|configure.war/pages/|configure.wsr/|core.jar/|persistence-server-ejb.jar/|product-manager-ejb.jar/|test-ejb.jar/|lib/core.jar/|content-browser.war/|content-browser.war/WEB-INF/src/|news-reader.war/|news-reader.war/WEB-INF/src/|news-reader.war/xsd/|news-reader.war/jsp/|news-reader.war/xls/" kind="src" path="core.ear"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/lib/core.jar" path="core.ear/lib/core.jar"/>
 	<classpathentry including="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/command-server-ejb.jar" path="core.ear/command-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/configure-server-ejb.jar" path="core.ear/configure-server-ejb.jar"/>
@@ -12,6 +12,8 @@
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/classes" path="core.ear/configure.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/" kind="src" path="core.ear/content-browser.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/content-browser.war/WEB-INF/classes" path="core.ear/content-browser.war/WEB-INF/src"/>
+	<classpathentry excluding="Build.xml|WEB-INF/src/|xsd/|jsp/|xls/" kind="src" path="core.ear/news-reader.war"/>
+	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/news-reader.war/WEB-INF/classes" path="core.ear/news-reader.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml|WEB-INF/alfresco-object.xml|WEB-INF/jboss-app.xml|WEB-INF/jboss-portlet.xml|WEB-INF/portlet.xml|WEB-INF/src/|WEB-INF/web.xml|asset-editor.jar/|jsp/" kind="src" path="alfresco.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/alfresco.war/jsp" path="alfresco.war/jsp"/>
 	<classpathentry excluding="alfresco/repository.properties" kind="src" output="target/jboss/server/default/deploy/alfresco.war/WEB-INF/classes" path="alfresco.war/WEB-INF/src"/>
