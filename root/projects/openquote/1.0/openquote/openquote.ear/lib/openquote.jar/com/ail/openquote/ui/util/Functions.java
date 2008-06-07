@@ -394,6 +394,24 @@ public class Functions {
     }
 
     /**
+     * Return the name of the portal that a render response relates to.
+     * The action URL for non-authenticated takes this kind of form:
+     *    /portal/portal/<portal-name>/<page-name>/<window-name>
+     * When authenticated the same URL looks like this:
+     *    /portal/auth/portal/<portal-name>/<page-name>/<window-name>
+     */
+    public static String getPortalName(RenderResponse response) {
+        String[] actionUrlPart=response.createActionURL().toString().split("/");
+        
+        if ("auth".equals(actionUrlPart[2])) {
+            return actionUrlPart[4];
+        }
+        else {
+            return actionUrlPart[3];
+        }
+    }
+
+    /**
      * Find the error (if any) associated with an element in a model.
      * @param xpath Where to look for the error
      * @param model The model to look in for the error

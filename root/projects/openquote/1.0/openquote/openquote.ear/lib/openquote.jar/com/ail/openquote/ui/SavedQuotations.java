@@ -174,7 +174,8 @@ public class SavedQuotations extends PageElement {
 
             try {
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
-                response.sendRedirect("/portal/auth/portal/default/"+pageName+"/QuoteWindow?action=1&username="+username+"&password="+password);
+                String portalName=Functions.getOperationParameters(request).getProperty("portal");
+                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?action=1&username="+username+"&password="+password);
             }
             catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -233,6 +234,7 @@ public class SavedQuotations extends PageElement {
 
         if (request.getRemoteUser()==null) {
             String pageName=Functions.getPortalPageName(response);
+            String portalName=Functions.getPortalName(response);
             
             w.printf("<table width='100%%' cols='3'>");
             w.printf( "<tr>");
@@ -256,7 +258,7 @@ public class SavedQuotations extends PageElement {
             w.printf(      "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a></td>");
             w.printf(     "</tr>");
             w.printf(     "<tr class='portlet-font'>");
-            w.printf(      "<td align='center' colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=login:page=%s' value='Login'/></td>", pageName);
+            w.printf(      "<td align='center' colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=login:portal=%s:page=%s' value='Login'/></td>", portalName, pageName);
             w.printf(     "</tr>");
             w.printf(    "</table>");
             w.printf(   "</form>");

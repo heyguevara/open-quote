@@ -84,9 +84,6 @@ public class LoginSection extends PageContainer {
     /** Page to forward to once authentication has succeeded. */
     private String forwardToPageName=null;
     
-    /** Name of portal for forward to if login succeeds */
-    private String forwardToPortalName;
-    
     /** Javascript to reset the LoginSection to show the "Proposer Login".
      * @see SaveButtonAction */
     public static final String reset="showDivDisplay(\"Proposer Login\"); hideDivDisplay(\"Forgotten Password\");hideDivDisplay(\"Create Login\")";
@@ -146,36 +143,14 @@ public class LoginSection extends PageContainer {
     public void setForwardToPageName(String pageName) {
         this.forwardToPageName = pageName;
     }
-
-    /**
-     * Name of the portal to forward to if authentication is successful. On login the user is forwarded to: <p/>
-     * &nbsp;&nbsp;&lt;protocol&gt;://&lt;host&gt;:&lt;port&gt;/portal/auth/&lt;<b>portalName</b>&gt;/&lt;pageName&gt;<p/>
-     * The default is to the portal named: "default"
-     * @see #getForwardToPageName()
-     * @return Name of portal to forward to.
-     */
-    public String getForwardToPortalName() {
-        return forwardToPortalName;
-    }
-
-    public void setForwardToPortalName(String forwardToPortalName) {
-        this.forwardToPortalName = forwardToPortalName;
-    }
     
     /**
-     * Return the name of the portal to forward to following authentication. The rules are as follows:
-     * <ol>
-     * <li>If the pageflow specified a portal name (via {@link #setForwardToPageName()}), forward to it</li>
-     * <li>Forward to "quote"</li></ol>
-     * @param request
-     * @return
+     * Return the name of the portal to forward to following authentication. 
+     * @param response
+     * @return Name of the "current" portal
      */
-    private String nameOfForwardToPortal(RenderRequest request) {
-        if (getForwardToPortalName()!=null) {
-            return getForwardToPortalName();
-        }
-        
-        return "quote";
+    private String nameOfForwardToPortal(RenderResponse response) {
+        return Functions.getPortalName(response);
     }
 
     @Override
@@ -374,7 +349,7 @@ public class LoginSection extends PageContainer {
         w.printf(       "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a></td>");
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", loginButtonLabel, getForwardToPageName(), nameOfForwardToPortal(request));
+        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", loginButtonLabel, getForwardToPageName(), nameOfForwardToPortal(response));
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");
@@ -406,7 +381,7 @@ public class LoginSection extends PageContainer {
         w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.cpassword']", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='Create & Save'/></td>", getForwardToPageName(), nameOfForwardToPortal(request));
+        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='Create & Save'/></td>", getForwardToPageName(), nameOfForwardToPortal(response));
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");
