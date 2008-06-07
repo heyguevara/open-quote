@@ -149,35 +149,15 @@
                     <window-name>IdentityUserPortletWindow</window-name>
                     <instance-ref>IdentityUserPortletInstance</instance-ref>
                     <region>left</region>
-                    <height>1</height>
-                    <security-constraint>
-                        <policy-permission>
-                            <action-name>view</action-name>
-                            <unchecked />
-                        </policy-permission>
-                    </security-constraint>
-                </window>
-                <window>
-                    <window-name>CurrentUsersPortletWindow</window-name>
-                    <instance-ref>CurrentUsersPortletInstance</instance-ref>
-                    <region>left</region>
                     <height>2</height>
                     <security-constraint>
                         <policy-permission>
                             <action-name>view</action-name>
-                            <unchecked />
+                            <role-name>Admin</role-name>
                         </policy-permission>
-                    </security-constraint>
-                </window>
-                <window>
-                    <window-name>NewsPortletWindow</window-name>
-                    <instance-ref>NewsPortletInstance</instance-ref>
-                    <region>center</region>
-                    <height>2</height>
-                    <security-constraint>
                         <policy-permission>
                             <action-name>view</action-name>
-                            <unchecked />
+                            <role-name>Developer</role-name>
                         </policy-permission>
                     </security-constraint>
                 </window>
