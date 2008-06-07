@@ -7,6 +7,10 @@
    <title>OpenQuote @major.version@.@minor.version@ RC2</title>
    <meta http-equiv="Content-Type" content="text/html;"/>
    <!-- to correct the unsightly Flash of Unstyled Content. -->
+   <!-- IE fix for alpha in .PNGs -->
+	 <!--[if lt IE 7.]> 
+	 <script defer type="text/javascript" src="js/pngfix.js"></script> 
+	 <![endif]--> 
    <script type="text/javascript"></script>
    <!-- inject the theme, default to the Renaissance theme if nothing is selected for the portal or the page -->
    <p:theme themeName="renaissance"/>

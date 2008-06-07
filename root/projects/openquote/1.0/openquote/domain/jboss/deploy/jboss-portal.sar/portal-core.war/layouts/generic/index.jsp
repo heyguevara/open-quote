@@ -8,6 +8,10 @@
    <meta http-equiv="Content-Type" content="text/html;"/>
    <!-- to correct the unsightly Flash of Unstyled Content. -->
    <script type="text/javascript"></script>
+   <!-- IE fix for alpha in .PNGs -->
+	 <!--[if lt IE 7.]> 
+	 <script defer type="text/javascript" src="js/pngfix.js"></script> 
+	 <![endif]--> 
    <!-- inject the theme, default to the Renaissance theme if nothing is selected for the portal or the page -->
    <p:theme themeName="renaissance"/>
    <!-- insert header content that was possibly set by portlets on the page -->
