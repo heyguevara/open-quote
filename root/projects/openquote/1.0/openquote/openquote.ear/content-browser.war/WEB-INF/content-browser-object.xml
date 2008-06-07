@@ -9,9 +9,25 @@
         <window>
             <window-name>ContentBrowserWindow</window-name>
             <instance-ref>ContentBrowserInstance</instance-ref>
-            <!-- <default>true</default> -->
             <region>center</region>
             <height>0</height>
+        </window>
+        <security-constraint>
+            <policy-permission>
+                <action-name>view</action-name>
+                <unchecked />
+            </policy-permission>
+        </security-constraint>
+    </deployment>
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default.default</parent-ref>
+        <properties />
+        <window>
+            <window-name>OpenQuoteProjectLinksWindow</window-name>
+            <instance-ref>OpenQuoteProjectLinksInstance</instance-ref>
+            <region>left</region>
+            <height>1</height>
         </window>
         <security-constraint>
             <policy-permission>
