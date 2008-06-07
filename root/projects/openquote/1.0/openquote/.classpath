@@ -3,12 +3,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" output="target/test/test.jar" path="test.jar"/>
 	<classpathentry kind="src" path="alfresco.war"/>
-	<classpathentry excluding="openquote.jar/|configure-server-ejb.jar/|configure.war/|motorplus.war/|motorplus.war/images/|motorplus.war/pages/|motorplus.war/WEB-INF/src/|quotation.war/|product-manager.war/|product-manager.war/WEB-INF/src/|quotation.war/WEB-INF/src/|command-server-ejb.jar/|product-manager.war/pages/|product-manager.war/images/|lib/openquote.jar/|content-browser.war/" kind="src" path="openquote.ear"/>
+	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure.war/|content-browser.war/|lib/openquote.jar/|motorplus.war/|motorplus.war/WEB-INF/src/|motorplus.war/images/|motorplus.war/pages/|openquote.jar/|product-manager.war/|product-manager.war/WEB-INF/src/|product-manager.war/images/|product-manager.war/pages/|quotation.war/|quotation.war/WEB-INF/src/|news-reader.war/" kind="src" path="openquote.ear"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/lib/openquote.jar" path="openquote.ear/lib/openquote.jar"/>
 	<classpathentry kind="src" path="openquote.ear/configure-server-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/command-server-ejb.jar" path="openquote.ear/command-server-ejb.jar"/>
 	<classpathentry kind="src" path="openquote.ear/configure.war"/>
 	<classpathentry kind="src" path="openquote.ear/content-browser.war"/>
+	<classpathentry kind="src" path="openquote.ear/news-reader.war"/>
 	<classpathentry excluding="WEB-INF/src/|pages/|images/" kind="src" path="openquote.ear/product-manager.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/WEB-INF/classes" path="openquote.ear/product-manager.war/WEB-INF/src"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/pages" path="openquote.ear/product-manager.war/pages"/>

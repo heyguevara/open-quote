@@ -40,6 +40,7 @@
       <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml"/>
       <delete file="${ear.dir}/content-browser.war/WEB-INF/content-browser-object.xml"/>
       <delete file="${ear.dir}/content-browser.war/WEB-INF/portlet-instances.xml"/>
+      <delete file="${ear.dir}/news-reader.war/WEB-INF/portlet-instances.xml"/>
 			<delete file="${deploy.dir}/deploy/ail-persistence-ds.xml"/>
 			<delete file="${deploy.dir}/deploy/ail-configure-ds.xml"/>
       <delete file="${deploy.dir}/deploy/alfresco.war/WEB-INF/alfresco-object.xml"/>
