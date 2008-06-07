@@ -60,4 +60,11 @@
             <context-root>content-browser</context-root>
         </web>
     </module>
+
+    <module>
+        <web>
+            <web-uri>news-reader.war</web-uri>
+            <context-root>news-reader</context-root>
+        </web>
+    </module>
 </application>
