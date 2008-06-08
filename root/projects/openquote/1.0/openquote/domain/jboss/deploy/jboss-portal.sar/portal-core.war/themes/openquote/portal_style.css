@@ -46,7 +46,7 @@ done to avoid overlapping of tab navigation in header */
 }
 
 #logoName {
-   background-image: url( images/logo.png );
+   background-image: url( images/logo-bg.gif );
    background-repeat: no-repeat;
    float: left;
    width: 250px;
