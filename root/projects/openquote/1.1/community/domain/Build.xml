@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file to deploy the jboss domain. 
+-->
+
+<project default="build" name="community:domain">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+  </target>
+
+  <target name="_build">
+    <antcall target="setup" />
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build"/>
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <!-- copy files that don't need filters to be applied -->
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="./jboss" includes="**" excludes="deploy/*-ds.xml, **/*.jsp" />
+    </copy>
+
+    <!-- copy files that do need filters to be applied -->
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="./jboss" includes="deploy/*-ds.xml, **/*.jsp, deploy/alfresco.war/**/repository.properties" />
+      <filterset>
+        <filter token="major.version" value="${major.version}" />
+        <filter token="minor.version" value="${minor.version}" />
+        <filter token="candidate.version" value="${candidate.version}" />
+        <filter token="dbname" value="${dbname}" />
+      </filterset>
+    </copy>
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${deploy.dir}" />
+  </target>
+</project>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Motor Plus product registry
+ $Revision$
+ $State$
+ $Date$
+ $Source$
+-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+    <name>Motor Plus product configuration</name>
+    <timeout>-1</timeout>
+    <who>Applied Industrial Logic</who>
+    <version>1.0</version>
+    <manager>com.ail.core.product.resetproduct.ResetProductService</manager>
+    <parentNamespace>AIL.Base.Registry</parentNamespace>
+
+    <types>
+        
+        <!-- Populate dropdown of driver names for the history page. --> 
+        <service name="PopulateDriverOptionsService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/PopulateDriverOptionsService.java</parameter>
+        </service>
+
+        <!-- Populate driver1's name and gender fields based on the proposer's details. --> 
+        <service name="PopulateDriverNameService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/PopulateDriverNameService.java</parameter>
+        </service>
+        
+        <service name="AssessPolicyRiskRule" builder="CachingClassBuilder" key="com.ail.core.command.DroolsDecisionTableAccessor" >
+            <!--uncomment the following to get a full dump of the rules (drl) and rule facts written to the console -->
+            <!--parameter name="LoggingIndicatorAsString">FULL</parameter-->
+            <parameter name="Url">~/PolicyRating.xls</parameter>
+        </service>
+
+        <service name="CalculatePolicyCommissionRule" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/CalculatePolicyCommissionRule.java</parameter>
+        </service>
+
+        <service name="CalculatePolicyMgmtChgRule" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/CalculatePolicyMgmtChgRule.java</parameter>
+        </service>
+
+        <service name='AssessPaymentOptionsRule' builder='CachingClassBuilder' key='com.ail.core.command.JaninoAccessor'>
+            <parameter name="Url">~/AssessPaymentOptionsRule.java</parameter>
+        </service>
+
+        <service name="StyleDocumentService" builder="ClassBuilder" key="com.ail.core.command.XSLTAccessor">
+            <parameter name="Url">http://localhost:8080/portal-core/themes/industrial/style.xslt</parameter>
+        </service>
+
+        <command name="AssessSectionRisk/MotorPlusSection" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessSectionRiskCommand">
+            <parameter name="Service">NullService</parameter>
+        </command>
+        
+        <command name="PopulateDriverName" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">PopulateDriverNameService</parameter>
+        </command>
+        
+        <command name="PopulateDriverOptions" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">PopulateDriverOptionsService</parameter>
+        </command>
+        
+        <type name="Quotation" builder="CastorXMLBuilder" key="com.ail.openquote.Quotation">
+            <parameter name="extends">BaseQuotation</parameter>
+            <parameter name="Url">~/Quotation.xml</parameter>
+        </type>
+        
+        <!-- Motor section - defaults to 'Comprehensive', coverages are set appropriatly -->
+        <type name="MotorPlusSection" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Section">
+            <parameter name="Url">~/MotorPlusSection.xml</parameter>
+        </type>
+        
+        <type name="AccidentalDamageExcess" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Excess">
+            <parameter name="Url">~/AccidentalDamageExcess.xml</parameter>
+        </type>
+        
+        <type name="FireAndTheftExcess" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Excess">
+            <parameter name="Url">~/FireAndTheftExcess.xml</parameter>
+        </type>
+        
+        <type name="VehicleAsset" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Asset">
+            <parameter name="Url">~/VehicleAsset.xml</parameter>
+        </type>
+        
+        <type name="DriverAsset" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Asset">
+            <parameter name="Url">~/DriverAsset.xml</parameter>
+        </type>
+        
+        <type name="DriverHistoryAsset" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Asset">
+            <parameter name="Url">~/DriverHistoryAsset.xml</parameter>
+        </type>
+        
+        <type name="AccidentHistoryAsset" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Asset">
+            <parameter name="Url">~/AccidentHistoryAsset.xml</parameter>
+        </type>
+        
+        <type name="MakesAndModels" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.openquote.ui.util.Choice">
+            <parameter name="Url">~/MakesAndModels.xml</parameter>
+        </type>
+        
+        <type name="ConvictionHistoryAsset" builder="CastorXMLBuilder" key="com.ail.insurance.policy.Asset">
+            <parameter name="Url">~/ConvictionHistoryAsset.xml</parameter>
+        </type>
+        
+        <type name="Occupations" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.openquote.ui.util.Choice">
+            <parameter name="Url">~/Occupations.xml</parameter>
+        </type>
+        
+        <type name="QuotationPageFlow" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.openquote.ui.PageFlow">
+						 <parameter name="extends">BaseQuotationPageFlow</parameter>
+            <parameter name="Url">~/QuotationPageFlow.xml</parameter>
+        </type>
+        
+        <type name="QuotationDocument" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.core.document.model.DocumentDefinition">
+            <parameter name="Url">~/QuotationDocument.xml</parameter>
+        </type>
+    </types>
+</configuration>

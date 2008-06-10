@@ -1,0 +1,14 @@
+<portlet-app>
+   <portlet>
+       <portlet-name>ConfigurePortlet</portlet-name>
+       <security></security>
+   </portlet>
+    <portlet>
+        <portlet-name>ConfigureUploadPortlet</portlet-name>
+        <security></security>
+    </portlet>
+    <portlet>
+        <portlet-name>ConfigureDownloadPortlet</portlet-name>
+        <security></security>
+    </portlet>
+</portlet-app>

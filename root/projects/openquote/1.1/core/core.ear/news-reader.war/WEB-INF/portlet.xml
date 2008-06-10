@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app
+   xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+   version="1.0">
+   <portlet>
+      <description>Basic news feed reading portlet for reading SourceForge feeds</description>
+      <portlet-name>NewsReaderPortlet</portlet-name>
+      <display-name>SourceForge News Feed Reader Portlet</display-name>
+      <portlet-class>com.ail.core.newsreader.NewsReaderPortlet</portlet-class>
+      <expiration-cache>180</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+      <portlet-info>
+         <title>News Feeds</title>
+         <keywords>sample,news</keywords>
+      </portlet-info>
+   </portlet>
+</portlet-app>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN' 
+  'http://java.sun.com/j2ee/dtds/ejb-jar_2_0.dtd'>
+<ejb-jar>
+  <description>Subrogation</description>
+  <display-name>Subrogation</display-name>
+  <enterprise-beans>
+    <session>
+      <display-name>SubrogationBean</display-name>
+      <ejb-name>SubrogationBean</ejb-name>
+      <home>com.ail.insurance.subrogation.SubrogationHome</home>
+      <remote>com.ail.insurance.subrogation.Subrogation</remote>
+      <ejb-class>com.ail.insurance.subrogation.SubrogationBean</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+      <env-entry>
+        <description>Define the concrete configuration loader for the Core.</description>
+        <env-entry-name>ConfigurationLoader.classname</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.ail.core.configure.ConnectionPoolConfigurationLoader</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <description>Define parameters to initialise the configuration loader.</description>
+        <env-entry-name>ConfigurationLoader.params</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@connectionpoolloader.params@</env-entry-value>
+      </env-entry>
+    </session>
+  </enterprise-beans>
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>SubrogationBean</ejb-name>
+        <method-name>*</method-name>
+      </method>
+      <trans-attribute>NotSupported</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+</ejb-jar>

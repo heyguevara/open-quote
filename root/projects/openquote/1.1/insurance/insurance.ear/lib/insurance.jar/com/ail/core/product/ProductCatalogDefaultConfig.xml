@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file defines the default (factory) configuration use by ListProducts service.
+ The configuration defines the products that are know to the system.
+ $Revision: 1.4 $
+ $State: Exp $
+ $Date: 2007/03/09 21:46:53 $
+ $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/core/product/ProductCatalogDefaultConfig.xml,v $
+-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+    <name>ProductCatalog configuration</name>
+    <timeout>60000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.4 $</version>
+    <manager>com.ail.core.product.listproducts.ListProductsService</manager>
+    
+    <group name="products">
+        <parameter name="com.ail.core.product.Product"/>
+        <parameter name="com.ail.core.product.TestProduct1"/>
+        <parameter name="com.ail.core.product.TestProduct2"/>
+        <parameter name="com.ail.core.product.TestProduct3"/>
+        <parameter name="com.ail.core.product.TestProduct4"/>
+        <parameter name="com.ail.core.product.TestProduct5"/>
+        <parameter name="com.ail.core.product.TestProduct6"/>
+        <parameter name="com.ail.core.product.TestProduct7"/>
+        <parameter name="com.ail.core.product.TestProduct8"/>
+        <parameter name="com.ail.core.product.TestProduct9"/>
+    </group>
+</configuration>

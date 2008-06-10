@@ -1,0 +1,11 @@
+import com.ail.util.Rate;
+import com.ail.insurance.policy.*;
+import com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxArgImp;
+
+public class CalculatePolicyTaxRule {
+    public static void invoke(CalculatePolicyTaxArgImp args) {
+        AssessmentSheet sheet=args.getAssessmentSheetArgRet();
+        AssessmentLine line=new RateBehaviour(sheet.generateLineId(), "IPT", null, "total premium", "total premium", BehaviourType.TAX, new Rate("5%"));
+        sheet.addLine(line);
+    }
+}
