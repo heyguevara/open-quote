@@ -98,5 +98,7 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-web-client.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/commons-io-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/hibernate-3.2.1-patched.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/portals-bridges-portletfilter-1.0.4.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/acegi-security-0.8.2_patched.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

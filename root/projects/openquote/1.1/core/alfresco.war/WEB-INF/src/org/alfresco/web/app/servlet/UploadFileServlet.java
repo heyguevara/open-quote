@@ -25,7 +25,6 @@ package org.alfresco.web.app.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -35,16 +34,15 @@ import javax.servlet.http.HttpSession;
 
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.repo.content.MimetypeMap;
-import org.alfresco.util.TempFileProvider;
 import org.alfresco.web.app.Application;
 import org.alfresco.web.bean.FileUploadBean;
 import org.alfresco.web.bean.content.AddContentDialog;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -62,7 +60,8 @@ public class UploadFileServlet extends BaseServlet
    /**
     * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
     */
-   protected void service(HttpServletRequest request, HttpServletResponse response)
+   @SuppressWarnings("unchecked")
+protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException
    {
       String uploadId = null;

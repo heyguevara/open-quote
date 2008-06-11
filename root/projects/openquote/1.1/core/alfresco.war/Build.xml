@@ -33,6 +33,11 @@
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <delete-exploded-war-macro overlay="true" />
+    <get-libs-macro todir="${output.dir}/WEB-INF/lib">
+      <libs-list>
+        <get-lib-macro artifact="portals-bridges-portletfilter" group="org/apache/portals/bridges" version="1.0.4" type="jar" repo="mirrors.ibiblio.org/pub/mirrors/maven2" />
+      </libs-list>
+    </get-libs-macro>
   </target>
 
   <target name="teardown" description="undo whatever setup did">

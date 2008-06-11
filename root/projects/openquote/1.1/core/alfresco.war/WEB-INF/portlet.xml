@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
-    <portlet>
-        <description>Alfresco Client Portlet</description>
+	<portlet id="FilteredAlfresco">
         <portlet-name>AlfrescoClient</portlet-name>
-        <portlet-class>org.alfresco.web.app.portlet.AlfrescoFacesPortlet</portlet-class>
-        
+        <display-name>Document management</display-name>
+        <description>Alfresco Client Portlet</description>
+        <portlet-class>org.apache.portals.bridges.portletfilter.FilterPortlet</portlet-class>
         <init-param>
-           <name>default-view</name>
-           <value>/jsp/login.jsp</value>
+            <name>portlet-class</name>
+            <value>org.alfresco.web.app.portlet.AlfrescoFacesPortlet</value>
         </init-param>
-
+        <init-param>
+            <name>default-view</name>
+            <value>/jsp/browse/browse.jsp</value>
+        </init-param>
+        <init-param>
+            <name>portlet-filters</name>
+            <value>org.szimano.alfresco.JBossPortalAlfrescoPortletFilter</value>
+        </init-param>
+        <init-param>
+            <name>org.szimano.alfresco.JBossPortalAlfrescoPortletFilter:alfrescoExternalAuth</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
-            <portlet-mode>HELP</portlet-mode>
         </supports>
-
+        <supported-locale>en</supported-locale>
         <portlet-info>
-            <title>Alfresco Client Portlet</title>
-            <short-title>alfresco-client-portlet</short-title>
+            <title>Alfresco</title>
+            <short-title>This is Alfresco Portlet</short-title>
         </portlet-info>
     </portlet>
-    
-    <user-attribute>
-        <name>user.home-info.online.email</name>
-    </user-attribute>
-
 </portlet-app>

@@ -12,7 +12,7 @@
 
   <!-- Release version numbers (BTW the build number comes from the Build.number file.) -->
   <property name="major.version" value="2" />
-  <property name="minor.version" value="2" />
+  <property name="minor.version" value="3" />
 
   <!-- Version of JBoss to use for this project -->
   <property name="jboss.version" value="4.2.2GA" />
