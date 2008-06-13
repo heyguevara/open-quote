@@ -12,10 +12,10 @@
 
   <!-- Release version numbers (BTW the build number comes from cruise control.) -->
   <property name="major.version" value="2" />
-  <property name="minor.version" value="1" />
+  <property name="minor.version" value="2" />
 
   <!-- Version of the Commercial project to use for this project -->
-  <property name="commercial.version" value="2.1" />
+  <property name="commercial.version" value="2.2" />
   <property name="commercial.build" value="1" />
 
   <!-- Version of JBoss to use for this project -->
