@@ -84,6 +84,48 @@
                         <usr:enabled>true</usr:enabled>
                       </view:properties>
                     </usr:user>
+                    <usr:user view:childName="usr:user">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:properties>
+                        <usr:accountExpires>false</usr:accountExpires>
+                        <usr:password>42464847c050b1f5e0696e6c4f14b4a3</usr:password>
+                        <usr:credentialsExpire>false</usr:credentialsExpire>
+                        <sys:node-uuid>458de0a2-38a8-11dd-ab0f-21e75d68c912</sys:node-uuid>
+                        <usr:accountLocked>false</usr:accountLocked>
+                        <sys:node-dbid>2006</sys:node-dbid>
+                        <usr:username>adam</usr:username>
+                        <usr:salt>
+                          <view:value view:isNull="true"></view:value>
+                        </usr:salt>
+                        <sys:store-protocol>user</sys:store-protocol>
+                        <cm:name>458de0a2-38a8-11dd-ab0f-21e75d68c912</cm:name>
+                        <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                        <usr:enabled>true</usr:enabled>
+                      </view:properties>
+                    </usr:user>
+                    <usr:user view:childName="usr:user">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:properties>
+                        <usr:accountExpires>false</usr:accountExpires>
+                        <usr:password>3356cef053f0367a94c3bf2143ed988e</usr:password>
+                        <usr:credentialsExpire>false</usr:credentialsExpire>
+                        <sys:node-uuid>61634657-38a8-11dd-ab0f-21e75d68c912</sys:node-uuid>
+                        <usr:accountLocked>false</usr:accountLocked>
+                        <sys:node-dbid>2008</sys:node-dbid>
+                        <usr:username>davy</usr:username>
+                        <usr:salt>
+                          <view:value view:isNull="true"></view:value>
+                        </usr:salt>
+                        <sys:store-protocol>user</sys:store-protocol>
+                        <cm:name>61634657-38a8-11dd-ab0f-21e75d68c912</cm:name>
+                        <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                        <usr:enabled>true</usr:enabled>
+                      </view:properties>
+                    </usr:user>
                   </sys:children>
                 </view:associations>
               </sys:container>

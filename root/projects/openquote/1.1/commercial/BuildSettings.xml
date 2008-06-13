@@ -12,10 +12,10 @@
       
   <!-- Release version numbers (BTW the build number comes from cruise control.) -->
   <property name="major.version" value="2"/>
-  <property name="minor.version" value="1"/>
+  <property name="minor.version" value="2"/>
 
   <!-- Version of Core project to use for this project -->
-  <property name="core.version" value="2.2"/>
+  <property name="core.version" value="2.3"/>
   <property name="core.build" value="1"/>
   
   <!-- Version of JBoss to use for this project -->

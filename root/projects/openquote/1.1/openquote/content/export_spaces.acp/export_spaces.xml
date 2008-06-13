@@ -4803,6 +4803,68 @@
                         <cm:location></cm:location>
                       </view:properties>
                     </cm:person>
+                    <cm:person view:childName="cm:person">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:acl>
+                        <view:ace view:access="ALLOWED">
+                          <view:authority>adam</view:authority>
+                          <view:permission>All</view:permission>
+                        </view:ace>
+                      </view:acl>
+                      <view:properties>
+                        <cm:email>adam@openquote</cm:email>
+                        <sys:node-uuid>4579472e-38a8-11dd-ab0f-21e75d68c912</sys:node-uuid>
+                        <cm:lastName>Inistrator</cm:lastName>
+                        <cm:presenceUsername></cm:presenceUsername>
+                        <cm:sizeQuota>-1</cm:sizeQuota>
+                        <cm:name>4579472e-38a8-11dd-ab0f-21e75d68c912</cm:name>
+                        <sys:store-identifier>SpacesStore</sys:store-identifier>
+                        <cm:organizationId></cm:organizationId>
+                        <cm:jobtitle></cm:jobtitle>
+                        <cm:firstName>Adam</cm:firstName>
+                        <cm:presenceProvider></cm:presenceProvider>
+                        <sys:node-dbid>2005</sys:node-dbid>
+                        <cm:sizeCurrent>0</cm:sizeCurrent>
+                        <cm:homeFolder>workspace://SpacesStore/cedfcb50-ff4d-11dc-8a11-d1bc3afb87c4</cm:homeFolder>
+                        <cm:userName>adam</cm:userName>
+                        <sys:store-protocol>workspace</sys:store-protocol>
+                        <cm:organization></cm:organization>
+                        <cm:location></cm:location>
+                      </view:properties>
+                    </cm:person>
+                    <cm:person view:childName="cm:person">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:acl>
+                        <view:ace view:access="ALLOWED">
+                          <view:authority>davy</view:authority>
+                          <view:permission>All</view:permission>
+                        </view:ace>
+                      </view:acl>
+                      <view:properties>
+                        <cm:email>davy@openquote</cm:email>
+                        <sys:node-uuid>615d04c3-38a8-11dd-ab0f-21e75d68c912</sys:node-uuid>
+                        <cm:lastName>Loper</cm:lastName>
+                        <cm:presenceUsername></cm:presenceUsername>
+                        <cm:sizeQuota>-1</cm:sizeQuota>
+                        <cm:name>615d04c3-38a8-11dd-ab0f-21e75d68c912</cm:name>
+                        <sys:store-identifier>SpacesStore</sys:store-identifier>
+                        <cm:organizationId></cm:organizationId>
+                        <cm:jobtitle></cm:jobtitle>
+                        <cm:firstName>Davy</cm:firstName>
+                        <cm:presenceProvider></cm:presenceProvider>
+                        <sys:node-dbid>2007</sys:node-dbid>
+                        <cm:sizeCurrent>0</cm:sizeCurrent>
+                        <cm:homeFolder>workspace://SpacesStore/cedfcb50-ff4d-11dc-8a11-d1bc3afb87c4</cm:homeFolder>
+                        <cm:userName>davy</cm:userName>
+                        <sys:store-protocol>workspace</sys:store-protocol>
+                        <cm:organization></cm:organization>
+                        <cm:location></cm:location>
+                      </view:properties>
+                    </cm:person>
                   </sys:children>
                 </view:associations>
               </sys:container>

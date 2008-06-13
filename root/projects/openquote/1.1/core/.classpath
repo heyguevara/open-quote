@@ -68,7 +68,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9-xpath.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9-dom.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9.jar"/>
-	<classpathentry kind="var" path="NETSCAPE_LIB"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/ant-nodeps-1.6.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/janino-2.5.10.jar"/>

@@ -45,7 +45,7 @@ try
    davy.setPassword(Tools.md5AsHexString("davy"));
    davy.setGivenName("Davy");
    davy.setFamilyName("Loper");
-   davy.setRealEmail("davy@portal.com");
+   davy.setRealEmail("davy@openquote");
    davy.setViewRealEmail(true);
    davy.setEnabled(true);
 
@@ -53,12 +53,25 @@ try
    davy.getRoles().add(developerRole);
    developerRole.getUsers().add(davy);
 
+   // OpenQuote productreader
+   HibernateUserImpl productreader = new HibernateUserImpl("productreader");
+   productreader.setPassword(Tools.md5AsHexString("prodreader"));
+   productreader.setGivenName("Product");
+   productreader.setFamilyName("Reader");
+   productreader.setRealEmail("productreader@openquote");
+   productreader.setViewRealEmail(true);
+   productreader.setEnabled(true);
+
+   //
+   productreader.getRoles().add(developerRole);
+   developerRole.getUsers().add(productreader);
+
    // OpenQuote administrator
    HibernateUserImpl adam = new HibernateUserImpl("adam");
    adam.setPassword(Tools.md5AsHexString("adam"));
    adam.setGivenName("Adam");
    adam.setFamilyName("Inistrator");
-   adam.setRealEmail("adam@portal.com");
+   adam.setRealEmail("adam@openquote");
    adam.setViewRealEmail(true);
    adam.setEnabled(true);
 
@@ -75,6 +88,7 @@ try
    session.save(user);
    session.save(adam);
    session.save(davy);
+   session.save(productreader);
 
    tx.commit();
 }
