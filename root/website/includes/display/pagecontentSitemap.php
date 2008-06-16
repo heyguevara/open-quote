@@ -12,6 +12,7 @@
 					<li><a href="downloads.php">Downloads</a> - Code, binaries and demo download links.</li>
 					<li><a href="demo.php">Demo</a> - Try OpenQuote on our demonstration server now.</li>
 					<li><a href="opensource.php">Open Source</a> - An introduction to Open Source.</li>
+					<li><a href="javadocs.php">Java Docs</a> - Java developers OpenQuote documentation.</li>
 					<li><a href="sitemap.php">Sitemap</a> - This page.</li>
 				</ul>				
 										

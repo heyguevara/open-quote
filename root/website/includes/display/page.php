@@ -39,5 +39,11 @@ include($includesPath."display/pagefooter.php");
 <!-- wrap ends here -->
 </div>
 
+<!-- google analytics starts here -->	
+<?php
+include($includesPath."display/googleanalytics.php"); 
+?>
+<!-- google analytics ends here -->
+
 </body>
 </html>
