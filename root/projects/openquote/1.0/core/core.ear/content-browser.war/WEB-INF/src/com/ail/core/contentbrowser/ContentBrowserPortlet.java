@@ -117,10 +117,10 @@ public class ContentBrowserPortlet extends GenericPortlet {
     }
 
     // Workaround for a bug in Alfresco 2.9.0 (C_dev 816) schema 124. In this version it appears that
-    // authentication of any content request depends on the alfresco web-client having a fully initialised
-    // JSF context, which it will only have when the /alfreso page has been opened. Attempting to make
+    // authentication of any content request depends on the alfresco web-client having a fully initialized
+    // JSF context, which it will only have when the /alfresco page has been opened. Attempting to make
     // content requests otherwise results in an NPE in alfresco, and an IOException to the client
-    // (i.e. this portlet!). This method works around that by making a single attempt to open the alfresco
+    // (i.e. this portlet!). This method works around that by making a second attempt to open the alfresco
     // page if we get an IOException. 
     private String fetchContent(String path) throws IOException, MalformedURLException {       
         try {
@@ -146,15 +146,17 @@ public class ContentBrowserPortlet extends GenericPortlet {
      * would take the user out of the portal.
      */
     private String buildURL(RenderResponse resp, String path) {
-        // Only modify refs to alfresco content, leave other URLs as they are
+        // Only modify refs to alfresco content, leave other URLs as they are.
+        // The rule is: if it includes the word "alfresco" and ends with a ".htm" or "html" or doesn't have an extension, 
+        // we will assume it is link to another page of alfresco content
         if (path.indexOf("alfresco")>=0) {
-            PortletURL url = resp.createActionURL();
-            url.setParameter("path", path);
-            return url.toString();
+            String ext=path.substring(path.lastIndexOf('.'));
+            if (".html".equalsIgnoreCase(ext) || ".htm".equalsIgnoreCase(ext) || path.length()-path.lastIndexOf('.')>4) {
+                PortletURL url = resp.createActionURL();
+                url.setParameter("path", path);
+                return url.toString();
+            }
         }
-        else {
-            return path;
-        }
+        return path;
     }
-
 }
