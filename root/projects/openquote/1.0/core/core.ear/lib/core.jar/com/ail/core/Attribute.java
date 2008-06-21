@@ -234,7 +234,7 @@ public class Attribute extends Type implements Identified {
     }
     
     /**
-     * Getter returning the value of the unit property. An optional attribute descibing the unit of the facet. This can be any
+     * Getter returning the value of the unit property. An optional attribute describing the unit of the facet. This can be any
      * standard unit understood by Unit.valueOf(String). E.g. "kg", "m", etc.
      * @return Value of the unit property
      */
@@ -243,7 +243,7 @@ public class Attribute extends Type implements Identified {
     }
 
     /**
-     * Setter to update the value of the unit property. An optional attribute descibing the unit of the facet. This can be any
+     * Setter to update the value of the unit property. An optional attribute describing the unit of the facet. This can be any
      * standard unit understood by Unit.valueOf(String). E.g. "kg", "m", etc.
      * @param unit New value for the unit property
      */
@@ -455,6 +455,11 @@ public class Attribute extends Type implements Identified {
         if (isCurrencyType() || isNumberType()) {
             String min=getFormatOption("min");
             String max=getFormatOption("max");
+            
+            if (getFormat().contains("percent")) {
+                min="0";
+                max="100";
+            }
 
             return ((min!=null && new Double(min) > new Double(value)) |
                     (max!=null && new Double(max) < new Double(value)));
