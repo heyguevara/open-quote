@@ -79,8 +79,8 @@
             <parameter name="Url">product://localhost:8080/AIL/Base/PremiumCalculationService.java</parameter>
         </service>
         
-        <service name='AssessPaymentOptionsRule' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-            <parameter name="ServiceClass">com.ail.core.NullService</parameter>
+        <service name='AssessPaymentOptionsRule' builder='ClassBuilder' key='com.ail.core.command.JaninoAccessor'>
+            <parameter name="Url">~/AssessPaymentOptionsRule.java</parameter>
         </service>
 
         <service name="MergeDocumentDataJavaService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
