@@ -2537,6 +2537,32 @@
                         <sys:store-identifier>SpacesStore</sys:store-identifier>
                       </view:properties>
                     </cm:content>
+
+                    <cm:content view:childName="cm:OpenQuote User Guide.pdf">
+                      <view:aspects>
+                        <cm:titled></cm:titled>
+                        <cm:auditable></cm:auditable>
+                        <sys:referenceable></sys:referenceable>
+                        <cm:author></cm:author>
+                        <app:inlineeditable></app:inlineeditable>
+                      </view:aspects>
+                      <view:properties>
+                        <app:editInline>true</app:editInline>
+                        <cm:description></cm:description>
+                        <sys:node-uuid>c381542f-3bcd-11dd-9bab-ff4a63e6fef0</sys:node-uuid>
+                        <cm:content>contentUrl=export_spaces/content118.pdf|mimetype=application/pdf|encoding=|locale=en_US_</cm:content>
+                        <cm:title>OpenQuote-User-Guide.pdf</cm:title>
+                        <cm:author></cm:author>
+                        <cm:created>2008-04-01T08:00:01.914+01:00</cm:created>
+                        <cm:modifier>admin</cm:modifier>
+                        <cm:modified>2008-04-01T08:00:19.280+01:00</cm:modified>
+                        <cm:creator>admin</cm:creator>
+                        <sys:store-protocol>workspace</sys:store-protocol>
+                        <cm:name>OpenQuote User Guide</cm:name>
+                        <sys:store-identifier>SpacesStore</sys:store-identifier>
+                      </view:properties>
+                    </cm:content>
+
                     <cm:content view:childName="cm:OpenQuote Project Links">
                       <view:aspects>
                         <cm:titled></cm:titled>
@@ -3033,6 +3059,35 @@
                                     <sys:store-protocol>workspace</sys:store-protocol>
                                   </view:properties>
                                 </cm:content>
+                                <cm:content view:childName="cm:AssessPaymentOptionsRule.java">
+                                  <view:aspects>
+                                    <cm:titled></cm:titled>
+                                    <cm:auditable></cm:auditable>
+                                    <sys:referenceable></sys:referenceable>
+                                    <cm:author></cm:author>
+                                    <app:inlineeditable></app:inlineeditable>
+                                    <cm:versionable></cm:versionable>
+                                  </view:aspects>
+                                  <view:properties>
+                                    <sys:node-uuid>ce124375-ffbc-11dc-ad48-17d88235ace2</sys:node-uuid>
+                                    <cm:content>contentUrl=export_spaces/content117.java|mimetype=text/plain|size=263|encoding=UTF-8|locale=en_US_</cm:content>
+                                    <cm:versionLabel>1.0</cm:versionLabel>
+                                    <cm:created>2008-04-01T08:25:29.062+01:00</cm:created>
+                                    <cm:initialVersion>true</cm:initialVersion>
+                                    <cm:creator>admin</cm:creator>
+                                    <cm:autoVersion>true</cm:autoVersion>
+                                    <cm:name>AssessPaymentOptionsRule.java</cm:name>
+                                    <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                    <app:editInline>true</app:editInline>
+                                    <cm:description>Default payment option generator rule..</cm:description>
+                                    <cm:title>AssessPaymentOptionsRule.java</cm:title>
+                                    <cm:author></cm:author>
+                                    <cm:modifier>admin</cm:modifier>
+                                    <cm:modified>2008-04-01T08:32:15.345+01:00</cm:modified>
+                                    <sys:store-protocol>workspace</sys:store-protocol>
+                                  </view:properties>
+                                </cm:content>
+                                
                                 <cm:content view:childName="cm:GenerateQuoteNumber.java">
                                   <view:aspects>
                                     <cm:titled></cm:titled>
