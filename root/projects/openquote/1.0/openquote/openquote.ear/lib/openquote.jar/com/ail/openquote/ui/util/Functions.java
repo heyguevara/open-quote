@@ -133,9 +133,18 @@ public class Functions {
      * @throws IOException
      */
     public static String renderAttribute(Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
+        // If we're not bound to anything, output nothing.
+        if (boundTo==null) {
+            return "";
+        }
+
         // Create the StringWriter - out output will go here.
         StringWriter ret=new StringWriter();
         PrintWriter w=new PrintWriter(ret);
+
+        if (boundTo==null) {
+            return "";
+        }
 
         String id=xpathToId(rowContext+boundTo);
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
@@ -154,11 +163,12 @@ public class Functions {
             }
             else if (attr.isNumberType()) {
                 String pattern=attr.getFormatOption("pattern");
+                String trailer=(attr.getFormat().endsWith("percent")) ? "%" : ""; 
                 int size=(pattern==null) ? 7 : pattern.length();
-                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getValue());
+                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
             }
             else if (attr.isCurrencyType()) {
-                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='7' type='text' value='%s'/>", id, onChangeEvent, attr.getValue());
+                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='7' type='text' value='%s'/>%s", id, onChangeEvent, attr.getValue(), attr.getUnit());
             }
             else if (attr.isChoiceMasterType()) {
                 onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
@@ -211,6 +221,11 @@ public class Functions {
     }
 
     public static String renderAttributePageLevel(Type model, String boundTo, String rowContext, PortletSession session) throws IllegalStateException, IOException {
+        // If we're not bound to anything, output nothing.
+        if (boundTo==null) {
+            return "";
+        }
+
         String ret="";
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 
@@ -232,6 +247,11 @@ public class Functions {
      * @return true if any errors are found, false otherwise.
      */
     public static boolean applyAttributeValidation(Type model, String boundTo) {
+        // If we're not bound to anything, don't validate anything.
+        if (boundTo==null) {
+            return false;
+        }
+
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
         boolean error=false;
         
@@ -267,10 +287,13 @@ public class Functions {
      * @param request The request whose parameters should be checked.
      */
     public static void applyAttributeValues(Type model, String boundTo, String rowContext, ActionRequest request) {
-        String name=xpathToId(rowContext+boundTo);
-        
-        if (request.getParameter(name)!=null) {
-            model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
+        // If we're not bound to anything, apply nothing.
+        if (boundTo!=null) {
+            String name=xpathToId(rowContext+boundTo);
+            
+            if (request.getParameter(name)!=null) {
+                model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
+            }
         }
     }
     

@@ -111,11 +111,16 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+        String title=getTitle();
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
 
         String onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+id+"\")";
         
+        if (title==null && getTitleBinding()!=null) {
+            title=model.xpathGet(getTitleBinding(), String.class);
+        }
+
         w.printf("<td>%s</td>", getTitle());
         w.printf("<td colspan='3'>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
         w.printf("</tr>");

@@ -187,7 +187,7 @@ public class ProposerDetails extends PageElement {
         w.printf("<table width='100%%' border='0' cols='6'>");
         w.printf(" <tr><td height='15' colspan='6'>&nbsp;</td></tr>");
         w.printf(" <tr class='portlet-font'>");
-        w.printf("  <td class='portal-form-label'>Title:</td>");
+        w.printf("  <td>Title:</td>");
         w.printf("  <td colspan='2'>");
         w.printf("   <table border='0'><tr>");
         w.printf("    <td>");

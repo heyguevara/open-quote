@@ -91,9 +91,10 @@ public class QuestionSection extends PageElement {
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
         boolean error=false;
+        Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
         
         for (Question q : question) {
-            error |= q.processValidations(request, response, model);
+            error |= q.processValidations(request, response, localModel);
         }
         
         return error;
@@ -101,20 +102,26 @@ public class QuestionSection extends PageElement {
 
     @Override
     public void processActions(ActionRequest request, ActionResponse response, Type model) {
+        Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
+
         for (PageElement q : question) {
-            q.processActions(request, response, model);
+            q.processActions(request, response, localModel);
         }
     }
 
     public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+        Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
+        
         for (Question q : question) {
-            q.applyRequestValues(request, response, model);
+            q.applyRequestValues(request, response, localModel);
         }
     }
 
     @Override
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
+        Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
+
         w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
 
         // output the title row if a title was defined
@@ -126,15 +133,17 @@ public class QuestionSection extends PageElement {
         
         while(it.hasNext()) {
             w.printf("<tr>");
-            it.next().renderResponse(request, response, model);
+            it.next().renderResponse(request, response, localModel);
             w.printf("</tr>");
         }
         w.printf("</table>");
 	}
 
     public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
+
         for(Question q: question) {
-            q.renderPageHeader(request, response, model);
+            q.renderPageHeader(request, response, localModel);
         }
     }
 }

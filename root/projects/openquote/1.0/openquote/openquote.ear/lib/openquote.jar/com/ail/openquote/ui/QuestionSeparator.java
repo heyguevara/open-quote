@@ -19,6 +19,8 @@ package com.ail.openquote.ui;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -26,28 +28,44 @@ import com.ail.core.Type;
 import com.ail.openquote.ui.util.Functions;
 
 /**
- * <p>The Question page element is probably one of the more commonly used elements in pageflows. It renders as a single line 
- * within its container which presents a question on the left, and prompts for an answer on the right. Validation errors
- * are rendered to the right of the answer.</p>
- * <p><img src="doc-files/Question.png"/></p>
- * <p>The screenshot above shows 12 questions; the first showing the locations of a question's parts.</p>
- * <p>The way in which the 'value binding' section is rendered depends entirely on the nature of the
- * {@link com.ail.core.Attribute Attribute} which the question is bound to (via it's {@link #getBinding() binding} property).
- * The screenshot shows how String Attributes are rendered (Name, Freeze brand and Passport are all examples 
- * of string Attributes). It also show Choice Attributes (Age, Gender, Colour, etc); and Currency Attributes (Purchase price and Sum insured).</p>
- * <p>The validations applied to each answer are also defined by the properties of the Attribute that the question is bound to.</p>
- * @see com.ail.core.Attribute
+ * <p>The QuestionSeparator is used to break up long list of questions with either a title, or simple white space.</p>
+ * <p><img src="doc-files/QuestionSeparator.png"/></p>
+ * <p>In the example above, a page of conditions has been broken into three blocks to make it more readable. Three
+ * QuestionSeparators are used, two with titles one without.</p>
+ * @see com.ail.openquote.ui.Question
  */
-public class Question extends AttributeField {
+public class QuestionSeparator extends Question {
     private static final long serialVersionUID = 7118438575837087257L;
 
-    public Question() {
+    public QuestionSeparator() {
 		super();
 	}
 
-	@Override
+    @Override
+    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    }
+
+    @Override
+    public void renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
+            IOException {
+    }
+
+    @Override
+    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
+    }
+
+    @Override
+    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    }
+
+    @Override
+    public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
+        return false;
+    }
+
+    @Override
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    renderResponse(request, response, model, "");
+        renderResponse(request, response, model, null);
     }
 
 	@Override
@@ -60,7 +78,6 @@ public class Question extends AttributeField {
             title=model.xpathGet(getTitleBinding(), String.class);
         }
         
-        w.printf("<td>%s</td>", title);
-        w.printf("<td colspan='3' align='left'>%s</td>", Functions.renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));
+        w.printf("<td class='portlet-section-subheader'>%s</td><td colspan='3' align='left'>&nbsp;</td>", Functions.hideNull(title));
     }
 }

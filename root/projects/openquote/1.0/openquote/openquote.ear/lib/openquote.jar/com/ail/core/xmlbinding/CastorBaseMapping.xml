@@ -543,6 +543,12 @@
         <field name="subTitle" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="titleBinding" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="subTitleBinding" type="string">
+            <bind-xml node="attribute"/>
+        </field>
         <field name="onChange" type="string">
             <bind-xml node="attribute"/>
         </field>
@@ -685,6 +691,10 @@
         <map-to xml="question"/>
     </class>
     
+    <class name="com.ail.openquote.ui.QuestionSeparator" extends="com.ail.openquote.ui.Question">
+        <map-to xml="questionSeparator"/>
+    </class>
+    
     <class name="com.ail.openquote.ui.QuestionWithDetails" extends="com.ail.openquote.ui.Question">
         <map-to xml="questionWithDetails"/>
         <field name="detailsTitle" type="string">
@@ -718,7 +728,7 @@
     
     <class name="com.ail.openquote.ui.SectionScroller" extends="com.ail.openquote.ui.Repeater">
         <map-to xml="sectionScroller"/>
-        <field name="sectionTitle" type="com.ail.openquote.ui.Label" required="true"/>
+        <field name="sectionTitle" type="com.ail.openquote.ui.Label"/>
     </class>
     
     <class name="com.ail.openquote.ui.PageSection" extends="com.ail.openquote.ui.PageContainer">

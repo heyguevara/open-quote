@@ -25,7 +25,7 @@ import com.ail.financial.PaymentSchedule;
 
 /**
  * A quotation can generally be represented as an instance of a Policy at the quotation state, however
- * in the context of the openquote system a policy can only exist upto the quoted/referred/declined 
+ * in the context of the openquote system a policy can only exist up to the quoted/referred/declined 
  * states and hence never becomes a policy. For that reason, this sub-type of Policy was created. It
  * also includes some additional properties which are specific to the openquote system.
  * @version $Revision: 1.9 $

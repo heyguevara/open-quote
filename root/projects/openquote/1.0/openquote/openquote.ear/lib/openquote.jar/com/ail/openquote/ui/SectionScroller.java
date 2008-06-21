@@ -34,7 +34,7 @@ import com.ail.core.Type;
  * being processed, and for each of those assets it renders a section built up from the page elements contained
  * in the SectionScroller. In this example, the SectionScroller contains 8 page elements, two of which have
  * detail associated with them.</p>
- * <p>A SectionScroller also has a {@link #getSectionTitle sectionTitle} property which is rendered at the top
+ * <p>A SectionScroller also has an optional {@link #getSectionTitle sectionTitle} property which is rendered at the top
  * of each section. The text of this {@link Label label} may be static, or as in this case dynamic. Dynamic titles are rendered 
  * using the context of the selected record, and may therefore be bound to fields in the record. In this case, the 
  * title is bound to the vehicle asset's make, model, and registrationNumber attributes.</p>
@@ -75,9 +75,12 @@ public class SectionScroller extends Repeater {
             
             w.printf("<tr><td>");
             w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-            sectionTitle.renderResponse(request, response, t);
-            w.printf("  </td></tr>");
+            
+            if (sectionTitle!=null) {
+                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+                sectionTitle.renderResponse(request, response, t);
+                w.printf("  </td></tr>");
+            }
     
             for (Iterator<AttributeField> question=item.iterator() ; question.hasNext() ; ) {
                 w.printf("<tr>");
