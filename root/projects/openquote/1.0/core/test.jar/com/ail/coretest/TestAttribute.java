@@ -96,8 +96,7 @@ public class TestAttribute extends TestCase {
         Attribute attr;
 
        attr=new Attribute("amount5", "£12.234", "number;pattern=£#.##");
-       assertEquals("£12.23", attr.getFormattedValue());
-       
+       assertEquals("£12.23", attr.getFormattedValue());       
     }
     
     public void testReference() {
@@ -121,5 +120,18 @@ public class TestAttribute extends TestCase {
     public void testChoiceOptionWithCommas() {
         Attribute a=new Attribute("refdata", "?", "choice,options=-1#?|1#Salon|2#House, Boat|3#Convertible, ship");
         assertEquals("-1#?|1#Salon|2#House, Boat|3#Convertible, ship", a.getFormatOption("options"));
+    }
+
+    public void testCurrencyAttribute() {
+        Attribute attr=new Attribute("q1","1002.23","currency", "GBP");
+        
+        assertEquals(java.lang.String.class, attr.getValue().getClass());
+        assertEquals(java.lang.Double.class, attr.getObject().getClass());
+        
+        
+        assertEquals("1,002.23 GBP", attr.getFormattedValue());
+        assertEquals("1002.23", attr.getValue());
+        assertEquals(1002.23, attr.getObject());
+
     }
 }
