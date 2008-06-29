@@ -43,9 +43,9 @@ public class RateBehaviour extends Behaviour {
     /**
      * Constructor
      * @param id The Id to use for this line
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
-     * @param contributesTo The Id of the line that this one cntributes to.
+     * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param type Behaviour type (Load or Discount)
      * @param rate The rate to be used in the calculation.
@@ -59,9 +59,9 @@ public class RateBehaviour extends Behaviour {
     /**
      * Constructor
      * @param id The Id to use for this line
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
-     * @param contributesTo The Id of the line that this one cntributes to.
+     * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param type Behaviour type (Load or Discount)
      * @param rate The rate to be used in the calculation.

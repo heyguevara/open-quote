@@ -454,7 +454,7 @@ public class AssessmentSheet extends Type {
      * </pre>
      * Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
      * @param id The Id to use for this line
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one cntributes to.
      * @param dependsOn The Id of the line that this on is derived from.
@@ -467,7 +467,7 @@ public class AssessmentSheet extends Type {
     /**
      * Add a loading with a generated lineId, and the specified arguments.
      * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one cntributes to.
      * @param dependsOn The Id of the line that this on is derived from.
@@ -479,7 +479,7 @@ public class AssessmentSheet extends Type {
 
     /**
      * Add a loading with a generated lineId, and the specified arguments.
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one cntributes to.
      * @param dependsOn The Id of the line that this on is derived from.
@@ -496,7 +496,7 @@ public class AssessmentSheet extends Type {
      * supplied and adds that instance to the sheet as a new line.
      * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
      * @param id The Id to use for this line
-     * @param reason Free text reson for this discount being created.
+     * @param reason Free text reason for this discount being created.
      * @param relatesTo Optional reference to the part of the policy that caused this discount.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
@@ -509,7 +509,7 @@ public class AssessmentSheet extends Type {
     /**
      * Same as addDiscount, but generates the line id automatically.
      * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
-     * @param reason Free text reson for this discount being created.
+     * @param reason Free text reason for this discount being created.
      * @param relatesTo Optional reference to the part of the policy that caused this discount.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
@@ -522,7 +522,7 @@ public class AssessmentSheet extends Type {
 
     /**
      * Same as addDiscount, but generates the line id automatically.
-     * @param reason Free text reson for this discount being created.
+     * @param reason Free text reason for this discount being created.
      * @param relatesTo Optional reference to the part of the policy that caused this discount.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
@@ -539,7 +539,7 @@ public class AssessmentSheet extends Type {
      * {@link Marker Marker} instance with the arguments supplied and adds it to
      * the sheet as a new line.
      * @param id The Id to use for this line
-     * @param reason Free text reson for this referral being created.
+     * @param reason Free text reason for this referral being created.
      * @param relatesTo Optional reference to the part of the policy that caused referral.
      */
     public void addReferral(String id, String reason, Reference relatesTo) {
@@ -548,7 +548,7 @@ public class AssessmentSheet extends Type {
 
     /**
      * Same as addReferral, but automatically generates the line id.
-     * @param reason Free text reson for this referral being created.
+     * @param reason Free text reason for this referral being created.
      * @param relatesTo Optional reference to the part of the policy that caused referral.
      * @see #addReferral
      */
@@ -561,7 +561,7 @@ public class AssessmentSheet extends Type {
      * {@link Marker Marker} instance with the arguments supplied and adds it to
      * the sheet as a new line.
      * @param id The Id to use for this line
-     * @param reason Free text reson for this decline being created.
+     * @param reason Free text reason for this decline being created.
      * @param relatesTo Optional reference to the part of the policy that caused decline line.
      */
     public void addDecline(String id, String reason, Reference relatesTo) {
@@ -570,7 +570,7 @@ public class AssessmentSheet extends Type {
 
     /**
      * Same as addDecline, but automatically generates a line id
-     * @param reason Free text reson for this decline being created.
+     * @param reason Free text reason for this decline being created.
      * @param relatesTo Optional reference to the part of the policy that caused decline line.
      * @see #addDecline
      */
@@ -584,7 +584,7 @@ public class AssessmentSheet extends Type {
      * it to the sheet as a new line.
      * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
@@ -598,7 +598,7 @@ public class AssessmentSheet extends Type {
      * {@link FixedSum FixedSum} instance using the arguments supplied and adds
      * it to the sheet as a new line.
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.#
@@ -611,7 +611,7 @@ public class AssessmentSheet extends Type {
     /**
      * Same as addFixedSum, but generates a line id automatically.
      * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
@@ -623,7 +623,7 @@ public class AssessmentSheet extends Type {
 
     /**
      * Same as addFixedSum, but generates a line id automatically.
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
