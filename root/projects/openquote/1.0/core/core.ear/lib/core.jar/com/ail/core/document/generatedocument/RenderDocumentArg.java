@@ -46,7 +46,7 @@ public interface RenderDocumentArg extends CommandArg {
      * Get the rendered document. This document is the result of the rendering process - 
      * a fully formed PDF, RTF, or whatever other format of file the implementing 
      * services support.
-     * @ret The document resulting from the render process
+     * @return The document resulting from the render process
      */
     byte[] getRenderedDocumentRet();
 

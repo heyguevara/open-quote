@@ -518,14 +518,7 @@ public class Attribute extends Type implements Identified {
      * @return true if this is a choice, false otherwise
      */
     public boolean isFreeChoiceType() {
-        if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
-            return false;
-        }
-        
-        String options=getFormatOption("choice");
-        
-        return (options!=null && options.indexOf('#')==-1);
+        return (isChoiceType() && getFormatOption("options")==null);
     }
     
     /**

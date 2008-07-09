@@ -45,11 +45,6 @@ import com.ail.core.persistence.PersistenceServerBean;
 import com.ail.core.persistence.QueryCommand;
 import com.ail.core.persistence.UpdateCommand;
 import com.ail.core.persistence.hibernate.HibernateCreateService;
-import com.ail.coretest.addressbook.Address;
-import com.ail.coretest.addressbook.AddressBook;
-import com.ail.coretest.addressbook.Organisation;
-import com.ail.coretest.addressbook.Party;
-import com.ail.coretest.addressbook.Person;
 
 /**
  * @version $Revision: 1.5 $
