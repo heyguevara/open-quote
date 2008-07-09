@@ -4657,6 +4657,421 @@
                                     </cm:contains>
                                   </view:associations>
                                 </cm:folder>
+                                <cm:folder view:childName="cm:IrishBrokerPI">
+                                  <view:aspects>
+                                    <cm:auditable></cm:auditable>
+                                    <sys:referenceable></sys:referenceable>
+                                    <app:uifacets></app:uifacets>
+                                  </view:aspects>
+                                  <view:properties>
+                                    <cm:description></cm:description>
+                                    <app:icon>space-icon-default</app:icon>
+                                    <sys:node-uuid>056d253c-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                    <sys:node-dbid>2008</sys:node-dbid>
+                                    <cm:title></cm:title>
+                                    <cm:created>2008-06-29T19:05:54.061+01:00</cm:created>
+                                    <cm:modifier>admin</cm:modifier>
+                                    <cm:modified>2008-06-29T19:05:54.072+01:00</cm:modified>
+                                    <cm:creator>admin</cm:creator>
+                                    <sys:store-protocol>workspace</sys:store-protocol>
+                                    <cm:name>IrishBrokerPI</cm:name>
+                                    <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                  </view:properties>
+                                  <view:associations>
+                                    <cm:contains>
+                                      <cm:content view:childName="cm:Quotation.xml">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <cm:lockable></cm:lockable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <sys:node-uuid>05af8580-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content119.xml|mimetype=text/xml|size=4189|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:lockOwner>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockOwner>
+                                          <cm:created>2008-06-19T07:54:01.878+01:00</cm:created>
+                                          <cm:creator>admin</cm:creator>
+                                          <cm:name>Quotation.xml</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/78de3273-ffba-11dc-ad48-17d88235ace3</cm:source>
+                                          <cm:description>Quotation template defining the default quotation type.</cm:description>
+                                          <sys:node-dbid>2009</sys:node-dbid>
+                                          <cm:lockType>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockType>
+                                          <cm:title>Quotation.xml</cm:title>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:expiryDate>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:expiryDate>
+                                          <cm:modified>2008-07-02T19:07:27.009+01:00</cm:modified>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:content view:childName="cm:QuotationDocument.xml">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <cm:lockable></cm:lockable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <sys:node-uuid>05e90c13-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content120.xml|mimetype=text/xml|size=5143|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:lockOwner>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockOwner>
+                                          <cm:created>2008-06-19T07:54:01.959+01:00</cm:created>
+                                          <cm:creator>admin</cm:creator>
+                                          <cm:name>QuotationDocument.xml</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/93cfc7e2-ffba-11dc-ad48-17d88235ace3</cm:source>
+                                          <cm:description>Quotation template defining the default quotation type.</cm:description>
+                                          <sys:node-dbid>2010</sys:node-dbid>
+                                          <cm:lockType>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockType>
+                                          <cm:title>QuotationDocument.xml</cm:title>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:expiryDate>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:expiryDate>
+                                          <cm:modified>2008-07-08T18:50:44.035+01:00</cm:modified>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:content view:childName="cm:QuotationPageFlow.xml">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <cm:lockable></cm:lockable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <sys:node-uuid>06450ec6-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content121.xml|mimetype=text/xml|size=9445|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:lockOwner>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockOwner>
+                                          <cm:created>2008-06-19T07:54:02.030+01:00</cm:created>
+                                          <cm:creator>admin</cm:creator>
+                                          <cm:name>QuotationPageFlow.xml</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/a859cec8-ffba-11dc-ad48-17d88235ace3</cm:source>
+                                          <cm:description>Definition of the questions and pages that make up the quotation page flow.</cm:description>
+                                          <sys:node-dbid>2011</sys:node-dbid>
+                                          <cm:lockType>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockType>
+                                          <cm:title>QuotationPageFlow.xml</cm:title>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:expiryDate>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:expiryDate>
+                                          <cm:modified>2008-07-03T18:15:56.615+01:00</cm:modified>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:content view:childName="cm:Registry.xml">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <cm:lockable></cm:lockable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <sys:node-uuid>067371c9-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content122.xml|mimetype=text/xml|size=3568|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:lockOwner>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockOwner>
+                                          <cm:created>2008-06-19T07:54:02.112+01:00</cm:created>
+                                          <cm:creator>admin</cm:creator>
+                                          <cm:name>Registry.xml</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/d786ae37-ffba-11dc-ad48-17d88235ace3</cm:source>
+                                          <cm:description>Product's service and type registry.</cm:description>
+                                          <sys:node-dbid>2012</sys:node-dbid>
+                                          <cm:lockType>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockType>
+                                          <cm:title>Registry.xml</cm:title>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:expiryDate>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:expiryDate>
+                                          <cm:modified>2008-07-04T08:46:44.247+01:00</cm:modified>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:folder view:childName="cm:Rules and Scripts">
+                                        <view:aspects>
+                                          <cm:auditable></cm:auditable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <app:uifacets></app:uifacets>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <cm:description></cm:description>
+                                          <app:icon>space-icon-default</app:icon>
+                                          <sys:node-uuid>06952a9c-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <sys:node-dbid>2013</sys:node-dbid>
+                                          <cm:title></cm:title>
+                                          <cm:created>2008-06-24T08:31:57.121+01:00</cm:created>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:modified>2008-06-24T08:31:57.133+01:00</cm:modified>
+                                          <cm:creator>admin</cm:creator>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                          <cm:name>Rules and Scripts</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                        </view:properties>
+                                        <view:associations>
+                                          <cm:contains>
+                                            <cm:content view:childName="cm:ExpiryDateCalculatorService.java">
+                                              <view:aspects>
+                                                <cm:titled></cm:titled>
+                                                <cm:auditable></cm:auditable>
+                                                <cm:lockable></cm:lockable>
+                                                <sys:referenceable></sys:referenceable>
+                                                <app:inlineeditable></app:inlineeditable>
+                                                <cm:author></cm:author>
+                                              </view:aspects>
+                                              <view:properties>
+                                                <sys:node-uuid>069b6c2e-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                                <cm:content>contentUrl=export_spaces/content123.txt|mimetype=text/plain|size=1275|encoding=UTF-8|locale=en_US_</cm:content>
+                                                <cm:lockOwner>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockOwner>
+                                                <cm:created>2008-06-24T19:12:43.858+01:00</cm:created>
+                                                <cm:creator>admin</cm:creator>
+                                                <cm:name>ExpiryDateCalculatorService.java</cm:name>
+                                                <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                                <app:editInline>true</app:editInline>
+                                                <cm:description></cm:description>
+                                                <sys:node-dbid>2014</sys:node-dbid>
+                                                <cm:lockType>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockType>
+                                                <cm:title></cm:title>
+                                                <cm:author></cm:author>
+                                                <cm:modifier>admin</cm:modifier>
+                                                <cm:expiryDate>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:expiryDate>
+                                                <cm:modified>2008-06-24T19:15:23.204+01:00</cm:modified>
+                                                <sys:store-protocol>workspace</sys:store-protocol>
+                                              </view:properties>
+                                            </cm:content>
+                                            <cm:content view:childName="cm:CalculatePolicyTaxRule.java">
+                                              <view:aspects>
+                                                <cm:lockable></cm:lockable>
+                                                <cm:auditable></cm:auditable>
+                                                <cm:titled></cm:titled>
+                                                <sys:referenceable></sys:referenceable>
+                                                <cm:copiedfrom></cm:copiedfrom>
+                                                <cm:author></cm:author>
+                                                <app:inlineeditable></app:inlineeditable>
+                                              </view:aspects>
+                                              <view:properties>
+                                                <sys:node-uuid>06b22881-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                                <cm:content>contentUrl=export_spaces/content124.txt|mimetype=text/plain|size=1554|encoding=UTF-8|locale=en_US_</cm:content>
+                                                <cm:lockOwner>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockOwner>
+                                                <cm:created>2008-06-29T11:13:22.787+01:00</cm:created>
+                                                <cm:creator>admin</cm:creator>
+                                                <cm:name>CalculatePolicyTaxRule.java</cm:name>
+                                                <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                                <app:editInline>true</app:editInline>
+                                                <cm:description>Irish Government Levy and Stamp duty rules</cm:description>
+                                                <cm:source>workspace://SpacesStore/77ec6e44-ffbc-11dc-ad48-17d88235ace3</cm:source>
+                                                <sys:node-dbid>2015</sys:node-dbid>
+                                                <cm:lockType>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockType>
+                                                <cm:title>CalculatePolicyTaxRule.java</cm:title>
+                                                <cm:author></cm:author>
+                                                <cm:modifier>admin</cm:modifier>
+                                                <cm:expiryDate>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:expiryDate>
+                                                <cm:modified>2008-06-30T08:10:13.484+01:00</cm:modified>
+                                                <sys:store-protocol>workspace</sys:store-protocol>
+                                              </view:properties>
+                                            </cm:content>
+                                            <cm:content view:childName="cm:PolicyRating.xls">
+                                              <view:aspects>
+                                                <cm:titled></cm:titled>
+                                                <cm:auditable></cm:auditable>
+                                                <cm:lockable></cm:lockable>
+                                                <sys:referenceable></sys:referenceable>
+                                                <cm:copiedfrom></cm:copiedfrom>
+                                              </view:aspects>
+                                              <view:properties>
+                                                <cm:source>workspace://SpacesStore/5c4f8fdd-ffba-11dc-ad48-17d88235ace3</cm:source>
+                                                <cm:description>Spreadsheet defining the rating rules.</cm:description>
+                                                <sys:node-uuid>06d5b614-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                                <sys:node-dbid>2016</sys:node-dbid>
+                                                <cm:lockType>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockType>
+                                                <cm:content>contentUrl=export_spaces/content125.xls|mimetype=application/vnd.excel|size=30720|encoding=UTF-8|locale=en_US_</cm:content>
+                                                <cm:title>Motor Plus Risk Assessment Rules</cm:title>
+                                                <cm:lockOwner>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockOwner>
+                                                <cm:created>2008-06-19T07:54:01.769+01:00</cm:created>
+                                                <cm:modifier>admin</cm:modifier>
+                                                <cm:expiryDate>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:expiryDate>
+                                                <cm:modified>2008-07-04T08:46:05.158+01:00</cm:modified>
+                                                <cm:creator>admin</cm:creator>
+                                                <sys:store-protocol>workspace</sys:store-protocol>
+                                                <cm:name>PolicyRating.xls</cm:name>
+                                                <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                              </view:properties>
+                                            </cm:content>
+                                            <cm:content view:childName="cm:ApplyAgentPremiumService.java">
+                                              <view:aspects>
+                                                <cm:titled></cm:titled>
+                                                <cm:auditable></cm:auditable>
+                                                <cm:lockable></cm:lockable>
+                                                <sys:referenceable></sys:referenceable>
+                                                <app:inlineeditable></app:inlineeditable>
+                                                <cm:author></cm:author>
+                                              </view:aspects>
+                                              <view:properties>
+                                                <sys:node-uuid>06e4f857-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                                <cm:content>contentUrl=export_spaces/content126.txt|mimetype=text/plain|size=3172|encoding=UTF-8|locale=en_US_</cm:content>
+                                                <cm:lockOwner>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockOwner>
+                                                <cm:created>2008-07-01T18:17:27.094+01:00</cm:created>
+                                                <cm:creator>admin</cm:creator>
+                                                <cm:name>ApplyAgentPremiumService.java</cm:name>
+                                                <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                                <app:editInline>true</app:editInline>
+                                                <cm:description></cm:description>
+                                                <sys:node-dbid>2017</sys:node-dbid>
+                                                <cm:lockType>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockType>
+                                                <cm:title></cm:title>
+                                                <cm:author></cm:author>
+                                                <cm:modifier>admin</cm:modifier>
+                                                <cm:expiryDate>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:expiryDate>
+                                                <cm:modified>2008-07-03T18:25:57.961+01:00</cm:modified>
+                                                <sys:store-protocol>workspace</sys:store-protocol>
+                                              </view:properties>
+                                            </cm:content>
+                                          </cm:contains>
+                                        </view:associations>
+                                      </cm:folder>
+                                      <cm:content view:childName="cm:Welcome.html">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <cm:lockable></cm:lockable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <sys:node-uuid>06fdd78a-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content127.html|mimetype=text/html|size=838|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:lockOwner>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockOwner>
+                                          <cm:created>2008-06-25T18:57:01.394+01:00</cm:created>
+                                          <cm:creator>admin</cm:creator>
+                                          <cm:name>Welcome.html</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/830e339a-ffbd-11dc-ad48-17d88235ace3</cm:source>
+                                          <cm:description>Content for the default welcome page displayed when users visit a product's home page.</cm:description>
+                                          <sys:node-dbid>2018</sys:node-dbid>
+                                          <cm:lockType>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:lockType>
+                                          <cm:title>Welcome.html</cm:title>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:expiryDate>
+                                            <view:value view:isNull="true"></view:value>
+                                          </cm:expiryDate>
+                                          <cm:modified>2008-06-28T11:31:54.021+01:00</cm:modified>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:content view:childName="cm:ReferralNotification.html">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/29eaaeea-ffbd-11dc-ad48-17d88235ace3</cm:source>
+                                          <cm:description>Content for the default referral page.</cm:description>
+                                          <sys:node-uuid>0725d1ed-4d0f-11dd-8e94-cb581605bbed</sys:node-uuid>
+                                          <sys:node-dbid>2019</sys:node-dbid>
+                                          <cm:content>contentUrl=export_spaces/content128.html|mimetype=text/html|size=350|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:title>ReferralNotification.html</cm:title>
+                                          <cm:created>2008-06-25T18:57:01.933+01:00</cm:created>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:modified>2008-06-25T18:57:02.005+01:00</cm:modified>
+                                          <cm:creator>admin</cm:creator>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                          <cm:name>ReferralNotification.html</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:content view:childName="cm:Thankyou.html">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/3bf55742-4d8b-11dd-84f5-fdac163ceef2</cm:source>
+                                          <cm:description>Content for the order confirmation page.</cm:description>
+                                          <sys:node-uuid>3bf55742-4d8b-11dd-84f5-fdac163ceef2</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content129.html|mimetype=text/html|size=350|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:title>Thankyou.html</cm:title>
+                                          <cm:created>2008-06-25T18:57:01.933+01:00</cm:created>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:modified>2008-06-25T18:57:02.005+01:00</cm:modified>
+                                          <cm:creator>admin</cm:creator>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                          <cm:name>Thankyou.html</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                        </view:properties>
+                                      </cm:content>
+                                    </cm:contains>
+                                  </view:associations>
+                                </cm:folder>                                
+                                
                               </cm:contains>
                             </view:associations>
                           </cm:folder>

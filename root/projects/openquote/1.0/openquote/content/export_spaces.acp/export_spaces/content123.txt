@@ -1,0 +1,32 @@
+/* Copyright Applied Industrial Logic Limited 2008. All rights reserved. */
+import java.util.Calendar;
+import java.util.Date;
+import com.ail.openquote.Quotation;
+import com.ail.core.product.executepageaction.ExecutePageActionArgImp;
+
+/**
+ * Set the quotation's inceptionDate to the value defined by /asset[id='company']/attribute[id='inceptionDate'], 
+ * the calculate an expiry date one year hence and set the quotation's expiryDate value to it.
+ */
+public class ExpiryDateCalculatorService {
+    /**
+     * Service entry point.
+     * @param args Contains the quotation object available for initialisation. 
+     */
+    public static void invoke(ExecutePageActionArgImp args) {
+        Calendar date=null;
+        Quotation quote=args.getQuotationArgRet();
+
+        Date incept=(Date)quote.xpathGet("/asset[id='company']/attribute[id='inceptionDate']/object", Date.class);
+        
+        /* Set the quote and expiry dates to today */
+        quote.setInceptionDate(incept);
+        
+        /* Set the policy's expiry date to yesterday + 1 year */
+        date=Calendar.getInstance();
+        date.setTime(incept);
+        date.add(Calendar.DATE, -1);
+        date.add(Calendar.YEAR, 1);
+        quote.setExpiryDate(date.getTime());
+    }
+}

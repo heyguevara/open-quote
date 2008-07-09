@@ -77,7 +77,7 @@ public class TestMotorPlusDocumentRender extends CoreUserTestCase {
         cmd.setPolicyArg(quote);
         cmd.invoke();
 
-        PrintWriter out=new PrintWriter(new File("./deploy/test/TestGenerateDocument.pdf"));
+        PrintWriter out=new PrintWriter(new File("./target/test/TestGenerateDocument.pdf"));
         out.print(new String(cmd.getDocumentRet()));
         out.close();
     }

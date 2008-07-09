@@ -78,6 +78,11 @@ public class QuestionSeparator extends Question {
             title=model.xpathGet(getTitleBinding(), String.class);
         }
         
-        w.printf("<td class='portlet-section-subheader'>%s</td><td colspan='3' align='left'>&nbsp;</td>", Functions.hideNull(title));
+        if (title==null) {
+            w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
+        }
+        else {
+            w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", Functions.hideNull(title));
+        }
     }
 }

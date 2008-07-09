@@ -29,8 +29,8 @@ import java.util.Properties;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletSession;
-import javax.portlet.RenderResponse;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
@@ -38,7 +38,6 @@ import com.ail.core.Type;
 import com.ail.core.TypeEnum;
 import com.ail.core.TypeXPathException;
 import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.util.Choice;
 
 /**
  * This class defines a collection of functions used by the classes in {@link com.ail.openquote.ui}.
@@ -197,7 +196,7 @@ public class Functions {
                 w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
             }
             else if (attr.isNoteType()) {
-                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' cols='30'>%s</textarea>", id, onChangeEvent, attr.getValue());
+                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea>", id, onChangeEvent, attr.getValue());
             }
             
             w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", error("attribute[id='error']", attr));

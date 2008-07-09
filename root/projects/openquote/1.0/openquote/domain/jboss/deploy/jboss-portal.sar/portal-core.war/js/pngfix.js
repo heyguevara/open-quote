@@ -37,3 +37,4 @@ if ((version >= 5.5) && (document.body.filters))
       }
    }
 }
+window.attachEvent("onload", correctPNG);

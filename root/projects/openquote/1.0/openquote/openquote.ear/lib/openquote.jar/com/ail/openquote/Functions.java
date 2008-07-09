@@ -32,7 +32,6 @@ import com.ail.core.TypeXPathException;
 /**
  * This class defines a set of unrelated functions which are intended to be
  * used from within Drools rulesets. 
- * @author richarda
  */
 public class Functions {
 

@@ -24,9 +24,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.util.Functions;
@@ -53,17 +51,8 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
 
         if (op!=null && op.equals(getLabel())) {
             try {
-                CoreProxy proxy=new CoreProxy();
-                
                 String quoteNumber=Functions.getOperationParameters(request).getProperty("id");
-
-                FetchDocumentCommand cmd=(FetchDocumentCommand)proxy.newCommand("FetchQuotationDocument");
-                cmd.setQuotationNumberArg(quoteNumber);
-                cmd.invoke();
-                                
-                request.getPortletSession().setAttribute("quotedocument", cmd.getDocumentRet());
-
-                response.sendRedirect("/quotation/DisplayQuotationServlet");
+                response.sendRedirect("/quotation/DisplayQuotationServlet?quoteNumber="+quoteNumber);
             }
             catch(Exception e) {
                 e.printStackTrace();

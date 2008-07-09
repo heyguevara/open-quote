@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+    <name>IBA/PIBA Professional Indemnity</name>
+    <timeout>-1</timeout>
+    <who>Applied Industrial Logic</who>
+    <version>1.0</version>
+    <manager>com.ail.core.product.resetproduct.ResetProductService</manager>
+    <parentNamespace>AIL.Base.Registry</parentNamespace>
+
+    <types>
+
+        <service name="CalculatePolicyTaxRule" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/CalculatePolicyTaxRule.java</parameter>
+        </service>
+
+        <service name="AssessPolicyRiskRule" builder="CachingClassBuilder" key="com.ail.core.command.DroolsDecisionTableAccessor">
+            <!--uncomment the following parameter to get a full dump of the rules (drl) and rule facts written to -->
+            <!--the console during risk assessment                                                                -->
+            <!--parameter name="LoggingIndicatorAsString">FULL</parameter-->
+            <parameter name="Url">~/Rules%20and%20Scripts/PolicyRating.xls</parameter>
+        </service>
+
+        <command name="AssessSectionRisk/Section" builder="ClassBuilder"
+            key="com.ail.insurance.quotation.assessrisk.AssessSectionRiskCommand">
+            <!-- There are no risk assessment rules at the section level for this product, all risk assessment -->
+            <!-- is done at the policy level. The NullService has the effect of saying 'do nothing'.           -->
+            <parameter name="Service">NullService</parameter>
+        </command>
+
+        <type name="Quotation" builder="CastorXMLBuilder" key="com.ail.openquote.Quotation">
+            <parameter name="extends">BaseQuotation</parameter>
+            <parameter name="Url">~/Quotation.xml</parameter>
+        </type>
+
+        <type name="QuotationPageFlow" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.openquote.ui.PageFlow">
+            <parameter name="extends">BaseQuotationPageFlow</parameter>
+            <parameter name="Url">~/QuotationPageFlow.xml</parameter>
+        </type>
+
+        <type name="QuotationDocument" builder="CastorXMLBuilder" singleInstance="true"
+            key="com.ail.core.document.model.DocumentDefinition">
+            <parameter name="Url">~/QuotationDocument.xml</parameter>
+        </type>
+
+        <service name="ExpiryDateCalculatorService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/ExpiryDateCalculatorService.java</parameter>
+        </service>
+
+        <command name="ExpiryDateCalculator" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">ExpiryDateCalculatorService</parameter>
+        </command>
+
+        <service name="ApplyAgentPremiumService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/ApplyAgentPremiumService.java</parameter>
+        </service>
+
+        <command name="ApplyAgentPremium" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">ApplyAgentPremiumService</parameter>
+        </command>
+    </types>
+</configuration>
+

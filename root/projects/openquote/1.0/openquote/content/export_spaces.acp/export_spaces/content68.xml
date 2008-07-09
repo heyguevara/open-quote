@@ -93,7 +93,7 @@
         
         <service name="RenderPdfDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <!-- Uncomment the following to get a full dump of what goes and and comes back from doc prod -->
-            <parameter name="LoggingIndicatorAsString">FULL</parameter>
+            <!-- parameter name="LoggingIndicatorAsString">FULL</parameter -->
             <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderPdfDocumentService</parameter>
         </service>
 

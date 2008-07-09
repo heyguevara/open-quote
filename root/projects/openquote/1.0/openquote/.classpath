@@ -22,7 +22,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jnlp-1.0.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jcs-1.0-dev.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jca-1.0.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jaxrpc-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jakarta-oro-2.0.7.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jaas-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/hsqldb-1.7.1.jar"/>

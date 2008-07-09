@@ -96,7 +96,7 @@ public class Answer extends PageElement {
             return dateFormat.format((Date)answer);
         }
         else if (answer instanceof com.ail.core.Attribute) {
-            return ((Attribute)answer).getValue();
+            return ((Attribute)answer).getFormattedValue();
         }
 
         return "Don't know how to format a '"+(answer==null ? "null" : answer.getClass().getName())+"'";

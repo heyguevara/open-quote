@@ -612,25 +612,6 @@
         </field>
     </class>
     
-    <class name="com.ail.openquote.ui.QuotationSummary" extends="com.ail.openquote.ui.PageContainer">
-        <map-to xml="quotationSummary"/>
-        <field name="termsAndConditionsUrl" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="wordingsUrl" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="requoteDestinationPageId" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="saveDestinationPageId" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="confirmAndPayDestinationPageId" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-    </class>
-    
     <class name="com.ail.openquote.ui.ReferralSummary" extends="com.ail.openquote.ui.PageContainer">
         <map-to xml="referralSummary"/>
         <field name="referralNotificationUrl" type="string">
@@ -746,6 +727,27 @@
             <bind-xml node="attribute"/>
         </field>
         <field name="question" type="com.ail.openquote.ui.Question" collection="arraylist"/>
+    </class>
+    
+    <class name="com.ail.openquote.ui.QuotationSummary" extends="com.ail.openquote.ui.PageContainer">
+        <map-to xml="quotationSummary"/>
+        <field name="termsAndConditionsUrl" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="wordingsUrl" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="requoteDestinationPageId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="saveDestinationPageId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="confirmAndPayDestinationPageId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="navigationSection" type="com.ail.openquote.ui.NavigationSection"/>
+        <field name="premiumSummaryFooter" type="com.ail.openquote.ui.PageSection"/>
     </class>
     
     <class name="com.ail.openquote.ui.Answer" extends="com.ail.openquote.ui.PageElement">

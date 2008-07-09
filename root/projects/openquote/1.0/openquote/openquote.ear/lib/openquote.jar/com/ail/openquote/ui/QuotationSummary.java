@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,6 +34,10 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
+import com.ail.insurance.policy.Behaviour;
+import com.ail.insurance.policy.BehaviourType;
+import com.ail.insurance.policy.RateBehaviour;
+import com.ail.insurance.policy.SumBehaviour;
 import com.ail.openquote.Quotation;
 
 /**
@@ -101,6 +106,23 @@ public class QuotationSummary extends PageContainer {
 
     /** ID of a page in the pageflow to forward to when the confirm and pay button is selected. */
     private String confirmAndPayDestinationPageId="ConfirmAndPay";
+    
+    /** Question section rendered immediately after the premium summary */ 
+    private PageSection premiumSummaryFooter;
+
+    /**
+     * @return the premiumSummaryQuestions
+     */
+    public PageSection getPremiumSummaryFooter() {
+        return premiumSummaryFooter;
+    }
+
+    /**
+     * @param premiumSummaryQuestions the premiumSummaryQuestions to set
+     */
+    public void setPremiumSummaryFooter(PageSection premiumSummaryFooter) {
+        this.premiumSummaryFooter = premiumSummaryFooter;
+    }
 
     /**
      * Default constructor 
@@ -200,6 +222,9 @@ public class QuotationSummary extends PageContainer {
         super.applyRequestValues(request, response, model);
         loginSection(model).applyRequestValues(request, response, model);
         navigationSection().applyRequestValues(request, response, model);
+        if (premiumSummaryFooter!=null) {
+            premiumSummaryFooter.applyRequestValues(request, response, model);
+        }
     }
 
     @Override
@@ -207,14 +232,22 @@ public class QuotationSummary extends PageContainer {
         super.processActions(request, response, model);
         loginSection(model).processActions(request, response, model);
         navigationSection().processActions(request, response, model);
+        if (premiumSummaryFooter!=null) {
+            premiumSummaryFooter.processActions(request, response, model);
+        }
     }
 
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
         boolean ret=false;
+        
         ret|=loginSection(model).processValidations(request, response, model);
+        
         ret|=super.processValidations(request, response, model);
         
+        if (premiumSummaryFooter!=null) {
+            ret|=premiumSummaryFooter.processValidations(request, response, model);
+        }
         return ret;
     }
 
@@ -222,6 +255,8 @@ public class QuotationSummary extends PageContainer {
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Quotation quote=(com.ail.openquote.Quotation)model;
+
+        w.printf("<form name='%s' action='%s' method='post'>", getId(), response.createActionURL());
 
         w.printf("<table width='100%%' cellpadding='15'>");
         w.printf(" <tr>");
@@ -238,13 +273,16 @@ public class QuotationSummary extends PageContainer {
         w.printf("  </td>");
         w.printf(" </tr>");
         w.printf("</table>");
+        
+        w.printf("</form>");
 	}
 
 	private void renderPremiumSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
         CurrencyAmount premium=quote.getTotalPremium();
 
+ 
         w.printf("<table width='100%%'>");
-        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>Your Quotation: £%s</td></tr>", premium.getAmountAsString());
+        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>Your Quotation: %s</td></tr>", premium.toString());
         w.printf("   <tr>");
         w.printf("       <td height='15'></td>");
         w.printf("   </tr>");
@@ -253,19 +291,28 @@ public class QuotationSummary extends PageContainer {
         w.printf("           <ul>");
         w.printf("               <li>Your quote number: <b>%s</b></li>", quote.getQuotationNumber());
         w.printf("               <li>This quote is valid for 30 days, until %s.</li>", longDate(quote.getQuotationExpiryDate()));
-        w.printf("               <li>This quote is inclusive of Insurance Premium Tax at 5%%</li>");
+        
+        renderTaxSummary(w, quote);
+        
         if (wordingsUrl!=null) {
             w.printf("               <li>A sample of the policy wordings is available <a target='wordings' href='%s'>here</a>.</li>", expandRelativeUrl(wordingsUrl, request, quote.getProductTypeId()));
         }
         w.printf("           </ul>");
         w.printf("       </td>");
         w.printf("   </tr>");
+
+        if (premiumSummaryFooter!=null) {
+            w.printf( "<tr>");
+            w.printf(  "<td class='portlet-font'>");
+            premiumSummaryFooter.renderResponse(request, response, quote);
+            w.printf(  "</td>");
+            w.printf( "</tr>");
+        }
+
         w.printf( "<tr>");
         w.printf(  "<td class='portlet-font'>");
 
-        w.printf("<form name='%s' action='%s' method='post'>", getId(), response.createActionURL());
         navigationSection().renderResponse(request, response, quote);
-        w.printf("</form>");
 
         w.printf(  "</td>");
         w.printf( "</tr>");
@@ -277,6 +324,34 @@ public class QuotationSummary extends PageContainer {
         w.printf(  "</td>");
         w.printf( "</tr>");
         w.printf("</table>");
+	}
+
+    private void renderTaxSummary(PrintWriter w, Quotation quote) {
+        Collection<Behaviour> taxLines=quote.getAssessmentSheet().getLinesOfBehaviourType(BehaviourType.TAX).values();
+
+        if (taxLines.size()==1) {
+            Behaviour taxLine=taxLines.iterator().next();
+            w.printf("<li>This quote is inclusive of ");
+            if (taxLine instanceof RateBehaviour) {
+                w.printf("%s at %s", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
+            }
+            else if (taxLine instanceof SumBehaviour) {
+                w.printf("%s of %s", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
+            }
+            w.printf("</li>");
+        }
+        else if (taxLines.size()>1) {
+            w.printf("<li>This quote is inclusive of:<ul>");
+            for(Behaviour taxLine: taxLines) {
+                if (taxLine instanceof RateBehaviour) {
+                    w.printf("<li>%s at %s</li>", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
+                }
+                else if (taxLine instanceof SumBehaviour) {
+                    w.printf("<li>%s of %s</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
+                }
+            }
+            w.printf("</ul></li>");
+        }
     }
 
     private void renderCoverSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
@@ -355,5 +430,19 @@ public class QuotationSummary extends PageContainer {
         }
         
         return navigationSection;
+    }
+
+    /**
+     * @return the navigationSection
+     */
+    public NavigationSection getNavigationSection() {
+        return navigationSection;
+    }
+
+    /**
+     * @param navigationSection the navigationSection to set
+     */
+    public void setNavigationSection(NavigationSection navigationSection) {
+        this.navigationSection = navigationSection;
     }    
 }
