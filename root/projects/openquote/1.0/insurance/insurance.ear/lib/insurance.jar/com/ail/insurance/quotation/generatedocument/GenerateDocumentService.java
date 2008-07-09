@@ -34,7 +34,7 @@ import com.ail.insurance.claim.SectionNotFoundException;
 import com.ail.insurance.policy.PolicyStatus;
 
 /**
- * Service to generate a quotation document. This service deligates to the three document
+ * Service to generate a quotation document. This service delegates to the three document
  * generation phase services: Merge, Style and Render. The actual services used in the
  * generation phases depends on the {@link DocumentDefinition} type defined in the product associated
  * with the policy for which a document is being generated. By convention, this type is named "QuotationDocument".
