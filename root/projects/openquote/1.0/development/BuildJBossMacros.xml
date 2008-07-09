@@ -46,7 +46,9 @@
   </macrodef>
 
 	<target name="_start-jboss-if-jboss-running=false" unless="jboss-running">
-	  <exec dir="${jboss.dir}/bin"  executable="${jboss.dir}/bin/run.sh"/>
+	  <exec dir="${jboss.dir}/bin"  executable="${jboss.dir}/bin/run.sh">
+	    <env key="DEBUG_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"/>
+	  </exec>
   </target>
   
 	<target name="_start-jboss-if-jboss-running=true" if="jboss-running">
