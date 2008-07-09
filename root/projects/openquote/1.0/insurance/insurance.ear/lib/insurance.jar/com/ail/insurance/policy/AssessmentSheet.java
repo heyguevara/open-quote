@@ -82,6 +82,23 @@ public class AssessmentSheet extends Type {
     }
     
     /**
+     * Get a hashtable of all the lines in the sheet of a specific behavour type.
+     * @param behaviourType The type of behaviour to search for.
+     * @return Hashtable of lines keyed on Id, this may be an empty table.
+     */
+    public Hashtable<String,Behaviour> getLinesOfBehaviourType(BehaviourType behaviourType) {
+        Hashtable<String,Behaviour> ret=new Hashtable<String,Behaviour>();
+        
+        for(Behaviour b: getLinesOfType(Behaviour.class).values()) {
+            if (behaviourType.equals(b.getType()) && !b.isDisabled()) {
+                ret.put(b.getId(), b);
+            }
+        }
+        
+        return ret;
+    }
+    
+    /**
      * Fetch the collection of line objects associated with this instance. The Collection returned includes
      * {@link AssessmentLine#isDisabled() disabled} lines. Use {@link #getEnabledLine getEnabledLine} to fetch
      * only those that are enabled. 

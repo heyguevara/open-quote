@@ -49,7 +49,7 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
     }
 
     /**
-     * Construnctor. A default priority of 0 is assumed.
+     * Constructor. A default priority of 0 is assumed.
      * @param id Value for Id property.
      * @param reason
      * @param relatesTo
@@ -61,7 +61,7 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
     }
 
     /**
-     * Construnctor
+     * Constructor
      * @param id Value for Id property.
      * @param reason The reason for creating this line.
      * @param relatesTo The id of another line that this one relates to.
