@@ -477,4 +477,9 @@
         <field name="policyArgRet" type="com.ail.insurance.policy.Policy"/>
     </class>
 
+    <class name="com.ail.insurance.quotation.generatedocument.GenerateDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
+        <field name="policyArg" type="com.ail.insurance.policy.Policy"/>
+        <field name="documentRet" type=""/>
+    </class>
+
 </mapping>
