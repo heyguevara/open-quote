@@ -25,13 +25,10 @@
 package org.alfresco.repo.domain.schema;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -72,7 +69,6 @@ import org.hibernate.dialect.MySQLInnoDBDialect;
 import org.hibernate.dialect.Oracle9Dialect;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.engine.ActionQueue;
-import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
@@ -107,7 +103,8 @@ public class SchemaBootstrap extends AbstractLifecycleBean
     private static final String ERR_STATEMENT_FAILED = "schema.update.err.statement_failed";
     private static final String ERR_UPDATE_FAILED = "schema.update.err.update_failed";
     private static final String ERR_VALIDATION_FAILED = "schema.update.err.validation_failed";
-    private static final String ERR_SCRIPT_NOT_RUN = "schema.update.err.update_script_not_run";
+    @SuppressWarnings("unused")
+	private static final String ERR_SCRIPT_NOT_RUN = "schema.update.err.update_script_not_run";
     private static final String ERR_SCRIPT_NOT_FOUND = "schema.update.err.script_not_found";
     private static final String ERR_STATEMENT_TERMINATOR = "schema.update.err.statement_terminator";
     
@@ -455,7 +452,8 @@ public class SchemaBootstrap extends AbstractLifecycleBean
     /**
      * @return Returns the number of applied patches
      */
-    private boolean didPatchSucceed(Connection connection, String patchId) throws Exception
+    @SuppressWarnings("unused")
+	private boolean didPatchSucceed(Connection connection, String patchId) throws Exception
     {
         String patchTableName = getAppliedPatchTableName(connection);
         if (patchTableName == null)
@@ -683,7 +681,8 @@ public class SchemaBootstrap extends AbstractLifecycleBean
      * 
      * @return Returns an input stream onto the script, otherwise null
      */
-    private InputStream getScriptInputStream(Class dialectClazz, String scriptUrl) throws Exception
+    @SuppressWarnings("unchecked")
+	private InputStream getScriptInputStream(Class dialectClazz, String scriptUrl) throws Exception
     {
         // replace the dialect placeholder
         String dialectScriptUrl = scriptUrl.replaceAll(PLACEHOLDER_SCRIPT_DIALECT, dialectClazz.getName());
@@ -854,7 +853,8 @@ public class SchemaBootstrap extends AbstractLifecycleBean
      * Performs dialect-specific checking.  This includes checking for InnoDB, dumping the dialect being used
      * as well as setting any runtime, dialect-specific properties.
      */
-    private void checkDialect(Dialect dialect)
+    @SuppressWarnings("unchecked")
+	private void checkDialect(Dialect dialect)
     {
         Class dialectClazz = dialect.getClass();
         LogUtil.info(logger, MSG_DIALECT_USED, dialectClazz.getName());
@@ -1114,7 +1114,8 @@ public class SchemaBootstrap extends AbstractLifecycleBean
         System.exit(exitCode);
     }
     
-    private static int dumpDialects(String[] dialectClassNames)
+    @SuppressWarnings("unchecked")
+	private static int dumpDialects(String[] dialectClassNames)
     {
         if (dialectClassNames.length == 0)
         {
@@ -1170,7 +1171,8 @@ public class SchemaBootstrap extends AbstractLifecycleBean
         return 0;
     }
     
-    private static void dumpDialectScript(Configuration configuration, Class dialectClazz, File directory)
+    @SuppressWarnings("unchecked")
+	private static void dumpDialectScript(Configuration configuration, Class dialectClazz, File directory)
     {
         // Set the dialect
         configuration.setProperty("hibernate.dialect", dialectClazz.getName());
