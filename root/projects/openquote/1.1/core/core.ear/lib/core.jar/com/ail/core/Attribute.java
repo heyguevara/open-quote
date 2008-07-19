@@ -184,6 +184,24 @@ public class Attribute extends Type implements Identified {
     }
 
     /**
+     * Method to help castor maintain backward compatibility with pre-core 2.3 XML documents. The value returned from this
+     * method will be mapped to the value attribute. As it is always null the value attribute is never marshalled.
+     * @return always null
+     */
+    public String getValueFromXmlAttribute() {
+    	return null;
+    }
+    
+    /**
+     * Castor will use this method when it finds a pre-2.3 style value (in an XML attribute).
+     * @see #getValueFromXmlAttribute() 
+     * @param val
+     */
+    public void setValueFromXmlAttribute(String val) {
+    	this.value=val;
+    }
+    
+    /**
      * Return the Attribute's value formatted 
      * @return The formatted attributes value.
      */
@@ -234,7 +252,7 @@ public class Attribute extends Type implements Identified {
     }
     
     /**
-     * Getter returning the value of the unit property. An optional attribute descibing the unit of the facet. This can be any
+     * Getter returning the value of the unit property. An optional attribute describing the unit of the facet. This can be any
      * standard unit understood by Unit.valueOf(String). E.g. "kg", "m", etc.
      * @return Value of the unit property
      */
@@ -243,7 +261,7 @@ public class Attribute extends Type implements Identified {
     }
 
     /**
-     * Setter to update the value of the unit property. An optional attribute descibing the unit of the facet. This can be any
+     * Setter to update the value of the unit property. An optional attribute describing the unit of the facet. This can be any
      * standard unit understood by Unit.valueOf(String). E.g. "kg", "m", etc.
      * @param unit New value for the unit property
      */
@@ -455,6 +473,11 @@ public class Attribute extends Type implements Identified {
         if (isCurrencyType() || isNumberType()) {
             String min=getFormatOption("min");
             String max=getFormatOption("max");
+            
+            if (getFormat().contains("percent")) {
+                min="0";
+                max="100";
+            }
 
             return ((min!=null && new Double(min) > new Double(value)) |
                     (max!=null && new Double(max) < new Double(value)));
@@ -513,14 +536,7 @@ public class Attribute extends Type implements Identified {
      * @return true if this is a choice, false otherwise
      */
     public boolean isFreeChoiceType() {
-        if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
-            return false;
-        }
-        
-        String options=getFormatOption("choice");
-        
-        return (options!=null && options.indexOf('#')==-1);
+        return (isChoiceType() && getFormatOption("options")==null);
     }
     
     /**
