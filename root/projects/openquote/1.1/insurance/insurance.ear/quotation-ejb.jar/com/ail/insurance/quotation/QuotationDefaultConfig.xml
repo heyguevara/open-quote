@@ -8,7 +8,7 @@
 -->
 <configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Quotation EJB configuration</name>
-    <timeout>5000</timeout>
+    <timeout>-1</timeout>
     <who>factory</who>
     <version>$Revision: 1.4 $</version>
     <types>

@@ -476,5 +476,4 @@
     <class name="com.ail.insurance.quotation.assessrisk.AssessRiskArgImp" extends="com.ail.core.command.CommandArgImp">
         <field name="policyArgRet" type="com.ail.insurance.policy.Policy"/>
     </class>
-
 </mapping>

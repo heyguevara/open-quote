@@ -9,9 +9,9 @@ Class-Path: lib/insurance.jar
   @commons-jxpath.jar@
   @commons-beanutils.jar@
   @fop.jar@
-  @iText.jar@
+  @itext.jar@
   @avalon-framework.jar@
-  @batik.jar@
+  @batik-all.jar@
   @commons-collections.jar@
   @commons-validator.jar@
   @drools-core.jar@
@@ -20,7 +20,7 @@ Class-Path: lib/insurance.jar
   @janino.jar@
   @eclipse-jtd-core.jar@
   @antlr.jar@
-  @antlr-ea.jar@
+  @antlr-runtime.jar@
   @jxl.jar@
   @commons-jci-core.jar@
   @stringtemplate.jar@

@@ -39,7 +39,7 @@ public class SumBehaviour extends Behaviour {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
@@ -52,7 +52,7 @@ public class SumBehaviour extends Behaviour {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
@@ -73,7 +73,7 @@ public class SumBehaviour extends Behaviour {
      * @return always true. FixedSum lines cannot fail to calculate.
      */
     public boolean calculate(AssessmentSheetList sheets, AssessmentSheet sheet) {
-        // try to get the line that this on contribites to.
+        // try to get the line that this on contributes to.
         FixedSum conTo=(FixedSum)sheets.findAssessmentLine(getContributesTo(), sheet);
 
         // if it doesn't exist, create it.
@@ -89,6 +89,9 @@ public class SumBehaviour extends Behaviour {
         }
         else if (getType().equals(BehaviourType.DISCOUNT)) {
             conTo.getAmount().subtract(getAmount());
+        }
+        else if (getType().equals(BehaviourType.TAX)) {
+            conTo.getAmount().add(getAmount());
         }
 
         return true;
