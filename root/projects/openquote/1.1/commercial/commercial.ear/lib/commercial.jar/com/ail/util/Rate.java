@@ -116,7 +116,7 @@ public class Rate extends Type {
 
     /**
      * Get the rate as a string. The string returned is the same as that used
-     * to inialise the Rate object (or passed to setRate).
+     * to initialise the Rate object (or passed to setRate).
      * @return The Rate string, or null if not defined.
      */
     public String getRate() {
@@ -130,7 +130,7 @@ public class Rate extends Type {
      * @param value The value to apply the rate to
      * @param scale Scale (decimal places) for the calculation.
      * @param roundingMode The rounding mode to use
-     * @return The result of appying this rate to value.
+     * @return The result of applying this rate to value.
      * @throws IllegalStateException If this rate has not be initialised.
      */
     public BigDecimal applyTo(BigDecimal value, int scale, int roundingMode) throws IllegalStateException {
@@ -158,12 +158,12 @@ public class Rate extends Type {
 
     /**
      * Apply this rate to a double value. The result will be rounded using the
-     * specificed rounding mode.
+     * specified rounding mode.
      * @param value Value to apply the rate to.
      * @param scale Scale (decimal places) for the calculation.
      * @param roundingMode Rounding mode to use.
      * @return The result of applying the rate.
-     * @throws IllegalStateException If this rate has not beeb initialised.
+     * @throws IllegalStateException If this rate has not been initialised.
      */
     public double applyTo(double value, int scale, int roundingMode) throws IllegalStateException {
         return applyTo(new BigDecimal(value), scale, roundingMode).doubleValue();
