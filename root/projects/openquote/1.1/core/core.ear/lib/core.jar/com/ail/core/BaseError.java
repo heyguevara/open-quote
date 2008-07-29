@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 import java.io.PrintStream;
 
 /**
- * This Error class represents the base of all bob errorss; which
+ * This Error class represents the base of all bob errors; which
  * indicate conditions within bob that applications generally do
  * not want to catch. They represent abnormal conditions that 
  * cannot be recovered from.<p>
@@ -105,6 +105,20 @@ public abstract class BaseError extends Error {
         }
 
         super.printStackTrace(writer);
+    }
+
+    /**
+     * @return the target
+     */
+    public Throwable getTarget() {
+        return target;
+    }
+
+    /**
+     * @param target the target to set
+     */
+    public void setTarget(Throwable target) {
+        this.target = target;
     }
 }
 

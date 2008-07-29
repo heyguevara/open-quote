@@ -46,7 +46,7 @@ public class BootLogger {
 		PrintStream logTo=System.err;
 
 		// direct DEBUG and INFO messages to System.out
-		if (Severity.DEBUG.equals(severity) || Severity.INFO.equals(severity)) {
+		if (Severity.DEBUG.equals(severity) || Severity.INFO.equals(severity) || Severity.WARNING.equals(severity)) {
 			logTo=System.out;
         }
 

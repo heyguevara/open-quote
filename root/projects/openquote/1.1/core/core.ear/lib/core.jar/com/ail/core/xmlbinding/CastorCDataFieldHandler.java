@@ -56,7 +56,7 @@ public class CastorCDataFieldHandler extends AbstractFieldHandler {
         }
         
         if (value==null || value.length()==0) {
-            return "";
+            return value;
         }
         
         return "<![CDATA[" + value.toString() + "]]>";

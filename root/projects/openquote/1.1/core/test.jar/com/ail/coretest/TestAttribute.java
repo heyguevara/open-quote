@@ -154,9 +154,26 @@ public class TestAttribute extends TestCase {
      */
     public void testXmlTextMapping() throws Exception{
     	Attribute attr;
-    	String pre23Sample="<attribute xsi:type='com.ail.core.Attribute'  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' id='name' format='note' value='hello'/>";
-    	String post23Sample="<attribute xsi:type='com.ail.core.Attribute'  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' id='name' format='note'>My Hat Is Off</attribute>";
+    	String pre23Sample="<attribute xsi:type='com.ail.core.Attribute' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' id='name' format='note' value='hello'/>";
+    	String post23Sample="<attribute xsi:type='com.ail.core.Attribute' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' id='name' format='note'><value><![CDATA[My Hat <b>Is</b> Off]]></value></attribute>";
+    	String subAttrPre23Sample="<attribute xsi:type='com.ail.core.Attribute' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' id='name' format='note' value='hello'>"+
+    	                              "<attribute id='code' format='string' value='a value'/>"+
+    	                          "</attribute>";
+       	String subAttrPost23Sample="<attribute xsi:type='com.ail.core.Attribute' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' id='name' format='note'>"+
+       	                              "<attribute id='code' format='string' value='a value'/>"+
+       	                              "<value><![CDATA[My Hat <b>Is</b> Off]]></value>"+
+       	                           "</attribute>";
 
+       	// check that the value for a note is mapped to an element
+       	attr=new Attribute("test", "<b>text</b>", "note");
+    	String xml=new CoreProxy().toXML(attr).toString();
+        assertTrue(xml.indexOf("<value>")>0);
+    	
+        // check that the value for non-notes is mapped to an attribute
+        attr=new Attribute("test", "hello", "string");
+        String xml2=new CoreProxy().toXML(attr).toString();
+        assertTrue(xml2.indexOf("<value>")==-1);
+        
     	attr=new CoreProxy().fromXML(Attribute.class, new XMLString(pre23Sample));
     	assertEquals("name", attr.getId());
     	assertEquals("note", attr.getFormat());
@@ -165,10 +182,22 @@ public class TestAttribute extends TestCase {
     	attr=new CoreProxy().fromXML(Attribute.class, new XMLString(post23Sample));
     	assertEquals("name", attr.getId());
     	assertEquals("note", attr.getFormat());
-    	assertEquals("My Hat Is Off", attr.getValue());
+    	assertEquals("My Hat <b>Is</b> Off", attr.getValue());
     	
-    	String xml=new CoreProxy().toXML(attr).toString();
-    	assertTrue(xml.contains(">My Hat Is Off<"));
+        attr=new CoreProxy().fromXML(Attribute.class, new XMLString(subAttrPre23Sample));
+        assertEquals("name", attr.getId());
+        assertEquals("note", attr.getFormat());
+        assertEquals("hello", attr.getValue());
+        assertEquals(1, attr.getAttributeCount());
+        
+        attr=new CoreProxy().fromXML(Attribute.class, new XMLString(subAttrPost23Sample));
+        assertEquals("name", attr.getId());
+        assertEquals("note", attr.getFormat());
+        assertEquals("My Hat <b>Is</b> Off", attr.getValue());
+        assertEquals(1, attr.getAttributeCount());
+
+        xml=new CoreProxy().toXML(attr).toString();
+    	assertTrue(xml.contains("<![CDATA[My Hat <b>Is</b> Off]]>"));
     	assertFalse(xml.contains("\"My Hat Is Off\""));
     }
 }

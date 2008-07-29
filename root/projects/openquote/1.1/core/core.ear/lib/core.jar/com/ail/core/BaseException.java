@@ -126,4 +126,18 @@ public abstract class BaseException extends Exception {
             super.printStackTrace(writer);
         }
     }
+
+    /**
+     * @return the target
+     */
+    public Throwable getTarget() {
+        return target;
+    }
+
+    /**
+     * @param target the target to set
+     */
+    public void setTarget(Throwable target) {
+        this.target = target;
+    }
 }

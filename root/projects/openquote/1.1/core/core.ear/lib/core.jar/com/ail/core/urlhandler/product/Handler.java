@@ -18,6 +18,7 @@
 package com.ail.core.urlhandler.product;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
@@ -39,20 +40,27 @@ import com.ail.core.Functions;
 public class Handler extends URLStreamHandler {
     private static StringBuffer ticket=new StringBuffer();
     
-    private String getTicket(URL url) throws java.io.IOException {
+    private String getTicket(URL url) throws IOException {
         if (ticket.length()==0) {
             synchronized (ticket) {
                 // TODO user and password _have_ to be moved out of here!!
                 URL loginUrl=new URL("http", url.getHost(), url.getPort(), "/alfresco/service/api/login?u=productreader&pw=preader");
                 String rawTicketResponse=Functions.loadUrlContentAsString(loginUrl);        
                 ticket.append(rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<")));
+
+                // Workaround for a bug in Alfresco 2.9.0 (C_dev 816) schema 124. In this version it appears that
+                // authentication of any content request depends on the alfresco web-client having a fully initialized
+                // JSF context, which it will only have when the /alfresco page has been opened. Attempting to make
+                // content requests otherwise results in an NPE in alfresco, and an IOException to the client
+                // We workaround that here by reading from /alfresco here, once, during ticket initialization. 
+                new URL("http", url.getHost(), url.getPort(), "/alfresco").openConnection().getContent();
             } 
         }
         
         return ticket.toString();
     }
     
-    protected URLConnection openConnection(URL u) throws java.io.IOException {
+    protected URLConnection openConnection(URL u) throws IOException {
         URL actualURL = new URL("http", u.getHost(), u.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+u.getPath()+"&ticket="+getTicket(u));
 
         if (actualURL == null) {

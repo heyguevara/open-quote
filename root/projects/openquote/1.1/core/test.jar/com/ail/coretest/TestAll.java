@@ -64,6 +64,7 @@ public class TestAll extends TestCase {
        ts.addTest(TestCoreXMLStringMapping.suite());
        ts.addTest(TestGenerateDocument.suite());
        ts.addTest(TestConfigurationServices.suite());
+       ts.addTest(TestExceptionRecord.suite());
           
        return ts;
    }

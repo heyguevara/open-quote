@@ -184,21 +184,21 @@ public class Attribute extends Type implements Identified {
     }
 
     /**
-     * Method to help castor maintain backward compatibility with pre-core 2.3 XML documents. The value returned from this
-     * method will be mapped to the value attribute. As it is always null the value attribute is never marshalled.
-     * @return always null
+     * 
+     * @return
      */
-    public String getValueFromXmlAttribute() {
-    	return null;
+    public String getValueForXmlText() {
+    	return isNoteType() ? getValue() : null;
+    }
+    
+    public void setValueForXmlText(String value) {
+    	this.value = value;
     }
     
     /**
-     * Castor will use this method when it finds a pre-2.3 style value (in an XML attribute).
-     * @see #getValueFromXmlAttribute() 
-     * @param val
      */
-    public void setValueFromXmlAttribute(String val) {
-    	this.value=val;
+    public String getValueForXmlAttribute() {
+    	return isNoteType() ? null : getValue();
     }
     
     /**
@@ -239,7 +239,7 @@ public class Attribute extends Type implements Identified {
      * @return dereferenced format
      */
     private String getLocalFormat() {
-        if (localFormat==null) {
+        if (localFormat==null && format!=null) {
             if (format.startsWith("ref=")) {
                 localFormat=getReferenceContext().xpathGet(format.substring(4), String.class);
             }
