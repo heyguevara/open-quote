@@ -31,23 +31,23 @@
   <property name="ftp.password" value="greenpea" />
   <property name="build.sysclasspath" value="last"/>
   <!-- default build.type is developer, cruisecontrol overrides this with a -D on the command line -->
-  <property name="build.type" value="developer"/> 
-  
+  <property name="build.type" value="developer"/>
+
   <target name="dummy" />
 
   <classfileset includes="${development.dir}/lib/*.jar" />
 
   <!-- Convert the named property from a windows style path to unix style -->
-  <!-- e.g. "c:\my\folder\file.txt" -> "c:/my/folder/file.txt"            -->   
+  <!-- e.g. "c:\my\folder\file.txt" -> "c:/my/folder/file.txt"            -->
   <macrodef name="unixify-path-macro">
     <attribute name="property"/>
     <sequential>
       <script language="beanshell">
         val=project.getProperty("@{property}");
         project.setProperty("@{property}", val.replaceAll("\\\\","/"));
-      </script>   
+      </script>
     </sequential>
-  </macrodef>   
+  </macrodef>
 
   <!-- The if-macro sets the named property to "true" if the specified condition evaluates to true. The -->
   <!-- property is "forced" to change breaking ant's normal immutable property rule.                    -->
@@ -84,7 +84,7 @@
           throw new Exception("Condition "+condition+" is not understood");
         }
   </scriptdef>
-  
+
   <!-- Run a specified target in all the ant files one level down in the directory structure -->
   <macrodef name="subant-macro">
     <attribute name="target" />
@@ -103,7 +103,7 @@
       <echo file="${copyfilter.file}" append="no" message="# Build generated file - do not edit!${line.separator}" />
     </sequential>
   </macrodef>
-  
+
   <!-- Macro which sets the ${mysql-running} to true if mysql is running -->
   <macrodef name="set-mysql-running-property-macro">
     <sequential>
@@ -112,12 +112,12 @@
       </condition>
     </sequential>
   </macrodef>
-  
-	<macrodef name="ail-reset-configurations-macro">
+
+  <macrodef name="ail-reset-configurations-macro">
     <element name="configs" optional="no"/>
-	  <element name="paths" optional="no"/>
-		  <sequential>
-      
+    <element name="paths" optional="no"/>
+    <sequential>
+
       <echo message="resetting configurations in database ${dbname}"/>
 
       <path id="reset.classpath">
@@ -135,28 +135,35 @@
       </path>
 
       <java classname="com.ail.core.configure.ConfigurationReset" fork="yes" failonerror="yes" classpathref="reset.classpath">
-	      <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader"/>
-	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver"/>
-	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}"/>
-	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=root"/>
-	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=bombay2000"/>
-	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.table=config"/>
-	      <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}"/>
-        <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/> 
-	      <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl"/>
-	      <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler"/>
-				<configs/>
-	    </java>
+        <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=root"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=bombay2000"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.table=config"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}"/>
+        <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/>
+        <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl"/>
+        <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler"/>
+        <configs/>
+      </java>
     </sequential>
   </macrodef>
 
-	<!-- replace an exploded jar folder with a jar file -->
+  <!-- replace an exploded jar folder with a jar file -->
   <macrodef name="unexplode-jar-macro">
     <attribute name="jar" />
     <sequential>
       <jar basedir="@{jar}" destfile="@{jar}.tmp"/>
       <delete dir="@{jar}"/>
       <move file="@{jar}.tmp" tofile="@{jar}"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="release-source-macro">
+    <sequential>
+      <mkdir dir="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}" />
+      <zip update="yes" basedir=".." destfile="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot-src.zip" includes="${ant.project.name}/**" excludes="${ant.project.name}/target/**, **/.svn/**" />
     </sequential>
   </macrodef>
 </project>
