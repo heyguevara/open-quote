@@ -29,13 +29,16 @@ import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.core.product.executepageaction.ExecutePageActionCommand;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.SavedQuotation;
 
 /**
  * Actions allow arbitrary commands to be invoked during a page flow. A number of page elements (e.g. {@link Page} 
  * and {@link CommandButtonAction}) allow Actions to be associated with them and will invoke the commands they define
  * in response to events.</p>
  * For example, any number of Actions can be attached to a CommandButtonAction. When the button is selected all the 
- * commands associated with the actions are executed (see {@link #condition}). 
+ * commands associated with the actions are executed (see {@link #condition}).
+ * If the commands execute successfully, the quote's persisted database record is automatically updated to keep it in
+ * sync with any changes that the command may have made. 
  */
 public class Action extends PageElement {
 	private static final long serialVersionUID = -1320299722728499324L;
@@ -173,5 +176,11 @@ public class Action extends PageElement {
             cp.logError("Error executing Action '"+getCommandName());
             e.printStackTrace();
         }
+        
+        // Update the persisted quote to keep in sync
+        SavedQuotation saved=new SavedQuotation(quote);
+        saved = cp.update(saved);
+        quote.setSystemId(saved.getSystemId());
+        quote.setSerialVersion(saved.getSerialVersion());
     }
 }
