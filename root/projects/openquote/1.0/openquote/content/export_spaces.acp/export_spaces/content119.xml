@@ -1,5 +1,5 @@
 <quotation xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <productName>Simple Product</productName>
+    <productName>IBA/PIBA Professional Indemnity</productName>
 
     <section id='section' sectionTypeId='Section' xsi:type="java:com.ail.insurance.policy.Section">
     </section>
