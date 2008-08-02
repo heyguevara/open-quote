@@ -4981,6 +4981,44 @@
                                                 <sys:store-protocol>workspace</sys:store-protocol>
                                               </view:properties>
                                             </cm:content>
+
+                                            <cm:content view:childName="cm:PlaceOrderService.java">
+                                              <view:aspects>
+                                                <cm:auditable></cm:auditable>
+                                                <cm:titled></cm:titled>
+                                                <cm:lockable></cm:lockable>
+                                                <sys:referenceable></sys:referenceable>
+                                                <cm:copiedfrom></cm:copiedfrom>
+                                                <cm:author></cm:author>
+                                                <app:inlineeditable></app:inlineeditable>
+                                              </view:aspects>
+                                              <view:properties>
+                                                <sys:node-uuid>dfb99fa4-5ed2-11dd-979d-750acc2382ca</sys:node-uuid>
+                                                <cm:content>contentUrl=export_spaces/content130.txt|mimetype=text/plain|size=1092|encoding=UTF-8|locale=en_US_</cm:content>
+                                                <cm:lockOwner>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockOwner>
+                                                <cm:created>2008-07-31T08:32:48.113+01:00</cm:created>
+                                                <cm:creator>admin</cm:creator>
+                                                <cm:name>PlaceOrderService.java</cm:name>
+                                                <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                                <app:editInline>true</app:editInline>
+                                                <cm:description></cm:description>
+                                                <cm:source>workspace://SpacesStore/06e4f857-4d0f-11dd-8e94-cb581605bbed</cm:source>
+                                                <cm:lockType>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:lockType>
+                                                <cm:title></cm:title>
+                                                <cm:author></cm:author>
+                                                <cm:modifier>admin</cm:modifier>
+                                                <cm:expiryDate>
+                                                  <view:value view:isNull="true"></view:value>
+                                                </cm:expiryDate>
+                                                <cm:modified>2008-07-31T20:36:20.317+01:00</cm:modified>
+                                                <sys:store-protocol>workspace</sys:store-protocol>
+                                              </view:properties>
+                                            </cm:content>
+
                                           </cm:contains>
                                         </view:associations>
                                       </cm:folder>

@@ -58,6 +58,15 @@
         <command name="ApplyAgentPremium" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
             <parameter name="Service">ApplyAgentPremiumService</parameter>
         </command>
+
+        <service name="PlaceOrderService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/PlaceOrderService.java</parameter>
+        </service>
+
+        <command name="PlaceOrder" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">PlaceOrderService</parameter>
+        </command>
+
     </types>
 </configuration>
 
