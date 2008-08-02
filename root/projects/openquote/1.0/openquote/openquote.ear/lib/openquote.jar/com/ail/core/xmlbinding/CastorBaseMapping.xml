@@ -595,6 +595,12 @@
         <field name="confirmAndPayDestinationPageId" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="confirmAndPayLabel" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="requoteLabel" type="string">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
     
     <class name="com.ail.openquote.ui.PaymentOptionSelector" extends="com.ail.openquote.ui.PageElement">

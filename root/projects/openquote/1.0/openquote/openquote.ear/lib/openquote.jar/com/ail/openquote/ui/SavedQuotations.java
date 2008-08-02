@@ -67,6 +67,12 @@ public class SavedQuotations extends PageElement {
     /** Id of the page to forward to in the pageflow if the user selected "confirm and pay" */
     private String confirmAndPayDestinationPageId;
 
+    /** Label to appear on the confirm button. Defaults to "Confirm and Pay" */
+    private String confirmAndPayLabel="Confirm and Pay";
+    
+    /** Label to appear on the requote button. Defaults to "Requote" */
+    private String requoteLabel="Requote";
+    
     /** Button to handle the "view quote" action.  */
     private ViewQuotationButtonAction viewQuotationButtonAction=new ViewQuotationButtonAction();
     
@@ -216,8 +222,8 @@ public class SavedQuotations extends PageElement {
                     w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(quote.getQuotationExpiryDate()));
                     w.printf(  "<td align='center' class='portal-form-label'>£%s</td>", quote.getPremium().getAmountAsString());
                     w.printf(  "<td align='left'>");
-                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='Confirm and Pay'/>", quote.getQuotationNumber());
-                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='Requote'/>", quote.getQuotationNumber());
+                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", quote.getQuotationNumber(), confirmAndPayLabel);
+                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", quote.getQuotationNumber(), requoteLabel);
                     viewQuotationButtonAction.renderResponse(request, response, quote);
                     w.printf(  "</td>");
                     w.printf("</tr>");
@@ -269,5 +275,36 @@ public class SavedQuotations extends PageElement {
             w.printf("</table>");
             w.printf("<script type='text/javascript'>hideDivDisplay('Proposer Login')</script>");
         }
+    }
+
+    /**
+     * @see #setConfirmAndPayLabel(String)
+     * @return the confirmAndPayLabel
+     */
+    public String getConfirmAndPayLabel() {
+        return confirmAndPayLabel;
+    }
+
+    /**
+     * Set the label to appear on the confirm button. The default is "Confirm and Pay".
+     * @param confirmAndPayLabel the confirmAndPayLabel to set
+     */
+    public void setConfirmAndPayLabel(String confirmAndPayLabel) {
+        this.confirmAndPayLabel = confirmAndPayLabel;
+    }
+
+    /**
+     * @return the requoteLabel
+     */
+    public String getRequoteLabel() {
+        return requoteLabel;
+    }
+
+    /**
+     * Set the label to appear on the requote button. The default is "Requote"
+     * @param requoteLabel the requoteLabel to set
+     */
+    public void setRequoteLabel(String requoteLabel) {
+        this.requoteLabel = requoteLabel;
     }
 }
