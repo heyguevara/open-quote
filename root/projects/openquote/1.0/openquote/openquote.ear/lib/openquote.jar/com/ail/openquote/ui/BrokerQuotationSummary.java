@@ -182,29 +182,31 @@ public class BrokerQuotationSummary extends PageContainer {
     }
 
     private void renderPayments(PrintWriter w, Quotation quote) {
-        w.printf("<table width='100%%' class='portlet-font'>");
-        w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>Payment</td></tr>");
-        w.printf(  "<tr><td colspan='5'>%s</td></tr>", quote.getPaymentDetails().getDescription());
-        
-        for(MoneyProvision provision: quote.getPaymentDetails().getMoneyProvision()) {
-            if (provision.getPaymentMethod() instanceof PaymentCard) {
-                DateFormat expiry=new SimpleDateFormat("dd/yy");
-                PaymentCard card=(PaymentCard)provision.getPaymentMethod();
-                w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Card details</u></td></tr>");
-                w.printf(  "<tr><td>&nbsp;</td><td>Card number</td><td>%s</td></tr>", card.getCardNumber());
-                w.printf(  "<tr><td>&nbsp;</td><td>Name on card</td><td>%s</td></tr>", card.getCardHoldersName());
-                w.printf(  "<tr><td>&nbsp;</td><td>Issue number</td><td>%s</td></tr>", card.getIssueNumber());
-                w.printf(  "<tr><td>&nbsp;</td><td>Expiry date</td><td>%s</td></tr>", expiry.format(card.getExpiryDate()));
+        if (quote.getPaymentDetails()!=null) {
+            w.printf("<table width='100%%' class='portlet-font'>");
+            w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>Payment</td></tr>");
+            w.printf(  "<tr><td colspan='5'>%s</td></tr>", quote.getPaymentDetails().getDescription());
+            
+            for(MoneyProvision provision: quote.getPaymentDetails().getMoneyProvision()) {
+                if (provision.getPaymentMethod() instanceof PaymentCard) {
+                    DateFormat expiry=new SimpleDateFormat("dd/yy");
+                    PaymentCard card=(PaymentCard)provision.getPaymentMethod();
+                    w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Card details</u></td></tr>");
+                    w.printf(  "<tr><td>&nbsp;</td><td>Card number</td><td>%s</td></tr>", card.getCardNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Name on card</td><td>%s</td></tr>", card.getCardHoldersName());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Issue number</td><td>%s</td></tr>", card.getIssueNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Expiry date</td><td>%s</td></tr>", expiry.format(card.getExpiryDate()));
+                }
+                else if (provision.getPaymentMethod() instanceof DirectDebit) {
+                    DirectDebit dd=(DirectDebit)provision.getPaymentMethod();
+                    w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Account details</u></td></tr>");
+                    w.printf(  "<tr><td>&nbsp;</td><td>Account number</td><td>%s</td></tr>", dd.getAccountNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Sort code</td><td>%s</td></tr>", dd.getSortCode());
+                }
             }
-            else if (provision.getPaymentMethod() instanceof DirectDebit) {
-                DirectDebit dd=(DirectDebit)provision.getPaymentMethod();
-                w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Account details</u></td></tr>");
-                w.printf(  "<tr><td>&nbsp;</td><td>Account number</td><td>%s</td></tr>", dd.getAccountNumber());
-                w.printf(  "<tr><td>&nbsp;</td><td>Sort code</td><td>%s</td></tr>", dd.getSortCode());
-            }
+            
+            w.printf("</table>");
         }
-        
-        w.printf("</table>");
     }
 
     private void renderSummary(PrintWriter w, Quotation quote) {
