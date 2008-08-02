@@ -34,7 +34,7 @@
     </questionPage>
     
     <questionPage id="Finish" title="Thankyou">
-        <action id="SendNitification" when="onRenderResponse" commandName="SendNotificationAction" xsi:type="action"/>
+        <action id="SendNotification" when="onRenderResponse" commandName="SendNotificationAction" xsi:type="action"/>
         <parsedUrlContent id="ThankYou" order="1" url="product://localhost:8080/AIL/Base/Thankyou.html"/>
         <navigationSection id="Navigation" order="2" quitDisabled='true'>
             <quitButtonAction id="Finish" order="1" label="Finish" destinationPageId="Finish"/>
