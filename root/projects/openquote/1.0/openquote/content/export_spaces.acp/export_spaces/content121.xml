@@ -1,7 +1,7 @@
 <pageFlow id="QuotationPageFlow" xsi:type="java:com.ail.openquote.ui.PageFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <questionPage id="Welcome" title="IBA/PIBA Professional Indemnity">
         <parsedUrlContent id="Content" url="~/Welcome.html"/>
-        <savedQuotations id="SavedQuotes" requoteDestinationPageId="QuestionPage"/>
+        <savedQuotations id="SavedQuotes" requoteDestinationPageId="CompanyDetails" confirmAndPayDestinationPageId="Confirm" confirmAndPayLabel="Confirm order"/>
     </questionPage>
     
     <questionPage id="Proposer" title="Applicant's Contact Details">
@@ -10,7 +10,6 @@
         </navigationSection>
     </questionPage>
 
-    
     <questionPage id="CompanyDetails" title="About The Proposer's Company">
         <questionSection>
             <questionSeparator title="About the business"/>
@@ -59,15 +58,15 @@
             <commandButtonAction label="Previous" destinationPageId="CompanyDetails" immediate="true"/>
             <commandButtonAction label="Quote" destinationPageId="Referral">
                 <action when="onProcessActions" commandName="PremiumCalculation"/>
-                <action when="onProcessActions" commandName="SendNotificationAction"/>
                 <pageForwardAction when="onProcessActions" condition="m:test(status[.='QUOTATION'])" destinationPageId="Quotation"/>
             </commandButtonAction>
         </navigationSection>
     </questionPage>
 
     <informationPage id="Quotation">
+        <action when="onRenderResponse" commandName="SendNotificationAction"/>
 
-        <quotationSummary requoteDestinationPageId="QuestionPage" saveDestinationPageId="SavedQuotes" confirmAndPayDestinationPageId="SelectPaymentOption">
+        <quotationSummary requoteDestinationPageId="CompanyDetails" saveDestinationPageId="SavedQuotes" confirmAndPayDestinationPageId="SelectPaymentOption">
 
             <premiumSummaryFooter>
                 <questionSection title="To override the calculated premium select Yes below, enter the required premium, and click Apply Override">
@@ -76,7 +75,6 @@
                 <navigationSection quitDisabled="true">
                     <commandButtonAction label="Apply Override" destinationPageId="Quotation">
                         <action when="onProcessActions" commandName="ApplyAgentPremium"/>
-                        <action when="onProcessActions" commandName="SendNotificationAction"/>
                     </commandButtonAction>
                 </navigationSection>
                 <questionSection>
@@ -86,8 +84,8 @@
 
             <navigationSection>
                 <saveButtonAction label="Save" destinationPageId="CompanyDetails" immediate="true"/>
-                <commandButtonAction label="Requote" destinationPageId="CompanyDetails"/>
-                <commandButtonAction label="Confirm Order" destinationPageId="Finish"/>
+                <requoteButtonAction label="Requote" destinationPageId="CompanyDetails"/>
+                <commandButtonAction label="Confirm Order" destinationPageId="Confirm"/>
                 <viewQuotationButtonAction label="View"/> 
             </navigationSection>
 
@@ -110,7 +108,9 @@
     </informationPage>
     
     <questionPage id="Referral" title="Referral">
-        <referralSummary referralNotificationUrl="~/ReferralNotification.html" requoteDestinationPageId="QuestionPage">
+        <action when="onRenderResponse" commandName="SendNotificationAction"/>
+
+        <referralSummary referralNotificationUrl="~/ReferralNotification.html" requoteDestinationPageId="CompanyDetails">
             <answerSection title="Summary of cover">
                 <answer title="Start date:" binding="inceptionDate"/>
                 <answer title="End date:" binding="expiryDate"/>
@@ -129,7 +129,14 @@
         </referralSummary>
     </questionPage>
 
-    <questionPage id="Finish" title="Thank you">
-        <parsedUrlContent id="ThankYou" order="1" url="~/Thankyou.html"/>
+    <questionPage id="Confirm" title="Thankyou">
+        <action when="onRenderResponse" commandName="PlaceOrder"/>
+        <action when="onRenderResponse" commandName="SendNotificationAction"/>
+        
+        <parsedUrlContent id="ThankYou" url="~/Thankyou.html"/>
+        
+        <navigationSection id="Navigation" quitDisabled="true">
+            <quitButtonAction id="Finish" label="Finish" destinationPageId="Confirm"/>
+        </navigationSection>
     </questionPage>
 </pageFlow>
