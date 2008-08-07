@@ -237,7 +237,7 @@
     </xsl:template>
     
     <xsl:template match="p">
-        <xsl:text>&#x00A0;&#x00A0;&#x00A0;&#x00A0;</xsl:text>
+        <!--<xsl:text>&#x00A0;&#x00A0;&#x00A0;&#x00A0;</xsl:text>-->
         <xsl:apply-templates select="node()"/>
         <xsl:call-template name="br"/>
     </xsl:template>
