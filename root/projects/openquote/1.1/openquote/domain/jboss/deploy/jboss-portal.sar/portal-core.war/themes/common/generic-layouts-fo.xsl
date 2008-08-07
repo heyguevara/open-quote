@@ -211,6 +211,18 @@
         </fo:inline>
     </xsl:template>
 
+    <xsl:template match="em">
+        <fo:inline xsl:use-attribute-sets="I">
+            <xsl:apply-templates select="node()"/>
+        </fo:inline>
+    </xsl:template>
+    
+    <xsl:template match="strong">
+        <fo:inline xsl:use-attribute-sets="B">
+            <xsl:apply-templates select="node()"/>
+        </fo:inline>
+    </xsl:template>
+    
     <xsl:template match="b">
         <xsl:choose>
             <xsl:when test="parent::p/@title!=text()">
@@ -241,7 +253,7 @@
     </xsl:template>
     
     <xsl:template name="br">
-        <xsl:text>&#x00A0;&#x2028;</xsl:text>
+        <xsl:text>&#x00A0;</xsl:text>
     </xsl:template>
     
     <xsl:template match="font-size">
