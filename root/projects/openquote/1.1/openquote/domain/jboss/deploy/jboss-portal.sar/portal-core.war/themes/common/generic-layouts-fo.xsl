@@ -225,7 +225,7 @@
     
     <xsl:template match="b">
         <xsl:choose>
-            <xsl:when test="parent::p/@title!=text()">
+            <xsl:when test="not(parent::p/@title) or  parent::p/@title!=text()">
                 <fo:inline xsl:use-attribute-sets="B">
                     <xsl:apply-templates select="node()"/>
                 </fo:inline>
