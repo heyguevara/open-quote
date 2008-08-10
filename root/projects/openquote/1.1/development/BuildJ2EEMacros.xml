@@ -321,7 +321,7 @@
   <target name="_install-base-domain" unless="domainpresent">
     <!-- Get the jboss zip into the cache -->
     <repo-get-macro group="ail" artifact="${dar}" version="${version}-build.${build}" repo="repo.ail-ltd.com/repo" type="dar"/>
-<echo message="plop"/>
+
     <!-- Determin the whether we want to use the *-snapshot file, or the repository's latest.  -->
     <!-- We'll use which ever is newer on the filesystem                                       -->
     <condition property="dar.src" value="${repo.dir}/ail/${dar}/${version}/${dar}-${version}-snapshot.dar" 
