@@ -23,14 +23,10 @@ import java.security.Principal;
 /**
  * Any class that wishes to use the Core class must implement this class. The
  * Core uses the methods defined he to query the client class.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CoreUser.java,v $
  */
 public interface CoreUser extends Serializable {
 	/**
-     * The Core uses this callback to determin which versions of artefacts it
+     * The Core uses this callback to determine which versions of artifacts it
      * should use on the CoreUser's behalf.
      * @return The version date that the CoreUser is working at.
      */
