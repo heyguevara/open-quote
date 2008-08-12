@@ -16,15 +16,17 @@
         </field>
         <field name="attribute" type="com.ail.core.Attribute" collection="arraylist"/>
     </class>
-    
-    
+        
     <class name="com.ail.core.Attribute" extends="com.ail.core.Type">
         <map-to xml="attribute"/>
         <field name="unit" type="string">
             <bind-xml node="attribute"/>
         </field>
-        <field name="value" type="string">
-            <bind-xml node="attribute"/>
+		<field name="value" type="string" set-method="setValue" get-method="getValueForXmlAttribute">
+			<bind-xml node="attribute"/>  
+		</field>
+        <field name="valueForXmlText" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml name="value" node="element"/>
         </field>
         <field name="format" type="string">
             <bind-xml node="attribute"/>
@@ -49,6 +51,19 @@
         <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate"/>
         <field name="configurationNamespace" type="string"/>
     </class>
+
+	<class name="com.ail.core.ExceptionRecord" extends="com.ail.core.Type">
+        <field name="date" type="date">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="reason" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="catchingClassName" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="stack" type="string" collection="collection"/>
+	</class>
 
     <class name="com.ail.core.command.CommandArgImp" extends="com.ail.core.Type">
         <field name="callersCore" type="com.ail.core.CoreUserImpl"/>
