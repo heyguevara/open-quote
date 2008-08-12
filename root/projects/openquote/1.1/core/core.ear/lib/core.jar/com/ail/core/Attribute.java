@@ -232,6 +232,7 @@ public class Attribute extends Type implements Identified {
      */
     public void setFormat(String format) {
         this.format = format;
+        localFormat = null;
     }
 
     /**
