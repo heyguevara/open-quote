@@ -68,7 +68,7 @@ public class CommandServerBean extends EJBComponent implements MessageDrivenBean
             XMLString commandArgXml=new XMLString(tm.getText());
             
             CommandArg commandArg=(CommandArg)getCore().fromXML(commandArgXml.getType(), commandArgXml);
-
+    
             // We take the basenanme of the class as the command name: i.e. if the command class is
             // "com.ail.core.logging.LoggerArgImp" the command name will be "LoggerArgImp".
             String commandName=commandArg.getClass().getName();
@@ -78,8 +78,10 @@ public class CommandServerBean extends EJBComponent implements MessageDrivenBean
             commandArg.setCallersCore(this);
             command.setArgs(commandArg);
             command.invoke();
-        } catch(Throwable t) {
+        }
+        catch(Throwable t) {
             t.printStackTrace();
+            ctx.setRollbackOnly();
         }
     }
 
