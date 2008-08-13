@@ -216,7 +216,7 @@
     <quotationNumber>QF1992</quotationNumber>
     <quotationDate>2006-09-12T08:08:16.307+01:00</quotationDate>
     <quotationExpiryDate>2006-10-12T08:08:16.342+01:00</quotationExpiryDate>
-    <proposer>
+	<proposer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="personalProposer">
         <address><line1>The Top Flat</line1><line2>Nice House</line2><line3/><line4/><line5/><town>Pleasent Vally</town><county>Toxteth</county><country/><postcode>TX9 1PQ</postcode></address>
         <legalName/>
         <firstName>Jimbo</firstName>
@@ -224,7 +224,7 @@
         <title>MR</title>
         <emailAddress>jimbo@cluck.com</emailAddress>
         <telephoneNumber>0800 737373</telephoneNumber>
-    </proposer>
+	</proposer>
     <broker>
         <address><line1>New Office</line1><line2>Small Street</line2><town>Uppington</town><county>Wessex</county><postcode>HP2 2PX</postcode></address>
         <legalName>Acme Broker Limited</legalName>
