@@ -102,12 +102,17 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+        String title=getTitle();
         String questionId=xpathToId(rowContext+binding);
         String detailsId=xpathToId(rowContext+detailsBinding);
         
         PrintWriter w=response.getWriter();
 
         String onChange="enableTargetIf(this.value==\"Yes\", \""+detailsId+"\")";
+        
+        if (title==null && getTitleBinding()!=null) {
+            title=model.xpathGet(getTitleBinding(), String.class);
+        }
         
         w.printf("<td>%s</td>", getTitle());
         w.printf("<td>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));

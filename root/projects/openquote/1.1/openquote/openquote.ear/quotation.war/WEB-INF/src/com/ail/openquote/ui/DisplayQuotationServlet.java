@@ -22,6 +22,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ail.core.BaseException;
+import com.ail.core.CoreProxy;
+import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
+
 public class DisplayQuotationServlet extends HttpServlet {
     
     private static final long serialVersionUID = 6984589565187737714L;
@@ -32,7 +36,21 @@ public class DisplayQuotationServlet extends HttpServlet {
         response.setHeader("Pragma", "private");
         response.setHeader("Cache-Control", "private");
 
-        byte[] doc=(byte[])request.getSession().getAttribute("javax.portlet.p.MotorPlusQuotationPortletInstance?quotedocument");
+        String quoteNumber=request.getParameter("quoteNumber");
+        
+        CoreProxy proxy=new CoreProxy();
+        FetchDocumentCommand cmd=(FetchDocumentCommand)proxy.newCommand("FetchQuoteDocument");
+        cmd.setQuotationNumberArg(quoteNumber);
+
+        try {
+            cmd.invoke();
+        }
+        catch(BaseException e) {
+            e.printStackTrace();
+            throw new ServletException("Failed to fetch quote (number:"+quoteNumber+") for display.");
+        }
+                        
+        byte[] doc=cmd.getDocumentRet();
         response.getOutputStream().write(doc);
         response.getOutputStream().flush();
     }

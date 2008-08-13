@@ -43,4 +43,8 @@
         from com.ail.openquote.SavedQuotation quotation fetch all properties where quotation.quotationNumber=?
     </query> 
     
+    <query name='get.savedQuotation.by.systemId'>
+        from com.ail.openquote.SavedQuotation quotation fetch all properties where quotation.systemId=?
+    </query> 
+    
 </hibernate-mapping> 

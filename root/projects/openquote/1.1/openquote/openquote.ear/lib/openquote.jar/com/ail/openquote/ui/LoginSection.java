@@ -44,6 +44,7 @@ import org.jboss.portal.identity.UserProfileModule;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
+import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 
@@ -252,6 +253,7 @@ public class LoginSection extends PageContainer {
 
         if ("Create".equals(op)) {            
             Quotation quote=(Quotation)model;
+            Proposer proposer=(Proposer)quote.getProposer();
             String password=request.getParameter("password");
 
             // This assumes that the attributes ("UserModule" etc) have been injected into the session's context in 
@@ -267,9 +269,9 @@ public class LoginSection extends PageContainer {
 
                 User user=userModule.createUser(quote.getUsername(), password);
                 userProfileModule.setProperty(user, User.INFO_USER_ENABLED, true);
-                userProfileModule.setProperty(user, User.INFO_USER_NAME_FAMILY, quote.getProposer().getSurname());
-                userProfileModule.setProperty(user, User.INFO_USER_NAME_GIVEN, quote.getProposer().getFirstName());
-                userProfileModule.setProperty(user, User.INFO_USER_EMAIL_REAL, quote.getProposer().getEmailAddress());
+                userProfileModule.setProperty(user, User.INFO_USER_NAME_FAMILY, proposer.getSurname());
+                userProfileModule.setProperty(user, User.INFO_USER_NAME_GIVEN, proposer.getFirstName());
+                userProfileModule.setProperty(user, User.INFO_USER_EMAIL_REAL, proposer.getEmailAddress());
                 userProfileModule.setProperty(user, User.INFO_USER_LOCALE, request.getLocale().toString());
                 userProfileModule.setProperty(user, User.INFO_USER_REGISTRATION_DATE, new Date());
 
@@ -322,9 +324,10 @@ public class LoginSection extends PageContainer {
     public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Quotation quotation=(Quotation)model;
+        Proposer proposer=(Proposer)quotation.getProposer();
 
         // Guess the username from the quotation or the proposer's email address.
-        String usernameGuess=quotation.getUsername()!=null ? quotation.getUsername() : quotation.getProposer().getEmailAddress();
+        String usernameGuess=quotation.getUsername()!=null ? quotation.getUsername() : proposer.getEmailAddress();
 
         String lnk="<a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Create Login\");'>"+invitationLinkText+"</a>";
         

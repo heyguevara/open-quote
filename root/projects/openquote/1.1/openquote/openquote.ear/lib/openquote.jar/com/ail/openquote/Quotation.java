@@ -18,14 +18,17 @@ package com.ail.openquote;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import com.ail.insurance.policy.Policy;
 import com.ail.financial.PaymentSchedule;
+import com.ail.party.Party;
+import com.ail.core.ExceptionRecord;
 
 /**
  * A quotation can generally be represented as an instance of a Policy at the quotation state, however
- * in the context of the openquote system a policy can only exist upto the quoted/referred/declined 
+ * in the context of the openquote system a policy can only exist up to the quoted/referred/declined 
  * states and hence never becomes a policy. For that reason, this sub-type of Policy was created. It
  * also includes some additional properties which are specific to the openquote system.
  * @version $Revision: 1.9 $
@@ -36,7 +39,7 @@ import com.ail.financial.PaymentSchedule;
  */
 public class Quotation extends Policy {
 	private static final long serialVersionUID = -414267648671599243L;
-	private Proposer proposer;
+	private Party proposer;
     private Broker broker;
 	private String page=null;
 	private Date quotationDate;
@@ -44,17 +47,19 @@ public class Quotation extends Policy {
     private ArrayList<PaymentSchedule> paymentOption;
     private String username;
     private boolean userSaved; // true if the user requested that this quote be saved
-    private boolean testCase;
+    private boolean testCase; // true if this quote has been saved as a test case
+    private Collection<ExceptionRecord> exception; // details of all exceptions thrown in during the processing of this quote.
     
     public Quotation() {
-        paymentOption=new ArrayList<PaymentSchedule>();
+        paymentOption=new ArrayList<PaymentSchedule>(0);
+        exception=new ArrayList<ExceptionRecord>(0);
     }
     
-    public Proposer getProposer() {
+    public Party getProposer() {
 		return proposer;
 	}
 
-	public void setProposer(Proposer proposer) {
+	public void setProposer(Party proposer) {
 		this.proposer = proposer;
 	}
 
@@ -129,4 +134,19 @@ public class Quotation extends Policy {
     public void setTestCase(boolean testCase) {
         this.testCase = testCase;
     }
+
+	public Collection<ExceptionRecord> getException() {
+		if (exception==null) {
+	        exception=new ArrayList<ExceptionRecord>(0);
+		}
+		return exception;
+	}
+
+	public void setException(Collection<ExceptionRecord> exception) {
+		this.exception = exception;
+	}
+	
+	public void addException(ExceptionRecord exception) {
+		getException().add(exception);
+	}
 }

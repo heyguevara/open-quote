@@ -36,6 +36,7 @@ import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
 import com.ail.financial.PaymentSchedule;
+import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 
@@ -180,6 +181,7 @@ public class PaymentDetails extends PageElement {
 
     private void renderSummary(PrintWriter w, Quotation quote) {
         SimpleDateFormat f=new SimpleDateFormat("d MMMMM, yyyy");
+        Proposer proposer=(Proposer)quote.getProposer();
 
         w.printf("<tr class='portlet-font'>");
         w.printf("    <td class='portlet-section-alternate'>Your quotation</td>");
@@ -199,9 +201,9 @@ public class PaymentDetails extends PageElement {
         w.printf("<tr>");
         w.printf("    <td>");
         w.printf("        <table width='100%%'>");
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Name</b></td><td>%s %s</td></tr>", quote.getProposer().getFirstName(), quote.getProposer().getSurname());
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Address</b></td><td>%s</td></tr>", quote.getProposer().getAddress());
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Email address</b></td><td>%s</td></tr>", quote.getProposer().getEmailAddress());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Name</b></td><td>%s %s</td></tr>", proposer.getFirstName(), proposer.getSurname());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Address</b></td><td>%s</td></tr>", proposer.getAddress());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Email address</b></td><td>%s</td></tr>", proposer.getEmailAddress());
         w.printf("        </table>");
         w.printf("    </td>");
         w.printf("</tr>");
@@ -293,7 +295,8 @@ public class PaymentDetails extends PageElement {
         String year=pc.getExpiryDate()!=null ? yearFormat.format(pc.getExpiryDate()) : "";
         
         if (pc.getCardHoldersName()==null) {
-            pc.setCardHoldersName(quote.getProposer().getFirstName()+" "+quote.getProposer().getSurname());
+        	Proposer proposer=(Proposer)quote.getProposer();
+            pc.setCardHoldersName(proposer.getFirstName()+" "+proposer.getSurname());
         }
         
         w.printf("<table width='100%%' cols='2'>");

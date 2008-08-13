@@ -15,10 +15,13 @@
  */
 package com.ail.insurance.quotation.notifyparty;
 
+import static com.ail.core.Functions.productNameToConfigurationNamespace;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -28,26 +31,23 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import com.ail.core.BaseException;
 import com.ail.core.Core;
-import static com.ail.core.Functions.productNameToConfigurationNamespace;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Version;
 import com.ail.core.XMLException;
 import com.ail.core.command.CommandArg;
+import com.ail.insurance.policy.PolicyStatus;
+import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.BrokerQuotationSummary;
 
 /**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype service
+ * Send a notification of an event relating to a quote to the broker associated with the product 
  */
 public class NotifyBrokerByEmailService extends Service {
     private static final long serialVersionUID = -4915889686192216902L;
@@ -149,6 +149,9 @@ public class NotifyBrokerByEmailService extends Service {
         try {
             emailNotification(savedQuotation);
         }
+        catch(MessagingException e) {
+        	throw new PreconditionException("Failed to connecto to SMTP server at: "+getCore().getParameterValue("smtp-server", "localhost")+" for quote: "+savedQuotation.getQuotationNumber()+". "+e.toString());
+        }
         catch(Exception e) {
             e.printStackTrace();
         }
@@ -173,7 +176,7 @@ public class NotifyBrokerByEmailService extends Service {
         message.addRecipients(Message.RecipientType.TO, toAddress);
         message.setFrom(new InternetAddress(fromAddress));
 
-        // Example subject: "Quotation: QF0001 - Motor Plus - Mr. Richard Anderson"
+        // Example subject: "Quotation: QF0001 - Motor Plus - Mr. Jimbo Clucknasty"
         message.setSubject(savedQuotation.getQuotation().getStatus().getLongName()+
                 ": "+savedQuotation.getQuotationNumber()+
                 " - "+savedQuotation.getQuotation().getProductName()+
@@ -183,9 +186,12 @@ public class NotifyBrokerByEmailService extends Service {
 
         multipart.addBodyPart(createBrokerSummaryAttachment(savedQuotation));
 
-//        if (PolicyStatus.QUOTATION.equals(savedQuotation.getStatus())) {
-//          multipart.addBodyPart(createQuoteDocumentAttachment(savedQuotation));
-//        }
+        if (PolicyStatus.QUOTATION.equals(savedQuotation.getStatus()) || PolicyStatus.SUBMITTED.equals(savedQuotation.getStatus())) {
+        	BodyPart docAttachment=createQuoteDocumentAttachment(savedQuotation);
+        	if (docAttachment!=null) {
+        		multipart.addBodyPart(docAttachment);
+        	}
+        }
 
         multipart.addBodyPart(createAssessmentSheetAttachment(savedQuotation));
         multipart.addBodyPart(createRawXmlAttachment(savedQuotation));
@@ -220,23 +226,29 @@ public class NotifyBrokerByEmailService extends Service {
 
     /**
      * Create a MimeBodyPart holding the quote document (PDF)
-     * @return body part.
+     * @return body part, or null if the quotation doc has not been generated yet.
      * @throws BaseException If the quote document fails to load.
      * @throws MessagingException
      */
-//    private BodyPart createQuoteDocumentAttachment(SavedQuotation quotation) throws BaseException, MessagingException {
-//        FetchDocumentCommand cmd=(FetchDocumentCommand)getCore().newCommand("FetchQuoteDocument");
-//        cmd.setQuotationNumberArg(args.getQuotationNumberArg());
-//        cmd.invoke();
-//        cmd.getDocumentRet();
-//
-//        BodyPart bp = new MimeBodyPart();
-//        bp.setHeader("Content-ID", "<quotation.pdf>");
-//        bp.setHeader("Content-Disposition", "attachment");
-//        bp.setContent("plop", "application/pdf");
-//        bp.setFileName(quotation.getQuotationNumber()+" Quotation.pdf");
-//        return bp;
-//    }
+    private BodyPart createQuoteDocumentAttachment(SavedQuotation quotation) throws BaseException, MessagingException {
+    	// Only attached the document if it has already been generated - don't generate it
+    	if (quotation.getQuotationDocument()!=null) {
+	        FetchDocumentCommand cmd=(FetchDocumentCommand)getCore().newCommand("FetchQuoteDocument");
+	        cmd.setQuotationNumberArg(args.getQuotationNumberArg());
+	        cmd.invoke();
+	
+	        BodyPart bp = new MimeBodyPart();
+	        bp.setHeader("Content-ID", "<quotation.pdf>");
+	        bp.setHeader("Content-Disposition", "attachment");
+	        bp.setDataHandler(new DataHandler(new ByteArrayDataSource(cmd.getDocumentRet(), "application/pdf")));
+	        bp.setFileName(quotation.getQuotationNumber()+" Quotation.pdf");
+
+	        return bp;
+    	}
+    	else {
+    		return null;
+    	}
+    }
     
     /**
      * Create a MimeBodyPart containing a SavedQuotaion's assessment sheet rendered as HTML.
@@ -264,9 +276,9 @@ public class NotifyBrokerByEmailService extends Service {
     }
 
     /**
-     * Output an inline style sheet defining the styles user by UI components. Some of the attachements 
-     * addded to the email are coded to also be used within the portal - and as a result refer to styles
-     * common to portlets. Adding these inline to each attachement gives the email some 'family' resemblance
+     * Output an inline style sheet defining the styles user by UI components. Some of the attachments 
+     * added to the email are coded to also be used within the portal - and as a result refer to styles
+     * common to portlets. Adding these inline to each attachment gives the email some 'family' resemblance
      * to the online system.
      * @param writer Style will be written here.
      */

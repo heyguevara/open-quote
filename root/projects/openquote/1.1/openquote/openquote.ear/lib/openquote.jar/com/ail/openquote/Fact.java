@@ -31,7 +31,6 @@ import com.ail.core.TypeXPathException;
  * themselves to. Also, this class offers some helper methods which make navigating and convering elements of our
  * type model easier. The major disadvantage is that once you've wrapped an object (e.g. an Asset) in a fact, you 
  * can't then use native rule Condition queries on it as easily.
- * @author richarda
  */
 public class Fact extends Type {
     private static final long serialVersionUID = -2842993394541843117L;

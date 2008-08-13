@@ -1,0 +1,64 @@
+<quotation xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <productName>IBA/PIBA Professional Indemnity</productName>
+
+    <xi:include href="product://localhost:8080/AIL/Base/Acme.xml" />
+	<xi:include href="product://localhost:8080/AIL/Base/CommercialProposer.xml"/>
+
+    <section id='section' sectionTypeId='Section' xsi:type="java:com.ail.insurance.policy.Section"/>
+
+    <excess id="excess" enabled="true" xsi:type="java:com.ail.insurance.policy.Excess">
+        <title>Excess</title>
+        <amount amount="2600" currency="EUR"/>
+    </excess>
+    
+    <asset id="company" assetTypeId='Asset'>
+        <attribute id="businessDescription" value="" format="note"/>
+        <attribute id="generalBroker" value="?" format="yesorno"/>
+        <attribute id="financialServices" value="?" format="yesorno"/>
+        <attribute id="mortgageWork" value="" format="number,percent"/> 
+        <attribute id="feesEstimated" value="" format="currency" unit="EUR"/> 
+        <attribute id="loyaltyDiscount" value="?" format="yesorno"/> 
+        <attribute id="limitOfIndemnity" value="?" format="choice,options=-1#?|1#1,500,000 EUR|2#2,600,000 EUR"/>
+        <attribute id="limitOfIndemnityWording" value="?" format="choice,options=-1#?|1#Any One Claim|2#Aggregate"/>
+        <attribute id="retroactiveDateApplied" value="?" format="yesorno"/>
+        <attribute id="retroactiveDate" value="" format="date,pattern=dd/MM/yyyy"/>
+        <attribute id="renewalQuotation" value="No" format="yesorno"/> 
+        <attribute id="mtaQuotation" value="No" format="yesorno"/> 
+        <attribute id="inceptionDate" value="" format="date,pattern=dd/MM/yyyy"/>
+        <attribute id="agentPremiumApplied" value="No" format="yesorno"/>
+        <attribute id="agentPremium" value="0" format="currency" unit="EUR"/>
+    </asset>
+    
+    <asset id="subjectivities" assetTypeId="Subjectivities">
+        <attribute id="paymentInFull" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Payment of the premium in full." format="string"/>
+        </attribute>    
+        <attribute id="noClaimDiscountProof" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Satisfactory proof of no claims discount." format="string"/>
+        </attribute>    
+    </asset>
+    
+    <asset id="endorsements" assetTypeId="Endorsements">
+        <attribute id="financialServicesAggregate" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Financial Services Aggregate Limit &apos; Retention each and every claimant Cost inclusive Endorsement." format="string"/>
+        </attribute>    
+    </asset>
+    
+    <asset id="extensions" assetTypeId="Extensions">
+        <attribute id="fullCivilLiability" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Full Civil Liability Wording" format="string"/>
+        </attribute>    
+        <attribute id="lossOfDocuments" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Loss of Documents Extension - Sub Limit EUR 2,600,000 in aggregate any one year" format="string"/>
+        </attribute>    
+        <attribute id="liabilityAndSlander" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Liabiity and Slander cover included" format="string"/>
+        </attribute>    
+        <attribute id="fedelityGuarntee" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Fedility Guarantee - Sub Limit EUR 2,600,000 in the aggregate any one year" format="string"/>
+        </attribute>    
+        <attribute id="financialRegulatorComplaint" value="No" format="choice,options=1#No|2#Yes">
+            <attribute id="title" value="Financial Regulator Complaint Determination Committee Hearing/Financial Services Ombudsman's Bureau and Data Protection Commissioner Defence Costs and Expenses - Sub Limit EUR 50,000" format="string"/>
+        </attribute>    
+    </asset>
+</quotation>

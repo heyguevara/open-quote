@@ -1,6 +1,8 @@
 <quotation xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<productName>Motor Plus</productName>
 
+	<xi:include href="product://localhost:8080/AIL/Base/PersonalProposer.xml"/>
+
 	<xi:include href="~/MotorPlusSection.xml"/>
 
 	<xi:include href="~/DriverAsset.xml"/>

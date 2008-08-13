@@ -40,6 +40,7 @@ import com.ail.insurance.policy.Behaviour;
 import com.ail.insurance.policy.BehaviourType;
 import com.ail.insurance.policy.Marker;
 import com.ail.insurance.policy.RateBehaviour;
+import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 
 /**
@@ -152,16 +153,17 @@ public class BrokerQuotationSummary extends PageContainer {
     }
 
     private void renderProposerDetails(PrintWriter w, Quotation quote) {
+    	Proposer proposer=(Proposer)quote.getProposer();
         w.printf("<table width='100%%' class='portlet-font'>");
         w.printf(  "<tr><td class='portlet-section-selected' colspan='2'>Proposer</td></tr>");
-        w.printf(  "<tr><td>Name</td><td>%s</td></tr>", quote.getProposer().getLegalName());
-        w.printf(  "<tr><td>Address</td><td>%s</td></tr>", quote.getProposer().getAddress().getLine1());
-        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", quote.getProposer().getAddress().getLine2());
-        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", quote.getProposer().getAddress().getTown());
-        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", quote.getProposer().getAddress().getCounty());
-        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", quote.getProposer().getAddress().getPostcode());
-        w.printf(  "<tr><td>Phone</td><td>%s</td></tr>", quote.getProposer().getTelephoneNumber());
-        w.printf(  "<tr><td>Email</td><td><a href='mailto:rand@shadows.demon.co.uk'>%s</a></td></tr>", quote.getProposer().getEmailAddress());
+        w.printf(  "<tr><td>Name</td><td>%s</td></tr>", proposer.getLegalName());
+        w.printf(  "<tr><td>Address</td><td>%s</td></tr>", proposer.getAddress().getLine1());
+        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getLine2());
+        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getTown());
+        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getCounty());
+        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getPostcode());
+        w.printf(  "<tr><td>Phone</td><td>%s</td></tr>", proposer.getTelephoneNumber());
+        w.printf(  "<tr><td>Email</td><td><a href='mailto:rand@shadows.demon.co.uk'>%s</a></td></tr>", proposer.getEmailAddress());
         w.printf("</table>");
     }
 
@@ -182,29 +184,31 @@ public class BrokerQuotationSummary extends PageContainer {
     }
 
     private void renderPayments(PrintWriter w, Quotation quote) {
-        w.printf("<table width='100%%' class='portlet-font'>");
-        w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>Payment</td></tr>");
-        w.printf(  "<tr><td colspan='5'>%s</td></tr>", quote.getPaymentDetails().getDescription());
-        
-        for(MoneyProvision provision: quote.getPaymentDetails().getMoneyProvision()) {
-            if (provision.getPaymentMethod() instanceof PaymentCard) {
-                DateFormat expiry=new SimpleDateFormat("dd/yy");
-                PaymentCard card=(PaymentCard)provision.getPaymentMethod();
-                w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Card details</u></td></tr>");
-                w.printf(  "<tr><td>&nbsp;</td><td>Card number</td><td>%s</td></tr>", card.getCardNumber());
-                w.printf(  "<tr><td>&nbsp;</td><td>Name on card</td><td>%s</td></tr>", card.getCardHoldersName());
-                w.printf(  "<tr><td>&nbsp;</td><td>Issue number</td><td>%s</td></tr>", card.getIssueNumber());
-                w.printf(  "<tr><td>&nbsp;</td><td>Expiry date</td><td>%s</td></tr>", expiry.format(card.getExpiryDate()));
+        if (quote.getPaymentDetails()!=null) {
+            w.printf("<table width='100%%' class='portlet-font'>");
+            w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>Payment</td></tr>");
+            w.printf(  "<tr><td colspan='5'>%s</td></tr>", quote.getPaymentDetails().getDescription());
+            
+            for(MoneyProvision provision: quote.getPaymentDetails().getMoneyProvision()) {
+                if (provision.getPaymentMethod() instanceof PaymentCard) {
+                    DateFormat expiry=new SimpleDateFormat("dd/yy");
+                    PaymentCard card=(PaymentCard)provision.getPaymentMethod();
+                    w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Card details</u></td></tr>");
+                    w.printf(  "<tr><td>&nbsp;</td><td>Card number</td><td>%s</td></tr>", card.getCardNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Name on card</td><td>%s</td></tr>", card.getCardHoldersName());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Issue number</td><td>%s</td></tr>", card.getIssueNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Expiry date</td><td>%s</td></tr>", expiry.format(card.getExpiryDate()));
+                }
+                else if (provision.getPaymentMethod() instanceof DirectDebit) {
+                    DirectDebit dd=(DirectDebit)provision.getPaymentMethod();
+                    w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Account details</u></td></tr>");
+                    w.printf(  "<tr><td>&nbsp;</td><td>Account number</td><td>%s</td></tr>", dd.getAccountNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>Sort code</td><td>%s</td></tr>", dd.getSortCode());
+                }
             }
-            else if (provision.getPaymentMethod() instanceof DirectDebit) {
-                DirectDebit dd=(DirectDebit)provision.getPaymentMethod();
-                w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>Account details</u></td></tr>");
-                w.printf(  "<tr><td>&nbsp;</td><td>Account number</td><td>%s</td></tr>", dd.getAccountNumber());
-                w.printf(  "<tr><td>&nbsp;</td><td>Sort code</td><td>%s</td></tr>", dd.getSortCode());
-            }
+            
+            w.printf("</table>");
         }
-        
-        w.printf("</table>");
     }
 
     private void renderSummary(PrintWriter w, Quotation quote) {

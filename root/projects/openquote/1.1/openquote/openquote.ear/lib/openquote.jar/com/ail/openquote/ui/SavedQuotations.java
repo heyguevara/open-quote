@@ -34,6 +34,7 @@ import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>Display a list of a user's saved quotations. If the user is logged in, a list of their saved
@@ -67,6 +68,12 @@ public class SavedQuotations extends PageElement {
     /** Id of the page to forward to in the pageflow if the user selected "confirm and pay" */
     private String confirmAndPayDestinationPageId;
 
+    /** Label to appear on the confirm button. Defaults to "Confirm and Pay" */
+    private String confirmAndPayLabel="Confirm and Pay";
+    
+    /** Label to appear on the requote button. Defaults to "Requote" */
+    private String requoteLabel="Requote";
+    
     /** Button to handle the "view quote" action.  */
     private ViewQuotationButtonAction viewQuotationButtonAction=new ViewQuotationButtonAction();
     
@@ -136,33 +143,34 @@ public class SavedQuotations extends PageElement {
         CoreProxy core=new CoreProxy();
         Properties opParams=Functions.getOperationParameters(request);
         String op=opParams.getProperty("op");
+        String quoteNumber=opParams.getProperty("id");
 
-        viewQuotationButtonAction.processActions(request, response, model);
-        
-        if ("confirm".equals(op) || "requote".equals(op)) {
+        if (quoteNumber!=null) {
             try {
-                String quoteNumber=opParams.getProperty("id");
-                
-                SavedQuotation savedQuotation=(SavedQuotation)core.queryUnique("get.savedQuotation.by.quotationNumber", quoteNumber);
-                
-                //TODO check saveQuotation's "owner" == current user. goto the error page if it doesn't
-                
-                //TODO check that savedQuotation hasn't expired - goto error page if it has.
-        
-                Quotation quote=savedQuotation.getQuotation();
-        
-                if ("confirm".equals(op)) {
-                    quote.setPage(confirmAndPayDestinationPageId);
-                    request.getPortletSession().setAttribute("quotation", quote);
-                }
-                else if ("requote".equals(op)) {
-                    quote.setPage(requoteDestinationPageId);
-                    quote.setStatus(PolicyStatus.APPLICATION);
-                    quote.setQuotationNumber(null);
-                    quote.markAsNotPersisted();
-                    request.getPortletSession().setAttribute("quotation", quote);
-                }
-            }
+		        SavedQuotation savedQuotation=(SavedQuotation)core.queryUnique("get.savedQuotation.by.quotationNumber", quoteNumber);
+		
+		        viewQuotationButtonAction.processActions(request, response, savedQuotation);
+		
+		        if ("confirm".equals(op) || "requote".equals(op)) {
+	                //TODO check saveQuotation's "owner" == current user. goto the error page if it doesn't
+	                
+	                //TODO check that savedQuotation hasn't expired - goto error page if it has.
+	        
+	                Quotation quote=savedQuotation.getQuotation();
+	        
+	                if ("confirm".equals(op)) {
+	                    quote.setPage(confirmAndPayDestinationPageId);
+	                    QuotationCommon.setCurrentQuotation(request.getPortletSession(), quote);
+	                }
+	                else if ("requote".equals(op)) {
+	                    quote.setPage(requoteDestinationPageId);
+	                    quote.setStatus(PolicyStatus.APPLICATION);
+	                    quote.setQuotationNumber(null);
+	                    quote.markAsNotPersisted();
+	                    QuotationCommon.setCurrentQuotation(request.getPortletSession(), quote);
+	                }
+	            }
+	        }
             catch(Exception e) {
                 e.printStackTrace();
             }
@@ -171,20 +179,20 @@ public class SavedQuotations extends PageElement {
             // We're performing a save and the user isn't logged in yet.
             String password=request.getParameter("password");
             String username=request.getParameter("username");
-
+            String url="Unknown";
+            
             try {
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
                 String portalName=Functions.getOperationParameters(request).getProperty("portal");
-                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?action=1&username="+username+"&password="+password);
+                url="/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?action=1&username="+username+"&password="+password;
+                response.sendRedirect(url);
             }
             catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            	throw new RenderingError("Page forward on login failed. Forward was to: "+url, e);
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
@@ -216,8 +224,8 @@ public class SavedQuotations extends PageElement {
                     w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(quote.getQuotationExpiryDate()));
                     w.printf(  "<td align='center' class='portal-form-label'>£%s</td>", quote.getPremium().getAmountAsString());
                     w.printf(  "<td align='left'>");
-                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='Confirm and Pay'/>", quote.getQuotationNumber());
-                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='Requote'/>", quote.getQuotationNumber());
+                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", quote.getQuotationNumber(), confirmAndPayLabel);
+                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", quote.getQuotationNumber(), requoteLabel);
                     viewQuotationButtonAction.renderResponse(request, response, quote);
                     w.printf(  "</td>");
                     w.printf("</tr>");
@@ -269,5 +277,36 @@ public class SavedQuotations extends PageElement {
             w.printf("</table>");
             w.printf("<script type='text/javascript'>hideDivDisplay('Proposer Login')</script>");
         }
+    }
+
+    /**
+     * @see #setConfirmAndPayLabel(String)
+     * @return the confirmAndPayLabel
+     */
+    public String getConfirmAndPayLabel() {
+        return confirmAndPayLabel;
+    }
+
+    /**
+     * Set the label to appear on the confirm button. The default is "Confirm and Pay".
+     * @param confirmAndPayLabel the confirmAndPayLabel to set
+     */
+    public void setConfirmAndPayLabel(String confirmAndPayLabel) {
+        this.confirmAndPayLabel = confirmAndPayLabel;
+    }
+
+    /**
+     * @return the requoteLabel
+     */
+    public String getRequoteLabel() {
+        return requoteLabel;
+    }
+
+    /**
+     * Set the label to appear on the requote button. The default is "Requote"
+     * @param requoteLabel the requoteLabel to set
+     */
+    public void setRequoteLabel(String requoteLabel) {
+        this.requoteLabel = requoteLabel;
     }
 }

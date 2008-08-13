@@ -28,7 +28,6 @@ import com.ail.core.Type;
  * comparison methods to act on values in the list. This class is designed to
  * be used from within a Drools rule set as a working-memory version of the
  * application data HashMap which Drools offers.
- * @author richarda
  */
 public class Variables extends Type {
     private static final long serialVersionUID = -5362666512306944366L;

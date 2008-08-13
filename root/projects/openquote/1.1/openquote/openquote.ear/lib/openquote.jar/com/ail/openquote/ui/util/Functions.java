@@ -34,10 +34,12 @@ import javax.portlet.RenderRequest;
 
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
+import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeEnum;
 import com.ail.core.TypeXPathException;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.RenderingError;
 import com.ail.openquote.ui.util.Choice;
 
 /**
@@ -89,16 +91,6 @@ public class Functions {
      * Render an AttributeField's choice list as a set of HTML options for use in a select element.
      * See {@link com.ail.core.Attribute} for details of the choice format.
      * @param format Choice string
-     * @return Option line as a string.
-     */
-    public static String renderEnumerationAsOptions(String format) {
-        return renderEnumerationAsOptions(format, null);
-    }
-
-    /**
-     * Render an AttributeField's choice list as a set of HTML options for use in a select element.
-     * See {@link com.ail.core.Attribute} for details of the choice format.
-     * @param format Choice string
      * @param selected The value of the option to show as selected, or null if no value is selected.
      * @return Option line as a string.
      */
@@ -131,86 +123,107 @@ public class Functions {
      * @return The HTML representing the attribute as a form element.
      * @throws IllegalStateException
      * @throws IOException
+     * @throws PostconditionException 
      */
     public static String renderAttribute(Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
+    	// If we're not bound to anything, output nothing.
+        if (boundTo==null) {
+            return "";
+        }
+
         // Create the StringWriter - out output will go here.
         StringWriter ret=new StringWriter();
         PrintWriter w=new PrintWriter(ret);
+
+        if (boundTo==null) {
+            return "";
+        }
 
         String id=xpathToId(rowContext+boundTo);
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
         String onChangeEvent=(onChange!=null) ? "onchange='"+onChange+"'" : "";
         
-        w.printf("<table><tr><td>");
-        
-        if (attr==null) {
-            w.printf("<b>undefined: %s</b>", boundTo);
-        }
-        else {
-            if (attr.isStringType()) {
-                String size=attr.getFormatOption("size");
-                size=(size!=null) ? "size='"+size+"'" : "";                
-                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getValue());
-            }
-            else if (attr.isNumberType()) {
-                String pattern=attr.getFormatOption("pattern");
-                int size=(pattern==null) ? 7 : pattern.length();
-                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getValue());
-            }
-            else if (attr.isCurrencyType()) {
-                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='7' type='text' value='%s'/>", id, onChangeEvent, attr.getValue());
-            }
-            else if (attr.isChoiceMasterType()) {
-                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-                onChange="updateSlaveChoiceOptions(document.getElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
-                w.printf("<select name=\"%s\" onchange=\"%s\" class='pn-normal'/>", id, onChange);
-            }
-            else if (attr.isChoiceSlaveType()) {
-                onLoad="loadSlaveChoiceOptions($this,$value,"+attr.getChoiceTypeName()+",'"+attr.getChoiceMaster()+"','"+attr.getId()+"')";
-                w.printf("<select name=\"%s\" class='pn-normal'/>", id);
-            }
-            else if (attr.isChoiceType()) {
-                if (attr.getFormatOption("type")==null) {
-                    w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
-                }
-                else {
-                    onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-                    w.printf("<select name=\"%s\" class='pn-normal'/>", id);
-                }
-            }
-            else if (attr.isDateType()) {
-                String dateFormat=attr.getFormatOption("pattern");
-                int size=(dateFormat==null) ? 10 : dateFormat.length();
-                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/>", id, onChangeEvent, size, attr.getValue());
-            }
-            else if (attr.isYesornoType()) {
-                w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
-            }
-            else if (attr.isNoteType()) {
-                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' cols='30'>%s</textarea>", id, onChangeEvent, attr.getValue());
-            }
-            
-            w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", error("attribute[id='error']", attr));
-    
-            if (onLoad!=null) {
-                String s=onLoad;
-    
-                if (s.contains("$this")) {
-                    s=s.replace("$this", "document.getElementsByName(\""+id+"\")[0]");
-                }
-    
-                if (s.contains("$value")) {
-                    s=s.replace("$value", "'"+attr.getValue()+"'");
-                }
-                
-                w.printf("<script type='text/javascript'>%s</script>", s);
-            }
-        }
-        
-        return ret.toString();
+    	try {
+            w.printf("<table><tr><td>");
+	        
+	        if (attr==null) {
+	            w.printf("<b>undefined: %s</b>", boundTo);
+	        }
+	        else {
+	            if (attr.isStringType()) {
+	                String size=attr.getFormatOption("size");
+	                size=(size!=null) ? "size='"+size+"'" : "";                
+	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getValue());
+	            }
+	            else if (attr.isNumberType()) {
+	                String pattern=attr.getFormatOption("pattern");
+	                String trailer=(attr.getFormat().endsWith("percent")) ? "%" : ""; 
+	                int size=(pattern==null) ? 7 : pattern.length();
+	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
+	            }
+	            else if (attr.isCurrencyType()) {
+	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='7' type='text' value='%s'/>%s", id, onChangeEvent, attr.getValue(), attr.getUnit());
+	            }
+	            else if (attr.isChoiceMasterType()) {
+	                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
+	                onChange="updateSlaveChoiceOptions(document.getElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
+	                w.printf("<select name=\"%s\" onchange=\"%s\" class='pn-normal'/>", id, onChange);
+	            }
+	            else if (attr.isChoiceSlaveType()) {
+	                onLoad="loadSlaveChoiceOptions($this,$value,"+attr.getChoiceTypeName()+",'"+attr.getChoiceMaster()+"','"+attr.getId()+"')";
+	                w.printf("<select name=\"%s\" class='pn-normal'/>", id);
+	            }
+	            else if (attr.isChoiceType()) {
+	                if (attr.getFormatOption("type")==null) {
+	                    w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
+	                }
+	                else {
+	                    onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
+	                    w.printf("<select name=\"%s\" class='pn-normal'/>", id);
+	                }
+	            }
+	            else if (attr.isDateType()) {
+	                String dateFormat=attr.getFormatOption("pattern");
+	                int size=(dateFormat==null) ? 10 : dateFormat.length();
+	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/>", id, onChangeEvent, size, attr.getValue());
+	            }
+	            else if (attr.isYesornoType()) {
+	                w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
+	            }
+	            else if (attr.isNoteType()) {
+	                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea>", id, onChangeEvent, attr.getValue());
+	            }
+	            
+	            w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", error("attribute[id='error']", attr));
+	    
+	            if (onLoad!=null) {
+	                String s=onLoad;
+	    
+	                if (s.contains("$this")) {
+	                    s=s.replace("$this", "document.getElementsByName(\""+id+"\")[0]");
+	                }
+	    
+	                if (s.contains("$value")) {
+	                    s=s.replace("$value", "'"+attr.getValue()+"'");
+	                }
+	                
+	                w.printf("<script type='text/javascript'>%s</script>", s);
+	            }
+	        }
+	        
+	        return ret.toString();
+    	}
+    	catch(Throwable t) {
+    		throw new RenderingError("Failed to render attribute id:'"+attr.getId()+"', format:'"+attr.getFormat()+"' value:'"+attr.getValue()+"'", t);
+    	}
     }
 
     public static String renderAttributePageLevel(Type model, String boundTo, String rowContext, PortletSession session) throws IllegalStateException, IOException {
+        // If we're not bound to anything, output nothing.
+        if (boundTo==null) {
+            return "";
+        }
+
         String ret="";
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 
@@ -232,6 +245,11 @@ public class Functions {
      * @return true if any errors are found, false otherwise.
      */
     public static boolean applyAttributeValidation(Type model, String boundTo) {
+        // If we're not bound to anything, don't validate anything.
+        if (boundTo==null) {
+            return false;
+        }
+
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
         boolean error=false;
         
@@ -267,10 +285,13 @@ public class Functions {
      * @param request The request whose parameters should be checked.
      */
     public static void applyAttributeValues(Type model, String boundTo, String rowContext, ActionRequest request) {
-        String name=xpathToId(rowContext+boundTo);
-        
-        if (request.getParameter(name)!=null) {
-            model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
+        // If we're not bound to anything, apply nothing.
+        if (boundTo!=null) {
+            String name=xpathToId(rowContext+boundTo);
+            
+            if (request.getParameter(name)!=null) {
+                model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
+            }
         }
     }
     
@@ -368,6 +389,24 @@ public class Functions {
         for(Attribute a: toDelete) {
             model.removeAttribute(a);
         }
+    }
+    
+    /**
+     * Return true if the specified object has any UI error markers associated with it. UI 
+     * components use the conversion of attaching error attributes to model element to indicate
+     * validation failures. This method will return true if it finds any such attributes
+     * associated with the specified object.
+     * @param model Object to check for error markers
+     * @return true if error markers are found, false otherwise.
+     */
+    public static boolean hasErrorMarkers(Type model) {
+        for(Attribute a: model.getAttribute()) {
+            if(a.getId().startsWith("error.")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -170,6 +170,10 @@
       <parameter name='ServiceClass'>com.ail.insurance.quotation.calculatepremium.CalculatePremiumService</parameter>
     </service>
     
+    <service name="RefreshAssessmentSheetsService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+        <parameter name="ServiceClass">com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsService</parameter>
+    </service>
+
     <service name='AddQuoteNumberService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
       <parameter name='ServiceClass'>com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService</parameter>
     </service>
@@ -224,7 +228,7 @@
     </service>
     
     <service name="FetchQuoteDocumentService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.quotation.fetchocument.FetchDocumentService</parameter>
+      <parameter name="ServiceClass">com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
     </service>
     
     <service name="NotifyPartyByEmailService" key="com.ail.core.command.ClassAccessor">
@@ -340,6 +344,10 @@
       <parameter name='Accessor'>AssessRiskService</parameter>
     </command>
     
+    <command name="RefreshAssessmentSheets" builder="ClassBuilder" key="com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand">
+      <parameter name="Service">RefreshAssessmentSheetsService</parameter>
+    </command>
+
     <command name='CalculatePremium' builder='ClassBuilder' key='com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand'>
       <parameter name='Accessor'>CalculatePremiumService</parameter>
     </command>
@@ -388,7 +396,7 @@
       <parameter name="Service">GenerateQuoteDocumentService</parameter>
     </command>
 
-    <command name="FetchQuoteDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.fetchocument.FetchDocumentCommand">
+    <command name="FetchQuoteDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand">
       <parameter name="Service">FetchQuoteDocumentService</parameter>
     </command>
     

@@ -1,7 +1,7 @@
 <quotation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.ail.openquote.Quotation">
     <status>APPLICATION</status>
     <page>Welcome</page>
-    <proposer xsi:type="java:com.ail.openquote.Proposer">
+    <proposer xsi:type="java:com.ail.openquote.PersonalProposer">
         <title>UNDEFINED</title>
         <otherTitle/>
         <firstName/>

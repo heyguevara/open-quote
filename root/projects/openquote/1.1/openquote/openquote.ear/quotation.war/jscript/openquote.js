@@ -96,3 +96,19 @@ function updateSlaveChoiceOptions(masterSelect, array, master, slave) {
         }
     }
 }
+
+tinyMCE.init({
+	// General options
+	mode : "textareas",
+	//elements : "elm2",
+	theme : "advanced",
+	skin : "o2k7",
+	plugins : "safari,style,iespell",
+
+	// Theme options
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough",
+	theme_advanced_buttons2 : "",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "external",
+	theme_advanced_resizing_min_height : 50
+});

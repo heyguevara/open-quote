@@ -11,6 +11,9 @@
         <field name="systemId" type="long">
             <bind-xml node="attribute"/>
         </field>
+        <field name="foreignSystemId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
         <field name="attribute" type="com.ail.core.Attribute" collection="arraylist"/>
     </class>
     
@@ -19,8 +22,11 @@
         <field name="unit" type="string">
             <bind-xml node="attribute"/>
         </field>
-        <field name="value" type="string">
-            <bind-xml node="attribute"/>
+		<field name="value" type="string" set-method="setValue" get-method="getValueForXmlAttribute">
+			<bind-xml node="attribute"/>  
+		</field>
+        <field name="valueForXmlText" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml name="value" node="element"/>
         </field>
         <field name="format" type="string">
             <bind-xml node="attribute"/>
@@ -29,7 +35,7 @@
             <bind-xml node="attribute"/>
         </field>
     </class>
-    
+
     <class name="com.ail.core.VersionEffectiveDate" extends="com.ail.core.Type">
         <map-to xml="versionEffectiveDate"/>
         <field name="time" type="long">
@@ -45,6 +51,19 @@
         <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
     </class>
     
+	<class name="com.ail.core.ExceptionRecord" extends="com.ail.core.Type">
+        <field name="date" type="date">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="reason" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="catchingClassName" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="stack" type="string" collection="collection"/>
+	</class>
+
     <class name="com.ail.core.configure.Component" extends="com.ail.core.Type">
         <map-to xml="component"/>
         <field name="name" type="string">
@@ -445,9 +464,18 @@
     <class name="com.ail.party.Organisation" extends="com.ail.party.Party" auto-complete="false">
     </class>
 
-    <class name="com.ail.openquote.Proposer" extends="com.ail.party.Person" auto-complete="false">
+    <class name="com.ail.openquote.PersonalProposer" extends="com.ail.party.Person" auto-complete="false">
         <field name="emailAddress" type="string"/>
         <field name="telephoneNumber" type="string"/>
+    </class>
+
+    <class name="com.ail.openquote.CommercialProposer" extends="com.ail.party.Organisation" auto-complete="false">
+        <field name="emailAddress" type="string"/>
+        <field name="telephoneNumber" type="string"/>
+        <field name="firstName" type="string"/>
+        <field name="surname" type="string"/>
+        <field name="title" type="string" get-method="getTitleAsString" set-method="setTitleAsString"/>
+        <field name="otherTitle" type="string"/>
     </class>
 
     <class name="com.ail.openquote.Broker" extends="com.ail.party.Organisation" auto-complete="false">
@@ -467,12 +495,13 @@
         <field name="page" type="string"/>
         <field name="quotationDate" type="date"/>
         <field name="quotationExpiryDate" type="date"/>
-        <field name="proposer" type="com.ail.openquote.Proposer"/>
+        <field name="proposer" type="com.ail.party.Party"/>
         <field name="broker" type="com.ail.openquote.Broker"/>
         <field name="paymentOption" type="com.ail.financial.PaymentSchedule" collection="collection"/>
         <field name="username" type="string"/>
         <field name="userSaved" type="boolean"/>
         <field name="testCase" type="boolean"/>
+        <field name="exception" type="com.ail.core.ExceptionRecord" collection="collection"/>
     </class>
 
     <class name="com.ail.openquote.SavedQuotationSummary" extends="com.ail.core.Type" auto-complete="false">
@@ -543,6 +572,12 @@
         <field name="subTitle" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="titleBinding" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="subTitleBinding" type="string">
+            <bind-xml node="attribute"/>
+        </field>
         <field name="onChange" type="string">
             <bind-xml node="attribute"/>
         </field>
@@ -589,6 +624,12 @@
         <field name="confirmAndPayDestinationPageId" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="confirmAndPayLabel" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="requoteLabel" type="string">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
     
     <class name="com.ail.openquote.ui.PaymentOptionSelector" extends="com.ail.openquote.ui.PageElement">
@@ -602,25 +643,6 @@
     <class name="com.ail.openquote.ui.ParsedUrlContent" extends="com.ail.openquote.ui.PageElement">
         <map-to xml="parsedUrlContent"/>
         <field name="url" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-    </class>
-    
-    <class name="com.ail.openquote.ui.QuotationSummary" extends="com.ail.openquote.ui.PageContainer">
-        <map-to xml="quotationSummary"/>
-        <field name="termsAndConditionsUrl" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="wordingsUrl" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="requoteDestinationPageId" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="saveDestinationPageId" type="string">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="confirmAndPayDestinationPageId" type="string">
             <bind-xml node="attribute"/>
         </field>
     </class>
@@ -685,6 +707,10 @@
         <map-to xml="question"/>
     </class>
     
+    <class name="com.ail.openquote.ui.QuestionSeparator" extends="com.ail.openquote.ui.Question">
+        <map-to xml="questionSeparator"/>
+    </class>
+    
     <class name="com.ail.openquote.ui.QuestionWithDetails" extends="com.ail.openquote.ui.Question">
         <map-to xml="questionWithDetails"/>
         <field name="detailsTitle" type="string">
@@ -718,7 +744,7 @@
     
     <class name="com.ail.openquote.ui.SectionScroller" extends="com.ail.openquote.ui.Repeater">
         <map-to xml="sectionScroller"/>
-        <field name="sectionTitle" type="com.ail.openquote.ui.Label" required="true"/>
+        <field name="sectionTitle" type="com.ail.openquote.ui.Label"/>
     </class>
     
     <class name="com.ail.openquote.ui.PageSection" extends="com.ail.openquote.ui.PageContainer">
@@ -736,6 +762,27 @@
             <bind-xml node="attribute"/>
         </field>
         <field name="question" type="com.ail.openquote.ui.Question" collection="arraylist"/>
+    </class>
+    
+    <class name="com.ail.openquote.ui.QuotationSummary" extends="com.ail.openquote.ui.PageContainer">
+        <map-to xml="quotationSummary"/>
+        <field name="termsAndConditionsUrl" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="wordingsUrl" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="requoteDestinationPageId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="saveDestinationPageId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="confirmAndPayDestinationPageId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="navigationSection" type="com.ail.openquote.ui.NavigationSection"/>
+        <field name="premiumSummaryFooter" type="com.ail.openquote.ui.PageSection"/>
     </class>
     
     <class name="com.ail.openquote.ui.Answer" extends="com.ail.openquote.ui.PageElement">

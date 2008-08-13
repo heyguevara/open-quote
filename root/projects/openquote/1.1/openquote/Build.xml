@@ -26,6 +26,7 @@
 
      	<!-- the dar contains some things which will only cause confusion if they're left -->
      	<!-- on the classath - delete them.                                               -->
+      <delete file="${ear.dir}/lib/jaxrpc-1.0.jar"/>
       <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreDefaultConfig.xml"/>
       <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreProxyDefaultConfig.xml"/>
       <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/CoreDefaultConfig.xml"/>
@@ -87,5 +88,6 @@
         
         <!-- The only release atrifact openquote makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
         <release-jboss-domain-macro/>
+	    	<release-source-macro/>
     </target>
 </project>

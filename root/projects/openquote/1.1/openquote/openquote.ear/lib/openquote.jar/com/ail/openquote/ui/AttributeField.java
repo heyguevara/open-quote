@@ -42,7 +42,9 @@ import com.ail.openquote.ui.util.Functions;
  * <p>The Attribute which the AttributeField is bound to dictates the HTML form elements used to represent it, and
  * the validations that will be applied to it. For example, a "choice" attribute is rendered as a drop down list; a
  * "string" is rendered as a right justified text field.</p>
- * <p>Each AttributeField defines it's column {@link #getTitle() title}, and an optional {@link #getSubTitle() subTitle}. 
+ * <p>Each AttributeField defines it's column {@link #getTitle() title}, and an optional {@link #getSubTitle() subTitle}
+ * which can be used when the titles are fixed. Dynamic titles - the text of which is picked up from another part of
+ * the quote - can be defined using {@link #getTitleBinding() titleBinding} and {@link #getSubTitleBinding() subTitleBinding}. 
  * It may also define javascript to be executed either onLoad (when the page is loaded); or onChange (when a fields 
  * value is changed).
  * @see RowScroller
@@ -56,6 +58,12 @@ public class AttributeField extends PageElement {
 
     /** The fixed subtitle to be displayed with the answer */
     private String subTitle;
+
+    /** A dynamic title taken from some other part of the quote instance to be displayed with the answer */
+    private String titleBinding;
+
+    /** The dynamic subtitle taken from some other part of the quote instance to be displayed with the answer */
+    private String subTitleBinding;
 
     /** Javascript to be executed when the page loads */
     private String onLoad;
@@ -161,5 +169,33 @@ public class AttributeField extends PageElement {
     public void renderPageLevelResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         w.print(Functions.renderAttributePageLevel(model, getBinding(), rowContext, request.getPortletSession()));
+    }
+
+    /**
+     * @return the titleBinding
+     */
+    public String getTitleBinding() {
+        return titleBinding;
+    }
+
+    /**
+     * @param titleBinding the titleBinding to set
+     */
+    public void setTitleBinding(String titleBinding) {
+        this.titleBinding = titleBinding;
+    }
+
+    /**
+     * @return the subTitleBinding
+     */
+    public String getSubTitleBinding() {
+        return subTitleBinding;
+    }
+
+    /**
+     * @param subTitleBinding the subTitleBinding to set
+     */
+    public void setSubTitleBinding(String subTitleBinding) {
+        this.subTitleBinding = subTitleBinding;
     }
 }

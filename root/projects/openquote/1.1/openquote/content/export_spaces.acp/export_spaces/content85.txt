@@ -9,7 +9,6 @@ import com.ail.core.Attribute;
  * The assumption here is that the proposer is the main driver, so we can use the
  * details collected on the proposer screen to populate the 1st driver's name, and
  * gender. 
- * @author richarda
  */
 public class PopulateDriverNameService {
     /**
@@ -24,7 +23,7 @@ public class PopulateDriverNameService {
         
         /* Only set the driver's name and sex if there isn't already a value in the name field. */
         if (name.getValue().equals("")) {
-            Proposer proposer=quote.getProposer();
+            Proposer proposer=(Proposer)quote.getProposer();
         
             name.setValue(proposer.getFirstName()+" "+proposer.getSurname());
         

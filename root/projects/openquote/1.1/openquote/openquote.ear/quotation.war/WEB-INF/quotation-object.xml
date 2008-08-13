@@ -81,6 +81,32 @@
                     </properties>
                 </window>
             </page>
+            <page>
+                <page-name>IrishBrokerPI</page-name>
+                <properties>
+                    <property>
+                        <name>layout.id</name>
+                        <value>quotation</value>
+                    </property>
+                </properties>
+                <window>
+                    <window-name>QuoteWindow</window-name>
+                    <instance-ref>IrishBrokerPIPortletInstance</instance-ref>
+                    <default>true</default>
+                    <region>center</region>
+                    <height>1</height>
+                    <properties>
+                        <property>
+                            <name>theme.windowRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                        <property>
+                            <name>theme.decorationRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                    </properties>
+                </window>
+            </page>
         </portal>
     </deployment>
 </deployments>

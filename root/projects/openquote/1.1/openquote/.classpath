@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" output="target/test/test.jar" path="test.jar"/>
 	<classpathentry kind="src" path="alfresco.war"/>
 	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure.war/|content-browser.war/|lib/openquote.jar/|motorplus.war/|motorplus.war/WEB-INF/src/|motorplus.war/images/|motorplus.war/pages/|openquote.jar/|product-manager.war/|product-manager.war/WEB-INF/src/|product-manager.war/images/|product-manager.war/pages/|quotation.war/|quotation.war/WEB-INF/src/|news-reader.war/" kind="src" path="openquote.ear"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/lib/openquote.jar" path="openquote.ear/lib/openquote.jar"/>
-	<classpathentry kind="src" path="openquote.ear/configure-server-ejb.jar"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/command-server-ejb.jar" path="openquote.ear/command-server-ejb.jar"/>
+	<classpathentry excluding="Build.xml, **/MANIFEST.MF" kind="src" path="openquote.ear/configure-server-ejb.jar"/>
+	<classpathentry excluding="Build.xml, **/MANIFEST.MF" kind="src" path="openquote.ear/command-server-ejb.jar"/>
 	<classpathentry kind="src" path="openquote.ear/configure.war"/>
 	<classpathentry kind="src" path="openquote.ear/content-browser.war"/>
 	<classpathentry kind="src" path="openquote.ear/news-reader.war"/>
@@ -14,15 +13,15 @@
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/WEB-INF/classes" path="openquote.ear/product-manager.war/WEB-INF/src"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/pages" path="openquote.ear/product-manager.war/pages"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/images" path="openquote.ear/product-manager.war/images"/>
-	<classpathentry excluding="WEB-INF/src/" kind="src" path="openquote.ear/quotation.war"/>
+	<classpathentry excluding="WEB-INF/src/|images/|jscript/" kind="src" path="openquote.ear/quotation.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/quotation.war/WEB-INF/classes" path="openquote.ear/quotation.war/WEB-INF/src"/>
+	<classpathentry kind="src" output="target/test/test.jar" path="test.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/proxool-0.7.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/odmg-3.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jnlp-1.0.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jcs-1.0-dev.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jca-1.0.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jaxrpc-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jakarta-oro-2.0.7.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jaas-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/hsqldb-1.7.1.jar"/>
@@ -102,5 +101,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/product-manager-ejb.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/quotation-ejb.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/subrogation-ejb.jar"/>
+	<classpathentry kind="lib" path="target/jboss/client/activation.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -53,9 +53,7 @@ public class SaveButtonAction extends CommandButtonAction {
         if (op!=null && op.equals(getLabel())) {
             Quotation quote=(Quotation)model;
             quote.setUserSaved(true);
-            if (quote.getUsername()==null) {
-                quote.setUsername(request.getRemoteUser());
-            }
+            quote.setUsername(request.getRemoteUser());
             SavedQuotation sq=new SavedQuotation(quote);
             new CoreProxy().update(sq);
             super.processActions(request, response, model);

@@ -45,8 +45,10 @@ public abstract class Page extends PageContainer {
             a.renderResponse(request, response, model);
         }
 
+        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'></script>");        
+
         // Always include the openquote script
-        w.printf("<script type='text/javascript' src='/quotation/openquote.js'></script>");        
+        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");        
     }
 
     @Override

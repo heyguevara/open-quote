@@ -52,9 +52,15 @@ public class Question extends AttributeField {
 
 	@Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
+        String title=getTitle();
 
-        w.printf("<td>%s</td>", getTitle());
+        PrintWriter w=response.getWriter();
+        
+        if (title==null && getTitleBinding()!=null) {
+            title=model.xpathGet(getTitleBinding(), String.class);
+        }
+        
+        w.printf("<td>%s</td>", title);
         w.printf("<td colspan='3' align='left'>%s</td>", Functions.renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));
     }
 }

@@ -26,7 +26,6 @@ import com.ail.insurance.policy.PolicyStatus;
  * This class is mapped to the database to represent a summary of each persisted quotation. In
  * effect it defines the fields broken out of the quotation object graph to allow for searching
  * and reporting.
- * @author richarda
  */
 public class SavedQuotationSummary extends Type {
     private static final long serialVersionUID = 8924615006523668514L;

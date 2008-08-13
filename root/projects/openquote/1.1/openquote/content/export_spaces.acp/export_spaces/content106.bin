@@ -3,7 +3,10 @@ type=new com.ail.openquote.Quotation();
 type.setProductTypeId("AIL.Demo.EquinePlus");
 type.setProductName("Equine Plus");
 
-/* Set the quotation date. This date will tie us to a specific verison of pageflow, rules etc. */
+/* Add a personal lines proposer */
+type.setProposer(core.newProductType("AIL.Base", "PersonalProposer"));
+
+/* Set the quotation date. This date will tie us to a specific version of pageflow, rules etc. */
 type.setQuotationDate(new Date());
 
 /* Set the policy inception date to today - why? Should the user be asked when they want cover to start?*/

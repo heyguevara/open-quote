@@ -52,7 +52,7 @@ public class SavedQuotation extends SavedQuotationSummary {
         }
         catch(IllegalStateException e) {
             // ignore this - we'll get it if the quotation doesn't have a premium; as  
-            // we're saving applications, it shouldn't come as a suprise that they don't
+            // we're saving applications, it shouldn't come as a surprise that they don't
             // always have premiums.
         }
     }

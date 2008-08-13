@@ -1,0 +1,65 @@
+<documentDefinition xsi:type="java:com.ail.core.document.model.DocumentDefinition" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <mergeCommand>MergeDocumentDataCommand</mergeCommand>
+    <styleCommand/>
+    <renderCommand>RenderIndustrialStyleDocumentCommand</renderCommand>
+    
+    <documentData>
+        <watermark>http://someplace/image.gif</watermark>
+    
+        <headerData applicability="all">
+            <modelData id="head" class="string">Professional Indemnity Insurance Premium Indication Insurance Intermediaries</modelData>
+        </headerData>
+        
+        <chapterData id="c1" title="Basic Details">
+            <blockData pd="prop" placement="body" applicability="all" title="Proposer">
+                <modelData id="pcm" title="Proposer" class="string" binding="/proposer/companyName"/>
+                <modelData id="line1" title="Address" class="line" binding="/proposer/address/line1"/>
+                <modelData id="line2" class="line" binding="/proposer/address/line2"/>
+                <modelData id="line3" class="line" binding="/proposer/address/line3"/>
+                <modelData id="line4" class="line" binding="/proposer/address/line4"/>
+                <modelData id="line5" class="line" binding="/proposer/address/line5"/>
+                <modelData id="town" class="town" binding="/proposer/address/town"/>
+                <modelData id="county" class="county" binding="/proposer/address/county"/>
+                <modelData id="country" class="country" binding="/proposer/address/country"/>
+                <modelData id="postcode" class="postcode" binding="/proposer/address/postcode"/>
+                <modelData id="pcn" title="Contact" class="string">${/proposer/actualTitle} ${/proposer/firstName} ${proposer/surname}</modelData>
+                <modelData id="pn" title="Phone number" class="phone" binding="/proposer/telephoneNumber"/>
+                <modelData id="em" title="Email address" class="email" binding="/proposer/emailAddress"/>
+            </blockData>
+            
+            <blockData id="qs" placement="body" applicability="all" title="Quotation summary">
+                <modelData id="qn" title="Quotation number" class="string" binding="/quotationNumber"/>
+                <modelData id="pm" title="Premium payable" class="string">${/assessmentSheet/line[id='total premium']/amountAsString} incl 2% Government Levy (these are minimum and deposit premiums)</modelData>
+                <modelData id="qd" title="Quotation date" class="date" binding="c:format(/quotationDate,&quot;d MMMMM, yyyy&quot;)"/>
+                <modelData id="qx" title="Quotation expiry date" class="date" binding="c:format(/quotationExpiryDate,&quot;d MMMMM, yyyy&quot;)"/>    
+            </blockData>
+
+            <blockData id="qs" placement="body" applicability="all" title="Cover">
+                <modelData id="bd" title="Business description" class="string" binding="asset[id='company']/attribute[id='businessDescription']/formattedValue"/>
+                <modelData id="id" title="Inception date" class="date" binding="c:format(/inceptionDate,&quot;d MMMMM, yyyy&quot;)"/>
+                <modelData id="id" title="Expiry date" class="date" binding="c:format(/expiryDate,&quot;d MMMMM, yyyy&quot;)"/>
+                <modelData id="poi" title="Limit of Indemnity" class="string">-</modelData>
+                <modelData id="exc" title="Excess" class="string">-</modelData>
+                <modelData id="ret" title="Retroactive date" class="string">-</modelData>
+                <modelData id="wrd" title="Wording" class="string">QBE Irish Intemediary wording</modelData>
+                <modelData id="jur" title="Jurisdiction" class="string">Worldwide - Excluding USA/Canada</modelData>
+                <modelData id="trl" title="Territorial limits" class="string">Worldwide - Excluding USA/Canada</modelData>
+                <modelData id="end" title="Endorsements" class="string">-</modelData>
+                <modelData id="ext" title="Extensions etc" class="string">-</modelData>
+                <modelData id="ct" title="Credit terms" class="string">Premium payment required within 15 days of attachment of cover</modelData>
+                <modelData id="sub" title="Subjectivities" class="string">-</modelData>
+            </blockData>
+            
+            <blockData id="qs" placement="body" applicability="all">
+                <modelData id="sg" title="Signed:" class="string">William Irwin</modelData>
+                <modelData id="sg" title="Date:" class="date" binding="c:format(/quotationDate,&quot;d MMMMM, yyyy&quot;)"/>
+            </blockData>
+            
+            <blockData id="qs" placement="body" applicability="all" title="Important Notice">
+                <modelData id="nt1" class="string">Terms are valid for 30 days from the date of this document.</modelData>
+                <modelData id="nt2" class="string">Please note no cover is given until acceptance of this indication sheet.</modelData>
+            </blockData>
+        </chapterData>
+    </documentData>
+</documentDefinition>

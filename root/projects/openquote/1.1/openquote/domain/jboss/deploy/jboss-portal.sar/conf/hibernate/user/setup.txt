@@ -21,7 +21,7 @@ try
    //
    HibernateUserImpl admin = new HibernateUserImpl("admin");
    admin.setPassword(Tools.md5AsHexString("admin"));
-   admin.setRealEmail("admin@portal.com");
+   admin.setRealEmail("admin@openquote");
    admin.setViewRealEmail(true);
    admin.setEnabled(true);
 
@@ -66,19 +66,6 @@ try
    productreader.getRoles().add(developerRole);
    developerRole.getUsers().add(productreader);
 
-   // OpenQuote administrator
-   HibernateUserImpl adam = new HibernateUserImpl("adam");
-   adam.setPassword(Tools.md5AsHexString("adam"));
-   adam.setGivenName("Adam");
-   adam.setFamilyName("Inistrator");
-   adam.setRealEmail("adam@openquote");
-   adam.setViewRealEmail(true);
-   adam.setEnabled(true);
-
-   //
-   adam.getRoles().add(adminRole);
-   adminRole.getUsers().add(adam);
-
    //
    session.save(adminRole);
    session.save(userRole);
@@ -86,7 +73,6 @@ try
    session.save(proposerRole);
    session.save(admin);
    session.save(user);
-   session.save(adam);
    session.save(davy);
    session.save(productreader);
 
