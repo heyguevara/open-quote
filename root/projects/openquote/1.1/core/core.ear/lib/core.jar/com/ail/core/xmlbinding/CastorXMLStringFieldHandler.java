@@ -94,22 +94,22 @@ public class CastorXMLStringFieldHandler extends AbstractFieldHandler {
     public void setValue(Object object, Object value) throws IllegalStateException, IllegalArgumentException {
 		FieldDescriptor f = getFieldDescriptor();
 		String fieldName = f.getFieldName();
+		int startIdx=0;
         
         // get the XML out of the node's first child.
         AnyNode node=(AnyNode)value;
         String xml=node.getFirstChild().toString();
 
-        // The xml variable will at this point include an XML header (in the 
+        // The xml variable may at this point include an XML header (in the 
         // form: <?xml version="1.0" encoding="UTF-8"?>). We don't want that header to end up 
         // in the XMLString, but I don't want to go to the expense of doing proper regex pattern
-        // matching, so we're going to assume that the real XML starts at char 39. That's a dangerious
-        // assumption, so we'll check it first and bail out if necessary.
-        if (!(xml.charAt(39)=='<' && xml.charAt(36)=='?')) {
-            throw new IllegalArgumentException("entity is not in the expected format:"+xml);
+        // matching, so we're going to assume that the real XML starts at char 39. 
+        if (xml.length()>39 && xml.charAt(39)=='<' && xml.charAt(36)=='?') {
+            startIdx=39;
         }
 
         try {
-            PropertyUtils.setProperty(object, fieldName, new XMLString(xml.substring(39)));
+            PropertyUtils.setProperty(object, fieldName, new XMLString(xml.substring(startIdx)));
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
