@@ -68,6 +68,15 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     }
     
     /**
+     * Construct a proxy for a CoreUser, and inherit all settings (namespace, version effective date, security
+     * principal etc) from an instance of CoreUser.
+     * @param coreuser Provides settings.
+     */
+    public CoreProxy(CoreUser coreuser) {
+        this(coreuser.getConfigurationNamespace(), coreuser.getVersionEffectiveDate(), coreuser.getSecurityPrincipal());
+    }
+
+    /**
      * Construct a proxy for a specific namespace, and inherit all other settings (version effective date, security
      * principal etc) from an instance of CoreUser.
      * @param namespace Configuration namespace to be used.
@@ -87,6 +96,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
         core=new Core(this);
         this.versionEffectiveDate=ved;
         this.namespace=namespace;
+        this.securityPrincipal=securityPrincipal;
     }
     
     /**
