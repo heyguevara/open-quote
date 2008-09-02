@@ -46,7 +46,10 @@
     </macrodef>
 
     <target name="_start-jboss-if-jboss-running=false" unless="jboss-running">
-	  <exec dir="${jboss.dir}/bin"  executable="${jboss.dir}/bin/run.sh">
+	  <exec dir="${jboss.dir}/bin"  executable="${jboss.dir}/bin/run.sh" os="Linux,Mac OS X,Solaris,Sun OS">
+	    <env key="DEBUG_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"/>
+	  </exec>
+	  <exec dir="${jboss.dir}/bin"  executable="${jboss.dir}/bin/run.bat" os="Windows 2000,Windows XP">
 	    <env key="DEBUG_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"/>
 	  </exec>
     </target>
