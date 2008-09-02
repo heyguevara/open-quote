@@ -24,10 +24,6 @@ import com.ail.core.BaseException;
 
 /**
  * This accessor supports the use of class instances as services.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/05/26 21:27:09 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/ClassAccessor.java,v $
  */
 public class ClassAccessor extends Accessor {
 	private String serviceClass=null;
