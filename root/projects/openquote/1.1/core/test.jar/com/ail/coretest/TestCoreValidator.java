@@ -119,7 +119,6 @@ public class TestCoreValidator extends CoreUserTestCase {
 	 * Test direct access to the validator
 	 * @throws Exception
 	 */
-	@SuppressWarnings({ "unchecked", "deprecation" })
     public void testCommonsValidatorFail() throws Exception {
 		// set up key & value
 		String key = "TestForm";
