@@ -190,7 +190,7 @@ public class CastorXMLFactory extends AbstractFactory {
             return mergeWithBase((com.ail.core.Type)ret, typeSpec, core);
         }
         catch(Exception e) {
-            throw new FactoryConfigurationError("Type script: '"+typeSpec.getName()+"' "+e);
+            throw new FactoryConfigurationError("Type script: '"+typeSpec.getName()+"' "+e, e);
         }
         finally {
             if (reader!=null) {
