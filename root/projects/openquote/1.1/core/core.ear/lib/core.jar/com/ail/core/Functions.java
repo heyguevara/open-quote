@@ -176,42 +176,71 @@ public class Functions {
     /**
      * Utility method to expand 'variables' embedded in a string with respect to a model. Variables
      * are in the form '${&lt;xpath&gt;}', where xpath is an expression compatible with JXPath. The 
-     * xpath expression is evaluated against <i>model</i> and the result placed into the string returned.</p>
+     * xpath expression is evaluated against <i>root</i> and the result placed into the string returned.</p>
      * For example: if the <i>src</i> value of <b>"Your quote number is: ${/quoteNumber}"</b> is passed in with a
      * <i>model</i> containing value of 'FQ1234' in it's <code>quoteNumber</code> property; this method would
      * return <b>"Your quote number is: FQ1234"</b>.
-     * @param src
-     * @param model
+     * @param src Source string containing embedded variables
+     * @param root All xpath expressions are evaluated against this object
      * @return A string matching <i>src</i> but with variable references expanded.
+     * @see #expand(String, Type, Type)
      */
-    public static String expand(String src, Type model) {
-        int tokenStart, tokenEnd;
-        StringBuilder buf=new StringBuilder(src);
-
-        do {
-
-            tokenStart=buf.indexOf("${");
-            tokenEnd=buf.indexOf("}");
+    public static String expand(String src, Type root) {
+        return expand(src, root, root);
+    }
+    
+    /**
+     * Utility method to expand 'variables' embedded in a string with respect to a model. Variables
+     * are in the form '${&lt;xpath&gt;}', where xpath is an expression compatible with JXPath. The 
+     * xpath expression is evaluated against a <i>model</i> and the result placed into the string returned.</p>
+     * <p>Two models are supported: <code>root</code> and <code>local</code>. XPath expressions starting with '.' 
+     * are evaluated against <code>local</code>; all others are evaluated against <code>root</code>.</p>
+     * For example: if the <i>src</i> value of <b>"Your quote number is: ${/quoteNumber}"</b> is passed in with a
+     * <i>model</i> containing value of 'FQ1234' in it's <code>quoteNumber</code> property; this method would
+     * return <b>"Your quote number is: FQ1234"</b>.
+     * @param src Source string containing embedded variables
+     * @param root Any xpath expression not starting with '.' is evaluated against this instance
+     * @param local Any xpath expression starting with '.' is evaluated against this instance
+     * @return A string matching <i>src</i> but with variable references expanded.
+     * @see #expand(String, Type)
+     */
+    public static String expand(String src, Type root, Type local) {
+        if (src!=null) { 
+            int tokenStart, tokenEnd;
+            StringBuilder buf=new StringBuilder(src);
+    
+            do {
+                tokenStart=buf.indexOf("${");
+                tokenEnd=buf.indexOf("}");
+                
+                if (tokenStart>=0 && tokenEnd>tokenStart) {
+                    String val=null;
+                    
+                    try {
+                        if (buf.charAt(tokenStart+2)=='.') {
+                            val=(String)local.xpathGet(buf.substring(tokenStart+2, tokenEnd));
+                        }
+                        else {
+                            val=(String)root.xpathGet(buf.substring(tokenStart+2, tokenEnd));
+                        }
+                    }
+                    catch(Throwable t) {
+                        // ignore this - the 'if val==null' below will handle the problem.
+                    }
+    
+                    if (val==null) {
+                        val="<b>could not resolve: "+buf.substring(tokenStart+2, tokenEnd)+"</b>";                    
+                    }
+                    
+                    buf.replace(tokenStart, tokenEnd+1, val);
+                }
+            } while(tokenStart>=0 && tokenEnd>=0);
             
-            if (tokenStart>=0 && tokenEnd>tokenStart) {
-                String val=null;
-                
-                try {
-                    val=(String)model.xpathGet(buf.substring(tokenStart+2, tokenEnd));
-                }
-                catch(Throwable t) {
-                    // ignore this - the 'if val==null' below will handle the problem.
-                }
-
-                if (val==null) {
-                    val="<b>could not resolve: "+buf.substring(tokenStart+2, tokenEnd)+"</b>";                    
-                }
-                
-                buf.replace(tokenStart, tokenEnd+1, val);
-            }
-        } while(tokenStart>=0 && tokenEnd>=0);
-        
-        return buf.toString();
+            return buf.toString();
+        }
+        else {
+            return null;
+        }
     }
     
     /**
