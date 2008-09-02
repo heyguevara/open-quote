@@ -245,6 +245,17 @@ public class TestTypeXpath extends CoreUserTestCase {
     }
 
     /**
+     * Check the both relative and absolute xpath references are handled correctly.
+     */
+    public void testAbsoluteAndRelative() {
+        Version version = new Version();
+        version.setAuthor("J.R.Hartley");
+
+        assertEquals("J.R.Hartley", version.xpathGet("/author"));
+        assertEquals("J.R.Hartley", version.xpathGet("./author"));
+    }
+    
+    /**
      * Define a few simple functions for use from JXPath expressions
      *
      */
