@@ -46,13 +46,31 @@ public class ExceptionRecord extends Type {
     }
     
     /**
+     * Unnest exception to get to base cause of the problem
+     * @param t Exception to be un-nested
+     * @return base reason
+     */
+    private Throwable unwindNested(Throwable t) {
+        if (t instanceof BaseException) {
+            BaseException c=(BaseException)t;
+            return c.getTarget()!=null ? unwindNested(c.getTarget()) : c;
+        }
+        else if (t instanceof BaseError) {
+            BaseError c=(BaseError)t;
+            return c.getTarget()!=null ? unwindNested(c.getTarget()) : c;
+        }
+        else {
+            return t;
+        }
+    }
+    
+    /**
      * Create a ExceptionRecord from a Throwable. Specifying a truncation point class allows
      * will cause the stack to be recorded only up to the last reference to a specified class, 
      * this is of particular use in JEE environments where the container's classes are of
      * little use in diagnosing a problem.
      * @param th Throwable to be represented by this record
      */
-    @SuppressWarnings("unchecked")
     public ExceptionRecord(Throwable th) {
         date = new Date();
         reason = th.toString();
@@ -69,14 +87,9 @@ public class ExceptionRecord extends Type {
         // We want the stack trace we record to be as relevant as possible, so when the
         // exception we've been given has a cause of some kind - i.e. wraps another
         // exception, we use that rather than the wrapping exception. 
-        if (th instanceof BaseException) {
-            stack.add(((BaseException)th).getTarget().toString());
-            stackToDump=((BaseException)th).getTarget().getStackTrace();
-        }
-        else if (th instanceof BaseError) {
-            stack.add(((BaseError)th).getTarget().toString());
-            stackToDump=((BaseError)th).getTarget().getStackTrace();
-        }
+        Throwable cause=unwindNested(th);
+        stack.add(cause.toString());
+        stackToDump=cause.getStackTrace();
 
         if (stackToDump==null) {
             stackToDump=th.getStackTrace();
