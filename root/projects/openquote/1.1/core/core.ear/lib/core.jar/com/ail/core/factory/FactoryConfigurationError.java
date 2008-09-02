@@ -29,4 +29,8 @@ public class FactoryConfigurationError extends BaseError {
     public FactoryConfigurationError(String description) {
         super(description);
     }
+    
+    public FactoryConfigurationError(String description, Throwable t) {
+        super(description, t);
+    }
 }
