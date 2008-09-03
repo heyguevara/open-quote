@@ -16,7 +16,7 @@
 
   <!-- Version of Core project to use for this project -->
   <property name="core.version" value="2.3"/>
-  <property name="core.build" value="3"/>
+  <property name="core.build" value="4"/>
   
   <!-- Version of JBoss to use for this project -->
   <property name="jboss.version" value="4.2.2GA"/>
