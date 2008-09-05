@@ -104,10 +104,6 @@ import com.ail.core.configure.Type;
  * value appears in the result. Also, notice that the merge is 'deep'; if you look at the properties on the 'id="two"' attribute 
  * you can see that the same merging rules have been applied to them. 
  * @see com.ail.core.xmlbinding.CastorFromXMLService
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2007/06/13 21:24:36 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/CastorXMLFactory.java,v $
  */
 public class CastorXMLFactory extends AbstractFactory {
     private XMLClassDescriptorResolver xmlClassResolver;
