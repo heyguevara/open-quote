@@ -50,7 +50,13 @@ import com.ail.openquote.ui.util.QuotationCommon;
  * </ul>
  */
 public class SandpitPortlet extends GenericPortlet {
-    private static String[] VIEW_MODES=new String[]{"Wizard","XML", "Assessment sheet", "Exception"};
+	private static String WIZARD_MODE="Wizard";
+	private static String XML_MODE="XML";
+	private static String ASSESSMENT_SHEET_MODE="Assessment sheet";
+	private static String EXCEPTION_MODE="Exception";
+	
+    private static String[] VIEW_MODES=new String[]{WIZARD_MODE, XML_MODE, ASSESSMENT_SHEET_MODE, EXCEPTION_MODE};
+    
     private AssessmentSheetDetails assessmentSheetDetails=new AssessmentSheetDetails();
     String statusMessage=null;
     
@@ -71,6 +77,7 @@ public class SandpitPortlet extends GenericPortlet {
                 if (q!=null) {
                 	QuotationCommon.setCurrentQuotation(session, q.getQuotation());
                     session.setAttribute("product", q.getProduct());
+                	session.setAttribute("view", WIZARD_MODE);
                 }
                 else {
                     statusMessage="Quotation '"+selectedQuote+"' not found";
@@ -78,16 +85,16 @@ public class SandpitPortlet extends GenericPortlet {
             }
             else if (request.getParameter("selectedProduct")!=null) {
                 String selectedProduct=request.getParameter("selectedProduct");
+                String selectedView=request.getParameter("selectedView");
                 
                 if (selectedProduct!=null && !"?".equals(selectedProduct)) {
                     if (!selectedProduct.equals(QuotationCommon.productName(request.getPortletSession(), request.getPreferences()))) {
                     	QuotationCommon.setCurrentQuotation(session, null);
                         session.setAttribute("product", selectedProduct);
+                    	selectedView=WIZARD_MODE;
                     }
                 }
     
-                String selectedView=request.getParameter("selectedView");
-                
                 if (!"XML".equals(getCurrentView(request)) && "XML".equals(selectedView)) {
                     if (session.getAttribute("quoteXml")==null) {
                         session.setAttribute("quoteXml", new CoreProxy().toXML(QuotationCommon.getCurrentQuotation(session)));
@@ -110,8 +117,17 @@ public class SandpitPortlet extends GenericPortlet {
             	
             	QuotationCommon.processAction(request, response);
             	
-            	if (QuotationCommon.getCurrentQuotation(session).getException().size() != exceptionCount) {
-                	session.setAttribute("view", "Exception");
+            	try {
+	            	if (QuotationCommon.getCurrentQuotation(session).getException().size() != exceptionCount) {
+	                	session.setAttribute("view", EXCEPTION_MODE);
+	            	}
+            	}
+            	catch(IllegalStateException e) {
+            		// Ignore IllegalState exceptions, they simply indicate that the Quit button has been
+            		// selected in the quote - that invalidates the session which prevents getCurrentQuotation 
+            		// from being able to get the Quotation as there is no session to get it from! AFAIK 
+            		// there is no way to detect that the session has been invalidated, other than to try and
+            		// access it.
             	}
             }
         }
@@ -133,7 +149,7 @@ public class SandpitPortlet extends GenericPortlet {
 
     		quote.addException(new ExceptionRecord(t));
 
-        	session.setAttribute("view", "Exception");
+        	session.setAttribute("view", EXCEPTION_MODE);
         }
     }
 
@@ -157,7 +173,8 @@ public class SandpitPortlet extends GenericPortlet {
                 	QuotationCommon.doView(request, response);
 
                 	if (QuotationCommon.getCurrentQuotation(session).getException().size() != exceptionCount) {
-                    	session.setAttribute("view", "Exception");
+	                	session.setAttribute("view", EXCEPTION_MODE);
+	                	doView(request, response);
                 	}
                 }
                 else if ("Assessment sheet".equals(getCurrentView(request))) {
@@ -187,7 +204,9 @@ public class SandpitPortlet extends GenericPortlet {
 
     		quote.addException(new ExceptionRecord(t));
 
-        	session.setAttribute("view", "Exception");
+        	session.setAttribute("view", EXCEPTION_MODE);
+
+        	doView(request, response);
         }
     }
     
@@ -212,7 +231,7 @@ public class SandpitPortlet extends GenericPortlet {
 	        		int truncateAtLine=er.getStack().size();
 	        		
 	        		w.printf("<tr><th align='left'>%s</th><th align='right'>%s</th></tr>", er.getReason(), SimpleDateFormat.getInstance().format(er.getDate()));
-        			w.printf("<tr><td rowspan='2'><small><pre>");
+        			w.printf("<tr><td colspan='2'><small><pre>");
         			
         			String[] stack=er.getStack().toArray(new String[er.getStack().size()]);
         			
