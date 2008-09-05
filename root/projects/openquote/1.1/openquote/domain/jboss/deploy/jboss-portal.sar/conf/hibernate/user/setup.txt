@@ -17,6 +17,7 @@ try
 	// OpeQuote roles
    HibernateRoleImpl developerRole = new HibernateRoleImpl("Developer", "Developers");
    HibernateRoleImpl proposerRole = new HibernateRoleImpl("Proposer", "Proposers");
+   HibernateRoleImpl agentRole = new HibernateRoleImpl("Agent", "Agents");
 	
    //
    HibernateUserImpl admin = new HibernateUserImpl("admin");
@@ -24,8 +25,6 @@ try
    admin.setRealEmail("admin@openquote");
    admin.setViewRealEmail(true);
    admin.setEnabled(true);
-
-   //
    admin.getRoles().add(adminRole);
    adminRole.getUsers().add(admin);
 
@@ -35,8 +34,6 @@ try
    user.setRealEmail("user@portal.com");
    user.setViewRealEmail(true);
    user.setEnabled(true);
-
-   //
    user.getRoles().add(userRole);
    userRole.getUsers().add(user);
 
@@ -48,10 +45,18 @@ try
    davy.setRealEmail("davy@openquote");
    davy.setViewRealEmail(true);
    davy.setEnabled(true);
-
-   //
    davy.getRoles().add(developerRole);
    developerRole.getUsers().add(davy);
+
+   HibernateUserImpl agent = new HibernateUserImpl("agent");
+   agent.setPassword(Tools.md5AsHexString("agent"));
+   agent.setGivenName("Agent");
+   agent.setFamilyName("Smith");
+   agent.setRealEmail("agent@openquote");
+   agent.setViewRealEmail(true);
+   agent.setEnabled(true);
+   agent.getRoles().add(agentRole);
+   agentRole.getUsers().add(agent);
 
    // OpenQuote productreader
    HibernateUserImpl productreader = new HibernateUserImpl("productreader");
@@ -70,8 +75,10 @@ try
    session.save(adminRole);
    session.save(userRole);
    session.save(developerRole);
+   session.save(agentRole);
    session.save(proposerRole);
    session.save(admin);
+   session.save(agent);
    session.save(user);
    session.save(davy);
    session.save(productreader);
