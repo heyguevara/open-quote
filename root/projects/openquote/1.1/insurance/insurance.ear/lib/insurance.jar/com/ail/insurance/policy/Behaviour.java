@@ -23,13 +23,11 @@ import com.ail.financial.CurrencyAmount;
  * A behaviour is a type of assessment line, specifically one that has an effect on a calculated amount.
  * A behaviour may "load" or "discount" and may do so with relation to a "rate" or a fixed sum. The 
  * behaviour's type gives more detail about the behaviour, e.g. is it a loading, a discount, a tax, etc.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 19:49:05 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Behaviour.java,v $
  * @stereotype type 
  */
 public abstract class Behaviour extends CalculationLine {
+    private static final long serialVersionUID = 4371815020594784515L;
+
     /** The type property describes type of behaviour being represented (e.g. Load, Discount). */
     private BehaviourType type = null;
 
@@ -42,7 +40,7 @@ public abstract class Behaviour extends CalculationLine {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
@@ -56,7 +54,7 @@ public abstract class Behaviour extends CalculationLine {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
@@ -71,7 +69,7 @@ public abstract class Behaviour extends CalculationLine {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
@@ -83,7 +81,7 @@ public abstract class Behaviour extends CalculationLine {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
