@@ -79,17 +79,12 @@ public class QuotationCommon {
     private static PageFlow pageFlow(Quotation quote, PortletSession session, PortletPreferences prefs) {
         PageFlow pageFlow=null;
         
-        try {
-            CoreProxy core=new CoreProxy();
-            // If the quote has a quote date, use that as the ved - if it doesn't (as in the case of
-            // a new quote), use the date now.
-            Date ved=(quote.getQuotationDate() != null) ? quote.getQuotationDate() : new Date();
-            core.setVersionEffectiveDate(new VersionEffectiveDate(ved));
-            pageFlow=(PageFlow)core.newProductType(productName(session, prefs), "QuotationPageFlow");
-        }
-        catch(Throwable e) {
-            e.printStackTrace();
-        }
+        CoreProxy core=new CoreProxy();
+        // If the quote has a quote date, use that as the ved - if it doesn't (as in the case of
+        // a new quote), use the date now.
+        Date ved=(quote.getQuotationDate() != null) ? quote.getQuotationDate() : new Date();
+        core.setVersionEffectiveDate(new VersionEffectiveDate(ved));
+        pageFlow=(PageFlow)core.newProductType(productName(session, prefs), "QuotationPageFlow");
 
         return pageFlow;
     }
