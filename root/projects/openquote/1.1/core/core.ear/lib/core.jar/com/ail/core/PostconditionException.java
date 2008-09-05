@@ -20,17 +20,30 @@ package com.ail.core;
 /**
  * The Postcondition exception is thrown to indicate the violation of an entry
  * point's exit conditions.
- * @since 2.0
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/PostconditionException.java,v $
  */
 public class PostconditionException extends BaseException {
-	/**
+    /**
+     * Constructor
+     * @param e BaseError causing this failure
+     */
+	public PostconditionException(BaseError e) {
+        super(e);
+    }
+
+    /**
      * Constructor
      * @param description A description of the pre-condition that has been
-     * violaated.
+     * violated.
+     * @param target The cause of this postcondition failure
+     */
+    public PostconditionException(String description, Throwable target) {
+        super(description, target);
+    }
+
+    /**
+     * Constructor
+     * @param description A description of the pre-condition that has been
+     * violated.
      */
     public PostconditionException(String description) {
         super(description);
