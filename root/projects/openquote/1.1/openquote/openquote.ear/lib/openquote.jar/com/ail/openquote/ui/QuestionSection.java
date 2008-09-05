@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.core.Functions.expand;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>A QuestionSection renders itself as a section within a {@link Page Page} or other {@link PageContainer PageContainer}. 
@@ -64,6 +67,25 @@ public class QuestionSection extends PageElement {
         return title;
     }
 
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+    public String getExpandedTitle(Type root, Type local) {
+    	if (getTitle()!=null) {
+    		return expand(getTitle(), root, local);
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
     /**
      * List of Questions which this section contains.
      * @return Question list of Questions
@@ -121,12 +143,13 @@ public class QuestionSection extends PageElement {
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
+        String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
 
         // output the title row if a title was defined
         if (title!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>%s</td></tr>", getTitle());
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>%s</td></tr>", title);
         }
 
         Iterator<? extends Question> it=question.iterator();

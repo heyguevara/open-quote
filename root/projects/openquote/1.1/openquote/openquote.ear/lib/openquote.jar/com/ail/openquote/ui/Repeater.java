@@ -32,11 +32,13 @@ import com.ail.core.Type;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.OrderedLinkedList;
+import static com.ail.core.Functions.expand;
 
 /**
  * A Repeater represents Collections of data on the UI. Subclasses of this type define how the
  * data is actually rendered on the UI, this class provides general support for dealing with
  * repeating UI elements.
+ * @version 1.1
  */
 public abstract class Repeater extends PageElement {
 	private static final long serialVersionUID = -6043887157243002172L;
@@ -70,6 +72,15 @@ public abstract class Repeater extends PageElement {
      */
     protected List<AttributeField> item=null;
 
+    /** 
+     * The title of the repeater as a whole
+     */
+    private String title = null;
+    
+    /**
+     * The title of each repeated element within the repeater.
+     */
+    private String repeatedTitle = null;
     /**
      * Default constructor
      */
@@ -79,6 +90,70 @@ public abstract class Repeater extends PageElement {
     }
 
     /**
+     * The fixed title to be displayed with the repeater. This method returns the raw title without
+     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * @see #getExpandedTitle(Type)
+     * @return value of title
+     * @since 1.1
+     */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title the title to set
+	 * @see #getTitle()
+     * @since 1.1
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+	public String getExpandedTitle(Type root, Type local) {
+		return expand(getTitle(), root, local);
+	}
+
+	/**
+	 * @return the repeatedTitle
+     * @since 1.1
+	 */
+	public String getRepeatedTitle() {
+		return repeatedTitle;
+	}
+
+	/**
+	 * @param repeatedTitle the repeatedTitle to set
+     * @since 1.1
+	 */
+	public void setRepeatedTitle(String repeatedTitle) {
+		this.repeatedTitle = repeatedTitle;
+	}
+
+    /**
+     * Get the repeated title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+	public String getExpandedRepeatedTitle(Type root, Type local) {
+		return expand(getRepeatedTitle(), root, local);
+	}
+
+	/**
      * The maximum number of items that can appear in the list. The default value of -1 means there is no limit.
      * @return Number of records allowed in the repeater.
      */

@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.core.Functions.expand;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>An AnswerSection is generally used on summary pages and acts as a container for listing the answers
@@ -37,6 +40,7 @@ import com.ail.core.Type;
  * result of the evaluation is used as the title.
  * @see Answer
  * @see AnswerScroller
+ * @version 1.1
  */
 public class AnswerSection extends PageElement {
 	private static final long serialVersionUID = 6794522768423045427L;
@@ -76,7 +80,9 @@ public class AnswerSection extends PageElement {
     }
 
     /**
-     * The fixed title to be displayed with the answer.
+     * The fixed title to be displayed with the answer. This method returns the raw title without
+     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * @see #getExpandedTitle(Type)
      * @return value of title
      */
     public String getTitle() {
@@ -92,9 +98,33 @@ public class AnswerSection extends PageElement {
     }
 
     /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+    public String getExpandedTitle(Type root, Type local) {
+    	if (getTitle()!=null) {
+    		return expand(getTitle(), root, local);
+    	}
+    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
+    	else if (getTitleBinding()!=null) {
+    		return local.xpathGet(getTitleBinding(), String.class);
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    /**
      * An optional XPath value which can be evaluated against the quotation to fetch a dynamic title.
      * If defined this is used in preference to the fixed title: @{link #title} 
      * @return Title's XPath binding
+     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
      */
     public String getTitleBinding() {
         return titleBinding;
@@ -103,6 +133,7 @@ public class AnswerSection extends PageElement {
     /**
      * @see #getTitleBinding()
      * @param titleBinding
+     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
      */
     public void setTitleBinding(String titleBinding) {
         this.titleBinding = titleBinding;
@@ -111,9 +142,10 @@ public class AnswerSection extends PageElement {
     @Override
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
+        
         w.printf(" <table width='100%%' border='0' cols='2'>");
 
-        String aTitle=(titleBinding!=null) ? (String)model.xpathGet(titleBinding) : title;
+        String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         // output the title row if a title was defined
         if (aTitle!=null) {
@@ -123,6 +155,7 @@ public class AnswerSection extends PageElement {
         for(Answer a: answer) { 
             a.renderResponse(request, response, model);
         }
+        
         w.printf("</table>");
 	}
 }

@@ -19,14 +19,23 @@ package com.ail.openquote.ui;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.transaction.Transaction;
+import javax.transaction.TransactionManager;
+
+import org.jboss.portal.common.transaction.TransactionException;
+import org.jboss.portal.common.transaction.TransactionManagerProvider;
+import org.jboss.portal.common.transaction.Transactions;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
+import com.ail.core.VersionEffectiveDate;
 import com.ail.core.product.executepageaction.ExecutePageActionCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.QuotationCommon;
@@ -80,21 +89,21 @@ public class Action extends PageElement {
     @Override
     public void processActions(ActionRequest request, ActionResponse response, Type model) {
         if ("onProcessActions".equals(when) && conditionIsMet(model)) {
-            executeAction(model);
+            executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
     }
 
     @Override
     public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         if ("onApplyRequestValues".equals(when) && conditionIsMet(model)) {
-            executeAction(model);
+            executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
 	}
 
 	@Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
         if ("onProcessValidations".equals(when) && conditionIsMet(model)) {
-            executeAction(model);
+            executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
 
         return false;
@@ -103,7 +112,7 @@ public class Action extends PageElement {
 	@Override
 	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {	    
 	    if ("onRenderResponse".equals(when)) {
-	        executeAction(model);
+	        executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
     }
 
@@ -161,22 +170,37 @@ public class Action extends PageElement {
         this.when = when;
     }
 
-    private void executeAction(Type model) {
+    private void executeAction(PortletSession portletSession, Principal principal, Type model) {
+        TransactionManager tm=null;
+        Transaction tx=null;
         Quotation quote=(Quotation)model;
         
-        CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()));
+        VersionEffectiveDate ved=(quote.getQuotationDate()!=null) ? new VersionEffectiveDate(quote.getQuotationDate()) : new VersionEffectiveDate();
+        CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()), ved, principal);
         ExecutePageActionCommand c=(ExecutePageActionCommand)cp.newCommand("ExecutePageAction");
         c.setQuotationArgRet(quote);
+        c.setPortletSessionArg(portletSession);
         c.setServiceNameArg(commandName);
-
         try {
+            tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
+            tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
             c.invoke();
+            quote=c.getQuotationArgRet();
         }
         catch (Throwable e) {
         	throw new RenderingError("Failed to execute action command: "+getCommandName(), e);
         }
+        finally {
+            try {
+                Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
+            }
+            catch(TransactionException e) {
+                throw new RenderingError("Transaction exception while executing command:"+getCommandName(), e);
+            }
+        }
         
-        // Update the persisted quote to keep in sync
+        // Update the persisted and session quotes to keep everything in sync
+        QuotationCommon.setCurrentQuotation(portletSession, quote);
         QuotationCommon.persistQuotation(quote);
     }
 }

@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.util.Functions.renderAttribute;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
@@ -29,6 +30,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>This element handles the common situation where selecting 'yes' in answer to a question
@@ -43,7 +45,8 @@ import com.ail.openquote.ui.util.Functions;
  * <p>The detail field is only enabled if the question has been answered "Yes".</p>
  * <p>Validation is applied to the YesOrNo question, an answer is considered mandatory. Validation applied
  * to the detail question's answer is again defined by the properties of the {@link com.ail.core.Attribute Attribute}
- * that it is bound to.</p>  
+ * that it is bound to.</p>
+ * @version 1.1  
  */
 public class QuestionWithDetails extends Question {
     private static final long serialVersionUID = 7118438575837087257L;
@@ -62,7 +65,13 @@ public class QuestionWithDetails extends Question {
         this.detailsBinding = detailsBinding;
     }
 
-    public String getDetailsTitle() {
+    /**
+     * The details title to be displayed with the answer. This method returns the raw title without
+     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * @see #getExpendedDetailsTitle(Type)
+     * @return value of title
+     */
+   public String getDetailsTitle() {
         return detailsTitle;
     }
 
@@ -70,6 +79,20 @@ public class QuestionWithDetails extends Question {
         this.detailsTitle = detailsTitle;
     }
 
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+    public String getExpandedDetailsTitle(Type root, Type local) {
+		return expand(getDetailsTitle(), root, local);
+    }
+    
     @Override
     public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         applyRequestValues(request, response, model, "");
@@ -102,7 +125,8 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title=getTitle();
+        String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
+        String detailTitle = getExpandedDetailsTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
         String questionId=xpathToId(rowContext+binding);
         String detailsId=xpathToId(rowContext+detailsBinding);
         
@@ -110,13 +134,9 @@ public class QuestionWithDetails extends Question {
 
         String onChange="enableTargetIf(this.value==\"Yes\", \""+detailsId+"\")";
         
-        if (title==null && getTitleBinding()!=null) {
-            title=model.xpathGet(getTitleBinding(), String.class);
-        }
-        
-        w.printf("<td>%s</td>", getTitle());
+        w.printf("<td>%s</td>", title);
         w.printf("<td>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
-        w.printf("<td>%s</td>", getDetailsTitle());
+        w.printf("<td>%s</td>", detailTitle);
         w.printf("<td>%s</td>", renderAttribute(model, getDetailsBinding(), rowContext, getOnChange(), getOnLoad()));
         
         // Disable the 'detail' textarea unless the question's answer is 'Yes'

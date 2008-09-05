@@ -24,6 +24,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>A Section scroller displays repeating blocks of questions. The data for the questions is selected
@@ -39,17 +40,20 @@ import com.ail.core.Type;
  * using the context of the selected record, and may therefore be bound to fields in the record. In this case, the 
  * title is bound to the vehicle asset's make, model, and registrationNumber attributes.</p>
  * @see Label
+ * @version 1.1
  */
 public class SectionScroller extends Repeater {
 	private static final long serialVersionUID = -6043887157243002172L;
 
     /** Label rendered within the repeated sections to identify them */
-    private Label sectionTitle;
+    @SuppressWarnings("deprecation")
+	private Label sectionTitle;
     
     /**
      * This label is rendered within each repeating section of the SectionScroller. This is intended to help
      * the user identify the record which the sections belong to.
      * @return section label
+     * @deprecated Use {@link #getTitle()} with embedded xpaths instead
      */
     public Label getSectionTitle() {
         return sectionTitle;
@@ -58,17 +62,27 @@ public class SectionScroller extends Repeater {
     /**
      * @see #getSectionTitle()
      * @param sectionTitle
+     * @deprecated Use {@link #getTitle()} with embedded xpaths instead
      */
     public void setSectionTitle(Label sectionTitle) {
         this.sectionTitle = sectionTitle;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
+        Type root=QuotationCommon.getCurrentQuotation(request.getPortletSession());
+        
         w.printf("<table width='100%%' border='0' cols='1' cellpadding='0'>");
+        
+        if (getTitle()!=null) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+            w.print(getExpandedRepeatedTitle(root, model));
+            w.printf("  </td></tr>");
+        }
+
         int rowCount=0;
         for(Iterator it=model.xpathIterate(getBinding()) ; it.hasNext() ; rowCount++) {
             Type t=(Type)it.next();
@@ -76,9 +90,16 @@ public class SectionScroller extends Repeater {
             w.printf("<tr><td>");
             w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
             
+            // TODO sectionTitle should be removed for 2.0
             if (sectionTitle!=null) {
                 w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
                 sectionTitle.renderResponse(request, response, t);
+                w.printf("  </td></tr>");
+            }
+
+            if (getRepeatedTitle()!=null) {
+                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+                w.print(getExpandedRepeatedTitle(root, t));
                 w.printf("  </td></tr>");
             }
     

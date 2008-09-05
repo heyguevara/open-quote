@@ -24,6 +24,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * A RowScroller represents a Collection of records in a table format with one row per record.<br>
@@ -51,18 +52,28 @@ public class RowScroller extends Repeater {
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
+
+        Type rootForExpansion=QuotationCommon.getCurrentQuotation(request.getPortletSession());
         
         // Start the table for the scroller (size()+1 to allow for the trash can column)
-        w.printf("<table width='100%%' border='0' cols='%d'>", isAddAndDeleteEnabled() ? item.size()+1 : item.size());
+        int columns=isAddAndDeleteEnabled() ? item.size()+1 : item.size();
 
+        w.printf("<table width='100%%' border='0' cols='%d'>", columns);
+
+        if (getTitle()!=null) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>", columns);
+            w.print(getExpandedRepeatedTitle(rootForExpansion, model));
+            w.printf("  </td></tr>");
+        }
+        
         // Output the column headers
         w.printf(" <tr class='portlet-section-alternate'>");
         for(AttributeField a: item) {
-            if (a.getSubTitle()!=null) {
-                w.printf("<td align='center'>%s<br/>%s</td>", a.getTitle(), a.getSubTitle());
+            if (a.getExpandedSubTitle(rootForExpansion, model)!=null) {
+                w.printf("<td align='center'>%s<br/>%s</td>", a.getExpandedTitle(rootForExpansion, model), a.getExpandedSubTitle(rootForExpansion, model));
             }
             else {
-                w.printf("<td align='center'>%s</td>", a.getTitle());
+                w.printf("<td align='center'>%s</td>", a.getExpandedTitle(rootForExpansion, model));
             }
         }
 

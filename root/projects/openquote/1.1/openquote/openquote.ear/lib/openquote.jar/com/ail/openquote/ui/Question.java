@@ -24,6 +24,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>The Question page element is probably one of the more commonly used elements in pageflows. It renders as a single line 
@@ -52,13 +53,9 @@ public class Question extends AttributeField {
 
 	@Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title=getTitle();
+        String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         PrintWriter w=response.getWriter();
-        
-        if (title==null && getTitleBinding()!=null) {
-            title=model.xpathGet(getTitleBinding(), String.class);
-        }
         
         w.printf("<td>%s</td>", title);
         w.printf("<td colspan='3' align='left'>%s</td>", Functions.renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));

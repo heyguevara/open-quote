@@ -40,6 +40,7 @@ import com.ail.openquote.ui.util.Binding;
  * <p>In the example above, format is set to "Details for %s %s %s", as this is a SectionScroller bound to 'asset[assetTypeId='Vehicle']',
  * the context used to evaluate the parameters is an asset; three parameters are supplied: "attribute[id='make']/value", 
  * "attribute[id='model']/value" and "attribute[id='registration']/value".</p>
+ * @deprecated use title/subTitle (etc) with embedded xpaths instead
  */
 public class Label extends PageElement {
     private static final long serialVersionUID = 1L;

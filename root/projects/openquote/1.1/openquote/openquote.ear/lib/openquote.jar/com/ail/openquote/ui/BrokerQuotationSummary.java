@@ -16,8 +16,6 @@
     /* Copyright Applied Industrial Logic Limited 2006. All rights Reserved */
 package com.ail.openquote.ui;
 
-import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
-import static com.ail.insurance.policy.PolicyStatus.SUBMITTED;
 import static com.ail.openquote.ui.util.Functions.longDate;
 
 import java.io.IOException;
@@ -110,12 +108,7 @@ public class BrokerQuotationSummary extends PageContainer {
         w.printf(      "<table width='100%%' style='border-collapse: collapse;'>");
         w.printf(        "<tr class='portlet-section-header'>");
         w.printf(           "<td>%s: %s</td>",quote.getStatus().longName(), quote.getQuotationNumber());
-        if (QUOTATION.equals(quote.getStatus()) || SUBMITTED.equals(quote.getStatus())) {
-            w.printf(           "<td align='right'>Gross Premium: %s</td>", quote.getTotalPremium());
-        }
-        else {
-            w.printf(           "<td>&nbsp;</td>");
-        }
+        renderPremium(w, quote);
         w.printf(        "</tr>");
         w.printf(        "<tr>");
         w.printf(          "<td colspan='2'>");
@@ -151,6 +144,16 @@ public class BrokerQuotationSummary extends PageContainer {
         w.printf(  "</tr>");
         w.printf("</table>");
     }
+
+	private void renderPremium(PrintWriter w, Quotation quote) {
+		// We'll get an IllegalStateException if there is no premium on the quote; which is the case sometimes for Referrals and Declines.
+		try {
+            w.printf("<td align='right'>Gross Premium: %s</td>", quote.getTotalPremium());
+		}
+		catch(IllegalStateException e) {
+            w.printf("<td>&nbsp;</td>");
+        }
+	}
 
     private void renderProposerDetails(PrintWriter w, Quotation quote) {
     	Proposer proposer=(Proposer)quote.getProposer();

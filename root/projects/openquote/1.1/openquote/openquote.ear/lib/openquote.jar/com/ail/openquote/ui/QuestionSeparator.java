@@ -26,6 +26,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>The QuestionSeparator is used to break up long list of questions with either a title, or simple white space.</p>
@@ -70,13 +71,9 @@ public class QuestionSeparator extends Question {
 
 	@Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title=getTitle();
+        String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         PrintWriter w=response.getWriter();
-        
-        if (title==null && getTitleBinding()!=null) {
-            title=model.xpathGet(getTitleBinding(), String.class);
-        }
         
         if (title==null) {
             w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");

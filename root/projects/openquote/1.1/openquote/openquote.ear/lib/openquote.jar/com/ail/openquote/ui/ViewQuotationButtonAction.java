@@ -73,7 +73,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
                 cmd.setQuotationNumberArg(quoteNumber);
                 cmd.invoke();
                 
-                // If we are processing a quotation (i.e. we're not on listing qutoes, we're processing quotes)
+                // If we are processing a quotation (i.e. we're not on listing quotations, we're processing a quote)
                 if (model instanceof Quotation) {
                 	// ...assume that we have just updated the persisted quote and keep the session in step
 	                SavedQuotation savedQuotation=(SavedQuotation)proxy.queryUnique("get.savedQuotation.by.quotationNumber", quoteNumber);

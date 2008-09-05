@@ -266,7 +266,6 @@ public class LoginSection extends PageContainer {
             try {
                 tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
                 tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
-
                 User user=userModule.createUser(quote.getUsername(), password);
                 userProfileModule.setProperty(user, User.INFO_USER_ENABLED, true);
                 userProfileModule.setProperty(user, User.INFO_USER_NAME_FAMILY, proposer.getSurname());

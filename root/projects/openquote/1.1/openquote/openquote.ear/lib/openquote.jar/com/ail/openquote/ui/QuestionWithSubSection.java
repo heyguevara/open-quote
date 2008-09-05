@@ -28,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>If the answer to a given question is yes, a number of subsequent questions are asked. This
@@ -111,17 +112,13 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title=getTitle();
+        String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
 
         String onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+id+"\")";
         
-        if (title==null && getTitleBinding()!=null) {
-            title=model.xpathGet(getTitleBinding(), String.class);
-        }
-
-        w.printf("<td>%s</td>", getTitle());
+        w.printf("<td>%s</td>", aTitle);
         w.printf("<td colspan='3'>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
         w.printf("</tr>");
         w.printf("<tr><td colspan='4'>");

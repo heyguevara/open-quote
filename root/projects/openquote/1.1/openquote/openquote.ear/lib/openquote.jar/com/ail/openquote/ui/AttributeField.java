@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.core.Functions.expand;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -49,6 +51,7 @@ import com.ail.openquote.ui.util.Functions;
  * value is changed).
  * @see RowScroller
  * @see com.ail.core.Attribute
+ * @version 1.1
  */
 public class AttributeField extends PageElement {
     private static final long serialVersionUID = 7118438575837087257L;
@@ -75,8 +78,11 @@ public class AttributeField extends PageElement {
 		super();
 	}
 
-    /** The fixed text sub title to be displayed with the answer.  
-     * @return sub title text if defined, or null otherwise.
+    /**
+     * The fixed sub title to be displayed with the answer. This method returns the raw sub title without
+     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * @see #getExpendedSubTitle(Type)
+     * @return value of title
      */
     public String getSubTitle() {
         return subTitle;
@@ -90,8 +96,34 @@ public class AttributeField extends PageElement {
         this.subTitle = subTitle;
     }
 
-    /** The fixed text title to be displayed with the answer.  
-     * @return title text if defined.
+    /**
+     * Get the sub title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+    public String getExpandedSubTitle(Type root, Type local) {
+    	if (getTitle()!=null) {
+    		return expand(getSubTitle(), root, local);
+    	}
+    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
+    	else if (getSubTitleBinding()!=null) {
+    		return local.xpathGet(getSubTitleBinding(), String.class);
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    /**
+     * The fixed title to be displayed with the answer. This method returns the raw title without
+     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * @see #getExpandedTitle(Type)
+     * @return value of title
      */
     public String getTitle() {
         return title;
@@ -105,6 +137,29 @@ public class AttributeField extends PageElement {
         this.title = title;
     }
 
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded
+     * @since 1.1
+     */
+    public String getExpandedTitle(Type root, Type local) {
+    	if (getTitle()!=null) {
+    		return expand(getTitle(), root, local);
+    	}
+    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
+    	else if (getTitleBinding()!=null) {
+    		return local.xpathGet(getTitleBinding(), String.class);
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
     /**
      * Javascript to be executed when a field's value is changed
      * @return java script
@@ -173,6 +228,7 @@ public class AttributeField extends PageElement {
 
     /**
      * @return the titleBinding
+     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
      */
     public String getTitleBinding() {
         return titleBinding;
@@ -180,6 +236,7 @@ public class AttributeField extends PageElement {
 
     /**
      * @param titleBinding the titleBinding to set
+     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
      */
     public void setTitleBinding(String titleBinding) {
         this.titleBinding = titleBinding;
@@ -187,6 +244,7 @@ public class AttributeField extends PageElement {
 
     /**
      * @return the subTitleBinding
+     * @deprecated Use {@link #getExpendedSubTitle(Type)} in combination with embedded xpath references within the title.
      */
     public String getSubTitleBinding() {
         return subTitleBinding;
@@ -194,6 +252,7 @@ public class AttributeField extends PageElement {
 
     /**
      * @param subTitleBinding the subTitleBinding to set
+     * @deprecated Use {@link #getExpendedSubTitle(Type)} in combination with embedded xpath references within the title.
      */
     public void setSubTitleBinding(String subTitleBinding) {
         this.subTitleBinding = subTitleBinding;

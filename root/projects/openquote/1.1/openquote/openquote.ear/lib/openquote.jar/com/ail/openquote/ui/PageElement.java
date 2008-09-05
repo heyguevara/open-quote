@@ -194,7 +194,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @throws IOException
      */
     public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        // default implementaiton does nothing.
+        // default implementation does nothing.
     }
     
     /**
