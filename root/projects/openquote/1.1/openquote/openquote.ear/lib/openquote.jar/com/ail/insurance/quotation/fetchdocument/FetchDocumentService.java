@@ -112,7 +112,8 @@ public class FetchDocumentService extends Service {
             cmd.setPolicyArg(savedQuotation.getQuotation());
             cmd.invoke();
             savedQuotation.setQuotationDocument(cmd.getDocumentRet());
-            getCore().update(savedQuotation);
+            savedQuotation=getCore().update(savedQuotation);
+            args.setQuotationRet(savedQuotation.getQuotation());
         }
 
         args.setDocumentRet(savedQuotation.getQuotationDocument());
