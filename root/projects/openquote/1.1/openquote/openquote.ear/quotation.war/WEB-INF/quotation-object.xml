@@ -106,6 +106,13 @@
                         </property>
                     </properties>
                 </window>
+                <security-constraint>
+                    <policy-permission>
+                        <role-name>Agent</role-name>
+                        <action-name>viewrecursive</action-name>
+                        <action-name>personalizerecursive</action-name>
+                    </policy-permission>
+                </security-constraint>
             </page>
         </portal>
     </deployment>
