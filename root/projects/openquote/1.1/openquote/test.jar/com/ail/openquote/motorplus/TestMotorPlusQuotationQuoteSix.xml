@@ -170,7 +170,7 @@
      <expiryDate>2007-08-21T08:41:52.902+01:00</expiryDate>
      <page>Quotation</page>
      <quotationDate>2006-02-23T19:31:45.813Z</quotationDate>
-     <proposer>
+     <proposer xsi:type="java:com.ail.openquote.PersonalProposer">
           <address>
                <line1>Cluck Hall</line1>
                <line2>Egging Road</line2>
