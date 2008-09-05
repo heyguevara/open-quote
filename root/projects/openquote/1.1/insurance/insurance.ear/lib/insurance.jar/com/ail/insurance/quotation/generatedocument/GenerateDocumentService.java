@@ -31,19 +31,14 @@ import com.ail.core.document.generatedocument.RenderDocumentCommand;
 import com.ail.core.document.generatedocument.StyleDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.insurance.claim.SectionNotFoundException;
-import com.ail.insurance.policy.PolicyStatus;
+import static com.ail.insurance.policy.PolicyStatus.REFERRED;
+import static com.ail.insurance.policy.PolicyStatus.QUOTATION;;
 
 /**
  * Service to generate a quotation document. This service delegates to the three document
  * generation phase services: Merge, Style and Render. The actual services used in the
  * generation phases depends on the {@link DocumentDefinition} type defined in the product associated
  * with the policy for which a document is being generated. By convention, this type is named "QuotationDocument".
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype entry-point
  */
 public class GenerateDocumentService extends Service {
     private static final long serialVersionUID = 3198893603833694389L;
@@ -112,7 +107,6 @@ public class GenerateDocumentService extends Service {
      * The 'business logic' of the entry point.
      * @throws PreconditionException If one of the preconditions is not met
      * @throws SectionNotFoundException If one of the sections identified in the
-     * recoveryMade hashtable does not exist.
      */
 	public void invoke() throws BaseException {
         XMLString subject=null;
@@ -121,8 +115,8 @@ public class GenerateDocumentService extends Service {
             throw new PreconditionException("args.getPolicyArg()==null");
         }
 
-		if (!PolicyStatus.QUOTATION.equals(args.getPolicyArg().getStatus())) {
-            throw new PreconditionException("!PolicyStatus.QUOTATION.equals(args.getPolicyArg().getStatus())");
+		if (!QUOTATION.equals(args.getPolicyArg().getStatus()) && !REFERRED.equals(args.getPolicyArg().getStatus())) {
+            throw new PreconditionException("!QUOTATION.equals(args.getPolicyArg().getStatus()) && !REFERRED.equals(args.getPolicyArg().getStatus())");
         }
         
         if (args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0) {
