@@ -18,6 +18,7 @@
 package com.ail.insurance.quotation.fetchdocument;
 
 import com.ail.core.command.CommandArgImp;
+import com.ail.insurance.policy.Policy;
 
 /**
  * This class represents the value object arguments and returns used/generated
@@ -32,7 +33,18 @@ public class FetchDocumentArgImp extends CommandArgImp implements FetchDocumentA
     private static final long serialVersionUID = 3606702185555605240L;
     private String quotationNumberArg;
     private byte[] documentRet;
+    private Policy quotationRet;
     
+    /** @inheritDoc */
+    public Policy getQuotationRet() {
+        return quotationRet;
+    }
+
+    /** @inheritDoc */
+    public void setQuotationRet(Policy quotationRet) {
+        this.quotationRet = quotationRet;
+    }
+
     /** @inheritDoc */
     public byte[] getDocumentRet() {
         return documentRet;

@@ -19,6 +19,7 @@ package com.ail.insurance.quotation.fetchdocument;
 
 import com.ail.core.command.Command;
 import com.ail.core.command.CommandArg;
+import com.ail.insurance.policy.Policy;
 
 /**
  * @version $Revision$
@@ -62,5 +63,13 @@ public class FetchDocumentCommand extends Command implements FetchDocumentArg {
     /** @inheritDoc */
     public void setQuotationNumberArg(String quotationNumberArg) {
         args.setQuotationNumberArg(quotationNumberArg);
+    }
+
+    public Policy getQuotationRet() {
+        return args.getQuotationRet();
+    }
+
+    public void setQuotationRet(Policy policyRet) {
+        args.setQuotationRet(policyRet);
     }
 }

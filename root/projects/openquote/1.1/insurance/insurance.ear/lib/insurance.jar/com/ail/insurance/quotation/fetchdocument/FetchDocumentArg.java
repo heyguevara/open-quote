@@ -18,6 +18,7 @@
 package com.ail.insurance.quotation.fetchdocument;
 
 import com.ail.core.command.CommandArg;
+import com.ail.insurance.policy.Policy;
 
 /**
  * Interface defining the arguments and returns associated with the fetch document service.
@@ -40,6 +41,18 @@ public interface FetchDocumentArg extends CommandArg {
      */
     void setQuotationNumberArg(String quotationNumberArg);
     
+    /**
+     * Fetch the quotation which may have been modified by the process of document generation
+     * @return Modified quotation
+     */
+    Policy getQuotationRet();
+    
+    /**
+     * @see #getQuotationRet()
+     * @param policyRet
+     */
+    void setQuotationRet(Policy policyRet);
+
     /**
      * The generated document.
      * @return document
