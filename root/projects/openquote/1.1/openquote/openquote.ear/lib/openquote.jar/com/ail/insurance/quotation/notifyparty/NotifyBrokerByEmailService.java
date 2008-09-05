@@ -18,6 +18,7 @@ package com.ail.insurance.quotation.notifyparty;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
 
@@ -150,7 +151,7 @@ public class NotifyBrokerByEmailService extends Service {
             emailNotification(savedQuotation);
         }
         catch(MessagingException e) {
-        	throw new PreconditionException("Failed to connecto to SMTP server at: "+getCore().getParameterValue("smtp-server", "localhost")+" for quote: "+savedQuotation.getQuotationNumber()+". "+e.toString());
+        	throw new PreconditionException("Failed to send notification email to: "+getCore().getParameterValue("smtp-server", "localhost")+" for quote: "+savedQuotation.getQuotationNumber()+". "+e.toString(), e);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -186,12 +187,10 @@ public class NotifyBrokerByEmailService extends Service {
 
         multipart.addBodyPart(createBrokerSummaryAttachment(savedQuotation));
 
-        if (PolicyStatus.QUOTATION.equals(savedQuotation.getStatus()) || PolicyStatus.SUBMITTED.equals(savedQuotation.getStatus())) {
-        	BodyPart docAttachment=createQuoteDocumentAttachment(savedQuotation);
-        	if (docAttachment!=null) {
-        		multipart.addBodyPart(docAttachment);
-        	}
-        }
+    	BodyPart docAttachment=createQuoteDocumentAttachment(savedQuotation);
+    	if (docAttachment!=null) {
+    		multipart.addBodyPart(docAttachment);
+    	}
 
         multipart.addBodyPart(createAssessmentSheetAttachment(savedQuotation));
         multipart.addBodyPart(createRawXmlAttachment(savedQuotation));
@@ -328,13 +327,14 @@ public class NotifyBrokerByEmailService extends Service {
      * @param savedQuotation Quote to render XML from.
      * @return BodyPart containing rendered output.
      * @throws MessagingException
+     * @throws IOException 
      * @throws XMLException
      */
-    private BodyPart createRawXmlAttachment(SavedQuotation savedQuotation) throws MessagingException, XMLException {
+    private BodyPart createRawXmlAttachment(SavedQuotation savedQuotation) throws MessagingException, IOException {
         BodyPart bp=new MimeBodyPart();
         bp.setHeader("Content-ID", "<raw.xml>");
         bp.setHeader("Content-Disposition", "attachment");
-        bp.setContent(savedQuotation.getQuotationAsString(), "text/xml");
+        bp.setDataHandler(new DataHandler(new ByteArrayDataSource(savedQuotation.getQuotationAsString(), "text/xml")));
         bp.setFileName(savedQuotation.getQuotationNumber()+" Raw.xml");
 
         return bp;
