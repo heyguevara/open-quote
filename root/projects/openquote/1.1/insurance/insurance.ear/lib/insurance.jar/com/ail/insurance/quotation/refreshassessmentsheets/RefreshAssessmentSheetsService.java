@@ -163,7 +163,7 @@ public class RefreshAssessmentSheetsService extends Service {
 
         Policy policy=args.getPolicyArgRet();
 
-        // remove anly lines that this origin added in the past
+        // remove only lines that this origin added in the past
         policy.removeAssessmentLinesByOrigin(args.getOriginArg());
 
         // lock the sheets to this origin
