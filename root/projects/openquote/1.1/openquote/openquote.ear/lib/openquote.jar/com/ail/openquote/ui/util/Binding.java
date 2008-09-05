@@ -21,7 +21,7 @@ import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.Label;
 
 /**
- * Holds an XPath expression designed to be evaluated agaist a {@link Quotation} object. Binding objects
+ * Holds an XPath expression designed to be evaluated against a {@link Quotation} object. Binding objects
  * are used where a PageElement needs a collection of XPath expressions (e.g. {@link Label}.
  */
 public class Binding extends Type {
