@@ -36,10 +36,10 @@
             </blockData>
 
             <blockData id="qs" placement="body" applicability="all" title="Cover">
-                <modelData id="bd" title="Business description" class="string" binding="asset[id='company']/attribute[id='businessDescription']/formattedValue"/>
+                <modelData id="bd" title="Business description" class="string">${asset[id='company']/attribute[id='businessDescription']/value}</modelData>
                 <modelData id="id" title="Inception date" class="date" binding="c:format(/inceptionDate,&quot;d MMMMM, yyyy&quot;)"/>
                 <modelData id="id" title="Expiry date" class="date" binding="c:format(/expiryDate,&quot;d MMMMM, yyyy&quot;)"/>
-                <modelData id="poi" title="Limit of Indemnity" class="string">-</modelData>
+                <modelData id="poi" title="Limit of Indemnity" class="string">${asset[id='company']/attribute[id='limitOfIndemnity']/formattedValue} any one Claim, Defence Costs and Expenses in addition BUT ${asset[id='company']/attribute[id='limitOfIndemnity']/formattedValue} Any one claim including Defence Costs and Expenses in respect of Pension and Mortgage work and ${asset[id='company']/attribute[id='limitOfIndemnity']/formattedValue} in the aggregate in respect of specific Financial Services and work as defined by the policy wording.</modelData>
                 <modelData id="exc" title="Excess" class="string">-</modelData>
                 <modelData id="ret" title="Retroactive date" class="string">-</modelData>
                 <modelData id="wrd" title="Wording" class="string">QBE Irish Intemediary wording</modelData>
@@ -48,9 +48,20 @@
                 <modelData id="end" title="Endorsements" class="string">-</modelData>
                 <modelData id="ext" title="Extensions etc" class="string">-</modelData>
                 <modelData id="ct" title="Credit terms" class="string">Premium payment required within 15 days of attachment of cover</modelData>
-                <modelData id="sub" title="Subjectivities" class="string">-</modelData>
             </blockData>
             
+            <blockData id="qs" placement="body" applicability="all" title="Subjectivities">
+                <repeatingData binding="asset[id='subjectivities']/attribute[value='Yes']" class='table'>
+                    <blockData placement="body">
+                        <modelData class='string'>${attribute/value}</modelData>
+                    </blockData>
+                </repeatingData>
+                <modelData id="nsubt" class="string">
+                  Underwriters reserve the right to cancel cover ab-initio if subjectivities are not 
+                  complied with within 10 days of inception, policy terms and conditions not withstanding.
+                </modelData>
+            </blockData>
+
             <blockData id="qs" placement="body" applicability="all">
                 <modelData id="sg" title="Signed:" class="string">William Irwin</modelData>
                 <modelData id="sg" title="Date:" class="date" binding="c:format(/quotationDate,&quot;d MMMMM, yyyy&quot;)"/>

@@ -75,6 +75,10 @@
             <parameter name="Url">product://localhost:8080/AIL/Base/AcceptQuotationActionService.java</parameter>
         </service>
 
+        <service name="CreateQuoteDocumentService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/CreateQuoteDocumentService.java</parameter>
+        </service>
+
         <service name="PremiumCalculationService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
             <parameter name="Url">product://localhost:8080/AIL/Base/PremiumCalculationService.java</parameter>
         </service>
@@ -172,6 +176,10 @@
             <parameter name="Service">AcceptQuotationActionService</parameter>
         </command>
         
+        <command name="CreateQuoteDocumentAction" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">CreateQuoteDocumentService</parameter>
+        </command>
+
         <!-- Premium calculation service combining assess risk, and calculate premium -->
         <command name="PremiumCalculation" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
             <parameter name="Service">PremiumCalculationService</parameter>

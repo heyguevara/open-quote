@@ -3324,6 +3324,34 @@
                                     <sys:store-protocol>workspace</sys:store-protocol>
                                   </view:properties>
                                 </cm:content>
+                                <cm:content view:childName="cm:CreateQuoteDocumentService.java">
+                                  <view:aspects>
+                                    <cm:titled></cm:titled>
+                                    <cm:auditable></cm:auditable>
+                                    <sys:referenceable></sys:referenceable>
+                                    <cm:author></cm:author>
+                                    <app:inlineeditable></app:inlineeditable>
+                                    <cm:versionable></cm:versionable>
+                                  </view:aspects>
+                                  <view:properties>
+                                    <sys:node-uuid>de99dfb5-77f2-11dd-9080-775572dc8f91</sys:node-uuid>
+                                    <cm:content>contentUrl=export_spaces/content135.txt|mimetype=text/plain|size=933|encoding=UTF-8|locale=en_US_</cm:content>
+                                    <cm:versionLabel>1.0</cm:versionLabel>
+                                    <cm:created>2008-04-01T08:29:08.563+01:00</cm:created>
+                                    <cm:initialVersion>true</cm:initialVersion>
+                                    <cm:creator>admin</cm:creator>
+                                    <cm:autoVersion>true</cm:autoVersion>
+                                    <cm:name>CreateQuoteDocumentService.java</cm:name>
+                                    <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                    <app:editInline>true</app:editInline>
+                                    <cm:description>Create and store a quotation document.</cm:description>
+                                    <cm:title>CreateQuoteDocumentService.java</cm:title>
+                                    <cm:author></cm:author>
+                                    <cm:modifier>admin</cm:modifier>
+                                    <cm:modified>2008-04-01T08:34:02.320+01:00</cm:modified>
+                                    <sys:store-protocol>workspace</sys:store-protocol>
+                                  </view:properties>
+                                </cm:content>
                                 <cm:content view:childName="cm:Thankyou.html">
                                   <view:aspects>
                                     <cm:titled></cm:titled>
@@ -4902,7 +4930,7 @@
                                         </view:properties>
                                         <view:associations>
                                           <cm:contains>
-                                            <cm:content view:childName="cm:ExpiryDateCalculatorService.java">
+                                            <cm:content view:childName="cm:ConditionsSetupService.java">
                                               <view:aspects>
                                                 <cm:titled></cm:titled>
                                                 <cm:auditable></cm:auditable>
@@ -4919,7 +4947,7 @@
                                                 </cm:lockOwner>
                                                 <cm:created>2008-06-24T19:12:43.858+01:00</cm:created>
                                                 <cm:creator>admin</cm:creator>
-                                                <cm:name>ExpiryDateCalculatorService.java</cm:name>
+                                                <cm:name>ConditionsSetupService.java</cm:name>
                                                 <sys:store-identifier>SpacesStore</sys:store-identifier>
                                                 <app:editInline>true</app:editInline>
                                                 <cm:description></cm:description>
@@ -5078,6 +5106,33 @@
                                                 <sys:store-protocol>workspace</sys:store-protocol>
                                               </view:properties>
                                             </cm:content>
+                                            <cm:content view:childName="cm:QuoteSetupService.java">
+                                                <view:aspects>
+                                                  <cm:auditable></cm:auditable>
+                                                  <cm:titled></cm:titled>
+                                                  <cm:lockable></cm:lockable>
+                                                  <sys:referenceable></sys:referenceable>
+                                                  <cm:copiedfrom></cm:copiedfrom>
+                                                  <cm:author></cm:author>
+                                                  <app:inlineeditable></app:inlineeditable>
+                                                </view:aspects>
+                                                <view:properties>
+                                                  <app:editInline>true</app:editInline>
+                                                  <cm:source>../cm:QuoteSetupService.java</cm:source>
+                                                  <cm:description>Initialisation service called from the pageflow immediately before the first quote screen is displayed</cm:description>
+                                                  <sys:node-uuid>1eb283b5-6fa7-11dd-a817-d7765d260ca3</sys:node-uuid>
+                                                  <cm:content>contentUrl=export_spaces/content133.txt|mimetype=text/plain|size=3172|encoding=UTF-8|locale=en_US_</cm:content>
+                                                  <cm:title></cm:title>
+                                                  <cm:author></cm:author>
+                                                  <cm:created>2008-08-21T18:32:25.654+01:00</cm:created>
+                                                  <cm:modifier>davy</cm:modifier>
+                                                  <cm:modified>2008-08-21T18:33:10.392+01:00</cm:modified>
+                                                  <cm:creator>davy</cm:creator>
+                                                  <sys:store-protocol>workspace</sys:store-protocol>
+                                                  <cm:name>QuoteSetupService.java</cm:name>
+                                                  <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                                </view:properties>
+                                              </cm:content>
                                           </cm:contains>
                                         </view:associations>
                                       </cm:folder>
@@ -5141,7 +5196,7 @@
                                           <sys:store-identifier>SpacesStore</sys:store-identifier>
                                         </view:properties>
                                       </cm:content>
-                                      <cm:content view:childName="cm:Thankyou.html">
+                                      <cm:content view:childName="cm:ThankYou.html">
                                         <view:aspects>
                                           <cm:titled></cm:titled>
                                           <cm:auditable></cm:auditable>
@@ -5155,20 +5210,43 @@
                                           <cm:description>Content for the order confirmation page.</cm:description>
                                           <sys:node-uuid>3bf55742-4d8b-11dd-84f5-fdac163ceef2</sys:node-uuid>
                                           <cm:content>contentUrl=export_spaces/content129.html|mimetype=text/html|size=350|encoding=UTF-8|locale=en_US_</cm:content>
-                                          <cm:title>Thankyou.html</cm:title>
+                                          <cm:title>ThankYou.html</cm:title>
                                           <cm:created>2008-06-25T18:57:01.933+01:00</cm:created>
                                           <cm:modifier>admin</cm:modifier>
                                           <cm:modified>2008-06-25T18:57:02.005+01:00</cm:modified>
                                           <cm:creator>admin</cm:creator>
                                           <sys:store-protocol>workspace</sys:store-protocol>
-                                          <cm:name>Thankyou.html</cm:name>
+                                          <cm:name>ThankYou.html</cm:name>
+                                          <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                        </view:properties>
+                                      </cm:content>
+                                      <cm:content view:childName="cm:PremiumRequestThankYou.html">
+                                        <view:aspects>
+                                          <cm:titled></cm:titled>
+                                          <cm:auditable></cm:auditable>
+                                          <sys:referenceable></sys:referenceable>
+                                          <cm:copiedfrom></cm:copiedfrom>
+                                          <app:inlineeditable></app:inlineeditable>
+                                        </view:aspects>
+                                        <view:properties>
+                                          <app:editInline>true</app:editInline>
+                                          <cm:source>workspace://SpacesStore/9b4836bc-7599-11dd-9c59-67539b366db6</cm:source>
+                                          <cm:description>Content for the order confirmation page.</cm:description>
+                                          <sys:node-uuid>9b4836bc-7599-11dd-9c59-67539b366db6</sys:node-uuid>
+                                          <cm:content>contentUrl=export_spaces/content134.html|mimetype=text/html|size=350|encoding=UTF-8|locale=en_US_</cm:content>
+                                          <cm:title>PremiumRequestThankYou.html</cm:title>
+                                          <cm:created>2008-06-25T18:57:01.933+01:00</cm:created>
+                                          <cm:modifier>admin</cm:modifier>
+                                          <cm:modified>2008-06-25T18:57:02.005+01:00</cm:modified>
+                                          <cm:creator>admin</cm:creator>
+                                          <sys:store-protocol>workspace</sys:store-protocol>
+                                          <cm:name>PremiumRequestThankYou.html</cm:name>
                                           <sys:store-identifier>SpacesStore</sys:store-identifier>
                                         </view:properties>
                                       </cm:content>
                                     </cm:contains>
                                   </view:associations>
                                 </cm:folder>                                
-                                
                               </cm:contains>
                             </view:associations>
                           </cm:folder>

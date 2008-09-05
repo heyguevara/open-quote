@@ -29,12 +29,8 @@
     </questionPage>
     
     <questionPage id="Vehicle Details" title="Details Of Your Car(s)">
-        <sectionScroller binding="/asset[assetTypeId='VehicleAsset']" type="VehicleAsset" addAndDeleteEnabled="false">
-            <sectionTitle format="Details for %s %s %s">
-                <binding xpath="attribute[id='make']/value"/>
-                <binding xpath="attribute[id='model']/value"/>
-                <binding xpath="attribute[id='registration']/value"/>
-            </sectionTitle>
+        <sectionScroller binding="/asset[assetTypeId='VehicleAsset']" type="VehicleAsset" addAndDeleteEnabled="false" 
+        				 repeatedTitle="Details for ${./attribute[id='make']/value} ${./attribute[id='model']/value} ${./attribute[id='registration']/value}">
             <question title="Is the car left hand drive?" binding="attribute[id='lefthanddrive']"/>
             <question title="Is the car registered in your name?" binding="attribute[id='registeredinproposersname']"/>
             <question title="Are you the owner of the car?" binding="attribute[id='ownedbyproposer']"/>
@@ -143,8 +139,8 @@
                 <answer title="Coverage" binding="section[id='section1']/attribute[id='cover']"/>
                 <answer title="Start date" binding="inceptionDate"/>
                 <answer title="End date" binding="expiryDate"/>
-                <answer titleBinding="/excess[id='excess1']/title" binding="/excess[id='excess1']/amount/amountAsString"/>
-                <answer titleBinding="/excess[id='excess2']/title" binding="/excess[id='excess2']/amount/amountAsString"/>
+                <answer title="${/excess[id='excess1']/title}" binding="/excess[id='excess1']/amount/amountAsString"/>
+                <answer title="${/excess[id='excess2']/title}" binding="/excess[id='excess2']/amount/amountAsString"/>
             </answerSection>
             
             <answerSection title="Driver(s)">
@@ -174,8 +170,8 @@
                 <answer title="Coverage" binding="section[id='section1']/attribute[id='cover']"/>
                 <answer title="Start date" binding="inceptionDate"/>
                 <answer title="End date" binding="expiryDate"/>
-                <answer titleBinding="/excess[id='excess1']/title" binding="/excess[id='excess1']/amount/amountAsString"/>
-                <answer titleBinding="/excess[id='excess2']/title" binding="/excess[id='excess2']/amount/amountAsString"/>
+                <answer title="${/excess[id='excess1']/title}" binding="/excess[id='excess1']/amount/amountAsString"/>
+                <answer title="${/excess[id='excess2']/title}" binding="/excess[id='excess2']/amount/amountAsString"/>
             </answerSection>
             
             <answerSection title="Driver(s)">

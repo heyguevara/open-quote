@@ -43,12 +43,12 @@
             <parameter name="Url">~/QuotationDocument.xml</parameter>
         </type>
 
-        <service name="ExpiryDateCalculatorService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
-            <parameter name="Url">~/Rules%20and%20Scripts/ExpiryDateCalculatorService.java</parameter>
+        <service name="ConditionsSetupService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/ConditionSetupService.java</parameter>
         </service>
 
-        <command name="ExpiryDateCalculator" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
-            <parameter name="Service">ExpiryDateCalculatorService</parameter>
+        <command name="ConditionsSetup" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">ConditionsSetupService</parameter>
         </command>
 
         <service name="ApplyAgentPremiumService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
@@ -66,6 +66,15 @@
         <command name="PlaceOrder" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
             <parameter name="Service">PlaceOrderService</parameter>
         </command>
+        
+        <service name="QuoteSetupService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/QuoteSetupService.java</parameter>
+        </service>
+
+        <command name="QuoteSetup" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">QuoteSetupService</parameter>
+        </command>
+        
     </types>
 </configuration>
 

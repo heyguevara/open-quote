@@ -14,10 +14,10 @@ public class ExpiryDateCalculatorService {
      * @param args Contains the quotation object available for initialisation. 
      */
     public static void invoke(ExecutePageActionArgImp args) {
-        Calendar date=null;
-        Quotation quote=args.getQuotationArgRet();
+        Calendar date = null;
+        Quotation quote = args.getQuotationArgRet();
 
-        Date incept=(Date)quote.xpathGet("/asset[id='company']/attribute[id='inceptionDate']/object", Date.class);
+        Date incept = (Date)quote.xpathGet("/asset[id='company']/attribute[id='inceptionDate']/object", Date.class);
         
         /* Set the quote and expiry dates to today */
         quote.setInceptionDate(incept);
@@ -28,5 +28,15 @@ public class ExpiryDateCalculatorService {
         date.add(Calendar.DATE, -1);
         date.add(Calendar.YEAR, 1);
         quote.setExpiryDate(date.getTime());
+        
+        Number mortgageWork = (Number)quote.xpathGet("/asset[id='company']/attribute[id='mortgageWork']/object", Number.class);
+        String financialServices = (String)quote.xpathGet("/asset[id='company']/attribute[id='financialServices']/value", String.class);
+        
+        if (mortgageWork.floatValue() > 15.0 || "Yes".equals(financialServices)) {
+	        quote.xpathSet("/asset[id='company']/attribute[id='excess']/value", "2500");
+	    }
+	    else {
+	        quote.xpathSet("/asset[id='company']/attribute[id='excess']/value", "1000");
+	    }
     }
 }

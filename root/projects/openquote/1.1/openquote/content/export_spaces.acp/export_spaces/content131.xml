@@ -5,53 +5,68 @@
     </questionPage>
     
     <questionPage id="Proposer" title="Proposer's Details">
+        <action when="onRenderResponse" commandName="QuoteSetup"/>
         <navigationSection id="Navigation">
             <commandButtonAction id="Next" destinationPageId="CompanyDetails"/>
         </navigationSection>
     </questionPage>
 
     <questionPage id="CompanyDetails" title="About The Proposer's Company">
-        <questionSection>
-            <questionSeparator title="About the business"/>
-            <question title="Please enter a description of the company's business." binding="/asset[id='company']/attribute[id='businessDescription']"/>
-            <question title="Is the proposer a General Broker (including Life/Pensions)?" binding="/asset[id='company']/attribute[id='generalBroker']"/>
-            <question title="Does the proposer offer Financial Services?" binding="/asset[id='company']/attribute[id='financialServices']"/>
-            <question title="What percentage of the proposer's business is Mortgage related?" binding="/asset[id='company']/attribute[id='mortgageWork']"/>
-            <question title="What are the proposer's estimated fees this year?" binding="/asset[id='company']/attribute[id='feesEstimated']"/>
+        <questionSection binding="/asset[id='company']">
+            <questionSeparator title="About the business (please answer 'Yes' to as many as are applicable)"/>
+            <question title="General insurance broker" binding="./attribute[id='business']/attribute[id='generalInsuranceBroker']"/>
+            <question title="Life and pension" binding="./attribute[id='business']/attribute[id='lifeAndPensions']"/>
+            <question title="Mortgage company" binding="./attribute[id='business']/attribute[id='mortgageCompany']"/>
+            <question title="Financal Adviser" binding="./attribute[id='business']/attribute[id='financialAdvisor']"/>
+            <questionWithSubSection title="Other" binding="./attribute[id='business']/attribute[id='other']">
+                <pageSection>
+                  <question title="Please enter details" binding="./attribute[id='business']/attribute[id='otherDescription']"/>
+                </pageSection>
+            </questionWithSubSection>
+
+            <questionSeparator title="Details about the business"/>
+            <question title="Does the proposer offer Financial Services?" binding="./attribute[id='financialServices']"/>
+            <question title="What percentage of the proposer's business is Mortgage related?" binding="./attribute[id='mortgageWork']"/>
+            <question title="What are the proposer's estimated fees this year?" binding="./attribute[id='feesEstimated']"/>
+
             <questionSeparator title="About cover"/>
-            <question title="At what date should cover incept?" binding="/asset[id='company']/attribute[id='inceptionDate']"/>
-            <questionWithDetails title="Is a retroactive cover required?" binding="/asset[id='company']/attribute[id='retroactiveDateApplied']" detailsTitle="From what date?" detailsBinding="/asset[id='company']/attribute[id='retroactiveDate']"/>
-            <question title="Please select the required limit of indemnity." binding="/asset[id='company']/attribute[id='limitOfIndemnity']"/>
-            <question title="How should the limit be applied?" binding="/asset[id='company']/attribute[id='limitOfIndemnityWording']"/>
+            <question title="At what date should cover incept?" binding="./attribute[id='inceptionDate']"/>
+            <questionWithDetails title="Is a retroactive cover required?" binding="./attribute[id='retroactiveDateApplied']" detailsTitle="From what date?" detailsBinding="./attribute[id='retroactiveDate']"/>
+            <question title="Please select the required limit of indemnity." binding="./attribute[id='limitOfIndemnity']"/>
+            <question title="How should the limit be applied?" binding="./attribute[id='limitOfIndemnityWording']"/>
+
             <questionSeparator title="About this quotation"/>
-            <question title="Is this a quotation for renewal or an existing policy?" binding="/asset[id='company']/attribute[id='renewalQuotation']"/>
-            <question title="Is this a mid term adjustment quotation?" binding="/asset[id='company']/attribute[id='mtaQuotation']"/>
-            <question title="Should a loyalty discount be applied?" binding="/asset[id='company']/attribute[id='loyaltyDiscount']"/>
+            <question title="Please enter the date of application:" binding="/attribute[id='applicationFormDate']"/>
+            <question title="Is this a quotation for the renewal of an existing policy?" binding="./attribute[id='renewalQuotation']"/>
+            <question title="Is this a mid term adjustment quotation?" binding="./attribute[id='mtaQuotation']"/>
         </questionSection>
 
         <navigationSection>
             <commandButtonAction label="Previous" destinationPageId="Proposer" immediate="true"/>
             <commandButtonAction label="Next" destinationPageId="Conditions">
-                <action when="onProcessActions" commandName="ExpiryDateCalculator" xsi:type="action"/>
+                <action when="onProcessActions" commandName="ConditionsSetup" xsi:type="action"/>
             </commandButtonAction>
         </navigationSection>
     </questionPage>
         
-    <questionPage id="Conditions" title="Subjectivities, Endorsements, And Extensions Applied">
-
-        <questionSection>
-            <questionSeparator title="Subjectivities"/>
-            <question titleBinding="/asset[id='subjectivities']/attribute[id='paymentInFull']/attribute/value" binding="/asset[id='subjectivities']/attribute[id='paymentInFull']"/>
-            <question titleBinding="/asset[id='subjectivities']/attribute[id='noClaimDiscountProof']/attribute/value" binding="/asset[id='subjectivities']/attribute[id='noClaimDiscountProof']"/>
-            <questionSeparator title="Endorsements"/>
-            <question titleBinding="/asset[id='endorsements']/attribute[id='financialServicesAggregate']/attribute/value" binding="/asset[id='endorsements']/attribute[id='financialServicesAggregate']"/>
-            <questionSeparator title="Extensions"/>
-            <question titleBinding="/asset[id='extensions']/attribute[id='fullCivilLiability']/attribute/value" binding="/asset[id='extensions']/attribute[id='fullCivilLiability']"/>
-            <question titleBinding="/asset[id='extensions']/attribute[id='lossOfDocuments']/attribute/value" binding="/asset[id='extensions']/attribute[id='lossOfDocuments']"/>
-
-            <question titleBinding="/asset[id='extensions']/attribute[id='liabilityAndSlander']/attribute/value" binding="/asset[id='extensions']/attribute[id='liabilityAndSlander']"/>
-            <question titleBinding="/asset[id='extensions']/attribute[id='fedelityGuarntee']/attribute/value" binding="/asset[id='extensions']/attribute[id='fedelityGuarntee']"/>
-            <question titleBinding="/asset[id='extensions']/attribute[id='financialRegulatorComplaint']/attribute/value" binding="/asset[id='extensions']/attribute[id='financialRegulatorComplaint']"/>
+    <questionPage id="Conditions" title="Conditions">
+        <questionSection binding="/asset[id='company']" title="Excess">
+            <questionWithDetails title="The standard excess applicable to this quote is ${/asset[id='company']/attribute[id='excess']/formattedValue}. Do you want to apply for a different excess?" 
+                                 binding="./attribute[id='agentExcessApplied']" 
+                                 detailsTitle="Non-standard excess:" 
+                                 detailsBinding="./attribute[id='excess']"/>
+        </questionSection>
+        <questionSection binding="/asset[id='subjectivities']" title="Subjectivities">
+            <question title="${./attribute[id='paymentInFull']/attribute/value}" binding="./attribute[id='paymentInFull']"/>
+            <question title="${./attribute[id='noClaimDeclarationProof']/attribute/value}" binding="./attribute[id='noClaimDeclarationProof']"/>
+            <question title="${./attribute[id='mortgageQuestionnaire']/attribute/value}" binding="./attribute[id='mortgageQuestionnaire']"/>
+            <question title="${./attribute[id='completedPropForm']/attribute/value}" binding="./attribute[id='completedPropForm']"/>
+            <questionWithSubSection title="Is an Insured Specfic Endorsement applicable?" 
+                binding="./attribute[id='insuredSpecificSubjectivity']">
+                <pageSection>
+                	<question title="Please enter the subjectivity text" binding="./attribute[id='insuredSpecificSubjectivity']/attribute[id='title']"/>
+                </pageSection>
+            </questionWithSubSection>
         </questionSection>
         <navigationSection>
             <commandButtonAction label="Previous" destinationPageId="CompanyDetails" immediate="true"/>
@@ -67,24 +82,11 @@
 
         <quotationSummary requoteDestinationPageId="CompanyDetails" saveDestinationPageId="SavedQuotes" confirmAndPayDestinationPageId="SelectPaymentOption">
 
-            <premiumSummaryFooter>
-                <questionSection title="To override the calculated premium select Yes below, enter the required premium, and click Apply Override">
-                    <questionWithDetails title="Select Yes to override" binding="/asset[id='company']/attribute[id='agentPremiumApplied']" detailsTitle="Override premium:" detailsBinding="/asset[id='company']/attribute[id='agentPremium']"/>
-                </questionSection>
-                <navigationSection quitDisabled="true">
-                    <commandButtonAction label="Apply Override" destinationPageId="Quotation">
-                        <action when="onProcessActions" commandName="ApplyAgentPremium"/>
-                    </commandButtonAction>
-                </navigationSection>
-                <questionSection>
-                    <questionSeparator title="&lt;hr style='border-top: 1px solid'/&gt;"/>
-                </questionSection>
-            </premiumSummaryFooter>
-
             <navigationSection>
                 <saveButtonAction label="Save" destinationPageId="CompanyDetails" immediate="true"/>
                 <requoteButtonAction label="Requote" destinationPageId="CompanyDetails"/>
                 <commandButtonAction label="Confirm Order" destinationPageId="Confirm"/>
+                <commandButtonAction label="Premium Request" destinationPageId="PremiumRequest"/>
                 <viewQuotationButtonAction/> 
             </navigationSection>
 
@@ -107,6 +109,7 @@
     </informationPage>
     
     <questionPage id="Referral" title="Referral">
+        <action when="onRenderResponse" commandName="CreateQuoteDocumentAction"/>
         <action when="onRenderResponse" commandName="SendNotificationAction"/>
 
         <referralSummary referralNotificationUrl="~/ReferralNotification.html" requoteDestinationPageId="CompanyDetails">
@@ -128,14 +131,37 @@
         </referralSummary>
     </questionPage>
 
-    <questionPage id="Confirm" title="Thankyou">
+    <questionPage id="PremiumRequest" title="Premium override request">
+        <questionSection title="To request different premium from the one calculated (${/assessmentSheet/line[id='total premium']/amountAsString}), enter the total gross premium (including tax) below, and press Submit">
+            <question title="Required gross premium" binding="/asset[id='company']/attribute[id='agentPremium']"/>
+        </questionSection>
+        <navigationSection>
+            <commandButtonAction label="Submit" destinationPageId="SubmittedPremiumRequest">
+                <action when="onProcessActions" commandName="ApplyAgentPremium"/>
+                <action when="onProcessActions" commandName="PremiumCalculation"/>
+                <action when="onProcessActions" commandName="CreateQuoteDocumentAction"/>
+            </commandButtonAction>
+        </navigationSection>
+    </questionPage>  
+
+    <questionPage id="SubmittedPremiumRequest" title="Thank you">
+        <action when="onRenderResponse" commandName="SendNotificationAction"/>
+        
+        <parsedUrlContent id="ThankYou" url="~/PremiumRequestThankYou.html"/>
+        
+        <navigationSection id="Navigation" quitDisabled="true">
+            <quitButtonAction id="Finish" label="Finish"/>
+        </navigationSection>
+    </questionPage>
+
+    <questionPage id="Confirm" title="Thank you">
         <action when="onRenderResponse" commandName="PlaceOrder"/>
         <action when="onRenderResponse" commandName="SendNotificationAction"/>
         
-        <parsedUrlContent id="ThankYou" url="~/Thankyou.html"/>
+        <parsedUrlContent id="ThankYou" url="~/ThankYou.html"/>
         
         <navigationSection id="Navigation" quitDisabled="true">
-            <quitButtonAction id="Finish" label="Finish" destinationPageId="Confirm"/>
+            <quitButtonAction id="Finish" label="Finish"/>
         </navigationSection>
     </questionPage>
 </pageFlow>
