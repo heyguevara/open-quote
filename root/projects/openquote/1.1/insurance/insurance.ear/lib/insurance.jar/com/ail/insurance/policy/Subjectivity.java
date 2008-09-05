@@ -26,6 +26,7 @@ import java.util.Date;
  * Subjectivity Assessment line. A subjectivity represents a condition that a policy holder must
  * meet before cover will be offered. A typical example in property insurance would be "Subject 
  * to a satisfactory surveyors report".
+ * @deprecated Subjectivities are now modeled as instances of {@link Clause} and are not held in the assessment sheet.
  * @version $Revision: 1.3 $
  * @state $State: Exp $
  * @date $Date: 2006/11/04 11:33:14 $

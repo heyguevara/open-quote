@@ -25,11 +25,6 @@ import com.ail.util.YesNo;
 
 /**
  * A section with the policy.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2006/07/26 21:00:28 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Section.java,v $
- * @stereotype type
  */
 public class Section extends Type {
     static final long serialVersionUID = -1451057528960584717L;
@@ -38,6 +33,7 @@ public class Section extends Type {
     private List<String> assetId = new ArrayList<String>();
     private List<String> uninsuredAssetId = new ArrayList<String>();
     private List<Coverage> coverage=new ArrayList<Coverage>();
+    private List<Clause> clause=new ArrayList<Clause>();
     private AssessmentSheet assessmentSheet;
     private String sectionTypeId;
 
@@ -497,5 +493,22 @@ public class Section extends Type {
      */
     public void addExcessId(String excessId) {
         this.excessId.add(excessId);
+    }
+
+    /**
+     * Fetch the list of clauses associated with this policy. An empty list may be returned, but a null will never be returned.
+     * @return the clause
+     */
+    public List<Clause> getClause() {
+        return clause;
+    }
+
+    /**
+     * @param clause the clause to set
+     */
+    public void setClause(List<Clause> clause) {
+        if (clause==null) {
+            this.clause.clear();
+        }
     }
 }

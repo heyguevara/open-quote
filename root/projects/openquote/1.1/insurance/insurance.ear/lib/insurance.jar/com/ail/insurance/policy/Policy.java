@@ -31,11 +31,6 @@ import com.ail.financial.PaymentSchedule;
 import com.ail.party.Party;
 
 /**
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2006/09/24 12:44:43 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Policy.java,v $
- * @stereotype type
  */
 public class Policy extends Type {
     static final long serialVersionUID = 3175904078936470552L;
@@ -45,6 +40,7 @@ public class Policy extends Type {
     private List<Asset> asset = new ArrayList<Asset>();
     private List<Section> section = new ArrayList<Section>();
     private List<Coverage> coverage = new ArrayList<Coverage>();
+    private List<Clause> clause = new ArrayList<Clause>();
     private String id = null;
     private PolicyStatus status = null;
     private AssessmentSheet assessmentSheet = null;
@@ -69,7 +65,7 @@ public class Policy extends Type {
     private String quotationNumber;
 
     /**
-     * Get the collection of Coverages associagted with this policy. Coverages exist at both the
+     * Get the collection of Coverages associated with this policy. Coverages exist at both the
      * policy and section levels, this method will only return those associated with the policy. 
      * Use {@link Section#getCoverage} to get those associated with specific sections.
      * @return A collection of Coverages
@@ -805,7 +801,7 @@ public class Policy extends Type {
     }
 
     /**
-     * Get the total premium. The premium is a calculate value held in the assessment sheeet,
+     * Get the total premium. The premium is a calculate value held in the assessment sheet,
      * it will only be present once the premium has been calculated.
      *
      * @return Total premium, or null if the field is not present in the assessment sheet.
@@ -900,7 +896,7 @@ public class Policy extends Type {
     }
 
     /**
-     * Getter returning the value of the inceptionDate property wrapped in CDATA tags. The date when the
+     * Getter returning the value of the inceptionDate in DataFormat.SHORT. The date when the
      * policy was incepted (created)
      * @return Value of the inceptionDate property
      */
@@ -973,7 +969,7 @@ public class Policy extends Type {
     }
 
     /**
-     * Fetch a spacific com.ail.insurance.policy.Wording from the collection by index number.
+     * Fetch a specific com.ail.insurance.policy.Wording from the collection by index number.
      * @param i Index of element to return
      * @return The instance of com.ail.insurance.policy.Wording at the specified index
      */
@@ -1021,9 +1017,6 @@ public class Policy extends Type {
         this.paymentDetails = paymentDetails;
     }
     
-
-
-
 	/**
 	 * Get the collection of instances of com.ail.core.Allowable associated with this object.
 	 * @return A collection of instances of Allowable
@@ -1051,7 +1044,7 @@ public class Policy extends Type {
 	}
 
 	/**
-	 * Fetch a spacific com.ail.core.Allowable from the collection by index number.
+	 * Fetch a specific com.ail.core.Allowable from the collection by index number.
 	 * @param i Index of element to return
 	 * @return The instance of com.ail.core.Allowable at the specified index
 	 */
@@ -1101,4 +1094,20 @@ public class Policy extends Type {
         this.productName = productName;
     }
     
+    /**
+     * Fetch the list of clauses associated with this policy. An empty list may be returned, but a null will never be returned.
+     * @return the clause
+     */
+    public List<Clause> getClause() {
+        return clause;
+    }
+
+    /**
+     * @param clause the clause to set
+     */
+    public void setClause(List<Clause> clause) {
+        if (clause==null) {
+            this.clause.clear();
+        }
+    }
 }

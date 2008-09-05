@@ -21,13 +21,9 @@ import com.ail.financial.CurrencyAmount;
 
 /**
  * A Calculation Line is an assessment line which contains a calculated element.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/02/18 16:50:43 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/CalculationLine.java,v $
- * @stereotype type
  */
 public abstract class CalculationLine extends AssessmentLine {
+    private static final long serialVersionUID = 8951155134050544922L;
     private String contributesTo;
     private CurrencyAmount amount;
 
