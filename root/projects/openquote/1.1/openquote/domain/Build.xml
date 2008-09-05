@@ -58,7 +58,15 @@
   <target name="teardown-db-if" if="mysql-running">
     <!-- drop all the databases -->
 		<sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
-        drop database if exists ${dbname};
+	  	    -- Make sure the database and users are there before we try to delete them!
+	        create database if not exists ${dbname};
+	        grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
+	        grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
+	  	  
+	        -- Now do the actual tidy up 
+	  	    drop database if exists ${dbname};
+	        revoke all privileges, grant option from 'coreuser'@'localhost';
+	  	    drop user 'coreuser'@'localhost';
 		</sql>
   </target>  
   
