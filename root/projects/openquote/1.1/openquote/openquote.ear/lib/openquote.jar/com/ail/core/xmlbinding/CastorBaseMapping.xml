@@ -395,11 +395,36 @@
         <field name="deductible" type="boolean">
             <bind-xml node="attribute"/>
         </field>
-        <field name="title" type="string"/>
+        <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
         <field name="assetId" type="string" collection="vector"/>
         <field name="amount" type="com.ail.financial.CurrencyAmount"/>
     </class>
-    
+
+    <class name="com.ail.insurance.policy.Clause" extends="com.ail.core.Type">
+      <field name="type" get-method="getTypeAsString" set-method="setTypeAsString" type="string">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="createdDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="startDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="endDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="reminderDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="manuscript" type="boolean">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+      <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+    </class>
+
     <class name="com.ail.insurance.policy.Section" extends="com.ail.core.Type" auto-complete="false">
         <field name="id" type="string">
             <bind-xml node="attribute"/>
@@ -411,6 +436,7 @@
         <field name="assetId" type="string" collection="arraylist"/>
         <field name="uninsuredAssetId" type="string" collection="arraylist"/>
         <field name="coverage" type="com.ail.insurance.policy.Coverage" collection="arraylist"/>
+        <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist"/>
     </class>
 
     <class name="com.ail.insurance.policy.Policy" extends="com.ail.core.Type" auto-complete="false">
@@ -430,6 +456,7 @@
         <field name="wording" type="com.ail.insurance.policy.Wording" collection="arraylist"/>
         <field name="quotationNumber" type="string"/>
         <field name="paymentDetails" type="com.ail.financial.PaymentSchedule"/>
+        <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist"/>
     </class>
 
     <class name="com.ail.util.DateOfBirth" extends="com.ail.core.Type" auto-complete="false">
@@ -732,6 +759,12 @@
         <field name="maxRows" type="int">
             <bind-xml node="attribute"/>
         </field>
+        <field name="title" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="repeatedTitle" type="string">
+            <bind-xml node="attribute"/>
+        </field>
         <field name="addAndDeleteEnabled" type="boolean">
             <bind-xml node="attribute"/>
         </field>
@@ -811,7 +844,7 @@
         <field name="answer" type="com.ail.openquote.ui.Answer" collection="arraylist"/>
     </class>
 
-		<class name="com.ail.openquote.ui.LoginSection" extends="com.ail.openquote.ui.PageElement">
+	<class name="com.ail.openquote.ui.LoginSection" extends="com.ail.openquote.ui.PageElement">
         <map-to xml="loginSection"/>
         <field name="loginButtonLabel" type="string">
             <bind-xml node="attribute"/>            
