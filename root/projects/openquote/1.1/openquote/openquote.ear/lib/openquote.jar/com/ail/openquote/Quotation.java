@@ -31,24 +31,19 @@ import com.ail.core.ExceptionRecord;
  * in the context of the openquote system a policy can only exist up to the quoted/referred/declined 
  * states and hence never becomes a policy. For that reason, this sub-type of Policy was created. It
  * also includes some additional properties which are specific to the openquote system.
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2006/11/14 22:17:56 $
- * @source $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/openquote.jar/com/ail/openquote/Quotation.java,v $
- * @stereotype type
  */
 public class Quotation extends Policy {
 	private static final long serialVersionUID = -414267648671599243L;
 	private Party proposer;
     private Broker broker;
-	private String page=null;
+	private String page=null; // name of the page in the product wizard where the quote currently is
 	private Date quotationDate;
     private Date quotationExpiryDate;
     private ArrayList<PaymentSchedule> paymentOption;
     private String username;
     private boolean userSaved; // true if the user requested that this quote be saved
     private boolean testCase; // true if this quote has been saved as a test case
-    private Collection<ExceptionRecord> exception; // details of all exceptions thrown in during the processing of this quote.
+    private Collection<ExceptionRecord> exception; // details of all exceptions thrown during the processing of this quote.
     
     public Quotation() {
         paymentOption=new ArrayList<PaymentSchedule>(0);
