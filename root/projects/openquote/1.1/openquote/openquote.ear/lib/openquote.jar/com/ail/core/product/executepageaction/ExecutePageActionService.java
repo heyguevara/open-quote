@@ -115,6 +115,7 @@ public class ExecutePageActionService extends Service {
             ExecutePageActionCommand c=(ExecutePageActionCommand)getCore().newCommand(args.getServiceNameArg());
             c.setQuotationArgRet(args.getQuotationArgRet());
             c.setServiceNameArg(args.getServiceNameArg());
+            c.setPortletSessionArg(args.getPortletSessionArg());
             c.invoke();
             args.setQuotationArgRet(c.getQuotationArgRet());
         }

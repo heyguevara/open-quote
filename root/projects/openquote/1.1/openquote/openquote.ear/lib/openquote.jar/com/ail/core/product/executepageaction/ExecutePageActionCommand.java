@@ -17,6 +17,8 @@
 
 package com.ail.core.product.executepageaction;
 
+import javax.portlet.PortletSession;
+
 import com.ail.core.command.Command;
 import com.ail.core.command.CommandArg;
 import com.ail.openquote.Quotation;
@@ -55,7 +57,6 @@ public class ExecutePageActionCommand extends Command implements ExecutePageActi
 
     /**
      * {@inheritDoc}
-     * @return @{inheritDoc}
      */
     public void setQuotationArgRet(Quotation quotationArgRet) {
         args.setQuotationArgRet(quotationArgRet);
@@ -71,9 +72,23 @@ public class ExecutePageActionCommand extends Command implements ExecutePageActi
 
     /**
      * {@inheritDoc}
-     * @return @{inheritDoc}
      */
     public void setServiceNameArg(String serviceNameArg) {
         args.setServiceNameArg(serviceNameArg);
     }
+
+    /**
+     * {@inheritDoc}
+     * @return @{inheritDoc}
+     */
+    public PortletSession getPortletSessionArg() {
+		return args.getPortletSessionArg();
+	}
+
+    /**
+     * {@inheritDoc}
+     */
+	public void setPortletSessionArg(PortletSession portletSession) {
+		args.setPortletSessionArg(portletSession);
+	}
 }

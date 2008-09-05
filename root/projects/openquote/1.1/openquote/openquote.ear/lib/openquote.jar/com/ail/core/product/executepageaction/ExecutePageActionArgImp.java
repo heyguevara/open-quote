@@ -17,6 +17,8 @@
 
 package com.ail.core.product.executepageaction;
 
+import javax.portlet.PortletSession;
+
 import com.ail.core.command.CommandArgImp;
 import com.ail.openquote.Quotation;
 
@@ -32,8 +34,25 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
 
     private Quotation quotationArgRet;
     private String serviceNameArg;
+    private PortletSession portletSessionArg;
     
-    /** Default constructor */
+    /**
+     * {@inheritDoc}
+	 * @return the portletSessionArg
+	 */
+	public PortletSession getPortletSessionArg() {
+		return portletSessionArg;
+	}
+
+	/**
+     * {@inheritDoc}
+	 * @param portletSessionArg the portletSessionArg to set
+	 */
+	public void setPortletSessionArg(PortletSession portletSessionArg) {
+		this.portletSessionArg = portletSessionArg;
+	}
+
+	/** Default constructor */
     public ExecutePageActionArgImp() {
     }
 

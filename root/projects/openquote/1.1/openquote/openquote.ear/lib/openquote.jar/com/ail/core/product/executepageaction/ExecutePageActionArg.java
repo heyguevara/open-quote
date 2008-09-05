@@ -17,6 +17,8 @@
 
 package com.ail.core.product.executepageaction;
 
+import javax.portlet.PortletSession;
+
 import com.ail.core.command.CommandArg;
 import com.ail.openquote.Quotation;
 
@@ -40,6 +42,17 @@ public interface ExecutePageActionArg extends CommandArg {
      */
     void setQuotationArgRet(Quotation quotationArgRet);
 
+    /**
+     * The portlet session associated with the action.
+     * @return Action's portlet session
+     */
+    PortletSession getPortletSessionArg();
+    
+    /**
+     * @see #getPortletSessionArg()
+     */
+    void setPortletSessionArg(PortletSession portletSession);
+    
     /** 
      * The service name property specifies the name of the product service to
      * be executed.
