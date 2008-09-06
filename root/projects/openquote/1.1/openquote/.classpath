@@ -93,7 +93,7 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/xstream-1.2.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/hibernate-3.2.1-patched.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/commercial.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/core.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/core.jar" sourcepath="/core/core.ear/lib/core.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/insurance.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/acceptance-ejb.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/configure-server-ejb.jar"/>
