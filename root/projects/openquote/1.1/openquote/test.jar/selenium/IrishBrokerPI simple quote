@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>IrishBrokerPI simple quote</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">IrishBrokerPI simple quote</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/portal/auth/portal/default/Sandpit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>selectedProduct</td>
+	<td>label=AIL.Demo.IrishBrokerPI</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Get A Quote:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>title</td>
+	<td>label=Mr.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>firstname</td>
+	<td>Jimbo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>surname</td>
+	<td>Clucknasty</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address1</td>
+	<td>Cluck House</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address2</td>
+	<td>Cluck Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>town</td>
+	<td>Cluckrown</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>town</td>
+	<td>Clucktown</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>county</td>
+	<td>Cluckintonshire</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>postcode</td>
+	<td>CL11 2CL</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>phone</td>
+	<td>0800 01010101</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>email</td>
+	<td>jimbo@cluck.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Next:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>asset[id=#company#]/attribute[id=#companyName#]</td>
+	<td>p</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>asset[id=#company#]/attribute[id=#companyName#]</td>
+	<td>Jimbo Insurance</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[id=#company#]/attribute[id=#businessDescription#]</td>
+	<td>Insuring Jimbos against fire</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#company#]/attribute[id=#generalBroker#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#company#]/attribute[id=#financialServices#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[id=#company#]/attribute[id=#mortgageWork#]</td>
+	<td>20</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[id=#company#]/attribute[id=#feesEstimated#]</td>
+	<td>100000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#company#]/attribute[id=#renewalOrLoyaltyDiscount#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#company#]/attribute[id=#limitOfIndemnity#]</td>
+	<td>label=EUR 1,500,000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#company#]/attribute[id=#limitOfIndemnityWording#]</td>
+	<td>label=Any One Claim</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#company#]/attribute[id=#retroactiveDateApplied#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[id=#company#]/attribute[id=#inceptionDate#]</td>
+	<td>01/12/2008</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Next:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Quote:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>682.50</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>EUR 1,500,000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Any One Claim</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Jimbo Insurance</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Quit:immediate=true']</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
