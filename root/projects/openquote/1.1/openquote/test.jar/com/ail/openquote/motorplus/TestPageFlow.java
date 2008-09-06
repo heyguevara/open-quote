@@ -60,7 +60,8 @@ public class TestPageFlow extends CoreUserTestCase {
         
     }
     
-    public void testDataElementsOnLabel() throws Exception {
+    @SuppressWarnings("deprecation")
+	public void testDataElementsOnLabel() throws Exception {
         CoreProxy cp=new CoreProxy();
         
         SectionScroller qs=new SectionScroller();
