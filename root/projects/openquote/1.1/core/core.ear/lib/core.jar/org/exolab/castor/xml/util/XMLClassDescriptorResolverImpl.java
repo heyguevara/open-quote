@@ -558,7 +558,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *         class could not be loaded or is contained in the list of
          *         missing classes.
          */
-        @SuppressWarnings("unchecked")
         public Class loadClass(String className, ClassLoader loader) {
             if (this._missingClasses.contains(className)) {
                 return null;
@@ -667,7 +666,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *
          * @see #INTERNAL_CONTAINER_NAME
          */
-        @SuppressWarnings("unchecked")
         private void addDescriptor(String className, XMLClassDescriptor descriptor) {
             _typeMap.put(className, descriptor);
 
@@ -710,7 +708,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *
          * @see #isMissingDescriptor(String)
          */
-        @SuppressWarnings("unchecked")
         public void addMissingDescriptor(String className) {
             _missingTypes.add(className);
         }
@@ -746,7 +743,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *         list if no such descriptor is stored in this cache. This
          *         method will never return <code>null</code>!
          */
-        @SuppressWarnings("unchecked")
         public List getDescriptorList(String xmlName) {
             List list = (List) _xmlNameMap.get(xmlName);
 
@@ -832,7 +828,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @throws ResolverException
          *             If a CDR file is available but cannot be opened or read.
          */
-        @SuppressWarnings("unchecked")
         public synchronized void loadCDRList(String packageName, ClassLoader loader) throws ResolverException {
             if (_loadedCDRLists.contains(packageName)) {
                 return;
@@ -888,7 +883,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @see #setLoadPackageMappings(boolean)
          * @see MappingLoader
          */
-        @SuppressWarnings("unchecked")
         public synchronized void loadPackageMapping(String packageName, ClassLoader loader) {
             if (!_loadPackageMappings || _loadedPackageMappings.contains(packageName)) {
                 return;
