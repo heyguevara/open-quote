@@ -39,6 +39,7 @@
   </target>
 
   <target name="release" description="build this project's releasable outputs">
+    <echo message="buildnumber: ${build.number}"/>
 		<!-- Stop the server if it is running -->
     <ant antfile="BuildCommands.xml" target="jboss: stop server"/>
     
@@ -48,7 +49,6 @@
 
     <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
     <release-jboss-domain-macro/>
-    <release-source-macro/>
   </target>
 </project>
 
