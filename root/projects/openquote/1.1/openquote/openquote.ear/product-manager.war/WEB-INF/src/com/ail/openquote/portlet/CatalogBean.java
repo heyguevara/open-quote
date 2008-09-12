@@ -286,7 +286,6 @@ public class CatalogBean {
         return serverDeligate;
     }    
 
-    @SuppressWarnings("unchecked")
     public void refresh() {
         Principal p=FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         VersionEffectiveDate ved=new VersionEffectiveDate();
