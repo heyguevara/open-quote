@@ -119,12 +119,10 @@
     </macrodef>
 
     <!-- Under a cruise control build we upload the results of the relese to the project wide repository -->
-    <target name="_release-jboss-domain-type=cruisecontrol">
-        <zip basedir="${deploy.dir}" destfile="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}.${label}/${ant.project.name}-${major.version}.${minor.version}.${label}.dar" />
-
-        <ftp action="put" userid="${ftp.user}" password="${ftp.password}" remotedir="${ftp.dir}" server="${ftp.server}" verbose="yes">
-       fileset dir="${repo.dir}" includes="ail/${ant.project.name}/${major.version}.${minor.version}.${label}/${ant.project.name}-${major.version}.${minor.version}.${label}.dar"/>
-     </ftp>
+    <target name="_release-jboss-domain-type=integration" depends="_release-jboss-domain-type=developer">
+      <mkdir dir="${release.repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}" />
+      <copyfile dest="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot.dar" 
+	            src="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}/${ant.project.name}-${major.version}.${minor.version}-build.${build.number}.dar"/>
     </target>
 
     <!-- For a local 'developer' build, we simply put a SNAPSHOT copy of the .dar in the local cache dir for other projects to use -->
