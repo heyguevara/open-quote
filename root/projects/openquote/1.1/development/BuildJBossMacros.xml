@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Macro file defining a collection of ant macros concerned with managing JBoss
- $Revision: 1.30 $
- $State: Exp $
- $Date: 2007/11/23 20:59:04 $
- $Source: /home/bob/CVSRepository/development/BuildJBossMacros.xml,v $
 -->
 
 <project default="dummy" name="BuildJBossMacros.xml">
@@ -18,8 +14,8 @@
         <!-- Unpack the cached zip into the dev tree -->
         <mkdir dir="${target.dir}" />
         <unzip overwrite="yes" dest="${target.dir}" src="${repo.dir}/jboss/jboss-ail/${version}/jboss-ail-${version}.zip" />
-        <exec os="Mac OS X" executable="chmod" dir="${target.dir}/jboss/bin">
-            <arg line="775 run.sh" />
+        <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${target.dir}/jboss/bin">
+            <arg line="-c 'chmod 755 *.sh'" />
         </exec>
     </target>
 
