@@ -5,13 +5,8 @@
  resetConfiguration() method.
  This configuration doesn't represent a real live configuration. This
  is only the core service and as such it doesn't define any product
- rules. For these you have to look at the specialisations that use this
+ rules. For these you have to look at the specializations that use this
  service.
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
 -->
 <configuration 
   xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
@@ -22,7 +17,7 @@
   <version>$Revision$</version>
 
  <!-- Select the method used to generate new numbers. Options are:                            -->
- <!--  ConfigurePropertyUniqueNumberHandler - which stores the numbers in configuation.       -->
+ <!--  ConfigurePropertyUniqueNumberHandler - which stores the numbers in configuration.       -->
  <!--  PolicyIdUniqueNumberGeneratorHandler - use the policy's unique ID as the quote number. -->
  <parameter name="UniqueQuotationNumberHandler">PolicyIdUniqueNumberGeneratorHandler</parameter>
 
