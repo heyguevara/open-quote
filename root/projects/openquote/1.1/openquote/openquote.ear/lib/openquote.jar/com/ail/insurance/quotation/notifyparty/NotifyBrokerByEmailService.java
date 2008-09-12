@@ -41,7 +41,6 @@ import com.ail.core.Service;
 import com.ail.core.Version;
 import com.ail.core.XMLException;
 import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.AssessmentSheetDetails;
