@@ -93,10 +93,11 @@ public abstract class PageContainer extends PageElement {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         for (PageElement e : pageElement) {
-            e.applyRequestValues(request, response, model);
+            model=e.applyRequestValues(request, response, model);
         }
+        return model;
     }
 
     @Override
@@ -111,9 +112,10 @@ public abstract class PageContainer extends PageElement {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         for (PageElement e : getPageElement()) {
-            e.processActions(request, response, model);
+            model=e.processActions(request, response, model);
         }
+        return model;
     }
 }

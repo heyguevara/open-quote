@@ -89,7 +89,8 @@ public class ReferralSummary extends PageContainer {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    	return model;
     }
 
 	@Override
@@ -98,7 +99,7 @@ public class ReferralSummary extends PageContainer {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Quotation quote=(com.ail.openquote.Quotation)model;
 
@@ -116,6 +117,8 @@ public class ReferralSummary extends PageContainer {
         w.printf("  </td>");
         w.printf(" </tr>");
         w.printf("</table>");
+
+        return model;
 	}
 
 	private void renderReferralNotification(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {

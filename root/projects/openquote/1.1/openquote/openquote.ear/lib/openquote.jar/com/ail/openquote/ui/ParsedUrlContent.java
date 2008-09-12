@@ -77,7 +77,8 @@ public class ParsedUrlContent extends PageElement {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    	return model;
     }
 
 	@Override
@@ -86,7 +87,7 @@ public class ParsedUrlContent extends PageElement {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Quotation quote=(com.ail.openquote.Quotation)model;
         String productName=null;
@@ -109,7 +110,7 @@ public class ParsedUrlContent extends PageElement {
                 }
             }
             catch(IOException e) {
-                // next
+                // next! This just indicates that we didn't find it in this namespace
             }
         }
         
@@ -120,5 +121,7 @@ public class ParsedUrlContent extends PageElement {
         w.printf("</td>");
         w.printf("</tr>");
         w.printf("</table>");
+        
+        return quote;
 	}
 }

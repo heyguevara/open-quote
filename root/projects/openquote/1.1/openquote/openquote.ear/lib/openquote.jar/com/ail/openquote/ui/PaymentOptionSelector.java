@@ -49,7 +49,7 @@ public class PaymentOptionSelector extends PageElement {
 	private static final long serialVersionUID = -4810599045554021748L;
 
 	@Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         Quotation quote=(Quotation)model;
 
         // null any existing payment option. In state terms is it okay for a quote to have a null
@@ -62,13 +62,15 @@ public class PaymentOptionSelector extends PageElement {
             int selectedOption=Integer.parseInt(request.getParameter("selectedOption"));
 
             // loop though the model's payment options looking for one with a matching hashcode
-            for(PaymentSchedule ps: ((Quotation)model).getPaymentOption()) {
+            for(PaymentSchedule ps: quote.getPaymentOption()) {
                 if (ps.hashCode()==selectedOption) {
                     // bingo!
                     quote.setPaymentDetails(ps);
                 }
             }
         }
+        
+        return quote;
     }
 
 	@Override
@@ -86,7 +88,7 @@ public class PaymentOptionSelector extends PageElement {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 	    Quotation quote=(Quotation)model;
         PrintWriter w=response.getWriter();
 
@@ -96,12 +98,12 @@ public class PaymentOptionSelector extends PageElement {
         w.printf("   </tr>");       
 
         // output the error if there is one
-        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", error("attribute[id='error.paymentDetails']", model));
+        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", error("attribute[id='error.paymentDetails']", quote));
         
         w.printf("   <tr><td colspan='2' height='15'><hr/></td></tr>");
 
         // loop through the options outputting each to its own row
-        for(PaymentSchedule ps: ((Quotation)model).getPaymentOption()) {
+        for(PaymentSchedule ps: quote.getPaymentOption()) {
             w.printf("   <tr class='portlet-font'>");
             w.printf("       <td class='portal-section'>");
             w.printf("           <b>%s</b>", ps.getDescription());
@@ -118,5 +120,7 @@ public class PaymentOptionSelector extends PageElement {
         }
 
         w.printf("</table>");
+        
+        return quote;
     }
 }

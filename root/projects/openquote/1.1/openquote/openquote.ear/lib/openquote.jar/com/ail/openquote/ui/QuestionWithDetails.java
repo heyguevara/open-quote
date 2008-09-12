@@ -94,13 +94,14 @@ public class QuestionWithDetails extends Question {
     }
     
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
-        applyRequestValues(request, response, model, "");
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+        return applyRequestValues(request, response, model, "");
     }
 
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
-        super.applyRequestValues(request, response, model, rowContext);
-        Functions.applyAttributeValues(model, getDetailsBinding(), rowContext, request);
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
+        model=super.applyRequestValues(request, response, model, rowContext);
+        model=Functions.applyAttributeValues(model, getDetailsBinding(), rowContext, request);
+        return model;
     }
 
     @Override
@@ -119,12 +120,12 @@ public class QuestionWithDetails extends Question {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    renderResponse(request, response, model, "");
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	    return renderResponse(request, response, model, "");
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
         String detailTitle = getExpandedDetailsTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
         String questionId=xpathToId(rowContext+binding);
@@ -142,5 +143,7 @@ public class QuestionWithDetails extends Question {
         // Disable the 'detail' textarea unless the question's answer is 'Yes'
         w.printf("<script type='text/javascript'>enableTargetIf(document.getElementsByName(\"%s\")[0].value==\"Yes\", \"%s\")</script>",
                 questionId, detailsId);
+        
+        return model;
     }
 }

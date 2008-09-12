@@ -60,8 +60,9 @@ public class PageScript extends PageElement {
     }
 
 	@Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
 		// nothing to do here - PageScript doesn't have a value
+		return model;
 	}
 
 	@Override
@@ -71,8 +72,9 @@ public class PageScript extends PageElement {
 	}
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 	    // nothing to do here - all our output goes in the page level
+		return model;
     }
 
     @Override

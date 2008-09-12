@@ -74,19 +74,21 @@ public class QuestionWithSubSection extends Question {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
-        applyRequestValues(request, response, model, "");
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+        return applyRequestValues(request, response, model, "");
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
-        super.processActions(request, response, model);
-        subSection.processActions(request, response, model);
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
+		model=super.processActions(request, response, model);
+		model=subSection.processActions(request, response, model);
+		return model;
     }
 
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
-        super.applyRequestValues(request, response, model, rowContext);
-        subSection.applyRequestValues(request, response, model);
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
+        model=super.applyRequestValues(request, response, model, rowContext);
+        model=subSection.applyRequestValues(request, response, model);
+        return model;
     }
 
     @Override
@@ -106,12 +108,13 @@ public class QuestionWithSubSection extends Question {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 	    renderResponse(request, response, model, "");
+	    return model;
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
@@ -124,7 +127,7 @@ public class QuestionWithSubSection extends Question {
         w.printf("<tr><td colspan='4'>");
         w.printf(" <div id='%s' style='visibility:hidden;display:none'>", id);
         w.print("   <table width='90%'><tr><td width='5%'/><td>");
-        subSection.renderResponse(request, response, model);
+        model=subSection.renderResponse(request, response, model);
         w.printf("  </td></tr></table>");
         w.printf(" </div>");
         w.printf("</td>");
@@ -136,5 +139,7 @@ public class QuestionWithSubSection extends Question {
                       "opt.options[opt.selectedIndex].text==\"Yes\", "+
                       "opt.options[opt.selectedIndex].text==\"No\", "+
                       "\"%2$s\")</script>", questionId, id);
+
+        return model;
     }
 }

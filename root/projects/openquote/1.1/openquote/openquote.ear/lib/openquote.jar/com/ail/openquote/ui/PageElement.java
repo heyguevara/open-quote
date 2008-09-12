@@ -148,9 +148,11 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @param request
      * @param response
      * @param model
+     * @return potentially modified model
      */
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         // default implementation does nothing.
+    	return model;
     }
 	
     /**
@@ -174,11 +176,14 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @param request
      * @param response
      * @param model
+     * @return potentially modified model
      */
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         for(Action a: action) {
-            a.processActions(request, response, model);
+            model=a.processActions(request, response, model);
         }
+        
+        return model;
     }
 
     /**
@@ -216,13 +221,16 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @param response
      * @param model
      * @throws IllegalStateException
+     * @return potentially modified model
      * @throws IOException
      */
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         // by default only process actions.
         for(Action a: action) {
-            a.renderResponse(request, response, model);
+            model=a.renderResponse(request, response, model);
         }
+        
+        return model;
     }
 
     /**

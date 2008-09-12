@@ -73,7 +73,7 @@ public class AnswerScroller extends Answer {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
         int rowCount=0;
@@ -88,6 +88,8 @@ public class AnswerScroller extends Answer {
 
             w.printf("<tr><td height='4' colspan='2'></td></tr>");
         }
+        
+        return model;
     }
 }
 

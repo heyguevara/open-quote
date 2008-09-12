@@ -218,23 +218,25 @@ public class QuotationSummary extends PageContainer {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
-        super.applyRequestValues(request, response, model);
-        loginSection(model).applyRequestValues(request, response, model);
-        navigationSection().applyRequestValues(request, response, model);
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+        model=super.applyRequestValues(request, response, model);
+        model=loginSection(model).applyRequestValues(request, response, model);
+        model=navigationSection().applyRequestValues(request, response, model);
         if (premiumSummaryFooter!=null) {
-            premiumSummaryFooter.applyRequestValues(request, response, model);
+            model=premiumSummaryFooter.applyRequestValues(request, response, model);
         }
+        return model;
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
-        super.processActions(request, response, model);
-        loginSection(model).processActions(request, response, model);
-        navigationSection().processActions(request, response, model);
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
+        model=super.processActions(request, response, model);
+        model=loginSection(model).processActions(request, response, model);
+        model=navigationSection().processActions(request, response, model);
         if (premiumSummaryFooter!=null) {
-            premiumSummaryFooter.processActions(request, response, model);
+            model=premiumSummaryFooter.processActions(request, response, model);
         }
+        return model;
     }
 
     @Override
@@ -252,7 +254,7 @@ public class QuotationSummary extends PageContainer {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Quotation quote=(com.ail.openquote.Quotation)model;
 
@@ -275,11 +277,12 @@ public class QuotationSummary extends PageContainer {
         w.printf("</table>");
         
         w.printf("</form>");
+        
+        return model;
 	}
 
 	private void renderPremiumSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
         CurrencyAmount premium=quote.getTotalPremium();
-
  
         w.printf("<table width='100%%'>");
         w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>Your Quotation: %s</td></tr>", premium.toString());

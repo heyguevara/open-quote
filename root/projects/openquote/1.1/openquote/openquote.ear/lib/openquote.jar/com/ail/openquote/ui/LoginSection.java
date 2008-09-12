@@ -155,7 +155,7 @@ public class LoginSection extends PageContainer {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
 
         if ("Create".equals(op)) {
@@ -166,6 +166,8 @@ public class LoginSection extends PageContainer {
             String username=request.getParameter("username");
             ((Quotation)model).setUsername(username);
         }
+        
+        return model;
     }
 
     @Override
@@ -245,7 +247,7 @@ public class LoginSection extends PageContainer {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         TransactionManager tm=null;
         Transaction tx=null;
 
@@ -315,12 +317,14 @@ public class LoginSection extends PageContainer {
             // TODO Send a reminder email to the user
         }
         else {
-            super.processActions(request, response, model);
+            model=super.processActions(request, response, model);
         }
+        
+        return model;
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Quotation quotation=(Quotation)model;
         Proposer proposer=(Proposer)quotation.getProposer();
@@ -429,6 +433,8 @@ public class LoginSection extends PageContainer {
         }
 
         w.printf("</script>");
+        
+        return model;
     }
 
     private boolean isAnExistingUser(String username, PortletRequest request) {

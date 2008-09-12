@@ -45,17 +45,20 @@ public class QuitButtonAction extends CommandButtonAction {
     }
     
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(getLabel())) {
-            super.processActions(request, response, model);
+            model=super.processActions(request, response, model);
             request.getPortletSession().invalidate();
         }
+        
+        return model;
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         w.printf("<input type='submit' name='op=%1$s:immediate=true' value='%1$s' class='portlet-form-input-field'/>", getLabel());
+        return model;
     }
 }

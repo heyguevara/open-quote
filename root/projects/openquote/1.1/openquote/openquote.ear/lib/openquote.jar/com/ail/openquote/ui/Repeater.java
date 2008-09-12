@@ -255,7 +255,7 @@ public abstract class Repeater extends PageElement {
     }
 
     @SuppressWarnings("unchecked")
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if (isAddAndDeleteEnabled()) {
             Properties opParams=Functions.getOperationParameters(request);
             String op=opParams.getProperty("op");
@@ -306,11 +306,13 @@ public abstract class Repeater extends PageElement {
                 c.remove(obj);
             }
         }
+        
+        return model;
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         int rowCount=0;
 
         // Loop through the rows
@@ -324,6 +326,8 @@ public abstract class Repeater extends PageElement {
 
             rowCount++;
         }
+        
+        return model;
     }
 
     @SuppressWarnings("unchecked")

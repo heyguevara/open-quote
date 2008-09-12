@@ -48,8 +48,9 @@ public class PageForwardAction extends Action {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         // do nothing
+    	return model;
     }
 
     @Override
@@ -58,14 +59,17 @@ public class PageForwardAction extends Action {
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         // do nothing
+    	return model;
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if ("onProcessActions".equals(getWhen()) && conditionIsMet(model)) {
             ((Quotation)model).setPage(getDestinationPageId());
         }
+        
+        return model;
     }
 }

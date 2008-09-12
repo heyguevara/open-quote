@@ -58,10 +58,12 @@ public class AssessmentSheetDetails extends PageElement {
 	}
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
-        render(w, model);        
+        render(w, model);
+        
+        return model;
     }
 
     /**

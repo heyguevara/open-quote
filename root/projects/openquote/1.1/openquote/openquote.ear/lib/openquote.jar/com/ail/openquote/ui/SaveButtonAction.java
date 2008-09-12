@@ -48,7 +48,7 @@ public class SaveButtonAction extends CommandButtonAction {
     }
     
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(getLabel())) {
             Quotation quote=(Quotation)model;
@@ -56,13 +56,15 @@ public class SaveButtonAction extends CommandButtonAction {
             quote.setUsername(request.getRemoteUser());
             SavedQuotation sq=new SavedQuotation(quote);
             new CoreProxy().update(sq);
-            super.processActions(request, response, model);
+            model=super.processActions(request, response, quote);
             request.getPortletSession().invalidate();
         }
+        
+        return model;
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
         if (request.getRemoteUser()!=null) {
@@ -71,5 +73,7 @@ public class SaveButtonAction extends CommandButtonAction {
         else {
             w.printf("<input type='button' onClick='%s' name='op=%2$s' value='%2$s' class='portlet-form-input-field'/>", LoginSection.reset, getLabel());
         }
+        
+        return model;
     }
 }

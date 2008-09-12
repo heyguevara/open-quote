@@ -71,7 +71,7 @@ public class PaymentDetails extends PageElement {
     private static SimpleDateFormat monthYearFormat=new SimpleDateFormat("MMyy");
 
 	@Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         Quotation quote=(Quotation)model;
  
         for(MoneyProvision mp: quote.getPaymentDetails().getMoneyProvision()) {
@@ -94,6 +94,8 @@ public class PaymentDetails extends PageElement {
                 mp.xpathSet("paymentMethod/sortCode", request.getParameter("sc1")+"-"+request.getParameter("sc2")+"-"+request.getParameter("sc3"));
             }
         }
+        
+        return quote;
     }
 
 	@Override
@@ -168,7 +170,7 @@ public class PaymentDetails extends PageElement {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 	    Quotation quote=(Quotation)model;
         PrintWriter w=response.getWriter();
 
@@ -177,6 +179,8 @@ public class PaymentDetails extends PageElement {
         renderPaymentDetails(w, quote);
         renderSubmit(w, quote);
         w.printf("</table>");
+        
+        return quote;
     }
 
     private void renderSummary(PrintWriter w, Quotation quote) {

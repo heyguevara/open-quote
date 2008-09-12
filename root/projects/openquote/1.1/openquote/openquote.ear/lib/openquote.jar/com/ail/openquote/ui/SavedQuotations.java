@@ -130,7 +130,8 @@ public class SavedQuotations extends PageElement {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    	return model;
     }
 
 	@Override
@@ -139,12 +140,13 @@ public class SavedQuotations extends PageElement {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         CoreProxy core=new CoreProxy();
         Properties opParams=Functions.getOperationParameters(request);
         String op=opParams.getProperty("op");
         String quoteNumber=opParams.getProperty("id");
-
+        Quotation quote=(Quotation)model;
+        
         if (quoteNumber!=null) {
             try {
 		        SavedQuotation savedQuotation=(SavedQuotation)core.queryUnique("get.savedQuotation.by.quotationNumber", quoteNumber);
@@ -156,7 +158,7 @@ public class SavedQuotations extends PageElement {
 	                
 	                //TODO check that savedQuotation hasn't expired - goto error page if it has.
 	        
-	                Quotation quote=savedQuotation.getQuotation();
+	                quote=savedQuotation.getQuotation();
 	        
 	                if ("confirm".equals(op)) {
 	                    quote.setPage(confirmAndPayDestinationPageId);
@@ -191,17 +193,19 @@ public class SavedQuotations extends PageElement {
             	throw new RenderingError("Page forward on login failed. Forward was to: "+url, e);
             }
         }
+        
+        return model;
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-        Quotation q=(Quotation)model;
+        Quotation quote=(Quotation)model;
 
         // If the user is logged in...
         if (request.getRemoteUser()!=null) {
             // get a list of the user's saved quotes.
-            List<?> quotes=new CoreProxy().query("get.savedQuotationSummary.by.username.and.product", request.getRemoteUser(), q.getProductTypeId());
+            List<?> quotes=new CoreProxy().query("get.savedQuotationSummary.by.username.and.product", request.getRemoteUser(), quote.getProductTypeId());
 
             // If the user has saved quotes...
             if (quotes.size()!=0) {
@@ -217,16 +221,16 @@ public class SavedQuotations extends PageElement {
                 w.printf(  "</tr>");
         
                 for(Object o: quotes) {
-                    SavedQuotationSummary quote=(SavedQuotationSummary)o;
+                    SavedQuotationSummary savedQuote=(SavedQuotationSummary)o;
                     w.printf("<tr>");
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", quote.getQuotationNumber());
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(quote.getQuotationDate()));
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(quote.getQuotationExpiryDate()));
-                    w.printf(  "<td align='center' class='portal-form-label'>£%s</td>", quote.getPremium().getAmountAsString());
+                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getQuotationNumber());
+                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
+                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
+                    w.printf(  "<td align='center' class='portal-form-label'>£%s</td>", savedQuote.getPremium().getAmountAsString());
                     w.printf(  "<td align='left'>");
-                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", quote.getQuotationNumber(), confirmAndPayLabel);
-                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", quote.getQuotationNumber(), requoteLabel);
-                    viewQuotationButtonAction.renderResponse(request, response, quote);
+                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), confirmAndPayLabel);
+                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), requoteLabel);
+                    viewQuotationButtonAction.renderResponse(request, response, savedQuote);
                     w.printf(  "</td>");
                     w.printf("</tr>");
                 }
@@ -234,6 +238,8 @@ public class SavedQuotations extends PageElement {
                 w.printf("</table>");
             }
         }
+        
+        return quote;
 	}
 
     @Override

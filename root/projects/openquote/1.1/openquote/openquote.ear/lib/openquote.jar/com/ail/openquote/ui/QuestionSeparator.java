@@ -43,7 +43,8 @@ public class QuestionSeparator extends Question {
 	}
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
+    	return model;
     }
 
     @Override
@@ -52,11 +53,13 @@ public class QuestionSeparator extends Question {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
+    	return model;
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    	return model;
     }
 
     @Override
@@ -65,12 +68,12 @@ public class QuestionSeparator extends Question {
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        renderResponse(request, response, model, null);
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        return renderResponse(request, response, model, null);
     }
 
 	@Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         PrintWriter w=response.getWriter();
@@ -81,5 +84,7 @@ public class QuestionSeparator extends Question {
         else {
             w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", Functions.hideNull(title));
         }
+        
+        return model;
     }
 }

@@ -134,12 +134,13 @@ public class Answer extends PageElement {
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         
         String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         w.printf("<tr><td>%s</td><td>%s</td></tr>", aTitle, formattedAnswer(model.xpathGet(binding)));
+        
+        return model;
     }
-
 }

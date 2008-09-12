@@ -193,12 +193,12 @@ public class AttributeField extends PageElement {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
-        applyRequestValues(request, response, model, "");
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+        return applyRequestValues(request, response, model, "");
     }
 
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
-        Functions.applyAttributeValues(model, getBinding(), rowContext, request);
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
+        return Functions.applyAttributeValues(model, getBinding(), rowContext, request);
     }
 
     @Override
@@ -207,13 +207,16 @@ public class AttributeField extends PageElement {
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    renderResponse(request, response, model, "");
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	    return renderResponse(request, response, model, "");
 	}
 
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
+        
         w.print(Functions.renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));
+        
+        return model;
     }
 
     @Override

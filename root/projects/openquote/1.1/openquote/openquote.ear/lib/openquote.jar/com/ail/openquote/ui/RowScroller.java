@@ -50,7 +50,7 @@ public class RowScroller extends Repeater {
     
     @SuppressWarnings("unchecked")
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
         Type rootForExpansion=QuotationCommon.getCurrentQuotation(request.getPortletSession());
@@ -134,6 +134,8 @@ public class RowScroller extends Repeater {
         }
         
         w.printf("</table>");
+        
+        return model;
     }
 }
 

@@ -54,7 +54,7 @@ public class PageSection extends PageContainer {
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         w.printf(" <table width='100%%' border='0' cols='%d'>", columns);
 
@@ -70,7 +70,7 @@ public class PageSection extends PageContainer {
             for(int col=0 ; col<columns ; col++) {
                 w.printf("<td>");
                 if (it.hasNext()) {
-                    it.next().renderResponse(request, response, model);
+                    model=it.next().renderResponse(request, response, model);
                 }
                 else {
                     w.printf("&nbsp;");
@@ -80,5 +80,7 @@ public class PageSection extends PageContainer {
             w.printf("</tr>");
         }
         w.printf("</table>");
+        
+        return model;
 	}
 }

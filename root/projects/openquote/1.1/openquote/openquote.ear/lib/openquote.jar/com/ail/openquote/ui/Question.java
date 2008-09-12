@@ -47,17 +47,19 @@ public class Question extends AttributeField {
 	}
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    renderResponse(request, response, model, "");
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	    return renderResponse(request, response, model, "");
     }
 
 	@Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
 
         PrintWriter w=response.getWriter();
         
         w.printf("<td>%s</td>", title);
         w.printf("<td colspan='3' align='left'>%s</td>", Functions.renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));
+        
+        return model;
     }
 }

@@ -29,7 +29,7 @@ import com.ail.openquote.Quotation;
 
 /**
  * The PageFlow class is the root of the openquote product UI concept. It contains
- * a collection of pages and implements lifecycle methods which simply delegate to
+ * a collection of pages and implements life-cycle methods which simply delegate to
  * the "current" page.<br/>
  * In all cases the page flow assumes that the model it is processing is a {@link com.ail.openquote.Quotation Quotation}.
  * The name of the "current" page is indicated by the Quotation's {@link com.ail.openquote.Quotation#getPage() page} 
@@ -69,13 +69,14 @@ public class PageFlow extends PageElement {
 	}
 
 	@Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
 		for(Page p: page) {
 			if (p.getId().equals(((Quotation)model).getPage())) {
-	            p.applyRequestValues(request, response, model);
+	            model=p.applyRequestValues(request, response, model);
                 break;
 			}
 		}
+		return model;
 	}
 
 	@Override
@@ -93,22 +94,24 @@ public class PageFlow extends PageElement {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
 		for(Page p: page) {
 			if (p.getId().equals(((Quotation)model).getPage())) {
-				p.processActions(request, response, model);
+				model=p.processActions(request, response, model);
                  break;
 			}
 		}
+		return model;
 	}
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 		for(Page p: page) {
 			if (p.getId().equals(((Quotation)model).getPage())) {
-				p.renderResponse(request, response, model);
+				model=p.renderResponse(request, response, model);
                  break;
 			}
 		}
+		return model;
 	}
 }

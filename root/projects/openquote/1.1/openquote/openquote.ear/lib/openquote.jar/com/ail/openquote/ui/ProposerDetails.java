@@ -76,7 +76,7 @@ public class ProposerDetails extends PageElement {
 	}
 
 	@Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         Proposer proposer=(Proposer)((Quotation)model).getProposer();
 
         proposer.setTitle(Title.forName(request.getParameter("title")));
@@ -94,6 +94,8 @@ public class ProposerDetails extends PageElement {
         if (proposer instanceof CommercialProposer) {
         	((CommercialProposer)proposer).setCompanyName(request.getParameter("companyName"));
         }
+        
+        return model;
     }
 
 	@Override
@@ -180,7 +182,7 @@ public class ProposerDetails extends PageElement {
     }
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         Proposer proposer=(Proposer)((Quotation)model).getProposer();
 
@@ -389,5 +391,7 @@ public class ProposerDetails extends PageElement {
         w.printf(" <script type='text/javascript'>disableTargetIf(document.getElementById(\"title\").value!=\"Other\", \"otherTitle\")</script>");
 
         w.printf("</table>");
+        
+        return model;
 	}
 }

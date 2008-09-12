@@ -59,7 +59,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
     }
     
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
 
         if (op!=null && op.equals(getLabel())) {
@@ -86,12 +86,16 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
                 throw new RenderingError("Failed to generate/display quote", e);
             }
         }
+        
+        return model;
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
         w.printf("<input type='submit' name='op=%1$s:id=%2$s' value='%1$s' class='portlet-form-input-field'/>", getLabel(), getQuoteNumberFromModel(model));
+        
+        return model;
     }
 }

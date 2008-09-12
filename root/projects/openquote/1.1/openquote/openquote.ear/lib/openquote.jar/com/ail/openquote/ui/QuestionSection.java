@@ -123,24 +123,28 @@ public class QuestionSection extends PageElement {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
 
         for (PageElement q : question) {
             q.processActions(request, response, localModel);
         }
+        
+        return model;
     }
 
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
         
         for (Question q : question) {
             q.applyRequestValues(request, response, localModel);
         }
+        
+        return model;
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
         String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
@@ -160,6 +164,8 @@ public class QuestionSection extends PageElement {
             w.printf("</tr>");
         }
         w.printf("</table>");
+        
+        return model;
 	}
 
     public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {

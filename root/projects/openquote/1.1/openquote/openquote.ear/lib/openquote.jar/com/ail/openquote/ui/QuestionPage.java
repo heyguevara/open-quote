@@ -42,8 +42,8 @@ public class QuestionPage extends Page {
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        super.renderResponse(request, response, model);
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        model=super.renderResponse(request, response, model);
         
         super.renderPageHeader(request, response, model);
 
@@ -58,7 +58,7 @@ public class QuestionPage extends Page {
 
         for (PageElement e : super.getPageElement()) {
             w.printf("<tr><td>");
-            e.renderResponse(request, response, model);
+            model=e.renderResponse(request, response, model);
             w.printf("</td></tr>");
         }
 
@@ -66,5 +66,7 @@ public class QuestionPage extends Page {
         w.printf("</form>");
 
         super.renderPageFooter(request, response, model);
+        
+        return model;
     }
 }

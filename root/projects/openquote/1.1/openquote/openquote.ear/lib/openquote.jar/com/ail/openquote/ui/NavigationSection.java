@@ -77,25 +77,27 @@ public class NavigationSection extends PageContainer {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if (!isQuitDisabled()) {
-            quitButton.processActions(request, response, model);
+            model=quitButton.processActions(request, response, model);
         }
         
         for(PageElement element: getPageElement()) {
-            element.processActions(request, response, model);
+            model=element.processActions(request, response, model);
         }
+        
+        return model;
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
         w.print("<table width='100%' border='0' align='center'><tr>");
         w.print("<td width='15%'>&nbsp;</td>");
         w.print("<td width='70%' align='center'>");
         for(PageElement element: getPageElement()) {
-			element.renderResponse(request, response, model);
+			model=element.renderResponse(request, response, model);
 		}
 		w.print("</td>");
         w.print("<td width='15%' align='right'>");
@@ -103,14 +105,17 @@ public class NavigationSection extends PageContainer {
             w.print("&nbsp;");
         }
         else {
-            quitButton.renderResponse(request, response, model);
+            model=quitButton.renderResponse(request, response, model);
         }
         w.print("</td></tr></table>");
+        
+        return model;
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         // Nothing to do here
+    	return model;
     }
 
     @Override

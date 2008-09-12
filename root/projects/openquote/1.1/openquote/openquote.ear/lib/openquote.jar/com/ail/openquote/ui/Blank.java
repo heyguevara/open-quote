@@ -36,8 +36,9 @@ public class Blank extends PageElement {
 	}
 
 	@Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
 		// nothing to do here - Blank doesn't have a value
+		return model;
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class Blank extends PageElement {
 	}
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 		response.getWriter().write("&nbsp;");
+		return model;
 	}
 }

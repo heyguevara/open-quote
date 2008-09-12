@@ -140,7 +140,7 @@ public class AnswerSection extends PageElement {
     }
 
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         
         w.printf(" <table width='100%%' border='0' cols='2'>");
@@ -153,9 +153,11 @@ public class AnswerSection extends PageElement {
         }
 
         for(Answer a: answer) { 
-            a.renderResponse(request, response, model);
+            model=a.renderResponse(request, response, model);
         }
         
         w.printf("</table>");
+        
+        return model;
 	}
 }

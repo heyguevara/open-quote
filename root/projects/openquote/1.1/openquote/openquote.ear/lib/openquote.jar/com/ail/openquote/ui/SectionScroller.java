@@ -70,7 +70,7 @@ public class SectionScroller extends Repeater {
 
     @SuppressWarnings({ "unchecked", "deprecation" })
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
         Type root=QuotationCommon.getCurrentQuotation(request.getPortletSession());
@@ -112,6 +112,8 @@ public class SectionScroller extends Repeater {
             w.printf("</td></tr>");
         }
         w.printf("</table>");
+        
+        return model;
     }
 }
 

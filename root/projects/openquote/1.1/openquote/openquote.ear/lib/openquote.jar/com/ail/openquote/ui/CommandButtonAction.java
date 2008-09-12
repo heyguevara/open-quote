@@ -109,17 +109,20 @@ public class CommandButtonAction extends PageElement {
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(label)) {
             ((Quotation)model).setPage(destinationPageId);
-            super.processActions(request, response, model);
+            model=super.processActions(request, response, model);
         }
+        
+        return model;
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         // do nothing
+    	return model;
     }
 
     @Override
@@ -128,9 +131,10 @@ public class CommandButtonAction extends PageElement {
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        super.renderResponse(request, response, model);
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        model=super.renderResponse(request, response, model);
         PrintWriter w=response.getWriter();
         w.printf("<input type='submit' name='op=%1$s:immediate=%2$b' value='%1$s' class='portlet-form-input-field'/>", label, immediate);
+        return model;
     }
 }

@@ -35,20 +35,22 @@ public abstract class Page extends PageContainer {
     }
 
     @Override
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         response.setContentType("text/html");
 
         PrintWriter w = response.getWriter();
 
         // Execute any page actions defined for this page
         for (Action a : getAction()) {
-            a.renderResponse(request, response, model);
+            model=a.renderResponse(request, response, model);
         }
 
         w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'></script>");        
 
         // Always include the openquote script
-        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");        
+        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");
+        
+        return model;
     }
 
     @Override

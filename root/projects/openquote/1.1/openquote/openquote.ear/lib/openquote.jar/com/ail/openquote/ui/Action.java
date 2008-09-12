@@ -87,17 +87,21 @@ public class Action extends PageElement {
     }
     
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if ("onProcessActions".equals(when) && conditionIsMet(model)) {
-            executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
+            model=executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
+        
+        return model;
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         if ("onApplyRequestValues".equals(when) && conditionIsMet(model)) {
-            executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
+            model=executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
+        
+        return model;
 	}
 
 	@Override
@@ -110,10 +114,12 @@ public class Action extends PageElement {
 	}
 
 	@Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {	    
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {	    
 	    if ("onRenderResponse".equals(when)) {
-	        executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
+	        model=executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
         }
+	    
+	    return model;
     }
 
     /**
@@ -170,7 +176,7 @@ public class Action extends PageElement {
         this.when = when;
     }
 
-    private void executeAction(PortletSession portletSession, Principal principal, Type model) {
+    private Type executeAction(PortletSession portletSession, Principal principal, Type model) {
         TransactionManager tm=null;
         Transaction tx=null;
         Quotation quote=(Quotation)model;
@@ -199,8 +205,11 @@ public class Action extends PageElement {
             }
         }
         
-        // Update the persisted and session quotes to keep everything in sync
+        // Always persist the quote after running an action - the next action/command may need to read the persisted state.
+        quote=QuotationCommon.persistQuotation(quote);
+        
         QuotationCommon.setCurrentQuotation(portletSession, quote);
-        QuotationCommon.persistQuotation(quote);
+        
+        return quote;
     }
 }

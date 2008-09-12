@@ -79,13 +79,13 @@ public class BrokerQuotationSummary extends PageContainer {
     }
 
     @Override
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
-        super.applyRequestValues(request, response, model);
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+        return super.applyRequestValues(request, response, model);
     }
 
     @Override
-    public void processActions(ActionRequest request, ActionResponse response, Type model) {
-        super.processActions(request, response, model);
+    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
+        return super.processActions(request, response, model);
     }
 
     @Override
@@ -240,8 +240,9 @@ public class BrokerQuotationSummary extends PageContainer {
      * @inheritDoc
      */
     @Override
-	public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         render(w, model);
+        return model;
 	}
 }

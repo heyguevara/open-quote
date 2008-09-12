@@ -91,8 +91,9 @@ public class Label extends PageElement {
         this.format = format;
     }
 
-    public void applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
+    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         // nothing to do here.
+    	return model;
     }
 
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
@@ -100,7 +101,7 @@ public class Label extends PageElement {
         return false;
     }
 
-    public void renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
             IOException {
         Object[] params = new Object[parameter.size()];
         int i = 0;
@@ -110,5 +111,7 @@ public class Label extends PageElement {
         }
 
         response.getWriter().printf(format, params);
+        
+        return model;
     }
 }
