@@ -28,7 +28,6 @@ public class ApplyAgentPremiumService {
         CoreProxy core=new CoreProxy(Functions.productNameToConfigurationNamespace(quote.getProductTypeId()));
 
         CalculatePremiumCommand cpc=(CalculatePremiumCommand)core.newCommand("CalculatePremium");
-        AddQuoteNumberCommand aqnc=(AddQuoteNumberCommand)core.newCommand("AddQuoteNumber");
         
         sheet.removeLinesByOrigin("ApplyAgentPremiumService");
         
@@ -38,7 +37,7 @@ public class ApplyAgentPremiumService {
         cpc.setPolicyArgRet(quote);
         cpc.invoke();
         quote=(Quotation)cpc.getPolicyArgRet();
-
+        
         quote.setStatus(PolicyStatus.APPLICATION);
         
         boolean renewal=("Yes".equals(quote.xpathGet("/asset[id='company']/attribute[id='renewalQuotation']/value")));
@@ -63,7 +62,7 @@ public class ApplyAgentPremiumService {
         sheet.addReferral("Agent requested an alternative premium", null);
         sheet.clearLockingActor();
         
-        // This is technically a new quote, so give it a new quote number
+        // This is technically a new quote, so clear quote number and system IDs etc
         quote.setQuotationNumber(null);
         quote.setUserSaved(false);
         quote.markAsNotPersisted();

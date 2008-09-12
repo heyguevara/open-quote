@@ -119,7 +119,7 @@
 <tr>
 	<td>select</td>
 	<td>./attribute[id=#limitOfIndemnityWording#]</td>
-	<td>label=Any One Claim</td>
+	<td>label=any one claim</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

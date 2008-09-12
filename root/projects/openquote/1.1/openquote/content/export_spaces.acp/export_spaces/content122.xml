@@ -44,7 +44,7 @@
         </type>
 
         <service name="ConditionsSetupService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
-            <parameter name="Url">~/Rules%20and%20Scripts/ConditionSetupService.java</parameter>
+            <parameter name="Url">~/Rules%20and%20Scripts/ConditionsSetupService.java</parameter>
         </service>
 
         <command name="ConditionsSetup" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">

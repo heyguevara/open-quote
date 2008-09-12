@@ -87,54 +87,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#businessDescription#]</td>
-	<td>Doing things from time to time for money.</td>
+	<td>select</td>
+	<td>./attribute[id=#business#]/attribute[id=#generalInsuranceBroker#]</td>
+	<td>label=Yes</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#generalBroker#]</td>
-	<td>label=No</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#financialServices#]</td>
+	<td>./attribute[id=#financialServices#]</td>
 	<td>label=No</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#mortgageWork#]</td>
+	<td>./attribute[id=#mortgageWork#]</td>
 	<td>10</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#feesEstimated#]</td>
+	<td>./attribute[id=#feesEstimated#]</td>
 	<td>60000</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#inceptionDate#]</td>
+	<td>./attribute[id=#inceptionDate#]</td>
 	<td>01/12/2008</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#retroactiveDateApplied#]</td>
-	<td>label=No</td>
+	<td>./attribute[id=#retroactiveDateApplied#]</td>
+	<td>label=None - Unlimited</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#limitOfIndemnity#]</td>
+	<td>./attribute[id=#limitOfIndemnity#]</td>
 	<td>label=1,500,000 EUR</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#limitOfIndemnityWording#]</td>
-	<td>label=Aggregate</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#loyaltyDiscount#]</td>
-	<td>label=No</td>
+	<td>./attribute[id=#limitOfIndemnityWording#]</td>
+	<td>label=in the aggregate</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -163,7 +153,7 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Aggregate</td>
+	<td>in the aggregate</td>
 	<td></td>
 </tr>
 

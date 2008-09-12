@@ -85,7 +85,9 @@
             <navigationSection>
                 <saveButtonAction label="Save" destinationPageId="CompanyDetails" immediate="true"/>
                 <requoteButtonAction label="Requote" destinationPageId="CompanyDetails"/>
-                <commandButtonAction label="Confirm Order" destinationPageId="Confirm"/>
+                <commandButtonAction label="Confirm Order" destinationPageId="Confirm">
+                  <action when="onProcessActions" commandName="PlaceOrder"/>
+                </commandButtonAction>
                 <commandButtonAction label="Premium Request" destinationPageId="PremiumRequest"/>
                 <viewQuotationButtonAction/> 
             </navigationSection>
@@ -155,7 +157,6 @@
     </questionPage>
 
     <questionPage id="Confirm" title="Thank you">
-        <action when="onRenderResponse" commandName="PlaceOrder"/>
         <action when="onRenderResponse" commandName="SendNotificationAction"/>
         
         <parsedUrlContent id="ThankYou" url="~/ThankYou.html"/>

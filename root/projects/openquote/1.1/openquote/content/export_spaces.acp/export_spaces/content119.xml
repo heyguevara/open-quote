@@ -19,7 +19,7 @@
     </excess>
     
     <asset id="company" assetTypeId='Asset'>
-        <attribute id="business" format="string">
+        <attribute id="business" format="note">
           <attribute id="generalInsuranceBroker" value="No" format="yesorno"/>
           <attribute id="lifeAndPensions" value="No" format="yesorno"/>
           <attribute id="mortgageCompany" value="No" format="yesorno"/>
@@ -34,7 +34,7 @@
         <attribute id="mortgageWork" value="" format="number,percent"/> 
         <attribute id="feesEstimated" value="" format="currency" unit="EUR"/> 
         <attribute id="limitOfIndemnity" value="?" format="choice,options=-1#?|1#1,500,000 EUR|2#2,600,000 EUR"/>
-        <attribute id="limitOfIndemnityWording" value="?" format="choice,options=-1#?|1#Any One Claim|2#Aggregate"/>
+        <attribute id="limitOfIndemnityWording" value="?" format="choice,options=-1#?|1#any one claim|2#in the aggregate"/>
         <attribute id="retroactiveDateApplied" value="?" format="choice,options=-1#?|1#None - Unlimited|2#Yes"/>
         <attribute id="retroactiveDate" value="" format="date,pattern=dd/MM/yyyy"/>
         <attribute id="renewalQuotation" value="No" format="yesorno"/> 

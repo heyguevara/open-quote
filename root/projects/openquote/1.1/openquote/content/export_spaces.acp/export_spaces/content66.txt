@@ -5,43 +5,33 @@ import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand;
 import com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand;
 import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceCommand;
 import com.ail.core.CoreProxy;
+import com.ail.core.Functions;
 import com.ail.openquote.Quotation;
 
 public class PremiumCalculationService {
-    public static void invoke(ExecutePageActionArgImp args) {
+    public static void invoke(ExecutePageActionArgImp args) throws Exception {
         Quotation quote=args.getQuotationArgRet();
         
-        CoreProxy core=new CoreProxy(); 
+        CoreProxy core=new CoreProxy(Functions.productNameToConfigurationNamespace(quote.getProductTypeId())); 
         
-        try {
-            AddQuoteNumberCommand aqnc=(AddQuoteNumberCommand)core.newCommand("AddQuoteNumber");
-            aqnc.setPolicyArgRet(quote);
-            aqnc.invoke();
-            quote=(Quotation)aqnc.getPolicyArgRet();
-        
-            /* CalculatePremium automatically calls CalculateTax, CalculateBrokerage, CalculateCommission and CalculateManagementCharge before
-             * processing the assessment sheets to arrive at a premium.
-             */
-            CalculatePremiumCommand cpc=(CalculatePremiumCommand)core.newCommand("CalculatePremium");
-            cpc.setPolicyArgRet(quote);
-            cpc.invoke();
-            quote=(Quotation)cpc.getPolicyArgRet();
-        }
-        catch(Throwable e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                EnforceComplianceCommand ecc=(EnforceComplianceCommand)core.newCommand("EnforceCompliance");
-                ecc.setPolicyArgRet(quote);
-                ecc.invoke();
-                quote=(Quotation)ecc.getPolicyArgRet();
-            }
-            catch(Throwable t) {
-               t.printStackTrace();
-            }
-        }
-        
+        AddQuoteNumberCommand aqnc=(AddQuoteNumberCommand)core.newCommand("AddQuoteNumber");
+        aqnc.setPolicyArgRet(quote);
+        aqnc.invoke();
+        quote=(Quotation)aqnc.getPolicyArgRet();
+    
+        /* CalculatePremium automatically calls CalculateTax, CalculateBrokerage, CalculateCommission and CalculateManagementCharge before
+         * processing the assessment sheets to arrive at a premium.
+         */
+        CalculatePremiumCommand cpc=(CalculatePremiumCommand)core.newCommand("CalculatePremium");
+        cpc.setPolicyArgRet(quote);
+        cpc.invoke();
+        quote=(Quotation)cpc.getPolicyArgRet();
+
+        EnforceComplianceCommand ecc=(EnforceComplianceCommand)core.newCommand("EnforceCompliance");
+        ecc.setPolicyArgRet(quote);
+        ecc.invoke();
+        quote=(Quotation)ecc.getPolicyArgRet();
+
         args.setQuotationArgRet(quote);
     }
 }

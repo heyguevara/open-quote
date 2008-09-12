@@ -27,6 +27,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>companyName</td>
+	<td>Clucknasty Limited</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address1</td>
+	<td>Cluck House</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address2</td>
+	<td>Clucking Lane</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>town</td>
+	<td>Clucktown</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>county</td>
+	<td>Cluckingtonshire</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>postcode</td>
+	<td>CL1 3CL</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>title</td>
 	<td>label=Mr.</td>
@@ -38,43 +68,13 @@
 </tr>
 <tr>
 	<td>type</td>
+	<td>phone</td>
+	<td>01923 332112</td>
+</tr>
+<tr>
+	<td>type</td>
 	<td>surname</td>
 	<td>Clucknasty</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>address1</td>
-	<td>Cluck Farm</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>address2</td>
-	<td>Clucking Lane</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>town</td>
-	<td>Clucknortown</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>county</td>
-	<td>C</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>county</td>
-	<td>Cluckingtonshire</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>postcode</td>
-	<td>CL21 3CL</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>phone</td>
-	<td>0800 80808080</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -87,64 +87,54 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>asset[id=#company#]/attribute[id=#companyName#]</td>
-	<td>Jimbo and Son</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#businessDescription#]</td>
-	<td>Doing things from time to time for money.</td>
-</tr>
-<tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#generalBroker#]</td>
+	<td>./attribute[id=#business#]/attribute[id=#generalInsuranceBroker#]</td>
 	<td>label=No</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#financialServices#]</td>
+	<td>./attribute[id=#financialServices#]</td>
 	<td>label=No</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#mortgageWork#]</td>
+	<td>./attribute[id=#mortgageWork#]</td>
 	<td>10</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#feesEstimated#]</td>
+	<td>./attribute[id=#feesEstimated#]</td>
 	<td>60000</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>/asset[id=#company#]/attribute[id=#inceptionDate#]</td>
+	<td>./attribute[id=#inceptionDate#]</td>
 	<td>01/12/2008</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#retroactiveDateApplied#]</td>
-	<td>label=No</td>
+	<td>./attribute[id=#retroactiveDateApplied#]</td>
+	<td>label=None - Unlimited</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#limitOfIndemnity#]</td>
+	<td>./attribute[id=#limitOfIndemnity#]</td>
 	<td>label=1,500,000 EUR</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#limitOfIndemnityWording#]</td>
-	<td>label=Any One Claim</td>
+	<td>./attribute[id=#limitOfIndemnityWording#]</td>
+	<td>label=any one claim</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#loyaltyDiscount#]</td>
-	<td>label=No</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>/asset[id=#company#]/attribute[id=#renewalQuotation#]</td>
+	<td>./attribute[id=#renewalQuotation#]</td>
 	<td>label=Yes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>./attribute[id=#mtaQuotation#]</td>
+	<td>label=No</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -159,6 +149,11 @@
 <tr>
 	<td>verifyTextPresent</td>
 	<td>This quote is inclusive of Irish Government Levy at 2%</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>490.62 EUR</td>
 	<td></td>
 </tr>
 
