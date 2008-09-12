@@ -118,7 +118,7 @@ public class TestQuotationPersistence extends CoreUserTestCase {
 
         {
             getCore().openPersistenceSession();
-            SavedQuotationSummary sqs = getCore().load(SavedQuotationSummary.class, quoteId);
+            getCore().load(SavedQuotationSummary.class, quoteId);
             getCore().closePersistenceSession();
         }
     }
