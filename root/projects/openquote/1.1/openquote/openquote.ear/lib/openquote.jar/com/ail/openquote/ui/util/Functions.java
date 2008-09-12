@@ -283,8 +283,9 @@ public class Functions {
      * @param boundTo xpath expression pointing into 'model' at the property to be updated.
      * @param row The row if the attribute is in a scroller, otherwise -1.
      * @param request The request whose parameters should be checked.
+     * @return potentially modified model
      */
-    public static void applyAttributeValues(Type model, String boundTo, String rowContext, ActionRequest request) {
+    public static Type applyAttributeValues(Type model, String boundTo, String rowContext, ActionRequest request) {
         // If we're not bound to anything, apply nothing.
         if (boundTo!=null) {
             String name=xpathToId(rowContext+boundTo);
@@ -293,6 +294,8 @@ public class Functions {
                 model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
             }
         }
+        
+        return model;
     }
     
     /** 
