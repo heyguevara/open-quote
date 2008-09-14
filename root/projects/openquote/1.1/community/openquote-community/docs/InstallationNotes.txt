@@ -17,6 +17,10 @@ Note: You will need to be happy working from a command line to complete the
 installation. If you're not, consider taking a look at our online demo at
 http://ail-ltd.com:8080/portal
 
+There is no automated process to upgrade installation of previous version of
+OpenQuote, but there are some notes at the end of this which you may find
+helpful.
+
 Prerequisites
 =============
 
@@ -94,5 +98,6 @@ carefully first, and only look at raising a new bug if you are sure your
 particular problem is not already covered. The bug tracker can be found on
 sourceforge here: http://sourceforge.net/tracker/?group_id=215808   
 
-
+Upgrading from earlier versions
+===============================
 

@@ -1,16 +1,24 @@
--- MySQL dump 9.07
+-- OpenQuote Community database setup script.
 --
--- Host: localhost    Database: openquote_1_0
----------------------------------------------------------
--- Server version	4.1.22-standard
+-- This script will create a database suitable for use with @major.version@.@minor.version@@increment.version@. The
+-- script is totally specific to that version and should not be expected to work with any other version; this is
+-- largely due to the way in which Alfresco content indexes are defined in this database, while the actual content
+-- is held within the JBoss domain.
+--
+-- Created from MySQL server version: 4.1.22-standard
+--
 
-create database if not exists oq_community_1_0;
-grant all on oq_community_1_0.* to 'openquote'@'localhost' identified by 'openquote' with grant option;
-grant all on oq_community_1_0.* to 'openquote'@'localhost.localdomain' identified by 'openquote' with grant option;
+--
+-- Create the OpenQuote database, users and rights.
+--
+
+CREATE DATABASE IF NOT EXISTS @dbname@;
+GRANT ALL ON @dbname@.* TO 'openquote'@'localhost' IDENTIFIED BY 'openquote' WITH GRANT OPTION;
+GRANT ALL ON @dbname@.* TO 'openquote'@'localhost.localdomain' IDENTIFIED BY 'openquote' WITH GRANT OPTION;
 
 SET FOREIGN_KEY_CHECKS=0;
 
-USE oq_community_1_0;
+USE @dbname@;
 
 --
 -- Table structure for table 'JBPM_ACTION'

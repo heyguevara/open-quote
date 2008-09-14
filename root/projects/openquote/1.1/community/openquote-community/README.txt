@@ -1,6 +1,6 @@
-OpenQuote Community @major.version@.@minor.version@@candidate.version@
+OpenQuote Community @major.version@.@minor.version@@increment.version@
 
-Please note this is a Release Candidate and not the final 1.0 release.
+Please note this is a Release Candidate and not the final @major.version@.@minor.version@ release.
 
 LICENSE
 This program is free software; you can redistribute it and/or modify it under

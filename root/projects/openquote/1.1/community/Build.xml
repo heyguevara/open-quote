@@ -29,7 +29,7 @@
   </target>
 
   <target name="teardown" description="undo whatever setup did">
-    <delete dir="./target" />
+    <delete dir="./target" includeemptydirs="yes"/>
   </target>
 
   <target name="release" description="build this project's releasable outputs">
@@ -62,7 +62,7 @@
     
 		<!-- don't use the zip ant task - it forgets unix file permissions -->
     <exec executable="zip" dir="${target.dir}/..">
-    	<arg line="-r ./openquote-community-${major.version}.${minor.version}${candidate.version}.zip openquote-community-${major.version}.${minor.version}${candidate.version}"/>
+    	<arg line="-r ./openquote-community-${major.version}.${minor.version}${increment.version}.zip openquote-community-${major.version}.${minor.version}${increment.version}"/>
 	  </exec>
   </target>
 </project>

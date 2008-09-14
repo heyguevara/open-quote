@@ -43,7 +43,7 @@
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <get-libs-macro todir="${test.dir}/lib">
       <libs-list>
-        <get-lib-macro repo="repo.ail-ltd.com/repo" group="commons-logging" artifact="commons-logging" version="1.1-dev" type="jar" />
+        <get-lib-macro repo="75.101.150.249/repo" group="commons-logging" artifact="commons-logging" version="1.1-dev" type="jar" />
         <get-lib-macro repo="repo1.maven.org/maven2" group="mysql" artifact="mysql-connector-java" version="3.1.11" type="jar" />
         <get-lib-macro repo="repo1.maven.org/maven2" group="junit" artifact="junit" version="3.8.1" type="jar" />
         <!--        <get-lib-macro name="grinder-j2se.jar" jarname="grinder-j2se5-3.0beta32.jar"/>

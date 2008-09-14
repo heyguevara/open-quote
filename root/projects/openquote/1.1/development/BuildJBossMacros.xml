@@ -9,7 +9,7 @@
 
     <target name="_install.jboss" unless="jbosspresent">
         <!-- Get the jboss zip into the cache -->
-        <repo-get-macro repo="repo.ail-ltd.com/repo" group="jboss" artifact="jboss-ail" version="${version}" type="zip" />
+        <repo-get-macro repo="75.101.150.249/repo" group="jboss" artifact="jboss-ail" version="${version}" type="zip" />
 
         <!-- Unpack the cached zip into the dev tree -->
         <mkdir dir="${target.dir}" />
