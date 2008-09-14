@@ -83,7 +83,7 @@
       <mkdir dir="${output.dir}"/>
 
       <!-- compile the java source -->
-      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes">
+      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes" target="1.5">
         <classpath>
           <javac-classpath/>
         </classpath>
@@ -116,7 +116,7 @@
       <mkdir dir="${output.dir}"/>
 
       <!-- compile the java source -->
-      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes">
+      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes" target="1.5">
         <classpath>
           <javac-classpath/>
         </classpath>
@@ -139,7 +139,7 @@
     <!-- compile the java source -->
     <javac destdir="${output.dir}/WEB-INF/classes" 
            classpath="${project.classpath}" 
-           srcdir="./WEB-INF/src" verbose="no" debug="yes" />
+           srcdir="./WEB-INF/src" verbose="no" debug="yes" target="1.5"/>
 
     <copy todir="${output.dir}/WEB-INF/classes">
       <filterset filtersfile="${copyfilter.file}"/>
