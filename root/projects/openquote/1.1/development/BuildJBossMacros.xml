@@ -118,7 +118,7 @@
         </sequential>
     </macrodef>
 
-    <!-- Under a cruise control build we upload the results of the relese to the project wide repository -->
+    <!-- Under an integration build we upload the results of the relese to the project wide repository -->
     <target name="_release-jboss-domain-type=integration" depends="_release-jboss-domain-type=developer">
       <mkdir dir="${release.repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}" />
       <copy file="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot.dar" 
