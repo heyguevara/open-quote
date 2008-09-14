@@ -24,11 +24,6 @@
   <property name="java.naming.provider.url" value="jnp://localhost:1099" />
   <property name="grinder.properties" value="${basedir}/grinder.properties" />
   <property name="connectionpoolloader.params" value="jndiname=java:/ConfigureDS;table=config" />
-  <!-- details for the Project Library (where 3rd party jars are held etc). -->
-  <property name="ftp.server" value="gus" />
-  <property name="ftp.user" value="developer" />
-  <property name="ftp.dir" value="/home/bob/ProjectLib" />
-  <property name="ftp.password" value="greenpea" />
   <property name="build.sysclasspath" value="last"/>
   <!-- default build.type is developer, cruisecontrol overrides this with a -D on the command line -->
   <property name="build.type" value="developer"/>
