@@ -153,12 +153,17 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>in the aggregate</td>
+	<td>any one claim</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>1,000,001.00 EUR</td>
+	<td>145,000.00 EUR</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Quit:immediate=true']</td>
 	<td></td>
 </tr>
 

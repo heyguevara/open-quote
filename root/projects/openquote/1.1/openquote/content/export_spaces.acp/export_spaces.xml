@@ -5133,6 +5133,32 @@
                                                   <sys:store-identifier>SpacesStore</sys:store-identifier>
                                                 </view:properties>
                                               </cm:content>
+                                              <cm:content view:childName="cm:ValidateCompanyDetailsService.java">
+                                                <view:aspects>
+                                                  <cm:auditable></cm:auditable>
+                                                  <cm:titled></cm:titled>
+                                                  <cm:lockable></cm:lockable>
+                                                  <sys:referenceable></sys:referenceable>
+                                                  <cm:copiedfrom></cm:copiedfrom>
+                                                  <cm:author></cm:author>
+                                                  <app:inlineeditable></app:inlineeditable>
+                                                </view:aspects>
+                                                <view:properties>
+                                                  <app:editInline>true</app:editInline>
+                                                  <cm:description></cm:description>
+                                                  <sys:node-uuid>c5afdf5b-8351-11dd-8def-ede7f7bec631</sys:node-uuid>
+                                                  <cm:content>contentUrl=export_spaces/content136.txt|mimetype=text/plain|size=3355|encoding=UTF-8|locale=en_US_</cm:content>
+                                                  <cm:title>ValidateCompanyDetailsService.java</cm:title>
+                                                  <cm:author></cm:author>
+                                                  <cm:created>2008-09-15T19:11:52.346+01:00</cm:created>
+                                                  <cm:modifier>admin</cm:modifier>
+                                                  <cm:modified>2008-09-15T19:12:18.370+01:00</cm:modified>
+                                                  <cm:creator>davy</cm:creator>
+                                                  <sys:store-protocol>workspace</sys:store-protocol>
+                                                  <cm:name>ValidateCompanyDetailsService.java</cm:name>
+                                                  <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                                </view:properties>
+                                              </cm:content>
                                           </cm:contains>
                                         </view:associations>
                                       </cm:folder>

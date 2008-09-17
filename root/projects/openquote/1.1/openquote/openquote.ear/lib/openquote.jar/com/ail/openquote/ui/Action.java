@@ -107,10 +107,11 @@ public class Action extends PageElement {
 	@Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
         if ("onProcessValidations".equals(when) && conditionIsMet(model)) {
-            executeAction(request.getPortletSession(), request.getUserPrincipal(), model);
+            return executeValidation(request.getPortletSession(), request.getUserPrincipal(), model);
         }
-
-        return false;
+        else {
+        	return false;
+        }
 	}
 
 	@Override
@@ -177,6 +178,20 @@ public class Action extends PageElement {
     }
 
     private Type executeAction(PortletSession portletSession, Principal principal, Type model) {
+    	Quotation quote=execute(portletSession, principal, model).getQuotationArgRet();
+    	
+        // Always persist the quote after running an action - the next action/command may need to read the persisted state.
+        quote=QuotationCommon.persistQuotation(quote);
+        QuotationCommon.setCurrentQuotation(portletSession, quote);
+        
+        return quote;
+    }
+
+    private boolean executeValidation(PortletSession portletSession, Principal principal, Type model) {
+    	return execute(portletSession, principal, model).getValidationFailedRet();
+    }
+
+    private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Type model) {
         TransactionManager tm=null;
         Transaction tx=null;
         Quotation quote=(Quotation)model;
@@ -191,7 +206,6 @@ public class Action extends PageElement {
             tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
             tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
             c.invoke();
-            quote=c.getQuotationArgRet();
         }
         catch (Throwable e) {
         	throw new RenderingError("Failed to execute action command: "+getCommandName(), e);
@@ -205,11 +219,7 @@ public class Action extends PageElement {
             }
         }
         
-        // Always persist the quote after running an action - the next action/command may need to read the persisted state.
-        quote=QuotationCommon.persistQuotation(quote);
+        return c;
         
-        QuotationCommon.setCurrentQuotation(portletSession, quote);
-        
-        return quote;
     }
 }

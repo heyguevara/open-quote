@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.util.Functions.addError;
+import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.hideNull;
 import static com.ail.openquote.ui.util.Functions.isEmpty;
 
@@ -29,9 +31,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.Attribute;
 import com.ail.core.Type;
-import com.ail.core.TypeXPathException;
 import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
@@ -107,7 +107,7 @@ public class PaymentDetails extends PageElement {
         Functions.removeErrorMarkers(schedule);
         
         if (request.getParameter("confirm")==null) {
-            schedule.addAttribute(new Attribute("error.confirm", "check to confirm", "string"));
+            addError("confirm", "check to confirm", schedule);
             error=true;
         }
         
@@ -116,30 +116,30 @@ public class PaymentDetails extends PageElement {
                 PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
                 
                 if (isEmpty(pc.getCardNumber())) {
-                    schedule.addAttribute(new Attribute("error.pc.cardNumber", "required", "string"));
+                    addError("pc.cardNumber", "required", schedule);
                     error=true;
                 }
                 else if (!pc.getCardNumber().matches("[0-9 ]*")) {
-                    schedule.addAttribute(new Attribute("error.pc.cardNumber", "invalid", "string"));
+                    addError("pc.cardNumber", "invalid", schedule);
                     error=true;
                 }
                 
                 if (pc.getExpiryDate()==null) {
-                    schedule.addAttribute(new Attribute("error.pc.expiryDate", "required", "string"));
+                    addError("pc.expiryDate", "required", schedule);
                     error=true;
                 }
 
                 if (!isEmpty(pc.getIssueNumber()) && !pc.getIssueNumber().matches("[0-9]*")) {
-                    schedule.addAttribute(new Attribute("error.pc.issueNumber", "invalid", "string"));
+                    addError("pc.issueNumber", "invalid", schedule);
                     error=true;
                 }
 
                 if (isEmpty(pc.getCardHoldersName())) {
-                    schedule.addAttribute(new Attribute("error.pc.cardHoldersName", "required", "string"));
+                    addError("pc.cardHoldersName", "required", schedule);
                     error=true;
                 }
                 else if (!pc.getCardHoldersName().matches("[a-zA-Z0-9 .&]*")) {
-                    schedule.addAttribute(new Attribute("error.pc.cardHoldersName", "invalid", "string"));
+                    addError("pc.cardHoldersName", "invalid", schedule);
                     error=true;
                 }
             }
@@ -147,20 +147,20 @@ public class PaymentDetails extends PageElement {
                 DirectDebit dd=(DirectDebit)mp.getPaymentMethod();
                 
                 if (isEmpty(dd.getAccountNumber())) {
-                    schedule.addAttribute(new Attribute("error.dd.account", "required", "string"));
+                    addError("dd.account", "required", schedule);
                     error=true;
                 }
                 else if (!dd.getAccountNumber().matches("[0-9]{8,10}")) {
-                    schedule.addAttribute(new Attribute("error.dd.account", "invalid", "string"));
+                    addError("dd.account", "invalid", schedule);
                     error=true;
                 }
                 
                 if (isEmpty(dd.getSortCode()) || "--".equals(dd.getSortCode())) {
-                    schedule.addAttribute(new Attribute("error.dd.sort", "required", "string"));
+                    addError("dd.sort", "required", schedule);
                     error=true;
                 }
                 else if (!dd.getSortCode().matches("[0-9]{2}-[0-9]{2}-[0-9]{2}")) {
-                    schedule.addAttribute(new Attribute("error.dd.sort", "invalid", "string"));
+                    addError("dd.sort", "invalid", schedule);
                     error=true;
                 }
             }
@@ -250,7 +250,7 @@ public class PaymentDetails extends PageElement {
         w.printf("  <td>");
         w.printf("    <table border='0'><tr>");
         w.printf("     <td><input name='acc' size='8' type='text' maxlength='10' value='%s'/></td>", accountNumber);
-        w.printf("     <td class='portlet-msg-error'>%s</td>", error("error.dd.account", schedule));
+        w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.account", schedule));
         w.printf("   </table>");
         w.printf("  </tr>");
         w.printf(" </tr>");
@@ -263,7 +263,7 @@ public class PaymentDetails extends PageElement {
         w.printf(       "<input name='sc2' size='2' maxlength='2' type='text' value='%s'/>-", sc2);
         w.printf(       "<input name='sc3' size='2' maxlength='2' type='text' value='%s'/>", sc3);
         w.printf("     </td>");
-        w.printf("     <td class='portlet-msg-error'>%s</td>", error("error.dd.sort", schedule));
+        w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.sort", schedule));
         w.printf("   </table>");
         w.printf("  </tr>");
         w.printf(" </tr>");
@@ -311,7 +311,7 @@ public class PaymentDetails extends PageElement {
         w.printf("  <td>");
         w.printf("   <table border='0'><tr>");
         w.printf("    <td><input name='cardNumber' size='20' type='text' value='%s'/></td>", hideNull(pc.getCardNumber()));
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("error.pc.cardNumber", schedule));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardNumber", schedule));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -324,7 +324,7 @@ public class PaymentDetails extends PageElement {
         w.printf("     <input name='expiryMonth' size='2' maxlength='2' type='text' value='%s'/>", month);
         w.printf("     <input name='expiryYear' size='2' type='text' maxlength='2' value='%s'/>", year);
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("error.pc.expiryDate", schedule));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.expiryDate", schedule));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -334,7 +334,7 @@ public class PaymentDetails extends PageElement {
         w.printf("  <td>");
         w.printf("   <table border='0'><tr>");
         w.printf("    <td><input name='issueNumber' size='2' maxlength='2' type='text' value='%s'/></td>", hideNull(pc.getIssueNumber()));
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("error.pc.issueNumber", schedule));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.issueNumber", schedule));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -344,7 +344,7 @@ public class PaymentDetails extends PageElement {
         w.printf("  <td>");
         w.printf("   <table border='0'><tr>");
         w.printf("    <td><input name='cardHoldersName' size='20' type='text' value='%s'/></td>", pc.getCardHoldersName());
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("error.pc.cardHoldersName", schedule));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardHoldersName", schedule));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -364,19 +364,9 @@ public class PaymentDetails extends PageElement {
         w.printf("You can contacted us on %s<br/><br/>", quote.getBroker().getPaymentTelephoneNumber());
         w.printf(" <table border='0'><tr>");
         w.printf("   <td>Please tick this box to confirm that the details you have entered are correct <input name='confirm' type='checkbox'/></td>");
-        w.printf("   <td class='portlet-msg-error'>%s</td>", error("error.confirm", quote.getPaymentDetails()));
+        w.printf("   <td class='portlet-msg-error'>%s</td>", findError("confirm", quote.getPaymentDetails()));
         w.printf(" </table>");
         w.printf(" </td>");
         w.printf("</tr>");
-    }
-
-
-    private String error(String key, Type model) {
-        try {
-            return (String)model.xpathGet("attribute[id='"+key+"']/value");
-        }
-        catch(TypeXPathException e) {
-            return "";
-        }
     }
 }

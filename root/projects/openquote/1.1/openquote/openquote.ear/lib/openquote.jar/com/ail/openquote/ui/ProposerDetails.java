@@ -16,7 +16,8 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.error;
+import static com.ail.openquote.ui.util.Functions.addError;
+import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.hideNull;
 import static com.ail.openquote.ui.util.Functions.isEmpty;
 
@@ -29,11 +30,10 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.Attribute;
 import com.ail.core.Type;
-import com.ail.openquote.Proposer;
 import com.ail.openquote.CommercialProposer;
 import com.ail.openquote.PersonalProposer;
+import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.party.Title;
@@ -106,76 +106,76 @@ public class ProposerDetails extends PageElement {
         
         // Check the proposer for errors.
         if (Title.UNDEFINED.equals(proposer.getTitle())) {
-            proposer.getInstance().addAttribute(new Attribute("error.title", "required", "string"));
+            addError("title", "required", proposer.getInstance());
         }
         else if (Title.OTHER.equals(proposer.getTitle()) && isEmpty(proposer.getOtherTitle())) {
-            proposer.getInstance().addAttribute(new Attribute("error.otherTitle", "required", "string"));
+            addError("otherTitle", "required", proposer.getInstance());
         }
 
         if (isEmpty(proposer.getFirstName())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.firstName", "required", "string"));
+        	addError("firstName", "required", proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getFirstName()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.firstName", "invalid", "string"));
+        	addError("firstName", "invalid", proposer.getInstance());
         }
         
         if (isEmpty(proposer.getSurname())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.surname", "required", "string"));
+        	addError("surname", "required", proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getSurname()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.surname", "invalid", "string"));
+        	addError("surname", "invalid", proposer.getInstance());
         }
         
         if (isEmpty(proposer.getAddress().getLine1())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.address1", "required", "string"));
+        	addError("address1", "required", proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getAddress().getLine1()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.address1", "invalid", "string"));
+        	addError("address1", "invalid", proposer.getInstance());
         }
         
         if (isEmpty(proposer.getAddress().getLine2())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.address2", "required", "string"));
+        	addError("address2", "required", proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getAddress().getLine2()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.address2", "invalid", "string"));
+        	addError("address2", "invalid", proposer.getInstance());
         }
 
         if (!isEmpty(proposer.getAddress().getLine3()) && !namePattern.matcher(proposer.getAddress().getLine3()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.address3", "invalid", "string"));
+        	addError("address3", "invalid", proposer.getInstance());
         }
 
         if (!isEmpty(proposer.getAddress().getLine4()) && !namePattern.matcher(proposer.getAddress().getLine4()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.address4", "invalid", "string"));
+        	addError("address4", "invalid", proposer.getInstance());
         }
 
         if (isEmpty(proposer.getAddress().getPostcode())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.postcode", "required", "string"));
+        	addError("postcode", "required", proposer.getInstance());
         }
         else if (!postcodePattern.matcher(proposer.getAddress().getPostcode()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.postcode", "invalid", "string"));
+        	addError("postcode", "invalid", proposer.getInstance());
         }
 
         if (isEmpty(proposer.getTelephoneNumber())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.phone", "required", "string"));
+        	addError("phone", "required", proposer.getInstance());
         }
         else if (!phonePattern.matcher(proposer.getTelephoneNumber()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.phone", "invalid", "string"));
+        	addError("phone", "invalid", proposer.getInstance());
         }
 
         if (isEmpty(proposer.getEmailAddress())) {
-        	proposer.getInstance().addAttribute(new Attribute("error.email", "required", "string"));
+        	addError("email", "required", proposer.getInstance());
         }
         else if (!emailPattern.matcher(proposer.getEmailAddress()).find()) {
-        	proposer.getInstance().addAttribute(new Attribute("error.email", "invalid", "string"));
+        	addError("email", "invalid", proposer.getInstance());
         }
         
         if (proposer instanceof CommercialProposer) {
         	String companyName=((CommercialProposer)proposer).getCompanyName();
         	if (isEmpty(companyName)) {
-        		proposer.getInstance().addAttribute(new Attribute("error.companyName", "required", "string"));
+        		addError("companyName", "required", proposer.getInstance());
         	}
             else if (!namePattern.matcher(companyName).find()) {
-            	proposer.getInstance().addAttribute(new Attribute("error.companyName", "invalid", "string"));
+            	addError("companyName", "invalid", proposer.getInstance());
             }
         }
         return Functions.hasErrorMarkers(proposer.getInstance());
@@ -198,7 +198,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("     <td>");
 	        w.printf("      <select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.value!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
 	        w.printf("     </td>");
-	        w.printf("     <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.title']", model));
+	        w.printf("     <td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
 	        w.printf("    </tr>");
 	        w.printf("   </table>");
 	        w.printf("  </td>");
@@ -208,7 +208,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("    <td>");
 	        w.printf("     <input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
 	        w.printf("    </td>");
-	        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.otherTitle']", model));
+	        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
 	        w.printf("   </tr></table>");
 	        w.printf("  </td>");
 	        w.printf(" </tr>");
@@ -220,7 +220,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("    <td>");
 	        w.printf("     <input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
 	        w.printf("    </td>");
-	        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.firstName']", model));
+	        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
 	        w.printf("   </tr></table>");
 	        w.printf("  </td>");
 	        w.printf("  <td class='portal-form-label'>Surname:</td>");
@@ -229,7 +229,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("    <td>");
 	        w.printf("     <input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
 	        w.printf("    </td>");
-	        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.surname']", model));
+	        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
 	        w.printf("   </tr></table>");
 	        w.printf("  </td>");
 	        w.printf(" </tr>");
@@ -242,7 +242,7 @@ public class ProposerDetails extends PageElement {
             w.printf("    <td>");
             w.printf("     <input name='companyName' class='portlet-form-input-field' type='text' value='%s' size='100'>", (((CommercialProposer)proposer).getCompanyName()));
             w.printf("    </td>");
-            w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.companyName']", model));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("companyName", proposer.getInstance()));
             w.printf("   </tr></table>");
             w.printf("  </td>");
             w.printf(" </tr>");
@@ -257,7 +257,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='address1' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine1());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.address1']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("address1", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -269,7 +269,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='address2' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine2());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.address2']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("address2", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -281,7 +281,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='town' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getTown());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.town']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("town", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -293,7 +293,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='county' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getCounty());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.county']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("county", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -305,7 +305,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='postcode' class='portlet-form-input-field' type='text' value='%s' size='8' maxlength='8'>", proposer.getAddress().getPostcode());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.postcode']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("postcode", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -324,7 +324,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("     <td>");
 	        w.printf("      <select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.value!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
 	        w.printf("     </td>");
-	        w.printf("     <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.title']", model));
+	        w.printf("     <td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
 	        w.printf("    </tr>");
 	        w.printf("   </table>");
 	        w.printf("  </td>");
@@ -334,7 +334,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("    <td>");
 	        w.printf("     <input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
 	        w.printf("    </td>");
-	        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.otherTitle']", model));
+	        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
 	        w.printf("   </tr></table>");
 	        w.printf("  </td>");
 	        w.printf(" </tr>");
@@ -346,7 +346,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("    <td>");
 	        w.printf("     <input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
 	        w.printf("    </td>");
-	        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.firstName']", model));
+	        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
 	        w.printf("   </tr></table>");
 	        w.printf("  </td>");
 	        w.printf("  <td class='portal-form-label'>Surname:</td>");
@@ -355,7 +355,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf("    <td>");
 	        w.printf("     <input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
 	        w.printf("    </td>");
-	        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.surname']", model));
+	        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
 	        w.printf("   </tr></table>");
 	        w.printf("  </td>");
 	        w.printf(" </tr>");
@@ -368,7 +368,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='phone' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getTelephoneNumber());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.phone']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("phone", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");
@@ -380,7 +380,7 @@ public class ProposerDetails extends PageElement {
         w.printf("    <td>");
         w.printf("     <input name='email' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getEmailAddress());
         w.printf("    </td>");
-        w.printf("    <td class='portlet-msg-error'>%s</td>", error("proposer/attribute[id='error.email']", model));
+        w.printf("    <td class='portlet-msg-error'>%s</td>", findError("email", proposer.getInstance()));
         w.printf("   </tr></table>");
         w.printf("  </td>");
         w.printf(" </tr>");

@@ -2,10 +2,6 @@
 <!--
  This ant include file defines settings that are specific to this project, and imports
  settings that are common to all projects.
- $Revision: 1.6 $
- $State: Exp $
- $Date: 2007/11/23 20:59:03 $
- $Source: /home/bob/CVSRepository/projects/openquote/BuildSettings.xml,v $
 -->
 <project name="BuildSettings" default="dummy">
   <property name="ear.name" value="openquote.ear"/>

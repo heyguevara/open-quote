@@ -18,7 +18,6 @@ package com.ail.openquote.ui.util;
 
 import com.ail.core.Type;
 import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.Label;
 
 /**
  * Holds an XPath expression designed to be evaluated against a {@link Quotation} object. Binding objects

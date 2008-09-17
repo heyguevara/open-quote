@@ -16,6 +16,9 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.util.Functions.findErrors;
+import static com.ail.openquote.ui.util.Functions.hasErrorMarkers;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -78,11 +81,22 @@ public class QuestionSeparator extends Question {
 
         PrintWriter w=response.getWriter();
         
+        
         if (title==null) {
-            w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
+            if (getBinding()!=null && hasErrorMarkers(model.xpathGet(getBinding(), Type.class))) {
+        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(getBinding(), Type.class)));
+        	}
+        	else {
+        		w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
+        	}
         }
         else {
-            w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", Functions.hideNull(title));
+            w.printf("<td colspan='4'><table width='100%%''>"); 
+            w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(title)); 
+            if (getBinding()!=null && hasErrorMarkers(model.xpathGet(getBinding(), Type.class))) {
+            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(getBinding(), Type.class)));
+            }
+            w.printf("</table></td>");
         }
         
         return model;

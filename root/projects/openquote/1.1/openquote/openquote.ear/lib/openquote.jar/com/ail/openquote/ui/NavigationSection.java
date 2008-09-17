@@ -120,7 +120,12 @@ public class NavigationSection extends PageContainer {
 
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
-        // Nothing to do heres
-        return false;
+    	boolean error=false;
+    	
+        for(PageElement element: getPageElement()) {
+			error |= element.processValidations(request, response, model);
+		}
+
+        return error;
     }
 }

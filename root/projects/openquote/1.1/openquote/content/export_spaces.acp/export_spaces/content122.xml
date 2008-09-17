@@ -75,6 +75,15 @@
             <parameter name="Service">QuoteSetupService</parameter>
         </command>
         
+        <service name="ValidateCompanyDetailsService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/Rules%20and%20Scripts/ValidateCompanyDetailsService.java</parameter>
+        </service>
+
+        <command name="ValidateCompanyDetails" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">ValidateCompanyDetailsService</parameter>
+        </command>
+
+
     </types>
 </configuration>
 

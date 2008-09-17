@@ -16,7 +16,9 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.error;
+import static com.ail.openquote.ui.util.Functions.addError;
+import static com.ail.openquote.ui.util.Functions.findError;
+import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +44,6 @@ import org.jboss.portal.identity.User;
 import org.jboss.portal.identity.UserModule;
 import org.jboss.portal.identity.UserProfileModule;
 
-import com.ail.core.Attribute;
 import com.ail.core.Type;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
@@ -184,25 +185,25 @@ public class LoginSection extends PageContainer {
             String pc=request.getParameter("cpassword");
             
             if (u==null || u.length()==0) {
-                model.addAttribute(new Attribute("error.username", "required", "string"));
+                addError("username", "required", model);
                 error=true;
             }
             else if (!u.equals(uc)) {
-                model.addAttribute(new Attribute("error.cusername", "usernames do not match", "string"));
+                addError("cusername", "usernames do not match", model);
                 error=true;
             }
 
             if (p==null || p.length()==0) {
-                model.addAttribute(new Attribute("error.password", "required", "string"));
+                addError("password", "required", model);
                 error=true;
             }
             else if (!p.equals(pc)) {
-                model.addAttribute(new Attribute("error.cpassword", "passwords do not match", "string"));
+                addError("cpassword", "passwords do not match", model);
                 error=true;
             }
             else {
                 if (isAnExistingUser(u, request)) {
-                    model.addAttribute(new Attribute("error.username", "username already taken", "string"));
+                    addError("username", "username already taken", model);
                     error=true;                    
                 }
             }
@@ -211,7 +212,7 @@ public class LoginSection extends PageContainer {
             // is used in renderResponse() to make sure the page is opened with the create form on
             // display.
             if (error) {
-                model.addAttribute(new Attribute("error.create", "error", "string"));
+                addError("create", "error", model);
             }
         }
         else if ("Save".equals(op) && request.getUserPrincipal()==null) {
@@ -222,16 +223,16 @@ public class LoginSection extends PageContainer {
             String p=request.getParameter("password");
             
             if (u==null || u.length()==0) {
-                model.addAttribute(new Attribute("error.username", "required", "string"));
+            	addError("username", "required", model);
                 error=true;
             }
             else if (!isAnExistingUser(u, request)) {
-                model.addAttribute(new Attribute("error.username", "username not recognized", "string"));
+                addError("username", "username not recognized", model);
                 error=true;                    
             }
 
             if (p==null || p.length()==0) {
-                model.addAttribute(new Attribute("error.password", "required", "string"));
+                addError("password", "required", model);
                 error=true;
             }            
 
@@ -239,7 +240,7 @@ public class LoginSection extends PageContainer {
             // is used in renderResponse() to make sure the page is opened with the save form on
             // display.
             if (error) {
-                model.addAttribute(new Attribute("error.login", "error", "string"));
+                addError("login", "error", model);
             }
         }
 
@@ -347,7 +348,7 @@ public class LoginSection extends PageContainer {
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td>Email address:</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>", isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.username']", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td valign='center'>Password:</td>");
@@ -369,22 +370,22 @@ public class LoginSection extends PageContainer {
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td>Email address:</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>",  !isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.username']", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td>Confirm email address:</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='cusername' id='cusername' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.cusername']", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cusername", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td valign='center'>Password:</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.password']", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("password", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td valign='center'>Confirm password:</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='cpassword' id='cpassword' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", error("attribute[id='error.cpassword']", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cpassword", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='Create & Save'/></td>", getForwardToPageName(), nameOfForwardToPortal(response));
@@ -416,12 +417,12 @@ public class LoginSection extends PageContainer {
         w.printf("<script type='text/javascript'>");
 
         // hide the 'create login' form unless there's an error associated with it.
-        if ("error".equals(error("attribute[id='error.create']", model))) {
+        if (hasErrorMarker("create", model)) {
             w.printf( "hideDivDisplay('Forgotten Password');");
             w.printf( "hideDivDisplay('Proposer Login');");
             w.printf( "showDivDisplay('Create Login');");
         }
-        else if ("error".equals(error("attribute[id='error.login']", model))) {
+        else if (hasErrorMarker("login", model)) {
             w.printf( "hideDivDisplay('Create Login');");
             w.printf( "hideDivDisplay('Forgotten Password');");
             w.printf( "showDivDisplay('Proposer Login');");

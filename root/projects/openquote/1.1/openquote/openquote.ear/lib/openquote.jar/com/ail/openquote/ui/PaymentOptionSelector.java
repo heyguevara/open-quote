@@ -16,7 +16,8 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.error;
+import static com.ail.openquote.ui.util.Functions.addError;
+import static com.ail.openquote.ui.util.Functions.findError;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +27,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.Attribute;
 import com.ail.core.Type;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentSchedule;
@@ -80,7 +80,7 @@ public class PaymentOptionSelector extends PageElement {
 	    Functions.removeErrorMarkers(quote);
         
         if (quote.getPaymentDetails()==null) {
-            quote.addAttribute(new Attribute("error.paymentDetails", "please select", "string"));
+            addError("paymentDetails", "please select", model);
             return true;
         }
 
@@ -98,7 +98,7 @@ public class PaymentOptionSelector extends PageElement {
         w.printf("   </tr>");       
 
         // output the error if there is one
-        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", error("attribute[id='error.paymentDetails']", quote));
+        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", findError("paymentDetails", quote));
         
         w.printf("   <tr><td colspan='2' height='15'><hr/></td></tr>");
 

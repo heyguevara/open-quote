@@ -13,7 +13,7 @@
 
     <questionPage id="CompanyDetails" title="About The Proposer's Company">
         <questionSection binding="/asset[id='company']">
-            <questionSeparator title="About the business (please answer 'Yes' to as many as are applicable)"/>
+            <questionSeparator title="About the business (please answer 'Yes' to as many as are applicable)" binding="./attribute[id='business']"/>
             <question title="General insurance broker" binding="./attribute[id='business']/attribute[id='generalInsuranceBroker']"/>
             <question title="Life and pension" binding="./attribute[id='business']/attribute[id='lifeAndPensions']"/>
             <question title="Mortgage company" binding="./attribute[id='business']/attribute[id='mortgageCompany']"/>
@@ -44,7 +44,8 @@
         <navigationSection>
             <commandButtonAction label="Previous" destinationPageId="Proposer" immediate="true"/>
             <commandButtonAction label="Next" destinationPageId="Conditions">
-                <action when="onProcessActions" commandName="ConditionsSetup" xsi:type="action"/>
+                <action when="onProcessValidations" commandName="ValidateCompanyDetails"/>
+                <action when="onProcessActions" commandName="ConditionsSetup"/>
             </commandButtonAction>
         </navigationSection>
     </questionPage>
@@ -61,8 +62,7 @@
             <question title="${./attribute[id='noClaimDeclarationProof']/attribute/value}" binding="./attribute[id='noClaimDeclarationProof']"/>
             <question title="${./attribute[id='mortgageQuestionnaire']/attribute/value}" binding="./attribute[id='mortgageQuestionnaire']"/>
             <question title="${./attribute[id='completedPropForm']/attribute/value}" binding="./attribute[id='completedPropForm']"/>
-            <questionWithSubSection title="Is an Insured Specfic Endorsement applicable?" 
-                binding="./attribute[id='insuredSpecificSubjectivity']">
+            <questionWithSubSection title="Is an Insured Specfic Endorsement applicable?" binding="./attribute[id='insuredSpecificSubjectivity']">
                 <pageSection>
                 	<question title="Please enter the subjectivity text" binding="./attribute[id='insuredSpecificSubjectivity']/attribute[id='title']"/>
                 </pageSection>

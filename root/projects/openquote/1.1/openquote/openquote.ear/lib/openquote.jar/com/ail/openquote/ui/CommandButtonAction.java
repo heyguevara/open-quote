@@ -127,7 +127,13 @@ public class CommandButtonAction extends PageElement {
 
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
-        return false;
+    	boolean error=false;
+    	
+    	for(Action a: getAction()) {
+            error |= a.processValidations(request, response, model);
+        }
+        
+        return error;
     }
 
     @Override

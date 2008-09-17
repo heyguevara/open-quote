@@ -141,6 +141,11 @@
 	<td>Your Quotation: 995.50 EUR</td>
 	<td></td>
 </tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Quit:immediate=true']</td>
+	<td></td>
+</tr>
 
 </tbody></table>
 </body>

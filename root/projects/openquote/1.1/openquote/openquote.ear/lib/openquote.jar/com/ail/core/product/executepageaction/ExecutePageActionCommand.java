@@ -91,4 +91,12 @@ public class ExecutePageActionCommand extends Command implements ExecutePageActi
 	public void setPortletSessionArg(PortletSession portletSession) {
 		args.setPortletSessionArg(portletSession);
 	}
+
+	public boolean getValidationFailedRet() {
+		return args.getValidationFailedRet();
+	}
+
+	public void setValidationFailedRet(boolean validationFailed) {
+		args.setValidationFailedRet(validationFailed);
+	}
 }

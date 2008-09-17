@@ -194,7 +194,7 @@ public class Functions {
 	                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea>", id, onChangeEvent, attr.getValue());
 	            }
 	            
-	            w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", error("attribute[id='error']", attr));
+	            w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", findErrors(attr));
 	    
 	            if (onLoad!=null) {
 	                String s=onLoad;
@@ -255,8 +255,7 @@ public class Functions {
         
         // if there's an error there already, remove it.
         try {
-            com.ail.core.Attribute errorAttr=(com.ail.core.Attribute)attr.xpathGet("attribute[id='error']");
-            attr.removeAttribute(errorAttr);
+        	removeErrorMarkers(attr);
         }
         catch(TypeXPathException e) {
             // ignore this - it'll get thrown if there weren't any errors
@@ -264,11 +263,11 @@ public class Functions {
 
         // Check if the value is undefined or invalid and add the error marker as appropriate
         if (attr.isUndefined() && !"no".equals(attr.getFormatOption("required"))) {
-            attr.addAttribute(new com.ail.core.Attribute("error", "required", "string"));
+            addError("error",  "required", attr);
             error=true;
         }
         else if (!attr.isChoiceType() && attr.isInvalid()) {
-            attr.addAttribute(new com.ail.core.Attribute("error", "invalid", "string"));
+            addError("error", "invalid", attr);
             error=true;
         }
 
@@ -371,48 +370,6 @@ public class Functions {
     }
 
     /**
-     * Remove error marker attributes attached to the specified object. The UI components use
-     * the conversion of attaching error attributes to model element to indicate validation 
-     * failures. This method strips any such markers from the object passed in. Note: It doesn't
-     * attempt to walk the object tree, it will only remove markers from the object itself.
-     * @param model Object to remove markers from.
-     */
-    public static void removeErrorMarkers(Type model) {
-        ArrayList<Attribute> toDelete=new ArrayList<Attribute>();
-        
-        // Delete all the error attributes from the proposer. To avoid a ConcurrentModificationException
-        // this is done in two stags: 1) add the error attributes to the 'toDelete' ArrayList; 2) delete
-        // all the attributes in the toDelete list from the proposer.
-        for(Attribute a: model.getAttribute()) {
-            if(a.getId().startsWith("error.")) {
-                toDelete.add(a);
-            }
-        }
-        
-        for(Attribute a: toDelete) {
-            model.removeAttribute(a);
-        }
-    }
-    
-    /**
-     * Return true if the specified object has any UI error markers associated with it. UI 
-     * components use the conversion of attaching error attributes to model element to indicate
-     * validation failures. This method will return true if it finds any such attributes
-     * associated with the specified object.
-     * @param model Object to check for error markers
-     * @return true if error markers are found, false otherwise.
-     */
-    public static boolean hasErrorMarkers(Type model) {
-        for(Attribute a: model.getAttribute()) {
-            if(a.getId().startsWith("error.")) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Return the name of the portal page that a render response relates to.
      * From a PageElement we don't have much information to go on if we want to
      * query the environment that the portlet we're associated with is running in.
@@ -453,18 +410,110 @@ public class Functions {
         }
     }
 
+
+    
     /**
-     * Find the error (if any) associated with an element in a model.
-     * @param xpath Where to look for the error
-     * @param model The model to look in for the error
-     * @return The error message, or "" (an empty String) if no message is found.
+     * Return true if the specified object has any UI error markers associated with it. UI 
+     * components use the conversion of attaching error attributes to model element to indicate
+     * validation failures. This method will return true if it finds any such attributes
+     * associated with the specified object.
+     * @param model Object to check for error markers
+     * @return true if error markers are found, false otherwise (including if model==null).
      */
-    public static String error(String xpath, Type model) {
-        try {
-            return (String)model.xpathGet(xpath+"/value");
+    public static boolean hasErrorMarkers(Type model) {
+    	if (model!=null) {
+	        for(Attribute a: model.getAttribute()) {
+	            if(a.getId().startsWith("error.")) {
+	                return true;
+	            }
+	        }
+    	}
+
+        return false;
+    }
+
+    /**
+     * Add a new error to a model.
+     * @param id unique error ID
+     * @param message Message to be displayed
+     * @param model Model to attach the error to
+     */
+    public static void addError(String id, String message, Type model) {
+    	model.addAttribute(new Attribute("error."+id, message, "string"));
+    }
+    
+    /**
+     * return true if the specified object has a specific error marker associated with it.
+     * @see #hasErrorMarkers(Type)
+     * @param id Name of error marker to look for
+     * @param model Object to check for the error marker
+     * @return true if the error marker is found, false otherwise (including if model==null).
+     */
+    public static boolean hasErrorMarker(String id, Type model) {
+    	if (model!=null) {
+	        for(Attribute a: model.getAttribute()) {
+	            if(a.getId().startsWith("error."+id)) {
+	                return true;
+	            }
+	        }
+    	}
+
+        return false;
+    }
+
+    /**
+     * Find the error(s) (if any) associated with an element in a model, and return them.
+     * @param errorFilter Which errors to return
+     * @param model The model to look in for the error
+     * @return The error message, or "&nbsp;" (an empty String) if no message is found.
+     */
+    public static String findError(String errorFilter, Type model) {
+    	StringBuffer error=new StringBuffer();
+
+    	for(Attribute attr: model.getAttribute()) {
+    		if (attr.getId().startsWith("error."+errorFilter)) {
+    			if (error.length()==0) {
+    				error.append(attr.getValue());
+    			}
+    			else {
+    				error.append(", ").append(attr.getValue());
+    			}
+    		}
+    	}
+    	
+    	return (error.length()==0) ? "&nbsp;" : error.toString();
+    }
+    
+    /**
+     * Find all the the error (if any) associated with an element in a model, and return them.
+     * @param model The model to look in for the error
+     * @return The error message, or "&nbsp;" (an empty String) if no message is found.
+     */
+    public static String findErrors(Type model) {
+    	return findError("", model);
+    }
+    
+    /**
+     * Remove error marker attributes attached to the specified object. The UI components use
+     * the conversion of attaching error attributes to model element to indicate validation 
+     * failures. This method strips any such markers from the object passed in. Note: It doesn't
+     * attempt to walk the object tree, it will only remove markers from the object itself.
+     * @param model Object to remove markers from.
+     */
+    public static void removeErrorMarkers(Type model) {
+        ArrayList<Attribute> toDelete=new ArrayList<Attribute>();
+        
+        // Delete all the error attributes from the proposer. To avoid a ConcurrentModificationException
+        // this is done in two stags: 1) add the error attributes to the 'toDelete' ArrayList; 2) delete
+        // all the attributes in the toDelete list from the proposer.
+        for(Attribute a: model.getAttribute()) {
+            if(a.getId().startsWith("error.")) {
+                toDelete.add(a);
+            }
         }
-        catch(TypeXPathException e) {
-            return "";
+        
+        for(Attribute a: toDelete) {
+            model.removeAttribute(a);
         }
     }
     

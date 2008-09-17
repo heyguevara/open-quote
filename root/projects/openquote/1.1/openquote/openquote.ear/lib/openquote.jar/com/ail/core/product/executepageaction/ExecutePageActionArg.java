@@ -65,6 +65,20 @@ public interface ExecutePageActionArg extends CommandArg {
      *
      */
     void setServiceNameArg(String serviceNameArg);
+    
+    /**
+     * If the service is performing a validation and the validation fails, it should set this 
+     * property to true. For the most part this is only used by commands concerned with cross
+     * field validations.
+     * @return true if validation has failed, false otherwise
+     */
+    boolean getValidationFailedRet();
+    
+    /**
+     * @see #setValidationFailedRet(boolean)
+     * @param validationFailed
+     */
+    void setValidationFailedRet(boolean validationFailed);
 }
 
 

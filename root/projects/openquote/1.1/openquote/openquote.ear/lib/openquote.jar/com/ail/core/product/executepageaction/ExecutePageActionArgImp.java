@@ -23,11 +23,7 @@ import com.ail.core.command.CommandArgImp;
 import com.ail.openquote.Quotation;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/01/30 21:38:26 $
- * @source $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/openquote.jar/com/ail/core/product/executepageaction/ExecutePageActionArgImp.java,v $
- * @stereotype argimp
+ * @see ExecutePageSctionArg 
  */
 public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePageActionArg {
     static final long serialVersionUID = 1199346453402049909L;
@@ -35,6 +31,7 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
     private Quotation quotationArgRet;
     private String serviceNameArg;
     private PortletSession portletSessionArg;
+    private boolean validationFailedRet;
     
     /**
      * {@inheritDoc}
@@ -66,7 +63,6 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
 
     /**
      * {@inheritDoc}
-     * @return @{inheritDoc}
      */
     public void setQuotationArgRet(Quotation quotation) {
         quotationArgRet=quotation;
@@ -87,6 +83,21 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
     public void setServiceNameArg(String serviceNameArg) {
         this.serviceNameArg=serviceNameArg;
     }
+
+    /**
+     * {@inheritDoc}
+     * @return @{inheritDoc}
+     */
+	public boolean getValidationFailedRet() {
+		return validationFailedRet;
+	}
+
+	/**
+	 * @see #getValidationFailedRet()
+	 */
+	public void setValidationFailedRet(boolean validationFailed) {
+		this.validationFailedRet=validationFailed;
+	}
 }
 
 
