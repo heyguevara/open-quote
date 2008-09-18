@@ -1,6 +1,9 @@
 OpenQuote Community @major.version@.@minor.version@@increment.version@
 
-Please note this is a Release Candidate and not the final @major.version@.@minor.version@ release.
+Please note this is an Early Access release and not the final @major.version@.@minor.version@ release.
+Early Access releases are made available to give access to the very latest 
+features which have just emerged from development. We make no guarantee as 
+to the overall stability.
 
 LICENSE
 This program is free software; you can redistribute it and/or modify it under

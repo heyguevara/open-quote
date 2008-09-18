@@ -37,10 +37,10 @@
     <antcall target="teardown" />
     <antcall target="setup" />
 
-		<unexplode-jar-macro jar="${ear.dir}/lib/core.jar"/>
-		<unexplode-jar-macro jar="${ear.dir}/lib/commercial.jar"/>
-		<unexplode-jar-macro jar="${ear.dir}/lib/insurance.jar"/>
-		<unexplode-jar-macro jar="${ear.dir}/lib/openquote.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/lib/core.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/lib/commercial.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/lib/insurance.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/lib/openquote.jar"/>
 
     <unexplode-jar-macro jar="${ear.dir}/acceptance-ejb.jar"/>
     <unexplode-jar-macro jar="${ear.dir}/command-server-ejb.jar"/>
@@ -60,9 +60,9 @@
     
     <unexplode-jar-macro jar="${deploy.dir}/deploy/alfresco.war"/>
     
-		<!-- don't use the zip ant task - it forgets unix file permissions -->
+    <!-- don't use the zip ant task - it forgets unix file permissions -->
     <exec executable="zip" dir="${target.dir}/..">
-    	<arg line="-r ./openquote-community-${major.version}.${minor.version}${increment.version}.zip openquote-community-${major.version}.${minor.version}${increment.version}"/>
-	  </exec>
+      <arg line="-r ./openquote-community-${major.version}.${minor.version}${increment.version}.zip openquote-community-${major.version}.${minor.version}${increment.version}"/>
+    </exec>
   </target>
 </project>
