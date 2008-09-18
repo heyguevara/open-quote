@@ -30,9 +30,9 @@
   <property name="dbname" value="oq_community_${major.version}_${minor.version}${increment.version}"/>
   
   <!-- Pull in the Common stuff - all projects use this. -->
-  <import file="../development/BuildCommon.xml"/>
-  <import file="../development/BuildJ2EEMacros.xml"/>
-  <import file="../development/BuildJBossMacros.xml"/>
-  <import file="../development/BuildTestingMacros.xml"/>
-  <import file="../development/BuildRepositoryMacros.xml" />
+  <import file="${development.dir}/BuildCommon.xml"/>
+  <import file="${development.dir}/BuildJ2EEMacros.xml"/>
+  <import file="${development.dir}/BuildJBossMacros.xml"/>
+  <import file="${development.dir}/BuildTestingMacros.xml"/>
+  <import file="${development.dir}/BuildRepositoryMacros.xml" />
 </project>
