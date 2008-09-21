@@ -6,7 +6,8 @@
     <!-- imported styles-->
     <xsl:param name="style-doc" select="'styles.xml'"/>
     <xsl:variable name="styles" select="document('http://localhost:8080/portal-core/themes/industrial/styles.xml')"/>
-    <!--<xsl:variable name="styles" select="document('styles.xml')"/>-->
+    <!--<xsl:variable name="stylesBook" select="document('styles.xml')"/>
+    <xsl:variable name="styles" select="$stylesBook/Book/Styles[@type= /documentData/style]"/>-->
     <!-- imported styles-->
     <xsl:template match="/">
         <fo:root xsl:use-attribute-sets="normal-font">
@@ -266,7 +267,7 @@
                 </xsl:choose>
             </xsl:variable>
             <fo:table xsl:use-attribute-sets="base-table-layout">
-                <fo:table-column column-width="proportional-column-width({$column1})"/>
+                <fo:table-column column-width="proportional-col umn-width({$column1})"/>
                 <fo:table-column column-width="proportional-column-width({$column2})"/>
                 <fo:table-column column-width="proportional-column-width({$column3})"/>
                 <fo:table-body>
@@ -294,28 +295,21 @@
                                 <fo:table-row keep-with-previous="always">
                                     <xsl:choose>
                                         <xsl:when test="@class='term-title'">
-                                            <fo:table-cell
-                                                xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
                                                 <xsl:call-template name="set-term-border">
-                                                  <xsl:with-param name="border"
-                                                  select="$styles/Styles/Terms/Title/Border[@type='label']"
-                                                  />
+                                                  <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='label']"/>
                                                 </xsl:call-template>
                                                 <fo:block>&#x00A0;</fo:block>
                                             </fo:table-cell>
-                                            <fo:table-cell
-                                                xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
                                                 <xsl:call-template name="set-term-border">
-                                                  <xsl:with-param name="border"
-                                                  select="$styles/Styles/Terms/Title/Border[@type='label']"
-                                                  />
+                                                  <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='label']"/>
                                                 </xsl:call-template>
                                                 <fo:block xsl:use-attribute-sets="H2">
                                                   <xsl:value-of select="."/>
                                                 </fo:block>
                                             </fo:table-cell>
-                                            <fo:table-cell
-                                                xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
                                                 <xsl:call-template name="set-term-border">
                                                   <xsl:with-param name="border"
                                                   select="$styles/Styles/Terms/Title/Border[@type='body']"
@@ -392,7 +386,9 @@
                                     <xsl:copy-of select="$empty-cell"/>
                                     <fo:table-cell>
                                         <fo:block>
-                                            <xsl:value-of select="."/>
+                                            <xsl:for-each select=".">
+                                                <xsl:apply-templates select="node()"/>
+                                            </xsl:for-each>
                                         </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -406,7 +402,9 @@
                                     <xsl:copy-of select="$empty-cell"/>
                                     <fo:table-cell>
                                         <fo:block>
-                                            <xsl:value-of select="."/>
+                                            <xsl:for-each select=".">
+                                                <xsl:apply-templates select="node()"/>
+                                            </xsl:for-each>
                                         </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -420,7 +418,9 @@
                                     <xsl:copy-of select="$empty-cell"/>
                                     <fo:table-cell>
                                         <fo:block>
-                                            <xsl:value-of select="."/>
+                                            <xsl:for-each select=".">
+                                                <xsl:apply-templates select="node()"/>
+                                            </xsl:for-each>
                                         </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -434,7 +434,9 @@
                                     <xsl:copy-of select="$empty-cell"/>
                                     <fo:table-cell>
                                         <fo:block>
-                                            <xsl:value-of select="."/>
+                                            <xsl:for-each select=".">
+                                                <xsl:apply-templates select="node()"/>
+                                            </xsl:for-each>
                                         </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -500,7 +502,6 @@
     <xsl:template name="title-variant">
         <xsl:param name="data" select="."/>
         <xsl:param name="value" select="''"/>
-
         <fo:table-row>
             <xsl:choose>
                 <xsl:when test="not($data/@title)">
@@ -509,7 +510,6 @@
                             <xsl:for-each select="$value">
                                 <xsl:apply-templates select="node()"/>
                             </xsl:for-each>
-                            
                         </fo:block>
                     </fo:table-cell>
                 </xsl:when>
@@ -525,7 +525,6 @@
                             <xsl:for-each select="$value">
                                 <xsl:apply-templates select="node()"/>
                             </xsl:for-each>
-                            
                         </fo:block>
                     </fo:table-cell>
                 </xsl:otherwise>
