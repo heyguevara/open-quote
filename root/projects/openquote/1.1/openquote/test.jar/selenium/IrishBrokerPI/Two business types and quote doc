@@ -139,7 +139,7 @@
 <tr>
 	<td>select</td>
 	<td>./attribute[id=#limitOfIndemnityWording#]</td>
-	<td>label=Any One Claim</td>
+	<td>label=any one claim</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -149,11 +149,6 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@name='op=Quote:immediate=false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@name='op=Document:id=QF0063']</td>
 	<td></td>
 </tr>
 <tr>
