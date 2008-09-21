@@ -1,7 +1,7 @@
 OpenQuote Release Candidate - Installation Notes
 ================================================
 
-Welcome to OpenQuote @major.version@.@minor.version@@candidate.version@@minor.version@, and thank you for your 
+Welcome to OpenQuote @major.version@.@minor.version@@increment.version@, and thank you for your 
 interest in this project.
 
 The notes included here are intended to get you up and running with OpenQuote
@@ -10,17 +10,17 @@ prerequisites installed.
 
 Beyond this basic configuration there are a host of other more detailed 
 customizations that are possible; some of which would be considered necessary
-before you think about using OpenQuote in a production environment. These will be
-covered later and elsewhere, for now this will be enough to get you off the 
+before you think about using OpenQuote in a production environment. These will
+be covered later and elsewhere, for now this will be enough to get you off the 
 ground.
 
 Note: You will need to be happy working from a command line to complete the
 installation. If you're not, consider taking a look at our online demo at
 http://ail-ltd.com:8080/portal
 
-There is no automated process to upgrade installation of previous version of
-OpenQuote, but there are some notes at the end of this which you may find
-helpful.
+There is no automated process to upgrade the installation of previous version
+of OpenQuote, but there are some notes at the end of this file which you may 
+find helpful.
 
 Prerequisites
 =============
@@ -102,7 +102,7 @@ sourceforge here: http://sourceforge.net/tracker/?group_id=215808
 Upgrading from earlier versions
 ===============================
 
-Installing this release of OpenQuote will not in any way affect ant existing 
+Installing this release of OpenQuote will not in any way affect any existing 
 installations of older versions. Follow the installation guidelines outlined 
 in the file will result in a completely new and independent installation with
 its own server and database.
