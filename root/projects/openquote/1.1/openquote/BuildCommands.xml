@@ -22,40 +22,34 @@
     <kick-jboss-macro />
   </target>
 
-	<target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
-		<content-download-export-macro/>
-	</target>
-  
-	<!-- drop all the tables that portal uses to store it's settins and preferences. These
+  <target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
+    <content-download-export-macro />
+  </target>
+
+  <!-- drop all the tables that portal uses to store it's settins and preferences. These
 	     all get recreated when jboss is restarted. -->
   <target name="jboss: reset portal" description="delete the portal tables - jboss will recreate them on startup">
-		<reset-portal-macro/>
+    <reset-portal-macro />
   </target>
-    
-	<target name="ail: clear server cache" description="Clear the config cache in jboss">
-  	<configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache"/>
-	</target>
-  
+
+  <target name="ail: clear server cache" description="Clear the config cache in jboss">
+    <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache" />
+  </target>
+
   <target name="ail: reset configurations" description="reset all the ail configurations">
-  	<configuration-macro username="admin" password="bombay2000" operation="resetAllConfigurations"/>
-    <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache"/>    
+    <configuration-macro username="admin" password="bombay2000" operation="resetAllConfigurations" />
+    <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache" />
   </target>
-  
-  <target name="mysql: dump openquote database" description="dump the openquote database into target/MySqlDump.sql">
-    <exec executable="sh" output="${target.dir}/MySqlDump.sql">
-      <arg line="-c mysqldump -u root -p bombay2000 --opt ${dbname}"/>
-    </exec>
-  </target>
-  
+
   <target name="grinder: start console" description="start The Grinder's console">
-		<start-grinder-console-macro/>	
-	</target>
+    <start-grinder-console-macro />
+  </target>
 
   <target name="grinder: start agent" description="start The Grinder's agent">
-		<start-grinder-agent-macro/>
-	</target>
+    <start-grinder-agent-macro />
+  </target>
 
-	<target name="grinder: start tcp proxy" description="start The Grinder's TCP Proxy">
-		<start-grinder-proxy-macro/>
+  <target name="grinder: start tcp proxy" description="start The Grinder's TCP Proxy">
+    <start-grinder-proxy-macro />
   </target>
 </project>
