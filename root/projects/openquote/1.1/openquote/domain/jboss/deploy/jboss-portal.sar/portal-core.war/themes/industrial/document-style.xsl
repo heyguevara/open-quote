@@ -267,7 +267,7 @@
                 </xsl:choose>
             </xsl:variable>
             <fo:table xsl:use-attribute-sets="base-table-layout">
-                <fo:table-column column-width="proportional-col umn-width({$column1})"/>
+                <fo:table-column column-width="proportional-column-width({$column1})"/>
                 <fo:table-column column-width="proportional-column-width({$column2})"/>
                 <fo:table-column column-width="proportional-column-width({$column3})"/>
                 <fo:table-body>
