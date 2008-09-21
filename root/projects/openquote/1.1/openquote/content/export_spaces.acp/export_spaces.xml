@@ -5153,7 +5153,7 @@
                                                   <cm:created>2008-09-15T19:11:52.346+01:00</cm:created>
                                                   <cm:modifier>admin</cm:modifier>
                                                   <cm:modified>2008-09-15T19:12:18.370+01:00</cm:modified>
-                                                  <cm:creator>davy</cm:creator>
+                                                  <cm:creator>admin</cm:creator>
                                                   <sys:store-protocol>workspace</sys:store-protocol>
                                                   <cm:name>ValidateCompanyDetailsService.java</cm:name>
                                                   <sys:store-identifier>SpacesStore</sys:store-identifier>
