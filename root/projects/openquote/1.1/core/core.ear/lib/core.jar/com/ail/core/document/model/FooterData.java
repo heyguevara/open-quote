@@ -18,6 +18,9 @@ package com.ail.core.document.model;
 import static com.ail.core.document.model.Placement.FOOTER;
 
 public class FooterData extends BlockData {
+    private String leftLogo=null;
+    private String rightLogo=null;
+
     public FooterData() {
         setPlacement(FOOTER);
     }
@@ -27,10 +30,46 @@ public class FooterData extends BlockData {
         context.getOutput().printf("<footerData%s%s%s%s applicability=\"%s\">", 
                                                     idAsAttribute(), titleAsAttribute(), styleClassAsAttribute(), orderAsAttribute(),
                                                     getApplicabilityAsString());
+        if (leftLogo!=null) {
+            context.getOutput().printf("<leftLogo>%s</leftLogo>", getLeftLogo());
+        }
+        
+        if (rightLogo!=null) {
+            context.getOutput().printf("<rightLogo>%s</rightLogo>", getRightLogo());
+        }
+        
         for(ItemData it: getItem()) {
             it.render(context);
         }
 
         context.getOutput().println("</footerData>");
+    }
+
+    /**
+     * @return the leftLogo
+     */
+    public String getLeftLogo() {
+        return leftLogo;
+    }
+
+    /**
+     * @param leftLogo the leftLogo to set
+     */
+    public void setLeftLogo(String leftLogo) {
+        this.leftLogo = leftLogo;
+    }
+
+    /**
+     * @return the rightLogo
+     */
+    public String getRightLogo() {
+        return rightLogo;
+    }
+
+    /**
+     * @param rightLogo the rightLogo to set
+     */
+    public void setRightLogo(String rightLogo) {
+        this.rightLogo = rightLogo;
     }
 }
