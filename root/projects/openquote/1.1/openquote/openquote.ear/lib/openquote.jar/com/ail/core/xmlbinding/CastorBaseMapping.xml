@@ -251,14 +251,18 @@
         <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="leftLogo" type="string"/>
+        <field name="rightLogo" type="string"/>
     </class>
     
     <class name="com.ail.core.document.model.FooterData" extends="com.ail.core.document.model.ItemContainer">
         <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="leftLogo" type="string"/>
+        <field name="rightLogo" type="string"/>
     </class>
-    
+
     <class name="com.ail.core.document.model.RepeatingData" extends="com.ail.core.document.model.ItemContainer">
         <map-to xml="repeatingData"/>
         <field name="binding" type="string">
