@@ -5,10 +5,10 @@
     <renderCommand>RenderIndustrialStyleDocumentCommand</renderCommand>
     
     <documentData>
-        <watermark>http://someplace/image.gif</watermark>
     
         <headerData applicability="all">
             <modelData id="head" class="string">Professional Indemnity Insurance Premium Indication Insurance Intermediaries</modelData>
+            <rightLogo>product://AIL.Demo.IrishBrokerPI/AgentLogo.gif</rightLogo>
         </headerData>
         
         <chapterData id="c1" title="Basic Details">
