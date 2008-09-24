@@ -2860,7 +2860,35 @@
                                     <sys:store-protocol>workspace</sys:store-protocol>
                                   </view:properties>
                                 </cm:content>
-
+                                <cm:content view:childName="cm:AcmeLogo.xml">
+                                  <view:aspects>
+                                    <cm:titled></cm:titled>
+                                    <cm:auditable></cm:auditable>
+                                    <sys:referenceable></sys:referenceable>
+                                    <cm:author></cm:author>
+                                    <app:inlineeditable></app:inlineeditable>
+                                    <cm:versionable></cm:versionable>
+                                  </view:aspects>
+                                  <view:properties>
+                                    <sys:node-uuid>3a0077a0-8a0d-11dd-8894-3b66a2345292</sys:node-uuid>
+                                    <cm:content>contentUrl=export_spaces/content137.gif|mimetype=image/gif|encoding=UTF-8|locale=en_US_</cm:content>
+                                    <cm:versionLabel>1.0</cm:versionLabel>
+                                    <cm:created>2008-04-01T08:19:40.976+01:00</cm:created>
+                                    <cm:initialVersion>true</cm:initialVersion>
+                                    <cm:creator>admin</cm:creator>
+                                    <cm:autoVersion>true</cm:autoVersion>
+                                    <cm:name>AcmeLogo.gif</cm:name>
+                                    <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                    <app:editInline>true</app:editInline>
+                                    <cm:description>Acme brokerage logo.</cm:description>
+                                    <sys:node-dbid>632</sys:node-dbid>
+                                    <cm:title>AcmeLogo.gif</cm:title>
+                                    <cm:author></cm:author>
+                                    <cm:modifier>admin</cm:modifier>
+                                    <cm:modified>2008-04-01T08:20:05.098+01:00</cm:modified>
+                                    <sys:store-protocol>workspace</sys:store-protocol>
+                                  </view:properties>
+                                </cm:content>
                                 <cm:content view:childName="cm:PersonalProposer.xml">
                                   <view:aspects>
                                     <cm:titled></cm:titled>

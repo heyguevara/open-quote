@@ -8,7 +8,7 @@
     
         <headerData applicability="all">
             <modelData id="head" class="string">Professional Indemnity Insurance Premium Indication Insurance Intermediaries</modelData>
-            <rightLogo>product://AIL.Demo.IrishBrokerPI/AgentLogo.gif</rightLogo>
+            <rightLogo>product://AIL.Base/AcmeLogo.gif</rightLogo>
         </headerData>
         
         <chapterData id="c1" title="Basic Details">
@@ -73,7 +73,7 @@
             </blockData>
 
             <blockData id="qs" placement="body" applicability="all">
-                <modelData id="sg" title="Signed:" class="string">William Irwin</modelData>
+                <modelData id="sg" title="Signed:" class="string">James Clucknasty</modelData>
                 <modelData id="sg" title="Date:" class="date" binding="c:format(/quotationDate,&quot;d MMMMM, yyyy&quot;)"/>
             </blockData>
             

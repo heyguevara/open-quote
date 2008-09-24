@@ -94,7 +94,6 @@
                         <usr:credentialsExpire>false</usr:credentialsExpire>
                         <sys:node-uuid>61634657-38a8-11dd-ab0f-21e75d68c912</sys:node-uuid>
                         <usr:accountLocked>false</usr:accountLocked>
-                        <sys:node-dbid>2008</sys:node-dbid>
                         <usr:username>davy</usr:username>
                         <usr:salt>
                           <view:value view:isNull="true"></view:value>
