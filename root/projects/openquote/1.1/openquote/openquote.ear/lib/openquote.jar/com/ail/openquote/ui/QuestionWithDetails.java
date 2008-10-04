@@ -133,7 +133,7 @@ public class QuestionWithDetails extends Question {
         
         PrintWriter w=response.getWriter();
 
-        String onChange="enableTargetIf(this.value==\"Yes\", \""+detailsId+"\")";
+        String onChange="enableTargetIf(this.options[this.selectedIndex].text==\"Yes\", \""+detailsId+"\")";
         
         w.printf("<td>%s</td>", title);
         w.printf("<td>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
@@ -141,7 +141,7 @@ public class QuestionWithDetails extends Question {
         w.printf("<td>%s</td>", renderAttribute(model, getDetailsBinding(), rowContext, getOnChange(), getOnLoad()));
         
         // Disable the 'detail' textarea unless the question's answer is 'Yes'
-        w.printf("<script type='text/javascript'>enableTargetIf(document.getElementsByName(\"%s\")[0].value==\"Yes\", \"%s\")</script>",
+        w.printf("<script type='text/javascript'>elem=findElementsByName(\"%s\")[0];enableTargetIf(elem.options[elem.selectedIndex].text==\"Yes\", \"%s\")</script>",
                 questionId, detailsId);
         
         return model;

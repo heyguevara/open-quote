@@ -1,8 +1,32 @@
+/* IE's implementation of getElementsByName is very patchy - works in some 
+ * versions and not in others. Hence this local implementation that will work
+ * on all versions of IE and other browsers.
+ */
+function findElementsByName(name) {
+  var tags = new Array();
+  var ret = new Array();
+  var retIdx;
+  
+  tags[0]="select"; tags[1]="input"; tags[2]="textarea";
+
+  for(retIdx=0, t=0 ; t<tags.length ; t++) {
+    var elem=document.getElementsByTagName(tags[t]);
+    
+    for(i=0 ; i<elem.length ; i++) {
+      if (elem[i].getAttribute("name") == name) {
+        ret[retIdx++]=elem[i];
+      }
+    }
+  }
+  
+  return ret;
+}
+
 /* If 'condition' is true then disable the 'target' page element, 
  * otherwise enable it.
  */
 function disableTargetIf(condition, targetName) {
-    document.getElementsByName(targetName)[0].disabled=condition;
+    findElementsByName(targetName)[0].disabled=condition;
 }
 
 /* If 'condition' is true then enable the 'target' page element, 
@@ -64,7 +88,7 @@ function loadChoiceOptions(select, selected, array) {
 function loadSlaveChoiceOptions(select, selected, array, master, slave) {
     masterSelectName=new String(select.name);
     masterSelectName=masterSelectName.replace(slave, master);
-    masterSelect=document.getElementsByName(masterSelectName)[0];
+    masterSelect=findElementsByName(masterSelectName)[0];
     masterSelectValue=masterSelect.options[masterSelect.selectedIndex].text;
     select.options.length=0;
     for(var m=1 ; m<array.length ; m++) {
@@ -85,7 +109,7 @@ function updateSlaveChoiceOptions(masterSelect, array, master, slave) {
     masterSelectValue=masterSelect.options[masterSelect.selectedIndex].text;
     slaveSelectName=new String(masterSelect.name);
     slaveSelectName=slaveSelectName.replace(master,slave);
-    slaveSelect=document.getElementsByName(slaveSelectName)[0];
+    slaveSelect=findElementsByName(slaveSelectName)[0];
     slaveSelect.options.length=0;
     for(var m=1 ; m<array.length ; m++) {
         if (array[m][0]==masterSelectValue) {

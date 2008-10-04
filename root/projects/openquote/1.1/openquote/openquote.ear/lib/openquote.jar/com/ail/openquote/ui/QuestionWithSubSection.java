@@ -134,7 +134,7 @@ public class QuestionWithSubSection extends Question {
 
         // Disable the 'detail' area unless the question's answer is 'Yes'
         w.printf("<script type='text/javascript'>"+
-                    "opt=document.getElementsByName(\"%1$s\")[0];" +
+                    "opt=findElementsByName(\"%1$s\")[0];" +
                     "showHideDivDisplay(" +
                       "opt.options[opt.selectedIndex].text==\"Yes\", "+
                       "opt.options[opt.selectedIndex].text==\"No\", "+

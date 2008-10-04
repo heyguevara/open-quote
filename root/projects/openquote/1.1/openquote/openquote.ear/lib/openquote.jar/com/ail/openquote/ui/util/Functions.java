@@ -166,7 +166,7 @@ public class Functions {
 	            }
 	            else if (attr.isChoiceMasterType()) {
 	                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-	                onChange="updateSlaveChoiceOptions(document.getElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
+	                onChange="updateSlaveChoiceOptions(findElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
 	                w.printf("<select name=\"%s\" onchange=\"%s\" class='pn-normal'/>", id, onChange);
 	            }
 	            else if (attr.isChoiceSlaveType()) {
@@ -200,7 +200,7 @@ public class Functions {
 	                String s=onLoad;
 	    
 	                if (s.contains("$this")) {
-	                    s=s.replace("$this", "document.getElementsByName(\""+id+"\")[0]");
+	                    s=s.replace("$this", "findElementsByName(\""+id+"\")[0]");
 	                }
 	    
 	                if (s.contains("$value")) {
