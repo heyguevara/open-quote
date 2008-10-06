@@ -125,7 +125,7 @@
             </answerSection>
             
             <answerSection title="Company details">
-				<answer title="Company name:" binding="proposer/companyName"/>
+                <answer title="Company name:" binding="proposer/companyName"/>
                 <answerScroller binding="/asset[id='company']">
                     <answer title="Estimated fees:" binding="attribute[id='feesEstimated']"/>
                 </answerScroller>

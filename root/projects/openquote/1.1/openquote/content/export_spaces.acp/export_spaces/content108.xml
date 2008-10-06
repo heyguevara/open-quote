@@ -98,7 +98,7 @@
         </quotationSummary>
     </informationPage>
 
-    <informationPage id="Referral">
+    <questionPage id="Referral" title="Referral">
         <referralSummary referralNotificationUrl="~/ReferralNotification.html" requoteDestinationPageId="HorseDetails">
             <answerSection title="Summary of your application">
                 <answer title="Usage" binding="asset[assetTypeId='HorseAsset']/attribute[id='typeOfUse']"/>
@@ -121,7 +121,7 @@
                 <answer title="Sum insured:" binding="/asset[id='horse1']/attribute[id='suminsured']"/>
             </answerSection>
         </referralSummary>
-    </informationPage>
+    </questionPage>
 
     <questionPage id="SelectPaymentOption" title="Confirm and Pay">
         <action when="onRenderResponse" commandName="AssessPaymentOptionsAction"/>

@@ -208,6 +208,14 @@
             <parameter name="Url">product://localhost:8080/AIL/Base/BaseQuotation.xml</parameter>
         </type>
 
+        <type builder="CastorXMLBuilder" key="com.ail.openquote.PersonalProposer" name="PersonalProposer">
+            <parameter name="Url">product://localhost:8080/AIL/Base/PersonalProposer.xml</parameter>
+        </type>
+
+        <type builder="CastorXMLBuilder" key="com.ail.openquote.CommercialProposer" name="CommercialProposer">
+            <parameter name="Url">product://localhost:8080/AIL/Base/CommercialProposer.xml</parameter>
+        </type>
+
         <type name="BaseQuotationPageFlow" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.openquote.ui.PageFlow">
             <parameter name="Url">product://localhost:8080/AIL/Base/BaseQuotationPageFlow.xml</parameter>
         </type>
