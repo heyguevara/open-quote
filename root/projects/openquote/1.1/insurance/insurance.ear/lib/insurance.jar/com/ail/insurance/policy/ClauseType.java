@@ -27,7 +27,8 @@ public enum ClauseType implements TypeEnum {
     CONDITION("Condition"),
     EXCLUSION("Exclusion"),
     EXTENSION("Extension"),
-    GUARENTEE("Guarentee");
+    GUARENTEE("Guarentee"),
+    SUBJECTIVITY("Subjectivity");
     
     private final String longName;
     
