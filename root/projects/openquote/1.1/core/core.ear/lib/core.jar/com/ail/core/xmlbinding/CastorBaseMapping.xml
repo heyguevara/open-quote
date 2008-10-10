@@ -46,6 +46,19 @@
         </field>
     </class>
 
+    <class name="com.ail.core.Locale" extends="com.ail.core.Type">
+        <map-to xml="locale"/>
+        <field name="language" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="country" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="variant" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
     <class name="com.ail.core.CoreUserImpl">
         <map-to xml="coreuser"/>
         <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate"/>
