@@ -16,7 +16,7 @@
 
   <!-- Version of the Commercial project to use for this project -->
   <property name="commercial.version" value="2.2" />
-  <property name="commercial.build" value="8" />
+  <property name="commercial.build" value="9" />
 
   <!-- Version of JBoss to use for this project -->
   <property name="jboss.version" value="4.2.2GA" />
