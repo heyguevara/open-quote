@@ -36,6 +36,19 @@
         </field>
     </class>
 
+    <class name="com.ail.core.Locale" extends="com.ail.core.Type">
+        <map-to xml="locale"/>
+        <field name="language" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="country" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="variant" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
     <class name="com.ail.core.VersionEffectiveDate" extends="com.ail.core.Type">
         <map-to xml="versionEffectiveDate"/>
         <field name="time" type="long">
@@ -515,6 +528,7 @@
         <field name="paymentDetails" type="com.ail.financial.PaymentSchedule"/>
         <field name="policyHolder" type="com.ail.party.Party"/>
         <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist"/>
+        <field name="locale" type="com.ail.core.Locale"/>
     </class>
 
     <class name="com.ail.insurance.quotation.assessrisk.AssessRiskArgImp" extends="com.ail.core.command.CommandArgImp">

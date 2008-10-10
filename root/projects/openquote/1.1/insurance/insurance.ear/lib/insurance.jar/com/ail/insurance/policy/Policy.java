@@ -29,6 +29,7 @@ import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
 import com.ail.party.Party;
+import com.ail.core.Locale;
 
 /**
  */
@@ -48,6 +49,7 @@ public class Policy extends Type {
     private String productTypeId = null;
     private String productName = null;
     private String policyNumber = null;
+    private Locale locale = null;
 
     /** The date when the policy was incepted (created) */
     private Date inceptionDate;
@@ -1109,5 +1111,25 @@ public class Policy extends Type {
         if (clause==null) {
             this.clause.clear();
         }
+    }
+
+    /**
+     * Get the locale <b>currently</b> associated with this policy. This indicates the locale for which the policy
+     * is currently being processed, so it may change through the life time of the policy. It is intended to influence
+     * the way in which the policy is presented. For example, when a US policy is being administered by a US office, you
+     * would expect all presentation, documentation etc to render US$ amounts simply as '$'. However, if the same policy
+     * was being administered in an office in Canada, a US$ amount should be shown as US$, and not '$'.
+     * @return Locale being used for processing
+     */
+    public Locale getLocale() {
+        return locale;
+    }
+    
+    /**
+     * @see #getLocale()
+     * @param locale
+     */
+    public void setLocale(Locale locale) {
+        this.locale=locale;
     }
 }
