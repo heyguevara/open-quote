@@ -352,6 +352,19 @@ public class TestServiceInvocation extends CoreUserTestCase {
         assertEquals(212, command.getR());
     }
 
+    public void testDroolsXMLService() throws Exception {
+        TestCommand command = (TestCommand) getCore().newCommand("TestDroolsXMLService");
+        command.setX(21);
+        command.setY(34);
+        command.invoke();
+        assertEquals(55, command.getR());
+
+        command.setX(101);
+        command.setY(10);
+        command.invoke();
+        assertEquals(212, command.getR());
+    }
+
     /**
      * Test the "normal" multi line service invocation.
      * <ol>

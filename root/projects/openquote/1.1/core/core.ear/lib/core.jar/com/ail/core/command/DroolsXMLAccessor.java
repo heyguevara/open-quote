@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 2005. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2002. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,10 +17,11 @@
 
 package com.ail.core.command;
 
+import static com.ail.core.command.AccessorLoggingIndicator.FULL;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
+import java.io.Reader;
+import java.io.StringReader;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +29,16 @@ import java.util.List;
 import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
-import org.drools.compiler.DrlParser;
 import org.drools.compiler.DroolsParserException;
 import org.drools.compiler.PackageBuilder;
-import org.drools.compiler.PackageBuilderConfiguration;
-import org.drools.decisiontable.InputType;
-import org.drools.decisiontable.SpreadsheetCompiler;
-import org.drools.decisiontable.parser.DecisionTableParseException;
+import org.drools.event.DebugWorkingMemoryEventListener;
+import org.drools.lang.descr.FunctionDescr;
+import org.drools.lang.descr.GlobalDescr;
+import org.drools.lang.descr.ImportDescr;
 import org.drools.lang.descr.PackageDescr;
-import org.drools.rule.InvalidRulePackage;
+import org.drools.lang.descr.RuleDescr;
+import org.drools.xml.XmlPackageReader;
+import org.xml.sax.SAXException;
 
 import com.ail.core.Core;
 import com.ail.core.Functions;
@@ -47,20 +49,31 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.factory.AbstractFactory;
 
 /**
- * This Accessor supports the use of Drools decision tables as services. Drools (www.drools.org) is
- * an open source rules engine which supports decision tables in the form of spreadsheets conforming
- * to certain conventions. The usage pattern here is to have an instance of this Accessor for each 
- * decision table based ruleset. The Accessor expects to find a URL pointing at the decision table in
- * it's "Url" parameter (generally this is set by configuration).
+ * This Accessor supports the use of Drools XML files (or content) as services.
+ * Drools (www.drools.org) is an open source rules engine which supports the
+ * definition of rules in an XML format. The usage pattern here is to have an 
+ * instance of this Accessor for each ruleset. The Accessor expects to find a 
+ * URL pointing at the decision table in its Script parameter (generally this
+ * is set by configuration).
  */
-public class DroolsDecisionTableAccessor extends Accessor implements ConfigurationOwner {
+public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
     private Core core=null;
     private CommandArg args=null;
-    private String url=null;
+    private String script=null;
     private String extend=null;
+    private String url=null;
     private transient RuleBase ruleBase=null;
-    private boolean ruleBaseLoaded=false;
 
+    /**
+     * Factory life cycle method. See {@link AbstractFactory} for details.
+     * @param core
+     */
+    public void activate(Core core, com.ail.core.configure.Type typeSpec) throws Exception {
+        this.core=core;
+        loadRuleBase();
+        this.core=null;
+    }
+    
     public void setArgs(CommandArg args) {
         this.args=args;
     }
@@ -70,31 +83,40 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
     }
 
     /**
-     * Factory life cycle method. See {@link AbstractFactory} for details.
-     * @param core
+     * Merge the rule elements (rules, globals, functions, etc.) from donor into subject.
+     * @param subject Package to merge into
+     * @param donor Package to merge from
      */
-    public void activate(Core core, com.ail.core.configure.Type typeSpec) {
-        if (ruleBase==null) {
-            try {
-                this.core=core;
-                core.logInfo("Loading decision table for:"+typeSpec.getName()+" from:"+getUrl());
-                loadRuleBase();
+    @SuppressWarnings("unchecked")
+    public static void mergeRulePackages(PackageDescr subject, PackageDescr donor) {
+        // Add rules from the donor which don't already appear in the subject
+        rules: for(RuleDescr donorRule: (List<RuleDescr>)donor.getRules()) {
+            for(RuleDescr subjectRule: (List<RuleDescr>)subject.getRules()) {
+                if (donorRule.getName().equals(subjectRule.getName())) {
+                    continue rules;
+                }
             }
-            catch(InvalidRulePackage e) {
-                core.logError("Failed to compile decision table: \n"+e.getMessage());
+            subject.addRule(donorRule);
+        }
+
+        // Add Globals from donor if they don't already appear in the subject
+        for(GlobalDescr global: (List<GlobalDescr>)donor.getGlobals()) {
+            if (!subject.getGlobals().contains(global)) {
+                subject.addGlobal(global);
             }
-            catch(DecisionTableParseException e) {
-                core.logError("Failed to parse decision table: \n"+e.getMessage());
+        }
+
+        // Add imports from the donor that don't appear in the subject
+        for(ImportDescr imp: (List<ImportDescr>)donor.getImports()) {
+            if (!subject.getImports().contains(imp)) {
+                subject.addImport(imp);
             }
-            catch(RuntimeException e) {
-                core.logError("Failed to compile decision table: \n"+e.getMessage());
-            }
-            catch(Throwable e) {
-                core.logError("Failed to compile decision table: "+getUrl());
-                e.printStackTrace();
-            }
-            finally {
-                this.core=null;
+        }
+
+        // Add functions from the donor that don't appear in the subject
+        for(FunctionDescr donorFunc: (List<FunctionDescr>)donor.getFunctions()) {
+            if (!subject.getFunctions().contains(donorFunc)) {
+                subject.addFunction(donorFunc);
             }
         }
     }
@@ -103,15 +125,15 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
         boolean mergeDone=false;
         
         if (extend!=null && extend.length()>0) {
-            String extendUrl=getCore().getParameterValue("_Types."+extend+".Url");
-            URL donorUrl=Functions.absoluteConfigureUrl(getCore(), extendUrl);
-            
-            PackageDescr donor=loadPackage(donorUrl);
+            String donorScript=getCore().getParameterValue("_Types."+extend+".Script");
+            String donorUrl=getCore().getParameterValue("_Types."+extend+".Url");
+
+            PackageDescr donor=loadPackage(Functions.loadScriptOrUrlContent(getCore(), donorUrl, donorScript));
 
             // Check the ruleBase for a package with the same name as the donor
             for(PackageDescr pd: pkgs) {
                 if (pd.getName().equals(donor.getName())) {
-                    DroolsAccessor.mergeRulePackages(pd, donor);
+                    mergeRulePackages(pd, donor);
                     mergeDone=true;
                 }
             }
@@ -128,62 +150,42 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
     }
     
     /**
-     * Load the rules from a URL into a package descriptor
-     * @param drlUrl String of statements
+     * Load the rules from a String into a package descriptor
+     * @param drlString String of statements
      * @return Loaded package
      * @throws IOException
      * @throws DroolsParserException
      */
-    private PackageDescr loadPackage(URL drlUrl) throws IOException, DroolsParserException {
+    private PackageDescr loadPackage(String xmlString) throws IOException, SAXException {
         // Parse the DRL string
-        DrlParser parser = new DrlParser();
+        Reader reader = new StringReader(xmlString);
+        XmlPackageReader xpr=new XmlPackageReader();
 
-        // first we compile the decision table into a whole lot of rules.
-        SpreadsheetCompiler compiler = new SpreadsheetCompiler();
-        String drl = compiler.compile((InputStream)drlUrl.getContent(), InputType.XLS);
-
-        if (AccessorLoggingIndicator.FULL.equals(getLoggingIndicator())) {
-            core.logInfo("Rules derived from "+getUrl()+"\n"+drl);
-        }
-        
         // Add it to the list
-        return parser.parse(drl);
+        return xpr.read(reader);
     }
 
     /**
-     * Load the rulebase if it hasn't be loaded already.
+     * Load the rulebase.
      * @throws Exception If the load fails
      */
-    private void loadRuleBase() throws Exception {
-        URL ruleUrl;
-
-        ruleUrl=Functions.absoluteConfigureUrl(getCore(), getUrl());
-
-        ruleBaseLoaded=false;
-        
+    private synchronized void loadRuleBase() throws Exception {
         List<PackageDescr> pkgs=new ArrayList<PackageDescr>();
 
-        pkgs.add(loadPackage(ruleUrl));
+        pkgs.add(loadPackage(Functions.loadScriptOrUrlContent(getCore(), getUrl(), getScript())));
         resolveInheritance(pkgs, getExtend());        
 
         ruleBase = RuleBaseFactory.newRuleBase();
 
-        PackageBuilder builder=null;
-        PackageBuilderConfiguration config=new PackageBuilderConfiguration();
-        
         for(PackageDescr desc: pkgs) {
-            builder = new PackageBuilder(config);
+            PackageBuilder builder = new PackageBuilder();
             builder.addPackage( desc );
             ruleBase.addPackage(builder.getPackage());
         }
-        
-        ruleBaseLoaded=true;
     }
-
+    
     public void invoke() throws DroolsServiceException {
-        if (!ruleBaseLoaded) {
-            throw new IllegalStateException("Rule base not loaded ("+getUrl()+"). Was there an error during compilation?");
-        }
+        super.logEntry();
         
         StatefulSession workingMemory=null;
         
@@ -191,18 +193,14 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
             workingMemory=ruleBase.newStatefulSession();
 
             workingMemory.insert(getArgs());
-
-            // create a global (variable) for each arg/ret in the service's arguments
-            for(Method m: getArgs().getClass().getMethods()) {
-                if (m.getName().startsWith("get") && (m.getName().endsWith("Arg") || m.getName().endsWith("Ret"))) {
-                    workingMemory.setGlobal("$"+m.getName().substring(3), m.invoke(args));
-                }
+            
+            if (FULL.equals(getLoggingIndicator())) {
+                workingMemory.addEventListener(new DebugWorkingMemoryEventListener());
             }
             
             workingMemory.fireAllRules();
-        } 
-        catch(Exception e) {
-            e.printStackTrace();
+            
+        } catch(Exception e) {
             throw new DroolsServiceException(e);
         }
         finally {
@@ -210,26 +208,36 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
                 workingMemory.dispose();
             }
         }
+
+        super.logExit();
     }
 
     public Version getVersion() {
-        throw new CommandInvocationError("Get version cannot be invoked on a DroolsDecisionTableAccessor service");
+        throw new CommandInvocationError("Get version cannot be invoked on a DroolsAccessor service");
     }
 
     public Configuration getConfiguration() {
-        throw new CommandInvocationError("Get configuration cannot be invoked on a DroolsDecisionTableAccessor service");
+        throw new CommandInvocationError("Get configuration cannot be invoked on a DroolsAccessor service");
     }
 
     public void setConfiguration(Configuration properties) {
-        throw new CommandInvocationError("Set configuration cannot be invoked on a DroolsDecisionTableAccessor service");
+        throw new CommandInvocationError("Set configuration cannot be invoked on a DroolsAccessor service");
+    }
+
+    public void setScript(String script) {
+        this.script=script;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public void setUrl(String url) {
         this.url=url;
     }
 
-    public String getUrl() {
-        return url;
+    public String getScript() {
+        return script;
     }
 
     public VersionEffectiveDate getVersionEffectiveDate() {
@@ -268,7 +276,7 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
      * @throws CloneNotSupportedException If the type cannot be deep cloned.
      */
     public Object clone() throws CloneNotSupportedException {
-        DroolsDecisionTableAccessor clone=(DroolsDecisionTableAccessor)super.clone();
+        DroolsXMLAccessor clone=(DroolsXMLAccessor)super.clone();
         clone.ruleBase=ruleBase;
         return clone;
     }
@@ -279,13 +287,5 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
 
     public void setExtend(String extend) {
         this.extend = extend;
-    }
-
-    public boolean isRuleBaseLoaded() {
-        return ruleBaseLoaded;
-    }
-
-    public void setRuleBaseLoaded(boolean ruleBaseLoaded) {
-        this.ruleBaseLoaded = ruleBaseLoaded;
     }
 }

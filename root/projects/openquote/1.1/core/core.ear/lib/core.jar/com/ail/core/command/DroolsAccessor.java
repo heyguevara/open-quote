@@ -48,15 +48,12 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.factory.AbstractFactory;
 
 /**
- * This Accessor supports the use of Drools decision tables as services. Drools (www.drools.org) is
- * an open source rules engine which supports decision tables in the form of spreadsheets conforming
- * to certain conventions. The usage pattern here is to have an instance of this Accessor for each 
- * decision table based ruleset. The Accessor expects to find a URL pointing at the decision table in
- * it's Script parameter (generally this is set by configuration).
- * @version $Revision: 1.11 $
- * @state $State: Exp $
- * @date $Date: 2007/12/22 10:40:49 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/DroolsAccessor.java,v $
+ * This Accessor supports the use of Drools DRL as services. Drools 
+ * (www.drools.org) is an open source rules engine which supports a native 
+ * rule language (DRL). The usage pattern here is to have an instance of this
+ * Accessor for each DRL based ruleset. The Accessor expects to find a URL 
+ * pointing at the decision table in it's Script parameter (generally this is
+ * set by configuration).
  */
 public class DroolsAccessor extends Accessor implements ConfigurationOwner {
     private Core core=null;
