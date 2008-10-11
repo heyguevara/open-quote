@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file to deploy the jboss domain. 
+-->
+
+<project default="build" name="community:domain">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+  </target>
+
+  <target name="_build">
+    <antcall target="setup" />
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build"/>
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <!-- copy files that don't need filters to be applied -->
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="./jboss" includes="**" excludes="deploy/*-ds.xml, **/*.jsp" />
+    </copy>
+
+    <!-- copy files that do need filters to be applied -->
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="./jboss" includes="deploy/*-ds.xml, **/*.jsp, deploy/alfresco.war/**/repository.properties" />
+      <filterset>
+        <filter token="major.version" value="${major.version}" />
+        <filter token="minor.version" value="${minor.version}" />
+        <filter token="increment.version" value="${increment.version}" />
+        <filter token="dbname" value="${dbname}" />
+      </filterset>
+    </copy>
+
+    <set-mysql-running-property-macro/>
+    <antcall target="setup-db-if"/>
+    <antcall target="setup-db-unless"/>
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${deploy.dir}" />
+    
+    <set-mysql-running-property-macro/>
+    <antcall target="teardown-db-if"/>
+    <antcall target="teardown-db-unless"/>
+  </target>
+
+  <target name="teardown-db-if" if="mysql-running">
+    <!-- drop all the databases -->
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
+          -- Make sure the database and users are there before we try to delete them!
+          create database if not exists ${dbname};
+          grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
+          grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
+        
+          -- Now do the actual tidy up 
+          drop database if exists ${dbname};
+          revoke all privileges, grant option from 'coreuser'@'localhost';
+          drop user 'coreuser'@'localhost';
+    </sql>
+  </target>  
+  
+  <target name="teardown-db-unless" unless="mysql-running">
+    <!-- drop all the databases -->
+    <echo message="Database has not been cleared - mysql doesn't appear to be running"/>
+  </target>  
+
+  <target name="setup-db-if" if="mysql-running">
+    <!-- create the databases we'll need for unit testing etc. -->
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
+      create database if not exists ${dbname};
+      grant all on ${dbname}.* to 'openquote'@'localhost' identified by 'openquote' with grant option;
+      grant all on ${dbname}.* to 'openquote'@'localhost.localdomain' identified by 'openquote' with grant option;
+      
+      create table if not exists ${dbname}.attribute (
+        id varchar(255) primary key,
+        value varchar(255),
+        format varchar(255),
+        unit varchar(255),
+        serial int
+      );
+      
+      create table if not exists ${dbname}.saved_quote_summary (
+        id bigint(20) auto_increment primary key,
+        version bigint(20),
+        quote_number varchar(255),
+        quote_date date,
+        expiry_date date,
+        status varchar(255),
+        page varchar(255),
+        premium_amount decimal(19,2),
+        premium_currency varchar(255),
+        username varchar(255),
+        product varchar(255),
+        user_saved bit,
+        test_case bit
+      );
+      
+      create table if not exists ${dbname}.saved_quote (
+        id bigint(20) primary key,
+        quotation text,
+        quotation_document longblob
+      );
+    </sql>
+  </target>
+
+  <target name="setup-db-unless" unless="mysql-running">
+    <!-- drop all the databases -->
+    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
+  </target>  
+</project>
