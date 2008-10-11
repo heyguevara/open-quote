@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+    <class name="com.ail.core.Type">
+        <map-to xml="type"/>
+        <field name="lock" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="serialVersion" type="long">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="systemId" type="long">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="foreignSystemId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="attribute" type="com.ail.core.Attribute" collection="arraylist"/>
+    </class>
+        
+    <class name="com.ail.core.Attribute" extends="com.ail.core.Type">
+        <map-to xml="attribute"/>
+        <field name="unit" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+		<field name="value" type="string" set-method="setValue" get-method="getValueForXmlAttribute">
+			<bind-xml node="attribute"/>  
+		</field>
+        <field name="valueForXmlText" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml name="value" node="element"/>
+        </field>
+        <field name="format" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.VersionEffectiveDate" extends="com.ail.core.Type">
+        <map-to xml="versionEffectiveDate"/>
+        <field name="time" type="long">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="date" type="date">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.CoreUserImpl">
+        <map-to xml="coreuser"/>
+        <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate"/>
+        <field name="configurationNamespace" type="string"/>
+    </class>
+
+	<class name="com.ail.core.ExceptionRecord" extends="com.ail.core.Type">
+        <field name="date" type="date">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="reason" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="catchingClassName" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="stack" type="string" collection="collection"/>
+	</class>
+
+    <class name="com.ail.core.command.CommandArgImp" extends="com.ail.core.Type">
+        <field name="callersCore" type="com.ail.core.CoreUserImpl"/>
+    </class>
+
+    <class name="com.ail.core.logging.LoggerArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
+
+    <class name="com.ail.core.product.listproducts.ListProductsArgImp" extends="com.ail.core.command.CommandArgImp">
+        <field name="productsRet" type="string" collection="collection"/>
+    </class>
+
+    <class name="com.ail.core.document.generatedocument.StyleDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
+        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
+        <field name="styledDocumentRet" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
+    </class>
+    
+    <class name="com.ail.core.configure.XMLMapping" extends="com.ail.core.Type">
+        <map-to xml="XMLMapping"/>
+        <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+    </class>
+
+    <class name="com.ail.core.configure.Component" extends="com.ail.core.Type">
+        <map-to xml="component"/>
+        <field name="name" type="string">
+            <bind-xml node="attribute"/>
+        </field>        
+    </class>
+
+    <class name="com.ail.core.configure.Parameter" extends="com.ail.core.configure.Component">
+        <map-to xml="parameter"/>
+        <field name="value" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml node="text"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.configure.Group" extends="com.ail.core.configure.Component">
+        <map-to xml="group"/>
+        <field name="attribute" type="com.ail.core.Attribute" collection="arraylist"/>
+        <field name="parameter" type="com.ail.core.configure.Parameter" collection="arraylist"/>
+        <field name="group" type="com.ail.core.configure.Group" collection="arraylist"/>
+    </class>
+
+    <class name="com.ail.core.configure.Builder" extends="com.ail.core.configure.Group">
+        <map-to xml="builder"/>
+        <field name="factory" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.configure.Builders" extends="com.ail.core.configure.Group">
+        <map-to xml="builders"/>
+        <field name="builder" type="com.ail.core.configure.Builder" get-method="getGroup" set-method="setGroup" collection="arraylist">
+            <bind-xml node="element"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.configure.Type" extends="com.ail.core.configure.Group">
+        <map-to xml="type"/>
+        <field name="key" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="singleInstance" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="builder" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.configure.Service" extends="com.ail.core.configure.Type">
+        <map-to xml="service"/>
+    </class>
+
+    <class name="com.ail.core.configure.Command" extends="com.ail.core.configure.Type">
+        <map-to xml="command"/>
+    </class>
+
+    <class name="com.ail.core.configure.Types" extends="com.ail.core.configure.Group">
+        <map-to xml="types"/>
+        <field name="type" type="com.ail.core.configure.Type" get-method="getGroup" set-method="setGroup" collection="arraylist"/>
+    </class>
+
+    <class name="com.ail.core.configure.Configuration" extends="com.ail.core.configure.Group">
+        <map-to xml="configuration"/>
+        <field name="name" type="string"/>
+        <field name="timeout" type="integer"/>
+        <field name="validTo" type="com.ail.core.VersionEffectiveDate"/>
+        <field name="parentNamespace" type="string"/>
+        <field name="manager" type="string"/>
+        <field name="who" type="string"/>
+        <field name="source" type="string"/>
+        <field name="loadedAt" type="date"/>
+        <field name="version" type="string"/>
+        <field name="validFrom" type="com.ail.core.VersionEffectiveDate"/>
+        <field name="onlyGroups" type="com.ail.core.configure.Group" get-method="getOnlyGroups" set-method="setOnlyGroups" collection="arraylist"/>
+        <field name="xmlMapping" type="com.ail.core.configure.XMLMapping"/>
+        <field name="builders" type="com.ail.core.configure.Builders"/>
+        <field name="types" type="com.ail.core.configure.Types"/>
+    </class>
+
+    <class name="com.ail.core.CommandScript" extends="com.ail.core.Type">
+        <map-to xml="commandScript"/>
+        <field name="script" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+        <field name="commandName" type="string"/>
+        <field name="namespace" type="string"/>
+        <field name="type" type="string"/>
+    </class>
+
+    <!-- Classes related to document generataion -->
+    <class name="com.ail.core.document.model.ItemData" extends="com.ail.core.Type">
+        <map-to xml="itemData"/>
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="title" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="order" type="long">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="class" type="string" get-method="getStyle" set-method="setStyle">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="value" type="string">
+            <bind-xml node="text"/>
+        </field>
+    </class>
+    
+    <class name="com.ail.core.document.model.ModelData" extends="com.ail.core.document.model.ItemData">        
+        <field name="binding" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.document.model.UrlData" extends="com.ail.core.document.model.ItemData">        
+        <field name="url" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.document.model.ItemContainer" extends="com.ail.core.document.model.ItemData">        
+        <field name="item" type="com.ail.core.document.model.ItemData" collection="arraylist"/>
+    </class>
+    
+    <class name="com.ail.core.document.model.BlockData" extends="com.ail.core.document.model.ItemContainer">
+        <map-to xml="blockData"/>
+        <field name="placement" get-method="getPlacementAsString" set-method="setPlacementAsString" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.document.model.HeaderData" extends="com.ail.core.document.model.ItemContainer">
+        <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="leftLogo" type="string"/>
+        <field name="rightLogo" type="string"/>
+    </class>
+    
+    <class name="com.ail.core.document.model.FooterData" extends="com.ail.core.document.model.ItemContainer">
+        <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="leftLogo" type="string"/>
+        <field name="rightLogo" type="string"/>
+    </class>
+
+    <class name="com.ail.core.document.model.RepeatingData" extends="com.ail.core.document.model.ItemContainer">
+        <map-to xml="repeatingData"/>
+        <field name="binding" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.document.model.ChapterData" extends="com.ail.core.document.model.ItemContainer">        
+        <map-to xml="chapterData"/>
+    </class>
+    
+    <class name="com.ail.core.document.model.DocumentData" extends="com.ail.core.document.model.ItemData">        
+        <map-to name="documentData"/>
+        <field name="headerData" type="com.ail.core.document.model.HeaderData" collection="arraylist"/>
+        <field name="footerData" type="com.ail.core.document.model.FooterData" collection="arraylist"/>
+        <field name="watermark" type="string"/>
+        <field name="chapterData" type="com.ail.core.document.model.ChapterData" collection="arraylist"/>
+    </class>
+
+    <class name="com.ail.core.document.model.DocumentDefinition" extends="com.ail.core.Type">        
+        <map-to name="documentDefinition"/>
+        <field name="mergeCommand" type="string"/>
+        <field name="styleCommand" type="string"/>
+        <field name="renderCommand" type="string"/>
+        <field name="documentData" type="com.ail.core.document.model.DocumentData"/>
+    </class>
+
+    <!-- Mappings for financial model types -->
+    <class name="com.ail.financial.CurrencyAmount" extends="com.ail.core.Type" auto-complete="false">
+        <field name="amount" type="string" get-method="getAmountAsString" set-method="setAmountAsString">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="currency" type="string" get-method="getCurrencyAsString" set-method="setCurrencyAsString">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.util.Rate" extends="com.ail.core.Type" auto-complete="false">
+        <field name="rate" type="string"/>
+    </class>
+
+    <class name="com.ail.financial.PaymentMethod" extends="com.ail.core.Type" auto-complete="false">
+    </class> 
+    
+    <class name="com.ail.financial.MoneyProvision" extends="com.ail.core.Type" auto-complete="false">
+        <map-to xml="moneyProvision"/>
+        <field name="description" type="string"/>
+        <field name="frequency" type="string" get-method="getFrequencyAsString" set-method="setFrequencyAsString"/>
+        <field name="number" type="int"/>
+        <field name="paymentsStartDate" type="date"/>
+        <field name="paymentsEndDate" type="date"/>
+        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
+        <field name="paymentMethod" type="com.ail.financial.PaymentMethod"/>
+    </class> 
+
+    <class name="com.ail.financial.DirectDebit" extends="com.ail.financial.PaymentMethod" auto-complete="false">
+        <map-to xml="directDebit"/>
+        <field name="accountNumber" type="string"/>
+        <field name="sortCode" type="string"/>
+    </class> 
+    
+    <class name="com.ail.financial.PaymentCard" extends="com.ail.financial.PaymentMethod" auto-complete="false">
+        <map-to xml="paymentCard"/>
+        <field name="cardHoldersName" type="string"/>
+        <field name="cardNumber" type="string"/>
+        <field name="issueNumber" type="string"/>
+        <field name="issuer" type="string" get-method="getIssuerAsString" set-method="setIssuerAsString"/>
+        <field name="expiryDate" type="date"/>
+    </class> 
+
+    <class name="com.ail.financial.PaymentSchedule" extends="com.ail.core.Type" auto-complete="false">
+        <map-to xml="paymentSchedule"/>
+        <field name="description" type="string"/>
+        <field name="moneyProvision" type="com.ail.financial.MoneyProvision" collection="arraylist"/>
+    </class>
+    
+    <class name="com.ail.util.DateOfBirth" extends="com.ail.core.Type" auto-complete="false">
+        <field name="dateOfBirth" type="string" get-method="getDateAsString" set-method="setDateAsString"/>
+    </class>
+
+    <class name="com.ail.party.Address" extends="com.ail.core.Type" auto-complete="false">
+        <field name="line1" type="string"/>
+        <field name="line2" type="string"/>
+        <field name="line3" type="string"/>
+        <field name="line4" type="string"/>
+        <field name="line5" type="string"/>
+        <field name="town" type="string"/>
+        <field name="county" type="string"/>
+        <field name="country" type="string"/>
+        <field name="postcode" type="string"/>
+    </class>
+
+    <class name="com.ail.party.Party" extends="com.ail.core.Type" auto-complete="false">
+        <field name="address" type="com.ail.party.Address"/>
+        <field name="legalName" type="string"/>
+    </class>
+
+    <class name="com.ail.party.Person" extends="com.ail.party.Party" auto-complete="false">
+        <field name="dateOfBirth" type="com.ail.util.DateOfBirth"/>
+        <field name="firstName" type="string"/>
+        <field name="surname" type="string"/>
+        <field name="title" type="string" get-method="getTitleAsString" set-method="setTitleAsString"/>
+        <field name="otherTitle" type="string"/>
+    </class>
+
+    <class name="com.ail.party.Organisation" extends="com.ail.party.Party" auto-complete="false"/>
+
+    <!-- Mappings for quote model related types -->
+    <class name="com.ail.insurance.policy.Reference" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string"/>
+        <field name="type" type="string" get-method="getTypeAsString" set-method="setTypeAsString"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.AssessmentLine" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string"/>
+        <field name="reason" type="string"/>
+        <field name="priority" type="int"/>
+        <field name="calculatedOrder" type="int"/>
+        <field name="origin" type="string"/>
+        <field name="disabled" type="boolean"/>
+        <field name="relatesTo" type="com.ail.insurance.policy.Reference"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.AssessmentNote" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false"/>
+
+    <class name="com.ail.insurance.policy.CalculationLine" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
+        <field name="contributesTo" type="string"/>
+        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+    <class name="com.ail.insurance.policy.Behaviour" extends="com.ail.insurance.policy.CalculationLine" auto-complete="false">
+        <field name="type" type="string" get-method="getTypeAsString" set-method="setTypeAsString"/>
+    </class>
+    
+    <class name="com.ail.insurance.policy.RateBehaviour" extends="com.ail.insurance.policy.Behaviour" auto-complete="false">
+        <field name="dependsOn" type="string"/>
+        <field name="rate" type="com.ail.util.Rate"/>
+    </class>
+    
+    <class name="com.ail.insurance.policy.SumBehaviour" extends="com.ail.insurance.policy.Behaviour" auto-complete="false"/>
+
+    <class name="com.ail.insurance.policy.FixedSum" extends="com.ail.insurance.policy.CalculationLine" auto-complete="false"/>
+
+    <class name="com.ail.insurance.policy.Totalizer" extends="com.ail.insurance.policy.CalculationLine" auto-complete="false">
+        <field name="dependsOn" type="string"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.Marker" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
+        <field name="type" type="string" set-method="setTypeAsString" get-method="getTypeAsString"/>
+    </class>
+    
+    <class name="com.ail.insurance.policy.Subjectivity" extends="com.ail.insurance.policy.Marker" auto-complete="false">
+        <field name="createdDate" type="date"/>
+        <field name="expiryDate" type="date"/>
+        <field name="reminderDate" type="date"/>
+        <field name="manuscript" type="boolean"/>
+        <field name="text" type="string"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.MarkerResolution" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
+        <field name="behaviourId" type="string"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.AssessmentSheet" extends="com.ail.core.Type" auto-complete="false">
+        <field name="lockingActor" type="string"/>
+        <field name="assessmentList" type="com.ail.insurance.policy.AssessmentLine" collection="map"/>
+    </class>
+
+    <class name="com.ail.core.Allowable" extends="com.ail.core.Type" auto-complete="false">
+        <field name="allowable" type="com.ail.core.Allowable" collection="vector"/>
+        <field name="name" type="string"/>
+        <field name="typeId" type="string"/>
+        <field name="className" type="string"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.Asset" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="assetTypeId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+    
+    <class name="com.ail.insurance.policy.Coverage" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="enabled" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="optional" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="description" type="string"/>
+        <field name="limit" type="com.ail.financial.CurrencyAmount"/>
+        <field name="deductible" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.Wording" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string"/>
+        <field name="wordingText" type="string"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.Excess" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="excessTypeId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="enabled" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="deductible" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="title" type="string"/>
+        <field name="assetId" type="string" collection="vector"/>
+        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+    
+    <class name="com.ail.insurance.policy.Clause" extends="com.ail.core.Type">
+      <field name="type" get-method="getTypeAsString" set-method="setTypeAsString" type="string">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="createdDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="startDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="endDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="reminderDate" type="date">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="manuscript" type="boolean">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+      <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.Section" extends="com.ail.core.Type" auto-complete="false">
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="sectionTypeId" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="assessmentSheet" type="com.ail.insurance.policy.AssessmentSheet"/>
+        <field name="assetId" type="string" collection="arraylist"/>
+        <field name="uninsuredAssetId" type="string" collection="arraylist"/>
+        <field name="coverage" type="com.ail.insurance.policy.Coverage" collection="arraylist"/>
+        <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.Policy" extends="com.ail.core.Type" auto-complete="false">
+        <field name="allowable" type="com.ail.core.Allowable" collection="arraylist"/>
+        <field name="excess" type="com.ail.insurance.policy.Excess" collection="arraylist"/>
+        <field name="asset" type="com.ail.insurance.policy.Asset" collection="arraylist"/>
+        <field name="section" type="com.ail.insurance.policy.Section" collection="arraylist"/>
+        <field name="coverage" type="com.ail.insurance.policy.Coverage" collection="arraylist"/>
+        <field name="id" type="string"/>
+        <field name="status" type="string" get-method="getStatusAsString" set-method="setStatusAsString"/>
+        <field name="assessmentSheet" type="com.ail.insurance.policy.AssessmentSheet"/>
+        <field name="productTypeId" type="string"/>
+        <field name="productName" type="string"/>
+        <field name="policyNumber" type="string"/>
+        <field name="inceptionDate" type="date"/>
+        <field name="expiryDate" type="date"/>
+        <field name="wording" type="com.ail.insurance.policy.Wording" collection="arraylist"/>
+        <field name="quotationNumber" type="string"/>
+        <field name="paymentDetails" type="com.ail.financial.PaymentSchedule"/>
+        <field name="policyHolder" type="com.ail.party.Party"/>
+        <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist"/>
+    </class>
+
+    <class name="com.ail.insurance.quotation.assessrisk.AssessRiskArgImp" extends="com.ail.core.command.CommandArgImp">
+        <field name="policyArgRet" type="com.ail.insurance.policy.Policy"/>
+    </class>
+</mapping>
