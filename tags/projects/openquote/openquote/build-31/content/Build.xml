@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file to deploy content to the content management system
+-->
+
+<project default="build" name="openquote:content">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate"/>
+
+  <target name="_build">
+    <build-bootstrap-content-macro basedir="./export_models.acp" />
+    <build-bootstrap-content-macro basedir="./export_spaces_archive.acp" />
+    <build-bootstrap-content-macro basedir="./export_spaces.acp" />
+    <build-bootstrap-content-macro basedir="./export_users.acp"  />
+    <build-bootstrap-content-macro basedir="./export_versions.acp" />
+    <build-bootstrap-content-macro basedir="./export_system.acp" />
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>

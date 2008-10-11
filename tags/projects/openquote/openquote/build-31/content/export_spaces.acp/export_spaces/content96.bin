@@ -1,0 +1,33 @@
+import com.ail.financial.*;
+import com.ail.util.*;
+import java.util.ArrayList;
+import java.math.BigDecimal;
+
+args.setOptionsRet(new ArrayList());
+premium=args.getPolicyArg().getTotalPremium();
+
+/* First option: Whole premium in one payment by payment card. */
+payments=new ArrayList();
+payments.add(new MoneyProvision(1, premium, FinancialFrequency.ONE_TIME, new PaymentCard(), null, null, null));
+args.getOptionsRet().add(new PaymentSchedule(payments, "A single payment by payment card of "+premium.getAmountAsString()));
+
+/* second option: Whole premium in one payment by direct debit. */
+payments=new ArrayList();
+payments.add(new MoneyProvision(1, premium, FinancialFrequency.ONE_TIME, new DirectDebit(), null, null, null));
+args.getOptionsRet().add(new PaymentSchedule(payments, "A single payment by direct debit of "+premium.getAmountAsString()));
+
+/* third option - deposit + 9 monthly payments. */ 
+adminFee="8%";
+premInc=premium.clone();
+premInc.apply(new Rate(adminFee));
+premInc.add(premium);
+pmnt=new CurrencyAmount(premInc.getAmount().divide(new BigDecimal(100)).intValue()*10, Currency.GBP);
+fstPmnt=new CurrencyAmount(pmnt.getAmount().add(premInc.getAmount().remainder(new BigDecimal(100))), Currency.GBP);
+payments=new ArrayList();
+payments.add(new MoneyProvision(1, fstPmnt, FinancialFrequency.ONE_TIME, new PaymentCard(), null, null, "A deposit of "+fstPmnt.getAmountAsString()));
+payments.add(new MoneyProvision(9, pmnt, FinancialFrequency.MONTHLY, new DirectDebit(), null, null, "Followed by 9 monthly payments of "+pmnt.getAmountAsString()));
+sched=new PaymentSchedule(payments, null);
+sched.setDescription("A deposit by payment card followed by nine monthly installments by direct debit totalling "+sched.calculateTotal().getAmountAsString()+" (includes an "+adminFee+" admin fee)");
+args.getOptionsRet().add(sched);
+
+print("Adding Payment Options to Schedule");

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quotation xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <asset id="driver1" assetTypeId="DriverAsset">
+          <attribute id="name" value="Jimbo Clucknasty" format="string,size=15"/>
+          <attribute id="dob" value="08/12/1964" format="date,pattern=dd/MM/yyyy"/>
+          <attribute id="sex" value="Male" format="choice,options=-1#?|1#Male|2#Female"/>
+          <attribute id="occupation" value="Doctor" format="choice,options=-1#?|1#Commercial Travelers|2#Driving Tuition|3#Motor Sportsman|4#Student|5#Members of Armed Forces|6#Office Worker|7#Racing and Gambling|8#Doctor|10#Accountant|11#Traveling Showman|12#Construction Site Worker|13#Nurse|14#Unemployed|15#Hotel Worker|16#Policeman|17#Restaurant Staff|18#Other"/>
+          <attribute id="licenseType" value="Full" format="choice,options=-1#?|1#Full|2#Provisional"/>
+          <attribute id="yearsLicenseHeld" value="23" format="number,pattern=##"/>
+          <attribute id="mainDriver" value="Yes" format="yesorno"/>
+     </asset>
+     <asset id="driversHistory" assetTypeId="DriverHistoryAsset">
+          <attribute id="refusedMotorInsurance" value="No" format="yesorno"/>
+          <attribute id="claimAccidentOrLoss" value="No" format="yesorno"/>
+          <attribute id="theft" value="No" format="yesorno"/>
+          <attribute id="motorConviction" value="No" format="yesorno"/>
+          <attribute id="otherConviction" value="No" format="yesorno"/>
+          <attribute id="previouslyInsured" value="No" format="yesorno"/>
+          <attribute id="gapInCover" value="?" format="yesorno"/>
+          <attribute id="gapInCoverDetail" value="" format="note"/>
+          <attribute id="previousInsurer" value="" format="string"/>
+          <attribute id="previousPolicyNumber" value="" format="string"/>
+          <attribute id="claimingNoClaimsBonus" value="No" format="yesorno"/>
+          <attribute id="yearsOfNoClaimsBonus" value="0" format="number,pattern=##"/>
+     </asset>
+     <asset id="vehicle1" assetTypeId="VehicleAsset">
+          <attribute id="make" value="AC" format="choice"/>
+          <attribute id="model" value="ACE" format="choice"/>
+          <attribute id="cc" value="2000" format="number,pattern=####"/>
+          <attribute id="bodytype" value="Coupe" format="choice,options=-1#?|1#Salon|2#Coupe|3#Convertable"/>
+          <attribute id="year" value="2001" format="date,pattern=yyyy"/>
+          <attribute id="registration" value="LGO 920Y" format="string,size=10"/>
+          <attribute id="datebought" value="01/01/2001" format="date,options=dd/MM/yyyy"/>
+          <attribute id="cost" value="2000" unit="GBP" format="currency"/>
+          <attribute id="value" value="4000" unit="GBP" format="currency"/>
+          <attribute id="lefthanddrive" value="No" format="yesorno"/>
+          <attribute id="registeredinproposersname" value="Yes" format="yesorno"/>
+          <attribute id="ownedbyproposer" value="Yes" format="yesorno"/>
+          <attribute id="driventoandfromwork" value="Yes" format="yesorno"/>
+          <attribute id="modified" value="No" format="yesorno"/>
+          <attribute id="modification" value="?" format="choice,options=-1#?|1#Increased power|2#Left hand drive conversion|3#Other"/>
+          <attribute id="securitydevice" value="Yes" format="yesorno"/>
+          <attribute id="keptatproposersaddress" value="Yes" format="yesorno"/>
+          <attribute id="storedingarage" value="Yes" format="yesorno"/>
+          <attribute id="garageofsolidconstruction" value="No" format="yesorno"/>
+     </asset>
+     <asset id="accidentHistory1" assetTypeId="AccidentHistoryAsset">
+          <attribute id="driver" value="?" format="choice,options=-1#?|1#Jimbo Clucknasty"/>
+          <attribute id="date" value="" format="date,pattern=dd/MM/yyyy"/>
+          <attribute id="atFault" value="?" format="yesorno"/>
+          <attribute id="value" value="" unit="GBP" format="currency"/>
+     </asset>
+     <asset id="convictionHistory1" assetTypeId="ConvictionHistoryAsset">
+          <attribute id="driver" value="?" format="choice,options=-1#?|1#Jimbo Clucknasty"/>
+          <attribute id="date" value="" format="date,pattern=dd/MM/yyyy"/>
+          <attribute id="type" value="?" format="choice,options=-1#?|1#Minor offence|2#Driving without due care and attention|3#Serious offence, but no disqualification|4#Serious offence resulting in disqualification"/>
+     </asset>
+     <section id="section1" sectionTypeId="MotorPlusSection">
+          <attribute id="cover" value="Comprehensive" format="choice,options=-1#?|1#Third Party Fire and Theft|2#Comprehensive"/>
+          <assessmentSheet/>
+          <assetId>vehicle1</assetId>
+          <assetId>driver1</assetId>
+          <assetId>history</assetId>
+          <assetId>accidentHistory1</assetId>
+          <assetId>convictionHistory1</assetId>
+          <coverage id="damage" enabled="true" optional="false">
+               <description>Damage to Third Party Property</description>
+               <limit amount="80000.00"/>
+          </coverage>
+          <coverage id="personalInjury" enabled="true" optional="false">
+               <description>Personal Injury to Third Parties</description>
+          </coverage>
+          <coverage id="fireOrTheft" enabled="true" optional="false">
+               <description>Loss or Damage to the Vehicle by Fire or Theft</description>
+               <deductible amount="100.00"/>
+          </coverage>
+          <coverage id="accidentalDamage" enabled="true" optional="false">
+               <description>Accidental Damage to the Vehicle</description>
+               <deductible amount="50.00"/>
+          </coverage>
+          <coverage id="cdEquipment" enabled="true" optional="false">
+               <description>CD Equipment</description>
+               <limit amount="300.00"/>
+               <deductible amount="50.00"/>
+          </coverage>
+          <coverage id="windscreen" enabled="true" optional="false">
+               <description>Windscreen and Windows</description>
+               <limit amount="400.00"/>
+               <deductible amount="50.00"/>
+          </coverage>
+          <coverage id="carHire" enabled="true" optional="false">
+               <description>Car Hire On Repair</description>
+          </coverage>
+          <coverage id="personalAccident" enabled="false" optional="true">
+               <description>Personal Accident Benefit</description>
+               <limit amount="1000.00"/>
+          </coverage>
+     </section>
+     <status>APPLICATION</status>
+     <productTypeId>AIL.Demo.MotorPlus</productTypeId>
+     <page>Quotation</page>
+     <quotationDate>2006-03-29T18:05:28.327+01:00</quotationDate>
+     <proposer>
+          <address>
+                  <line1>Cluck Hall</line1>
+                  <line2>Egging Road</line2>
+                  <line3/>
+                  <line4/>
+                  <line5/>
+                  <town>Nesttown</town>
+                  <county>Beakshire</county>
+                  <country/>
+                  <postcode>HP2 2PX</postcode>
+                 </address>
+          <legalName/>
+          <firstName>Jimbo</firstName>
+          <surname>Clucknasty</surname>
+          <title>MR</title>
+          <emailAddress>jimbo@cluck.com</emailAddress>
+          <telephoneNumber>0800 737373</telephoneNumber>
+     </proposer>
+</quotation>

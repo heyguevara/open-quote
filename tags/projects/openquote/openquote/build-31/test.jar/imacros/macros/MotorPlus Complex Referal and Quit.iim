@@ -1,0 +1,92 @@
+﻿VERSION BUILD=6040429 RECORDER=FX
+TAB T=1
+URL GOTO=http://localhost:8080/portal/portal/quote/MotorPlus
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Welcome ATTR=NAME:op=Get<SP>A<SP>Quote:immediate=false&&VALUE:Get<SP>A<SP>Quote
+TAG POS=1 TYPE=SELECT FORM=NAME:Proposer ATTR=ID:title CONTENT=$Mr.
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:firstname CONTENT=Jimbo
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:surname CONTENT=Clucknasty
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:address1 CONTENT=Cluck<SP>Houst
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:address1 CONTENT=Cluck<SP>House
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:address2 CONTENT=Clu
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:address2 CONTENT=Cluck<SP>Street
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:town CONTENT=Cluckinton
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:county CONTENT=Cluckshire
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:postcode CONTENT=CL11<SP>3CL
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:phone CONTENT=0800<SP>201103
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=NAME:email CONTENT=cluck@cluck.com
+TAG POS=1 TYPE=SELECT FORM=NAME:Proposer ATTR=ID:title CONTENT=$Other
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Proposer ATTR=ID:otherTitle CONTENT=Dr
+TAG POS=1 TYPE=SELECT FORM=NAME:Proposer ATTR=ID:title CONTENT=$Mr.
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Proposer ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#make#] CONTENT=$AC
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#model#] CONTENT=$ACE
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cc#] CONTENT=2000
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#bodytype#] CONTENT=$Coupe
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#year#] CONTENT=2003
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#registration#] CONTENT=CL1<SP>920K
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#datebought#] CONTENT=01/01/2005
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cost#] CONTENT=6000
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#value#] CONTENT=8,000
+TAG POS=1 TYPE=INPUT:IMAGE FORM=NAME:Vehicles ATTR=NAME:op=add:id=#d31a:immediate=true:
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#make#] CONTENT=$ARIEL
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#model#] CONTENT=$ATOM
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#cc#] CONTENT=2500
+TAG POS=1 TYPE=SELECT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#bodytype#] CONTENT=$Salon
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#year#] CONTENT=2004
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#registration#] CONTENT=AA1<SP>812X
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#datebought#] CONTENT=01/02/2007
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#cost#] CONTENT=2000
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Vehicles ATTR=NAME:/asset[assetTypeId=#VehicleAsset#][1]attribute[id=#value#] CONTENT=10000
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Vehicles ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=TD ATTR=TXT:Details<SP>for<SP>AC<SP>ACE<SP>CL1<SP>920K<SP><SP>
+TAG POS=1 TYPE=TD ATTR=TXT:Details<SP>for<SP>ARIEL<SP>ATOM<SP>AA1<SP>812X<SP><SP>
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Vehicle<SP>Details ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#dob#] CONTENT=01/02/1967
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#occupation#] CONTENT=$Accountant
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#licenseType#] CONTENT=$Full
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][0]attribute[id=#yearsLicenseHeld#] CONTENT=20
+TAG POS=1 TYPE=INPUT:IMAGE FORM=NAME:Drivers ATTR=NAME:op=add:id=#49dc:immediate=true:
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#name#] CONTENT=C
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#name#] CONTENT=Jan<SP>Clucknasty
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#dob#] CONTENT=01/02/1901
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#sex#] CONTENT=$Female
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#occupation#] CONTENT=$Construction<SP>Site<SP>Worker
+TAG POS=1 TYPE=SELECT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#licenseType#] CONTENT=$Automatic
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:Drivers ATTR=NAME:/asset[assetTypeId=#DriverAsset#][1]attribute[id=#yearsLicenseHeld#] CONTENT=5
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Drivers ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#refusedMotorInsurance#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#claimAccidentOrLoss#] CONTENT=$Yes
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][0]attribute[id=#driver#] CONTENT=$Jan<SP>Clucknasty
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][0]attribute[id=#date#] CONTENT=01/12/abc
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][0]attribute[id=#atFault#] CONTENT=$No
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][0]attribute[id=#value#] CONTENT=1000
+TAG POS=1 TYPE=INPUT:IMAGE FORM=NAME:History ATTR=NAME:op=add:id=ah:immediate=true:
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][1]attribute[id=#driver#] CONTENT=$Jan<SP>Clucknasty
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][1]attribute[id=#date#] CONTENT=01/12/2007
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][1]attribute[id=#atFault#] CONTENT=$No
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][1]attribute[id=#value#] CONTENT=100
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#theft#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#motorConviction#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#otherConviction#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#previouslyInsured#] CONTENT=$No
+TAG POS=1 TYPE=SELECT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#claimingNoClaimsBonus#] CONTENT=$Yes
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:History ATTR=NAME:/asset[id=#driversHistory#]/attribute[id=#yearsOfNoClaimsBonus#] CONTENT=5
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:History ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=2 TYPE=TD ATTR=TXT:invalid
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:History ATTR=NAME:/asset[assetTypeId=#AccidentHistoryAsset#][0]attribute[id=#date#] CONTENT=01/12/2006
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:History ATTR=NAME:op=Next:immediate=false&&VALUE:Next
+TAG POS=1 TYPE=U ATTR=TXT:Summary<SP>of<SP>your<SP>requirements
+TAG POS=1 TYPE=TD ATTR=TXT:50.00
+TAG POS=2 TYPE=TD ATTR=TXT:50.00
+TAG POS=1 TYPE=TD ATTR=TXT:Jimbo<SP>Clucknasty
+TAG POS=1 TYPE=TD ATTR=TXT:01/02/1967
+TAG POS=1 TYPE=TD ATTR=TXT:Accountant
+TAG POS=1 TYPE=TD ATTR=TXT:Jan<SP>Clucknasty
+TAG POS=1 TYPE=TD ATTR=TXT:Construction<SP>Site<SP>Worker
+TAG POS=1 TYPE=TD ATTR=TXT:AC
+TAG POS=1 TYPE=TD ATTR=TXT:ACE
+TAG POS=1 TYPE=TD ATTR=TXT:CL1<SP>920K
+TAG POS=1 TYPE=TD ATTR=TXT:ARIEL
+TAG POS=1 TYPE=TD ATTR=TXT:ATOM
+TAG POS=1 TYPE=TD ATTR=TXT:AA1<SP>812X
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:Referral ATTR=NAME:op=Quit:immediate=true&&VALUE:Quit

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Base premium (Fee Multiplier)</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Base premium (Fee Multiplier)</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/portal/auth/portal/default/Sandpit/QuotationDevelopmentWindow?action=e&amp;windowstate=normal&amp;mode=view</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>selectedProduct</td>
+	<td>label=AIL.Demo.IrishBrokerPI</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Get A Quote:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>companyName</td>
+	<td>Clucknasty Limited</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address1</td>
+	<td>Cluck House</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address2</td>
+	<td>Clucking Lane</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>town</td>
+	<td>Clucktown</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>county</td>
+	<td>Cluckingtonshire</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>postcode</td>
+	<td>CL1 3CL</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>title</td>
+	<td>label=Mr.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>firstname</td>
+	<td>Jimbo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>phone</td>
+	<td>01923 332112</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>surname</td>
+	<td>Clucknasty</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>email</td>
+	<td>jimbo@cluckers.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Next:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>./attribute[id=#business#]/attribute[id=#generalInsuranceBroker#]</td>
+	<td>label=Yes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>./attribute[id=#financialServices#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>./attribute[id=#mortgageWork#]</td>
+	<td>10</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>./attribute[id=#feesEstimated#]</td>
+	<td>150000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>./attribute[id=#inceptionDate#]</td>
+	<td>01/12/2008</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>./attribute[id=#retroactiveDateApplied#]</td>
+	<td>label=None - Unlimited</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>./attribute[id=#limitOfIndemnity#]</td>
+	<td>label=1,500,000 EUR</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>./attribute[id=#limitOfIndemnityWording#]</td>
+	<td>label=any one claim</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Next:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Quote:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Your Quotation: 995.50 EUR</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Quit:immediate=true']</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
