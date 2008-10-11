@@ -1,0 +1,24 @@
+import com.ail.core.product.executepageaction.ExecutePageActionArgImp;
+import com.ail.insurance.acceptance.AssessPaymentOptionsCommand;
+import com.ail.openquote.Quotation;
+import com.ail.core.CoreProxy;
+import com.ail.core.Functions;
+
+public class AssessPaymentOptionsActionService {
+    public static void invoke(ExecutePageActionArgImp args) {
+        /* use the quote's product type as a namespace so we get the product's configuration. */
+        String namespace=Functions.productNameToConfigurationNamespace(args.getQuotationArgRet().getProductTypeId());
+        CoreProxy core=new CoreProxy(namespace);
+            
+        try {
+            Quotation quote=args.getQuotationArgRet();            
+            AssessPaymentOptionsCommand command=(AssessPaymentOptionsCommand)core.newCommand("AssessPaymentOptions");
+            command.setPolicyArg(quote);
+            command.invoke();
+            quote.setPaymentOption(command.getOptionsRet());
+        }
+        catch(Exception e) {
+            core.logError("Error in AssessPaymentOptionsActionService: "+e);
+        }
+    }
+}

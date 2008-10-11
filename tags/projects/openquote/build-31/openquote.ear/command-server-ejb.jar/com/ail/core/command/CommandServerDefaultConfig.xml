@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file defines the default (factory) configuration for the Rainbow
+ component. This configuration is used by the component's resetConfiguration()
+ method.
+ $Revision$
+ $Author$
+ $State$
+ $Date$
+ $Source$
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>CommandServerBean configuration</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>$Revision$</version>
+
+    <types>
+        <service name="NotifyBrokerByEmailService" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.notifyparty.NotifyBrokerByEmailService</parameter>
+        </service>
+
+        <command name="NotifyPartyArgImp" key="com.ail.insurance.quotation.notifyparty.NotifyPartyCommand">
+            <parameter name="Service">NotifyBrokerByEmailService</parameter>
+        </command>
+    </types>
+</configuration>

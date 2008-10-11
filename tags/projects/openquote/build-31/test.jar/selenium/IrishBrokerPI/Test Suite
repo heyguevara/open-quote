@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="./Base premium (Fixed value)">Base premium (Fixed value)</a></td></tr>
+<tr><td><a href="./Base premium (Fee Multiplier)">Base premium (Fee Multiplier)</a></td></tr>
+<tr><td><a href="./Base premium (Fixed value)">Base premium (Fixed value)</a></td></tr>
+<tr><td><a href="./Base premium (Mortgage Multiplier + Fee Multiplier)">Base premium (Mortgage Multiplier + Fee Multiplier)</a></td></tr>
+<tr><td><a href="./Base premium (Mortgage Multiplier + Fixed Value)">Base premium (Mortgage Multiplier + Fixed Value)</a></td></tr>
+<tr><td><a href="./Excess Override">Excess Override</a></td></tr>
+<tr><td><a href="./Fees Greater Than 1m">Fees Greater Than 1m</a></td></tr>
+<tr><td><a href="./MTA">MTA</a></td></tr>
+<tr><td><a href="./Premium Override">Premium Override</a></td></tr>
+<tr><td><a href="./Renewal">Renewal</a></td></tr>
+<tr><td><a href="./Two business types and quote doc">Two business types and quote doc</a></td></tr>
+<tr><td><a href="./Validation on Commercial Proposer">Validation on Commercial Proposer</a></td></tr>
+</tbody></table>
+</body>
+</html>

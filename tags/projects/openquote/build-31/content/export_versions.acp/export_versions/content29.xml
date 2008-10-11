@@ -1,0 +1,15 @@
+<asset assetTypeId='HorseAsset' xsi:type="java:com.ail.insurance.policy.Asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <attribute id="name" value="" format="string,size=50,pattern=[0-9A-Za-z]*"/>
+    <attribute id="age" value="?" format="choice,options=-1#?|1#Under one year|2#One year|3#2 years|4#3 years|5#4 years|6#5 years|7#6 years|8#7 years|9#8 years|10#9 years|11#10 years|13#12 years|14#13 years|15#14 years|16#15 years|17#Over 15 years"/>
+    <attribute id="sex" value="?" format="choice,options=-1#?|1#Colt|2#Filly|3#Gelding|4#Mare|5#Stallion"/>
+    <attribute id="colour" value="?" format="choice,options=-1#?|1#Appaloosa|2#Bay|3#Black|4#Chestnut|5#Dapple Grey|6#Grey|7#Palamino|8#Piebald|9#Strawberry Roan"/>
+    <attribute id="height-hands" value="?" format="choice,options=-1#?|1#10|2#11|3#12|4#13|5#14|6#15|7#16|8#17|9#18|10#19"/>
+    <attribute id="height-inches" value="?" format="choice,options=-1#?|1#1|2#2|3#3"/>
+    <attribute id="freezebrand" value="" format="string,size=10,pattern=[0-9A-Za-z]*"/>
+    <attribute id="passport" value="" format="string,size=20,pattern=[0-9A-Za-z]*"/>
+    <attribute id="owned" value="?" format="choice,options=-1#?|1#Owned by you|2#On loan to you"/>
+    <attribute id="datebought" value="" format="date,pattern=dd/MM/yyyy"/>
+    <attribute id="purchaseprice" value="0" format="currency" unit="GBP"/>
+    <attribute id="suminsured" value="0" format="currency" unit="GBP"/>
+    <attribute id="typeOfUse" value="?" format="choice,options=-1#?|1#Class 1|2#Class 2|3#Class 3"/>
+</asset>
