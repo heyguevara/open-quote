@@ -1,0 +1,203 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jstl/core"
+   class="admin-ui">
+
+<link rel="stylesheet" type="text/css" href="/portal-admin/css/style.css" media="screen"/>
+
+<div class="wizard-tab-container">
+<ul class="objectpath">
+   <li class="selected">Adding a new Portlet</li>
+</ul>
+
+<div class="property-container">
+<c:choose>
+   <c:when test="#{newWindowWizard.currentStep == 0}">
+      <div class="wizardStepBox" id="selected">
+         <p class="stepNumber">Step 1</p>
+
+         <p class="stepText">Select Portlet</p>
+      </div>
+   </c:when>
+   <c:otherwise>
+      <c:choose>
+         <c:when test="#{newWindowWizard.enabled[0]}">
+            <h:form><h:commandLink action="#{newWindowWizard.goTo}">
+               <f:param name="step" value="0"/>
+
+               <div class="wizardStepBox">
+                  <p class="stepNumber">Step 1</p>
+
+                  <p class="stepText">Select Portlet</p>
+               </div>
+            </h:commandLink></h:form>
+         </c:when>
+         <c:otherwise>
+            <div class="wizardStepBox">
+               <p class="stepNumber">Step 1</p>
+
+               <p class="stepText">Select Portlet</p>
+            </div>
+         </c:otherwise>
+      </c:choose>
+   </c:otherwise>
+</c:choose>
+
+<c:choose>
+   <c:when test="#{newWindowWizard.currentStep == 1}">
+      <div class="wizardStepBox" id="selected">
+         <p class="stepNumber">Step 2</p>
+
+         <p class="stepText">Select Portal</p>
+      </div>
+   </c:when>
+   <c:otherwise>
+      <c:choose>
+         <c:when test="#{newWindowWizard.enabled[1]}">
+            <h:form><h:commandLink action="#{newWindowWizard.goTo}">
+               <f:param name="step" value="1"/>
+
+               <div class="wizardStepBox">
+                  <p class="stepNumber">Step 2</p>
+
+                  <p class="stepText">Select Portal</p>
+               </div>
+            </h:commandLink></h:form>
+         </c:when>
+         <c:otherwise>
+            <div class="wizardStepBox">
+               <p class="stepNumber">Step 2</p>
+
+               <p class="stepText">Select Portal</p>
+            </div>
+         </c:otherwise>
+      </c:choose>
+   </c:otherwise>
+</c:choose>
+
+<c:choose>
+   <c:when test="#{newWindowWizard.currentStep == 2}">
+      <div class="wizardStepBox" id="selected">
+         <p class="stepNumber">Step 3</p>
+
+         <p class="stepText">Select Page</p>
+      </div>
+   </c:when>
+   <c:otherwise>
+      <c:choose>
+         <c:when test="#{newWindowWizard.enabled[2]}">
+            <h:form><h:commandLink action="#{newWindowWizard.goTo}">
+               <f:param name="step" value="2"/>
+
+               <div class="wizardStepBox">
+                  <p class="stepNumber">Step 3</p>
+
+                  <p class="stepText">Select Page</p>
+               </div>
+            </h:commandLink></h:form>
+         </c:when>
+         <c:otherwise>
+            <div class="wizardStepBox">
+               <p class="stepNumber">Step 3</p>
+
+               <p class="stepText">Select Page</p>
+            </div>
+         </c:otherwise>
+      </c:choose>
+   </c:otherwise>
+</c:choose>
+
+<c:choose>
+   <c:when test="#{newWindowWizard.currentStep == 3}">
+      <div class="wizardStepBox" id="selected">
+         <p class="stepNumber">Step 4</p>
+
+         <p class="stepText">Select Region</p>
+      </div>
+   </c:when>
+   <c:otherwise>
+      <c:choose>
+         <c:when test="#{newWindowWizard.enabled[3]}">
+            <h:form><h:commandLink action="#{newWindowWizard.goTo}">
+               <f:param name="step" value="3"/>
+
+               <div class="wizardStepBox">
+                  <p class="stepNumber">Step 4</p>
+
+                  <p class="stepText">Select Region</p>
+               </div>
+            </h:commandLink></h:form>
+         </c:when>
+         <c:otherwise>
+            <div class="wizardStepBox">
+               <p class="stepNumber">Step 4</p>
+
+               <p class="stepText">Select Region</p>
+            </div>
+         </c:otherwise>
+      </c:choose>
+   </c:otherwise>
+</c:choose>
+
+<c:choose>
+   <c:when test="#{newWindowWizard.currentStep == 4}">
+      <div class="wizardStepBox" id="selected">
+         <p class="stepNumber">Step 5</p>
+
+         <p class="stepText">Confirm</p>
+      </div>
+   </c:when>
+   <c:otherwise>
+      <c:choose>
+         <c:when test="#{newWindowWizard.enabled[4]}">
+            <h:form><h:commandLink action="#{newWindowWizard.goTo}">
+               <f:param name="step" value="4"/>
+
+               <div class="wizardStepBox">
+                  <p class="stepNumber">Step 5</p>
+
+                  <p class="stepText">Confirm</p>
+               </div>
+            </h:commandLink></h:form>
+         </c:when>
+         <c:otherwise>
+            <div class="wizardStepBox">
+               <p class="stepNumber">Step 5</p>
+
+               <p class="stepText">Confirm</p>
+            </div>
+         </c:otherwise>
+      </c:choose>
+   </c:otherwise>
+</c:choose>
+
+<!-- Status message -->
+<h:message id="status" for="status"/>
+
+
+<!-- Content -->
+<div class="wizardContent">
+
+   	   <ui:insert name="content">Content</ui:insert>
+</div>
+
+<div class="wizardButtonBox">
+   <h:form>
+      <h:commandButton rendered="#{newWindowWizard.currentStep gt 0}" value="Previous"
+                       action="#{newWindowWizard.previous}" styleClass="portlet-form-button"/>
+      <h:commandButton
+         rendered="#{newWindowWizard.currentStep lt 4 and newWindowWizard.enabled[newWindowWizard.currentStep + 1]}"
+         value="Next" action="#{newWindowWizard.next}" styleClass="portlet-form-button"/>
+   </h:form>
+</div>
+
+<h:form>
+   <p style="text-align: right;"><h:commandLink action="advancedMode">Switch to advanced mode</h:commandLink></p>
+</h:form>
+</div>
+</div>
+
+</div>

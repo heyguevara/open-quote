@@ -1,0 +1,84 @@
+package idofu9dbzfofo6dbzfqqht;
+
+/**
+@version 2.0
+@physicalPackage
+@__modelType diagram 
+*/
+class diagram {
+/**
+@__ref <oiref:java#Class#com.ail.coretest.service.TestArgImp:oiref><oihard>
+@__modelType reference 
+*/
+class reference {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.service.TestArg:oiref><oihard>
+@__modelType reference 
+*/
+class reference4 {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.service.TestService:oiref><oihard>
+@__modelType reference 
+*/
+class reference5 {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.service.TestCommand:oiref><oihard>
+@__modelType reference 
+*/
+class reference6 {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.service.PreService:oiref><oihard>
+@__modelType reference 
+*/
+class reference2 {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.service.PostService:oiref><oihard>
+@__modelType reference 
+*/
+class reference7 {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.service.TypeWithHashtable:oiref><oihard>
+@__modelType reference 
+*/
+class reference90 {
+}}/**
+@__tags
+@shapeType ClassDiagram 
+*/
+class __tags {
+}/**
+@__options 
+*/
+class __options {
+}/**
+@__positions 
+<oigroup:<oiref:java#Implements#com.ail.coretest.service.TestCommand#com.ail.coretest.service.TestArg:oiref>=260,252,260,188:oigroup>
+<oigroup:<oiref:java#Class#com.ail.coretest.service.TestArg:oiref>=232,10,163,178,1:oigroup>
+<oigroup:<oiref:java#Class#com.ail.coretest.service.TestCommand:oiref>=153,252,163,183,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestCommand#getR#(##)#:oiref>=237,260,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestCommand#getX#(##)#:oiref>=241,268,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestCommand#getPostConditionFlag#(##)#:oiref>=234,270,0,0,1:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.ail.coretest.service.TestCommand#args:oiref>=288,252,288,188:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArg#getR#(##)#:oiref>=297,18,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArg#getX#(##)#:oiref>=279,15,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArgImp#y:oiref>=420,277,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArgImp#r:oiref>=391,270,0,0,1:oigroup>
+<oigroup:<oiref:java#Class#com.ail.coretest.service.PostService:oiref>=570,220,123,158,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArgImp#preconditionflag:oiref>=345,260,0,0,1:oigroup>
+<oigroup:<oiref:java#Implements#com.ail.coretest.service.TestArgImp#com.ail.coretest.service.TestArg:oiref>=355,252,355,188:oigroup>
+<oigroup:<oiref:java#Class#com.ail.coretest.service.PreService:oiref>=450,10,123,158,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArgImp#postconditionflag:oiref>=336,267,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestCommand#getY#(##)#:oiref>=233,271,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArg#getPostConditionFlag#(##)#:oiref>=297,14,0,0,1:oigroup>
+<oigroup:<oiref:java#Class#com.ail.coretest.service.TestService:oiref>=30,10,123,158,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArg#getPreConditionFlag#(##)#:oiref>=289,30,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestCommand#getPreConditionFlag#(##)#:oiref>=191,263,0,0,1:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArg#getY#(##)#:oiref>=278,23,0,0,1:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.ail.coretest.service.PostService#args:oiref>=631,220,375,188:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.ail.coretest.service.PreService#args:oiref>=450,89,395,89:oigroup>
+<oigroup:<oiref:java#Member#com.ail.coretest.service.TestArgImp#x:oiref>=379,275,0,0,1:oigroup>
+<oigroup:<oiref:java#Class#com.ail.coretest.service.TestArgImp:oiref>=315,252,163,206,1:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.ail.coretest.service.TestService#args:oiref>=153,89,232,89:oigroup>
+*/
+class __positions {
+}

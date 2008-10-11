@@ -1,0 +1,129 @@
+<demoPolicy>
+    <agent>Mrs A Gent</agent>
+    <totalPremium>
+        <lock>false</lock>
+        <amount>132.0</amount>
+        <serialVersion>0</serialVersion>
+        <currencyAsString>USD</currencyAsString>
+    </totalPremium>
+    <markedForRefer>false</markedForRefer>
+    <assetCount>1</assetCount>
+    <markedForDecline>false</markedForDecline>
+    <section>
+        <sectionTypeId>TermLife</sectionTypeId>
+        <assetIdCount>1</assetIdCount>
+        <lock>false</lock>
+        <serialVersion>0</serialVersion>
+        <assetId>asset1</assetId>
+        <premiumCalculationTable>
+            <markedForDeclined>false</markedForDeclined>
+            <flagCount>0</flagCount>
+            <serialVersion>0</serialVersion>
+            <calculationLine xsi:type="java:com.ail.insurance.policy.Sum" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <contributesTo>total premium</contributesTo>
+                <name>base premium</name>
+                <lock>false</lock>
+                <typeAsString>Value</typeAsString>
+                <serialVersion>0</serialVersion>
+                <value>
+                    <lock>false</lock>
+                    <amount>132.0</amount>
+                    <serialVersion>0</serialVersion>
+                    <currencyAsString>USD</currencyAsString>
+                </value>
+                <reason>Value from rate lookup</reason>
+            </calculationLine>
+            <markedForRefer>false</markedForRefer>
+            <calculationLineCount>1</calculationLineCount>
+            <lock>false</lock>
+        </premiumCalculationTable>
+        <id>section1</id>
+    </section>
+    <serialVersion>0</serialVersion>
+    <productTypeId>TermLife</productTypeId>
+    <asset xsi:type="java:com.ail.insurance.termlife.LifeAsset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <id>asset1</id>
+        <serialVersion>0</serialVersion>
+        <weight>250</weight>
+        <forname>asset.forname</forname>
+        <surname>asset.surname</surname>
+        <assetTypeId>Life</assetTypeId>
+        <sexAsString>Male</sexAsString>
+        <smokerAsString>No</smokerAsString>
+        <title>Mr</title>
+        <address>
+            <country>country</country>
+            <serialVersion>0</serialVersion>
+            <postcode>postcode</postcode>
+            <county>county</county>
+            <line5>line5</line5>
+            <town>town</town>
+            <line4>line4</line4>
+            <line3>line3</line3>
+            <line2>line2</line2>
+            <lock>false</lock>
+            <line1>line1</line1>
+        </address>
+        <lock>false</lock>
+        <dob>
+            <date>1964-01-01T00:00:00.000Z</date>
+            <lock>false</lock>
+            <serialVersion>0</serialVersion>
+            <dateAsString>1/1/64</dateAsString>
+        </dob>
+        <height>1.6</height>
+    </asset>
+    <premiumCalculationTable>
+        <markedForDeclined>false</markedForDeclined>
+        <flagCount>0</flagCount>
+        <serialVersion>0</serialVersion>
+        <calculationLine xsi:type="java:com.ail.insurance.policy.Sum" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <contributesTo>total premium</contributesTo>
+            <name>total premium</name>
+            <lock>false</lock>
+            <typeAsString>Value</typeAsString>
+            <serialVersion>0</serialVersion>
+            <value>
+                <lock>false</lock>
+                <amount>132.0</amount>
+                <serialVersion>0</serialVersion>
+                <currencyAsString>USD</currencyAsString>
+            </value>
+            <reason>Value from rate lookup</reason>
+        </calculationLine>
+        <markedForRefer>false</markedForRefer>
+        <calculationLineCount>1</calculationLineCount>
+        <lock>false</lock>
+    </premiumCalculationTable>
+    <id>123</id>
+    <sectionCount>1</sectionCount>
+    <policyNumber>POL1123</policyNumber>
+    <policyHolder xsi:type="java:com.ail.insurance.policy.Person" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <telephoneHome>home no</telephoneHome>
+        <legalName>Mr forname surname</legalName>
+        <telephoneWork>work no</telephoneWork>
+        <telephoneMobile>mobile no</telephoneMobile>
+        <serialVersion>0</serialVersion>
+        <forname>forname</forname>
+        <surname>surname</surname>
+        <email>email</email>
+        <title>Mr</title>
+        <address>
+            <country>country</country>
+            <serialVersion>0</serialVersion>
+            <postcode>postcode</postcode>
+            <county>county</county>
+            <line5>line5</line5>
+            <town>town</town>
+            <line4>line4</line4>
+            <line3>line3</line3>
+            <line2>line2</line2>
+            <lock>false</lock>
+            <line1>line1</line1>
+        </address>
+        <lock>false</lock>
+    </policyHolder>
+    <excessCount>0</excessCount>
+    <statusAsString>Quotation</statusAsString>
+    <lock>false</lock>
+</demoPolicy>
