@@ -1,4 +1,0 @@
-import com.ail.util.Rate;
-
-sheet=args.getPolicyArg().getAssessmentSheet();
-sheet.addLoading("Commission", null, "Commission", "TotalPremium", new Rate("1%"));
