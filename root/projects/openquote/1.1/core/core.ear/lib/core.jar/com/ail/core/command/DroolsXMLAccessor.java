@@ -22,6 +22,7 @@ import static com.ail.core.command.AccessorLoggingIndicator.FULL;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.lang.reflect.Method;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,7 @@ public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
      */
     public void activate(Core core, com.ail.core.configure.Type typeSpec) throws Exception {
         this.core=core;
+        core.logInfo("Loading XML rules for:"+typeSpec.getName()+" from:"+((getUrl()!=null)?getUrl():" Inline from Registry"));
         loadRuleBase();
         this.core=null;
     }
@@ -193,6 +195,13 @@ public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
             workingMemory=ruleBase.newStatefulSession();
 
             workingMemory.insert(getArgs());
+            
+            // create a global (variable) for each arg/ret in the service's arguments
+            for(Method m: getArgs().getClass().getMethods()) {
+                if (m.getName().startsWith("get") && (m.getName().endsWith("Arg") || m.getName().endsWith("Ret"))) {
+                    workingMemory.setGlobal("$"+m.getName().substring(3), m.invoke(args));
+                }
+            }
             
             if (FULL.equals(getLoggingIndicator())) {
                 workingMemory.addEventListener(new DebugWorkingMemoryEventListener());
