@@ -38,16 +38,23 @@ import com.ail.core.Functions;
  * <p/>
  */
 public class Handler extends URLStreamHandler {
+    private static final long TICKET_TIMEOUT=1000*60*50; // timeout tickets every 50 mins - alfresco's session timeout is 60 mins (see alfreso's WEB-INF/web.xml session-timeout).
+    
     private static StringBuffer ticket=new StringBuffer();
+    private static long ticketExpiryTime=0;
     
     private String getTicket(URL url) throws IOException {
-        if (ticket.length()==0) {
+        if (ticket.length()==0 || System.currentTimeMillis() > ticketExpiryTime) {
             synchronized (ticket) {
                 // TODO user and password _have_ to be moved out of here!!
                 URL loginUrl=new URL("http", url.getHost(), url.getPort(), "/alfresco/service/api/login?u=productreader&pw=preader");
                 String rawTicketResponse=Functions.loadUrlContentAsString(loginUrl);        
+
+                ticket.delete(0, ticket.length());
                 ticket.append(rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<")));
 
+                ticketExpiryTime=System.currentTimeMillis()+TICKET_TIMEOUT;
+                
                 // Workaround for a bug in Alfresco 2.9.0 (C_dev 816) schema 124. In this version it appears that
                 // authentication of any content request depends on the alfresco web-client having a fully initialized
                 // JSF context, which it will only have when the /alfresco page has been opened. Attempting to make
