@@ -26,7 +26,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>An AnswerSection is generally used on summary pages and acts as a container for listing the answers
@@ -145,7 +145,7 @@ public class AnswerSection extends PageElement {
         
         w.printf(" <table width='100%%' border='0' cols='2'>");
 
-        String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
+        String aTitle = getExpandedTitle(QuotationContext.getQuotation(), model);
 
         // output the title row if a title was defined
         if (aTitle!=null) {

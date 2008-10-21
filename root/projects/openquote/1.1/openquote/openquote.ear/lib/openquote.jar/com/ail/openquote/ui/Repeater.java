@@ -32,6 +32,8 @@ import com.ail.core.Type;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.OrderedLinkedList;
+import com.ail.openquote.ui.util.QuotationContext;
+
 import static com.ail.core.Functions.expand;
 
 /**
@@ -143,14 +145,14 @@ public abstract class Repeater extends PageElement {
      * Get the repeated title with all variable references expanded. References are expanded with 
      * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
      * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * <i>root</i>. 
+     * the current quotation (from {@link QuotationContext}).
      * @param root Model to expand references with respect to.
      * @param local Model to expand local references (xpaths starting ./) with respect to.
      * @return Title with embedded references expanded
      * @since 1.1
      */
-	public String getExpandedRepeatedTitle(Type root, Type local) {
-		return expand(getRepeatedTitle(), root, local);
+	public String getExpandedRepeatedTitle(Type local) {
+		return expand(getRepeatedTitle(), QuotationContext.getQuotation(), local);
 	}
 
 	/**

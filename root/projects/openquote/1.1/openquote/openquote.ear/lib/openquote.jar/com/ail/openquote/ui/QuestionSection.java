@@ -29,7 +29,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>A QuestionSection renders itself as a section within a {@link Page Page} or other {@link PageContainer PageContainer}. 
@@ -147,7 +147,7 @@ public class QuestionSection extends PageElement {
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
-        String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
+        String title = getExpandedTitle(QuotationContext.getQuotation(), model);
 
         w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
 

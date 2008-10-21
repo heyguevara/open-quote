@@ -26,6 +26,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Adds a quit button to a page. By default this button will close the current quote
@@ -49,7 +50,8 @@ public class QuitButtonAction extends CommandButtonAction {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(getLabel())) {
             model=super.processActions(request, response, model);
-            request.getPortletSession().invalidate();
+            QuotationContext.setQuotation(null);
+//            request.getPortletSession().invalidate();
         }
         
         return model;

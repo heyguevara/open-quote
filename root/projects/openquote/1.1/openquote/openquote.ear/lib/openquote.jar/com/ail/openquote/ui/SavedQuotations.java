@@ -34,7 +34,7 @@ import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.util.Functions;
-import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Display a list of a user's saved quotations. If the user is logged in, a list of their saved
@@ -162,14 +162,14 @@ public class SavedQuotations extends PageElement {
 	        
 	                if ("confirm".equals(op)) {
 	                    quote.setPage(confirmAndPayDestinationPageId);
-	                    QuotationCommon.setCurrentQuotation(request.getPortletSession(), quote);
+	                    QuotationContext.setQuotation(quote);
 	                }
 	                else if ("requote".equals(op)) {
 	                    quote.setPage(requoteDestinationPageId);
 	                    quote.setStatus(PolicyStatus.APPLICATION);
 	                    quote.setQuotationNumber(null);
 	                    quote.markAsNotPersisted();
-	                    QuotationCommon.setCurrentQuotation(request.getPortletSession(), quote);
+	                    QuotationContext.setQuotation(quote);
 	                }
 	            }
 	        }

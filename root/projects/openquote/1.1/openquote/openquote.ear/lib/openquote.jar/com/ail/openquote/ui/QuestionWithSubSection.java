@@ -16,7 +16,6 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.renderAttribute;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
 import java.io.IOException;
@@ -28,7 +27,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>If the answer to a given question is yes, a number of subsequent questions are asked. This
@@ -115,7 +113,7 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
+        String aTitle = getExpandedTitle(model);
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
 

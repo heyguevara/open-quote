@@ -39,6 +39,7 @@ import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * This Portlet performs a similar function to the {@link QuotationPortlet}, but is slightly specialized to better fit into a
@@ -64,9 +65,11 @@ public class SandpitPortlet extends GenericPortlet {
         PortletSession session=request.getPortletSession();
         statusMessage=null;
         
+        QuotationContext.initialise(request);
+        
         try {
             if (request.getParameter("saveAsTestcase")!=null) {
-                SavedQuotation q=new SavedQuotation(QuotationCommon.getCurrentQuotation(session));
+                SavedQuotation q=new SavedQuotation(QuotationContext.getQuotation());
                 q.setTestCase(true);
                 new CoreProxy().update(q);
                 statusMessage="Quotation '"+q.getQuotationNumber()+"' saved as a testcase";
@@ -75,7 +78,7 @@ public class SandpitPortlet extends GenericPortlet {
                 String selectedQuote=request.getParameter("selectedQuote");
                 SavedQuotation q=(SavedQuotation)new CoreProxy().queryUnique("get.savedQuotation.by.quotationNumber", selectedQuote);
                 if (q!=null) {
-                	QuotationCommon.setCurrentQuotation(session, q.getQuotation());
+                	QuotationContext.setQuotation(q.getQuotation());
                     session.setAttribute("product", q.getProduct());
                 	session.setAttribute("view", WIZARD_MODE);
                 }
@@ -89,7 +92,7 @@ public class SandpitPortlet extends GenericPortlet {
                 
                 if (selectedProduct!=null && !"?".equals(selectedProduct)) {
                     if (!selectedProduct.equals(QuotationCommon.productName(request.getPortletSession(), request.getPreferences()))) {
-                    	QuotationCommon.setCurrentQuotation(session, null);
+                    	QuotationContext.setQuotation(null);
                         session.setAttribute("product", selectedProduct);
                     	selectedView=WIZARD_MODE;
                     }
@@ -97,14 +100,14 @@ public class SandpitPortlet extends GenericPortlet {
     
                 if (!"XML".equals(getCurrentView(request)) && "XML".equals(selectedView)) {
                     if (session.getAttribute("quoteXml")==null) {
-                        session.setAttribute("quoteXml", new CoreProxy().toXML(QuotationCommon.getCurrentQuotation(session)));
+                        session.setAttribute("quoteXml", new CoreProxy().toXML(QuotationContext.getQuotation()));
                     }
                 }
                 else if ("XML".equals(getCurrentView(request)) && !"XML".equals(selectedView)) {
                     XMLString quoteXml=new XMLString(request.getParameter("quoteXml"));
                     session.setAttribute("quoteXml", quoteXml);
                     Quotation quote=(Quotation)new CoreProxy().fromXML(Quotation.class, quoteXml);
-                    QuotationCommon.setCurrentQuotation(session, quote);
+                    QuotationContext.setQuotation(quote);
                     session.removeAttribute("quoteXml");
                 }
                 
@@ -112,13 +115,13 @@ public class SandpitPortlet extends GenericPortlet {
             
             }
             else if (processingQuotation(request.getPortletSession(), request.getPreferences())) {
-            	Quotation quote=QuotationCommon.getCurrentQuotation(session);
+            	Quotation quote=QuotationContext.getQuotation();
             	int exceptionCount = (quote!=null) ? quote.getException().size() : 0;
             	
             	QuotationCommon.processAction(request, response);
             	
             	try {
-	            	if (QuotationCommon.getCurrentQuotation(session).getException().size() != exceptionCount) {
+	            	if (QuotationContext.getQuotation()!=null && QuotationContext.getQuotation().getException().size() != exceptionCount) {
 	                	session.setAttribute("view", EXCEPTION_MODE);
 	            	}
             	}
@@ -132,19 +135,11 @@ public class SandpitPortlet extends GenericPortlet {
             }
         }
         catch(Throwable t) {
-        	Quotation quote=null;
-        	
-        	try {
-        		QuotationCommon.getCurrentQuotation(session);
-        	}
-        	catch(IllegalStateException e) {
-        		t.printStackTrace();
-        		return;
-        	}
-        	
+        	Quotation quote = QuotationContext.getQuotation();;
+
         	if (quote==null) {
         		quote=new Quotation();
-        		QuotationCommon.setCurrentQuotation(session, quote);
+        		QuotationContext.setQuotation(quote);
         	}
 
     		quote.addException(new ExceptionRecord(t));
@@ -155,38 +150,40 @@ public class SandpitPortlet extends GenericPortlet {
 
     public void doView(RenderRequest request, RenderResponse response) throws IOException {
         response.setContentType("text/html");
-
-        renderProductDebugPanel(request, response);
-
+        
         PortletSession session=request.getPortletSession();
         
         try {
+            QuotationContext.initialise(request);
+            
+            renderProductDebugPanel(request, response);
+
             if (statusMessage!=null) {
                 PrintWriter out = response.getWriter();
                 out.printf("<table width='100%%'><tr><td align='center'>%s</td></tr></table>", statusMessage);
             }
             else if (processingQuotation(session, request.getPreferences())) {
                 if ("Wizard".equals(getCurrentView(request))) {
-                	Quotation quote=QuotationCommon.getCurrentQuotation(session);
+                	Quotation quote=QuotationContext.getQuotation();;
                 	int exceptionCount = (quote!=null) ? quote.getException().size() : 0;
 
                 	QuotationCommon.doView(request, response);
 
-                	if (QuotationCommon.getCurrentQuotation(session).getException().size() != exceptionCount) {
+                	if (QuotationContext.getQuotation().getException().size() != exceptionCount) {
 	                	session.setAttribute("view", EXCEPTION_MODE);
 	                	doView(request, response);
                 	}
                 }
                 else if ("Assessment sheet".equals(getCurrentView(request))) {
-                    if (QuotationCommon.getCurrentQuotation(session).getAssessmentSheet()!=null) {
-                        assessmentSheetDetails.renderResponse(request, response, QuotationCommon.getCurrentQuotation(session));
+                    if (QuotationContext.getQuotation().getAssessmentSheet()!=null) {
+                        assessmentSheetDetails.renderResponse(request, response, QuotationContext.getQuotation());
                     }
                     else {
                         response.getWriter().print("<table width='100%'><tr><td align='center'>No assessment sheet attached to the quotation</td></tr></table>");
                     }
                 }
                 else if ("Exception".equals(getCurrentView(request))) {
-                	renderQuoteExceptions(request, response, QuotationCommon.getCurrentQuotation(session));
+                	renderQuoteExceptions(request, response, QuotationContext.getQuotation());
                 }
             }
             else {
@@ -195,16 +192,21 @@ public class SandpitPortlet extends GenericPortlet {
             }
         }
         catch(Throwable t)  {
-        	Quotation quote=QuotationCommon.getCurrentQuotation(session);
+        	Quotation quote=QuotationContext.getQuotation();;
         	
         	if (quote==null) {
         		quote=new Quotation();
-        		QuotationCommon.setCurrentQuotation(session, quote);
+        		QuotationContext.setQuotation(quote);
         	}
 
     		quote.addException(new ExceptionRecord(t));
 
         	session.setAttribute("view", EXCEPTION_MODE);
+
+        	// we've probably already written something - half formed - to the 
+        	// output stream before the exception was thrown. Reset the buffer
+        	// so the doView() below gets a clean start.
+        	response.resetBuffer();
 
         	doView(request, response);
         }
@@ -273,7 +275,7 @@ public class SandpitPortlet extends GenericPortlet {
 
             product=(String)request.getPortletSession().getAttribute("product");
             
-            Quotation quote=QuotationCommon.getCurrentQuotation(request.getPortletSession());
+            Quotation quote=QuotationContext.getQuotation();
 
             // we're processing a quote and we've actually quoted - so allow a save as testcase.
             if (quote!=null && PolicyStatus.QUOTATION.equals(quote.getStatus())) {

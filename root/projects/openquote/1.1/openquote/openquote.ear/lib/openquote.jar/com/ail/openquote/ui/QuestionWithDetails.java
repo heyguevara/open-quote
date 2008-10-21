@@ -17,7 +17,6 @@
 package com.ail.openquote.ui;
 
 import static com.ail.core.Functions.expand;
-import static com.ail.openquote.ui.util.Functions.renderAttribute;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
 import java.io.IOException;
@@ -29,8 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.Functions;
-import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>This element handles the common situation where selecting 'yes' in answer to a question
@@ -84,13 +82,12 @@ public class QuestionWithDetails extends Question {
      * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
      * expanded with respect to <i>local</i>, all others are expanded with respect to
      * <i>root</i>. 
-     * @param root Model to expand references with respect to.
      * @param local Model to expand local references (xpaths starting ./) with respect to.
      * @return Title with embedded references expanded
      * @since 1.1
      */
-    public String getExpandedDetailsTitle(Type root, Type local) {
-		return expand(getDetailsTitle(), root, local);
+    public String getExpandedDetailsTitle(Type local) {
+		return expand(getDetailsTitle(), QuotationContext.getQuotation(), local);
     }
     
     @Override
@@ -100,7 +97,7 @@ public class QuestionWithDetails extends Question {
 
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
         model=super.applyRequestValues(request, response, model, rowContext);
-        model=Functions.applyAttributeValues(model, getDetailsBinding(), rowContext, request);
+        model=applyAttributeValues(model, getDetailsBinding(), rowContext, request);
         return model;
     }
 
@@ -113,7 +110,7 @@ public class QuestionWithDetails extends Question {
 
         // if the question's answer is 'Yes', and the detail is empty...
         if ("Yes".equals(model.xpathGet(getBinding()+"/value"))) {
-            error|=Functions.applyAttributeValidation(model, getDetailsBinding());
+            error|=applyAttributeValidation(model, getDetailsBinding());
         }
 
         return error;
@@ -126,12 +123,12 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
-        String detailTitle = getExpandedDetailsTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
-        String questionId=xpathToId(rowContext+binding);
-        String detailsId=xpathToId(rowContext+detailsBinding);
+        String title = getExpandedTitle(model);
+        String detailTitle = getExpandedDetailsTitle(model);
+        String questionId = xpathToId(rowContext+binding);
+        String detailsId = xpathToId(rowContext+detailsBinding);
         
-        PrintWriter w=response.getWriter();
+        PrintWriter w = response.getWriter();
 
         String onChange="enableTargetIf(this.options[this.selectedIndex].text==\"Yes\", \""+detailsId+"\")";
         

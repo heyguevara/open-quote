@@ -16,11 +16,7 @@
  */
 package com.ail.openquote.ui.util;
 
-import static com.ail.core.Attribute.YES_OR_NO_FORMAT;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,19 +24,12 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderRequest;
 
 import com.ail.core.Attribute;
-import com.ail.core.CoreProxy;
-import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeEnum;
-import com.ail.core.TypeXPathException;
-import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.RenderingError;
-import com.ail.openquote.ui.util.Choice;
 
 /**
  * This class defines a collection of functions used by the classes in {@link com.ail.openquote.ui}.
@@ -111,192 +100,6 @@ public class Functions {
         return ret.toString();
     }
 
-    /**
-     * Render an AttributeField on the UI. This is quite a common requirement throughout the classes
-     * of the ui package, so it's put here for convenience. The result of calling this method
-     * is some kind of HTML form element (input, select, textarea, etc) being returned as a String.
-     * @param data The 'model' (in MVC terms) containing the AttributeField to be rendered
-     * @param boundTo An XPath expressing pointing at the AttributeField in 'data' that we're rendering.
-     * @param rowContext If we're rendering into a scroller, this'll be the row number in xpath predicate format (e.g. "[1]"). Otherwise ""
-     * @param onChange JavaScript onChange event
-     * @param onLoad JavaScript onLoad event
-     * @return The HTML representing the attribute as a form element.
-     * @throws IllegalStateException
-     * @throws IOException
-     * @throws PostconditionException 
-     */
-    public static String renderAttribute(Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
-    	// If we're not bound to anything, output nothing.
-        if (boundTo==null) {
-            return "";
-        }
-
-        // Create the StringWriter - out output will go here.
-        StringWriter ret=new StringWriter();
-        PrintWriter w=new PrintWriter(ret);
-
-        if (boundTo==null) {
-            return "";
-        }
-
-        String id=xpathToId(rowContext+boundTo);
-        com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-        String onChangeEvent=(onChange!=null) ? "onchange='"+onChange+"'" : "";
-        
-    	try {
-            w.printf("<table><tr><td>");
-	        
-	        if (attr==null) {
-	            w.printf("<b>undefined: %s</b>", boundTo);
-	        }
-	        else {
-	            if (attr.isStringType()) {
-	                String size=attr.getFormatOption("size");
-	                size=(size!=null) ? "size='"+size+"'" : "";                
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getValue());
-	            }
-	            else if (attr.isNumberType()) {
-	                String pattern=attr.getFormatOption("pattern");
-	                String trailer=(attr.getFormat().endsWith("percent")) ? "%" : ""; 
-	                int size=(pattern==null) ? 7 : pattern.length();
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
-	            }
-	            else if (attr.isCurrencyType()) {
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='7' type='text' value='%s'/>%s", id, onChangeEvent, attr.getValue(), attr.getUnit());
-	            }
-	            else if (attr.isChoiceMasterType()) {
-	                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-	                onChange="updateSlaveChoiceOptions(findElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
-	                w.printf("<select name=\"%s\" onchange=\"%s\" class='pn-normal'/>", id, onChange);
-	            }
-	            else if (attr.isChoiceSlaveType()) {
-	                onLoad="loadSlaveChoiceOptions($this,$value,"+attr.getChoiceTypeName()+",'"+attr.getChoiceMaster()+"','"+attr.getId()+"')";
-	                w.printf("<select name=\"%s\" class='pn-normal'/>", id);
-	            }
-	            else if (attr.isChoiceType()) {
-	                if (attr.getFormatOption("type")==null) {
-	                    w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
-	                }
-	                else {
-	                    onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-	                    w.printf("<select name=\"%s\" class='pn-normal'/>", id);
-	                }
-	            }
-	            else if (attr.isDateType()) {
-	                String dateFormat=attr.getFormatOption("pattern");
-	                int size=(dateFormat==null) ? 10 : dateFormat.length();
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/>", id, onChangeEvent, size, attr.getValue());
-	            }
-	            else if (attr.isYesornoType()) {
-	                w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
-	            }
-	            else if (attr.isNoteType()) {
-	                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea>", id, onChangeEvent, attr.getValue());
-	            }
-	            
-	            w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", findErrors(attr));
-	    
-	            if (onLoad!=null) {
-	                String s=onLoad;
-	    
-	                if (s.contains("$this")) {
-	                    s=s.replace("$this", "findElementsByName(\""+id+"\")[0]");
-	                }
-	    
-	                if (s.contains("$value")) {
-	                    s=s.replace("$value", "'"+attr.getValue()+"'");
-	                }
-	                
-	                w.printf("<script type='text/javascript'>%s</script>", s);
-	            }
-	        }
-	        
-	        return ret.toString();
-    	}
-    	catch(Throwable t) {
-    		throw new RenderingError("Failed to render attribute id:'"+attr.getId()+"', format:'"+attr.getFormat()+"' value:'"+attr.getValue()+"'", t);
-    	}
-    }
-
-    public static String renderAttributePageLevel(Type model, String boundTo, String rowContext, PortletSession session) throws IllegalStateException, IOException {
-        // If we're not bound to anything, output nothing.
-        if (boundTo==null) {
-            return "";
-        }
-
-        String ret="";
-        com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-
-        if (attr.isChoiceType() && !attr.isChoiceSlaveType() && attr.getFormatOption("type")!=null) {
-            String optionTypeName=attr.getFormatOption("type");
-            Choice choice=(Choice)(new CoreProxy().newProductType(((Quotation)session.getAttribute("quotation")).getProductTypeId(), optionTypeName));
-            ret=choice.renderAsJavaScriptArray(optionTypeName);
-        }
-
-        return ret;
-    }
-    
-    /**
-     * Validate that the value contained in the model (at a specific xpath) are valid. If
-     * errors are found, the details are added to the attribute as a sub-attribute with the
-     * id 'error'. The value of this attribute indicates the error type.
-     * @param model Model containing data to be validated
-     * @param boundTo XPath expression identifying attribute to validate.
-     * @return true if any errors are found, false otherwise.
-     */
-    public static boolean applyAttributeValidation(Type model, String boundTo) {
-        // If we're not bound to anything, don't validate anything.
-        if (boundTo==null) {
-            return false;
-        }
-
-        com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-        boolean error=false;
-        
-        // if there's an error there already, remove it.
-        try {
-        	removeErrorMarkers(attr);
-        }
-        catch(TypeXPathException e) {
-            // ignore this - it'll get thrown if there weren't any errors
-        }
-
-        // Check if the value is undefined or invalid and add the error marker as appropriate
-        if (attr.isUndefined() && !"no".equals(attr.getFormatOption("required"))) {
-            addError("error",  "required", attr);
-            error=true;
-        }
-        else if (!attr.isChoiceType() && attr.isInvalid()) {
-            addError("error", "invalid", attr);
-            error=true;
-        }
-
-        return error;
-    }
-    
-    /**
-     * Check if 'request' contains a new value for the 'boundTo', and if it does, update model with
-     * the new value. If row is other than -1 it is taken to indicate the row within a scroller
-     * that boundTo relates to.
-     * @param model Model to be updated
-     * @param boundTo xpath expression pointing into 'model' at the property to be updated.
-     * @param row The row if the attribute is in a scroller, otherwise -1.
-     * @param request The request whose parameters should be checked.
-     * @return potentially modified model
-     */
-    public static Type applyAttributeValues(Type model, String boundTo, String rowContext, ActionRequest request) {
-        // If we're not bound to anything, apply nothing.
-        if (boundTo!=null) {
-            String name=xpathToId(rowContext+boundTo);
-            
-            if (request.getParameter(name)!=null) {
-                model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
-            }
-        }
-        
-        return model;
-    }
-    
     /** 
      * Convert an XPath expression in to a format that will be accepted as an HTML element's id.
      * The data binding mechanism used in openquote's UI is based on xpath. A field in a UI form

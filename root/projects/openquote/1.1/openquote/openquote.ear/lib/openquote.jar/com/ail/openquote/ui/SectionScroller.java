@@ -24,7 +24,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * <p>A Section scroller displays repeating blocks of questions. The data for the questions is selected
@@ -73,13 +72,11 @@ public class SectionScroller extends Repeater {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
-        Type root=QuotationCommon.getCurrentQuotation(request.getPortletSession());
-        
         w.printf("<table width='100%%' border='0' cols='1' cellpadding='0'>");
         
         if (getTitle()!=null) {
             w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-            w.print(getExpandedRepeatedTitle(root, model));
+            w.print(getExpandedRepeatedTitle(model));
             w.printf("  </td></tr>");
         }
 
@@ -99,7 +96,7 @@ public class SectionScroller extends Repeater {
 
             if (getRepeatedTitle()!=null) {
                 w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-                w.print(getExpandedRepeatedTitle(root, t));
+                w.print(getExpandedRepeatedTitle(t));
                 w.printf("  </td></tr>");
             }
     

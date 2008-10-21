@@ -31,7 +31,7 @@ import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.util.Functions;
-import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Adds a "view quotation" button to a page. When selected this button will open a new window containing
@@ -77,7 +77,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
                 if (model instanceof Quotation) {
                 	// ...assume that we have just updated the persisted quote and keep the session in step
 	                SavedQuotation savedQuotation=(SavedQuotation)proxy.queryUnique("get.savedQuotation.by.quotationNumber", quoteNumber);
-	                QuotationCommon.setCurrentQuotation(request.getPortletSession(), savedQuotation.getQuotation());
+	                QuotationContext.setQuotation(savedQuotation.getQuotation());
                 }
                 
                 response.sendRedirect("/quotation/DisplayQuotationServlet?quoteNumber="+quoteNumber);

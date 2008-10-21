@@ -28,7 +28,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>An Answer simply displays the answer given to a previous asked question. An {@link AnswerSection} is used to 
@@ -137,7 +137,7 @@ public class Answer extends PageElement {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         
-        String aTitle = getExpandedTitle(QuotationCommon.getCurrentQuotation(request.getPortletSession()), model);
+        String aTitle = getExpandedTitle(QuotationContext.getQuotation(), model);
 
         w.printf("<tr><td>%s</td><td>%s</td></tr>", aTitle, formattedAnswer(model.xpathGet(binding)));
         

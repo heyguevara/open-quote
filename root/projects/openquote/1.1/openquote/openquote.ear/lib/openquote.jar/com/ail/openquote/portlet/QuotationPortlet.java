@@ -27,6 +27,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.ExceptionRecord;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * This Portlet acts as the controller (in MVC terms) for the quotation process. On initially being called, it
@@ -39,17 +40,19 @@ import com.ail.openquote.ui.util.QuotationCommon;
 public class QuotationPortlet extends GenericPortlet {
     
     public void processAction(ActionRequest request, ActionResponse response) {
-    	Quotation quote=null;
-    	
+    	QuotationContext.initialise(request);
+   	
     	try {
     		QuotationCommon.processAction(request, response);
         }
         catch(Throwable t) {
-            if (quote==null) {
+        	Quotation quotation = QuotationContext.getQuotation();
+        	
+            if (quotation==null) {
             	t.printStackTrace();
             }
             else {
-            	quote.addException(new ExceptionRecord(t));
+            	quotation.addException(new ExceptionRecord(t));
             }
             
             // TODO Forward to an error page
@@ -57,17 +60,19 @@ public class QuotationPortlet extends GenericPortlet {
     }
 
     public void doView(RenderRequest request, RenderResponse response) throws IOException {
-    	Quotation quote=null;;
+    	QuotationContext.initialise(request);
 
     	try {
     		QuotationCommon.doView(request, response);
         }
         catch(Throwable t) {
-            if (quote==null) {
+        	Quotation quotation = QuotationContext.getQuotation();
+        	
+            if (quotation==null) {
             	t.printStackTrace();
             }
             else {
-            	quote.addException(new ExceptionRecord(t));
+            	quotation.addException(new ExceptionRecord(t));
             }
 
             // TODO Forward to an error page

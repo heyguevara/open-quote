@@ -39,6 +39,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.product.executepageaction.ExecutePageActionCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * Actions allow arbitrary commands to be invoked during a page flow. A number of page elements (e.g. {@link Page} 
@@ -182,7 +183,7 @@ public class Action extends PageElement {
     	
         // Always persist the quote after running an action - the next action/command may need to read the persisted state.
         quote=QuotationCommon.persistQuotation(quote);
-        QuotationCommon.setCurrentQuotation(portletSession, quote);
+        QuotationContext.setQuotation(quote);
         
         return quote;
     }
