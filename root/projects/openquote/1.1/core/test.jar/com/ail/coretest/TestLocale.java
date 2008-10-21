@@ -18,17 +18,12 @@
 package com.ail.coretest;
 
 import static java.util.Locale.CANADA;
-import static java.util.Locale.GERMANY;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import com.ail.core.Core;
-import com.ail.core.CoreProxy;
-import com.ail.core.Functions;
 import com.ail.core.Locale;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
