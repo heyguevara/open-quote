@@ -461,8 +461,8 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         // make sure the status comes out correct
         assertEquals(PolicyStatus.REFERRED, policy.getStatus());
 
-        // make sure no entries were added the the sheets
-        assertEquals(2, policy.getAssessmentSheet().getLineCount());
+        // make sure _all_ entries were added the the sheets
+        assertEquals(7, policy.getAssessmentSheet().getLineCount());
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
     }
 
@@ -500,7 +500,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         assertEquals(PolicyStatus.DECLINED, policy.getStatus());
 
         // make sure no entries were added the the sheets
-        assertEquals(2, policy.getAssessmentSheet().getLineCount());
+        assertEquals(7, policy.getAssessmentSheet().getLineCount());
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
     }
 
@@ -539,7 +539,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         assertEquals(PolicyStatus.DECLINED, policy.getStatus());
 
         // make sure no entries were added the the sheets
-        assertEquals(3, policy.getAssessmentSheet().getLineCount());
+        assertEquals(8, policy.getAssessmentSheet().getLineCount());
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
     }
 
@@ -648,7 +648,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         assertEquals(PolicyStatus.REFERRED, policy.getStatus());
 
         // make sure all the entries are there - it's a quote so commission etc will have been added
-        assertEquals(4, policy.getAssessmentSheet().getLineCount());
+        assertEquals(9, policy.getAssessmentSheet().getLineCount());
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
     }
 
