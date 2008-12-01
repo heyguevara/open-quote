@@ -209,12 +209,12 @@ public class TestGenerateDocument extends CoreUserTestCase {
         byte[] doc=getCore().generateDocument("com.ail.core.product.TestProduct1", "MyTestDocument", model);
         
 // uncomment to dump the pdf to a file
-//        PrintWriter out=new PrintWriter(new File("./deploy/test/testGenerateDocumentFromCore.pdf"));
+//        PrintWriter out=new PrintWriter(new File("./target/test/testGenerateDocumentFromCore.pdf"));
 //        out.print(new String(doc));
 //        out.close();
 
         assertNotNull(doc);
-        assertEquals(4752, doc.length);
+        assertEquals(4736, doc.length);
         
     }
 }

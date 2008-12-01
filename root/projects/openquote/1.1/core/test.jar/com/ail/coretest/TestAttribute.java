@@ -17,6 +17,15 @@
 
 package com.ail.coretest;
 
+import static java.util.Locale.CANADA;
+import static java.util.Locale.GERMANY;
+import static java.util.Locale.UK;
+import static java.util.Locale.US;
+
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.MessageFormat;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -24,14 +33,11 @@ import junit.textui.TestRunner;
 
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
+import com.ail.core.Locale;
 import com.ail.core.XMLString;
 
 /**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source: /home/bob/CVSRepository/projects/core/test/com/ail/coretest/TestTypeXpath.java,v $
+ * Tests to exercise the facilities offered by he Core's Attribute class.
  */
 public class TestAttribute extends TestCase {
 
@@ -48,7 +54,7 @@ public class TestAttribute extends TestCase {
         TestRunner.run(suite());
     }
 
-    public void testAttributeValidation() {
+    public void testAttributeValidation() throws Exception {
         Attribute attr;
 
         attr = new Attribute("q1", "1", "number;min=0;max=21");
@@ -98,6 +104,7 @@ public class TestAttribute extends TestCase {
 
         attr = new Attribute("amount5", "£12.234", "number;pattern=£#.##");
         assertEquals("£12.23", attr.getFormattedValue());
+        assertEquals(12.234, attr.getObject());
     }
 
     public void testReference() {
@@ -140,10 +147,9 @@ public class TestAttribute extends TestCase {
         assertEquals(java.lang.String.class, attr.getValue().getClass());
         assertEquals(java.lang.Double.class, attr.getObject().getClass());
 
-        assertEquals("1,002.23 GBP", attr.getFormattedValue());
+        assertEquals("GBP1,002.23", attr.getFormattedValue());
         assertEquals("1002.23", attr.getValue());
         assertEquals(1002.23, attr.getObject());
-        System.out.print(attr.getObject().getClass().getName());
     }
     
     /**
@@ -200,4 +206,185 @@ public class TestAttribute extends TestCase {
     	assertTrue(xml.contains("<![CDATA[My Hat <b>Is</b> Off]]>"));
     	assertFalse(xml.contains("\"My Hat Is Off\""));
     }
+
+
+    /**
+     * The getFormattedValue() method on attribute should return values formatted
+     * for the current locale. This test checks that functionality.
+     */
+    public void testLocaleSpecificCurrencyFormatting() throws Exception {
+        
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
+
+        try {
+            Locale.setDefault(new Locale(UK));
+            Attribute gbp = new Attribute("q1", "1002.23", "currency", "GBP");
+            
+            // test that formatting works in the default locale
+            assertEquals("£1,002.23", gbp.getFormattedValue());
+    
+            Attribute usd = new Attribute("q1", "1002.23", "currency", "USD");
+    
+            // USD formatted for Canada
+            Locale.setThreadLocale(CANADA);
+            assertEquals("USD1,002.23", usd.getFormattedValue());
+            
+            // USD formatted for USA
+            Locale.setThreadLocale(US);
+            assertEquals("$1,002.23", usd.getFormattedValue());
+            
+            // USD formatted for Germany
+            Locale.setThreadLocale(GERMANY);
+            assertEquals("1.002,23 USD", usd.getFormattedValue());
+            
+            Locale.setThreadLocale(US);
+            usd.setFormat("currency;pattern=\u00A4 #,##0");
+            assertEquals("$ 1,002", usd.getFormattedValue());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
+    }
+
+    /**
+     * The getFormattedValue() method on attribute should return values formatted
+     * for the current locale. This test checks that functionality.
+     */
+    public void testLocaleSpecificNumberFormatting() throws Exception {
+        
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
+
+        try {
+            Locale.setThreadLocale(UK);
+            Attribute number = new Attribute("q1", "1002.23", "number");
+    
+            Locale.setThreadLocale(GERMANY);
+            assertEquals("1.002,23", number.getFormattedValue());
+
+            Locale.setThreadLocale(US);
+            assertEquals("1,002.23", number.getFormattedValue());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
+    }
+
+    /**
+     * Values sent to an Attribute's set method may be in a format appropriate 
+     * to the current locale, or in the Attribute's own defined format (pattern), or
+     * in a format suitable for the system's default locale. This test checks these
+     * operations.
+     */
+    public void testSetOperationsForLocaleSpecificdNumberValues() throws Exception {
+        
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
+
+        try {
+            Locale.setDefault(new Locale(UK));
+            Attribute number = new Attribute("q1", "1002.23", "number");
+            
+            Locale.setThreadLocale(UK);
+            number.setValue("2,004.32");
+            assertEquals("2004.32", number.getValue());
+            assertEquals(2004.32, number.getObject());  
+            
+            Locale.setThreadLocale(GERMANY);
+            number.setValue("1.002,64");
+            assertEquals("1002.64", number.getValue());
+            assertEquals(1002.64, number.getObject());  
+            number.setValue("9.021,131");
+            assertEquals("9021.131", number.getValue());
+            assertEquals(9021.131, number.getObject());  
+
+             Locale.setThreadLocale(UK);
+            number.setValue("10,921.441");
+
+            Locale.setThreadLocale(GERMANY);
+            assertEquals("10921.441", number.getValue());
+            assertEquals("10.921,441", number.getFormattedValue());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
+    }
+
+    public void testSetOperationsForLocaleSpecificdCurrencyValues() throws Exception {
+        
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
+
+        try {
+            Locale.setDefault(new Locale(UK));
+            Locale.setThreadLocale(UK);
+
+            Attribute money = new Attribute("q1", "1002.23", "currency", "GBP");
+            money.setValue("1004.80");
+            assertEquals("1004.8", money.getValue());
+            money.setValue("2,001.90");
+            assertEquals("2001.9", money.getValue());
+            money.setValue("£921.30");
+            assertEquals("921.3", money.getValue());
+
+            Locale.setThreadLocale(GERMANY);
+            money.setValue("1004,80");
+            assertEquals("1004.8", money.getValue());
+            money.setValue("2.001,90");
+            assertEquals("2001.9", money.getValue());
+            money.setValue("921,30 GBP");
+            assertEquals("921.3", money.getValue());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
+    }
+
+    public void testGetAndSetOperationsForPercentValues() throws Exception {
+        
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
+
+        try {
+            Locale.setDefault(new Locale(UK));
+            Locale.setThreadLocale(UK);
+
+            Attribute percent;
+            
+            percent = new Attribute("q1", "12%", "number,percent");
+            assertEquals("12", percent.getValue());
+            assertEquals(0.12, percent.getObject());
+            assertEquals("12%", percent.getFormattedValue());
+            
+            percent = new Attribute("q1", "12", "number,percent");
+            assertEquals("12", percent.getValue());
+            assertEquals(.12, percent.getObject());
+            assertEquals("12%", percent.getFormattedValue());
+
+            percent.setValue("15");
+            assertEquals("15", percent.getValue());
+            assertEquals(.15, percent.getObject());
+            assertEquals("15%", percent.getFormattedValue());
+
+            percent.setValue("90%");
+            assertEquals("90", percent.getValue());
+            assertEquals(.9, percent.getObject());
+            assertEquals("90%", percent.getFormattedValue());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
+    }
 }
+

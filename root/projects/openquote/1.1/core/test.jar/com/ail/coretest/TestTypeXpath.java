@@ -161,11 +161,16 @@ public class TestTypeXpath extends CoreUserTestCase {
         v.addAttribute(new Attribute("amount1", "£12", "currency", "GBP"));
         v.addAttribute(new Attribute("amount2", "12", "currency", "EUR"));
         v.addAttribute(new Attribute("amount3", "12%", "number,percent"));
-        v.addAttribute(new Attribute("amount4", "12", "currency"));
         v.addAttribute(new Attribute("amount5", "£12.234", "number,pattern=£#.##"));
-        v.addAttribute(new Attribute("amount6", "12,000", "currency"));
         v.addAttribute(new Attribute("answer", "Yes", "yesorno"));
         
+        try {
+            v.addAttribute(new Attribute("amount4", "12", "currency"));
+        }
+        catch(IllegalStateException e) {
+            // this is good - you can't create a currency attribute without defining the currency itself as the unit.
+        }
+
         Calendar c = Calendar.getInstance();
         c.set(1978, 10, 30, 0, 0, 0);
 
@@ -174,23 +179,20 @@ public class TestTypeXpath extends CoreUserTestCase {
         assertEquals(c.getTime().toString(), v.xpathGet("attribute[id='attrib2']/object", Date.class).toString());
         assertEquals(new Double(1.0), (Double) v.xpathGet("attribute[id='gender1']/object"));
         assertEquals("£12", v.xpathGet("attribute[id='amount1']/value"));
-        assertEquals("12.00 GBP", v.xpathGet("attribute[id='amount1']/formattedValue"));
+        assertEquals("GBP12.00", v.xpathGet("attribute[id='amount1']/formattedValue"));
         assertEquals("12", v.xpathGet("attribute[id='amount1']/object", String.class));
         assertEquals("12", v.xpathGet("attribute[id='amount2']/object", String.class));
         assertEquals("12", v.xpathGet("attribute[id='amount2']/value"));
         assertEquals("Male", v.xpathGet("attribute[id='gender1']/formattedValue"));
         
-        assertEquals(new Long(12), (Long)v.xpathGet("attribute[id='amount3']/object"));
-        assertEquals("12%", (String)v.xpathGet("attribute[id='amount3']/value"));
-        assertEquals(new Long(12), (Long)v.xpathGet("attribute[id='amount4']/object"));
-        assertEquals("12", (String)v.xpathGet("attribute[id='amount4']/value")); 
+        assertEquals(0.12, v.xpathGet("attribute[id='amount3']/object"));
+        assertEquals("12", (String)v.xpathGet("attribute[id='amount3']/value"));
+        assertEquals("12%", (String)v.xpathGet("attribute[id='amount3']/formattedValue"));
+
         assertEquals(new Double(12.234), (Double)v.xpathGet("attribute[id='amount5']/object"));
-        assertEquals("£12.234", (String)v.xpathGet("attribute[id='amount5']/value")); 
+        assertEquals("12.234", v.xpathGet("attribute[id='amount5']/value")); 
         assertEquals("£12.23", (String)v.xpathGet("attribute[id='amount5']/formattedValue"));
-        assertEquals("12.00 EUR", (String)v.xpathGet("attribute[id='amount2']/formattedValue"));
-        assertEquals(new Long(12000), (Long)v.xpathGet("attribute[id='amount6']/object"));
-        assertEquals("12,000", v.xpathGet("attribute[id='amount6']/value"));
-        assertEquals("12,000", (String)v.xpathGet("attribute[id='amount6']/formattedValue"));
+        assertEquals("EUR12.00", (String)v.xpathGet("attribute[id='amount2']/formattedValue"));
         assertEquals("Male", (String)v.xpathGet("attribute[id='gender1']/value"));
         assertEquals(new Double(1.0), (Double)v.xpathGet("attribute[id='gender1']/object"));
         assertEquals("Male", (String)v.xpathGet("attribute[id='gender1']/formattedValue"));
@@ -227,8 +229,8 @@ public class TestTypeXpath extends CoreUserTestCase {
         TypeXPathFunctionRegister.getInstance().registerFunctionLibrary("test", TestFunctions.class);
         
         // invoke the newly registered function
-        assertEquals(29, v.xpathGet("test:age(attribute[id='dob1'])"));
-        assertEquals(21, v.xpathGet("test:age(test:youngest(attribute))"));
+        assertEquals(30, v.xpathGet("test:age(attribute[id='dob1'])"));
+        assertEquals(22, v.xpathGet("test:age(test:youngest(attribute))"));
     }
 
     public void testCollection() {

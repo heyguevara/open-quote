@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <mapping>
     <class name="com.ail.core.Type">
         <map-to xml="type"/>
@@ -22,17 +21,17 @@
         <field name="unit" type="string">
             <bind-xml node="attribute"/>
         </field>
-		<field name="value" type="string" set-method="setValue" get-method="getValueForXmlAttribute">
-			<bind-xml node="attribute"/>  
-		</field>
-        <field name="valueForXmlText" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
-            <bind-xml name="value" node="element"/>
-        </field>
         <field name="format" type="string">
             <bind-xml node="attribute"/>
         </field>
         <field name="id" type="string">
             <bind-xml node="attribute"/>
+        </field>
+        <field name="value" type="string" set-method="setValue" get-method="getValueForXmlAttribute">
+			<bind-xml node="attribute"/>  
+		</field>
+        <field name="valueForXmlText" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml name="value" node="element"/>
         </field>
     </class>
 

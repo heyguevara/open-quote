@@ -287,8 +287,8 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
                       "<comment>The loganberry's are sweet</comment>"+
                       "<copyright>Copyright us.</copyright>"+
                       "<version>1.0</version>"+
-                      "<attribute id='one' value='valueone'/>"+
-                      "<attribute id='two' value='valuetwo'/>"+
+                      "<attribute id='one' value='valueone' format='string'/>"+
+                      "<attribute id='two' value='valuetwo' format='string'/>"+
                    "</version>");
         t.addParameter(p);
         
@@ -319,8 +319,8 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
                       "<comment>The loganberry's are sweet</comment>"+
                       "<copyright>Copyright us.</copyright>"+
                       "<version>1.0</version>"+
-                      "<attribute id='one' value='valueone'/>"+
-                      "<attribute id='two' value='valuetwo'/>"+
+                      "<attribute id='one' value='valueone' format='string'/>"+
+                      "<attribute id='two' value='valuetwo' format='string'/>"+
                    "</version>");
         t.addParameter(p);
 

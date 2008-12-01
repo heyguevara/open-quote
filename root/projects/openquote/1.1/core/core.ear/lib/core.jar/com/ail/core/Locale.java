@@ -24,6 +24,18 @@ package com.ail.core;
  * @see java.util.Locale
  */
 public class Locale extends Type {
+    private static ThreadLocal<java.util.Locale> threadLocale = new ThreadLocal<java.util.Locale>() {
+        java.util.Locale threadLocale;
+        
+        public java.util.Locale get() {
+            return threadLocale!=null ? threadLocale : java.util.Locale.getDefault();
+        }
+        
+        public void set(java.util.Locale threadLocale) {
+            this.threadLocale=threadLocale;
+        }
+    };
+    
     private String language=null;
     private String country=null;
     private String variant=null;
@@ -159,5 +171,30 @@ public class Locale extends Type {
      */
     public static Locale getDefault() {
         return new Locale(java.util.Locale.getDefault());
+    }
+
+    /**
+     * Get an instance of Locale representing the default locale for this JVM.
+     * @see java.util.Locale#getDefault()
+     * @return JVM's default locale
+     */
+    public static void setDefault(Locale locale) {
+        java.util.Locale.setDefault(locale.getInstance());
+    }
+
+    /**
+     * Set the locale to be used while processing this thread.
+     * @param threadLocaleArg Locale to be used
+     */
+    public static void setThreadLocale(java.util.Locale threadLocaleArg) {
+        threadLocale.set(threadLocaleArg);
+    }
+
+    /**
+     * Get the locale being used while processing this thread.
+     * @return Locale currently being used
+     */
+    public static java.util.Locale getThreadLocale() {
+        return threadLocale.get();
     }
 }
