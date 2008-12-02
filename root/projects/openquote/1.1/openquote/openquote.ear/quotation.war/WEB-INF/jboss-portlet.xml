@@ -4,6 +4,10 @@
     <portlet>
         <portlet-name>QuotationPortlet</portlet-name>
     </portlet>
+    <portlet>
+        <portlet-name>ShippingQuotationPortlet</portlet-name>
+        <remotable>true</remotable>
+    </portlet>
     <service>
         <service-name>UserModule</service-name>
         <service-class>org.jboss.portal.identity.UserModule</service-class>

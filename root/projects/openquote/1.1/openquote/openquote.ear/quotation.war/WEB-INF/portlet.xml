@@ -26,4 +26,26 @@
 		</portlet-preferences>
 	</portlet>
 	
+  <portlet>
+    <description>ShippingPlus WSRP Portlet</description>
+    <portlet-name>ShippingPlusQuotationPortlet</portlet-name>
+    <display-name>ShippingPlus Quotation</display-name>
+    <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    <portlet-info>
+      <title>Shipping Plus Quotation Portlet</title>
+      <short-title>ShippingPlus Quotation</short-title>
+      <keywords>Quotation, Portlet</keywords>
+    </portlet-info>
+    <portlet-preferences>
+      <preference>
+        <name>product</name>
+        <value>AIL.Demo.ShippingPlus</value>
+      </preference>
+    </portlet-preferences>
+  </portlet>
+
 </portlet-app>
