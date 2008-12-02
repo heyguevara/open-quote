@@ -76,30 +76,6 @@ public class Functions {
         }
     }
 
-    /**
-     * Render an AttributeField's choice list as a set of HTML options for use in a select element.
-     * See {@link com.ail.core.Attribute} for details of the choice format.
-     * @param format Choice string
-     * @param selected The value of the option to show as selected, or null if no value is selected.
-     * @return Option line as a string.
-     */
-    public static String renderEnumerationAsOptions(String format, String selected) {
-        StringBuffer ret=new StringBuffer();
-
-        String[] opts=format.split("[|#]");
-
-        for(int i=1 ; i<opts.length ; i+=2) {
-            if (opts[i].equals(selected)) {
-                ret.append("<option selected='yes'>"+opts[i]+"</option>");
-            }
-            else {
-                ret.append("<option>"+opts[i]+"</option>");
-            }
-        }
-        
-        return ret.toString();
-    }
-
     /** 
      * Convert an XPath expression in to a format that will be accepted as an HTML element's id.
      * The data binding mechanism used in openquote's UI is based on xpath. A field in a UI form

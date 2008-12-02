@@ -57,7 +57,16 @@ import com.ail.openquote.ui.util.QuotationContext;
  * which can be used when the titles are fixed. Dynamic titles - the text of which is picked up from another part of
  * the quote - can be defined using {@link #getTitleBinding() titleBinding} and {@link #getSubTitleBinding() subTitleBinding}. 
  * It may also define javascript to be executed either onLoad (when the page is loaded); or onChange (when a fields 
- * value is changed).
+ * value is changed).</p>
+ * <p>The AttributeField also supports the concept of RenderHints. The rendering engine will take these hints into account
+ * as it displays the field within the page. The values of hint supported are dependent on the Attribute being rendered.
+ * The supported hints are listed below:</p>
+ * <table>
+ * <tr><th>Attribute Type</th><th>Render Hints</th></tr>
+ * <tr><td>choice</td><td>"dropdown" - Display the options on a drop down menu (default)<br/>"radio" - Display the choice list as radio buttons</tr>
+ * <tr><td>yesorno</td><td>"dropdown" - Display the options on a drop down menu (default)<br/>"checkbox" - Display as a checkbox<br/>"radio" - Display Yes/No as radio buttons</tr>
+ * </table>
+ * 
  * @see RowScroller
  * @see com.ail.core.Attribute
  * @version 1.1
@@ -82,8 +91,12 @@ public class AttributeField extends PageElement {
 
     /** Javascript to be executed when a field's value is changed */
     private String onChange;
+    
+    /** Hints to the UI rendering engine specifying details of how this field should be rendered. The values supported
+     * are specific to the type of attribute being rendered. */ 
+    private String renderHint;
 
-    public AttributeField() {
+	public AttributeField() {
 		super();
 	}
 
@@ -268,6 +281,23 @@ public class AttributeField extends PageElement {
         this.subTitleBinding = subTitleBinding;
     }
 
+    /** 
+     * Hints to the UI rendering engine specifying details of how this field should be rendered. The values supported
+     * are specific to the type of attribute being rendered.  
+	 * @return the renderHint
+	 */
+	public String getRenderHint() {
+		return renderHint;
+	}
+
+	/**
+	 * @see #getRenderHint()
+	 * @param renderHint the renderHint to set
+	 */
+	public void setRenderHint(String renderHint) {
+		this.renderHint = renderHint;
+	}
+
 	/**
 	 * Render an AttributeField on the UI. This is quite a common requirement throughout the classes
 	 * of the ui package, so it's put here for convenience. The result of calling this method
@@ -334,7 +364,18 @@ public class AttributeField extends PageElement {
 	            }
 	            else if (attr.isChoiceType()) {
 	                if (attr.getFormatOption("type")==null) {
-	                    w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, Functions.renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
+	                	if ("radio".equals(getRenderHint())) {
+	                        String[] opts=attr.getFormatOption("options").split("[|#]");
+
+	                        for(int i=1 ; i<opts.length ; i+=2) {
+	                        	if (!"?".equals(opts[i])) {
+	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>", id, opts[i], (opts[i].equals(attr.getValue())) ? "checked='checked'" : "", opts[i]);
+	                        	}
+	                        }
+	                	}
+	                	else {
+	                		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
+	                	}
 	                }
 	                else {
 	                    onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
@@ -347,7 +388,16 @@ public class AttributeField extends PageElement {
 	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/>", id, onChangeEvent, size, attr.getValue());
 	            }
 	            else if (attr.isYesornoType()) {
-	                w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, Functions.renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
+	            	if ("checkbox".equals(renderHint)) {
+	            		w.printf("<input name=\"%s\" type='checkbox' value='Yes' class='pn-normal' %s %s/>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
+	            	}
+	            	else if("radio".equals(renderHint)) {
+	            		w.printf("<input name=\"%s\" type='radio' value='No' class='pn-normal' %s %s>No</input>", id, ("No".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
+	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>Yes</input>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
+	            	}
+	            	else {
+	            		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
+	            	}
 	            }
 	            else if (attr.isNoteType()) {
 	                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea>", id, onChangeEvent, attr.getValue());
@@ -451,8 +501,35 @@ public class AttributeField extends PageElement {
 	        if (request.getParameter(name)!=null) {
 	            model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
 	        }
+	        else if (request.getParameter(name)==null && "checkbox".equals(getRenderHint())) {
+	            model.xpathSet(boundTo+"/value", "No");
+	        }
 	    }
 	    
 	    return model;
 	}
+
+    /**
+     * Render an AttributeField's choice list as a set of HTML options for use in a select element.
+     * See {@link com.ail.core.Attribute} for details of the choice format.
+     * @param format Choice string
+     * @param selected The value of the option to show as selected, or null if no value is selected.
+     * @return Option line as a string.
+     */
+    private String renderEnumerationAsOptions(String format, String selected) {
+        StringBuffer ret=new StringBuffer();
+
+        String[] opts=format.split("[|#]");
+
+        for(int i=1 ; i<opts.length ; i+=2) {
+            if (opts[i].equals(selected)) {
+                ret.append("<option selected='yes'>"+opts[i]+"</option>");
+            }
+            else {
+                ret.append("<option>"+opts[i]+"</option>");
+            }
+        }
+        
+        return ret.toString();
+    }
 }
