@@ -12,16 +12,6 @@
 <tr><td rowspan="1" colspan="3">Excess Override</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/portal/auth/portal/default/Sandpit/QuotationDevelopmentWindow?action=e&amp;windowstate=normal&amp;mode=view</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectAndWait</td>
-	<td>selectedProduct</td>
-	<td>label=AIL.Demo.IrishBrokerPI</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>//input[@name='op=Get A Quote:immediate=false']</td>
 	<td></td>

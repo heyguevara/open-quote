@@ -12,16 +12,6 @@
 <tr><td rowspan="1" colspan="3">Validation on Commercial Proposer</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/portal/auth/portal/default/Sandpit</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectAndWait</td>
-	<td>selectedProduct</td>
-	<td>label=AIL.Demo.IrishBrokerPI</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>//input[@name='op=Get A Quote:immediate=false']</td>
 	<td></td>
@@ -329,7 +319,22 @@
 <tr>
 	<td>type</td>
 	<td>email</td>
-	<td> </td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=Next:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>required</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>email</td>
+	<td>123</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -344,7 +349,7 @@
 <tr>
 	<td>type</td>
 	<td>email</td>
-	<td> 123</td>
+	<td>asdf</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -354,42 +359,12 @@
 <tr>
 	<td>verifyTextPresent</td>
 	<td>invalid</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>email</td>
-	<td> asdf</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>invalid</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>email</td>
-	<td> test@test.test</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>email</td>
 	<td>test@test.test</td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>invalid</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
