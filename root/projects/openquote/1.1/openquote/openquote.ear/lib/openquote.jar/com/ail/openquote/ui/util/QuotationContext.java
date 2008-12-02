@@ -68,6 +68,7 @@ public class QuotationContext {
 		
 		public void set(PortletRequest request) {
 			this.request=request;
+			Locale.setThreadLocale(request.getLocale());
 		}
 	};
 	
@@ -177,7 +178,7 @@ public class QuotationContext {
 	 * Set the portlet request currently being processed.
 	 * @param requestArg
 	 */
-	private static void setRequest(PortletRequest requestArg) {
+	public static void setRequest(PortletRequest requestArg) {
 		request.set(requestArg);
 	}
 
@@ -193,7 +194,7 @@ public class QuotationContext {
 	 * Set the portlet request currently being processed.
 	 * @param requestArg
 	 */
-	private static void setPageFlow(PageFlow pageFlowArg) {
+	public static void setPageFlow(PageFlow pageFlowArg) {
 		pageFlow.set(pageFlowArg);
 	}
 	
