@@ -24,8 +24,8 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
