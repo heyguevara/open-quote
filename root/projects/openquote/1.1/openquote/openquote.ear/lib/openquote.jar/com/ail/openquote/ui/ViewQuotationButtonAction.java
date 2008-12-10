@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -62,7 +64,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
 
-        if (op!=null && op.equals(getLabel())) {
+        if ("view".equals(op)) {
             try {
                 CoreProxy proxy=new CoreProxy();
 
@@ -94,7 +96,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
-        w.printf("<input type='submit' name='op=%1$s:id=%2$s' value='%1$s' class='portlet-form-input-field'/>", getLabel(), getQuoteNumberFromModel(model));
+        w.printf("<input type='submit' name='op=view:id=%s' value='%s' class='portlet-form-input-field'/>", getQuoteNumberFromModel(model), i18n(getLabel()));
         
         return model;
     }

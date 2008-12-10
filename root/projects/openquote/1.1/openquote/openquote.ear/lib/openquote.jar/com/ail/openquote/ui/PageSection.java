@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -60,7 +62,7 @@ public class PageSection extends PageContainer {
 
         // Output the section title if there is one.
         if (!Functions.isEmpty(getTitle())) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>%s</td></tr>", columns, getTitle());
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>%s</td></tr>", columns, i18n(getTitle()));
         }
 
         Iterator<? extends PageElement> it=getPageElement().iterator();

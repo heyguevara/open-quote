@@ -2,5 +2,5 @@
     <attribute id="driver" value="?" format="choice"/>
     <attribute id="date" value="" format="date,pattern=dd/MM/yyyy"/>
     <attribute id="atFault" value="?" format="yesorno"/>
-    <attribute id="value" value="" format="currency" unit="GBP"/>
+    <attribute id="value" value="0" format="currency" unit="GBP"/>
 </asset>

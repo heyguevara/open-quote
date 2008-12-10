@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -76,7 +77,7 @@ public class SectionScroller extends Repeater {
         
         if (getTitle()!=null) {
             w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-            w.print(getExpandedRepeatedTitle(model));
+            w.print(i18n(getExpandedRepeatedTitle(model)));
             w.printf("  </td></tr>");
         }
 
@@ -96,7 +97,7 @@ public class SectionScroller extends Repeater {
 
             if (getRepeatedTitle()!=null) {
                 w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-                w.print(getExpandedRepeatedTitle(t));
+                w.print(i18n(getExpandedRepeatedTitle(t)));
                 w.printf("  </td></tr>");
             }
     

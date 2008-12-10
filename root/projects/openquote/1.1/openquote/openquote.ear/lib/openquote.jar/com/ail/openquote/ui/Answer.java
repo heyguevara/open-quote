@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
 
 import java.io.IOException;
@@ -139,7 +140,7 @@ public class Answer extends PageElement {
         
         String aTitle = getExpandedTitle(QuotationContext.getQuotation(), model);
 
-        w.printf("<tr><td>%s</td><td>%s</td></tr>", aTitle, formattedAnswer(model.xpathGet(binding)));
+        w.printf("<tr><td>%s</td><td>%s</td></tr>", i18n(aTitle), formattedAnswer(model.xpathGet(binding)));
         
         return model;
     }

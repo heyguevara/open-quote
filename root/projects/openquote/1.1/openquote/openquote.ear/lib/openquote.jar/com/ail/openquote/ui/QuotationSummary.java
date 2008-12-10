@@ -17,6 +17,7 @@
 package com.ail.openquote.ui;
 
 import static com.ail.core.Functions.expand;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
 import static com.ail.openquote.ui.util.Functions.longDate;
 
@@ -285,20 +286,20 @@ public class QuotationSummary extends PageContainer {
         CurrencyAmount premium=quote.getTotalPremium();
  
         w.printf("<table width='100%%'>");
-        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>Your Quotation: %s</td></tr>", premium.toString());
+        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>"+i18n("i18n_quotation_summary_quote_message")+"</td></tr>", premium.toString());
         w.printf("   <tr>");
         w.printf("       <td height='15'></td>");
         w.printf("   </tr>");
         w.printf("   <tr>");
         w.printf("       <td class='portlet-font'>");
         w.printf("           <ul>");
-        w.printf("               <li>Your quote number: <b>%s</b></li>", quote.getQuotationNumber());
-        w.printf("               <li>This quote is valid for 30 days, until %s.</li>", longDate(quote.getQuotationExpiryDate()));
+        w.printf("               <li>"+i18n("i18n_quotation_summary_quote_number_message")+"</li>", quote.getQuotationNumber());
+        w.printf("               <li>"+i18n("i18n_quotation_summary_valid_until_message")+"</li>", longDate(quote.getQuotationExpiryDate()));
         
         renderTaxSummary(w, quote);
         
         if (wordingsUrl!=null) {
-            w.printf("               <li>A sample of the policy wordings is available <a target='wordings' href='%s'>here</a>.</li>", expandRelativeUrl(wordingsUrl, request, quote.getProductTypeId()));
+            w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrl(wordingsUrl, request, quote.getProductTypeId()));
         }
         w.printf("           </ul>");
         w.printf("       </td>");
@@ -334,23 +335,23 @@ public class QuotationSummary extends PageContainer {
 
         if (taxLines.size()==1) {
             Behaviour taxLine=taxLines.iterator().next();
-            w.printf("<li>This quote is inclusive of ");
+            w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_header_message")+" ");
             if (taxLine instanceof RateBehaviour) {
-                w.printf("%s at %s", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
+                w.printf(i18n("i18n_quotation_summary_inclusive_rate_message"), taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
             }
             else if (taxLine instanceof SumBehaviour) {
-                w.printf("%s of %s", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
+                w.printf(i18n("i18n_quotation_summary_inclusive_sum_message"), taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
             }
             w.printf("</li>");
         }
         else if (taxLines.size()>1) {
-            w.printf("<li>This quote is inclusive of:<ul>");
+            w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_header_message")+":<ul>");
             for(Behaviour taxLine: taxLines) {
                 if (taxLine instanceof RateBehaviour) {
-                    w.printf("<li>%s at %s</li>", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
+                    w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_rate_message")+"</li>", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
                 }
                 else if (taxLine instanceof SumBehaviour) {
-                    w.printf("<li>%s of %s</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
+                    w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_sum_message")+"</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
                 }
             }
             w.printf("</ul></li>");
@@ -385,7 +386,7 @@ public class QuotationSummary extends PageContainer {
                 expand(w, new URL(fullUrl), quote);
             }
             catch(MalformedURLException e) {
-                w.printf("Please contact us on "+quote.getBroker().getQuoteEmailAddress()+" for a copy of our Terms & Conditions.");
+                w.printf(i18n("i18n_quotation_summary_missing_tandc_message"), quote.getBroker().getQuoteEmailAddress());
                 new CoreProxy().logError("Failed to display terms and conditions for quote: '"+quote.getQuotationNumber()+"', product: '"+quote.getProductTypeId()+"' url:'"+fullUrl+"'");
             }
         }
@@ -399,12 +400,12 @@ public class QuotationSummary extends PageContainer {
         if (loginSection==null) {
             Quotation q=(Quotation)model;
             loginSection=new LoginSection();
-            loginSection.setInvitationMessageText("If you have an existing account, please login here. If not, please %s.");
-            loginSection.setInvitationLinkText("create one");
+            loginSection.setInvitationMessageText(i18n("i18n_quotation_summary_existing_account_message"));
+            loginSection.setInvitationLinkText(i18n("i18n_quotation_summary_create_message"));
             // The page we're forwarding to is just the last part of the product ID, 
             // e.g. for AIL.Demo.MotorPlus, the page is MotorPlus
             loginSection.setForwardToPageName(q.getProductTypeId().substring(q.getProductTypeId().lastIndexOf('.')+1));
-            loginSection.setLoginButtonLabel("Login & Save");
+            loginSection.setLoginButtonLabel(i18n("i18n_quotation_summary_login_and_save_button_label"));
         }
         return loginSection;
     }
@@ -418,17 +419,17 @@ public class QuotationSummary extends PageContainer {
             navigationSection.getPageElement().add(save);
         
             RequoteButtonAction requote=new RequoteButtonAction();
-            requote.setLabel("Requote");
+            requote.setLabel("i18n_requote_button_label");
             requote.setDestinationPageId(requoteDestinationPageId);
             navigationSection.getPageElement().add(requote);
     
             CommandButtonAction confirmAndPay=new CommandButtonAction();
-            confirmAndPay.setLabel("Confirm and Pay");
+            confirmAndPay.setLabel("i18n_confirm_and_pay_button_label");
             confirmAndPay.setDestinationPageId(confirmAndPayDestinationPageId);
             navigationSection.getPageElement().add(confirmAndPay);
 
             CommandButtonAction view=new ViewQuotationButtonAction();
-            view.setLabel("View");
+            view.setLabel("i18n_view_document_button_label");
             navigationSection.getPageElement().add(view);
         }
         

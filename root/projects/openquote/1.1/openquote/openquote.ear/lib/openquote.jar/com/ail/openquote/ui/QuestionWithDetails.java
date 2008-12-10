@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
@@ -132,9 +133,9 @@ public class QuestionWithDetails extends Question {
 
         String onChange="enableTargetIf(this.options[this.selectedIndex].text==\"Yes\", \""+detailsId+"\")";
         
-        w.printf("<td>%s</td>", title);
+        w.printf("<td>%s</td>", i18n(title));
         w.printf("<td>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
-        w.printf("<td>%s</td>", detailTitle);
+        w.printf("<td>%s</td>", i18n(detailTitle));
         w.printf("<td>%s</td>", renderAttribute(model, getDetailsBinding(), rowContext, getOnChange(), getOnLoad()));
         
         // Disable the 'detail' textarea unless the question's answer is 'Yes'

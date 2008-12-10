@@ -20,6 +20,7 @@ import static com.ail.openquote.ui.util.Functions.addError;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.hideNull;
 import static com.ail.openquote.ui.util.Functions.isEmpty;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -116,30 +117,30 @@ public class PaymentDetails extends PageElement {
                 PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
                 
                 if (isEmpty(pc.getCardNumber())) {
-                    addError("pc.cardNumber", "required", schedule);
+                    addError("pc.cardNumber", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!pc.getCardNumber().matches("[0-9 ]*")) {
-                    addError("pc.cardNumber", "invalid", schedule);
+                    addError("pc.cardNumber", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
                 
                 if (pc.getExpiryDate()==null) {
-                    addError("pc.expiryDate", "required", schedule);
+                    addError("pc.expiryDate", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
 
                 if (!isEmpty(pc.getIssueNumber()) && !pc.getIssueNumber().matches("[0-9]*")) {
-                    addError("pc.issueNumber", "invalid", schedule);
+                    addError("pc.issueNumber", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
 
                 if (isEmpty(pc.getCardHoldersName())) {
-                    addError("pc.cardHoldersName", "required", schedule);
+                    addError("pc.cardHoldersName", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!pc.getCardHoldersName().matches("[a-zA-Z0-9 .&]*")) {
-                    addError("pc.cardHoldersName", "invalid", schedule);
+                    addError("pc.cardHoldersName", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
             }
@@ -147,20 +148,20 @@ public class PaymentDetails extends PageElement {
                 DirectDebit dd=(DirectDebit)mp.getPaymentMethod();
                 
                 if (isEmpty(dd.getAccountNumber())) {
-                    addError("dd.account", "required", schedule);
+                    addError("dd.account", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!dd.getAccountNumber().matches("[0-9]{8,10}")) {
-                    addError("dd.account", "invalid", schedule);
+                    addError("dd.account", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
                 
                 if (isEmpty(dd.getSortCode()) || "--".equals(dd.getSortCode())) {
-                    addError("dd.sort", "required", schedule);
+                    addError("dd.sort", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!dd.getSortCode().matches("[0-9]{2}-[0-9]{2}-[0-9]{2}")) {
-                    addError("dd.sort", "invalid", schedule);
+                    addError("dd.sort", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
             }
@@ -188,26 +189,26 @@ public class PaymentDetails extends PageElement {
         Proposer proposer=(Proposer)quote.getProposer();
 
         w.printf("<tr class='portlet-font'>");
-        w.printf("    <td class='portlet-section-alternate'>Your quotation</td>");
+        w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_title")+"</td>");
         w.printf("</tr>");
         w.printf("<tr>");
         w.printf("    <td>");
         w.printf("        <table width='100%%'>");
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Premium</b></td><td>%s</td></tr>", quote.getTotalPremium());
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Cover start date</b></td><td>%s</td></tr>", f.format(quote.getInceptionDate()));
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Cover end date</b></td><td>%s</td></tr>", f.format(quote.getExpiryDate()));
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_premium_label")+"</b></td><td>%s</td></tr>", quote.getTotalPremium());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_cover_start_date_label")+"</b></td><td>%s</td></tr>", f.format(quote.getInceptionDate()));
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_cover_end_date_label")+"</b></td><td>%s</td></tr>", f.format(quote.getExpiryDate()));
         w.printf("        </table>");
         w.printf("  </td>");
         w.printf("</tr>");
         w.printf("<tr class='portlet-font'>");
-        w.printf("    <td class='portlet-section-alternate'>Your contact information</td>");
+        w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_contact_details_title")+"</td>");
         w.printf("</tr> ");
         w.printf("<tr>");
         w.printf("    <td>");
         w.printf("        <table width='100%%'>");
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Name</b></td><td>%s %s</td></tr>", proposer.getFirstName(), proposer.getSurname());
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Address</b></td><td>%s</td></tr>", proposer.getAddress());
-        w.printf("            <tr class='portlet-font'><td width='15%%'><b>Email address</b></td><td>%s</td></tr>", proposer.getEmailAddress());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_name_label")+"</b></td><td>%s %s</td></tr>", proposer.getFirstName(), proposer.getSurname());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_address_label")+"</b></td><td>%s</td></tr>", proposer.getAddress());
+        w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_email_address_label")+"</b></td><td>%s</td></tr>", proposer.getEmailAddress());
         w.printf("        </table>");
         w.printf("    </td>");
         w.printf("</tr>");
@@ -215,7 +216,7 @@ public class PaymentDetails extends PageElement {
 
     private void renderPaymentDetails(PrintWriter w, Quotation quote) {
         w.printf("<tr class='portlet-font'>");
-        w.printf("    <td class='portlet-section-alternate'>Payment details</td>");
+        w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_payment_details_title")+"</td>");
         w.printf("</tr> ");
         w.printf("<tr>");
         w.printf("    <td>");
@@ -242,11 +243,11 @@ public class PaymentDetails extends PageElement {
         String sc3=sortCode.substring(sortCode.lastIndexOf('-')+1);
         
         w.printf("<table width='100%%' cols='2'>");
-        w.printf(" <tr class='portlet-font'><td width='25%%' colspan='2'>Please enter your bank account number and sort code so that we can take payment from your account</td></tr>");
-        w.printf(" <tr class='portlet-font'><td width='25%%'><b>Originator</b></td><td>%s</td></tr>", quote.getBroker().getLegalName()+", "+quote.getBroker().getAddress());
-        w.printf(" <tr class='portlet-font'><td width='25%%'><b>Originator's identification number</b></td><td>%s</td></tr>", quote.getBroker().getDirectDebitIdentificationNumber());
+        w.printf(" <tr class='portlet-font'><td width='25%%' colspan='2'>"+i18n("i18n_payment_details_bank_account_message")+"</td></tr>");
+        w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getLegalName()+", "+quote.getBroker().getAddress());
+        w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_id_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getDirectDebitIdentificationNumber());
         w.printf(" <tr class='portlet-font'>");
-        w.printf("  <td width='25%%'><b>Account number</b></td>");
+        w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_account_number_label")+"</b></td>");
         w.printf("  <td>");
         w.printf("    <table border='0'><tr>");
         w.printf("     <td><input name='acc' size='8' type='text' maxlength='10' value='%s'/></td>", accountNumber);
@@ -255,7 +256,7 @@ public class PaymentDetails extends PageElement {
         w.printf("  </tr>");
         w.printf(" </tr>");
         w.printf(" <tr class='portlet-font'>");
-        w.printf("  <td width='25%%'><b>Sort code</b></td>");
+        w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_sort_code_label")+"</b></td>");
         w.printf("  <td>");
         w.printf("    <table border='0'><tr>");
         w.printf("     <td>");
@@ -269,23 +270,12 @@ public class PaymentDetails extends PageElement {
         w.printf(" </tr>");
         w.printf(" <tr class='portlet-font'>");
         w.printf("  <td colspan='2'>");
-        w.printf("Please pay %s from the account detailed in this instruction subject to the safeguards assured by the ", quote.getBroker().getLegalName());
-        w.printf("direct debit guarantee. I understand that this instruction may remain with the originator mentioned above and, if so, details will be ");
-        w.printf("passed electronically to my bank or building society.<br/><br/>");
+        w.printf(   i18n("i18n_payment_details_direct_debit_message"), quote.getBroker().getLegalName());
         w.printf("  </td>");
         w.printf(" </tr>");
         w.printf(" <tr class='portlet-font'>");
         w.printf("  <td colspan='2'>");
-        w.printf("<u>Direct Debit Guarantee</u><br/>");
-        w.printf("This guarantee is offered by all banks and building societies that take part in the Direct Debit scheme. The efficiency ");
-        w.printf("and security of the scheme is monitored and protected by your own bank or building society.");
-        w.printf("<ul> ");
-        w.printf("<li>If the amounts to be paid or the payment dates change, you will be told of this 8 days in advance of your account ");
-        w.printf("being debited.</li> ");
-        w.printf("<li>If an error is made by %s or your bank or building society, you are guaranteed a full and immediate ", quote.getBroker().getLegalName());
-        w.printf("refund from your branch of the amount paid.</li>");
-        w.printf("<li>You can cancel a Direct Debit at any time by writing to your bank or building society. Please also send a copy of your ");
-        w.printf("letter to us.</li>");
+        w.printf(   i18n("i18n_payment_details_guarantee_message"), quote.getBroker().getLegalName());
         w.printf("  </td>");
         w.printf(" </tr>");
         w.printf("</table>");
@@ -304,7 +294,7 @@ public class PaymentDetails extends PageElement {
         }
         
         w.printf("<table width='100%%' cols='2'>");
-        w.printf(" <tr class='portlet-font'><td width='15%%' colspan='2'>Please enter your credit/debit card details</td></tr>");
+        w.printf(" <tr class='portlet-font'><td width='15%%' colspan='2'>"+i18n("i18n_payment_details_direct_debit_title")+"</td></tr>");
 
         w.printf(" <tr class='portlet-font'>");
         w.printf("  <td width='15%%'><b>Card number</b></td>");
@@ -358,14 +348,11 @@ public class PaymentDetails extends PageElement {
         w.printf("</tr>");
         w.printf("<tr class='portlet-font'>");
         w.printf(" <td>");
-        w.printf("Please note you have confirmed that you are not falsely representing yourself or impersonating someone else within the ");
-        w.printf("details you are submitting for this policy and payment. You also confirm that you are the only person required to ");
-        w.printf("authorise this debit from your account. If you can not comply please contact us.<br/><br/>");
-        w.printf("You can contacted us on %s<br/><br/>", quote.getBroker().getPaymentTelephoneNumber());
+        w.printf(  i18n("i18n_payment_details_confirm_message"), quote.getBroker().getPaymentTelephoneNumber());
         w.printf(" <table border='0'><tr>");
-        w.printf("   <td>Please tick this box to confirm that the details you have entered are correct <input name='confirm' type='checkbox'/></td>");
+        w.printf("   <td>"+i18n("i18n_payment_details_confirm_label")+"<input name='confirm' type='checkbox'/></td>");
         w.printf("   <td class='portlet-msg-error'>%s</td>", findError("confirm", quote.getPaymentDetails()));
-        w.printf(" </table>");
+        w.printf(" </tr></table>");
         w.printf(" </td>");
         w.printf("</tr>");
     }

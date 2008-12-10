@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.openquote.ui.util.Functions.hideNull;
 
 import java.io.IOException;
@@ -81,12 +82,12 @@ public class AssessmentSheetDetails extends PageElement {
         w.printf(    "<td>");
         w.printf(      "<table width='100%%' class='portlet-section-header'");
         w.printf(        "<tr width='100%%'>");
-        w.printf(          "<td>Assessment Sheet for quotation %s</td>", quote.getQuotationNumber());
+        w.printf(          "<td>"+i18n("i18n_assessment_sheet__details_title")+"</td>", quote.getQuotationNumber());
         w.printf(          "<td align='right'>");
         w.printf(            "<table>");
-        w.printf(              "<tr><td class='portlet-font'>Product</td><td class='portlet-font'>%s</td></tr>", quote.getProductName());
-        w.printf(              "<tr><td class='portlet-font'>Status</td><td class='portlet-font'>%s</td></tr>", quote.getStatusAsString());
-        w.printf(              "<tr><td class='portlet-font'>Total premium</td><td class='portlet-font'>%s</td></tr>", totalPremium(quote));
+        w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_product_title")+"</td><td class='portlet-font'>%s</td></tr>", quote.getProductName());
+        w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_status_title")+"</td><td class='portlet-font'>%s</td></tr>", quote.getStatusAsString());
+        w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_total_premium_title")+"</td><td class='portlet-font'>%s</td></tr>", totalPremium(quote));
         w.printf(            "</table>");
         w.printf(          "</td>");
         w.printf(        "</tr>");
@@ -100,14 +101,14 @@ public class AssessmentSheetDetails extends PageElement {
         w.printf(    "<td colspan='2'>");
         w.printf(      "<table width='100%%' style='border-collapse: collapse;'>");
 
-        renderAssessmentSheet(w, "Policy", quote.getAssessmentSheet());
+        renderAssessmentSheet(w, i18n("i18n_assessment_sheet_details_policy_title"), quote.getAssessmentSheet());
 
         w.printf(  "<tr>");
         w.printf(    "<td height='10'></td>");
         w.printf(  "</tr>");
 
         for(Section s: quote.getSection()) {
-            renderAssessmentSheet(w, "Section "+s.getSectionTypeId(), s.getAssessmentSheet());
+            renderAssessmentSheet(w, i18n("i18n_assessment_sheet_details_section_title")+" "+s.getSectionTypeId(), s.getAssessmentSheet());
         }
         
         w.printf(      "</table>");
@@ -118,7 +119,7 @@ public class AssessmentSheetDetails extends PageElement {
 
     private void renderAssessmentSheet(PrintWriter w, String title, AssessmentSheet sheet) {
         w.printf("<tr>");
-        w.printf(  "<td colspan='6' style='border: 1px solid gray;' class='portlet-section-selected'><b>%s level assessment lines</b></td>", title);
+        w.printf(  "<td colspan='6' style='border: 1px solid gray;' class='portlet-section-selected'><b>"+i18n("i18n_assessment_sheet_section_title")+"</b></td>", title);
         w.printf("</tr>");
 
         renderNotesLines(w, sheet);
@@ -133,12 +134,12 @@ public class AssessmentSheetDetails extends PageElement {
         w.printf(  "<td colspan='6' style='border: 1px solid gray;' colspan='6' height='5'></td>");
         w.printf("</tr>");
         w.printf("<tr>");
-        w.printf(  "<td style='border: 1px solid gray;' colspan='6' class='portlet-section-header'><b>Notes</b></td>");
+        w.printf(  "<td style='border: 1px solid gray;' colspan='6' class='portlet-section-header'><b>"+i18n("i18n_assessment_sheet_notes_title")+"</b></td>");
         w.printf("</tr>");
         w.printf("<tr>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Id</td>");
-        w.printf(  "<td style='border: 1px solid gray;' width='40%%' class='portlet-section-subheader'>Description</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Source</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_id_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' width='40%%' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_description_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_source_title")+"</td>");
         w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>&nbsp;</td>");
         w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>&nbsp;</td>");
         w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>&nbsp;</td>");
@@ -176,15 +177,15 @@ public class AssessmentSheetDetails extends PageElement {
         w.printf(  "<td colspan='6' style='border: 1px solid gray;' height='5'></td>");
         w.printf("</tr>");
         w.printf("<tr>");
-        w.printf(  "<td style='border: 1px solid gray;' colspan='6' class='portlet-section-header'><b>Calculations</b></td>");
+        w.printf(  "<td style='border: 1px solid gray;' colspan='6' class='portlet-section-header'><b>"+i18n("i18n_assessment_sheet_calculations_title")+"</b></td>");
         w.printf("</tr>");
         w.printf("<tr>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Id</td>");
-        w.printf(  "<td style='border: 1px solid gray;' width='40%%' class='portlet-section-subheader'>Description</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Source</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Type</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader' align='center'>Rate</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader' align='center'>Amount</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_id_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' width='40%%' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_description_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_source_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_type_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader' align='center'>"+i18n("i18n_assessment_sheet_rate_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader' align='center'>"+i18n("i18n_assessment_sheet_amount_title")+"</td>");
         w.printf("</tr>");
  
         ArrayList<CalculationLine> sortedLines=new ArrayList<CalculationLine>(sheet.getLinesOfType(CalculationLine.class).values());
@@ -232,13 +233,13 @@ public class AssessmentSheetDetails extends PageElement {
         w.printf(  "<td colspan='6' style='border: 1px solid gray;' height='5'></td>");
         w.printf("</tr>");
         w.printf("<tr>");
-        w.printf(  "<td style='border: 1px solid gray;' colspan='6' class='portlet-section-header'><b>Markers</b></td>");
+        w.printf(  "<td style='border: 1px solid gray;' colspan='6' class='portlet-section-header'><b>"+i18n("i18n_assessment_sheet_markers_title")+"</b></td>");
         w.printf("</tr>");
         w.printf("<tr>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Id</td>");
-        w.printf(  "<td style='border: 1px solid gray;' width='40%%' class='portlet-section-subheader'>Description</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Source</td>");
-        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>Type</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_id_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' width='40%%' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_description_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_source_title")+"</td>");
+        w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>"+i18n("i18n_assessment_sheet_type_title")+"</td>");
         w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>&nbsp;</td>");
         w.printf(  "<td style='border: 1px solid gray;' class='portlet-section-subheader'>&nbsp;</td>");
         w.printf("</tr>");
@@ -302,7 +303,7 @@ public class AssessmentSheetDetails extends PageElement {
         else if (line instanceof FixedSum) {
             FixedSum f=(FixedSum)line;
             return String.format("<table width='100%%' style='border-collapse: collapse;'>"+
-                                   "<tr><td class='portlet-font' rowspan='2'>FixedSum</td><td align='right' class='portlet-section-footer'>&nbsp;</td></tr>"+
+                                   "<tr><td class='portlet-font' rowspan='2'>"+i18n("i18n_assessment_sheet_fixedsum_title")+"</td><td align='right' class='portlet-section-footer'>&nbsp;</td></tr>"+
                                    "<tr><td align='right' class='portlet-section-footer'>%s</td></tr>"+
                                  "</table>", 
                                  hideNull(f.getContributesTo()));

@@ -22,6 +22,8 @@ import static com.ail.core.Functions.expand;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,6 +75,7 @@ import com.ail.openquote.ui.util.QuotationContext;
  */
 public class AttributeField extends PageElement {
     private static final long serialVersionUID = 7118438575837087257L;
+    private static final Pattern formattedCurrencyPattern=Pattern.compile("([^0-9,.']*)([0-9,.']*)([^0-9,.']*)");
 
     /** The fixed title to be displayed with the answer */
     private String title;
@@ -351,7 +354,26 @@ public class AttributeField extends PageElement {
 	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
 	            }
 	            else if (attr.isCurrencyType()) {
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='7' type='text' value='%s'/>%s", id, onChangeEvent, attr.getValue(), attr.getUnit());
+	            	String value, pre, post;
+
+	            	// If we can get the formatted value from the currency, this will give use all the locale specific symbols
+	            	// to place before or after the value. However, as Attributes are allowed to hold invalid values, we will 
+	            	// adopt the fall back position of of using the value as the fields content with nothing to the left of the
+	            	// field, and the currency's ISO on the right.
+	            	try {
+	            		Matcher m=formattedCurrencyPattern.matcher(attr.getFormattedValue());
+	            		m.matches();
+	            		pre=m.group(1);
+	            		value=m.group(2);
+	            		post=m.group(3);
+	            	}
+	            	catch(Throwable e) {
+		            	pre="";
+		            	value=attr.getValue();
+		            	post=attr.getUnit();
+	            	}
+	                
+	            	w.printf("%s<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='10' type='text' value='%s'/>%s", pre, id, onChangeEvent, value, post);
 	            }
 	            else if (attr.isChoiceMasterType()) {
 	                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";

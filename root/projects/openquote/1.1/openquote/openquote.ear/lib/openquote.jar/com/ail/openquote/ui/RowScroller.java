@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -67,10 +69,10 @@ public class RowScroller extends Repeater {
         w.printf(" <tr class='portlet-section-alternate'>");
         for(AttributeField a: item) {
             if (a.getExpandedSubTitle(model)!=null) {
-                w.printf("<td align='center'>%s<br/>%s</td>", a.getExpandedTitle(model), a.getExpandedSubTitle(model));
+                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s<br/>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)), i18n(a.getExpandedSubTitle(model)));
             }
             else {
-                w.printf("<td align='center'>%s</td>", a.getExpandedTitle(model));
+                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)));
             }
         }
 

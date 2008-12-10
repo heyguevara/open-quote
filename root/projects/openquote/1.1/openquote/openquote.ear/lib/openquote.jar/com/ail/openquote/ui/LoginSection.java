@@ -19,6 +19,7 @@ package com.ail.openquote.ui;
 import static com.ail.openquote.ui.util.Functions.addError;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -81,7 +82,7 @@ public class LoginSection extends PageContainer {
     private String invitationLinkText;
 
     /** Login button's label text. Defaults to "Login" */
-    private String loginButtonLabel="Login";
+    private String loginButtonLabel="i18n_login_section_login_button_label";
     
     /** Page to forward to once authentication has succeeded. */
     private String forwardToPageName=null;
@@ -185,25 +186,25 @@ public class LoginSection extends PageContainer {
             String pc=request.getParameter("cpassword");
             
             if (u==null || u.length()==0) {
-                addError("username", "required", model);
+                addError("username", i18n("i18n_required_error"), model);
                 error=true;
             }
             else if (!u.equals(uc)) {
-                addError("cusername", "usernames do not match", model);
+                addError("cusername", i18n("i18n_login_section_username_missmatch_error"), model);
                 error=true;
             }
 
             if (p==null || p.length()==0) {
-                addError("password", "required", model);
+                addError("password", i18n("i18n_required_error"), model);
                 error=true;
             }
             else if (!p.equals(pc)) {
-                addError("cpassword", "passwords do not match", model);
+                addError("cpassword", i18n("i18n_login_section_password_missmatch_error"), model);
                 error=true;
             }
             else {
                 if (isAnExistingUser(u, request)) {
-                    addError("username", "username already taken", model);
+                    addError("username", i18n("i18n_login_section_username_taken_error"), model);
                     error=true;                    
                 }
             }
@@ -223,16 +224,16 @@ public class LoginSection extends PageContainer {
             String p=request.getParameter("password");
             
             if (u==null || u.length()==0) {
-            	addError("username", "required", model);
+            	addError("username", i18n("i18n_required_error"), model);
                 error=true;
             }
             else if (!isAnExistingUser(u, request)) {
-                addError("username", "username not recognized", model);
+                addError("username", i18n("i18n_login_section_unknown_username_error"), model);
                 error=true;                    
             }
 
             if (p==null || p.length()==0) {
-                addError("password", "required", model);
+                addError("password", i18n("i18n_required_error"), model);
                 error=true;
             }            
 
@@ -284,7 +285,7 @@ public class LoginSection extends PageContainer {
 
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
                 String portalName=Functions.getOperationParameters(request).getProperty("portal");
-                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?op=Save&action=1&username="+quote.getUsername()+"&password="+password);
+                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?op=save&action=1&username="+quote.getUsername()+"&password="+password);
             }
             catch (Exception e) {
                 // TODO Send a support email
@@ -307,7 +308,7 @@ public class LoginSection extends PageContainer {
             try {
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
                 String portalName=Functions.getOperationParameters(request).getProperty("portal");
-                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?op=Save&action=1&username="+username+"&password="+password);
+                response.sendRedirect("/portal/auth/portal/"+portalName+"/"+pageName+"/QuoteWindow?op=save&action=1&username="+username+"&password="+password);
             }
             catch (Exception e) {
                 // TODO Send a support email
@@ -346,17 +347,17 @@ public class LoginSection extends PageContainer {
         w.printf(    "<form method='post' action='%s' name='loginform' id='loginForm'>", response.createActionURL());
         w.printf(     "<table>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>Email address:</td>");
+        w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>", isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
         w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td valign='center'>Password:</td>");
+        w.printf(       "<td valign='center'>"+i18n("i18n_login_section_password_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
         w.printf(       "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a></td>");
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", loginButtonLabel, getForwardToPageName(), nameOfForwardToPortal(response));
+        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", i18n(loginButtonLabel), getForwardToPageName(), nameOfForwardToPortal(response));
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");
@@ -368,27 +369,27 @@ public class LoginSection extends PageContainer {
         w.printf(    "<form method='post' action='%s'>", response.createActionURL());
         w.printf(     "<table>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>Email address:</td>");
+        w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>",  !isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
         w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>Confirm email address:</td>");
+        w.printf(       "<td>"+i18n("i18n_login_section_confirm_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='cusername' id='cusername' value=''/></td>");
         w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cusername", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td valign='center'>Password:</td>");
+        w.printf(       "<td valign='center'>"+i18n("i18n_login_section_password_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
         w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("password", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td valign='center'>Confirm password:</td>");
+        w.printf(       "<td valign='center'>"+i18n("i18n_login_section_confirm_password_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='cpassword' id='cpassword' value=''/></td>");
         w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cpassword", model));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='Create & Save'/></td>", getForwardToPageName(), nameOfForwardToPortal(response));
+        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='"+i18n("i18n_login_section_create_and_save_button_label")+"'/></td>", getForwardToPageName(), nameOfForwardToPortal(response));
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");
@@ -396,15 +397,15 @@ public class LoginSection extends PageContainer {
 
         // Div #3: Send a password reminder
         w.printf(   "<div class='portlet-font' id='Forgotten Password'>");
-        w.printf(    "Enter your email address below and your password will be emailed to you.");
+        w.printf(    i18n("i18n_login_section_email_password_message"));
         w.printf(    "<form method='post'>");
         w.printf(     "<table>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>Email address:</td>");
+        w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>",  isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='2'><input type='submit' id='email' class='portlet-form-input-field' name='op=Reminder' value='Send Reminder'/></td>");
+        w.printf(       "<td colspan='2'><input type='submit' id='email' class='portlet-form-input-field' name='op=Reminder' value='"+i18n("i18n_login_section_send_reminder_button_label")+"'/></td>");
         w.printf(      "</tr>");
         w.printf(     "</table>");
         w.printf(    "</form>");

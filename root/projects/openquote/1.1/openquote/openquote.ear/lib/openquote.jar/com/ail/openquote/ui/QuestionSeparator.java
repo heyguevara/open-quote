@@ -18,6 +18,7 @@ package com.ail.openquote.ui;
 
 import static com.ail.openquote.ui.util.Functions.findErrors;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarkers;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -91,7 +92,7 @@ public class QuestionSeparator extends Question {
         }
         else {
             w.printf("<td colspan='4'><table width='100%%''>"); 
-            w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(title)); 
+            w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(i18n(title))); 
             if (getBinding()!=null && hasErrorMarkers(model.xpathGet(getBinding(), Type.class))) {
             	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(getBinding(), Type.class)));
             }

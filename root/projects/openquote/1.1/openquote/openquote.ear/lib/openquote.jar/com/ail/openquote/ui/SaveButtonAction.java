@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -29,6 +30,7 @@ import com.ail.core.Type;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Adds a save button to a page. By default this button saves the quote and returns
@@ -44,20 +46,22 @@ public class SaveButtonAction extends CommandButtonAction {
     private static final long serialVersionUID = 7575333161831400599L;
     
     public SaveButtonAction() {
-        setLabel("Save");
+        setLabel("i18n_save_button_label");
     }
     
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
-        if (op!=null && op.equals(getLabel())) {
+        if ("save".equals(op)) {
             Quotation quote=(Quotation)model;
             quote.setUserSaved(true);
             quote.setUsername(request.getRemoteUser());
             SavedQuotation sq=new SavedQuotation(quote);
-            new CoreProxy().update(sq);
+            sq=new CoreProxy().update(sq);
+            quote.setSystemId(sq.getSystemId());
+            quote.setSerialVersion(sq.getSerialVersion());
             model=super.processActions(request, response, quote);
-            request.getPortletSession().invalidate();
+            QuotationContext.setQuotation(null);
         }
         
         return model;
@@ -68,10 +72,10 @@ public class SaveButtonAction extends CommandButtonAction {
         PrintWriter w=response.getWriter();
 
         if (request.getRemoteUser()!=null) {
-            w.printf("<input type='submit' name='op=%1$s' value='%1$s' class='portlet-form-input-field'/>", getLabel());
+            w.printf("<input type='submit' name='op=save' value='%s' class='portlet-form-input-field'/>", i18n(getLabel()));
         }
         else {
-            w.printf("<input type='button' onClick='%s' name='op=%2$s' value='%2$s' class='portlet-form-input-field'/>", LoginSection.reset, getLabel());
+            w.printf("<input type='button' onClick='%s' name='op=save' value='%s' class='portlet-form-input-field'/>", LoginSection.reset, i18n(getLabel()));
         }
         
         return model;

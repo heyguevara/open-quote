@@ -18,6 +18,7 @@ package com.ail.openquote.ui;
 
 import static com.ail.openquote.ui.util.Functions.addError;
 import static com.ail.openquote.ui.util.Functions.findError;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -80,7 +81,7 @@ public class PaymentOptionSelector extends PageElement {
 	    Functions.removeErrorMarkers(quote);
         
         if (quote.getPaymentDetails()==null) {
-            addError("paymentDetails", "please select", model);
+            addError("paymentDetails", i18n("i18n_payment_option_select_error"), model);
             return true;
         }
 
@@ -94,7 +95,7 @@ public class PaymentOptionSelector extends PageElement {
 
         w.printf("<table cellpadding='4' width='100%%' col='2'>");
         w.printf("   <tr class='portlet-font'>");
-        w.printf("       <td class='portlet-section-alternate' colspan='2'>Please select how you wish to pay and press next.</td>");
+        w.printf("       <td class='portlet-section-alternate' colspan='2'>"+i18n("i18n_payment_option_selector_title")+"</td>");
         w.printf("   </tr>");       
 
         // output the error if there is one

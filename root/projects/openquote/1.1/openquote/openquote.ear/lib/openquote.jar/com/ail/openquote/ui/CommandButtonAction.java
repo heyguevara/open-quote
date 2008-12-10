@@ -27,6 +27,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Type;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 /**
  * <p>This page element renders itself as a button, typically within a {@link NavigationSection}. When clicked the
@@ -140,7 +141,7 @@ public class CommandButtonAction extends PageElement {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         model=super.renderResponse(request, response, model);
         PrintWriter w=response.getWriter();
-        w.printf("<input type='submit' name='op=%1$s:immediate=%2$b' value='%1$s' class='portlet-form-input-field'/>", label, immediate);
+        w.printf("<input type='submit' name='op=%s:immediate=%b' value='%s' class='portlet-form-input-field'/>", label, immediate, i18n(label));
         return model;
     }
 }

@@ -19,12 +19,12 @@
             <attributeField title="Year" subTitle="(yyyy)" binding="attribute[id='year']"/>
             <attributeField title="Registration no" binding="attribute[id='registration']"/>
             <attributeField title="Date bought" subTitle="(dd/mm/yyyy)" binding="attribute[id='datebought']"/>
-            <attributeField title="Price when new" subTitle="(GBP)" binding="attribute[id='cost']"/>
-            <attributeField title="Value now" subTitle="(GBP)" binding="attribute[id='value']"/> 
+            <attributeField title="Price when new" binding="attribute[id='cost']"/>
+            <attributeField title="Value now" binding="attribute[id='value']"/> 
         </rowScroller>                    
         <navigationSection>
-            <commandButtonAction label="Previous" destinationPageId="Proposer" immediate="true"/>
-            <commandButtonAction label="Next" destinationPageId="Vehicle Details"/>
+            <commandButtonAction label="i18n_previous_button_label" destinationPageId="Proposer" immediate="true"/>
+            <commandButtonAction label="i18n_next_button_label" destinationPageId="Vehicle Details"/>
         </navigationSection>
     </questionPage>
     
@@ -47,8 +47,8 @@
                 detailsBinding="attribute[id='garageofsolidconstruction']" />
         </sectionScroller>
         <navigationSection>
-            <commandButtonAction label="Previous" destinationPageId="Vehicles" immediate="true"/>
-            <commandButtonAction label="Next" destinationPageId="Drivers"/>
+            <commandButtonAction label="i18n_previous_button_label" destinationPageId="Vehicles" immediate="true"/>
+            <commandButtonAction label="i18n_next_button_label" destinationPageId="Drivers"/>
         </navigationSection>
     </questionPage>
     
@@ -63,8 +63,8 @@
             <attributeField title="Years license held" binding="attribute[id='yearsLicenseHeld']"/>
         </rowScroller>
         <navigationSection>
-            <commandButtonAction label="Previous" destinationPageId="Vehicle Details" immediate="true"/>
-            <commandButtonAction label="Next" destinationPageId="History"/> 
+            <commandButtonAction label="i18n_previous_button_label" destinationPageId="Vehicle Details" immediate="true"/>
+            <commandButtonAction label="i18n_next_button_label" destinationPageId="History"/> 
         </navigationSection>
     </questionPage>
     
@@ -119,8 +119,8 @@
                 detailsBinding="/asset[id='driversHistory']/attribute[id='yearsOfNoClaimsBonus']"/>
         </questionSection>
         <navigationSection>
-            <commandButtonAction label="Previous" destinationPageId="Drivers" immediate="true"/>
-            <commandButtonAction label="Next" destinationPageId="Referral">
+            <commandButtonAction label="i18n_previous_button_label" destinationPageId="Drivers" immediate="true"/>
+            <commandButtonAction label="i18n_next_button_label" destinationPageId="Referral">
                 <action when="onProcessActions" commandName="PremiumCalculation" xsi:type="action"/>
                 <pageForwardAction when="onProcessActions" condition="m:test(status[.='QUOTATION'])" destinationPageId="Quotation"/>
             </commandButtonAction>

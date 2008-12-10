@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
 import java.io.IOException;
@@ -119,7 +120,7 @@ public class QuestionWithSubSection extends Question {
 
         String onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+id+"\")";
         
-        w.printf("<td>%s</td>", aTitle);
+        w.printf("<td>%s</td>", i18n(aTitle));
         w.printf("<td colspan='3'>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
         w.printf("</tr>");
         w.printf("<tr><td colspan='4'>");

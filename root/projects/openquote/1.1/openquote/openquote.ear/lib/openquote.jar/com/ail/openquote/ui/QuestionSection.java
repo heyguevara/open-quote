@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
 
 import java.io.IOException;
@@ -153,7 +154,7 @@ public class QuestionSection extends PageElement {
 
         // output the title row if a title was defined
         if (title!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>%s</td></tr>", title);
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>%s</td></tr>", i18n(title));
         }
 
         Iterator<? extends Question> it=question.iterator();

@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -47,7 +49,7 @@ public class InformationPage extends Page {
         w.printf(" <table width='100%%' border='0' cols='1'>");
 
         if (getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-header'><td>%s</td></tr>", getTitle());
+            w.printf("  <tr class='portlet-section-header'><td>%s</td></tr>", i18n(getTitle()));
         }
 
         for (PageElement e : super.getPageElement()) {

@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -69,10 +70,10 @@ public class SavedQuotations extends PageElement {
     private String confirmAndPayDestinationPageId;
 
     /** Label to appear on the confirm button. Defaults to "Confirm and Pay" */
-    private String confirmAndPayLabel="Confirm and Pay";
+    private String confirmAndPayLabel="i18n_saved_quotations_confirm_button_label";
     
     /** Label to appear on the requote button. Defaults to "Requote" */
-    private String requoteLabel="Requote";
+    private String requoteLabel="i18n_saved_quotations_requote_button_label";
     
     /** Button to handle the "view quote" action.  */
     private ViewQuotationButtonAction viewQuotationButtonAction=new ViewQuotationButtonAction();
@@ -210,13 +211,13 @@ public class SavedQuotations extends PageElement {
             // If the user has saved quotes...
             if (quotes.size()!=0) {
                 w.printf("<table width='100%%' border='0' cols='5'>");
-                w.printf(  "<tr><td cols='5'>You have the following saved %s:</td></tr>", quotes.size()==1 ? "quote" : "quotes");
+                w.printf(  "<tr><td cols='5'>"+i18n("i18n_saved_quotations_title")+"</td></tr>", quotes.size()==1 ? "quote" : "quotes");
                 w.printf(  "<tr><td height='10' cols='5'/></tr>");
                 w.printf(  "<tr class='portlet-font'>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>Quotation Number</td>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>Quotation Date</td>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>Expiry Date</td>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>Premium</td>");
+                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_number_heading")+"</td>");
+                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_date_heading")+"</td>");
+                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_expiry_date_heading")+"</td>");
+                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_premium_heading")+"</td>");
                 w.printf(    "<td class='portlet-section-alternate'>&nbsp</td>");
                 w.printf(  "</tr>");
         
@@ -228,8 +229,8 @@ public class SavedQuotations extends PageElement {
                     w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
                     w.printf(  "<td align='center' class='portal-form-label'>£%s</td>", savedQuote.getPremium().getAmountAsString());
                     w.printf(  "<td align='left'>");
-                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), confirmAndPayLabel);
-                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), requoteLabel);
+                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(confirmAndPayLabel));
+                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(requoteLabel));
                     viewQuotationButtonAction.renderResponse(request, response, savedQuote);
                     w.printf(  "</td>");
                     w.printf("</tr>");
@@ -252,7 +253,7 @@ public class SavedQuotations extends PageElement {
             
             w.printf("<table width='100%%' cols='3'>");
             w.printf( "<tr>");
-            w.printf(  "<td colspan='3' class='portlet-font'>Please <a onclick='showDivDisplay(\"Proposer Login\")'>login here</a> if you have previously saved quotes that you would like to view.</td>");
+            w.printf(  "<td colspan='3' class='portlet-font'>"+i18n("i18n_saved_quotations_login_message")+"</td>");
             w.printf( "</tr>");
             w.printf( "<tr><td height='15'/></tr>");
             w.printf( "<tr>");
@@ -262,14 +263,14 @@ public class SavedQuotations extends PageElement {
             w.printf(   "<form method='post' action='%s' name='loginform' id='loginForm'>", response.createActionURL());
             w.printf(    "<table>");
             w.printf(     "<tr class='portlet-font'>");
-            w.printf(      "<td>Email address:</td>");
+            w.printf(      "<td>"+i18n("i18n_saved_quotations_username_label")+"</td>");
             w.printf(      "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value=''/></td>");
             w.printf(      "<td>&nbsp;</td>");
             w.printf(     "</tr>");
             w.printf(     "<tr class='portlet-font'>");
-            w.printf(      "<td valign='center'>Password:</td>");
+            w.printf(      "<td valign='center'>"+i18n("i18n_saved_quotations_password_label")+"</td>");
             w.printf(      "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
-            w.printf(      "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a></td>");
+            w.printf(      "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>"+i18n("i18n_saved_quotations_forgotten_password_message")+"</a></td>");
             w.printf(     "</tr>");
             w.printf(     "<tr class='portlet-font'>");
             w.printf(      "<td align='center' colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=login:portal=%s:page=%s' value='Login'/></td>", portalName, pageName);

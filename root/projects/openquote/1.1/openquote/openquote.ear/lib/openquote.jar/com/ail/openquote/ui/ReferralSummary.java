@@ -164,7 +164,7 @@ public class ReferralSummary extends PageContainer {
             }
         
             RequoteButtonAction requote=new RequoteButtonAction();
-            requote.setLabel("Requote");
+            requote.setLabel("i18n_requote_button_label");
             requote.setDestinationPageId(requoteDestinationPageId);
             navigationSection.getPageElement().add(requote);
 

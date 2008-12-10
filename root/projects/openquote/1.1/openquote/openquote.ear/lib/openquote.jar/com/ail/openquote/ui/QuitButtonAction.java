@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -42,16 +44,15 @@ public class QuitButtonAction extends CommandButtonAction {
     private static final long serialVersionUID = 7575333161831400599L;
     
     public QuitButtonAction() {
-        setLabel("Quit");
+        setLabel("i18n_quit_button_label");
     }
     
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
-        if (op!=null && op.equals(getLabel())) {
+        if (op!=null && "quit".equals(op)) {
             model=super.processActions(request, response, model);
             QuotationContext.setQuotation(null);
-//            request.getPortletSession().invalidate();
         }
         
         return model;
@@ -60,7 +61,7 @@ public class QuitButtonAction extends CommandButtonAction {
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-        w.printf("<input type='submit' name='op=%1$s:immediate=true' value='%1$s' class='portlet-form-input-field'/>", getLabel());
+        w.printf("<input type='submit' name='op=quit:immediate=true' value='%1$s' class='portlet-form-input-field'/>", i18n(getLabel()));
         return model;
     }
 }

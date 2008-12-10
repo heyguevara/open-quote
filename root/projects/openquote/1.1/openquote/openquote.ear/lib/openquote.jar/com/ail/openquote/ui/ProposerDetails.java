@@ -20,6 +20,7 @@ import static com.ail.openquote.ui.util.Functions.addError;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.hideNull;
 import static com.ail.openquote.ui.util.Functions.isEmpty;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -106,76 +107,76 @@ public class ProposerDetails extends PageElement {
         
         // Check the proposer for errors.
         if (Title.UNDEFINED.equals(proposer.getTitle())) {
-            addError("title", "required", proposer.getInstance());
+            addError("title", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (Title.OTHER.equals(proposer.getTitle()) && isEmpty(proposer.getOtherTitle())) {
-            addError("otherTitle", "required", proposer.getInstance());
+            addError("otherTitle", i18n("i18n_required_error"), proposer.getInstance());
         }
 
         if (isEmpty(proposer.getFirstName())) {
-        	addError("firstName", "required", proposer.getInstance());
+        	addError("firstName", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getFirstName()).find()) {
-        	addError("firstName", "invalid", proposer.getInstance());
+        	addError("firstName", i18n("i18n_invalid_error"), proposer.getInstance());
         }
         
         if (isEmpty(proposer.getSurname())) {
-        	addError("surname", "required", proposer.getInstance());
+        	addError("surname", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getSurname()).find()) {
-        	addError("surname", "invalid", proposer.getInstance());
+        	addError("surname", i18n("i18n_invalid_error"), proposer.getInstance());
         }
         
         if (isEmpty(proposer.getAddress().getLine1())) {
-        	addError("address1", "required", proposer.getInstance());
+        	addError("address1", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getAddress().getLine1()).find()) {
-        	addError("address1", "invalid", proposer.getInstance());
+        	addError("address1", i18n("i18n_invalid_error"), proposer.getInstance());
         }
         
         if (isEmpty(proposer.getAddress().getLine2())) {
-        	addError("address2", "required", proposer.getInstance());
+        	addError("address2", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!namePattern.matcher(proposer.getAddress().getLine2()).find()) {
-        	addError("address2", "invalid", proposer.getInstance());
+        	addError("address2", i18n("i18n_invalid_error"), proposer.getInstance());
         }
 
         if (!isEmpty(proposer.getAddress().getLine3()) && !namePattern.matcher(proposer.getAddress().getLine3()).find()) {
-        	addError("address3", "invalid", proposer.getInstance());
+        	addError("address3", i18n("i18n_invalid_error"), proposer.getInstance());
         }
 
         if (!isEmpty(proposer.getAddress().getLine4()) && !namePattern.matcher(proposer.getAddress().getLine4()).find()) {
-        	addError("address4", "invalid", proposer.getInstance());
+        	addError("address4", i18n("i18n_invalid_error"), proposer.getInstance());
         }
 
         if (isEmpty(proposer.getAddress().getPostcode())) {
-        	addError("postcode", "required", proposer.getInstance());
+        	addError("postcode", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!postcodePattern.matcher(proposer.getAddress().getPostcode()).find()) {
-        	addError("postcode", "invalid", proposer.getInstance());
+        	addError("postcode", i18n("i18n_invalid_error"), proposer.getInstance());
         }
 
         if (isEmpty(proposer.getTelephoneNumber())) {
-        	addError("phone", "required", proposer.getInstance());
+        	addError("phone", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!phonePattern.matcher(proposer.getTelephoneNumber()).find()) {
-        	addError("phone", "invalid", proposer.getInstance());
+        	addError("phone", i18n("i18n_invalid_error"), proposer.getInstance());
         }
 
         if (isEmpty(proposer.getEmailAddress())) {
-        	addError("email", "required", proposer.getInstance());
+        	addError("email", i18n("i18n_required_error"), proposer.getInstance());
         }
         else if (!emailPattern.matcher(proposer.getEmailAddress()).find()) {
-        	addError("email", "invalid", proposer.getInstance());
+        	addError("email", i18n("i18n_invalid_error"), proposer.getInstance());
         }
         
         if (proposer instanceof CommercialProposer) {
         	String companyName=((CommercialProposer)proposer).getCompanyName();
         	if (isEmpty(companyName)) {
-        		addError("companyName", "required", proposer.getInstance());
+        		addError("companyName", i18n("i18n_required_error"), proposer.getInstance());
         	}
             else if (!namePattern.matcher(companyName).find()) {
-            	addError("companyName", "invalid", proposer.getInstance());
+            	addError("companyName", i18n("i18n_invalid_error"), proposer.getInstance());
             }
         }
         return Functions.hasErrorMarkers(proposer.getInstance());
@@ -191,7 +192,7 @@ public class ProposerDetails extends PageElement {
         
         if (proposer instanceof PersonalProposer) {
             w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>Title:</td>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
             w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'>");
 	        w.printf(    "<tr>");
@@ -202,7 +203,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf(    "</tr>");
 	        w.printf(   "</table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>Other:</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -214,7 +215,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf( "</tr>");
 
 	        w.printf( "<tr class='portlet-font'>");
-	        w.printf(  "<td class='portal-form-label'>First name:</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -223,7 +224,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>Surname:</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -236,7 +237,7 @@ public class ProposerDetails extends PageElement {
         }
         else if (proposer instanceof CommercialProposer) {
             w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>Company name:</td>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_company_label")+"</td>");
             w.printf(  "<td colspan='4'>");
             w.printf(   "<table border='0'><tr>");
             w.printf(    "<td>");
@@ -251,7 +252,7 @@ public class ProposerDetails extends PageElement {
         w.printf( "<tr><td height='15'></td></tr>");
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>Address:</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_address_label")+"</td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -320,7 +321,7 @@ public class ProposerDetails extends PageElement {
             w.printf( "<tr><td height='15'></td></tr>");
             w.printf( "<tr><td class='portlet-section-subheader' colspan='4'>Contact details</td></tr>");
             w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>Title:</td>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
             w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'>");
 	        w.printf(    "<tr>");
@@ -331,7 +332,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf(    "</tr>");
 	        w.printf(   "</table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>Other:</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -343,7 +344,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf( "</tr>");
 
 	        w.printf( "<tr class='portlet-font'>");
-	        w.printf(  "<td class='portal-form-label'>First name:</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -352,7 +353,7 @@ public class ProposerDetails extends PageElement {
 	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>Surname:</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -365,7 +366,7 @@ public class ProposerDetails extends PageElement {
         }
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>Telephone number:</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_telephone_label")+"</td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -378,7 +379,7 @@ public class ProposerDetails extends PageElement {
         w.printf( "</tr>");
 
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>Email address:</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_email_label")+"</td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
