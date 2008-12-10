@@ -353,6 +353,14 @@ public class SandpitPortlet extends GenericPortlet {
             StringBuffer ret=new StringBuffer("<option>?</option>");
             
             for(ProductDetails p: lpods.getProductsRet()) {
+            	// It is admittedly naff to had-code a product name here, but at the moment the product
+            	// catalog doesn't have sufficient structure to indicate whether a product is "abstract" - 
+            	// i.e. it cannot be quoted from but is instead a base which other products extend.
+            	// TODO Remove this when the catalog has more meta data
+            	if ("AIL.Base".equals(p.getName())) {
+            		continue;
+            	}
+            	
                 if (p.getName().equals(product)) {
                     ret.append("<option selected='yes'>"+p.getName()+"</option>");
                 }
