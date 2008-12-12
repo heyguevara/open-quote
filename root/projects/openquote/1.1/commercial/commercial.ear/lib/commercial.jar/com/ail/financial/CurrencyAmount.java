@@ -17,20 +17,17 @@
 
 package com.ail.financial;
 
+import com.ail.core.Locale;
 import com.ail.core.Type;
 import com.ail.util.Rate;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Instances of this class represent amounts of money.
  * todo This currently assumes a BigDecimal scale of 2 for all currencies.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/03/20 22:46:08 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/financial/CurrencyAmount.java,v $
- * @stereotype type
  */
 public class CurrencyAmount extends Type {
     static final long serialVersionUID = -7610940646036255844L;
@@ -41,7 +38,7 @@ public class CurrencyAmount extends Type {
     /**
      * Default constructor. This constructor is provided to use by frameworks
      * (like castor) that demand a default constructor. Its use from code is
-     * discounraged as it creates an instance that is unusable until the
+     * discouraged as it creates an instance that is unusable until the
      * setters for amount and currency have been invoked.
      */
     public CurrencyAmount() {
@@ -251,6 +248,17 @@ public class CurrencyAmount extends Type {
      */
     public String toString() {
         return getAmountAsString()+" "+currency;
+    }
+    
+    /**
+     * Get the value as a string in the format best suited for the current thread's locale.
+     * The actual currency symbol used and the number format depend on the locale.
+     * @return Formatted string
+     */
+    public String toFormattedString() {
+        NumberFormat fmt=NumberFormat.getCurrencyInstance(Locale.getThreadLocale());
+        fmt.setCurrency(java.util.Currency.getInstance(getCurrencyAsString()));
+        return fmt.format(amount);
     }
 
     /**

@@ -18,6 +18,7 @@
 package com.ail.commercialtest;
 
 import com.ail.util.Rate;
+import com.ail.core.Locale;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.Currency;
 import junit.framework.Test;
@@ -108,11 +109,11 @@ public class TestCurrencyAmount extends TestCase {
      * test2 to 101USD.</li>
      * <li>Fail if test2.greaterThan(test1) returns false.</li>
      * <li>Fail if test1.greaterThan(test2) returns true.</li>
-     * <li>Repeate the previous tests using the overloaded amount, currency method.</li>
+     * <li>Repeat the previous tests using the overloaded amount, currency method.</li>
      * <li>Create another CurrencyAmount (test3) for 101GBP.</li>
      * <li>Fail if test1.greaterThan(test3) does anything other than throwing an IllegalArgumentException.</li>
      * <li>Fail if test3.greaterThan(test1) does anything other than throwing an IllegalArgumentException.</li>
-     * <li>Repeate the previous test using the overloaded amount, currency method.</li>
+     * <li>Repeat the previous test using the overloaded amount, currency method.</li>
      * </ol>
      */
     public void testGreaterThan() {
@@ -203,4 +204,21 @@ public class TestCurrencyAmount extends TestCase {
         }
     }
 
+    /**
+     * Currency provides a method to format it's value into a String in a format
+     * appropriate to the current Locale (as defined by the {@link com.ail.core.Locale}).
+     */
+    public void testFormatting() {
+        CurrencyAmount test;
+
+        Locale.setThreadLocale(java.util.Locale.UK);
+        test=new CurrencyAmount(100000, Currency.GBP);
+        assertEquals("£100,000.00", test.toFormattedString());
+
+        Locale.setThreadLocale(java.util.Locale.US);
+        assertEquals("GBP100,000.00", test.toFormattedString());
+
+        Locale.setThreadLocale(java.util.Locale.GERMANY);
+        assertEquals("100.000,00 GBP", test.toFormattedString());
+    }
 }
