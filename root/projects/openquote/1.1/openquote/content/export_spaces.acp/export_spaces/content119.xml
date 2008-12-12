@@ -31,9 +31,9 @@
         <attribute id="agentName" value="" format="string"/>
         <attribute id="applicationFormDate" value="" format="date,pattern=dd/MM/yyyy"/>
         <attribute id="financialServices" value="?" format="yesorno"/>
-        <attribute id="mortgageWork" value="" format="number,percent"/> 
-        <attribute id="feesEstimated" value="" format="currency" unit="EUR"/> 
-        <attribute id="limitOfIndemnity" value="?" format="choice,options=-1#?|1#1,500,000 EUR|2#2,600,000 EUR"/>
+        <attribute id="mortgageWork" value="0" format="number,percent"/> 
+        <attribute id="feesEstimated" value="0.00" format="currency" unit="EUR"/> 
+        <attribute id="limitOfIndemnity" value="?" format="choice,options=-1#?|1#&#8364;1,500,000.00|2#&#8364;2,600,000.00"/>
         <attribute id="limitOfIndemnityWording" value="?" format="choice,options=-1#?|1#any one claim|2#in the aggregate"/>
         <attribute id="retroactiveDateApplied" value="?" format="choice,options=-1#?|1#None - Unlimited|2#Yes"/>
         <attribute id="retroactiveDate" value="" format="date,pattern=dd/MM/yyyy"/>

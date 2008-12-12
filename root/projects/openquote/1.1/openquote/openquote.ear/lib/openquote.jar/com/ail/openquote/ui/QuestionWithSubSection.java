@@ -114,11 +114,20 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String aTitle = getExpandedTitle(model);
+    	String onChange=null;
+    	String aTitle = getExpandedTitle(model);
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
 
-        String onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+id+"\")";
+        if ("radio".equals(getRenderHint())) {
+        	onChange="showHideDivDisplay(this.checked && this.value==\"Yes\", this.checked && this.value==\"No\", \""+id+"\")";
+        }
+        else if ("checkbox".equals(getRenderHint())) {
+        	onChange="showHideDivDisplay(this.checked, !this.checked, \""+id+"\")";
+        }
+        else {
+        	onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+id+"\")";
+        }
         
         w.printf("<td>%s</td>", i18n(aTitle));
         w.printf("<td colspan='3'>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
@@ -132,12 +141,28 @@ public class QuestionWithSubSection extends Question {
         w.printf("</td>");
 
         // Disable the 'detail' area unless the question's answer is 'Yes'
-        w.printf("<script type='text/javascript'>"+
+        if ("radio".equals(getRenderHint())) {
+            w.printf("<script type='text/javascript'>"+
+                    "radio=findElementsByName(\"%1$s\")[1];" +
+                    "showHideDivDisplay(radio.checked, !radio.checked, \"%2$s\");"+
+                    "</script>", questionId, id);
+        }
+        else if ("checkbox".equals(getRenderHint())) {
+            w.printf("<script type='text/javascript'>"+
+                    "cbox=findElementsByName(\"%1$s\")[0];" +
+                    "showHideDivDisplay(" +
+                      "cbox.checked,"+
+                      "!cbox.checked, "+
+                      "\"%2$s\")</script>", questionId, id);
+        }
+        else {
+            w.printf("<script type='text/javascript'>"+
                     "opt=findElementsByName(\"%1$s\")[0];" +
                     "showHideDivDisplay(" +
                       "opt.options[opt.selectedIndex].text==\"Yes\", "+
                       "opt.options[opt.selectedIndex].text==\"No\", "+
                       "\"%2$s\")</script>", questionId, id);
+        }
 
         return model;
     }

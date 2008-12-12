@@ -14,18 +14,18 @@
     <questionPage id="CompanyDetails" title="About The Proposer's Company">
         <questionSection binding="/asset[id='company']">
             <questionSeparator title="About the business (please answer 'Yes' to as many as are applicable)" binding="./attribute[id='business']"/>
-            <question title="General insurance broker" binding="./attribute[id='business']/attribute[id='generalInsuranceBroker']"/>
-            <question title="Life and pension" binding="./attribute[id='business']/attribute[id='lifeAndPensions']"/>
-            <question title="Mortgage company" binding="./attribute[id='business']/attribute[id='mortgageCompany']"/>
-            <question title="Financal Adviser" binding="./attribute[id='business']/attribute[id='financialAdvisor']"/>
-            <questionWithSubSection title="Other" binding="./attribute[id='business']/attribute[id='other']">
+            <question title="General insurance broker" binding="./attribute[id='business']/attribute[id='generalInsuranceBroker']" renderHint="radio"/>
+            <question title="Life and pension" binding="./attribute[id='business']/attribute[id='lifeAndPensions']" renderHint="radio"/>
+            <question title="Mortgage company" binding="./attribute[id='business']/attribute[id='mortgageCompany']" renderHint="radio"/>
+            <question title="Financal Adviser" binding="./attribute[id='business']/attribute[id='financialAdvisor']" renderHint="radio"/>
+            <questionWithSubSection title="Other" binding="./attribute[id='business']/attribute[id='other']" renderHint="radio">
                 <pageSection>
                   <question title="Please enter details" binding="./attribute[id='business']/attribute[id='otherDescription']"/>
                 </pageSection>
             </questionWithSubSection>
 
             <questionSeparator title="Details about the business"/>
-            <question title="Does the proposer offer Financial Services?" binding="./attribute[id='financialServices']"/>
+            <question title="Does the proposer offer Financial Services?" binding="./attribute[id='financialServices']" renderHint="radio"/>
             <question title="What percentage of the proposer's business is Mortgage related?" binding="./attribute[id='mortgageWork']"/>
             <question title="What are the proposer's estimated fees this year?" binding="./attribute[id='feesEstimated']"/>
 
@@ -37,8 +37,8 @@
 
             <questionSeparator title="About this quotation"/>
             <question title="Please enter the date of application:" binding="/attribute[id='applicationFormDate']"/>
-            <question title="Is this a quotation for the renewal of an existing policy?" binding="./attribute[id='renewalQuotation']"/>
-            <question title="Is this a mid term adjustment quotation?" binding="./attribute[id='mtaQuotation']"/>
+            <question title="Is this a quotation for the renewal of an existing policy?" binding="./attribute[id='renewalQuotation']" renderHint="radio"/>
+            <question title="Is this a mid term adjustment quotation?" binding="./attribute[id='mtaQuotation']" renderHint="radio"/>
         </questionSection>
 
         <navigationSection>
@@ -55,14 +55,15 @@
             <questionWithDetails title="The standard excess applicable to this quote is ${/asset[id='company']/attribute[id='excess']/formattedValue}. Do you want to apply for a different excess?" 
                                  binding="./attribute[id='agentExcessApplied']" 
                                  detailsTitle="Non-standard excess:" 
-                                 detailsBinding="./attribute[id='excess']"/>
+                                 detailsBinding="./attribute[id='excess']"
+                                 renderHint="radio"/>
         </questionSection>
         <questionSection binding="/asset[id='subjectivities']" title="Subjectivities">
-            <question title="${./attribute[id='paymentInFull']/attribute/value}" binding="./attribute[id='paymentInFull']"/>
-            <question title="${./attribute[id='noClaimDeclarationProof']/attribute/value}" binding="./attribute[id='noClaimDeclarationProof']"/>
-            <question title="${./attribute[id='mortgageQuestionnaire']/attribute/value}" binding="./attribute[id='mortgageQuestionnaire']"/>
-            <question title="${./attribute[id='completedPropForm']/attribute/value}" binding="./attribute[id='completedPropForm']"/>
-            <questionWithSubSection title="Is an Insured Specfic Endorsement applicable?" binding="./attribute[id='insuredSpecificSubjectivity']">
+            <question title="${./attribute[id='paymentInFull']/attribute/value}" binding="./attribute[id='paymentInFull']" renderHint="radio"/>
+            <question title="${./attribute[id='noClaimDeclarationProof']/attribute/value}" binding="./attribute[id='noClaimDeclarationProof']" renderHint="radio"/>
+            <question title="${./attribute[id='mortgageQuestionnaire']/attribute/value}" binding="./attribute[id='mortgageQuestionnaire']" renderHint="radio"/>
+            <question title="${./attribute[id='completedPropForm']/attribute/value}" binding="./attribute[id='completedPropForm']" renderHint="radio"/>
+            <questionWithSubSection title="Is an Insured Specfic Endorsement applicable?" binding="./attribute[id='insuredSpecificSubjectivity']" renderHint="radio">
                 <pageSection>
                 	<question title="Please enter the subjectivity text" binding="./attribute[id='insuredSpecificSubjectivity']/attribute[id='title']"/>
                 </pageSection>
