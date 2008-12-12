@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Locale;
 
 import com.ail.core.Functions;
 
@@ -156,7 +157,57 @@ public class TestUrlHandlers extends TestCase {
         }
 
         // try to access the content that does exist
-        url=new URL("product://localhost:8080/Demo/Demo/Welcome.html");
+        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
         Functions.loadUrlContentAsString(url);
+    }
+
+    /**
+     * Test raw access to the alfresco repository with and without defining the language. This test uses the same method of access
+     * as the alfresco content URL handler uses.
+     * @throws Exception
+     */
+    public void testAlfrescoUrlAccessWithLocale() throws Exception {
+        URL url=null;
+
+        // get a ticket for admin/admin
+        url=new URL("http://localhost:8080/alfresco/service/api/login?u=admin&pw=admin");
+        String rawTicketResponse=Functions.loadUrlContentAsString(url);        
+        assertTrue(rawTicketResponse.indexOf("<ticket>")>0);
+        String ticket=rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<"));
+
+        // get content without specifying a local
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome&ticket="+ticket);
+        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+
+        // get content with a locale for which content is defined
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome&ticket="+ticket+"&language=de");
+        assertEquals("Hallo Welt!", Functions.loadUrlContentAsString(url));
+
+        // get content with a locale for which content is not defined
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome&ticket="+ticket+"&language=fr");
+        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+    }
+
+    /**
+     * Test product access to the alfresco repository with and without defining the language.
+     * @throws Exception
+     */
+    public void testProductUrlAccessWithLocale() throws Exception {
+        URL url=null;
+
+         // get content without specifying a local
+        com.ail.core.Locale.setThreadLocale(Locale.ENGLISH);
+        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
+        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+
+        // get content with a locale for which content is defined
+        com.ail.core.Locale.setThreadLocale(Locale.GERMAN);
+        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
+        assertEquals("Hallo Welt!", Functions.loadUrlContentAsString(url));
+
+        // get content with a locale for which content is not defined
+        com.ail.core.Locale.setThreadLocale(Locale.FRENCH);
+        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
+        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
     }
 }

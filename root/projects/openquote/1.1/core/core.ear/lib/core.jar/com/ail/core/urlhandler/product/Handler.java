@@ -24,17 +24,19 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
 import com.ail.core.Functions;
+import com.ail.core.Locale;
 
 /**
- * The handler for the "product://" URLs. All this class does is to
- * transparently transform a "product://" URL into a reference to a resource
- * in the product repository.
- * <p/>
- * For example, a URL like: <code>product://localhost:8080/Demo/Demo/Welcome.html</code> is translated into a call
- * to <code>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome.html</code>.
+ * The handler deals with URLs of the form: "product://". All this class does is to transparently transform a "product://" URL into 
+ * a reference to a resource in the product repository. The reference is always language sensitive in that the 
+ * language associated with the current thread's {@link com.ail.core.Locale} is always passed as a parameter in the URL. The repository
+ * therefore has the option of returning language specific variants if it supports them.
  * <p/>
  * This handler is specifically implemented to work with alfresco. It also assumes that access to Product resources
- * is restricted and requires authentication. 
+ * is restricted and requires authentication, and will authenticate requests automatically by first retrieving an alfresco ticket.
+ * <p/>
+ * For example, a URL like: <code>product://localhost:8080/Demo/Demo/Welcome.html</code> is translated into a call
+ * to <code>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome.html?language=en?ticket=<i>ticket</i></code>.
  * <p/>
  */
 public class Handler extends URLStreamHandler {
@@ -68,8 +70,15 @@ public class Handler extends URLStreamHandler {
     }
     
     protected URLConnection openConnection(URL u) throws IOException {
-        URL actualURL = new URL("http", u.getHost(), u.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+u.getPath()+"&ticket="+getTicket(u));
+        String language="";
+        
+        // Respect the language associated with the current thread if the URL doesn't already include one.
+        if (!u.getPath().contains("&language=")) {
+            language="&language="+Locale.getThreadLocale().getLanguage();
+        }
 
+        URL actualURL = new URL("http", u.getHost(), u.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+u.getPath()+"&ticket="+getTicket(u)+language);
+        
         if (actualURL == null) {
             throw new FileNotFoundException(u.toExternalForm());
         }

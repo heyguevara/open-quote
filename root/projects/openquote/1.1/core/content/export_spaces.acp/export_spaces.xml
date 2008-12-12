@@ -2477,13 +2477,15 @@
                             </view:properties>
                             <view:associations>
                               <cm:contains>
-                                <cm:content view:childName="cm:Welcome.html">
+                                <cm:content view:childName="cm:Welcome">
                                   <view:aspects>
+                                    <cm:versionable></cm:versionable>
+                                    <sys:localized></sys:localized>
                                     <cm:titled></cm:titled>
                                     <cm:auditable></cm:auditable>
                                     <sys:referenceable></sys:referenceable>
-                                    <cm:author></cm:author>
                                     <app:inlineeditable></app:inlineeditable>
+                                    <cm:author></cm:author>
                                   </view:aspects>
                                   <view:properties>
                                     <app:editInline>true</app:editInline>
@@ -2495,10 +2497,43 @@
                                     <cm:author></cm:author>
                                     <cm:created>2008-03-27T18:30:02.116Z</cm:created>
                                     <cm:modifier>admin</cm:modifier>
+                                    <sys:locale>en_</sys:locale>
                                     <cm:modified>2008-03-28T08:11:39.702Z</cm:modified>
                                     <cm:creator>admin</cm:creator>
                                     <sys:store-protocol>workspace</sys:store-protocol>
-                                    <cm:name>Welcome.html</cm:name>
+                                    <cm:name>Welcome</cm:name>
+                                    <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                  </view:properties>
+                                </cm:content>
+                              </cm:contains>
+                            </view:associations>
+                            <view:associations>
+                              <cm:contains>
+                                <cm:content view:childName="cm:Welcome_de">
+                                  <view:aspects>
+                                    <sys:localized></sys:localized>
+                                    <cm:versionable></cm:versionable>
+                                    <cm:titled></cm:titled>
+                                    <cm:auditable></cm:auditable>
+                                    <cm:lockable></cm:lockable>
+                                    <sys:referenceable></sys:referenceable>
+                                    <cm:author></cm:author>
+                                    <app:inlineeditable></app:inlineeditable>
+                                  </view:aspects>
+                                  <view:properties>
+                                    <app:editInline>true</app:editInline>
+                                    <cm:description></cm:description>
+                                    <sys:node-uuid>c31110e2-c6f7-11dd-b1f5-37b219372dea</sys:node-uuid>
+                                    <cm:content>contentUrl=export_spaces/content46.html|mimetype=text/html|size=15|encoding=MacRoman|locale=de</cm:content>
+                                    <cm:title></cm:title>
+                                    <cm:author></cm:author>
+                                    <cm:created>2008-03-27T18:30:02.116Z</cm:created>
+                                    <cm:modifier>admin</cm:modifier>
+                                    <sys:locale>de_</sys:locale>
+                                    <cm:modified>2008-03-28T08:11:39.702Z</cm:modified>
+                                    <cm:creator>admin</cm:creator>
+                                    <sys:store-protocol>workspace</sys:store-protocol>
+                                    <cm:name>Welcome_de</cm:name>
                                     <sys:store-identifier>SpacesStore</sys:store-identifier>
                                   </view:properties>
                                 </cm:content>
