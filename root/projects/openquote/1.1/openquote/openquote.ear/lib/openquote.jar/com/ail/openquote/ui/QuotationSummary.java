@@ -286,7 +286,7 @@ public class QuotationSummary extends PageContainer {
         CurrencyAmount premium=quote.getTotalPremium();
  
         w.printf("<table width='100%%'>");
-        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>"+i18n("i18n_quotation_summary_quote_message")+"</td></tr>", premium.toString());
+        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>"+i18n("i18n_quotation_summary_quote_message")+"</td></tr>", premium.toFormattedString());
         w.printf("   <tr>");
         w.printf("       <td height='15'></td>");
         w.printf("   </tr>");
@@ -330,7 +330,18 @@ public class QuotationSummary extends PageContainer {
         w.printf("</table>");
 	}
 
-    private void renderTaxSummary(PrintWriter w, Quotation quote) {
+	/**
+	 * Render the tax panel. There are two formats here: If there is just one tax, we want to display something like:
+	 * <p><b>This premium is inclusive of IPT at 5%</b></p>
+	 * <p>If there is more than one tax, it is broken out into a list:</p>
+	 * <p><b>This premium is inclusive of:<ul>
+	 * <li>IPT at 5%</li>
+	 * <li>Stamp duty of £3.00</li>
+	 * </ul></b></p>
+	 * @param w
+	 * @param quote
+	 */
+	private void renderTaxSummary(PrintWriter w, Quotation quote) {
         Collection<Behaviour> taxLines=quote.getAssessmentSheet().getLinesOfBehaviourType(BehaviourType.TAX).values();
 
         if (taxLines.size()==1) {
@@ -340,7 +351,7 @@ public class QuotationSummary extends PageContainer {
                 w.printf(i18n("i18n_quotation_summary_inclusive_rate_message"), taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
             }
             else if (taxLine instanceof SumBehaviour) {
-                w.printf(i18n("i18n_quotation_summary_inclusive_sum_message"), taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
+                w.printf(i18n("i18n_quotation_summary_inclusive_sum_message"), taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toFormattedString());
             }
             w.printf("</li>");
         }
@@ -351,7 +362,7 @@ public class QuotationSummary extends PageContainer {
                     w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_rate_message")+"</li>", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
                 }
                 else if (taxLine instanceof SumBehaviour) {
-                    w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_sum_message")+"</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toString());
+                    w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_sum_message")+"</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toFormattedString());
                 }
             }
             w.printf("</ul></li>");
