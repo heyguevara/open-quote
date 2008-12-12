@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Get A Quote:immediate=false']</td>
+	<td>//input[@name='op=i18n_quote_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,13 +73,13 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>click</td>
 	<td>./attribute[id=#financialServices#]</td>
-	<td>label=No</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -104,7 +104,7 @@
 <tr>
 	<td>select</td>
 	<td>./attribute[id=#limitOfIndemnity#]</td>
-	<td>label=1,500,000 EUR</td>
+	<td>label=€1,500,000.00</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -138,7 +138,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Finish:immediate=true']</td>
+	<td>//input[@name='op=quit:immediate=true']</td>
 	<td></td>
 </tr>
 

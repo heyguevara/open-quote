@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Get A Quote:immediate=false']</td>
+	<td>//input[@name='op=i18n_quote_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,7 +73,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,7 +153,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,7 +173,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,7 +228,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -248,7 +248,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,7 +268,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -288,7 +288,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -303,7 +303,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -323,7 +323,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -338,7 +338,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -353,7 +353,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -368,7 +368,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Next:immediate=false']</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -378,7 +378,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='op=Quit:immediate=true']</td>
+	<td>//input[@name='op=quit:immediate=true']</td>
 	<td></td>
 </tr>
 
