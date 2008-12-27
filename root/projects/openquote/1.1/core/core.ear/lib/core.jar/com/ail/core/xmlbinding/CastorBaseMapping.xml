@@ -63,7 +63,7 @@
         <field name="language" type="string" set-method="%1">
             <bind-xml node="attribute"/>
         </field>
-        <field name="extendsLanguage" type="string" set-method="$2">
+        <field name="extendsLanguage" type="string" set-method="%2">
             <bind-xml node="attribute"/>
         </field>
         <field name="key" collection="map">
