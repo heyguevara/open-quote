@@ -91,6 +91,6 @@ public abstract class CalculationLine extends AssessmentLine {
      * @return Line's amount as a string, or "" if the line's amount is null.
      */
     public String getAmountAsString() {
-        return (amount==null) ? "" : amount.getAmountAsString()+" "+amount.getCurrencyAsString();
+        return (amount==null) ? "" : amount.toFormattedString();
     }
 }
