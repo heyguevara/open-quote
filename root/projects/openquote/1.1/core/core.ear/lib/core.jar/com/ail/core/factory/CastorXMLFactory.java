@@ -169,7 +169,7 @@ public class CastorXMLFactory extends AbstractFactory {
             }
             else {
                 URL configureUrl=Functions.absoluteConfigureUrl(core, url);
-                reader=new InputStreamReader(configureUrl.openStream());
+                reader=new InputStreamReader(configureUrl.openStream(), "UTF-8");
                 configurationURL=configureUrl.toExternalForm();
             }
 

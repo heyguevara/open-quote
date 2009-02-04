@@ -23,6 +23,7 @@ import junit.textui.TestRunner;
 
 import com.ail.core.Core;
 import com.ail.core.VersionEffectiveDate;
+import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.language.Translation;
 import com.ail.core.language.Translations;
@@ -107,5 +108,12 @@ public class TestTranslations extends CoreUserTestCase {
         assertEquals("$$key5$$", translations.translate("one", "key5"));
         
         System.out.println(getCore().toXML(translations));
+    }
+    
+    public void testFromXML() throws Exception {
+        XMLString instanceXml = new XMLString(this.getClass().getResourceAsStream("TestTranslations.xml"));
+        Translations instanceObj = (Translations) super.getCore().fromXML(Translations.class, instanceXml);
+        assertNotNull(instanceObj);
+        assertEquals("Second <b>String</b> number two", instanceObj.translate("two", "key2"));
     }
 }

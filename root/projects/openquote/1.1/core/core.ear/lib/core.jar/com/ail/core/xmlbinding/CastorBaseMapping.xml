@@ -73,7 +73,7 @@
                         <bind-xml node="attribute" name="key"/> 
                     </field> 
                     <field name="value" type="string">
-                        <bind-xml name="value" node="text"/>
+                        <bind-xml name="value" node="text" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
                     </field> 
                 </class> 
             </bind-xml>
