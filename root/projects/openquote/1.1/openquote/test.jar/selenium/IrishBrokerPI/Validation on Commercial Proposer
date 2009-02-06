@@ -378,6 +378,56 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
+	<td>//input[@name='op=Previous:immediate=true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>companyName</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address1</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address2</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>town</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>county</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>firstname</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>surname</td>
+	<td>Testü</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>About The Proposer's Company</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>//input[@name='op=quit:immediate=true']</td>
 	<td></td>
 </tr>

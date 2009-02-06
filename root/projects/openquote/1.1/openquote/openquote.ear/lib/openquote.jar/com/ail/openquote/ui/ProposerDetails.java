@@ -47,18 +47,18 @@ import com.ail.party.Title;
  * <p>This page element applies the following validation rules:<ul>
  * <li>A value (other than "Title?") must be selected in the "Title" drop-down.</li>
  * <li>If a "Title" of "Other" is selected in the drop down, a value must be entered in "Other title".</li>
- * <li>Both "First name" and "Surname" must be supplied and must match the regular expression: ^[a-zA-Z0-9-,. ()]*$</li>
+ * <li>Both "First name" and "Surname" must be supplied and must match the regular expression: ^[\\p{L}\\p{N}-,. ()]*$</li>
  * <li>Address lines 1 & 2 must be supplied and must match the regular expression above.</li>
  * <li>Address lines 3 & 4 are optional, but if supplied must match the regular expression above.</li>
  * <li>Postcode must be supplied, and must match the regular expression: ^[a-zA-Z0-9 -]*$</li>
  * <li>Telephone number must be supplied, and must match the regular expression: (^[+()0-9 -]*$)|(^[+()0-9 -]*[extEXT]{0,3}[ ()0-9]*$)</li>
  * <li>Email address must be supplied, and must match the regular expression: ^[0-9a-zA-Z.-]*@[0-9a-zA-Z.-]*[.][0-9a-zA-Z.-]*$</li>
- * <li>If in Commercial mode, company name must be supplied and must match the regular expression: ^[a-zA-Z0-9-,. ()]*$.</li>
+ * <li>If in Commercial mode, company name must be supplied and must match the regular expression: ^[\\p{L}\\p{N}-,. ()]*$.</li>
  * </ul>
  */
 public class ProposerDetails extends PageElement {
 	private static final long serialVersionUID = -4810599045554021748L;
-    private static final Pattern namePattern=Pattern.compile("^[a-zA-Z0-9-,. ()]*$");
+    private static final Pattern namePattern=Pattern.compile("^[\\p{L}\\p{N}-,. ()]*$");
     private static final Pattern postcodePattern=Pattern.compile("^[a-zA-Z0-9 -]*$");
     private static final Pattern emailPattern=Pattern.compile("^[0-9a-zA-Z.-]*@[0-9a-zA-Z.-]*[.][0-9a-zA-Z.-]*$");
     private static final Pattern phonePattern=Pattern.compile("(^[+()0-9 -]*$)|(^[+()0-9 -]*[extEXT]{0,3}[ ()0-9]*$)");

@@ -336,22 +336,22 @@ public class AttributeField extends PageElement {
 	    String onChangeEvent=(onChange!=null) ? "onchange='"+onChange+"'" : "";
 	    
 		try {
-	        w.printf("<table><tr><td>");
+	        w.printf("<table><tr>");
 	        
 	        if (attr==null) {
-	            w.printf("<b>undefined: %s</b>", boundTo);
+	            w.printf("<td width='25px'>&nbsp;</td><td><b>undefined: %s</b></td>", boundTo);
 	        }
 	        else {
 	            if (attr.isStringType()) {
 	                String size=attr.getFormatOption("size");
 	                size=(size!=null) ? "size='"+size+"'" : "";                
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getValue());
+	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/></td>", id, size, onChangeEvent, attr.getValue());
 	            }
 	            else if (attr.isNumberType()) {
 	                String pattern=attr.getFormatOption("pattern");
 	                String trailer=(attr.getFormat().endsWith("percent")) ? "%" : ""; 
 	                int size=(pattern==null) ? 7 : pattern.length();
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
+	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
 	            }
 	            else if (attr.isCurrencyType()) {
 	            	String value, pre, post;
@@ -368,30 +368,33 @@ public class AttributeField extends PageElement {
 	            		post=m.group(3);
 	            	}
 	            	catch(Throwable e) {
-		            	pre="";
+		            	pre="&nbsp;";
 		            	value=attr.getValue();
 		            	post=attr.getUnit();
 	            	}
 	                
-	            	w.printf("%s<input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='10' type='text' value='%s'/>%s", pre, id, onChangeEvent, value, post);
+	            	w.printf("<td align='right' width='25px'>%s</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='10' type='text' value='%s'/>%s</td>", pre, id, onChangeEvent, value, post);
 	            }
 	            else if (attr.isChoiceMasterType()) {
 	                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
 	                onChange="updateSlaveChoiceOptions(findElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
-	                w.printf("<select name=\"%s\" onchange=\"%s\" class='pn-normal'/>", id, onChange);
+	                w.printf("<td width='25px'>&nbsp;</td><td><select name=\"%s\" onchange=\"%s\" class='pn-normal'/></td>", id, onChange);
 	            }
 	            else if (attr.isChoiceSlaveType()) {
 	                onLoad="loadSlaveChoiceOptions($this,$value,"+attr.getChoiceTypeName()+",'"+attr.getChoiceMaster()+"','"+attr.getId()+"')";
-	                w.printf("<select name=\"%s\" class='pn-normal'/>", id);
+	                w.printf("<td width='25px'>&nbsp;</td><td><select name=\"%s\" class='pn-normal'/></td>", id);
 	            }
 	            else if (attr.isChoiceType()) {
-	                if (attr.getFormatOption("type")==null) {
+                    w.printf("<td width='25px'>&nbsp;</td><td>");
+
+                    if (attr.getFormatOption("type")==null) {
 	                	if ("radio".equals(getRenderHint())) {
 	                        String[] opts=attr.getFormatOption("options").split("[|#]");
 
+
 	                        for(int i=1 ; i<opts.length ; i+=2) {
 	                        	if (!"?".equals(opts[i])) {
-	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>", id, opts[i], (opts[i].equals(attr.getValue())) ? "checked='checked'" : "", opts[i]);
+	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>&nbsp;&nbsp;", id, opts[i], (opts[i].equals(attr.getValue())) ? "checked='checked'" : "", opts[i]);
 	                        	}
 	                        }
 	                	}
@@ -403,29 +406,33 @@ public class AttributeField extends PageElement {
 	                    onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
 	                    w.printf("<select name=\"%s\" class='pn-normal'/>", id);
 	                }
+
+                    w.printf("</td>");
 	            }
 	            else if (attr.isDateType()) {
 	                String dateFormat=attr.getFormatOption("pattern");
 	                int size=(dateFormat==null) ? 10 : dateFormat.length();
-	                w.printf("<input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/>", id, onChangeEvent, size, attr.getValue());
+	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/></td>", id, onChangeEvent, size, attr.getValue());
 	            }
 	            else if (attr.isYesornoType()) {
+                    w.printf("<td width='25px'>&nbsp;</td><td>");
 	            	if ("checkbox".equals(renderHint)) {
 	            		w.printf("<input name=\"%s\" type='checkbox' value='Yes' class='pn-normal' %s %s/>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
 	            	}
 	            	else if("radio".equals(renderHint)) {
-	            		w.printf("<input name=\"%s\" type='radio' value='No' class='pn-normal' %s %s>No</input>", id, ("No".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
-	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>Yes</input>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
+	            		w.printf("<input name=\"%s\" type='radio' value='No' class='pn-normal' %s %s>No</input>&nbsp;&nbsp;", id, ("No".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
+	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>Yes</input>&nbsp;&nbsp;", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
 	            	}
 	            	else {
 	            		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
 	            	}
+                    w.printf("</td>");
 	            }
 	            else if (attr.isNoteType()) {
-	                w.printf("<textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea>", id, onChangeEvent, attr.getValue());
+	                w.printf("<td width='25px'>&nbsp;</td><td><textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea></td>", id, onChangeEvent, attr.getValue());
 	            }
 	            
-	            w.printf("</td><td class='portlet-msg-error'>%s</td></tr></table>", Functions.findErrors(attr));
+	            w.printf("<td class='portlet-msg-error'>%s</td></tr></table>", Functions.findErrors(attr));
 	    
 	            if (onLoad!=null) {
 	                String s=onLoad;

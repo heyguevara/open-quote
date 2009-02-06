@@ -16,17 +16,20 @@
  */
 package com.ail.openquote.ui.messages;
 
-import java.util.ResourceBundle;
-
+import com.ail.core.CoreProxy;
+import com.ail.core.language.Translations;
 import com.ail.openquote.ui.util.QuotationContext;
 
 public class I18N {
 	public static String i18n(String message) {
 		if (message!=null) {
 	    	try {
-	    		return ResourceBundle.getBundle("com.ail.openquote.ui.messages.quotation", QuotationContext.getRequest().getLocale()).getString(message);
+	    		String product=QuotationContext.getQuotation().getProductTypeId();
+	    		Translations trans=(Translations)new CoreProxy().newProductType(product, "Translations");
+	    		return trans.translate(message);
 	    	}
 	    	catch(Throwable e) {
+	    		e.printStackTrace();
 	    		// ignore this - let the default return handle it
 	    	}
 		}

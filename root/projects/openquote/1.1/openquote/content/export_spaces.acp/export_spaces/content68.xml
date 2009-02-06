@@ -223,5 +223,9 @@
         <type name='AilDemoBroker' builder='CastorXMLBuilder' key='com.ail.openquote.Broker'>
             <parameter name="Url">product://localhost:8080/AIL/Base/Acme.xml</parameter>
         </type>
+
+        <type name="Translations" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.core.language.Translations">
+            <parameter name="Url">product://localhost:8080/AIL/Base/Translations.xml</parameter>
+        </type>
     </types>
 </configuration>

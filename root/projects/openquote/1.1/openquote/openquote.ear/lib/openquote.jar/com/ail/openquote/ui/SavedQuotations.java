@@ -227,7 +227,7 @@ public class SavedQuotations extends PageElement {
                     w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getQuotationNumber());
                     w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
                     w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
-                    w.printf(  "<td align='center' class='portal-form-label'>£%s</td>", savedQuote.getPremium().getAmountAsString());
+                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getPremium().toFormattedString());
                     w.printf(  "<td align='left'>");
                     w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(confirmAndPayLabel));
                     w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(requoteLabel));
