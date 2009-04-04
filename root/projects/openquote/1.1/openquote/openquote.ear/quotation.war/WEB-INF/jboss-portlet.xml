@@ -1,11 +1,10 @@
 <!DOCTYPE portlet-app PUBLIC "-//JBoss Portal//DTD JBoss Portlet 2.6//EN" "http://www.jboss.org/portal/dtd/jboss-portlet_2_6.dtd">
 <portlet-app>
-   <remotable>true</remotable>
     <portlet>
         <portlet-name>QuotationPortlet</portlet-name>
     </portlet>
     <portlet>
-        <portlet-name>ShippingQuotationPortlet</portlet-name>
+        <portlet-name>MotorPlusWSRPQuotationPortlet</portlet-name>
         <remotable>true</remotable>
     </portlet>
     <service>

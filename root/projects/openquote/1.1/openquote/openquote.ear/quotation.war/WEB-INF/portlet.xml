@@ -3,49 +3,48 @@
   xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
-
-	<portlet>
-    <description>OpenQuote generic product quotation portlet</description>
-		<portlet-name>QuotationPortlet</portlet-name>
-		<display-name>Quotation</display-name>
-		<portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Quotation Portlet</title>
-			<short-title>Quotation</short-title>
-			<keywords>Quotation, Portlet</keywords>
-		</portlet-info>
-		<portlet-preferences>
-			<preference>
-				<name>product</name>
-				<value>undefined</value>
-			</preference>
-		</portlet-preferences>
-	</portlet>
-	
+  
   <portlet>
-    <description>ShippingPlus WSRP Portlet</description>
-    <portlet-name>ShippingPlusQuotationPortlet</portlet-name>
-    <display-name>ShippingPlus Quotation</display-name>
+    <description>OpenQuote generic product quotation portlet</description>
+    <portlet-name>QuotationPortlet</portlet-name>
+    <display-name>Quotation</display-name>
     <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>VIEW</portlet-mode>
     </supports>
     <portlet-info>
-      <title>Shipping Plus Quotation Portlet</title>
-      <short-title>ShippingPlus Quotation</short-title>
+      <title>Quotation Portlet</title>
+      <short-title>Quotation</short-title>
       <keywords>Quotation, Portlet</keywords>
     </portlet-info>
     <portlet-preferences>
       <preference>
         <name>product</name>
-        <value>AIL.Demo.ShippingPlus</value>
+        <value>undefined</value>
       </preference>
     </portlet-preferences>
   </portlet>
-
+  
+  <portlet>
+    <description>MotorPlus WSRP Portlet</description>
+    <portlet-name>MotorPlusWSRPQuotationPortlet</portlet-name>
+    <display-name>MotorPlus WSRP Quotation</display-name>
+    <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    <portlet-info>
+      <title>Motor Plus Quotation Portlet</title>
+      <short-title>MotorPlus Quotation</short-title>
+      <keywords>Quotation, Portlet</keywords>
+    </portlet-info>
+    <portlet-preferences>
+      <preference>
+        <name>product</name>
+        <value>AIL.Demo.MotorPlus</value>
+      </preference>
+    </portlet-preferences>
+  </portlet>
 </portlet-app>
