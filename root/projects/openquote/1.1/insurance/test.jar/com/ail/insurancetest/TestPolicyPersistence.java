@@ -48,6 +48,7 @@ import com.ail.util.DateOfBirth;
  * @date $Date: 2006/07/26 21:00:28 $
  * @source $Source: /home/bob/CVSRepository/projects/insurance/test.jar/com/ail/insurancetest/TestPolicyPersistence.java,v $
  */
+@SuppressWarnings("deprecation")
 public class TestPolicyPersistence extends CoreUserTestCase {
     private static final long serialVersionUID = -1883228598369537657L;
 
