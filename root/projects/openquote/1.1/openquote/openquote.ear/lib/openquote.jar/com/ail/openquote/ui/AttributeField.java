@@ -327,10 +327,6 @@ public class AttributeField extends PageElement {
 	    StringWriter ret=new StringWriter();
 	    PrintWriter w=new PrintWriter(ret);
 	
-	    if (boundTo==null) {
-	        return "";
-	    }
-	
 	    String id=Functions.xpathToId(rowContext+boundTo);
 	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 	    String onChangeEvent=(onChange!=null) ? "onchange='"+onChange+"'" : "";

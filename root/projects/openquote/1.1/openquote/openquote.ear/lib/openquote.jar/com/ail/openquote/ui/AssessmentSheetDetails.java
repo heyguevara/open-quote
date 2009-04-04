@@ -82,7 +82,7 @@ public class AssessmentSheetDetails extends PageElement {
         w.printf(    "<td>");
         w.printf(      "<table width='100%%' class='portlet-section-header'");
         w.printf(        "<tr width='100%%'>");
-        w.printf(          "<td>"+i18n("i18n_assessment_sheet__details_title")+"</td>", quote.getQuotationNumber());
+        w.printf(          "<td>"+i18n("i18n_assessment_sheet_details_title")+"</td>", quote.getQuotationNumber());
         w.printf(          "<td align='right'>");
         w.printf(            "<table>");
         w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_product_title")+"</td><td class='portlet-font'>%s</td></tr>", quote.getProductName());
