@@ -9,11 +9,11 @@
   <!-- Release version numbers (BTW the build number comes from cruise control.) -->
   <property name="major.version" value="1"/>
   <property name="minor.version" value="1"/>
-  <property name="increment.version" value="EA1"/>
+  <property name="increment.version" value="EA2"/>
 
   <!-- Version of the insurance project to use for this project -->
   <property name="openquote.version" value="1.1"/>
-  <property name="openquote.build" value="32"/>
+  <property name="openquote.build" value="43"/>
   
   <!-- Version of JBoss to use for this project -->
   <property name="jboss.version" value="4.2.2GA"/>
