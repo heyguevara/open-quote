@@ -3025,7 +3025,6 @@
                                     <sys:store-identifier>SpacesStore</sys:store-identifier>
                                     <app:editInline>true</app:editInline>
                                     <cm:description>Basic pageflow for new business. This is designed to be extended into a product specific pageflow.</cm:description>
-                                    <sys:node-dbid>635</sys:node-dbid>
                                     <cm:title>BaseQuotationPageFlow.xml</cm:title>
                                     <cm:author></cm:author>
                                     <cm:modifier>admin</cm:modifier>
@@ -3033,6 +3032,30 @@
                                     <sys:store-protocol>workspace</sys:store-protocol>
                                   </view:properties>
                                 </cm:content>
+                                <cm:content view:childName="cm:Translations.xml">
+                                  <view:aspects>
+                                    <cm:titled></cm:titled>
+                                    <cm:auditable></cm:auditable>
+                                    <sys:referenceable></sys:referenceable>
+                                    <app:inlineeditable></app:inlineeditable>
+                                    <cm:author></cm:author>
+                                  </view:aspects>
+                                  <view:properties>
+                                    <app:editInline>true</app:editInline>
+                                    <cm:description>Resource defining language translations for use within pageflows and documents.</cm:description>
+                                    <sys:node-uuid>e0a2a143-d505-11dd-b650-1da5035f7bf3</sys:node-uuid>
+                                    <cm:content>contentUrl=export_spaces/content138.xml|mimetype=text/xml|size=15763|encoding=UTF-8|locale=en_US_</cm:content>
+                                    <cm:title>Translations</cm:title>
+                                    <cm:author>Dick Anderson</cm:author>
+                                    <cm:created>2008-12-28T17:35:11.174Z</cm:created>
+                                    <cm:modifier>admin</cm:modifier>
+                                    <cm:modified>2008-12-28T18:32:35.561Z</cm:modified>
+                                    <cm:creator>admin</cm:creator>
+                                    <sys:store-protocol>workspace</sys:store-protocol>
+                                    <cm:name>Translations.xml</cm:name>
+                                    <sys:store-identifier>SpacesStore</sys:store-identifier>
+                                  </view:properties>
+                                </cm:content>                                
                                 <cm:content view:childName="cm:CalculatePolicyTaxRule.java">
                                   <view:aspects>
                                     <cm:titled></cm:titled>
@@ -3054,7 +3077,6 @@
                                     <sys:store-identifier>SpacesStore</sys:store-identifier>
                                     <app:editInline>true</app:editInline>
                                     <cm:description>Basic tax calculations. Most products will override this with their own rules.</cm:description>
-                                    <sys:node-dbid>636</sys:node-dbid>
                                     <cm:title>CalculatePolicyTaxRule.java</cm:title>
                                     <cm:author></cm:author>
                                     <cm:modifier>admin</cm:modifier>
