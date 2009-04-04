@@ -33,10 +33,10 @@
         <type name="TestTypeB" key="com.ail.core.Type" builder="CastorXMLBuilder">
             <parameter name="Script"><![CDATA[
             <type xsi:type='java:com.ail.core.Type' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-                <attribute id="name" type="string" value="TestTypeB"/>
-                <attribute id="productname" type="string" value="TestProduct3"/>
-                <attribute id="age" type="number" value="34"/>
-                <attribute id="colour" type="string" value="orange"/>
+                <attribute id="name" format="string" value="TestTypeB"/>
+                <attribute id="productname" format="string" value="TestProduct3"/>
+                <attribute id="age" format="number" value="34"/>
+                <attribute id="colour" format="string" value="orange"/>
             </type>
                 ]]></parameter>
         </type>

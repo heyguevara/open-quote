@@ -31,6 +31,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.command.CommandInvocationError;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.server.ServerBean;
+import com.ail.core.factory.RecursiveTypeError;
 import com.ail.core.factory.UndefinedTypeError;
 import com.ail.core.product.ProductDetails;
 
@@ -203,7 +204,7 @@ public class TestProductServices extends CoreUserTestCase {
     }
     
     /**
-     * Each product can define any number of named types. This test checks that the defalut product's
+     * Each product can define any number of named types. This test checks that the default product's
      * named types are available, and that requests to instantiate types that are not defined are
      * handled correctly.
      */
@@ -273,10 +274,45 @@ public class TestProductServices extends CoreUserTestCase {
      * the URL has been added correctly.
      */
     public void testConfigurationSource() {
-        // We can't check the whole path becuase it'll change from machine to machine depending
+        // We can't check the whole path because it'll change from machine to machine depending
         // on where the test source has been checked-out to. We'll make do with checking just
         // the start and the end.
         assertTrue(getCore().getConfiguration().getSource().startsWith("file:"));
         assertTrue(getCore().getConfiguration().getSource().endsWith("target/test/test.jar/com/ail/coretest/TestProductServicesDefaultConfig.xml"));
+    }
+    
+    /**
+     * Test that an extending product type (i.e. one which extends another type) handles extension correctly in 
+     * the following circumstances:<ol>
+     * <li>When it extends a type of the same name, and a type matching that name is defined by the parent
+     * product. This should operate exactly as a normal "extends" would if the names were different.</li>
+     * <li>When it extends a type of the same name, and that type is not defined in the parent product. A type
+     * cannot extend itself, so an exception should be thrown when this situation is detected.</li>
+     * <li>When it extends a type which is undefined. Again, an exception should be thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testDuplicateTypeNameHandling() throws Exception {
+        Type t=null;
+        
+        t=getCore().newProductType("com.ail.core.product.TestProduct3", "TestTypeC");
+        assertEquals("TestProduct2", t.xpathGet("attribute[id='source']/value"));        
+        assertEquals("TestTypeC", t.xpathGet("attribute[id='name']/value"));        
+
+        try {
+            getCore().newProductType("com.ail.core.product.TestProduct3", "TestTypeD");
+            fail("Should have got an UndefinedTypeError");
+        }
+        catch(UndefinedTypeError e) {
+            // ignore this - its what we want
+        }
+        
+        try {
+            getCore().newProductType("com.ail.core.product.TestProduct3", "TestTypeE");
+            fail("Should have got an RecursiveTypeError");
+        }
+        catch(RecursiveTypeError e) {
+            // ignore this - it's what we want
+        }
     }
 }

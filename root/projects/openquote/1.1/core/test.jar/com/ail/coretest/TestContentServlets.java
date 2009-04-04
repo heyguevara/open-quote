@@ -53,32 +53,57 @@ public class TestContentServlets extends TestCase {
 
     /**
      * "Guest" servlets provide access to content without needing authentication. This test
-     * checks that we can access content, and that failures are handled correctly.
+     * checks that we can access content using a node-reference.
      * @throws MalformedURLException
      * @throws IOException
      */
-    public void testGuestServlets() throws MalformedURLException, IOException {
+    public void testGuestServletsContentExistsNodeRef() throws MalformedURLException, IOException {
         String content;
-
-        // access some content that does exist using node-reference
-        content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/guestDownload/direct/workspace/SpacesStore/a4b5f79e-dec3-11dc-ae45-833fd23b6aba/Alfresco-Tutorial.pdf"));
+        content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/d/d/workspace/SpacesStore/fc6d1198-fc28-11dc-b2b2-4798120be4e3/Alfresco-Tutorial.pdf"));
         assertEquals("Wrong number of characters returned.", 4351571, content.length());
+    }
 
-        // attempt to access content that does not exist using node-reference.
+    /**
+     * "Guest" servlets provide access to content without needing authentication. This test
+     * checks that a reference to content using a node-reference that does not exist throws
+     * the anticipated exception.
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public void testGuestServletsContentNotExistsNodeRef() throws MalformedURLException, IOException {
         try {
-            content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/guestDownload/direct/workspace/SpacesStore/a4b5f79fd-dec3-11dc-ae45-833fd23b6aba/ThingThatDoesNotExist.pdf"));
+            loadUrlContentAsString(new URL("http://localhost:8080/alfresco/guestDownload/direct/workspace/SpacesStore/a4b5f79fd-dec3-11dc-ae45-833fd23b6aba/ThingThatDoesNotExist.pdf"));
             fail("Downloaded content that doesn't exist!");
         }
         catch(IOException e) {
             // this is what we expect
         }
+    }
+
+    /**
+     * "Guest" servlets provide access to content without needing authentication. This test
+     * checks that we can access content using a path URL.
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public void testGuestServletsContentExistsPathRef() throws MalformedURLException, IOException {
+        String content;
         
         // access some content that does exist using path
         content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/guestDownload/direct?path=/Company%20Home/Guest%20Home/Alfresco-Tutorial.pdf"));
         assertEquals("Wrong number of characters returned.", 4351571, content.length());
+    }
 
+    /**
+     * "Guest" servlets provide access to content without needing authentication. This test
+     * checks that attempting to access content which does not exist using a path reference
+     * throws the expected exception.
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public void testGuestServletsContentNotExistPathRef() throws MalformedURLException, IOException {
         try {
-            content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/guestDownload/direct?path=/Company%20Home/Guest%20Home/ThingThatDoesNotExist.pdf"));
+            loadUrlContentAsString(new URL("http://localhost:8080/alfresco/guestDownload/direct?path=/Company%20Home/Guest%20Home/ThingThatDoesNotExist.pdf"));
             fail("Downloaded content that doesn't exist!");
         }
         catch(IOException e) {

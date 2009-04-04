@@ -95,7 +95,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         this.coreUser=coreUser;
 	}
 
-    private CoreUser getCoreUser() {
+    public CoreUser getCoreUser() {
         return this.coreUser;
     }
 

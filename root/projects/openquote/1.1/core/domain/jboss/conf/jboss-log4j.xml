@@ -307,7 +307,7 @@
         <priority value="WARN" />
     </category>
     <category name="org.alfresco">
-        <priority value="WARN" />
+        <priority value="ERROR" />
     </category>
     <category name="org.alfresco.repo.policy">
         <priority value="WARN" />

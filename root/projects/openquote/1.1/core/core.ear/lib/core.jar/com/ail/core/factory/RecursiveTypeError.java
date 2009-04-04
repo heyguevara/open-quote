@@ -20,11 +20,10 @@ package com.ail.core.factory;
 import com.ail.core.BaseError;
 
 /**
- * Error thrown when the factory is asked to instantiate a type for which it has no definition. This will
- * also be thrown when an attempt is made to instantiate a type which extends another that is undefined.
+ * Error thrown when the factory detects a type which defines itself as its parent.
  */
-public class UndefinedTypeError extends BaseError {
-    public UndefinedTypeError(String description) {
+public class RecursiveTypeError extends BaseError {
+    public RecursiveTypeError(String description) {
         super(description);
     }
 }

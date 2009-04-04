@@ -154,7 +154,7 @@ public class CoreUserTestCase extends TestCase implements CoreUser, Configuratio
             Configuration factoryConfig=getCore().fromXML(Configuration.class, factoryConfigXML);
 
             // write details of where we loaded the config from back into the config so that
-            // anyone who uses this configuraiton in future can see where it came from.
+            // anyone who uses this configuration in future can see where it came from.
             factoryConfig.setSource(inputUrl.toExternalForm());
             
             // reset the configuration

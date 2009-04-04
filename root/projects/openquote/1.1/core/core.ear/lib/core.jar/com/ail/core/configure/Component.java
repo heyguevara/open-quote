@@ -19,17 +19,15 @@ package com.ail.core.configure;
 import com.ail.core.Type;
 
 /**
- * This is the base of the composite patten implementation which defines
+ * This is the base of the composite pattern implementation which defines
  * configuration data.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @stereotype type
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Component.java,v $
  */
 public class Component extends Type {
     static final long serialVersionUID = -1770023766173749861L;
     private String name=null;
+
+    /** Configuration namespace in which this component was defined */
+    private String namespace=null;
 
 	/**
      * Getter for the component's name.
@@ -45,7 +43,7 @@ public class Component extends Type {
     
     /**
      * Getter for the component's name that always returns the name in lower case.
-     * This method simply returns a lowercase version of the string that {@link #getName getName()} returns.
+     * This method simply returns a lower-case version of the string that {@link #getName getName()} returns.
      * @return The component's name.
      */
     public String getNameLowerCase() {
@@ -59,5 +57,21 @@ public class Component extends Type {
      */
     public void setName(String name) {
         this.name=name;
+    }
+
+    /**
+     * Get the namespace in which this component is defined.
+     * @return component's namespace
+     */
+    public String getNamespace() {
+        return namespace;
+    }
+
+    /** 
+     * Set the namespace in which this component is defined.
+     * @param namespace Component's namespace
+     */
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
 }

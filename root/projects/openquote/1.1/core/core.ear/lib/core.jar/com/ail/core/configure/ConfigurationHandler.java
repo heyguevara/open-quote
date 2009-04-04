@@ -173,7 +173,7 @@ public class ConfigurationHandler {
 
         config.setLoadedAt(new Date(System.currentTimeMillis()));
 
-        core.logBootInfo("Configuration laoded: "+namespace);
+        core.logBootInfo("Configuration loaded: "+namespace);
 
         return config;
     }
@@ -318,6 +318,11 @@ public class ConfigurationHandler {
             ret=config.findParameter(paramName);
 		}
 
+		// set the param's namespace to the config where it was found
+		if (ret!=null) {
+            ret.setNamespace(config.getNamespace());
+        }
+        
         return ret;
     }
 
@@ -369,12 +374,21 @@ public class ConfigurationHandler {
      * @param core The instance of Core making the call.
      */
 	public Group getGroup(String name, ConfigurationOwner owner, CoreUser user, Core core) {
-        Configuration config=null; 
+	    boolean isSuperType=false;
+        Configuration config=null;
+        String cannonicalName=name;
         Group ret=null;
 
+        if (name.contains("_Types.super.")) {
+            isSuperType=true;
+            cannonicalName=name.replace("_Types.super.", "_Types.");
+        }
+        
         try {
 			config=findConfiguration(owner.getConfigurationNamespace(), user, core);
-			ret=config.findGroup(name);
+			if (!isSuperType) {
+			    ret=config.findGroup(cannonicalName);
+			}
         }
         catch(UnknownNamespaceError e) {
 			if (owner==core) {
@@ -384,17 +398,22 @@ public class ConfigurationHandler {
         
         while(ret==null && config!=null && config.getParentNamespace()!=null) {
             config=findConfiguration(config.getParentNamespace(), user, core);
-            ret=config.findGroup(name);
+            ret=config.findGroup(cannonicalName);
         }
 
 		// If the group wasn't in the config user's namespace, is it in the core
         // namespace?
         if (ret==null && !Core.CoreNamespace.equals(owner.getConfigurationNamespace())) {
             config=findConfiguration(Core.CoreNamespace, user, core);
-            ret=config.findGroup(name);
+            ret=config.findGroup(cannonicalName);
         }
 
-		return ret;
+        // set the group's namespace to the config where it was found
+        if (ret!=null) {
+            ret.setNamespace(config.getNamespace());
+        }
+        
+        return ret;
     }
 
 	/**

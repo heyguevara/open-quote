@@ -31,15 +31,9 @@ import com.ail.core.configure.server.ServerBean;
 import com.ail.coretest.service.TestService;
 
 /**
- * The core's factories support the concept of baseing one type on another - in effect
+ * The core's factories support the concept of basing one type on another - in effect
  * allowing type definition to extend one another. The tests here try exercise that
  * support.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source:
- *         /home/bob/CVSRepository/projects/core/test/com/ail/coretest/TestServiceInvocation.java,v $
  */
 public class TestFactoryTypeMerging extends CoreUserTestCase {
     private static boolean oneTimeSetupDone=false;

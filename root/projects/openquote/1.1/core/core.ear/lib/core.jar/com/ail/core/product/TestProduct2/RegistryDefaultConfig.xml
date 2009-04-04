@@ -24,10 +24,10 @@
         <type name="TestProduct2" key="com.ail.core.Type" builder="CastorXMLBuilder">
             <parameter name="Script"><![CDATA[
                <type xsi:type='java:com.ail.core.Type' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-                  <attribute id="name" type="string" value="TestProduct2"/>
-                  <attribute id="productname" type="string" value="TestProduct2"/>
-                  <attribute id="age" type="number" value="34"/>
-                  <attribute id="colour" type="string" value="purple"/>
+                  <attribute id="name" format="string" value="TestProduct2"/>
+                  <attribute id="productname" format="string" value="TestProduct2"/>
+                  <attribute id="age" format="number" value="34"/>
+                  <attribute id="colour" format="string" value="purple"/>
                </type>
             ]]></parameter>
         </type>
@@ -40,14 +40,47 @@
                 a=new com.ail.core.Attribute();
                 a.setId("name");
                 a.setValue("TestTypeB");
+                a.setFormat("string");
                 type.addAttribute(a);
                 
                 a=new com.ail.core.Attribute();
                 a.setId("colour");
                 a.setValue("TestTypeB");
+                a.setFormat("string");
                 type.addAttribute(a);
             ]]></parameter>
         </type>
+
+        <!-- Type which extends a type of the same name in the parent product -->
+        <type name="TestTypeC" key="com.ail.core.Type" builder="CastorXMLBuilder">
+            <parameter name="Extends">super.TestTypeC</parameter>
+            <parameter name="Script"><![CDATA[
+            <type xsi:type='java:com.ail.core.Type' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+                <attribute id="source" format="string" value="TestProduct2"/>
+            </type>
+            ]]></parameter>
+        </type>
+
+        <!-- Type which extends a type which is undefined -->
+        <type name="TestTypeD" key="com.ail.core.Type" builder="CastorXMLBuilder">
+            <parameter name="Extends">UnknownTypeWhichIsNotDefined</parameter>
+            <parameter name="Script"><![CDATA[
+            <type xsi:type='java:com.ail.core.Type' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+                <attribute id="name" format="string" value="TestTypeD"/>
+                <attribute id="source" format="string" value="TestProduct2"/>
+            </type>
+            ]]></parameter>
+        </type>
+
+        <!-- Type which extends itself (a type of the same name is not defined in the parent product) -->
+        <type name="TestTypeE" key="com.ail.core.Type" builder="CastorXMLBuilder">
+            <parameter name="Extends">TestTypeE</parameter>
+            <parameter name="Script"><![CDATA[
+            <type xsi:type='java:com.ail.core.Type' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+                <attribute id="name" format="string" value="TestTypeD"/>
+                <attribute id="source" format="string" value="TestProduct2"/>
+            </type>
+            ]]></parameter>
+        </type>
     </types>
-    
 </configuration>

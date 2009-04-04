@@ -131,38 +131,6 @@ public class FactoryHandler {
         }
         
         return newInstance;
-        
-//        synchronized(typeSpec) {
-//            if (typeSpec.getPrototype()==null) {
-//                // get hold of the Factory for this type
-//        	    AbstractFactory factory=fetchBuilder(typeSpec.getBuilder(), core);
-//        
-//        	    // Use the factory to create the instance
-//        	    Object instance=factory.createType(typeSpec, core);
-//            
-//        	    // Cache the instance as a prototype if the factory says we should.
-//        	    if (factory.cachePrototype()) {
-//        	        try {
-//                        if (typeSpec.isSingleInstance()) {
-//                            typeSpec.setPrototype((Type)instance);
-//                        }
-//                        else {
-//                            typeSpec.setPrototype((Type)((Type)instance).clone());
-//                        }
-//                    }
-//                    catch(CloneNotSupportedException e) {
-//                        // Tell the world about the clone failure, but don't worry about it. Performace may
-//                        // suffer as a result, but that may not be an issue.
-//                        core.logWarning("Clone for prototype failed for '"+typeSpec.getName()+"'. Attempt to clone threw:"+e);
-//                    }
-//        		}
-//        	    
-//        	    return instance;
-//            }
-//            else {
-//                return createInstance(typeSpec, core);
-//            }
-//        }
 	}
 
     public static FactoryHandler getInstance() {

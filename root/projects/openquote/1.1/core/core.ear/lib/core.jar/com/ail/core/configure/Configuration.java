@@ -50,9 +50,6 @@ public class Configuration extends Group {
     /** The name of a service/component which manages this configuration */
     private String manager=null;
 
-    /** Namespace string */
-    private String namespace=null;
-
     /** Date at which the configuration was loaded from persistent storage */
     private Date loadedAt=null;
     
@@ -383,14 +380,6 @@ public class Configuration extends Group {
      */
     public void setManager(String manager) {
         this.manager = manager;
-    }
-
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
     }
 
     /** 
