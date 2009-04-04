@@ -90,14 +90,16 @@ Trouble shooting
 ================
 
 If you have any issues during installation, or while you are using OpenQuote, 
-please search our forums (http://sourceforge.net/forum/?group_id=215808) for 
-help, and feel free to post a question if you can't find the answer you need.
+the best place to start looking for information is in our new forum here: 
+http://openquote.opensourceinsurance.org/index.php/support/support-forum
+(and our old forums here: http://sourceforge.net/forum/?group_id=215808) and 
+feel free to post a question if you can't find the answer you need.
 
-As this is an RC release, we do anticipate there being bugs. If you believe
+As this is an EA release, we do anticipate there being bugs. If you believe
 you have found one please check our bug tracker. However, do please search 
 carefully first, and only look at raising a new bug if you are sure your 
-particular problem is not already covered. The bug tracker can be found on
-sourceforge here: http://sourceforge.net/tracker/?group_id=215808   
+particular problem is not already covered. The bug tracker can be found 
+here: http://openquotecommunity.org/jira 
 
 Upgrading from earlier versions
 ===============================
