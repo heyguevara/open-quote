@@ -17,7 +17,6 @@
 package com.ail.openquote.ui;
 
 import static com.ail.core.Functions.expand;
-import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -144,21 +143,8 @@ public class AnswerSection extends PageElement {
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w = response.getWriter();
         
-        w.printf(" <table width='100%%' border='0' cols='2'>");
+        String title = getExpandedTitle(QuotationContext.getQuotation(), model);
 
-        String aTitle = getExpandedTitle(QuotationContext.getQuotation(), model);
-
-        // output the title row if a title was defined
-        if (aTitle!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='2'><u>%s</u></td></tr>", i18n(aTitle));
-        }
-
-        for(Answer a: answer) { 
-            model=a.renderResponse(request, response, model);
-        }
-        
-        w.printf("</table>");
-        
-        return model;
+        return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, title);
 	}
 }

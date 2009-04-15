@@ -24,6 +24,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * A blank page element outputs nothing. Specifically it renders a non-breaking space.
@@ -49,7 +50,6 @@ public class Blank extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-		response.getWriter().write("&nbsp;");
-		return model;
+		return QuotationContext.getRenderer().renderBlank(response.getWriter(), request, response, model, this);
 	}
 }

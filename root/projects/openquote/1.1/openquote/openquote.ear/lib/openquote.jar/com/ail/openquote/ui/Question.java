@@ -56,7 +56,7 @@ public class Question extends AttributeField {
         PrintWriter w=response.getWriter();
         
         w.printf("<td>%s</td>", title);
-        w.printf("<td colspan='3' align='left'>%s</td>", renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));
+        w.printf("<td colspan='3' align='left'>%s</td>", renderAttribute(request, response, model, getBinding(), rowContext, getOnChange(), getOnLoad()));
         
         return model;
     }

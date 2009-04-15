@@ -29,6 +29,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.PageFlow;
 import com.ail.openquote.ui.RenderingError;
+import com.ail.openquote.ui.render.Renderer;
 
 /**
  * This class acts wraps a number of ThreadLocal objects which are initialized at the beginning of each Portal request/response 
@@ -81,6 +82,18 @@ public class QuotationContext {
 		
 		public void set(CoreProxy core) {
 			this.core=core;
+		}
+	};
+	
+	private static ThreadLocal<Renderer> renderer = new ThreadLocal<Renderer>() {
+		Renderer renderer;
+		
+		public Renderer get() {
+			return renderer;
+		}
+		
+		public void set(Renderer renderer) {
+			this.renderer=renderer;
 		}
 	};
 	
@@ -139,6 +152,7 @@ public class QuotationContext {
 		setQuotation(quotation);
 		setCore(core);
 		setPageFlow(pageFlow);
+    	setRenderer((Renderer)core.newType("Renderer:"+request.getResponseContentType()));
     }
     
 	/**
@@ -196,6 +210,22 @@ public class QuotationContext {
 	 */
 	public static void setPageFlow(PageFlow pageFlowArg) {
 		pageFlow.set(pageFlowArg);
+	}
+	
+	/**
+	 * Fetch the renderer to be used by this thread
+	 * @return renderer
+	 */
+	public static Renderer getRenderer() {
+		return renderer.get();
+	}
+	
+	/**
+	 * Fetch the renderer to be used by this thread
+	 * @return renderer
+	 */
+	public static void setRenderer(Renderer rendererArg) {
+		renderer.set(rendererArg);
 	}
 	
 	class ThreadLocalFields {

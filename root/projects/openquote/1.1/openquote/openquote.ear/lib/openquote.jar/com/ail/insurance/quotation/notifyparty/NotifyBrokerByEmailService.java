@@ -43,8 +43,8 @@ import com.ail.core.XMLException;
 import com.ail.core.command.CommandArg;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
-import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.BrokerQuotationSummary;
+import com.ail.openquote.ui.render.Html;
 
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
@@ -52,7 +52,6 @@ import com.ail.openquote.ui.BrokerQuotationSummary;
 public class NotifyBrokerByEmailService extends Service {
     private static final long serialVersionUID = -4915889686192216902L;
     private static BrokerQuotationSummary brokerQuotationSummaryRenderer=new BrokerQuotationSummary();
-    private static AssessmentSheetDetails assessmentSheetRenderer=new AssessmentSheetDetails();
     private NotifyPartyArg args = null;
     private String configurationNamespace = null;
     private Core core = null;
@@ -211,7 +210,7 @@ public class NotifyBrokerByEmailService extends Service {
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
         insertStyles(writer);
-        brokerQuotationSummaryRenderer.render(writer, savedQuotation.getQuotation());
+        new com.ail.openquote.ui.render.Html().renderBrokerQuotationSummary(writer, null, null, savedQuotation.getQuotation(), null);
         writer.close();
         String content=new String(baos.toByteArray());
         
@@ -254,13 +253,14 @@ public class NotifyBrokerByEmailService extends Service {
      * @return BodyPart containing rendered output.
      * @throws MessagingException
      * @throws XMLException
+     * @throws IOException 
      */
-    private BodyPart createAssessmentSheetAttachment(SavedQuotation savedQuotation) throws MessagingException, XMLException {
+    private BodyPart createAssessmentSheetAttachment(SavedQuotation savedQuotation) throws MessagingException, XMLException, IOException {
         // Use the UI's rendered to create the HTML output - email is a kind of UI after all!
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
         insertStyles(writer);
-        assessmentSheetRenderer.render(writer, savedQuotation.getQuotation());
+        new Html().renderAssessmentSheetDetails(writer, null, null, savedQuotation.getQuotation(), null);
         writer.close();
         String content=new String(baos.toByteArray());
         

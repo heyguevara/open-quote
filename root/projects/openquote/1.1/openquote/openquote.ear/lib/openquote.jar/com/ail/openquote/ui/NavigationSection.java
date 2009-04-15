@@ -25,6 +25,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>A navigation section acts as a container for buttons like 'Next' and 'Previous' which are used to navigate through the
@@ -93,23 +94,7 @@ public class NavigationSection extends PageContainer {
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
-        w.print("<table width='100%' border='0' align='center'><tr>");
-        w.print("<td width='15%'>&nbsp;</td>");
-        w.print("<td width='70%' align='center'>");
-        for(PageElement element: getPageElement()) {
-			model=element.renderResponse(request, response, model);
-		}
-		w.print("</td>");
-        w.print("<td width='15%' align='right'>");
-        if (isQuitDisabled()) {
-            w.print("&nbsp;");
-        }
-        else {
-            model=quitButton.renderResponse(request, response, model);
-        }
-        w.print("</td></tr></table>");
-        
-        return model;
+        return QuotationContext.getRenderer().renderNavigationSection(w, request, response, model, this);
     }
 
     @Override

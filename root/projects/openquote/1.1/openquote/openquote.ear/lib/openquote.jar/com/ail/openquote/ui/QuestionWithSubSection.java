@@ -130,7 +130,7 @@ public class QuestionWithSubSection extends Question {
         }
         
         w.printf("<td>%s</td>", i18n(aTitle));
-        w.printf("<td colspan='3'>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
+        w.printf("<td colspan='3'>%s</td>", renderAttribute(request, response, model, getBinding(), rowContext, onChange, getOnLoad()));
         w.printf("</tr>");
         w.printf("<tr><td colspan='4'>");
         w.printf(" <div id='%s' style='visibility:hidden;display:none'>", id);

@@ -143,9 +143,9 @@ public class QuestionWithDetails extends Question {
         }
         
         w.printf("<td>%s</td>", i18n(title));
-        w.printf("<td>%s</td>", renderAttribute(model, getBinding(), rowContext, onChange, getOnLoad()));
+        w.printf("<td>%s</td>", renderAttribute(request, response, model, getBinding(), rowContext, onChange, getOnLoad()));
         w.printf("<td>%s</td>", i18n(detailTitle));
-        w.printf("<td>%s</td>", renderAttribute(model, getDetailsBinding(), rowContext, getOnChange(), getOnLoad()));
+        w.printf("<td>%s</td>", renderAttribute(request, response, model, getDetailsBinding(), rowContext, getOnChange(), getOnLoad()));
         
         // Disable the 'detail' textarea unless the question's answer is 'Yes'
         if ("radio".equals(getRenderHint())) {

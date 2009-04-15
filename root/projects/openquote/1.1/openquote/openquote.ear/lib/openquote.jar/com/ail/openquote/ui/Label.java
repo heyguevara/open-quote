@@ -26,6 +26,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.ui.util.Binding;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>A Label renders as fixed text on the page. It may be built up, in part or entirely, from dynamic information collected
@@ -110,7 +111,7 @@ public class Label extends PageElement {
             params[i++] = model.xpathGet(expr.getXpath());
         }
 
-        response.getWriter().printf(format, params);
+        QuotationContext.getRenderer().renderLabel(response.getWriter(), request, response, model, this, format, params);        
         
         return model;
     }

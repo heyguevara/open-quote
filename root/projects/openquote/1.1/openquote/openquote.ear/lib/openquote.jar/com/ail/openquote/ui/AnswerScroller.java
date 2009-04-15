@@ -19,12 +19,12 @@ package com.ail.openquote.ui;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>An AnswerScroller displays a repeating pattern of answers. It is generally used on summary screens within an 
@@ -71,25 +71,11 @@ public class AnswerScroller extends Answer {
         this.answer = answer;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
-        int rowCount=0;
-        for(Iterator it=model.xpathIterate(getBinding()) ; it.hasNext() ; rowCount++) {
-            Type t=(Type)it.next();
-               
-            for (Answer a: answer) {
-                w.printf("<tr>");
-                a.renderResponse(request, response, t);
-                w.printf("</tr>");
-            }
-
-            w.printf("<tr><td height='4' colspan='2'></td></tr>");
-        }
-        
-        return model;
+        return QuotationContext.getRenderer().renderAnswerScroller(w, request, response, model, this);
     }
 }
 

@@ -16,10 +16,8 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.addError;
-import static com.ail.openquote.ui.util.Functions.findError;
-import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
 import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.addError;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,6 +47,7 @@ import com.ail.core.Type;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * The LoginSection page element provides a single UI section which deals with the following
@@ -333,110 +332,11 @@ public class LoginSection extends PageContainer {
 
         // Guess the username from the quotation or the proposer's email address.
         String usernameGuess=quotation.getUsername()!=null ? quotation.getUsername() : proposer.getEmailAddress();
-
-        String lnk="<a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Create Login\");'>"+invitationLinkText+"</a>";
+        usernameGuess=isAnExistingUser(usernameGuess, request) ? usernameGuess : "";
         
-        w.printf("<table>");
-        w.printf( "<tr>");
-        w.printf(  "<td align='center'>");
-
-        // Div #1: login and save the quote. Note: if the usernameGuess is a known user we'll pre-populate the form with 
-        // the guess to save the user some typing; otherwise we'll leave the username field blank.
-        w.printf(   "<div class='portlet-font' id='Proposer Login'>");
-        w.printf(    invitationMessageText, lnk);
-        w.printf(    "<form method='post' action='%s' name='loginform' id='loginForm'>", response.createActionURL());
-        w.printf(     "<table>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>", isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td valign='center'>"+i18n("i18n_login_section_password_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
-        w.printf(       "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a></td>");
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=%1$s:page=%2$s:portal=%3$s' value='%1$s'/></td>", i18n(loginButtonLabel), getForwardToPageName(), nameOfForwardToPortal(response));
-        w.printf(      "</tr>");
-        w.printf(     "</table>");
-        w.printf(    "</form>");
-        w.printf(   "</div>");
-
-        // Div #2: create a new user and save quote
-        w.printf(   "<div class='portlet-font' id='Create Login'>");
-        w.printf(    "Create a new account here. If you have an existing account, please <a onClick='showDivDisplay(\"Proposer Login\");hideDivDisplay(\"Create Login\");'>login here</a>.");
-        w.printf(    "<form method='post' action='%s'>", response.createActionURL());
-        w.printf(     "<table>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>",  !isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>"+i18n("i18n_login_section_confirm_username_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='text' name='cusername' id='cusername' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cusername", model));
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td valign='center'>"+i18n("i18n_login_section_password_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("password", model));
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td valign='center'>"+i18n("i18n_login_section_confirm_password_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='password' name='cpassword' id='cpassword' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cpassword", model));
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='"+i18n("i18n_login_section_create_and_save_button_label")+"'/></td>", getForwardToPageName(), nameOfForwardToPortal(response));
-        w.printf(      "</tr>");
-        w.printf(     "</table>");
-        w.printf(    "</form>");
-        w.printf(   "</div>");
-
-        // Div #3: Send a password reminder
-        w.printf(   "<div class='portlet-font' id='Forgotten Password'>");
-        w.printf(    i18n("i18n_login_section_email_password_message"));
-        w.printf(    "<form method='post'>");
-        w.printf(     "<table>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
-        w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>",  isAnExistingUser(usernameGuess, request) ? usernameGuess : "");
-        w.printf(      "</tr>");
-        w.printf(      "<tr class='portlet-font'>");
-        w.printf(       "<td colspan='2'><input type='submit' id='email' class='portlet-form-input-field' name='op=Reminder' value='"+i18n("i18n_login_section_send_reminder_button_label")+"'/></td>");
-        w.printf(      "</tr>");
-        w.printf(     "</table>");
-        w.printf(    "</form>");
-        w.printf(   "</div>");
-
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        w.printf("</table>");
-
-        w.printf("<script type='text/javascript'>");
-
-        // hide the 'create login' form unless there's an error associated with it.
-        if (hasErrorMarker("create", model)) {
-            w.printf( "hideDivDisplay('Forgotten Password');");
-            w.printf( "hideDivDisplay('Proposer Login');");
-            w.printf( "showDivDisplay('Create Login');");
-        }
-        else if (hasErrorMarker("login", model)) {
-            w.printf( "hideDivDisplay('Create Login');");
-            w.printf( "hideDivDisplay('Forgotten Password');");
-            w.printf( "showDivDisplay('Proposer Login');");
-        }
-        else {
-            w.printf( "hideDivDisplay('Create Login');");
-            w.printf( "hideDivDisplay('Forgotten Password');");
-            w.printf( "hideDivDisplay('Proposer Login');");
-        }
-
-        w.printf("</script>");
-        
-        return model;
+        String nameOfForwardToPortal=nameOfForwardToPortal(response);
+        	
+        return QuotationContext.getRenderer().renderLoginSection(w, request, response, model, this, usernameGuess, nameOfForwardToPortal);
     }
 
     private boolean isAnExistingUser(String username, PortletRequest request) {

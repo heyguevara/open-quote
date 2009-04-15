@@ -410,5 +410,7 @@
     <type builder="ClassBuilder" key="com.ail.insurance.claim.ClaimSection" name="ClaimSection"/>
     <type builder="ClassBuilder" key="com.ail.insurance.policy.Policy" name="Policy"/>
     <type builder="ClassBuilder" key="com.ail.insurance.policy.AssessmentSheet" name="AssessmentSheet"/>
+    <type builder="ClassBuilder" key="com.ail.openquote.ui.render.Html" name="Renderer:text/html" singleInstance="true"/>
+    <type builder="ClassBuilder" key="com.ail.openquote.ui.render.Xform" name="Renderer:text/xml" singleInstance="true"/>
   </types>
 </configuration>

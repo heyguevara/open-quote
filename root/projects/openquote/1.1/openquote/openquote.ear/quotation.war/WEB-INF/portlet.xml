@@ -32,7 +32,7 @@
     <display-name>MotorPlus WSRP Quotation</display-name>
     <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
     <supports>
-      <mime-type>text/html</mime-type>
+      <mime-type>text/xml</mime-type>
       <portlet-mode>VIEW</portlet-mode>
     </supports>
     <portlet-info>

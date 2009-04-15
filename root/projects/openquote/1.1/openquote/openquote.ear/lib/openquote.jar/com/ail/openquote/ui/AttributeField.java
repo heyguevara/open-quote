@@ -16,27 +16,20 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.core.Attribute.YES_OR_NO_FORMAT;
 import static com.ail.core.Functions.expand;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.CoreProxy;
 import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
-import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.util.Choice;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 
@@ -75,7 +68,6 @@ import com.ail.openquote.ui.util.QuotationContext;
  */
 public class AttributeField extends PageElement {
     private static final long serialVersionUID = 7118438575837087257L;
-    private static final Pattern formattedCurrencyPattern=Pattern.compile("([^0-9,.']*)([0-9,.']*)([^0-9,.']*)");
 
     /** The fixed title to be displayed with the answer */
     private String title;
@@ -237,7 +229,7 @@ public class AttributeField extends PageElement {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
-        w.print(renderAttribute(model, getBinding(), rowContext, getOnChange(), getOnLoad()));
+        w.print(renderAttribute(request, response, model, getBinding(), rowContext, getOnChange(), getOnLoad()));
         
         return model;
     }
@@ -249,7 +241,7 @@ public class AttributeField extends PageElement {
 
     public void renderPageLevelResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-        w.print(renderAttributePageLevel(model, getBinding(), rowContext, request.getPortletSession()));
+        w.print(renderAttributePageLevel(request, response, model, getBinding(), rowContext));
     }
 
     /**
@@ -317,7 +309,7 @@ public class AttributeField extends PageElement {
 	 * @throws IOException
 	 * @throws PostconditionException 
 	 */
-	protected String renderAttribute(Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
+	protected String renderAttribute(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
 		// If we're not bound to anything, output nothing.
 	    if (boundTo==null) {
 	        return "";
@@ -329,127 +321,10 @@ public class AttributeField extends PageElement {
 	
 	    String id=Functions.xpathToId(rowContext+boundTo);
 	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-	    String onChangeEvent=(onChange!=null) ? "onchange='"+onChange+"'" : "";
 	    
-		try {
-	        w.printf("<table><tr>");
-	        
-	        if (attr==null) {
-	            w.printf("<td width='25px'>&nbsp;</td><td><b>undefined: %s</b></td>", boundTo);
-	        }
-	        else {
-	            if (attr.isStringType()) {
-	                String size=attr.getFormatOption("size");
-	                size=(size!=null) ? "size='"+size+"'" : "";                
-	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/></td>", id, size, onChangeEvent, attr.getValue());
-	            }
-	            else if (attr.isNumberType()) {
-	                String pattern=attr.getFormatOption("pattern");
-	                String trailer=(attr.getFormat().endsWith("percent")) ? "%" : ""; 
-	                int size=(pattern==null) ? 7 : pattern.length();
-	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
-	            }
-	            else if (attr.isCurrencyType()) {
-	            	String value, pre, post;
-
-	            	// If we can get the formatted value from the currency, this will give use all the locale specific symbols
-	            	// to place before or after the value. However, as Attributes are allowed to hold invalid values, we will 
-	            	// adopt the fall back position of of using the value as the fields content with nothing to the left of the
-	            	// field, and the currency's ISO on the right.
-	            	try {
-	            		Matcher m=formattedCurrencyPattern.matcher(attr.getFormattedValue());
-	            		m.matches();
-	            		pre=m.group(1);
-	            		value=m.group(2);
-	            		post=m.group(3);
-	            	}
-	            	catch(Throwable e) {
-		            	pre="&nbsp;";
-		            	value=attr.getValue();
-		            	post=attr.getUnit();
-	            	}
-	                
-	            	w.printf("<td align='right' width='25px'>%s</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='10' type='text' value='%s'/>%s</td>", pre, id, onChangeEvent, value, post);
-	            }
-	            else if (attr.isChoiceMasterType()) {
-	                onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-	                onChange="updateSlaveChoiceOptions(findElementsByName('"+id+"')[0], "+attr.getChoiceTypeName()+", '"+attr.getId()+"', '"+attr.getChoiceSlave()+"');";
-	                w.printf("<td width='25px'>&nbsp;</td><td><select name=\"%s\" onchange=\"%s\" class='pn-normal'/></td>", id, onChange);
-	            }
-	            else if (attr.isChoiceSlaveType()) {
-	                onLoad="loadSlaveChoiceOptions($this,$value,"+attr.getChoiceTypeName()+",'"+attr.getChoiceMaster()+"','"+attr.getId()+"')";
-	                w.printf("<td width='25px'>&nbsp;</td><td><select name=\"%s\" class='pn-normal'/></td>", id);
-	            }
-	            else if (attr.isChoiceType()) {
-                    w.printf("<td width='25px'>&nbsp;</td><td>");
-
-                    if (attr.getFormatOption("type")==null) {
-	                	if ("radio".equals(getRenderHint())) {
-	                        String[] opts=attr.getFormatOption("options").split("[|#]");
-
-
-	                        for(int i=1 ; i<opts.length ; i+=2) {
-	                        	if (!"?".equals(opts[i])) {
-	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>&nbsp;&nbsp;", id, opts[i], (opts[i].equals(attr.getValue())) ? "checked='checked'" : "", opts[i]);
-	                        	}
-	                        }
-	                	}
-	                	else {
-	                		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
-	                	}
-	                }
-	                else {
-	                    onLoad="loadChoiceOptions($this,$value,"+attr.getChoiceTypeName()+")";
-	                    w.printf("<select name=\"%s\" class='pn-normal'/>", id);
-	                }
-
-                    w.printf("</td>");
-	            }
-	            else if (attr.isDateType()) {
-	                String dateFormat=attr.getFormatOption("pattern");
-	                int size=(dateFormat==null) ? 10 : dateFormat.length();
-	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/></td>", id, onChangeEvent, size, attr.getValue());
-	            }
-	            else if (attr.isYesornoType()) {
-                    w.printf("<td width='25px'>&nbsp;</td><td>");
-	            	if ("checkbox".equals(renderHint)) {
-	            		w.printf("<input name=\"%s\" type='checkbox' value='Yes' class='pn-normal' %s %s/>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
-	            	}
-	            	else if("radio".equals(renderHint)) {
-	            		w.printf("<input name=\"%s\" type='radio' value='No' class='pn-normal' %s %s>No</input>&nbsp;&nbsp;", id, ("No".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
-	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>Yes</input>&nbsp;&nbsp;", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
-	            	}
-	            	else {
-	            		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
-	            	}
-                    w.printf("</td>");
-	            }
-	            else if (attr.isNoteType()) {
-	                w.printf("<td width='25px'>&nbsp;</td><td><textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea></td>", id, onChangeEvent, attr.getValue());
-	            }
-	            
-	            w.printf("<td class='portlet-msg-error'>%s</td></tr></table>", Functions.findErrors(attr));
+	    QuotationContext.getRenderer().renderAttributeField(w, request, response, attr, this, boundTo, id, onChange, onLoad);
 	    
-	            if (onLoad!=null) {
-	                String s=onLoad;
-	    
-	                if (s.contains("$this")) {
-	                    s=s.replace("$this", "findElementsByName(\""+id+"\")[0]");
-	                }
-	    
-	                if (s.contains("$value")) {
-	                    s=s.replace("$value", "'"+attr.getValue()+"'");
-	                }
-	                
-	                w.printf("<script type='text/javascript'>%s</script>", s);
-	            }
-	        }
-	        
-	        return ret.toString();
-		}
-		catch(Throwable t) {
-			throw new RenderingError("Failed to render attribute id:'"+attr.getId()+"', format:'"+attr.getFormat()+"' value:'"+attr.getValue()+"'", t);
-		}
+	    return ret.toString();
 	}
 
 	/**
@@ -490,22 +365,21 @@ public class AttributeField extends PageElement {
 	    return error;
 	}
 
-	protected String renderAttributePageLevel(Type model, String boundTo, String rowContext, PortletSession session) throws IllegalStateException, IOException {
+	protected String renderAttributePageLevel(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext) throws IllegalStateException, IOException {
 	    // If we're not bound to anything, output nothing.
 	    if (boundTo==null) {
 	        return "";
 	    }
 	
-	    String ret="";
+	    StringWriter ret=new StringWriter();
+	    PrintWriter w=new PrintWriter(ret);
+	
+	    String id=Functions.xpathToId(rowContext+boundTo);
 	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-	
-	    if (attr.isChoiceType() && !attr.isChoiceSlaveType() && attr.getFormatOption("type")!=null) {
-	        String optionTypeName=attr.getFormatOption("type");
-	        Choice choice=(Choice)(new CoreProxy().newProductType(((Quotation)session.getAttribute("quotation")).getProductTypeId(), optionTypeName));
-	        ret=choice.renderAsJavaScriptArray(optionTypeName);
-	    }
-	
-	    return ret;
+	    
+	    QuotationContext.getRenderer().renderAttributeFieldPageLevel(w, request, response, attr, this, boundTo, id);
+	    
+	    return ret.toString();
 	}
 
 	/**
@@ -533,28 +407,4 @@ public class AttributeField extends PageElement {
 	    
 	    return model;
 	}
-
-    /**
-     * Render an AttributeField's choice list as a set of HTML options for use in a select element.
-     * See {@link com.ail.core.Attribute} for details of the choice format.
-     * @param format Choice string
-     * @param selected The value of the option to show as selected, or null if no value is selected.
-     * @return Option line as a string.
-     */
-    private String renderEnumerationAsOptions(String format, String selected) {
-        StringBuffer ret=new StringBuffer();
-
-        String[] opts=format.split("[|#]");
-
-        for(int i=1 ; i<opts.length ; i+=2) {
-            if (opts[i].equals(selected)) {
-                ret.append("<option selected='yes'>"+opts[i]+"</option>");
-            }
-            else {
-                ret.append("<option>"+opts[i]+"</option>");
-            }
-        }
-        
-        return ret.toString();
-    }
 }

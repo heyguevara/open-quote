@@ -25,6 +25,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * An information page typically contains more information than question/answer elements (which are better housed in a
@@ -46,20 +47,8 @@ public class InformationPage extends Page {
         
         PrintWriter w = response.getWriter();
 
-        w.printf(" <table width='100%%' border='0' cols='1'>");
-
-        if (getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-header'><td>%s</td></tr>", i18n(getTitle()));
-        }
-
-        for (PageElement e : super.getPageElement()) {
-            w.printf("<tr><td>");
-            model=e.renderResponse(request, response, model);
-            w.printf("</td></tr>");
-        }
+        model=QuotationContext.getRenderer().renderInformationPage(w, request, response, model, this, i18n(getTitle()), super.getPageElement());
         
-        w.printf(" </table>");
-
         super.renderPageFooter(request, response, model);
         
         return model;
