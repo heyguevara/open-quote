@@ -24,6 +24,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.Proposer;
+import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.Answer;
 import com.ail.openquote.ui.AnswerScroller;
 import com.ail.openquote.ui.AnswerSection;
@@ -36,7 +38,16 @@ import com.ail.openquote.ui.InformationPage;
 import com.ail.openquote.ui.Label;
 import com.ail.openquote.ui.LoginSection;
 import com.ail.openquote.ui.NavigationSection;
+import com.ail.openquote.ui.Page;
 import com.ail.openquote.ui.PageElement;
+import com.ail.openquote.ui.PageScript;
+import com.ail.openquote.ui.PageSection;
+import com.ail.openquote.ui.ParsedUrlContent;
+import com.ail.openquote.ui.PaymentDetails;
+import com.ail.openquote.ui.PaymentOptionSelector;
+import com.ail.openquote.ui.ProposerDetails;
+import com.ail.openquote.ui.Question;
+import com.ail.openquote.ui.QuestionPage;
 
 public class Xform extends Type implements Renderer {
 	private static final long serialVersionUID = 2918957259222383330L;
@@ -105,4 +116,50 @@ public class Xform extends Type implements Renderer {
 		// TODO Auto-generated method stub
     	return model;
     }    
+
+    public Type renderPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Page page) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderPageScriptHeader(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderParsedUrlContent(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ParsedUrlContent parsedUrlContent, String content) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderPaymentDetails(PrintWriter w, RenderRequest request, RenderResponse response, Quotation model, PaymentDetails paymentDetails) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Quotation renderPaymentOptionSelector(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quotation, PaymentOptionSelector paymentOptionSelector) {
+		// TODO Auto-generated method stub
+    	return quotation;
+    }
+
+    public Proposer renderProposerDetails(PrintWriter w, RenderRequest request, RenderResponse response, Proposer proposer, ProposerDetails proposerDetails) {
+		// TODO Auto-generated method stub
+    	return proposer;
+    }
+
+    public Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderQuestionPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionPage questionPage, String title) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+    
 }

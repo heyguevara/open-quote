@@ -16,11 +16,9 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.addError;
-import static com.ail.openquote.ui.util.Functions.findError;
-import static com.ail.openquote.ui.util.Functions.hideNull;
-import static com.ail.openquote.ui.util.Functions.isEmpty;
 import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.addError;
+import static com.ail.openquote.ui.util.Functions.isEmpty;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,10 +31,10 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.CommercialProposer;
-import com.ail.openquote.PersonalProposer;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 import com.ail.party.Title;
 
 /**
@@ -187,220 +185,7 @@ public class ProposerDetails extends PageElement {
         PrintWriter w=response.getWriter();
         Proposer proposer=(Proposer)((Quotation)model).getProposer();
 
-        w.printf("<table width='100%%' border='0' cols='6'>");
-        w.printf( "<tr><td height='15' colspan='6'>&nbsp;</td></tr>");
-        
-        if (proposer instanceof PersonalProposer) {
-            w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
-            w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'>");
-	        w.printf(    "<tr>");
-	        w.printf(     "<td>");
-	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
-	        w.printf(     "</td>");
-	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
-	        w.printf(    "</tr>");
-	        w.printf(   "</table>");
-	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
-	        w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'><tr>");
-	        w.printf(    "<td>");
-	        w.printf(     "<input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
-	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
-	        w.printf(   "</tr></table>");
-	        w.printf(  "</td>");
-	        w.printf( "</tr>");
-
-	        w.printf( "<tr class='portlet-font'>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
-	        w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'><tr>");
-	        w.printf(    "<td>");
-	        w.printf(     "<input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
-	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
-	        w.printf(   "</tr></table>");
-	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
-	        w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'><tr>");
-	        w.printf(    "<td>");
-	        w.printf(     "<input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
-	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
-	        w.printf(   "</tr></table>");
-	        w.printf(  "</td>");
-	        w.printf( "</tr>");
-        }
-        else if (proposer instanceof CommercialProposer) {
-            w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_company_label")+"</td>");
-            w.printf(  "<td colspan='4'>");
-            w.printf(   "<table border='0'><tr>");
-            w.printf(    "<td>");
-            w.printf(     "<input name='companyName' class='portlet-form-input-field' type='text' value='%s' size='100'>", (((CommercialProposer)proposer).getCompanyName()));
-            w.printf(    "</td>");
-            w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("companyName", proposer.getInstance()));
-            w.printf(   "</tr></table>");
-            w.printf(  "</td>");
-            w.printf( "</tr>");
-        }
-                
-        w.printf( "<tr><td height='15'></td></tr>");
-        
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_address_label")+"</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='address1' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine1());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address1", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='address2' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine2());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address2", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='town' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getTown());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("town", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='county' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getCounty());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("county", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='postcode' class='portlet-form-input-field' type='text' value='%s' size='8' maxlength='8'>", proposer.getAddress().getPostcode());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("postcode", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        
-        w.printf( "<tr><td height='15'></td></tr>");
-        
-        w.printf("</table>");
-
-        w.printf("<table border='0' cols='6'>");
-
-        if (proposer instanceof CommercialProposer) {
-            w.printf( "<tr><td height='15'></td></tr>");
-            w.printf( "<tr><td class='portlet-section-subheader' colspan='4'>Contact details</td></tr>");
-            w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
-            w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'>");
-	        w.printf(    "<tr>");
-	        w.printf(     "<td>");
-	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
-	        w.printf(     "</td>");
-	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
-	        w.printf(    "</tr>");
-	        w.printf(   "</table>");
-	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
-	        w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'><tr>");
-	        w.printf(    "<td>");
-	        w.printf(     "<input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
-	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
-	        w.printf(   "</tr></table>");
-	        w.printf(  "</td>");
-	        w.printf( "</tr>");
-
-	        w.printf( "<tr class='portlet-font'>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
-	        w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'><tr>");
-	        w.printf(    "<td>");
-	        w.printf(     "<input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
-	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
-	        w.printf(   "</tr></table>");
-	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
-	        w.printf(  "<td colspan='2'>");
-	        w.printf(   "<table border='0'><tr>");
-	        w.printf(    "<td>");
-	        w.printf(     "<input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
-	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
-	        w.printf(   "</tr></table>");
-	        w.printf(  "</td>");
-	        w.printf( "</tr>");
-        }
-        
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_telephone_label")+"</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='phone' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getTelephoneNumber());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("phone", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf(  "<td colspan='4'>&nbsp;</td>");
-        w.printf( "</tr>");
-
-        w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_email_label")+"</td>");
-        w.printf(  "<td colspan='2'>");
-        w.printf(   "<table border='0'><tr>");
-        w.printf(    "<td>");
-        w.printf(     "<input name='email' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getEmailAddress());
-        w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("email", proposer.getInstance()));
-        w.printf(   "</tr></table>");
-        w.printf(  "</td>");
-        w.printf(  "<td colspan='4'>&nbsp;</td>");
-        w.printf( "</tr>");
-
-        w.printf( "<tr><td height='15' colspan='6'>&nbsp;</td></tr>");
-
-        // Disable the 'otherTitle' field on page load if 'title' isn't 'Other'.
-        w.printf( "<script type='text/javascript'>\n");
-        w.printf( "elm=findElementsByName(\"title\")[0];\n");
-        w.printf( "val=elm.options[elm.selectedIndex].text;\n");
-        w.printf( "disableTargetIf(val!=\"Other\", \"otherTitle\");\n");
-        w.printf( "</script>");
-
-        w.printf("</table>");
+        QuotationContext.getRenderer().renderProposerDetails(w, request, response, proposer, this);
         
         return model;
 	}

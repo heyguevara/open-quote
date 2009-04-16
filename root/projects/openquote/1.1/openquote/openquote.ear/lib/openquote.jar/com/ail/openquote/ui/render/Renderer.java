@@ -24,6 +24,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.Proposer;
+import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.Answer;
 import com.ail.openquote.ui.AnswerScroller;
 import com.ail.openquote.ui.AnswerSection;
@@ -36,7 +38,16 @@ import com.ail.openquote.ui.InformationPage;
 import com.ail.openquote.ui.Label;
 import com.ail.openquote.ui.LoginSection;
 import com.ail.openquote.ui.NavigationSection;
+import com.ail.openquote.ui.Page;
 import com.ail.openquote.ui.PageElement;
+import com.ail.openquote.ui.PageScript;
+import com.ail.openquote.ui.PageSection;
+import com.ail.openquote.ui.ParsedUrlContent;
+import com.ail.openquote.ui.PaymentDetails;
+import com.ail.openquote.ui.PaymentOptionSelector;
+import com.ail.openquote.ui.ProposerDetails;
+import com.ail.openquote.ui.Question;
+import com.ail.openquote.ui.QuestionPage;
 
 public interface Renderer {
 	Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException;
@@ -64,4 +75,22 @@ public interface Renderer {
     Type renderLoginSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, LoginSection loginSection, String usernameGuess, String nameOfForwardToPortal);
 
     Type renderNavigationSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, NavigationSection navigtionSection) throws IllegalStateException, IOException ;
+
+    Type renderPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Page page);
+
+    Type renderPageScriptHeader(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript);
+
+    Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection) throws IllegalStateException, IOException;
+
+    Type renderParsedUrlContent(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ParsedUrlContent parsedUrlContent, String content);
+
+    Type renderPaymentDetails(PrintWriter w, RenderRequest request, RenderResponse response, Quotation model, PaymentDetails paymentDetails);
+
+    Quotation renderPaymentOptionSelector(PrintWriter w, RenderRequest request, RenderResponse response, Quotation model, PaymentOptionSelector paymentOptionSelector);
+
+    Proposer renderProposerDetails(PrintWriter w, RenderRequest request, RenderResponse response, Proposer proposer, ProposerDetails proposerDetails);
+
+    Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext) throws IllegalStateException, IOException;
+
+    Type renderQuestionPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionPage questionPage, String title) throws IllegalStateException, IOException;
 }

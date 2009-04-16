@@ -25,6 +25,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>The QuestionPage element is the most commonly used page within {@link PageFlow PageFlows}. As the name
@@ -49,24 +50,12 @@ public class QuestionPage extends Page {
         
         super.renderPageHeader(request, response, model);
 
+        String title=(getTitle()!=null) ? i18n(getTitle()) : null;
+        
         PrintWriter w = response.getWriter();
         
-        w.printf("<form name='%s' action='%s' method='post'>", getId(), response.createActionURL());
-        w.printf(" <table width='100%%' border='0' cols='1'>");
-
-        if (getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-header'><td>%s</td></tr>", i18n(getTitle()));
-        }
-
-        for (PageElement e : super.getPageElement()) {
-            w.printf("<tr><td>");
-            model=e.renderResponse(request, response, model);
-            w.printf("</td></tr>");
-        }
-
-        w.printf(" </table>");
-        w.printf("</form>");
-
+        model=QuotationContext.getRenderer().renderQuestionPage(w, request, response, model, this, title);
+        
         super.renderPageFooter(request, response, model);
         
         return model;

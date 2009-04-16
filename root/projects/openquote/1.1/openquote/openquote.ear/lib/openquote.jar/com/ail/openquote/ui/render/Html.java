@@ -44,6 +44,7 @@ import com.ail.core.Type;
 import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
+import com.ail.financial.PaymentSchedule;
 import com.ail.insurance.policy.AssessmentLine;
 import com.ail.insurance.policy.AssessmentNote;
 import com.ail.insurance.policy.AssessmentSheet;
@@ -55,6 +56,8 @@ import com.ail.insurance.policy.Marker;
 import com.ail.insurance.policy.RateBehaviour;
 import com.ail.insurance.policy.Section;
 import com.ail.insurance.policy.SumBehaviour;
+import com.ail.openquote.CommercialProposer;
+import com.ail.openquote.PersonalProposer;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.Answer;
@@ -69,16 +72,29 @@ import com.ail.openquote.ui.InformationPage;
 import com.ail.openquote.ui.Label;
 import com.ail.openquote.ui.LoginSection;
 import com.ail.openquote.ui.NavigationSection;
+import com.ail.openquote.ui.Page;
 import com.ail.openquote.ui.PageElement;
 import com.ail.openquote.ui.PageFlow;
+import com.ail.openquote.ui.PageScript;
+import com.ail.openquote.ui.PageSection;
+import com.ail.openquote.ui.ParsedUrlContent;
+import com.ail.openquote.ui.PaymentDetails;
+import com.ail.openquote.ui.PaymentOptionSelector;
+import com.ail.openquote.ui.ProposerDetails;
+import com.ail.openquote.ui.Question;
+import com.ail.openquote.ui.QuestionPage;
 import com.ail.openquote.ui.RenderingError;
 import com.ail.openquote.ui.util.Choice;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
+import com.ail.party.Title;
 
 public class Html extends Type implements Renderer {
 	private static final long serialVersionUID = 1L;
 	private RenderBrokerQuotationSummaryHelper renderBrokerQuotationSummaryHelper=new RenderBrokerQuotationSummaryHelper();
+	private RenderAssessmentSheetDetailsHelper renderAssessmentSheetDetailsHelper=new RenderAssessmentSheetDetailsHelper();
+	private RenderAttributeFieldHelper renderAttributeFieldHelper=new RenderAttributeFieldHelper();
+	private RenderPaymentDetailsHelper renderPaymentDetailsHelper=new RenderPaymentDetailsHelper();
 	
 	public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException {
 		 w.printf("<tr><td>%s</td><td>%s</td></tr>", title, answerText);
@@ -142,7 +158,7 @@ public class Html extends Type implements Renderer {
         w.printf(            "<table>");
         w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_product_title")+"</td><td class='portlet-font'>%s</td></tr>", quote.getProductName());
         w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_status_title")+"</td><td class='portlet-font'>%s</td></tr>", quote.getStatusAsString());
-        w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_total_premium_title")+"</td><td class='portlet-font'>%s</td></tr>", RenderAssessmentSheetDetailsHelper.totalPremium(quote));
+        w.printf(              "<tr><td class='portlet-font'>"+i18n("i18n_assessment_sheet_details_total_premium_title")+"</td><td class='portlet-font'>%s</td></tr>", renderAssessmentSheetDetailsHelper.totalPremium(quote));
         w.printf(            "</table>");
         w.printf(          "</td>");
         w.printf(        "</tr>");
@@ -156,14 +172,14 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td colspan='2'>");
         w.printf(      "<table width='100%%' style='border-collapse: collapse;'>");
 
-        RenderAssessmentSheetDetailsHelper.renderAssessmentSheet(w, i18n("i18n_assessment_sheet_details_policy_title"), quote.getAssessmentSheet());
+        renderAssessmentSheetDetailsHelper.renderAssessmentSheet(w, i18n("i18n_assessment_sheet_details_policy_title"), quote.getAssessmentSheet());
 
         w.printf(  "<tr>");
         w.printf(    "<td height='10'></td>");
         w.printf(  "</tr>");
 
         for(Section s: quote.getSection()) {
-        	RenderAssessmentSheetDetailsHelper.renderAssessmentSheet(w, i18n("i18n_assessment_sheet_details_section_title")+" "+s.getSectionTypeId(), s.getAssessmentSheet());
+        	renderAssessmentSheetDetailsHelper.renderAssessmentSheet(w, i18n("i18n_assessment_sheet_details_section_title")+" "+s.getSectionTypeId(), s.getAssessmentSheet());
         }
         
         w.printf(      "</table>");
@@ -245,7 +261,7 @@ public class Html extends Type implements Renderer {
 	                        }
 	                	}
 	                	else {
-	                		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, RenderAttributeFieldHelper.renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
+	                		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderAttributeFieldHelper.renderEnumerationAsOptions(attr.getFormatOption("options"), attr.getValue()));
 	                	}
 	                }
 	                else {
@@ -270,7 +286,7 @@ public class Html extends Type implements Renderer {
 	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>Yes</input>&nbsp;&nbsp;", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
 	            	}
 	            	else {
-	            		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, RenderAttributeFieldHelper.renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
+	            		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderAttributeFieldHelper.renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
 	            	}
                     w.printf("</td>");
 	            }
@@ -528,10 +544,360 @@ public class Html extends Type implements Renderer {
         return model;
     }
     
-    static class RenderAssessmentSheetDetailsHelper {
-	    private static String cellStyle="class='portlet-font' style='border: 1px solid gray;'";
+    public Type renderPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Page page) {
+        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'></script>");        
 
-	    static public void renderAssessmentSheet(PrintWriter w, String title, AssessmentSheet sheet) {
+        // Always include the openquote script
+        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");
+        
+    	return model;
+    }
+    
+    public Type renderPageScriptHeader(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript) {
+        if (pageScript.getUrl().indexOf(':')>=0) {
+            w.printf("<script type='text/javascript' src='%s'></script>", pageScript.getUrl());
+        }
+        else {
+            w.printf("<script type='text/javascript' src='%s'></script>", request.getContextPath()+"/"+pageScript.getUrl());
+        }
+    	return model;
+    }
+    
+    public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection) throws IllegalStateException, IOException {
+        w.printf(" <table width='100%%' border='0' cols='%d'>", pageSection.getColumns());
+
+        // Output the section title if there is one.
+        if (!Functions.isEmpty(pageSection.getTitle())) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>%s</td></tr>", pageSection.getColumns(), i18n(pageSection.getTitle()));
+        }
+
+        Iterator<? extends PageElement> it=pageSection.getPageElement().iterator();
+        
+        while(it.hasNext()) {
+            w.printf("<tr>");
+            for(int col=0 ; col<pageSection.getColumns() ; col++) {
+                w.printf("<td>");
+                if (it.hasNext()) {
+                    model=it.next().renderResponse(request, response, model);
+                }
+                else {
+                    w.printf("&nbsp;");
+                }
+                w.printf("</td>");
+            }
+            w.printf("</tr>");
+        }
+        w.printf("</table>");
+        
+        return model;
+    }
+    
+    public Type renderParsedUrlContent(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ParsedUrlContent parsedUrlContent, String content) {
+        w.printf("<table>");
+        w.printf("<tr>");
+        w.printf("<td class='portlet-font' width='100%%'>");
+        
+        w.print(content);
+        
+        w.printf("</td>");
+        w.printf("</tr>");
+        w.printf("</table>");
+        
+        return model;
+    }
+    
+    public Type renderPaymentDetails(PrintWriter w, RenderRequest request, RenderResponse response, Quotation model, PaymentDetails paymentDetails) {
+        w.printf("<table cellpadding='4' width='100%%'>");
+        renderPaymentDetailsHelper.renderSummary(w, model);
+        renderPaymentDetailsHelper.renderPaymentDetails(w, model);
+        renderPaymentDetailsHelper.renderSubmit(w, model);
+        w.printf("</table>");
+        
+    	return model;
+    }
+    
+    public Quotation renderPaymentOptionSelector(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quotation, PaymentOptionSelector paymentOptionSelector) {
+        w.printf("<table cellpadding='4' width='100%%' col='2'>");
+        w.printf("   <tr class='portlet-font'>");
+        w.printf("       <td class='portlet-section-alternate' colspan='2'>"+i18n("i18n_payment_option_selector_title")+"</td>");
+        w.printf("   </tr>");       
+
+        // output the error if there is one
+        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", findError("paymentDetails", quotation));
+        
+        w.printf("   <tr><td colspan='2' height='15'><hr/></td></tr>");
+
+        // loop through the options outputting each to its own row
+        for(PaymentSchedule ps: quotation.getPaymentOption()) {
+            w.printf("   <tr class='portlet-font'>");
+            w.printf("       <td class='portal-section'>");
+            w.printf("           <b>%s</b>", ps.getDescription());
+            if (ps.getMoneyProvision().size() > 1) {
+                for(MoneyProvision mp: ps.getMoneyProvision()) {
+                    w.printf("<br/>%s", mp.getDescription());
+                }
+            }
+            w.printf("       </td>");
+            w.printf("       <td align='center'><input name='selectedOption' value='%d' %s type='radio'/></td>", 
+                 ps.hashCode(), (quotation.getPaymentDetails()==ps) ? "checked='yes'" : "");
+            w.printf("   </tr>");
+            w.printf("   <tr><td colspan='2'><hr/></td></tr>");
+        }
+
+        w.printf("</table>");
+
+        return quotation;
+    }
+
+    public Proposer renderProposerDetails(PrintWriter w, RenderRequest request, RenderResponse response, Proposer proposer, ProposerDetails proposerDetails) {
+        w.printf("<table width='100%%' border='0' cols='6'>");
+        w.printf( "<tr><td height='15' colspan='6'>&nbsp;</td></tr>");
+        
+        if (proposer instanceof PersonalProposer) {
+            w.printf( "<tr class='portlet-font'>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
+            w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'>");
+	        w.printf(    "<tr>");
+	        w.printf(     "<td>");
+	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
+	        w.printf(     "</td>");
+	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
+	        w.printf(    "</tr>");
+	        w.printf(   "</table>");
+	        w.printf(  "</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
+	        w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'><tr>");
+	        w.printf(    "<td>");
+	        w.printf(     "<input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
+	        w.printf(    "</td>");
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
+	        w.printf(   "</tr></table>");
+	        w.printf(  "</td>");
+	        w.printf( "</tr>");
+
+	        w.printf( "<tr class='portlet-font'>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
+	        w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'><tr>");
+	        w.printf(    "<td>");
+	        w.printf(     "<input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
+	        w.printf(    "</td>");
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
+	        w.printf(   "</tr></table>");
+	        w.printf(  "</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
+	        w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'><tr>");
+	        w.printf(    "<td>");
+	        w.printf(     "<input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
+	        w.printf(    "</td>");
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
+	        w.printf(   "</tr></table>");
+	        w.printf(  "</td>");
+	        w.printf( "</tr>");
+        }
+        else if (proposer instanceof CommercialProposer) {
+            w.printf( "<tr class='portlet-font'>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_company_label")+"</td>");
+            w.printf(  "<td colspan='4'>");
+            w.printf(   "<table border='0'><tr>");
+            w.printf(    "<td>");
+            w.printf(     "<input name='companyName' class='portlet-form-input-field' type='text' value='%s' size='100'>", (((CommercialProposer)proposer).getCompanyName()));
+            w.printf(    "</td>");
+            w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("companyName", proposer.getInstance()));
+            w.printf(   "</tr></table>");
+            w.printf(  "</td>");
+            w.printf( "</tr>");
+        }
+                
+        w.printf( "<tr><td height='15'></td></tr>");
+        
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_address_label")+"</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='address1' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine1());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address1", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf( "</tr>");
+        
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='address2' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine2());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address2", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf( "</tr>");
+        
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='town' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getTown());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("town", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf( "</tr>");
+        
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='county' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getCounty());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("county", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf( "</tr>");
+
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='postcode' class='portlet-form-input-field' type='text' value='%s' size='8' maxlength='8'>", proposer.getAddress().getPostcode());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("postcode", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf( "</tr>");
+        
+        w.printf( "<tr><td height='15'></td></tr>");
+        
+        w.printf("</table>");
+
+        w.printf("<table border='0' cols='6'>");
+
+        if (proposer instanceof CommercialProposer) {
+            w.printf( "<tr><td height='15'></td></tr>");
+            w.printf( "<tr><td class='portlet-section-subheader' colspan='4'>Contact details</td></tr>");
+            w.printf( "<tr class='portlet-font'>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
+            w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'>");
+	        w.printf(    "<tr>");
+	        w.printf(     "<td>");
+	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
+	        w.printf(     "</td>");
+	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
+	        w.printf(    "</tr>");
+	        w.printf(   "</table>");
+	        w.printf(  "</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
+	        w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'><tr>");
+	        w.printf(    "<td>");
+	        w.printf(     "<input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
+	        w.printf(    "</td>");
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
+	        w.printf(   "</tr></table>");
+	        w.printf(  "</td>");
+	        w.printf( "</tr>");
+
+	        w.printf( "<tr class='portlet-font'>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
+	        w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'><tr>");
+	        w.printf(    "<td>");
+	        w.printf(     "<input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
+	        w.printf(    "</td>");
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
+	        w.printf(   "</tr></table>");
+	        w.printf(  "</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
+	        w.printf(  "<td colspan='2'>");
+	        w.printf(   "<table border='0'><tr>");
+	        w.printf(    "<td>");
+	        w.printf(     "<input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
+	        w.printf(    "</td>");
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
+	        w.printf(   "</tr></table>");
+	        w.printf(  "</td>");
+	        w.printf( "</tr>");
+        }
+        
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_telephone_label")+"</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='phone' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getTelephoneNumber());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("phone", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf(  "<td colspan='4'>&nbsp;</td>");
+        w.printf( "</tr>");
+
+        w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_email_label")+"</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='email' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getEmailAddress());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("email", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf(  "<td colspan='4'>&nbsp;</td>");
+        w.printf( "</tr>");
+
+        w.printf( "<tr><td height='15' colspan='6'>&nbsp;</td></tr>");
+
+        // Disable the 'otherTitle' field on page load if 'title' isn't 'Other'.
+        w.printf( "<script type='text/javascript'>\n");
+        w.printf( "elm=findElementsByName(\"title\")[0];\n");
+        w.printf( "val=elm.options[elm.selectedIndex].text;\n");
+        w.printf( "disableTargetIf(val!=\"Other\", \"otherTitle\");\n");
+        w.printf( "</script>");
+
+        w.printf("</table>");
+        
+        return proposer;
+    }
+    
+    public Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext) throws IllegalStateException, IOException {
+        w.printf("<td>%s</td>", title);
+        w.printf("<td colspan='3' align='left'>%s</td>", question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
+    	return model;
+    }
+
+    public Type renderQuestionPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionPage questionPage, String title) throws IllegalStateException, IOException {
+        w.printf("<form name='%s' action='%s' method='post'>", questionPage.getId(), response.createActionURL());
+        w.printf(" <table width='100%%' border='0' cols='1'>");
+
+        if (title!=null) {
+            w.printf("  <tr class='portlet-section-header'><td>%s</td></tr>", title);
+        }
+
+        for (PageElement e : questionPage.getPageElement()) {
+            w.printf("<tr><td>");
+            model=e.renderResponse(request, response, model);
+            w.printf("</td></tr>");
+        }
+
+        w.printf(" </table>");
+        w.printf("</form>");
+        
+    	return model;
+    }
+    
+    private class RenderAssessmentSheetDetailsHelper {
+	    private String cellStyle="class='portlet-font' style='border: 1px solid gray;'";
+
+	    public void renderAssessmentSheet(PrintWriter w, String title, AssessmentSheet sheet) {
 	        w.printf("<tr>");
 	        w.printf(  "<td colspan='6' style='border: 1px solid gray;' class='portlet-section-selected'><b>"+i18n("i18n_assessment_sheet_section_title")+"</b></td>", title);
 	        w.printf("</tr>");
@@ -543,7 +909,7 @@ public class Html extends Type implements Renderer {
 	        renderMarkerLines(w, sheet);
 	    }
 
-	    static private void renderNotesLines(PrintWriter w, AssessmentSheet sheet) {
+	    private void renderNotesLines(PrintWriter w, AssessmentSheet sheet) {
 	        w.printf("<tr>");
 	        w.printf(  "<td colspan='6' style='border: 1px solid gray;' colspan='6' height='5'></td>");
 	        w.printf("</tr>");
@@ -586,7 +952,7 @@ public class Html extends Type implements Renderer {
 	        }
 	    }
 
-	    static private void renderCalculationLines(PrintWriter w, AssessmentSheet sheet) {
+	    private void renderCalculationLines(PrintWriter w, AssessmentSheet sheet) {
 	        w.printf("<tr>");
 	        w.printf(  "<td colspan='6' style='border: 1px solid gray;' height='5'></td>");
 	        w.printf("</tr>");
@@ -642,7 +1008,7 @@ public class Html extends Type implements Renderer {
 	        }
 	    }
 
-	    static private void renderMarkerLines(PrintWriter w, AssessmentSheet sheet) {
+	    private void renderMarkerLines(PrintWriter w, AssessmentSheet sheet) {
 	        w.printf("<tr>");
 	        w.printf(  "<td colspan='6' style='border: 1px solid gray;' height='5'></td>");
 	        w.printf("</tr>");
@@ -685,7 +1051,7 @@ public class Html extends Type implements Renderer {
 	        }
 	    }
 
-	    static private String totalPremium(Quotation quote) {
+	    private String totalPremium(Quotation quote) {
 	        try {
 	            return quote.getTotalPremium().toString();
 	        }
@@ -694,7 +1060,7 @@ public class Html extends Type implements Renderer {
 	        }
 	    }
 
-	    static private String calculationLineRate(CalculationLine line) {
+	    private String calculationLineRate(CalculationLine line) {
 	        try {
 	            return ((RateBehaviour)line).getRate().getRate();
 	        }
@@ -703,7 +1069,7 @@ public class Html extends Type implements Renderer {
 	        }
 	    }
 	    
-	    static private String calculationLineType(CalculationLine line) {
+	    private String calculationLineType(CalculationLine line) {
 	        if (line instanceof RateBehaviour) {
 	            RateBehaviour r=(RateBehaviour)line;
 	            return String.format("<table width='100%%' style='border-collapse: collapse;'>"+
@@ -737,7 +1103,7 @@ public class Html extends Type implements Renderer {
 	    }
 	}
 	
-	static class RenderAttributeFieldHelper {
+	private class RenderAttributeFieldHelper {
 	    /**
 	     * Render an AttributeField's choice list as a set of HTML options for use in a select element.
 	     * See {@link com.ail.core.Attribute} for details of the choice format.
@@ -745,7 +1111,7 @@ public class Html extends Type implements Renderer {
 	     * @param selected The value of the option to show as selected, or null if no value is selected.
 	     * @return Option line as a string.
 	     */
-	    private static String renderEnumerationAsOptions(String format, String selected) {
+	    private String renderEnumerationAsOptions(String format, String selected) {
 	        StringBuffer ret=new StringBuffer();
 
 	        String[] opts=format.split("[|#]");
@@ -763,11 +1129,11 @@ public class Html extends Type implements Renderer {
 	    }
 	}
 
-    static class RenderBrokerQuotationSummaryHelper {
+    private class RenderBrokerQuotationSummaryHelper {
         /** Define the types of lines to include in the premium detail table */
-        private static List<BehaviourType> PREMIUM_DETAIL_LINE_TYPES = new ArrayList<BehaviourType>();
+        private List<BehaviourType> PREMIUM_DETAIL_LINE_TYPES = new ArrayList<BehaviourType>();
         
-        static {
+        RenderBrokerQuotationSummaryHelper() {
             PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.TAX);
             PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.COMMISSION);
             PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.MANAGEMENT_CHARGE);
@@ -864,5 +1230,187 @@ public class Html extends Type implements Renderer {
 	        }
 	        w.printf("</table>");
 	    }
+    }
+    
+    private class RenderPaymentDetailsHelper {
+    	private SimpleDateFormat monthFormat=new SimpleDateFormat("MM");
+        private SimpleDateFormat yearFormat=new SimpleDateFormat("yy");
+
+        private void renderSummary(PrintWriter w, Quotation quote) {
+            SimpleDateFormat f=new SimpleDateFormat("d MMMMM, yyyy");
+            Proposer proposer=(Proposer)quote.getProposer();
+
+            w.printf("<tr class='portlet-font'>");
+            w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_title")+"</td>");
+            w.printf("</tr>");
+            w.printf("<tr>");
+            w.printf("    <td>");
+            w.printf("        <table width='100%%'>");
+            w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_premium_label")+"</b></td><td>%s</td></tr>", quote.getTotalPremium());
+            w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_cover_start_date_label")+"</b></td><td>%s</td></tr>", f.format(quote.getInceptionDate()));
+            w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_cover_end_date_label")+"</b></td><td>%s</td></tr>", f.format(quote.getExpiryDate()));
+            w.printf("        </table>");
+            w.printf("  </td>");
+            w.printf("</tr>");
+            w.printf("<tr class='portlet-font'>");
+            w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_contact_details_title")+"</td>");
+            w.printf("</tr> ");
+            w.printf("<tr>");
+            w.printf("    <td>");
+            w.printf("        <table width='100%%'>");
+            w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_name_label")+"</b></td><td>%s %s</td></tr>", proposer.getFirstName(), proposer.getSurname());
+            w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_address_label")+"</b></td><td>%s</td></tr>", proposer.getAddress());
+            w.printf("            <tr class='portlet-font'><td width='15%%'><b>"+i18n("i18n_payment_details_email_address_label")+"</b></td><td>%s</td></tr>", proposer.getEmailAddress());
+            w.printf("        </table>");
+            w.printf("    </td>");
+            w.printf("</tr>");
+        }
+
+        private void renderPaymentDetails(PrintWriter w, Quotation quote) {
+            w.printf("<tr class='portlet-font'>");
+            w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_payment_details_title")+"</td>");
+            w.printf("</tr> ");
+            w.printf("<tr>");
+            w.printf("    <td>");
+            for(MoneyProvision mp: quote.getPaymentDetails().getMoneyProvision()) {
+                if (mp.getPaymentMethod() instanceof PaymentCard) {
+                    renderCardDetails(w, quote, mp);
+                }
+                else if (mp.getPaymentMethod() instanceof DirectDebit) {
+                    renderBankDetails(w, quote, mp);
+                }
+            }
+            w.printf("    </td>");
+            w.printf("</tr> ");
+        }
+
+        private void renderBankDetails(PrintWriter w, Quotation quote, MoneyProvision mp) {
+            PaymentSchedule schedule=quote.getPaymentDetails();
+
+            DirectDebit dd=(DirectDebit)mp.getPaymentMethod();
+            String accountNumber=hideNull(dd.getAccountNumber());
+            String sortCode=(dd.getSortCode()!=null && dd.getSortCode().length()>0)? dd.getSortCode() : "--";
+            String sc1=sortCode.substring(0, sortCode.indexOf('-'));
+            String sc2=sortCode.substring(sortCode.indexOf('-')+1, sortCode.lastIndexOf('-'));
+            String sc3=sortCode.substring(sortCode.lastIndexOf('-')+1);
+            
+            w.printf("<table width='100%%' cols='2'>");
+            w.printf(" <tr class='portlet-font'><td width='25%%' colspan='2'>"+i18n("i18n_payment_details_bank_account_message")+"</td></tr>");
+            w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getLegalName()+", "+quote.getBroker().getAddress());
+            w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_id_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getDirectDebitIdentificationNumber());
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_account_number_label")+"</b></td>");
+            w.printf("  <td>");
+            w.printf("    <table border='0'><tr>");
+            w.printf("     <td><input name='acc' size='8' type='text' maxlength='10' value='%s'/></td>", accountNumber);
+            w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.account", schedule));
+            w.printf("   </table>");
+            w.printf("  </tr>");
+            w.printf(" </tr>");
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_sort_code_label")+"</b></td>");
+            w.printf("  <td>");
+            w.printf("    <table border='0'><tr>");
+            w.printf("     <td>");
+            w.printf(       "<input name='sc1' size='2' maxlength='2' type='text' value='%s'/>-", sc1);
+            w.printf(       "<input name='sc2' size='2' maxlength='2' type='text' value='%s'/>-", sc2);
+            w.printf(       "<input name='sc3' size='2' maxlength='2' type='text' value='%s'/>", sc3);
+            w.printf("     </td>");
+            w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.sort", schedule));
+            w.printf("   </table>");
+            w.printf("  </tr>");
+            w.printf(" </tr>");
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td colspan='2'>");
+            w.printf(   i18n("i18n_payment_details_direct_debit_message"), quote.getBroker().getLegalName());
+            w.printf("  </td>");
+            w.printf(" </tr>");
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td colspan='2'>");
+            w.printf(   i18n("i18n_payment_details_guarantee_message"), quote.getBroker().getLegalName());
+            w.printf("  </td>");
+            w.printf(" </tr>");
+            w.printf("</table>");
+        }
+
+        private void renderCardDetails(PrintWriter w, Quotation quote, MoneyProvision mp) {
+            PaymentSchedule schedule=quote.getPaymentDetails();
+            PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
+            
+            String month=pc.getExpiryDate()!=null ? monthFormat.format(pc.getExpiryDate()) : "";
+            String year=pc.getExpiryDate()!=null ? yearFormat.format(pc.getExpiryDate()) : "";
+            
+            if (pc.getCardHoldersName()==null) {
+            	Proposer proposer=(Proposer)quote.getProposer();
+                pc.setCardHoldersName(proposer.getFirstName()+" "+proposer.getSurname());
+            }
+            
+            w.printf("<table width='100%%' cols='2'>");
+            w.printf(" <tr class='portlet-font'><td width='15%%' colspan='2'>"+i18n("i18n_payment_details_direct_debit_title")+"</td></tr>");
+
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='15%%'><b>Card number</b></td>");
+            w.printf("  <td>");
+            w.printf("   <table border='0'><tr>");
+            w.printf("    <td><input name='cardNumber' size='20' type='text' value='%s'/></td>", hideNull(pc.getCardNumber()));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardNumber", schedule));
+            w.printf("   </tr></table>");
+            w.printf("  </td>");
+            w.printf(" </tr>");
+
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='15%%'><b>Expiry date</b></td>");
+            w.printf("  <td>");
+            w.printf("   <table border='0'><tr>");
+            w.printf("    <td>");
+            w.printf("     <input name='expiryMonth' size='2' maxlength='2' type='text' value='%s'/>", month);
+            w.printf("     <input name='expiryYear' size='2' type='text' maxlength='2' value='%s'/>", year);
+            w.printf("    </td>");
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.expiryDate", schedule));
+            w.printf("   </tr></table>");
+            w.printf("  </td>");
+            w.printf(" </tr>");
+            
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='15%%'><b>Issue number</b></td>");
+            w.printf("  <td>");
+            w.printf("   <table border='0'><tr>");
+            w.printf("    <td><input name='issueNumber' size='2' maxlength='2' type='text' value='%s'/></td>", hideNull(pc.getIssueNumber()));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.issueNumber", schedule));
+            w.printf("   </tr></table>");
+            w.printf("  </td>");
+            w.printf(" </tr>");
+
+            w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='15%%'><b>Cardholders name</b></td>");
+            w.printf("  <td>");
+            w.printf("   <table border='0'><tr>");
+            w.printf("    <td><input name='cardHoldersName' size='20' type='text' value='%s'/></td>", pc.getCardHoldersName());
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardHoldersName", schedule));
+            w.printf("   </tr></table>");
+            w.printf("  </td>");
+            w.printf(" </tr>");
+
+            w.printf("</table>");
+        }
+
+        private void renderSubmit(PrintWriter w, Quotation quote) {
+            w.printf("<tr class='portlet-font'>");
+            w.printf("    <td class='portlet-section-alternate'>Submit</td>");
+            w.printf("</tr>");
+            w.printf("<tr class='portlet-font'>");
+            w.printf(" <td>");
+            w.printf(  i18n("i18n_payment_details_confirm_message"), quote.getBroker().getPaymentTelephoneNumber());
+            w.printf(" <table border='0'><tr>");
+            w.printf("   <td>"+i18n("i18n_payment_details_confirm_label")+"<input name='confirm' type='checkbox'/></td>");
+            w.printf("   <td class='portlet-msg-error'>%s</td>", findError("confirm", quote.getPaymentDetails()));
+            w.printf(" </tr></table>");
+            w.printf(" </td>");
+            w.printf("</tr>");
+        }
+    }
+    
+    private class RenderProposerDetailsHelper {
+    	
     }
 }

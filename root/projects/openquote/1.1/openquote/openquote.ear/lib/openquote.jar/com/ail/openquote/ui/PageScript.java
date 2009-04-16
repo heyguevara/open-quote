@@ -24,6 +24,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * The PageScript element inserts javascript in a page's heading. The javascript itself is indicated by a URL (which
@@ -79,11 +80,6 @@ public class PageScript extends PageElement {
 
     @Override
     public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        if (url.indexOf(':')>=0) {
-            response.getWriter().printf("<script type='text/javascript' src='%s'></script>", url);
-        }
-        else {
-            response.getWriter().printf("<script type='text/javascript' src='%s'></script>", request.getContextPath()+"/"+url);
-        }
+    	QuotationContext.getRenderer().renderPageScriptHeader(response.getWriter(), request, response, model, this);
     }
 }

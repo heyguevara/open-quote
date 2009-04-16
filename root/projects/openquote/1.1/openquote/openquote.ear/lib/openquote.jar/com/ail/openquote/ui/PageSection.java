@@ -16,17 +16,13 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * A PageSection renders as a section on the page containing a number of columns (1 by default). The section may
@@ -57,32 +53,6 @@ public class PageSection extends PageContainer {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w = response.getWriter();
-        w.printf(" <table width='100%%' border='0' cols='%d'>", columns);
-
-        // Output the section title if there is one.
-        if (!Functions.isEmpty(getTitle())) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>%s</td></tr>", columns, i18n(getTitle()));
-        }
-
-        Iterator<? extends PageElement> it=getPageElement().iterator();
-        
-        while(it.hasNext()) {
-            w.printf("<tr>");
-            for(int col=0 ; col<columns ; col++) {
-                w.printf("<td>");
-                if (it.hasNext()) {
-                    model=it.next().renderResponse(request, response, model);
-                }
-                else {
-                    w.printf("&nbsp;");
-                }
-                w.printf("</td>");
-            }
-            w.printf("</tr>");
-        }
-        w.printf("</table>");
-        
-        return model;
-	}
+        return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this);
+    }
 }

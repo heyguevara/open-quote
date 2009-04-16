@@ -23,6 +23,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>The Question page element is probably one of the more commonly used elements in pageflows. It renders as a single line 
@@ -55,9 +56,6 @@ public class Question extends AttributeField {
 
         PrintWriter w=response.getWriter();
         
-        w.printf("<td>%s</td>", title);
-        w.printf("<td colspan='3' align='left'>%s</td>", renderAttribute(request, response, model, getBinding(), rowContext, getOnChange(), getOnLoad()));
-        
-        return model;
+        return QuotationContext.getRenderer().renderQuestion(w, request, response, model, this, title, rowContext);
     }
 }

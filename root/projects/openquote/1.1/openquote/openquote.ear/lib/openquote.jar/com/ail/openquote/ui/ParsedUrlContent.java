@@ -16,14 +16,13 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.core.Functions.configurationNamespaceToProductName;
 import static com.ail.core.Functions.expand;
 import static com.ail.core.Functions.loadUrlContentAsString;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
-import static com.ail.core.Functions.configurationNamespaceToProductName;
 import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Collection;
 
@@ -35,6 +34,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * A PageElement which contains content read from an arbitrary URL. The content is parsed
@@ -88,15 +88,12 @@ public class ParsedUrlContent extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        Quotation quote=(com.ail.openquote.Quotation)model;
         String productName=null;
         boolean success=false;
-
-        w.printf("<table>");
-        w.printf("<tr>");
-        w.printf("<td class='portlet-font' width='100%%'>");
+        String content=null;
         
+        Quotation quote=(com.ail.openquote.Quotation)model;
+
         CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()));
         Collection<String> namespaces=cp.getConfigurationNamespaceParent();
         
@@ -104,7 +101,7 @@ public class ParsedUrlContent extends PageElement {
             try {
                 if (namespace.endsWith("Registry")) {
                     productName=configurationNamespaceToProductName(namespace);
-                    expand(w, loadUrlContentAsString(new URL(expandRelativeUrl(url, request, productName))), quote);
+                    content=expand(loadUrlContentAsString(new URL(expandRelativeUrl(getUrl(), request, productName))), quote);
                     success=true;
                     break;
                 }
@@ -115,13 +112,9 @@ public class ParsedUrlContent extends PageElement {
         }
         
         if (!success) {
-            w.printf("ERROR: Content not found for:"+url);
+            content="ERROR: Content not found for:"+getUrl();
         }
         
-        w.printf("</td>");
-        w.printf("</tr>");
-        w.printf("</table>");
-        
-        return quote;
+        return QuotationContext.getRenderer().renderParsedUrlContent(response.getWriter(), request, response, model, this, content);
 	}
 }

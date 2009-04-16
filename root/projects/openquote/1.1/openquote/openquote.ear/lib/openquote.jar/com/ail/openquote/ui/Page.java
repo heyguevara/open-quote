@@ -17,12 +17,12 @@
 package com.ail.openquote.ui;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * An abstract UI element providing default handler methods common to its concrete sub-classes.
@@ -36,21 +36,14 @@ public abstract class Page extends PageContainer {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        response.setContentType("text/html");
-
-        PrintWriter w = response.getWriter();
+        response.setContentType(request.getResponseContentType());
 
         // Execute any page actions defined for this page
         for (Action a : getAction()) {
             model=a.renderResponse(request, response, model);
         }
 
-        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'></script>");        
-
-        // Always include the openquote script
-        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");
-        
-        return model;
+        return QuotationContext.getRenderer().renderPage(response.getWriter(), request, response, model, this);
     }
 
     @Override

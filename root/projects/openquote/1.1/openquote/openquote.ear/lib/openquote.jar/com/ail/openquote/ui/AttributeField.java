@@ -309,7 +309,7 @@ public class AttributeField extends PageElement {
 	 * @throws IOException
 	 * @throws PostconditionException 
 	 */
-	protected String renderAttribute(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
+	public String renderAttribute(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
 		// If we're not bound to anything, output nothing.
 	    if (boundTo==null) {
 	        return "";

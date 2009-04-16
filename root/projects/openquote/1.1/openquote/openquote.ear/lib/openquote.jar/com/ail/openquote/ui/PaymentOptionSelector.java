@@ -33,6 +33,7 @@ import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentSchedule;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>This element displays the payment options available and prompts the user to select
@@ -90,38 +91,6 @@ public class PaymentOptionSelector extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    Quotation quote=(Quotation)model;
-        PrintWriter w=response.getWriter();
-
-        w.printf("<table cellpadding='4' width='100%%' col='2'>");
-        w.printf("   <tr class='portlet-font'>");
-        w.printf("       <td class='portlet-section-alternate' colspan='2'>"+i18n("i18n_payment_option_selector_title")+"</td>");
-        w.printf("   </tr>");       
-
-        // output the error if there is one
-        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", findError("paymentDetails", quote));
-        
-        w.printf("   <tr><td colspan='2' height='15'><hr/></td></tr>");
-
-        // loop through the options outputting each to its own row
-        for(PaymentSchedule ps: quote.getPaymentOption()) {
-            w.printf("   <tr class='portlet-font'>");
-            w.printf("       <td class='portal-section'>");
-            w.printf("           <b>%s</b>", ps.getDescription());
-            if (ps.getMoneyProvision().size() > 1) {
-                for(MoneyProvision mp: ps.getMoneyProvision()) {
-                    w.printf("<br/>%s", mp.getDescription());
-                }
-            }
-            w.printf("       </td>");
-            w.printf("       <td align='center'><input name='selectedOption' value='%d' %s type='radio'/></td>", 
-                 ps.hashCode(), (quote.getPaymentDetails()==ps) ? "checked='yes'" : "");
-            w.printf("   </tr>");
-            w.printf("   <tr><td colspan='2'><hr/></td></tr>");
-        }
-
-        w.printf("</table>");
-        
-        return quote;
+        return QuotationContext.getRenderer().renderPaymentOptionSelector(response.getWriter(), request, response, (Quotation)model, this);
     }
 }
