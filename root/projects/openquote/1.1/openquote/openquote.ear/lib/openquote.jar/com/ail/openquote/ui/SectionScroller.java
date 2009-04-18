@@ -16,15 +16,14 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>A Section scroller displays repeating blocks of questions. The data for the questions is selected
@@ -68,50 +67,11 @@ public class SectionScroller extends Repeater {
         this.sectionTitle = sectionTitle;
     }
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
-        w.printf("<table width='100%%' border='0' cols='1' cellpadding='0'>");
-        
-        if (getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-            w.print(i18n(getExpandedRepeatedTitle(model)));
-            w.printf("  </td></tr>");
-        }
-
-        int rowCount=0;
-        for(Iterator it=model.xpathIterate(getBinding()) ; it.hasNext() ; rowCount++) {
-            Type t=(Type)it.next();
-            
-            w.printf("<tr><td>");
-            w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
-            
-            // TODO sectionTitle should be removed for 2.0
-            if (sectionTitle!=null) {
-                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-                sectionTitle.renderResponse(request, response, t);
-                w.printf("  </td></tr>");
-            }
-
-            if (getRepeatedTitle()!=null) {
-                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
-                w.print(i18n(getExpandedRepeatedTitle(t)));
-                w.printf("  </td></tr>");
-            }
-    
-            for (Iterator<AttributeField> question=item.iterator() ; question.hasNext() ; ) {
-                w.printf("<tr>");
-                question.next().renderResponse(request, response, t, getBinding()+"["+rowCount+"]");
-                w.printf("</tr>");
-            }
-            w.printf(" </table>");
-            w.printf("</td></tr>");
-        }
-        w.printf("</table>");
-        
-        return model;
+        return QuotationContext.getRenderer().renderSectionScroller(w, request, response, model, this);
     }
 }
 

@@ -28,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>If the answer to a given question is yes, a number of subsequent questions are asked. This
@@ -42,7 +43,7 @@ import com.ail.core.Type;
  * {@see RowScroller} and {@see SectionScroller} elements); whereas QuestionWithDetails only supports a single
  * question.</p>
  * @see QuestionWithDetails
- * @see RowScroller
+¤ * @see RowScroller
  * @see SectionScroller
  */
 public class QuestionWithSubSection extends Question {
@@ -114,55 +115,11 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	String onChange=null;
-    	String aTitle = getExpandedTitle(model);
+    	String aTitle = i18n(getExpandedTitle(model));
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
 
-        if ("radio".equals(getRenderHint())) {
-        	onChange="showHideDivDisplay(this.checked && this.value==\"Yes\", this.checked && this.value==\"No\", \""+id+"\")";
-        }
-        else if ("checkbox".equals(getRenderHint())) {
-        	onChange="showHideDivDisplay(this.checked, !this.checked, \""+id+"\")";
-        }
-        else {
-        	onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+id+"\")";
-        }
-        
-        w.printf("<td>%s</td>", i18n(aTitle));
-        w.printf("<td colspan='3'>%s</td>", renderAttribute(request, response, model, getBinding(), rowContext, onChange, getOnLoad()));
-        w.printf("</tr>");
-        w.printf("<tr><td colspan='4'>");
-        w.printf(" <div id='%s' style='visibility:hidden;display:none'>", id);
-        w.print("   <table width='90%'><tr><td width='5%'/><td>");
-        model=subSection.renderResponse(request, response, model);
-        w.printf("  </td></tr></table>");
-        w.printf(" </div>");
-        w.printf("</td>");
-
-        // Disable the 'detail' area unless the question's answer is 'Yes'
-        if ("radio".equals(getRenderHint())) {
-            w.printf("<script type='text/javascript'>"+
-                    "radio=findElementsByName(\"%1$s\")[1];" +
-                    "showHideDivDisplay(radio.checked, !radio.checked, \"%2$s\");"+
-                    "</script>", questionId, id);
-        }
-        else if ("checkbox".equals(getRenderHint())) {
-            w.printf("<script type='text/javascript'>"+
-                    "cbox=findElementsByName(\"%1$s\")[0];" +
-                    "showHideDivDisplay(" +
-                      "cbox.checked,"+
-                      "!cbox.checked, "+
-                      "\"%2$s\")</script>", questionId, id);
-        }
-        else {
-            w.printf("<script type='text/javascript'>"+
-                    "opt=findElementsByName(\"%1$s\")[0];" +
-                    "showHideDivDisplay(" +
-                      "opt.options[opt.selectedIndex].text==\"Yes\", "+
-                      "opt.options[opt.selectedIndex].text==\"No\", "+
-                      "\"%2$s\")</script>", questionId, id);
-        }
+        QuotationContext.getRenderer().renderQuestionWithSubSection(w, request, response, model, this, aTitle, rowContext, questionId);
 
         return model;
     }

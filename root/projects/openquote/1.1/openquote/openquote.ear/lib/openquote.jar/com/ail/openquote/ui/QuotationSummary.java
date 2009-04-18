@@ -16,30 +16,19 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.messages.I18N.i18n;
-import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
-import static com.ail.openquote.ui.util.Functions.longDate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.financial.CurrencyAmount;
-import com.ail.insurance.policy.Behaviour;
-import com.ail.insurance.policy.BehaviourType;
-import com.ail.insurance.policy.RateBehaviour;
-import com.ail.insurance.policy.SumBehaviour;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Page element to display a summary of a quotation. The QuotationSummary element is designed to render 
@@ -259,155 +248,12 @@ public class QuotationSummary extends PageContainer {
         PrintWriter w=response.getWriter();
         Quotation quote=(com.ail.openquote.Quotation)model;
 
-        w.printf("<form name='%s' action='%s' method='post'>", getId(), response.createActionURL());
-
-        w.printf("<table width='100%%' cellpadding='15'>");
-        w.printf(" <tr>");
-        w.printf("  <td>");
-        renderPremiumSummary(w, request, response, quote);
-        w.printf("  </td>");
-        w.printf("  <td rowspan='2' valign='top'>");
-        renderCoverSummary(w, request, response, quote);
-        w.printf("  </td>");
-        w.printf(" </tr>");
-        w.printf(" <tr>");
-        w.printf("  <td align='left' width='50%%'>");
-        renderTermsAndConditions(w, request, quote);
-        w.printf("  </td>");
-        w.printf(" </tr>");
-        w.printf("</table>");
-        
-        w.printf("</form>");
+        QuotationContext.getRenderer().renderQuotationSummary(w, request, response, quote, this);
         
         return model;
 	}
 
-	private void renderPremiumSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
-        CurrencyAmount premium=quote.getTotalPremium();
- 
-        w.printf("<table width='100%%'>");
-        w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>"+i18n("i18n_quotation_summary_quote_message")+"</td></tr>", premium.toFormattedString());
-        w.printf("   <tr>");
-        w.printf("       <td height='15'></td>");
-        w.printf("   </tr>");
-        w.printf("   <tr>");
-        w.printf("       <td class='portlet-font'>");
-        w.printf("           <ul>");
-        w.printf("               <li>"+i18n("i18n_quotation_summary_quote_number_message")+"</li>", quote.getQuotationNumber());
-        w.printf("               <li>"+i18n("i18n_quotation_summary_valid_until_message")+"</li>", longDate(quote.getQuotationExpiryDate()));
-        
-        renderTaxSummary(w, quote);
-        
-        if (wordingsUrl!=null) {
-            w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrl(wordingsUrl, request, quote.getProductTypeId()));
-        }
-        w.printf("           </ul>");
-        w.printf("       </td>");
-        w.printf("   </tr>");
-
-        if (premiumSummaryFooter!=null) {
-            w.printf( "<tr>");
-            w.printf(  "<td class='portlet-font'>");
-            premiumSummaryFooter.renderResponse(request, response, quote);
-            w.printf(  "</td>");
-            w.printf( "</tr>");
-        }
-
-        w.printf( "<tr>");
-        w.printf(  "<td class='portlet-font'>");
-
-        navigationSection().renderResponse(request, response, quote);
-
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        w.printf( "<tr>");
-        w.printf(  "<td>");
-
-        loginSection(quote).renderResponse(request, response, quote);
-
-        w.printf(  "</td>");
-        w.printf( "</tr>");
-        w.printf("</table>");
-	}
-
-	/**
-	 * Render the tax panel. There are two formats here: If there is just one tax, we want to display something like:
-	 * <p><b>This premium is inclusive of IPT at 5%</b></p>
-	 * <p>If there is more than one tax, it is broken out into a list:</p>
-	 * <p><b>This premium is inclusive of:<ul>
-	 * <li>IPT at 5%</li>
-	 * <li>Stamp duty of £3.00</li>
-	 * </ul></b></p>
-	 * @param w
-	 * @param quote
-	 */
-	private void renderTaxSummary(PrintWriter w, Quotation quote) {
-        Collection<Behaviour> taxLines=quote.getAssessmentSheet().getLinesOfBehaviourType(BehaviourType.TAX).values();
-
-        if (taxLines.size()==1) {
-            Behaviour taxLine=taxLines.iterator().next();
-            w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_header_message")+" ");
-            if (taxLine instanceof RateBehaviour) {
-                w.printf(i18n("i18n_quotation_summary_inclusive_rate_message"), taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
-            }
-            else if (taxLine instanceof SumBehaviour) {
-                w.printf(i18n("i18n_quotation_summary_inclusive_sum_message"), taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toFormattedString());
-            }
-            w.printf("</li>");
-        }
-        else if (taxLines.size()>1) {
-            w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_header_message")+":<ul>");
-            for(Behaviour taxLine: taxLines) {
-                if (taxLine instanceof RateBehaviour) {
-                    w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_rate_message")+"</li>", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
-                }
-                else if (taxLine instanceof SumBehaviour) {
-                    w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_sum_message")+"</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toFormattedString());
-                }
-            }
-            w.printf("</ul></li>");
-        }
-    }
-
-    private void renderCoverSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
-        w.printf("<table class='portlet-font'>");
-
-        // output the summary sections.
-        for(PageElement e: super.getPageElement()) {
-            if (e instanceof AnswerSection) {
-                w.printf("<tr><td>");
-                e.renderResponse(request, response, quote);
-                w.printf("</td></tr>");
-            }
-            w.printf("<tr><td height='15' colspan='2'></td></tr>");
-        }
-
-        w.printf("</table>");
-    }
-    
-    private void renderTermsAndConditions(PrintWriter w, RenderRequest request, Quotation quote) {
-        w.printf("<table>");
-        w.printf("<tr>");
-        w.printf("<td class='portlet-font' width='50%%'>");
-        
-        if (termsAndConditionsUrl!=null) {
-            String fullUrl=expandRelativeUrl(termsAndConditionsUrl, request, quote.getProductTypeId());
-            
-            try {
-                expand(w, new URL(fullUrl), quote);
-            }
-            catch(MalformedURLException e) {
-                w.printf(i18n("i18n_quotation_summary_missing_tandc_message"), quote.getBroker().getQuoteEmailAddress());
-                new CoreProxy().logError("Failed to display terms and conditions for quote: '"+quote.getQuotationNumber()+"', product: '"+quote.getProductTypeId()+"' url:'"+fullUrl+"'");
-            }
-        }
-        
-        w.printf("</td>");
-        w.printf("</tr>");
-        w.printf("</table>");
-    }
-
-    private PageElement loginSection(Type model) {
+    public PageElement loginSection(Type model) {
         if (loginSection==null) {
             Quotation q=(Quotation)model;
             loginSection=new LoginSection();
@@ -421,7 +267,7 @@ public class QuotationSummary extends PageContainer {
         return loginSection;
     }
     
-    private PageElement navigationSection() {
+    public PageElement navigationSection() {
         if (navigationSection==null) {
             navigationSection=new NavigationSection();
             

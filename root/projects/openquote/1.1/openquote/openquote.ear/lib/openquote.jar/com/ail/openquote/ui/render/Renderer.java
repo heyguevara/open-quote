@@ -48,6 +48,17 @@ import com.ail.openquote.ui.PaymentOptionSelector;
 import com.ail.openquote.ui.ProposerDetails;
 import com.ail.openquote.ui.Question;
 import com.ail.openquote.ui.QuestionPage;
+import com.ail.openquote.ui.QuestionSection;
+import com.ail.openquote.ui.QuestionSeparator;
+import com.ail.openquote.ui.QuestionWithDetails;
+import com.ail.openquote.ui.QuestionWithSubSection;
+import com.ail.openquote.ui.QuotationSummary;
+import com.ail.openquote.ui.ReferralSummary;
+import com.ail.openquote.ui.RowScroller;
+import com.ail.openquote.ui.SaveButtonAction;
+import com.ail.openquote.ui.SavedQuotations;
+import com.ail.openquote.ui.SectionScroller;
+import com.ail.openquote.ui.ViewQuotationButtonAction;
 
 public interface Renderer {
 	Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException;
@@ -93,4 +104,32 @@ public interface Renderer {
     Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext) throws IllegalStateException, IOException;
 
     Type renderQuestionPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionPage questionPage, String title) throws IllegalStateException, IOException;
+
+    Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title) throws IllegalStateException, IOException;
+
+    Type renderQuestionSeparator(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSeparator questionSeparator, String title);
+
+    Type renderQuestionWithDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithDetails questionWithDetails, String title, String detailTitle, String rowContext, String questionId, String detailId) throws IllegalStateException, IOException;
+
+    Type renderQuestionWithSubSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithSubSection questionWithSubSection, String title, String rowContext, String questionId) throws IllegalStateException, IOException;
+
+    Type renderQuitButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label); 
+
+    Quotation renderQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException;
+
+    Quotation renderReferralSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, ReferralSummary referralSummary) throws IOException;
+
+    Type renderRequoteButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label);
+
+    Type renderRowScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, RowScroller rowScroller) throws IllegalStateException, IOException;
+
+    Type renderSaveButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SaveButtonAction saveButtonAction, String label, boolean remoteUser);
+
+    List<?> renderSaveQuotations(PrintWriter w, RenderRequest request, RenderResponse response, List<?> quotationSummaries, SavedQuotations saveedQuotations) throws IllegalStateException, IOException;
+
+    Type renderSaveQuotationsFooter(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SavedQuotations saveedQuotations);
+
+    Type renderSectionScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SectionScroller sectionScroller) throws IllegalStateException, IOException;
+
+    Type renderViewQuotationButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ViewQuotationButtonAction saveButtonAction, String quoteNumber, String label);
 }

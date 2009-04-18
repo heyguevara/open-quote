@@ -96,8 +96,6 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
-        w.printf("<input type='submit' name='op=view:id=%s' value='%s' class='portlet-form-input-field'/>", getQuoteNumberFromModel(model), i18n(getLabel()));
-        
-        return model;
+        return QuotationContext.getRenderer().renderViewQuotationButtonAction(w, request, response, model, this, getQuoteNumberFromModel(model), i18n(getLabel()));
     }
 }

@@ -16,10 +16,8 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
 
@@ -33,7 +31,6 @@ import com.ail.core.Type;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
-import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 
@@ -60,7 +57,6 @@ import com.ail.openquote.ui.util.QuotationContext;
  * </ul>
  */
 public class SavedQuotations extends PageElement {
-    private static SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
 	private static final long serialVersionUID = -4810599045554021748L;
 
     /** Id of the page to forward to in the pageflow if the user selected "requote" */
@@ -210,33 +206,7 @@ public class SavedQuotations extends PageElement {
 
             // If the user has saved quotes...
             if (quotes.size()!=0) {
-                w.printf("<table width='100%%' border='0' cols='5'>");
-                w.printf(  "<tr><td cols='5'>"+i18n("i18n_saved_quotations_title")+"</td></tr>", quotes.size()==1 ? "quote" : "quotes");
-                w.printf(  "<tr><td height='10' cols='5'/></tr>");
-                w.printf(  "<tr class='portlet-font'>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_number_heading")+"</td>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_date_heading")+"</td>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_expiry_date_heading")+"</td>");
-                w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_premium_heading")+"</td>");
-                w.printf(    "<td class='portlet-section-alternate'>&nbsp</td>");
-                w.printf(  "</tr>");
-        
-                for(Object o: quotes) {
-                    SavedQuotationSummary savedQuote=(SavedQuotationSummary)o;
-                    w.printf("<tr>");
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getQuotationNumber());
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
-                    w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getPremium().toFormattedString());
-                    w.printf(  "<td align='left'>");
-                    w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(confirmAndPayLabel));
-                    w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(requoteLabel));
-                    viewQuotationButtonAction.renderResponse(request, response, savedQuote);
-                    w.printf(  "</td>");
-                    w.printf("</tr>");
-                }
-                
-                w.printf("</table>");
+            	QuotationContext.getRenderer().renderSaveQuotations(w, request, response, quotes, this);
             }
         }
         
@@ -248,41 +218,7 @@ public class SavedQuotations extends PageElement {
         PrintWriter w=response.getWriter();
 
         if (request.getRemoteUser()==null) {
-            String pageName=Functions.getPortalPageName(response);
-            String portalName=Functions.getPortalName(response);
-            
-            w.printf("<table width='100%%' cols='3'>");
-            w.printf( "<tr>");
-            w.printf(  "<td colspan='3' class='portlet-font'>"+i18n("i18n_saved_quotations_login_message")+"</td>");
-            w.printf( "</tr>");
-            w.printf( "<tr><td height='15'/></tr>");
-            w.printf( "<tr>");
-            w.printf(  "<td width='30%%'/>");
-            w.printf(  "<td align='center'>");
-            w.printf(  "<div class='portlet-font' id='Proposer Login'>");
-            w.printf(   "<form method='post' action='%s' name='loginform' id='loginForm'>", response.createActionURL());
-            w.printf(    "<table>");
-            w.printf(     "<tr class='portlet-font'>");
-            w.printf(      "<td>"+i18n("i18n_saved_quotations_username_label")+"</td>");
-            w.printf(      "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value=''/></td>");
-            w.printf(      "<td>&nbsp;</td>");
-            w.printf(     "</tr>");
-            w.printf(     "<tr class='portlet-font'>");
-            w.printf(      "<td valign='center'>"+i18n("i18n_saved_quotations_password_label")+"</td>");
-            w.printf(      "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
-            w.printf(      "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>"+i18n("i18n_saved_quotations_forgotten_password_message")+"</a></td>");
-            w.printf(     "</tr>");
-            w.printf(     "<tr class='portlet-font'>");
-            w.printf(      "<td align='center' colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=login:portal=%s:page=%s' value='Login'/></td>", portalName, pageName);
-            w.printf(     "</tr>");
-            w.printf(    "</table>");
-            w.printf(   "</form>");
-            w.printf(  "</div>");
-            w.printf(  "</td>");
-            w.printf(  "<td width='30%%'/>");
-            w.printf( "</tr>");
-            w.printf("</table>");
-            w.printf("<script type='text/javascript'>hideDivDisplay('Proposer Login')</script>");
+        	model=QuotationContext.getRenderer().renderSaveQuotationsFooter(w, request, response, model, this);
         }
     }
 

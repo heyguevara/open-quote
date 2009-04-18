@@ -17,17 +17,24 @@
 package com.ail.openquote.ui.render;
 
 import static com.ail.core.Attribute.YES_OR_NO_FORMAT;
+import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
 import static com.ail.openquote.ui.util.Functions.findError;
+import static com.ail.openquote.ui.util.Functions.findErrors;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
+import static com.ail.openquote.ui.util.Functions.hasErrorMarkers;
 import static com.ail.openquote.ui.util.Functions.hideNull;
 import static com.ail.openquote.ui.util.Functions.longDate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -41,6 +48,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
+import com.ail.financial.CurrencyAmount;
 import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
@@ -60,6 +68,7 @@ import com.ail.openquote.CommercialProposer;
 import com.ail.openquote.PersonalProposer;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.Answer;
 import com.ail.openquote.ui.AnswerScroller;
 import com.ail.openquote.ui.AnswerSection;
@@ -83,7 +92,18 @@ import com.ail.openquote.ui.PaymentOptionSelector;
 import com.ail.openquote.ui.ProposerDetails;
 import com.ail.openquote.ui.Question;
 import com.ail.openquote.ui.QuestionPage;
+import com.ail.openquote.ui.QuestionSection;
+import com.ail.openquote.ui.QuestionSeparator;
+import com.ail.openquote.ui.QuestionWithDetails;
+import com.ail.openquote.ui.QuestionWithSubSection;
+import com.ail.openquote.ui.QuotationSummary;
+import com.ail.openquote.ui.ReferralSummary;
 import com.ail.openquote.ui.RenderingError;
+import com.ail.openquote.ui.RowScroller;
+import com.ail.openquote.ui.SaveButtonAction;
+import com.ail.openquote.ui.SavedQuotations;
+import com.ail.openquote.ui.SectionScroller;
+import com.ail.openquote.ui.ViewQuotationButtonAction;
 import com.ail.openquote.ui.util.Choice;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
@@ -95,6 +115,8 @@ public class Html extends Type implements Renderer {
 	private RenderAssessmentSheetDetailsHelper renderAssessmentSheetDetailsHelper=new RenderAssessmentSheetDetailsHelper();
 	private RenderAttributeFieldHelper renderAttributeFieldHelper=new RenderAttributeFieldHelper();
 	private RenderPaymentDetailsHelper renderPaymentDetailsHelper=new RenderPaymentDetailsHelper();
+	private RenderQuotationSummaryHelper renderQuotationSummaryHelper=new RenderQuotationSummaryHelper();
+	private RenderReferralSummaryHelper renderReferralSummaryHelper=new RenderReferralSummaryHelper();
 	
 	public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException {
 		 w.printf("<tr><td>%s</td><td>%s</td></tr>", title, answerText);
@@ -894,6 +916,405 @@ public class Html extends Type implements Renderer {
     	return model;
     }
     
+    public Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title) throws IllegalStateException, IOException {
+        w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
+
+        // output the title row if a title was defined
+        if (title!=null) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>%s</td></tr>", title);
+        }
+
+        Iterator<? extends Question> it=questionSection.getQuestion().iterator();
+        
+        while(it.hasNext()) {
+            w.printf("<tr>");
+            it.next().renderResponse(request, response, model);
+            w.printf("</tr>");
+        }
+        w.printf("</table>");
+
+        return model;
+    }
+
+    public Type renderQuestionSeparator(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSeparator questionSeparator, String title) {
+        if (title==null) {
+            if (questionSeparator.getBinding()!=null && hasErrorMarkers(model.xpathGet(questionSeparator.getBinding(), Type.class))) {
+        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class)));
+        	}
+        	else {
+        		w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
+        	}
+        }
+        else {
+            w.printf("<td colspan='4'><table width='100%%''>"); 
+            w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(title)); 
+            if (questionSeparator.getBinding()!=null && hasErrorMarkers(model.xpathGet(questionSeparator.getBinding(), Type.class))) {
+            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class)));
+            }
+            w.printf("</table></td>");
+        }
+
+        return model;
+    }
+
+    public Type renderQuestionWithDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithDetails questionWithDetails, String title, String detailTitle, String rowContext, String questionId, String detailId) throws IllegalStateException, IOException {
+    	String onChange = null;
+
+    	if ("radio".equals(questionWithDetails.getRenderHint())) {
+        	onChange="enableTargetIf(this.checked && this.value==\"Yes\", \""+detailId+"\")";
+        }
+        else if ("checkbox".equals(questionWithDetails.getRenderHint())) {
+        	onChange="enableTargetIf(this.checked, \""+detailId+"\")";
+        }
+        else {
+        	onChange="enableTargetIf(this.options[this.selectedIndex].text==\"Yes\", \""+detailId+"\")";
+        }
+        
+        w.printf("<td>%s</td>", title);
+        w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getBinding(), rowContext, onChange, questionWithDetails.getOnLoad()));
+        w.printf("<td>%s</td>", detailTitle);
+        w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getDetailsBinding(), rowContext, questionWithDetails.getOnChange(), questionWithDetails.getOnLoad()));
+        
+        // Disable the 'detail' textarea unless the question's answer is 'Yes'
+        if ("radio".equals(questionWithDetails.getRenderHint())) {
+            w.printf("<script type='text/javascript'>radio=findElementsByName(\"%s\")[1];enableTargetIf(radio.checked, \"%s\")</script>",
+                    questionId, detailId);
+        }
+        else if ("checkbox".equals(questionWithDetails.getRenderHint())) {
+            w.printf("<script type='text/javascript'>cbox=findElementsByName(\"%s\")[0];enableTargetIf(cbox.checked, \"%s\")</script>",
+                    questionId, detailId);
+        }
+        else {
+            w.printf("<script type='text/javascript'>elem=findElementsByName(\"%s\")[0];enableTargetIf(elem.options[elem.selectedIndex].text==\"Yes\", \"%s\")</script>",
+                    questionId, detailId);
+        }
+
+        return model;
+    }
+    
+    public Type renderQuestionWithSubSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithSubSection questionWithSubSection, String title, String rowContext, String questionId) throws IllegalStateException, IOException {
+    	String onChange=null;
+
+    	if ("radio".equals(questionWithSubSection.getRenderHint())) {
+        	onChange="showHideDivDisplay(this.checked && this.value==\"Yes\", this.checked && this.value==\"No\", \""+questionWithSubSection.getId()+"\")";
+        }
+        else if ("checkbox".equals(questionWithSubSection.getRenderHint())) {
+        	onChange="showHideDivDisplay(this.checked, !this.checked, \""+questionWithSubSection.getId()+"\")";
+        }
+        else {
+        	onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+questionWithSubSection.getId()+"\")";
+        }
+        
+        w.printf("<td>%s</td>", title);
+        w.printf("<td colspan='3'>%s</td>", questionWithSubSection.renderAttribute(request, response, model, questionWithSubSection.getBinding(), rowContext, onChange, questionWithSubSection.getOnLoad()));
+        w.printf("</tr>");
+        w.printf("<tr><td colspan='4'>");
+        w.printf(" <div id='%s' style='visibility:hidden;display:none'>", questionWithSubSection.getId());
+        w.print("   <table width='90%'><tr><td width='5%'/><td>");
+        model=questionWithSubSection.getSubSection().renderResponse(request, response, model);
+        w.printf("  </td></tr></table>");
+        w.printf(" </div>");
+        w.printf("</td>");
+
+        // Disable the 'detail' area unless the question's answer is 'Yes'
+        if ("radio".equals(questionWithSubSection.getRenderHint())) {
+            w.printf("<script type='text/javascript'>"+
+                    "radio=findElementsByName(\"%1$s\")[1];" +
+                    "showHideDivDisplay(radio.checked, !radio.checked, \"%2$s\");"+
+                    "</script>", questionId, questionWithSubSection.getId());
+        }
+        else if ("checkbox".equals(questionWithSubSection.getRenderHint())) {
+            w.printf("<script type='text/javascript'>"+
+                    "cbox=findElementsByName(\"%1$s\")[0];" +
+                    "showHideDivDisplay(" +
+                      "cbox.checked,"+
+                      "!cbox.checked, "+
+                      "\"%2$s\")</script>", questionId, questionWithSubSection.getId());
+        }
+        else {
+            w.printf("<script type='text/javascript'>"+
+                    "opt=findElementsByName(\"%1$s\")[0];" +
+                    "showHideDivDisplay(" +
+                      "opt.options[opt.selectedIndex].text==\"Yes\", "+
+                      "opt.options[opt.selectedIndex].text==\"No\", "+
+                      "\"%2$s\")</script>", questionId, questionWithSubSection.getId());
+        }
+
+        return model;
+    }
+
+    public Type renderQuitButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label) {
+        w.printf("<input type='submit' name='op=quit:immediate=true' value='%1$s' class='portlet-form-input-field'/>", label);
+        
+    	return model;
+    }
+
+    public Quotation renderQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException {
+        w.printf("<form name='%s' action='%s' method='post'>", quotationSummary.getId(), response.createActionURL());
+
+        w.printf("<table width='100%%' cellpadding='15'>");
+        w.printf(" <tr>");
+        w.printf("  <td>");
+        renderQuotationSummaryHelper.renderPremiumSummary(w, request, response, quote, quotationSummary);
+        w.printf("  </td>");
+        w.printf("  <td rowspan='2' valign='top'>");
+        renderQuotationSummaryHelper.renderCoverSummary(w, request, response, quote, quotationSummary);
+        w.printf("  </td>");
+        w.printf(" </tr>");
+        w.printf(" <tr>");
+        w.printf("  <td align='left' width='50%%'>");
+        renderQuotationSummaryHelper.renderTermsAndConditions(w, request, quote, quotationSummary);
+        w.printf("  </td>");
+        w.printf(" </tr>");
+        w.printf("</table>");
+        
+        w.printf("</form>");
+
+        return quote;
+    }
+    
+    public Quotation renderReferralSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, ReferralSummary referralSummary) throws IOException {
+        w.printf("<table columns='2' width='100%%' cellpadding='15'>");
+        w.printf(" <tr>");
+        w.printf("  <td>");
+        renderReferralSummaryHelper.renderReferralNotification(w, request, response, quote, referralSummary);
+        w.printf("  </td>");
+        w.printf("  <td rowspan='2' valign='top' align='center'>");
+        renderReferralSummaryHelper.renderRequirementSummary(w, request, response, quote, referralSummary);
+        w.printf("  </td>");
+        w.printf(" </tr>");
+        w.printf(" <tr>");
+        w.printf("  <td align='center' width='50%%'>");
+        w.printf("  </td>");
+        w.printf(" </tr>");
+        w.printf("</table>");
+
+        return quote;
+    }
+    
+    public Type renderRequoteButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label) {
+        w.printf("<input type='submit' name='op=requote' value='%s' class='portlet-form-input-field'/>", label);
+    	return model;
+    }
+
+    @SuppressWarnings("unchecked")
+	public Type renderRowScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, RowScroller rowScroller) throws IllegalStateException, IOException {
+        // Start the table for the scroller (size()+1 to allow for the trash can column)
+        int columns=rowScroller.isAddAndDeleteEnabled() ? rowScroller.getItem().size()+1 : rowScroller.getItem().size();
+
+        w.printf("<table width='100%%' border='0' cols='%d'>", columns);
+
+        if (rowScroller.getTitle()!=null) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>", columns);
+            w.print(rowScroller.getExpandedRepeatedTitle(model));
+            w.printf("  </td></tr>");
+        }
+        
+        // Output the column headers
+        w.printf(" <tr class='portlet-section-alternate'>");
+        for(AttributeField a: rowScroller.getItem()) {
+            if (a.getExpandedSubTitle(model)!=null) {
+                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s<br/>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)), i18n(a.getExpandedSubTitle(model)));
+            }
+            else {
+                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)));
+            }
+        }
+
+        // Add a column for the trash can, if it's enabled
+        if (rowScroller.isAddAndDeleteEnabled()) {
+            w.printf("<td>&nbsp;</td>");
+            w.printf(" </tr>");
+        }
+        
+        // Now output the rows of data
+        int rowCount=0;
+        for(Iterator it=model.xpathIterate(rowScroller.getBinding()) ; it.hasNext() ; ) {
+            Type t=(Type)it.next();
+            
+            w.printf("<tr>");
+
+            for(AttributeField a: rowScroller.getItem()) {
+                w.printf("<td align='center'>");
+                a.renderResponse(request, response, t, rowScroller.getBinding()+"["+rowCount+"]");
+                w.printf("</td>");
+            }
+
+            // Add the trash can for this row if enabled.
+            if (rowScroller.isAddAndDeleteEnabled()) {
+                if (rowCount>=rowScroller.getMinRows()) {
+                    w.printf("<td align='center'>");
+                    w.printf("<input type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", rowScroller.getId(), rowCount);
+                    w.printf("</td>");
+                }
+                else {
+                    w.printf("<td>&nbsp;</td>");
+                }
+            }
+            
+            w.printf("</tr>");
+           
+            rowCount++;
+        }
+
+        // if Add and Delete are enabled, put an 'Add' button to the bottom right of the scroller.
+        if (rowScroller.isAddAndDeleteEnabled()) {
+            w.print("<tr>");
+            for(int i=0 ; i<rowScroller.getItem().size() ; i++) {
+                w.print("<td>&nbsp;</td>");
+            }
+            
+            w.printf("<td align='center'>");
+
+            // disabled the button if we've reached 'maxRows'.
+            if (rowScroller.getMaxRows()!=-1 && rowCount==rowScroller.getMaxRows()) {
+                w.printf("<input type='image' src='/quotation/images/add-disabled.gif' name='op=add:id=%s:immediate=true:' disabled='true'/>", rowScroller.getId());
+            }
+            else {
+                w.printf("<input type='image' src='/quotation/images/add.gif' name='op=add:id=%s:immediate=true:'/>", rowScroller.getId());
+            }
+            
+            w.printf("</td></tr>");
+        }
+        
+        w.printf("</table>");
+
+        return model;
+    }
+
+    public Type renderSaveButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SaveButtonAction saveButtonAction, String label, boolean remoteUser) {
+        if (remoteUser) {
+            w.printf("<input type='submit' name='op=save' value='%s' class='portlet-form-input-field'/>", label);
+        }
+        else {
+            w.printf("<input type='button' onClick='%s' name='op=save' value='%s' class='portlet-form-input-field'/>", LoginSection.reset, label);
+        }
+        
+    	return model;
+    }
+
+    public List<?> renderSaveQuotations(PrintWriter w, RenderRequest request, RenderResponse response, List<?> quotationSummaries, SavedQuotations saveedQuotations) throws IllegalStateException, IOException {
+        SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
+
+        w.printf("<table width='100%%' border='0' cols='5'>");
+        w.printf(  "<tr><td cols='5'>"+i18n("i18n_saved_quotations_title")+"</td></tr>", quotationSummaries.size()==1 ? "quote" : "quotes");
+        w.printf(  "<tr><td height='10' cols='5'/></tr>");
+        w.printf(  "<tr class='portlet-font'>");
+        w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_number_heading")+"</td>");
+        w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_date_heading")+"</td>");
+        w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_expiry_date_heading")+"</td>");
+        w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_premium_heading")+"</td>");
+        w.printf(    "<td class='portlet-section-alternate'>&nbsp</td>");
+        w.printf(  "</tr>");
+
+        for(Object o: quotationSummaries) {
+            SavedQuotationSummary savedQuote=(SavedQuotationSummary)o;
+            w.printf("<tr>");
+            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getQuotationNumber());
+            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
+            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
+            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getPremium().toFormattedString());
+            w.printf(  "<td align='left'>");
+            w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(saveedQuotations.getConfirmAndPayLabel()));
+            w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(saveedQuotations.getRequoteLabel()));
+            saveedQuotations.getViewQuotationButtonAction().renderResponse(request, response, savedQuote);
+            w.printf(  "</td>");
+            w.printf("</tr>");
+        }
+        
+        w.printf("</table>");
+
+        return quotationSummaries;
+    }
+    
+    public Type renderSaveQuotationsFooter(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SavedQuotations saveedQuotations) {
+        String pageName=Functions.getPortalPageName(response);
+        String portalName=Functions.getPortalName(response);
+        
+        w.printf("<table width='100%%' cols='3'>");
+        w.printf( "<tr>");
+        w.printf(  "<td colspan='3' class='portlet-font'>"+i18n("i18n_saved_quotations_login_message")+"</td>");
+        w.printf( "</tr>");
+        w.printf( "<tr><td height='15'/></tr>");
+        w.printf( "<tr>");
+        w.printf(  "<td width='30%%'/>");
+        w.printf(  "<td align='center'>");
+        w.printf(  "<div class='portlet-font' id='Proposer Login'>");
+        w.printf(   "<form method='post' action='%s' name='loginform' id='loginForm'>", response.createActionURL());
+        w.printf(    "<table>");
+        w.printf(     "<tr class='portlet-font'>");
+        w.printf(      "<td>"+i18n("i18n_saved_quotations_username_label")+"</td>");
+        w.printf(      "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value=''/></td>");
+        w.printf(      "<td>&nbsp;</td>");
+        w.printf(     "</tr>");
+        w.printf(     "<tr class='portlet-font'>");
+        w.printf(      "<td valign='center'>"+i18n("i18n_saved_quotations_password_label")+"</td>");
+        w.printf(      "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
+        w.printf(      "<td><a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>"+i18n("i18n_saved_quotations_forgotten_password_message")+"</a></td>");
+        w.printf(     "</tr>");
+        w.printf(     "<tr class='portlet-font'>");
+        w.printf(      "<td align='center' colspan='3'><input type='submit' id='loginButton' class='portlet-form-input-field' name='op=login:portal=%s:page=%s' value='Login'/></td>", portalName, pageName);
+        w.printf(     "</tr>");
+        w.printf(    "</table>");
+        w.printf(   "</form>");
+        w.printf(  "</div>");
+        w.printf(  "</td>");
+        w.printf(  "<td width='30%%'/>");
+        w.printf( "</tr>");
+        w.printf("</table>");
+        w.printf("<script type='text/javascript'>hideDivDisplay('Proposer Login')</script>");
+
+        return model;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public Type renderSectionScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SectionScroller sectionScroller) throws IllegalStateException, IOException {
+        w.printf("<table width='100%%' border='0' cols='1' cellpadding='0'>");
+        
+        if (sectionScroller.getTitle()!=null) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+            w.print(i18n(sectionScroller.getExpandedRepeatedTitle(model)));
+            w.printf("  </td></tr>");
+        }
+
+        int rowCount=0;
+        for(Iterator<Type> it=(Iterator<Type>)model.xpathIterate(sectionScroller.getBinding()) ; it.hasNext() ; rowCount++) {
+            Type t=it.next();
+            
+            w.printf("<tr><td>");
+            w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
+            
+            // TODO sectionTitle should be removed for 2.0
+            if (sectionScroller.getSectionTitle()!=null) {
+                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+                sectionScroller.getSectionTitle().renderResponse(request, response, t);
+                w.printf("  </td></tr>");
+            }
+
+            if (sectionScroller.getRepeatedTitle()!=null) {
+                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+                w.print(i18n(sectionScroller.getExpandedRepeatedTitle(t)));
+                w.printf("  </td></tr>");
+            }
+    
+            for (Iterator<AttributeField> question=sectionScroller.getItem().iterator() ; question.hasNext() ; ) {
+                w.printf("<tr>");
+                question.next().renderResponse(request, response, t, sectionScroller.getBinding()+"["+rowCount+"]");
+                w.printf("</tr>");
+            }
+            w.printf(" </table>");
+            w.printf("</td></tr>");
+        }
+        w.printf("</table>");
+
+        return model;
+    }
+    
+    public Type renderViewQuotationButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ViewQuotationButtonAction viewQuotationButtonAction, String quoteNumber, String label) {
+        w.printf("<input type='submit' name='op=view:id=%s' value='%s' class='portlet-form-input-field'/>", quoteNumber, label);
+    	return model;
+    }
+    
     private class RenderAssessmentSheetDetailsHelper {
 	    private String cellStyle="class='portlet-font' style='border: 1px solid gray;'";
 
@@ -1410,7 +1831,163 @@ public class Html extends Type implements Renderer {
         }
     }
     
-    private class RenderProposerDetailsHelper {
-    	
+    private class RenderQuotationSummaryHelper {
+    	private void renderPremiumSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException {
+            CurrencyAmount premium=quote.getTotalPremium();
+     
+            w.printf("<table width='100%%'>");
+            w.printf("   <tr valign='middle' class='portlet-table-subheader'><td>"+i18n("i18n_quotation_summary_quote_message")+"</td></tr>", premium.toFormattedString());
+            w.printf("   <tr>");
+            w.printf("       <td height='15'></td>");
+            w.printf("   </tr>");
+            w.printf("   <tr>");
+            w.printf("       <td class='portlet-font'>");
+            w.printf("           <ul>");
+            w.printf("               <li>"+i18n("i18n_quotation_summary_quote_number_message")+"</li>", quote.getQuotationNumber());
+            w.printf("               <li>"+i18n("i18n_quotation_summary_valid_until_message")+"</li>", longDate(quote.getQuotationExpiryDate()));
+            
+            renderTaxSummary(w, quote);
+            
+            if (quotationSummary.getWordingsUrl()!=null) {
+                w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrl(quotationSummary.getWordingsUrl(), request, quote.getProductTypeId()));
+            }
+            w.printf("           </ul>");
+            w.printf("       </td>");
+            w.printf("   </tr>");
+
+            if (quotationSummary.getPremiumSummaryFooter()!=null) {
+                w.printf( "<tr>");
+                w.printf(  "<td class='portlet-font'>");
+                quotationSummary.getPremiumSummaryFooter().renderResponse(request, response, quote);
+                w.printf(  "</td>");
+                w.printf( "</tr>");
+            }
+
+            w.printf( "<tr>");
+            w.printf(  "<td class='portlet-font'>");
+
+            quotationSummary.navigationSection().renderResponse(request, response, quote);
+
+            w.printf(  "</td>");
+            w.printf( "</tr>");
+            w.printf( "<tr>");
+            w.printf(  "<td>");
+
+            quotationSummary.loginSection(quote).renderResponse(request, response, quote);
+
+            w.printf(  "</td>");
+            w.printf( "</tr>");
+            w.printf("</table>");
+    	}
+
+    	/**
+    	 * Render the tax panel. There are two formats here: If there is just one tax, we want to display something like:
+    	 * <p><b>This premium is inclusive of IPT at 5%</b></p>
+    	 * <p>If there is more than one tax, it is broken out into a list:</p>
+    	 * <p><b>This premium is inclusive of:<ul>
+    	 * <li>IPT at 5%</li>
+    	 * <li>Stamp duty of £3.00</li>
+    	 * </ul></b></p>
+    	 * @param w
+    	 * @param quote
+    	 */
+    	private void renderTaxSummary(PrintWriter w, Quotation quote) {
+            Collection<Behaviour> taxLines=quote.getAssessmentSheet().getLinesOfBehaviourType(BehaviourType.TAX).values();
+
+            if (taxLines.size()==1) {
+                Behaviour taxLine=taxLines.iterator().next();
+                w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_header_message")+" ");
+                if (taxLine instanceof RateBehaviour) {
+                    w.printf(i18n("i18n_quotation_summary_inclusive_rate_message"), taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
+                }
+                else if (taxLine instanceof SumBehaviour) {
+                    w.printf(i18n("i18n_quotation_summary_inclusive_sum_message"), taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toFormattedString());
+                }
+                w.printf("</li>");
+            }
+            else if (taxLines.size()>1) {
+                w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_header_message")+":<ul>");
+                for(Behaviour taxLine: taxLines) {
+                    if (taxLine instanceof RateBehaviour) {
+                        w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_rate_message")+"</li>", taxLine.getReason(), ((RateBehaviour)taxLine).getRate().getRate());
+                    }
+                    else if (taxLine instanceof SumBehaviour) {
+                        w.printf("<li>"+i18n("i18n_quotation_summary_inclusive_sum_message")+"</li>", taxLine.getReason(), ((SumBehaviour)taxLine).getAmount().toFormattedString());
+                    }
+                }
+                w.printf("</ul></li>");
+            }
+        }
+
+        private void renderCoverSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException {
+            w.printf("<table class='portlet-font'>");
+
+            // output the summary sections.
+            for(PageElement e: quotationSummary.getPageElement()) {
+                if (e instanceof AnswerSection) {
+                    w.printf("<tr><td>");
+                    e.renderResponse(request, response, quote);
+                    w.printf("</td></tr>");
+                }
+                w.printf("<tr><td height='15' colspan='2'></td></tr>");
+            }
+
+            w.printf("</table>");
+        }
+        
+        private void renderTermsAndConditions(PrintWriter w, RenderRequest request, Quotation quote, QuotationSummary quotationSummary) {
+            w.printf("<table>");
+            w.printf("<tr>");
+            w.printf("<td class='portlet-font' width='50%%'>");
+            
+            if (quotationSummary.getTermsAndConditionsUrl()!=null) {
+                String fullUrl=expandRelativeUrl(quotationSummary.getTermsAndConditionsUrl(), request, quote.getProductTypeId());
+                
+                try {
+                    expand(w, new URL(fullUrl), quote);
+                }
+                catch(MalformedURLException e) {
+                    w.printf(i18n("i18n_quotation_summary_missing_tandc_message"), quote.getBroker().getQuoteEmailAddress());
+                    new CoreProxy().logError("Failed to display terms and conditions for quote: '"+quote.getQuotationNumber()+"', product: '"+quote.getProductTypeId()+"' url:'"+fullUrl+"'");
+                }
+            }
+            
+            w.printf("</td>");
+            w.printf("</tr>");
+            w.printf("</table>");
+        }
+    }
+
+    private class RenderReferralSummaryHelper {
+    	private void renderReferralNotification(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, ReferralSummary referralSummary) throws IOException {
+            w.printf("<table>");
+            w.printf("   <tr>");
+            w.printf("       <td class='portlet-font'>");
+            referralSummary.getReferralNotificationSection().renderResponse(request, response, quote);
+            w.printf("       </td>");
+            w.printf("   </tr>");
+            w.printf("   <tr>");
+            w.printf("       <td class='portlet-font'>");
+            referralSummary.getNavigationSection().renderResponse(request, response, quote);
+            w.printf("       </td>");
+            w.printf("   </tr>");
+            w.printf("</table>");
+        }
+        
+        private void renderRequirementSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, ReferralSummary referralSummary) throws IOException {
+            w.printf("<table class='portlet-font'>");
+
+            // output the summary sections.
+            for(PageElement e: referralSummary.getPageElement()) {
+                if (e instanceof AnswerSection) {
+                    w.printf("<tr><td>");
+                    e.renderResponse(request, response, quote);
+                    w.printf("</td></tr>");
+                }
+                w.printf("<tr><td height='15' colspan='2'></td></tr>");
+            }
+
+            w.printf("</table>");
+        }
     }
 }

@@ -71,13 +71,6 @@ public class SaveButtonAction extends CommandButtonAction {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
-        if (request.getRemoteUser()!=null) {
-            w.printf("<input type='submit' name='op=save' value='%s' class='portlet-form-input-field'/>", i18n(getLabel()));
-        }
-        else {
-            w.printf("<input type='button' onClick='%s' name='op=save' value='%s' class='portlet-form-input-field'/>", LoginSection.reset, i18n(getLabel()));
-        }
-        
-        return model;
+        return QuotationContext.getRenderer().renderSaveButtonAction(w, request, response, model, this, i18n(getLabel()), request.getRemoteUser()!=null);
     }
 }

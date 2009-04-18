@@ -61,7 +61,9 @@ public class QuitButtonAction extends CommandButtonAction {
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-        w.printf("<input type='submit' name='op=quit:immediate=true' value='%1$s' class='portlet-form-input-field'/>", i18n(getLabel()));
+        
+        QuotationContext.getRenderer().renderQuitButtonAction(w, request, response, model, this, i18n(getLabel()));
+        
         return model;
     }
 }

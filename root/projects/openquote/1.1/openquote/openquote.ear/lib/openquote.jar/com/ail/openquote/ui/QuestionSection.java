@@ -16,13 +16,12 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -150,21 +149,9 @@ public class QuestionSection extends PageElement {
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
         String title = getExpandedTitle(QuotationContext.getQuotation(), model);
 
-        w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
-
-        // output the title row if a title was defined
-        if (title!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>%s</td></tr>", i18n(title));
-        }
-
-        Iterator<? extends Question> it=question.iterator();
+        title = (title!=null) ? i18n(title) : null;
         
-        while(it.hasNext()) {
-            w.printf("<tr>");
-            it.next().renderResponse(request, response, localModel);
-            w.printf("</tr>");
-        }
-        w.printf("</table>");
+        QuotationContext.getRenderer().renderQuestionSection(w, request, response, localModel, this, title);
         
         return model;
 	}

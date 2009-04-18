@@ -48,6 +48,17 @@ import com.ail.openquote.ui.PaymentOptionSelector;
 import com.ail.openquote.ui.ProposerDetails;
 import com.ail.openquote.ui.Question;
 import com.ail.openquote.ui.QuestionPage;
+import com.ail.openquote.ui.QuestionSection;
+import com.ail.openquote.ui.QuestionSeparator;
+import com.ail.openquote.ui.QuestionWithDetails;
+import com.ail.openquote.ui.QuestionWithSubSection;
+import com.ail.openquote.ui.QuotationSummary;
+import com.ail.openquote.ui.ReferralSummary;
+import com.ail.openquote.ui.RowScroller;
+import com.ail.openquote.ui.SaveButtonAction;
+import com.ail.openquote.ui.SavedQuotations;
+import com.ail.openquote.ui.SectionScroller;
+import com.ail.openquote.ui.ViewQuotationButtonAction;
 
 public class Xform extends Type implements Renderer {
 	private static final long serialVersionUID = 2918957259222383330L;
@@ -162,4 +173,73 @@ public class Xform extends Type implements Renderer {
     	return model;
     }
     
+    public Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderQuestionSeparator(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSeparator questionSeparator, String title) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderQuestionWithDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithDetails questionWithDetails, String title, String detailTitle, String rowContext, String questionId, String detailsd) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderQuestionWithSubSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithSubSection questionWithSubSection, String title, String rowContext, String questionId) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderQuitButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Quotation renderQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException {
+		// TODO Auto-generated method stub
+    	return quote;
+    }
+
+    public Quotation renderReferralSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, ReferralSummary referralSummary) throws IOException {
+		// TODO Auto-generated method stub
+    	return quote;
+    }
+
+    public Type renderRequoteButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderRowScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, RowScroller rowScroller) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+    
+    public Type renderSaveButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SaveButtonAction saveButtonAction, String label, boolean remoteUser) { 
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+   	public List<?> renderSaveQuotations(PrintWriter w, RenderRequest request, RenderResponse response, List<?> quotationSummaries, SavedQuotations saveedQuotations) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return quotationSummaries;
+    }
+
+    public Type renderSaveQuotationsFooter(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SavedQuotations saveedQuotations) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderSectionScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SectionScroller sectionScroller) throws IllegalStateException, IOException {
+		// TODO Auto-generated method stub
+    	return model;
+    }
+
+    public Type renderViewQuotationButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ViewQuotationButtonAction viewQuotationButtonAction, String quoteNumber, String label) {
+		// TODO Auto-generated method stub
+    	return model;
+    }
 }

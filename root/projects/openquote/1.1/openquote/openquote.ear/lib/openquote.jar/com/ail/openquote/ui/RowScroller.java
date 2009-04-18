@@ -16,16 +16,14 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * A RowScroller represents a Collection of records in a table format with one row per record.<br>
@@ -49,90 +47,11 @@ import com.ail.core.Type;
 public class RowScroller extends Repeater {
 	private static final long serialVersionUID = -6043887157243002172L;
     
-    @SuppressWarnings("unchecked")
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
-        // Start the table for the scroller (size()+1 to allow for the trash can column)
-        int columns=isAddAndDeleteEnabled() ? item.size()+1 : item.size();
-
-        w.printf("<table width='100%%' border='0' cols='%d'>", columns);
-
-        if (getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>", columns);
-            w.print(getExpandedRepeatedTitle(model));
-            w.printf("  </td></tr>");
-        }
-        
-        // Output the column headers
-        w.printf(" <tr class='portlet-section-alternate'>");
-        for(AttributeField a: item) {
-            if (a.getExpandedSubTitle(model)!=null) {
-                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s<br/>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)), i18n(a.getExpandedSubTitle(model)));
-            }
-            else {
-                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)));
-            }
-        }
-
-        // Add a column for the trash can, if it's enabled
-        if (isAddAndDeleteEnabled()) {
-            w.printf("<td>&nbsp;</td>");
-            w.printf(" </tr>");
-        }
-        
-        // Now output the rows of data
-        int rowCount=0;
-        for(Iterator it=model.xpathIterate(getBinding()) ; it.hasNext() ; ) {
-            Type t=(Type)it.next();
-            
-            w.printf("<tr>");
-
-            for(AttributeField a: item) {
-                w.printf("<td align='center'>");
-                a.renderResponse(request, response, t, getBinding()+"["+rowCount+"]");
-                w.printf("</td>");
-            }
-
-            // Add the trash can for this row if enabled.
-            if (isAddAndDeleteEnabled()) {
-                if (rowCount>=getMinRows()) {
-                    w.printf("<td align='center'>");
-                    w.printf("<input type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", getId(), rowCount);
-                    w.printf("</td>");
-                }
-                else {
-                    w.printf("<td>&nbsp;</td>");
-                }
-            }
-            
-            w.printf("</tr>");
-           
-            rowCount++;
-        }
-
-        // if Add and Delete are enabled, put an 'Add' button to the bottom right of the scroller.
-        if (isAddAndDeleteEnabled()) {
-            w.print("<tr>");
-            for(int i=0 ; i<item.size() ; i++) {
-                w.print("<td>&nbsp;</td>");
-            }
-            
-            w.printf("<td align='center'>");
-
-            // disabled the button if we've reached 'maxRows'.
-            if (maxRows!=-1 && rowCount==maxRows) {
-                w.printf("<input type='image' src='/quotation/images/add-disabled.gif' name='op=add:id=%s:immediate=true:' disabled='true'/>", getId());
-            }
-            else {
-                w.printf("<input type='image' src='/quotation/images/add.gif' name='op=add:id=%s:immediate=true:'/>", getId());
-            }
-            
-            w.printf("</td></tr>");
-        }
-        
-        w.printf("</table>");
+        QuotationContext.getRenderer().renderRowScroller(w, request, response, model, this);
         
         return model;
     }

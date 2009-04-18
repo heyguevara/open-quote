@@ -124,44 +124,15 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	String onChange = null;
-        String title = getExpandedTitle(model);
-        String detailTitle = getExpandedDetailsTitle(model);
+        String title = i18n(getExpandedTitle(model));
+        String detailTitle = i18n(getExpandedDetailsTitle(model));
         String questionId = xpathToId(rowContext+binding);
-        String detailsId = xpathToId(rowContext+detailsBinding);
+        String detailId = xpathToId(rowContext+detailsBinding);
         
         PrintWriter w = response.getWriter();
+        
+        QuotationContext.getRenderer().renderQuestionWithDetails(w, request, response, model, this, title, detailTitle, rowContext, questionId, detailId);
 
-        if ("radio".equals(getRenderHint())) {
-        	onChange="enableTargetIf(this.checked && this.value==\"Yes\", \""+detailsId+"\")";
-        }
-        else if ("checkbox".equals(getRenderHint())) {
-        	onChange="enableTargetIf(this.checked, \""+detailsId+"\")";
-        }
-        else {
-        	onChange="enableTargetIf(this.options[this.selectedIndex].text==\"Yes\", \""+detailsId+"\")";
-        }
-        
-        w.printf("<td>%s</td>", i18n(title));
-        w.printf("<td>%s</td>", renderAttribute(request, response, model, getBinding(), rowContext, onChange, getOnLoad()));
-        w.printf("<td>%s</td>", i18n(detailTitle));
-        w.printf("<td>%s</td>", renderAttribute(request, response, model, getDetailsBinding(), rowContext, getOnChange(), getOnLoad()));
-        
-        // Disable the 'detail' textarea unless the question's answer is 'Yes'
-        if ("radio".equals(getRenderHint())) {
-            w.printf("<script type='text/javascript'>radio=findElementsByName(\"%s\")[1];enableTargetIf(radio.checked, \"%s\")</script>",
-                    questionId, detailsId);
-        }
-        else if ("checkbox".equals(getRenderHint())) {
-            w.printf("<script type='text/javascript'>cbox=findElementsByName(\"%s\")[0];enableTargetIf(cbox.checked, \"%s\")</script>",
-                    questionId, detailsId);
-        }
-        else {
-            w.printf("<script type='text/javascript'>elem=findElementsByName(\"%s\")[0];enableTargetIf(elem.options[elem.selectedIndex].text==\"Yes\", \"%s\")</script>",
-                    questionId, detailsId);
-        }
-
-        
         return model;
     }
 }

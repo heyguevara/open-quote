@@ -26,6 +26,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Page element to display a summary of a referral. The ReferralSummary element is designed to render 
@@ -103,56 +104,12 @@ public class ReferralSummary extends PageContainer {
         PrintWriter w=response.getWriter();
         Quotation quote=(com.ail.openquote.Quotation)model;
 
-        w.printf("<table columns='2' width='100%%' cellpadding='15'>");
-        w.printf(" <tr>");
-        w.printf("  <td>");
-        renderReferralNotification(w, request, response, quote);
-        w.printf("  </td>");
-        w.printf("  <td rowspan='2' valign='top' align='center'>");
-        renderRequirementSummary(w, request, response, quote);
-        w.printf("  </td>");
-        w.printf(" </tr>");
-        w.printf(" <tr>");
-        w.printf("  <td align='center' width='50%%'>");
-        w.printf("  </td>");
-        w.printf(" </tr>");
-        w.printf("</table>");
-
+        QuotationContext.getRenderer().renderReferralSummary(w, request, response, quote, this);
+        
         return model;
 	}
 
-	private void renderReferralNotification(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
-        w.printf("<table>");
-        w.printf("   <tr>");
-        w.printf("       <td class='portlet-font'>");
-        getReferralNotificationSection().renderResponse(request, response, quote);
-        w.printf("       </td>");
-        w.printf("   </tr>");
-        w.printf("   <tr>");
-        w.printf("       <td class='portlet-font'>");
-        getNavigationSection().renderResponse(request, response, quote);
-        w.printf("       </td>");
-        w.printf("   </tr>");
-        w.printf("</table>");
-    }
-    
-    private void renderRequirementSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote) throws IOException {
-        w.printf("<table class='portlet-font'>");
-
-        // output the summary sections.
-        for(PageElement e: super.getPageElement()) {
-            if (e instanceof AnswerSection) {
-                w.printf("<tr><td>");
-                e.renderResponse(request, response, quote);
-                w.printf("</td></tr>");
-            }
-            w.printf("<tr><td height='15' colspan='2'></td></tr>");
-        }
-
-        w.printf("</table>");
-    }
-    
-    private NavigationSection getNavigationSection() {
+    public NavigationSection getNavigationSection() {
         if (navigationSection==null) {
             navigationSection=new NavigationSection();
             
@@ -174,7 +131,7 @@ public class ReferralSummary extends PageContainer {
         return navigationSection;
     }
 
-    private ParsedUrlContent getReferralNotificationSection() {
+    public ParsedUrlContent getReferralNotificationSection() {
         if (referralNotification==null) {
             referralNotification=new ParsedUrlContent();
             referralNotification.setUrl(referralNotificationUrl);

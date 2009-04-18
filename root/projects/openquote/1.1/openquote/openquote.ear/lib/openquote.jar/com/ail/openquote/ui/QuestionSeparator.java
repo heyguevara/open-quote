@@ -16,8 +16,6 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.findErrors;
-import static com.ail.openquote.ui.util.Functions.hasErrorMarkers;
 import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
@@ -29,7 +27,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>The QuestionSeparator is used to break up long list of questions with either a title, or simple white space.</p>
@@ -78,26 +76,10 @@ public class QuestionSeparator extends Question {
 	@Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         String title = getExpandedTitle(model);
-
+        title = (title!=null) ? i18n(title) : null;
         PrintWriter w=response.getWriter();
         
-        
-        if (title==null) {
-            if (getBinding()!=null && hasErrorMarkers(model.xpathGet(getBinding(), Type.class))) {
-        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(getBinding(), Type.class)));
-        	}
-        	else {
-        		w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
-        	}
-        }
-        else {
-            w.printf("<td colspan='4'><table width='100%%''>"); 
-            w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(i18n(title))); 
-            if (getBinding()!=null && hasErrorMarkers(model.xpathGet(getBinding(), Type.class))) {
-            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(getBinding(), Type.class)));
-            }
-            w.printf("</table></td>");
-        }
+        QuotationContext.getRenderer().renderQuestionSeparator(w, request, response, model, this, title);
         
         return model;
     }

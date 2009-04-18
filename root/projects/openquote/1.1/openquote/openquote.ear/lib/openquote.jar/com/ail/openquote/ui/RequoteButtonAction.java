@@ -29,6 +29,7 @@ import com.ail.core.Type;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * <p>Adds a requote button to a page. By default this button will redirect the user
@@ -71,7 +72,7 @@ public class RequoteButtonAction extends CommandButtonAction {
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-        w.printf("<input type='submit' name='op=requote' value='%s' class='portlet-form-input-field'/>", i18n(getLabel()));
+        QuotationContext.getRenderer().renderRequoteButtonAction(w, request, response, model, this, i18n(getLabel()));
         return model;
     }
 }
