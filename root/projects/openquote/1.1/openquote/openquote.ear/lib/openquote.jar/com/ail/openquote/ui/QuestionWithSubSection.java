@@ -115,6 +115,10 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
     	String aTitle = i18n(getExpandedTitle(model));
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);

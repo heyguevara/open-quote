@@ -29,52 +29,12 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
-import com.ail.core.TypeEnum;
 
 /**
  * This class defines a collection of functions used by the classes in {@link com.ail.openquote.ui}.
  */
 public class Functions {
     private static SimpleDateFormat longFormat=new SimpleDateFormat("d MMMMM, yyyy");
-
-    /**
-     * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
-     * enumeration must be based on {@link TypeEnum}.
-     * @param Enumeration type
-     * @return Option list as a string.
-     */
-    public static String renderEnumerationAsOptions(Class<? extends TypeEnum> clazz) {
-        return renderEnumerationAsOptions(clazz, null);
-    }
-    
-    /**
-     * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
-     * enumeration must be based on {@link TypeEnum}.
-     * @param clazz Enumeration type
-     * @param selected Enum value to show as selected.
-     * @return Option list as a string.
-     */
-    public static String renderEnumerationAsOptions(Class<? extends TypeEnum> clazz, TypeEnum selected) {
-        try {
-            StringBuffer ret=new StringBuffer();
-            TypeEnum[] values;
-            values = (TypeEnum[])clazz.getMethod("values").invoke(null);
-            
-            for(TypeEnum en: values) {
-                if (selected!=null && selected.equals(en)) {
-                    ret.append("<option selected='yes'>"+en.longName()+"</option>");
-                }
-                else {
-                    ret.append("<option>"+en.longName()+"</option>");
-                }
-            }
-            
-            return ret.toString();
-        }
-        catch(Exception e) {
-            throw new AssertionError("Failed to build an option list for: "+clazz.getName()+". Cause was: "+e.toString());
-        }
-    }
 
     /** 
      * Convert an XPath expression in to a format that will be accepted as an HTML element's id.

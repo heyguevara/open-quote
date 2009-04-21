@@ -63,6 +63,13 @@ public abstract class PageElement extends Type implements Identified, Comparable
     private ArrayList<Action> action;
 
     /**
+     * An optional XPath expression. If defined the expression is evaluated against the quotation
+     * immediately before the action is to be executed. The action will only be executed if the expression 
+     * returns true (i.e. <code>(Boolean)model.xpathGet(condition)==true</code> 
+     */
+    private String condition;
+    
+    /**
      * Default constructor
      */
     public PageElement() {
@@ -72,7 +79,15 @@ public abstract class PageElement extends Type implements Identified, Comparable
         
         action = new ArrayList<Action>();
     }
+    
+    public PageElement(String condition) {
+    	this.condition=condition;
+    }
 	
+    protected boolean conditionIsMet(Type model) {
+        return condition==null || (Boolean)model.xpathGet(condition)==true;
+    }
+    
     /**
      * The property change listener is primarily provided for listening
      * to changes to the {@link #getOrder() order} property. The {@link com.ail.openquote.ui.util.OrderedLinkedList}
@@ -139,6 +154,24 @@ public abstract class PageElement extends Type implements Identified, Comparable
      */
     public void setAction(ArrayList<Action> action) {
         this.action = action;
+    }
+
+    /**
+     * get the page element's condition
+     * @see #condition
+     * @return current value of property
+     */
+    public String getCondition() {
+        return condition;
+    }
+
+    /**
+     * Set the page element's condition.
+     * @see #condition
+     * @param condition
+     */
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
     /**

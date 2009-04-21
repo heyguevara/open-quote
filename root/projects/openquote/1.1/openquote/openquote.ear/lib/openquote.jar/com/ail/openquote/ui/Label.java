@@ -102,9 +102,12 @@ public class Label extends PageElement {
         return false;
     }
 
-    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
-            IOException {
-        Object[] params = new Object[parameter.size()];
+    public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	Object[] params = new Object[parameter.size()];
         int i = 0;
 
         for (Binding expr : parameter) {

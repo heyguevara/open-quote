@@ -52,7 +52,11 @@ public class Question extends AttributeField {
 
 	@Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title = getExpandedTitle(model);
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	String title = getExpandedTitle(model);
 
         PrintWriter w=response.getWriter();
         

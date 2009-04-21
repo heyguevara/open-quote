@@ -73,7 +73,11 @@ public class AnswerScroller extends Answer {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	PrintWriter w=response.getWriter();
         
         return QuotationContext.getRenderer().renderAnswerScroller(w, request, response, model, this);
     }

@@ -69,6 +69,10 @@ public class SectionScroller extends Repeater {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+    	
         PrintWriter w=response.getWriter();
         
         return QuotationContext.getRenderer().renderSectionScroller(w, request, response, model, this);

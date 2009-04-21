@@ -145,6 +145,10 @@ public class QuestionSection extends PageElement {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
         PrintWriter w = response.getWriter();
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
         String title = getExpandedTitle(QuotationContext.getQuotation(), model);

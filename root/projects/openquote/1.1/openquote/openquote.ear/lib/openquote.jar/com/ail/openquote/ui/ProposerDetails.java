@@ -182,7 +182,12 @@ public class ProposerDetails extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	PrintWriter w=response.getWriter();
+    	
         Proposer proposer=(Proposer)((Quotation)model).getProposer();
 
         QuotationContext.getRenderer().renderProposerDetails(w, request, response, proposer, this);

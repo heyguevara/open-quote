@@ -616,6 +616,9 @@
         <field name="binding" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="condition" type="string">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
     
     <class name="com.ail.openquote.ui.PageContainer" extends="com.ail.openquote.ui.PageElement">
@@ -628,9 +631,6 @@
     
     <class name="com.ail.openquote.ui.Action" extends="com.ail.openquote.ui.PageElement">
         <map-to xml="action"/>
-        <field name="condition" type="string">
-            <bind-xml node="attribute"/>
-        </field>
         <field name="when" type="string">
             <bind-xml node="attribute"/>
         </field>

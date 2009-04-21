@@ -92,7 +92,11 @@ public class ParsedUrlContent extends PageElement {
         boolean success=false;
         String content=null;
         
-        Quotation quote=(com.ail.openquote.Quotation)model;
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	Quotation quote=(com.ail.openquote.Quotation)model;
 
         CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()));
         Collection<String> namespaces=cp.getConfigurationNamespaceParent();

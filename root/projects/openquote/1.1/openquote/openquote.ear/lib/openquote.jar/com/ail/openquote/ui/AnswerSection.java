@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
 
 import java.io.IOException;
@@ -141,10 +142,14 @@ public class AnswerSection extends PageElement {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w = response.getWriter();
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	PrintWriter w = response.getWriter();
         
         String title = getExpandedTitle(QuotationContext.getQuotation(), model);
 
-        return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, title);
+        return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, i18n(title));
 	}
 }

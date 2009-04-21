@@ -48,6 +48,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
+import com.ail.core.TypeEnum;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
@@ -118,6 +119,45 @@ public class Html extends Type implements Renderer {
 	private RenderQuotationSummaryHelper renderQuotationSummaryHelper=new RenderQuotationSummaryHelper();
 	private RenderReferralSummaryHelper renderReferralSummaryHelper=new RenderReferralSummaryHelper();
 	
+    /**
+     * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
+     * enumeration must be based on {@link TypeEnum}.
+     * @param Enumeration type
+     * @return Option list as a string.
+     */
+    private static String renderEnumerationAsOptions(Class<? extends TypeEnum> clazz) {
+        return renderEnumerationAsOptions(clazz, null);
+    }
+    
+    /**
+     * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
+     * enumeration must be based on {@link TypeEnum}.
+     * @param clazz Enumeration type
+     * @param selected Enum value to show as selected.
+     * @return Option list as a string.
+     */
+    private static String renderEnumerationAsOptions(Class<? extends TypeEnum> clazz, TypeEnum selected) {
+        try {
+            StringBuffer ret=new StringBuffer();
+            TypeEnum[] values;
+            values = (TypeEnum[])clazz.getMethod("values").invoke(null);
+            
+            for(TypeEnum en: values) {
+                if (selected!=null && selected.equals(en)) {
+                    ret.append("<option selected='yes'>"+en.longName()+"</option>");
+                }
+                else {
+                    ret.append("<option>"+en.longName()+"</option>");
+                }
+            }
+            
+            return ret.toString();
+        }
+        catch(Exception e) {
+            throw new AssertionError("Failed to build an option list for: "+clazz.getName()+". Cause was: "+e.toString());
+        }
+    }
+
 	public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException {
 		 w.printf("<tr><td>%s</td><td>%s</td></tr>", title, answerText);
 		 
@@ -148,7 +188,7 @@ public class Html extends Type implements Renderer {
 		
 		// output the title row if a title was defined
 		if (title!=null) {
-		    w.printf("  <tr class='portlet-section-subheader'><td colspan='2'><u>%s</u></td></tr>", i18n(title));
+		    w.printf("  <tr class='portlet-section-subheader'><td colspan='2'><u>%s</u></td></tr>", title);
 		}
 		
 		for(Answer a: answerSection.getAnswer()) { 
@@ -585,12 +625,12 @@ public class Html extends Type implements Renderer {
     	return model;
     }
     
-    public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection) throws IllegalStateException, IOException {
+    public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection, String title) throws IllegalStateException, IOException {
         w.printf(" <table width='100%%' border='0' cols='%d'>", pageSection.getColumns());
 
         // Output the section title if there is one.
-        if (!Functions.isEmpty(pageSection.getTitle())) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>%s</td></tr>", pageSection.getColumns(), i18n(pageSection.getTitle()));
+        if (!Functions.isEmpty(title)) {
+            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>%s</td></tr>", pageSection.getColumns(), title);
         }
 
         Iterator<? extends PageElement> it=pageSection.getPageElement().iterator();
@@ -682,7 +722,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(   "<table border='0'>");
 	        w.printf(    "<tr>");
 	        w.printf(     "<td>");
-	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
+	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", renderEnumerationAsOptions(Title.class, proposer.getTitle()));
 	        w.printf(     "</td>");
 	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
 	        w.printf(    "</tr>");
@@ -811,7 +851,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(   "<table border='0'>");
 	        w.printf(    "<tr>");
 	        w.printf(     "<td>");
-	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", Functions.renderEnumerationAsOptions(Title.class, proposer.getTitle()));
+	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", renderEnumerationAsOptions(Title.class, proposer.getTitle()));
 	        w.printf(     "</td>");
 	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
 	        w.printf(    "</tr>");

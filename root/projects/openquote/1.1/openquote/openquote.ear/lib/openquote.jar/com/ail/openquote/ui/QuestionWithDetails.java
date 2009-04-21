@@ -124,7 +124,11 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title = i18n(getExpandedTitle(model));
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	String title = i18n(getExpandedTitle(model));
         String detailTitle = i18n(getExpandedDetailsTitle(model));
         String questionId = xpathToId(rowContext+binding);
         String detailId = xpathToId(rowContext+detailsBinding);

@@ -315,7 +315,11 @@ public class AttributeField extends PageElement {
 	        return "";
 	    }
 	
-	    // Create the StringWriter - out output will go here.
+    	if (!conditionIsMet(model)) {
+    		return "";
+    	}
+
+    	// Create the StringWriter - out output will go here.
 	    StringWriter ret=new StringWriter();
 	    PrintWriter w=new PrintWriter(ret);
 	
@@ -371,7 +375,11 @@ public class AttributeField extends PageElement {
 	        return "";
 	    }
 	
-	    StringWriter ret=new StringWriter();
+    	if (!conditionIsMet(model)) {
+    		return "";
+    	}
+
+    	StringWriter ret=new StringWriter();
 	    PrintWriter w=new PrintWriter(ret);
 	
 	    String id=Functions.xpathToId(rowContext+boundTo);

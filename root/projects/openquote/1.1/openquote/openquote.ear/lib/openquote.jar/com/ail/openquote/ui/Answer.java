@@ -136,7 +136,11 @@ public class Answer extends PageElement {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w = response.getWriter();
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	PrintWriter w = response.getWriter();
         
         String aTitle = getExpandedTitle(QuotationContext.getQuotation(), model);
 

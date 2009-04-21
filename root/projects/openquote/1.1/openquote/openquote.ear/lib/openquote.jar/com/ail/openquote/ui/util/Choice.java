@@ -22,58 +22,61 @@ import java.util.List;
 import com.ail.core.Type;
 
 /**
- * Utility class which assist in the rendering of Choice types. The values made available to the user in
- * a choice may be hard wired into the {@link com.ail.core.Atribute Attribute} or derived from a Choice
- * Type. Typically, a choice Type is used when the number of options becomes unmanagebly large.
- * The Choice type also supports sub-choices, for example vehicle Make and Model choices.
+ * Utility class which assist in the rendering of Choice types. The values made
+ * available to the user in a choice may be hard wired into the
+ * {@link com.ail.core.Atribute Attribute} or derived from a Choice Type.
+ * Typically, a choice Type is used when the number of options becomes
+ * unmanagebly large. The Choice type also supports sub-choices, for example
+ * vehicle Make and Model choices.
  */
 public class Choice extends Type {
-    private static final long serialVersionUID = -7252168449721481890L;
-    private List<Choice> choice=null;
-    private String name;
-    private String compiled;
-    
-    public Choice() {
-        choice=new ArrayList<Choice>();
-    }
+	private static final long serialVersionUID = -7252168449721481890L;
+	private List<Choice> choice = null;
+	private String name;
+	private String compiled;
 
-    public String getName() {
-        return name;
-    }
+	public Choice() {
+		choice = new ArrayList<Choice>();
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public List<Choice> getChoice() {
-        return choice;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setChoice(List<Choice> choice) {
-        this.choice = choice;
-    }
-    
-    public String renderAsJavaScriptArray(String arrayName) {
-        if (compiled==null) {
-            StringBuffer buf=new StringBuffer();
-            int i=1;
-            
-            buf.append("<script type='text/javascript'>");
-            buf.append(arrayName).append("=new Array();");
-            
-            for(Choice m: choice) {
-                buf.append(arrayName).append("[").append(i++).append("]=new Array('").append(m.getName()).append("'");
-                for(Choice s: m.getChoice()) {
-                    buf.append(",'").append(s.getName()).append("'");
-                }
-                buf.append(");");
-            }
-            
-            buf.append("</script>");
-            
-            compiled=buf.toString();
-        }
+	public List<Choice> getChoice() {
+		return choice;
+	}
 
-        return compiled;
-    }
+	public void setChoice(List<Choice> choice) {
+		this.choice = choice;
+	}
+
+	public String renderAsJavaScriptArray(String arrayName) {
+		if (compiled == null) {
+			StringBuffer buf = new StringBuffer();
+			int i = 1;
+
+			buf.append("<script type='text/javascript'>");
+			buf.append(arrayName).append("=new Array();");
+
+			for (Choice m : choice) {
+				buf.append(arrayName).append("[").append(i++).append(
+						"]=new Array('").append(m.getName()).append("'");
+				for (Choice s : m.getChoice()) {
+					buf.append(",'").append(s.getName()).append("'");
+				}
+				buf.append(");");
+			}
+
+			buf.append("</script>");
+
+			compiled = buf.toString();
+		}
+
+		return compiled;
+	}
 }

@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 
 import javax.portlet.RenderRequest;
@@ -53,6 +55,10 @@ public class PageSection extends PageContainer {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this);
+    	if (!conditionIsMet(model)) {
+    		return model;
+    	}
+
+    	return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()));
     }
 }

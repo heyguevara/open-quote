@@ -65,28 +65,16 @@ public class Action extends PageElement {
      */
     private String commandName;
     
-    /**
-     * An optional XPath expression. If defined the expression is evaluated against the quotation
-     * immediately before the action is to be executed. The action will only be executed if the expression 
-     * returns true (i.e. <code>(Boolean)model.xpathGet(condition)==true</code> 
-     */
-    private String condition;
-    
 	public Action() {
 		super();
 	}
 
 	public Action(String when, String commandName, String condition) {
-        super();
+        super(condition);
         this.when = when;
         this.commandName = commandName;
-        this.condition = condition;
     }
 
-    protected boolean conditionIsMet(Type model) {
-        return condition==null || (Boolean)model.xpathGet(condition)==true;
-    }
-    
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if ("onProcessActions".equals(when) && conditionIsMet(model)) {
@@ -122,24 +110,6 @@ public class Action extends PageElement {
         }
 	    
 	    return model;
-    }
-
-    /**
-     * get the action's condition
-     * @see #condition
-     * @return current value of property
-     */
-    public String getCondition() {
-        return condition;
-    }
-
-    /**
-     * Set the action's condition.
-     * @see #condition
-     * @param condition
-     */
-    public void setCondition(String condition) {
-        this.condition = condition;
     }
 
     /**
