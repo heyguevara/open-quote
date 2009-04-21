@@ -542,11 +542,13 @@
     <class name="com.ail.openquote.PersonalProposer" extends="com.ail.party.Person" auto-complete="false">
         <field name="emailAddress" type="string"/>
         <field name="telephoneNumber" type="string"/>
+        <field name="mobilephoneNumber" type="string"/>
     </class>
 
     <class name="com.ail.openquote.CommercialProposer" extends="com.ail.party.Organisation" auto-complete="false">
         <field name="emailAddress" type="string"/>
         <field name="telephoneNumber" type="string"/>
+        <field name="mobilephoneNumber" type="string"/>
         <field name="firstName" type="string"/>
         <field name="surname" type="string"/>
         <field name="title" type="string" get-method="getTitleAsString" set-method="setTitleAsString"/>

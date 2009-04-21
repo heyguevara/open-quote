@@ -29,6 +29,7 @@ public class CommercialProposer extends Organisation implements Proposer {
 
 	private String emailAddress;
 	private String telephoneNumber;
+	private String mobilephoneNumber;
 	private Person contact;
 	
 	public String getCompanyName() {
@@ -113,5 +114,19 @@ public class CommercialProposer extends Organisation implements Proposer {
 
 	public Type getInstance() {
 		return this;
+	}
+
+	/**
+	 * @return the mobilephoneNumber
+	 */
+	public String getMobilephoneNumber() {
+		return mobilephoneNumber;
+	}
+
+	/**
+	 * @param mobilephoneNumber the mobilephoneNumber to set
+	 */
+	public void setMobilephoneNumber(String mobilephoneNumber) {
+		this.mobilephoneNumber = mobilephoneNumber;
 	}
 }

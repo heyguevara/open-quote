@@ -50,6 +50,7 @@ import com.ail.party.Title;
  * <li>Address lines 3 & 4 are optional, but if supplied must match the regular expression above.</li>
  * <li>Postcode must be supplied, and must match the regular expression: ^[a-zA-Z0-9 -]*$</li>
  * <li>Telephone number must be supplied, and must match the regular expression: (^[+()0-9 -]*$)|(^[+()0-9 -]*[extEXT]{0,3}[ ()0-9]*$)</li>
+ * <li>Mobile phone number are optional and must match the regular expression: (^[+()0-9 -]*$)</li>
  * <li>Email address must be supplied, and must match the regular expression: ^[0-9a-zA-Z.-]*@[0-9a-zA-Z.-]*[.][0-9a-zA-Z.-]*$</li>
  * <li>If in Commercial mode, company name must be supplied and must match the regular expression: ^[\\p{L}\\p{N}-,. ()]*$.</li>
  * </ul>
@@ -59,6 +60,7 @@ public class ProposerDetails extends PageElement {
     private static final Pattern namePattern=Pattern.compile("^[\\p{L}\\p{N}-,. ()]*$");
     private static final Pattern postcodePattern=Pattern.compile("^[a-zA-Z0-9 -]*$");
     private static final Pattern emailPattern=Pattern.compile("^[0-9a-zA-Z.-]*@[0-9a-zA-Z.-]*[.][0-9a-zA-Z.-]*$");
+    private static final Pattern mobilePattern=Pattern.compile("(^[+()0-9 -]*$)");
     private static final Pattern phonePattern=Pattern.compile("(^[+()0-9 -]*$)|(^[+()0-9 -]*[extEXT]{0,3}[ ()0-9]*$)");
 	private String title;
 
@@ -88,6 +90,7 @@ public class ProposerDetails extends PageElement {
         proposer.getAddress().setCounty(request.getParameter("county"));
         proposer.getAddress().setPostcode(request.getParameter("postcode"));
         proposer.setTelephoneNumber(request.getParameter("phone"));
+        proposer.setMobilephoneNumber(request.getParameter("mobile"));
         proposer.setEmailAddress(request.getParameter("email"));
         
         if (proposer instanceof CommercialProposer) {
@@ -159,6 +162,10 @@ public class ProposerDetails extends PageElement {
         }
         else if (!phonePattern.matcher(proposer.getTelephoneNumber()).find()) {
         	addError("phone", i18n("i18n_invalid_error"), proposer.getInstance());
+        }
+
+        if (!mobilePattern.matcher(proposer.getMobilephoneNumber()).find()) {
+        	addError("mobile", i18n("i18n_invalid_error"), proposer.getInstance());
         }
 
         if (isEmpty(proposer.getEmailAddress())) {

@@ -31,6 +31,10 @@ public interface Proposer {
 
 	String getTelephoneNumber();
 
+	void setMobilephoneNumber(String telephoneNumber);
+
+	String getMobilephoneNumber();
+
 	void setTelephoneNumber(String telephoneNumber);
 
 	String getLegalName();

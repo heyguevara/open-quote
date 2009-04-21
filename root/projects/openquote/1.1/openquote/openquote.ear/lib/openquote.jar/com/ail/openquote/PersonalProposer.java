@@ -29,6 +29,7 @@ import com.ail.party.Person;
 public class PersonalProposer extends Person implements Proposer {
 	private static final long serialVersionUID = -4521508279619758949L;
 	private String emailAddress;
+	private String mobilephoneNumber;
 	private String telephoneNumber;
 	
 	public PersonalProposer() {
@@ -52,5 +53,19 @@ public class PersonalProposer extends Person implements Proposer {
 	
 	public Type getInstance() {
 		return this;
+	}
+
+	/**
+	 * @return the mobilephoneNumber
+	 */
+	public String getMobilephoneNumber() {
+		return mobilephoneNumber;
+	}
+
+	/**
+	 * @param mobilephoneNumber the mobilephoneNumber to set
+	 */
+	public void setMobilephoneNumber(String mobilephoneNumber) {
+		this.mobilephoneNumber = mobilephoneNumber;
 	}
 }

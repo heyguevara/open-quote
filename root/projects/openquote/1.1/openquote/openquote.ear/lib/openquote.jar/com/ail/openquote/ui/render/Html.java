@@ -904,6 +904,19 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
 
         w.printf( "<tr class='portlet-font'>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_mobilephone_label")+"</td>");
+        w.printf(  "<td colspan='2'>");
+        w.printf(   "<table border='0'><tr>");
+        w.printf(    "<td>");
+        w.printf(     "<input name='mobile' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getMobilephoneNumber());
+        w.printf(    "</td>");
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("mobile", proposer.getInstance()));
+        w.printf(   "</tr></table>");
+        w.printf(  "</td>");
+        w.printf(  "<td colspan='4'>&nbsp;</td>");
+        w.printf( "</tr>");
+
+        w.printf( "<tr class='portlet-font'>");
         w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_email_label")+"</td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
