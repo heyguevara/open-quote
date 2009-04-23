@@ -16,5 +16,6 @@
 		<country />
 	</address>
 	<telephoneNumber />
+	<mobilephoneNumber />
 	<emailAddress />
 </proposer>

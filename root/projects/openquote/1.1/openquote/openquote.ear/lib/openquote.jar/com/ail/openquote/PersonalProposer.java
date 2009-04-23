@@ -20,11 +20,9 @@ import com.ail.core.Type;
 import com.ail.party.Person;
 
 /**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/05/21 16:43:11 $
- * @source $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/openquote.jar/com/ail/openquote/PersonalProposer.java,v $
- * @stereotype type
+ * A PersonalProposer represents the individual applying for a product. Generally appropriate for
+ * personal lines products.
+ * @see CommercialProposer
  */
 public class PersonalProposer extends Person implements Proposer {
 	private static final long serialVersionUID = -4521508279619758949L;
@@ -55,16 +53,10 @@ public class PersonalProposer extends Person implements Proposer {
 		return this;
 	}
 
-	/**
-	 * @return the mobilephoneNumber
-	 */
 	public String getMobilephoneNumber() {
 		return mobilephoneNumber;
 	}
 
-	/**
-	 * @param mobilephoneNumber the mobilephoneNumber to set
-	 */
 	public void setMobilephoneNumber(String mobilephoneNumber) {
 		this.mobilephoneNumber = mobilephoneNumber;
 	}

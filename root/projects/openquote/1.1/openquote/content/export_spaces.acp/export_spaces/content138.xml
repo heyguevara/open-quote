@@ -116,6 +116,7 @@
         <element key="i18n_proposer_details_company_label">Company name:</element>
         <element key="i18n_proposer_details_address_label">Address:</element>
         <element key="i18n_proposer_details_telephone_label">Telephone number:</element>
+        <element key="i18n_proposer_details_mobilephone_label">Mobile number:</element>
         <element key="i18n_proposer_details_email_label">Email address:</element>
         <element key="i18n_proposer_details_postcode_label">Postcode</element>
         
@@ -175,6 +176,7 @@
         <element key="i18n_proposer_details_company_label">Firmenname:</element>
         <element key="i18n_proposer_details_address_label">Adress:</element>
         <element key="i18n_proposer_details_telephone_label">Telefonnummer:</element>
+        <element key="i18n_proposer_details_mobilephone_label">Handy-nummer:</element>
         <element key="i18n_proposer_details_email_label">E-mail adress:</element>
         
         <element key="i18n_saved_quotations_username_label">E-mail adress:</element>

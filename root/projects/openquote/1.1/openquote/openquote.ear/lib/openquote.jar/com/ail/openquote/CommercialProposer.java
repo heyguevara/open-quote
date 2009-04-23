@@ -22,7 +22,9 @@ import com.ail.party.Person;
 import com.ail.party.Title;
 
 /**
- * Represents the organisation that the quotation was prepared for.
+ * Represents the organisation that the quotation was prepared for. Generally this type is appropriate
+ * for use in commercial lines.
+ * @see PersonalProposer
  */
 public class CommercialProposer extends Organisation implements Proposer {
 	private static final long serialVersionUID = 1L;
@@ -116,16 +118,10 @@ public class CommercialProposer extends Organisation implements Proposer {
 		return this;
 	}
 
-	/**
-	 * @return the mobilephoneNumber
-	 */
 	public String getMobilephoneNumber() {
 		return mobilephoneNumber;
 	}
 
-	/**
-	 * @param mobilephoneNumber the mobilephoneNumber to set
-	 */
 	public void setMobilephoneNumber(String mobilephoneNumber) {
 		this.mobilephoneNumber = mobilephoneNumber;
 	}
