@@ -28,7 +28,7 @@ import com.ail.core.TypeXPathException;
  * sub class a specific class, the engine simply uses reflection to query them. Wrapping objects in an instance of 
  * Fact has some advantages - and some disadvantages. Chief among the advantages are that Facts can be given 
  * arbitrary (and duplicate) names this allows us to group objects in ways that the the raw objects wouldn't lend
- * themselves to. Also, this class offers some helper methods which make navigating and convering elements of our
+ * themselves to. Also, this class offers some helper methods which make navigating and converting elements of our
  * type model easier. The major disadvantage is that once you've wrapped an object (e.g. an Asset) in a fact, you 
  * can't then use native rule Condition queries on it as easily.
  */
