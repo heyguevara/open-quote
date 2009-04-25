@@ -87,7 +87,7 @@ function loadChoiceOptions(select, selected, array) {
  */
 function loadSlaveChoiceOptions(select, selected, array, master, slave) {
     masterSelectName=new String(select.name);
-    masterSelectName=masterSelectName.replace(slave, master);
+    masterSelectName=masterSelectName.replace('#'+slave+'#', '#'+master+'#');
     masterSelect=findElementsByName(masterSelectName)[0];
     masterSelectValue=masterSelect.options[masterSelect.selectedIndex].text;
     select.options.length=0;
@@ -108,7 +108,7 @@ function loadSlaveChoiceOptions(select, selected, array, master, slave) {
 function updateSlaveChoiceOptions(masterSelect, array, master, slave) {
     masterSelectValue=masterSelect.options[masterSelect.selectedIndex].text;
     slaveSelectName=new String(masterSelect.name);
-    slaveSelectName=slaveSelectName.replace(master,slave);
+    slaveSelectName=slaveSelectName.replace('#'+master+'#','#'+slave+'#');
     slaveSelect=findElementsByName(slaveSelectName)[0];
     slaveSelect.options.length=0;
     for(var m=1 ; m<array.length ; m++) {
