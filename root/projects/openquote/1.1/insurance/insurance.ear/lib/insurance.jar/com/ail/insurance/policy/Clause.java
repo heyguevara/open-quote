@@ -72,6 +72,41 @@ public class Clause extends Type {
     }
 
     /**
+     * Create a clause specifying all fields. Note that if text!=null, then manuscript is set to true.
+     * @param type The Type of the clause (Subjectivity, Endorsement, Extension...)
+     * @param reference Contract certainty reference number
+     * @param title Clause title
+     * @param text Clause text (may include markup). May be null.
+     * @param reminderDate Date on which a reminder notification should be sent (most usually used on subjectivity clauses)
+     * @param startDate Date that the clause comes into effect. Null indicates policy start date 
+     * @param endDate Date at which the clause's effect ends. Null indicates policy end date
+     */
+    public Clause(ClauseType type, String reference, String title, String text, Date reminderDate, Date startDate, Date endDate) {
+        super();
+        this.type = type;
+        this.reference = reference;
+        this.title = title;
+        this.text = text;
+        this.reminderDate = reminderDate;
+        this.endDate = endDate;
+        this.startDate = startDate;
+
+        if (text!=null) {
+            this.manuscript = true;
+        }
+    }
+
+    /**
+     * Create a clause specifying all fields. The text, reminderDate, startDate and endDate properties are all set to null.
+     * @param type The Type of the clause (Subjectivity, Endorsement, Extension...)
+     * @param reference Contract certainty reference number
+     * @param title Clause title
+     */
+    public Clause(ClauseType type, String reference, String title) {
+        this(type, reference, title, null, null, null, null);
+    }
+
+    /**
      * The clause type dictates how the clause should be interpreted.
      * 
      * @return the type
