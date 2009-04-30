@@ -21,13 +21,18 @@ import com.ail.core.BaseException;
 /**
  * This exception is thrown by the Drools Accessor in response to exceptions thrown
  * by drools itself. It acts as a simple wrapper.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/11/25 09:11:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/DroolsServiceException.java,v $
  */
 public class DroolsServiceException extends BaseException {
     public DroolsServiceException(Exception e) {
         super(e.toString(), e);
+    }
+
+    /**
+     * Constructor
+     * @param description A description of the error.
+     * @param target The exception that cause this exception to be thrown.
+     **/
+    public DroolsServiceException(String description, Throwable target) {
+        super(description, target);
     }
 }

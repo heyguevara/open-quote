@@ -59,6 +59,7 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
     private String url=null;
     private String extend=null;
     private transient RuleBase ruleBase=null;
+    private transient Throwable compilationError=null;
     private boolean ruleBaseLoaded=false;
 
     public void setArgs(CommandArg args) {
@@ -82,16 +83,19 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
             }
             catch(InvalidRulePackage e) {
                 core.logError("Failed to compile decision table: \n"+e.getMessage());
+                compilationError=e;
             }
             catch(DecisionTableParseException e) {
                 core.logError("Failed to parse decision table: \n"+e.getMessage());
+                compilationError=e;
             }
             catch(RuntimeException e) {
                 core.logError("Failed to compile decision table: \n"+e.getMessage());
+                compilationError=e;
             }
             catch(Throwable e) {
                 core.logError("Failed to compile decision table: "+getUrl());
-                e.printStackTrace();
+                compilationError=e;
             }
             finally {
                 this.core=null;
@@ -182,7 +186,12 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
 
     public void invoke() throws DroolsServiceException {
         if (!ruleBaseLoaded) {
-            throw new IllegalStateException("Rule base not loaded ("+getUrl()+"). Was there an error during compilation?");
+            if (compilationError!=null) {
+                throw new DroolsServiceException("Decision table compilation failure", compilationError);
+            }
+            else {
+                throw new IllegalStateException("Rule base not loaded ("+getUrl()+"). Was there an error during compilation?");
+            }
         }
         
         StatefulSession workingMemory=null;
