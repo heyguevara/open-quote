@@ -45,6 +45,23 @@ Installing MySql
 - Once downloaded, follow the installation wizard - as part of this you will
   be prompted to select a password. You will need this later on.
   
+Installing OpenQuote
+====================
+
+OpenQuote community is supplied as a zip file. Simply unpack this zip file
+and follow the instructions below (Installing the OpenQuote database, and
+Starting the OpenQuote server).
+
+Note: If you are installing OpenQuote for use with Java J2SE 6.0, you should
+also do the following: Manually copy the following files from the  
+openquote-community/jboss/client folder to the openquote-community/jboss/lib/endorsed 
+directory:
+          o jboss-jaxrpc.jar
+          o jboss-jaxws.jar
+          o jboss-jaxws-ext.jar
+          o jboss-saaj.jar
+          o jaxb-api.jar 
+
 Installing the OpenQuote database 
 =================================
 
