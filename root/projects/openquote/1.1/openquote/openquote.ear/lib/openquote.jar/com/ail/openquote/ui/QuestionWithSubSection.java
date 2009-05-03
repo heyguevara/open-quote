@@ -47,7 +47,7 @@ import com.ail.openquote.ui.util.QuotationContext;
  * @see SectionScroller
  */
 public class QuestionWithSubSection extends Question {
-    private static final long serialVersionUID = 7118438575837087257L;
+	private static final long serialVersionUID = 7118438575837087257L;
     
     /** PageElement to be rendered/filled if the Question is answered "Yes". */
     private PageElement subSection=null;
@@ -127,4 +127,10 @@ public class QuestionWithSubSection extends Question {
 
         return model;
     }
+
+	@Override
+	public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+		super.renderPageHeader(request, response, model);
+		subSection.renderPageHeader(request, response, model);
+	}
 }
