@@ -468,6 +468,9 @@
       <field name="manuscript" type="boolean">
         <bind-xml node="attribute"/>
       </field>
+      <field name="reference" type="string">
+        <bind-xml node="attribute"/>
+      </field>
       <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
       <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
     </class>
