@@ -65,9 +65,9 @@ public class Choice extends Type {
 
 			for (Choice m : choice) {
 				buf.append(arrayName).append("[").append(i++).append(
-						"]=new Array('").append(m.getName()).append("'");
+						"]=new Array('").append(m.getName().replace("'", "\\'")).append("'");
 				for (Choice s : m.getChoice()) {
-					buf.append(",'").append(s.getName()).append("'");
+					buf.append(",'").append(s.getName().replace("'", "\\'")).append("'");
 				}
 				buf.append(");");
 			}
