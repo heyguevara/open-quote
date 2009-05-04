@@ -366,7 +366,7 @@ public class Html extends Type implements Renderer {
 	                }
 	    
 	                if (s.contains("$value")) {
-	                    s=s.replace("$value", "'"+attr.getValue()+"'");
+	                    s=s.replace("$value", "'"+attr.getValue().replace("'", "\\'")+"'");
 	                }
 	                
 	                w.printf("<script type='text/javascript'>%s</script>", s);
@@ -984,6 +984,7 @@ public class Html extends Type implements Renderer {
             it.next().renderResponse(request, response, model);
             w.printf("</tr>");
         }
+
         w.printf("</table>");
 
         return model;
