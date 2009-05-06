@@ -139,6 +139,62 @@ public class Functions {
    }
     
     /**
+     * Given a collection of number attributes, calculate the highest .
+     * @param numbers Attributes describing values
+     * @return highest Highest attribute.
+     * @throws Exception
+     */
+    public static Attribute highestOf(Collection<Attribute> numbers) throws Exception {
+        Attribute highest=null;
+
+        if (numbers==null) {
+            throw new IllegalArgumentException("highestOf(Collection<Attribute>) function called with an empty list of numbers");
+        }
+        
+        for(Attribute attr: numbers) {
+            if (attr.isNumberType()) {
+                if (highest==null || ((Number)attr.getObject()) > highest) {
+                	highest=attr;
+                }
+            }
+        }
+
+        if (highest==null) {
+            throw new IllegalArgumentException("highestOf(Collection<Attribute>) function called with a list of attributes that contained no numbers");
+        }
+        
+        return highest;
+   }
+    
+    /**
+     * Given a collection of number attributes, calculate the lowest .
+     * @param numbers Attributes describing values
+     * @return Lowest attribute.
+     * @throws Exception
+     */
+    public static Attribute lowestOf(Collection<Attribute> numbers) throws Exception {
+        Attribute lowest=null;
+
+        if (numbers==null) {
+            throw new IllegalArgumentException("lowestOf(Collection<Attribute>) function called with an empty list of numbers");
+        }
+        
+        for(Attribute attr: numbers) {
+            if (attr.isNumberType()) {
+                if (lowest==null || ((Number)attr.getObject()) > lowest) {
+                	lowest=attr;
+                }
+            }
+        }
+
+        if (lowest==null) {
+            throw new IllegalArgumentException("lowestOf(Collection<Attribute>) function called with a list of attributes that contained no numbers");
+        }
+        
+        return lowest;
+   }
+
+    /**
      * Assert a new fact into dools working memory. The fact to be asserted is derived by evaluating an
      * xpath expression against a source object.
      * @param drools KnowledgeHelper to assert the new fact into.
