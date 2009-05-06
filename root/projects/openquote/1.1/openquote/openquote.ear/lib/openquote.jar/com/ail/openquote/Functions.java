@@ -26,6 +26,7 @@ import org.drools.spi.KnowledgeHelper;
 
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
+import com.ail.core.Locale;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
 
@@ -63,7 +64,7 @@ public class Functions {
     
     
     /**
-     * Calcuate the age of something given its date of creation (or birth).
+     * Calculate the age of something given its date of creation (or birth).
      * @param date Attribute describing the date of birth or creation
      * @return Age in years
      */
@@ -200,5 +201,52 @@ public class Functions {
     @SuppressWarnings("unchecked")
     public static Object test(Object c) {
         return ((List)c).size()!=0;
+    }
+
+    /**
+     * Convert a string to upper case. This simply wraps {@link java.lang.String#toUpperCase(Locale locale)}
+     * @param string String to be converted
+     * @return Upper case version of <i>string</i>, or null if <i>string</i> is null.
+     */
+    public static String toUpperCase(String string) {
+    	if (string==null) {
+    		return null;
+    	}
+    	else {
+    		return string.toUpperCase(Locale.getThreadLocale());
+    	}
+    }
+
+    /**
+     * Convert a string to lower case. This simply wraps {@link java.lang.String#toLowerCase(Locale locale)}
+     * @param string String to be converted
+     * @return Lower case version of <i>string</i>, or null if <i>string</i> is null.
+     */
+    public static String toLowerCase(String string) {
+    	if (string==null) {
+    		return null;
+    	}
+    	else {
+    		return string.toLowerCase(Locale.getThreadLocale());
+    	}
+    }
+    
+    /**
+     * Return a substring of <i>string</i>. The substring begins at the specified beginIndex and extends to the 
+     * character at index endIndex - 1. Thus the length of the substring is endIndex-beginIndex.<p/>
+     * Examples:<br/>
+     *  <code>"hamburger".substring(4, 8) returns "urge"</code><br/>
+     *  <code>"smiles".substring(1, 5) returns "mile"</code>
+     * @param string String to get the substring from
+     * @param beginIndex the beginning index, inclusive.
+     * @param endIndex the ending index, exclusive.
+     * @return the specified substring.
+     */
+    public static String substring(String string, int beginIndex, int endIndex) {
+    	if (string==null) {
+    		return null;
+    	}
+    	
+   		return string.substring(beginIndex, endIndex);
     }
 }
