@@ -153,7 +153,7 @@ public class Functions {
         
         for(Attribute attr: numbers) {
             if (attr.isNumberType()) {
-                if (highest==null || ((Number)attr.getObject()) > ((Number)highest.getObject())) {
+                if (highest==null || ((Number)attr.getObject()).floatValue() > ((Number)highest.getObject()).floatValue()) {
                 	highest=attr;
                 }
             }
@@ -181,7 +181,7 @@ public class Functions {
         
         for(Attribute attr: numbers) {
             if (attr.isNumberType()) {
-                if (lowest==null || ((Number)attr.getObject()) < ((Number)lowest.getObject())) {
+                if (lowest==null || ((Number)attr.getObject()).floatValue() < ((Number)lowest.getObject()).floatValue()) {
                 	lowest=attr;
                 }
             }
