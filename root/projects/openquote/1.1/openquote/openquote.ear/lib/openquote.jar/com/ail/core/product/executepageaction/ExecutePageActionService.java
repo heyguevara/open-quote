@@ -118,6 +118,7 @@ public class ExecutePageActionService extends Service {
             c.setPortletSessionArg(args.getPortletSessionArg());
             c.invoke();
             args.setQuotationArgRet(c.getQuotationArgRet());
+            args.setValidationFailedRet(c.getValidationFailedRet());
         }
         catch(BeanShellServiceException e) {
             core.logError("Action failed: "+e.getEvalError().getMessage());
