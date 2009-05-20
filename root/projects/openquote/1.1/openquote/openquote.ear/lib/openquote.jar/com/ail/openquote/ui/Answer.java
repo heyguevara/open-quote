@@ -29,6 +29,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
+import com.ail.financial.CurrencyAmount;
 import com.ail.openquote.ui.util.QuotationContext;
 
 /**
@@ -129,6 +130,9 @@ public class Answer extends PageElement {
         }
         else if (answer instanceof com.ail.core.Attribute) {
             return ((Attribute)answer).getFormattedValue();
+        }
+        else if (answer instanceof CurrencyAmount) {
+        	return ((CurrencyAmount)answer).toFormattedString();
         }
 
         return "Don't know how to format a '"+(answer==null ? "null" : answer.getClass().getName())+"'";
