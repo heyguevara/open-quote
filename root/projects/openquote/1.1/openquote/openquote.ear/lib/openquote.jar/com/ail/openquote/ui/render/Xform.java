@@ -624,7 +624,7 @@ public class Xform extends Type implements Renderer {
     }
 
     public Type renderQuitButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label) {
-        w.printf("<submit submission='' ref='op=%1$s:immediate=true'><label>%1$s</label></submit>", label);
+        w.printf("<submit submission='' ref='op=quit:immediate=true'><label>%1$s</label></submit>", label);
     	return model;
     }
 
@@ -670,7 +670,7 @@ public class Xform extends Type implements Renderer {
     }
 
     public Type renderRequoteButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label) {
-        w.printf("<submit submission='' ref='op=%1$s'><label>%1$s</label></submit>", label);
+        w.printf("<submit submission='' ref='op=requote'><label>%1$s</label></submit>", label);
     	return model;
     }
 
