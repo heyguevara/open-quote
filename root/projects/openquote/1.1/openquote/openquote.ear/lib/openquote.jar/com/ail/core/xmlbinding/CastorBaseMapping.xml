@@ -570,6 +570,16 @@
         <field name="directDebitIdentificationNumber" type="string"/>
     </class>
 
+    <class name="com.ail.openquote.PageVisit" extends="com.ail.core.Type" auto-complete="false">
+        <map-to xml="pageVisit"/>
+        <field name="pageName" type="string">
+	        <bind-xml node="attribute"/>
+		</field>
+        <field name="visited" type="date">
+	        <bind-xml node="attribute"/>
+		</field>
+    </class>
+
     <class name="com.ail.openquote.Quotation" extends="com.ail.insurance.policy.Policy" auto-complete="false">
         <map-to xml="quotation"/>
         <field name="page" type="string"/>
@@ -582,6 +592,7 @@
         <field name="userSaved" type="boolean"/>
         <field name="testCase" type="boolean"/>
         <field name="exception" type="com.ail.core.ExceptionRecord" collection="collection"/>
+        <field name="pageVisit" type="com.ail.openquote.PageVisit" collection="collection"/>
     </class>
 
     <class name="com.ail.openquote.SavedQuotationSummary" extends="com.ail.core.Type" auto-complete="false">

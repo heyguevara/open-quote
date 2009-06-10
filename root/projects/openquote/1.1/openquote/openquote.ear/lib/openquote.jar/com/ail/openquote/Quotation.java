@@ -44,10 +44,12 @@ public class Quotation extends Policy {
     private boolean userSaved; // true if the user requested that this quote be saved
     private boolean testCase; // true if this quote has been saved as a test case
     private Collection<ExceptionRecord> exception; // details of all exceptions thrown during the processing of this quote.
+    private Collection<PageVisit> pageVisit;
     
     public Quotation() {
         paymentOption=new ArrayList<PaymentSchedule>(0);
         exception=new ArrayList<ExceptionRecord>(0);
+        pageVisit=new ArrayList<PageVisit>(0);
     }
     
     public Party getProposer() {
@@ -63,6 +65,10 @@ public class Quotation extends Policy {
 	}
 
 	public void setPage(String page) {
+		if (this.page!=null) {
+			addPageVisit(new PageVisit(this.page));
+		}
+		
 		this.page = page;
 	}
 
@@ -143,5 +149,17 @@ public class Quotation extends Policy {
 	
 	public void addException(ExceptionRecord exception) {
 		getException().add(exception);
+	}
+
+	public Collection<PageVisit> getPageVisit() {
+		return pageVisit;
+	}
+
+	public void setPageVisit(Collection<PageVisit> pageVisit) {
+		this.pageVisit = pageVisit;
+	}
+
+	public void addPageVisit(PageVisit pageVisit) {
+		this.pageVisit.add(pageVisit);
 	}
 }
