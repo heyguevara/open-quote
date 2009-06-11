@@ -160,6 +160,9 @@ public class Quotation extends Policy {
 	}
 
 	public void addPageVisit(PageVisit pageVisit) {
+		if (this.pageVisit==null) {
+			this.pageVisit=new ArrayList<PageVisit>(0);
+		}
 		this.pageVisit.add(pageVisit);
 	}
 }
