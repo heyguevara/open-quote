@@ -16,11 +16,9 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.addError;
-import static com.ail.openquote.ui.util.Functions.findError;
-import static com.ail.openquote.ui.util.Functions.hideNull;
-import static com.ail.openquote.ui.util.Functions.isEmpty;
 import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.addError;
+import static com.ail.openquote.ui.util.Functions.isEmpty;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +35,6 @@ import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
 import com.ail.financial.PaymentSchedule;
-import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
@@ -68,8 +65,6 @@ import com.ail.openquote.ui.util.QuotationContext;
  */
 public class PaymentDetails extends PageElement {
 	private static final long serialVersionUID = -4810599045554021748L;
-	private static SimpleDateFormat monthFormat=new SimpleDateFormat("MM");
-    private static SimpleDateFormat yearFormat=new SimpleDateFormat("yy");
     private static SimpleDateFormat monthYearFormat=new SimpleDateFormat("MMyy");
 
 	@Override

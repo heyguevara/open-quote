@@ -326,7 +326,54 @@ public class AttributeField extends PageElement {
 	    String id=Functions.xpathToId(rowContext+boundTo);
 	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 	    
-	    QuotationContext.getRenderer().renderAttributeField(w, request, response, attr, this, boundTo, id, onChange, onLoad);
+	    String styleClass = getStyleClass();
+	    String ref = getRef();
+	    
+	    QuotationContext.getRenderer().renderAttributeField(w, request, response, attr, this, boundTo, id, onChange, onLoad, "", styleClass, ref);
+	    
+	    return ret.toString();
+	}
+	
+	/**
+	 * Render an AttributeField on the UI. This is quite a common requirement throughout the classes
+	 * of the ui package, so it's put here for convenience. The result of calling this method
+	 * is some kind of HTML form element (input, select, textarea, etc) being returned as a String.
+	 * The actual element returned depends on the specifics of the Attribute it is being rendered 
+	 * for.
+	 * @param data The 'model' (in MVC terms) containing the AttributeField to be rendered
+	 * @param boundTo An XPath expressing pointing at the AttributeField in 'data' that we're rendering.
+	 * @param rowContext If we're rendering into a scroller, this'll be the row number in xpath predicate format (e.g. "[1]"). Otherwise ""
+	 * @param onChange JavaScript onChange event
+	 * @param onLoad JavaScript onLoad event
+	 * @param String title (to Bypass titles)
+	 * @return The HTML representing the attribute as a form element.
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 * @throws PostconditionException 
+	 */
+	
+	public String renderAttributeWithTitle(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad, String title) throws IllegalStateException, IOException {
+		// If we're not bound to anything, output nothing.
+	    if (boundTo==null) {
+	        return "";
+	    }
+	
+    	if (!conditionIsMet(model)) {
+    		return "";
+    	}
+
+    	// Create the StringWriter - out output will go here.
+	    StringWriter ret=new StringWriter();
+	    PrintWriter w=new PrintWriter(ret);
+	
+	    String id=Functions.xpathToId(rowContext+boundTo);
+	    //com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(id);
+	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
+	    
+	    String styleClass = getStyleClass();
+	    String ref = getRef();
+	    
+	    QuotationContext.getRenderer().renderAttributeField(w, request, response, attr, this, boundTo, id, onChange, onLoad, title, styleClass, ref);
 	    
 	    return ret.toString();
 	}

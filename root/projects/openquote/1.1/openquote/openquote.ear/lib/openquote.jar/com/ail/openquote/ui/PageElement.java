@@ -57,6 +57,17 @@ public abstract class PageElement extends Type implements Identified, Comparable
      */
 	protected String binding;
 
+    /** Optional class to be referred to by style sheets */
+    protected String styleClass;
+
+    /** Optional ref for the elements presentation layer */
+    protected String ref;
+    
+    /** Optional help texts for the elements presentation layer */
+    protected HelpText hint;
+    protected HelpText note;
+    protected HelpText alert;
+	
     /**
      * List of action associated with this element.
      */
@@ -138,7 +149,92 @@ public abstract class PageElement extends Type implements Identified, Comparable
     public void setId(String id) {
 		this.id = id;
 	}
+    
+    /**
+     * Get the style class if any - for this page element. 
+     * @return style class name
+     */
+    public String getStyleClass() {
+        return styleClass;
+    }
 	
+    /**
+     * Set the style class for this page element.
+     * @see #getStyleClass()
+     * @param styleClass Page element's style class.
+     */
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+	
+    /**
+     * Get the ref if any - for this page element. 
+     * @return ref 
+     */
+    public String getRef() {
+        return ref;
+    }
+	
+    /**
+     * Set the ref for this page element.
+     * @see #getRef()
+     * @param ref Page element's ref.
+     */
+    public void setRef(String ref) {
+        this.ref = ref;
+    }    
+	
+    /**
+     * Get the hint if any - for this page element. 
+     * @return hint 
+     */
+    public HelpText getHint(){
+    	return hint;
+    }
+    
+    /**
+     * Set the hint for this page element.
+     * @see #getHint()
+     * @param hint Page element's hint.
+     */
+    public void setHint(HelpText hint){
+    	this.hint = hint;
+    }
+    
+    /**
+     * Get the note if any - for this page element. 
+     * @return note 
+     */
+    public HelpText getNote(){
+    	return note;
+    }
+    
+    /**
+     * Set the note for this page element.
+     * @see #getNote()
+     * @param note Page element's note.
+     */
+    public void setNote(HelpText note){
+    	this.note = note;
+    }
+    
+    /**
+     * Get the alert if any - for this page element. 
+     * @return alert 
+     */
+    public HelpText getAlert(){
+    	return alert;
+    }
+    
+    /**
+     * Set the alert for this page element.
+     * @see #getAlert()
+     * @param alert Page element's alert.
+     */
+    public void setAlert(HelpText alert){
+    	this.alert = alert;
+    }
+    
     /**
      * A list of the actions associated with this element. An action is some processing which
      * takes place in response to a life-cycle even, or a page event (e.g. pressing a button).

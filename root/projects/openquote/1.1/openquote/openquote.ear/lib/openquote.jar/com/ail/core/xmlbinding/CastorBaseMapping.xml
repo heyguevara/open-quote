@@ -623,6 +623,9 @@
     <class name="com.ail.openquote.ui.PageElement">
         <map-to xml="pageElement"/>
         <field name="action" type="com.ail.openquote.ui.Action" collection="arraylist"/>
+        <field name="hint" type="com.ail.openquote.ui.HelpText"/>
+        <field name="note" type="com.ail.openquote.ui.HelpText"/>
+        <field name="alert" type="com.ail.openquote.ui.HelpText"/>        
         <field name="id" type="string">
             <bind-xml node="attribute"/>
         </field>
@@ -633,6 +636,12 @@
             <bind-xml node="attribute"/>
         </field>
         <field name="condition" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="styleClass" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="ref" type="string">
             <bind-xml node="attribute"/>
         </field>
     </class>
@@ -980,4 +989,12 @@
         <field name="namespaceArg" type="string"/>
         <field name="commandScriptArg" type="com.ail.core.CommandScript"/>
     </class>
+    
+    <class name="com.ail.openquote.ui.HelpText">
+      <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+      <field name="error" type="string">
+            <bind-xml node="attribute"/>
+      </field>
+    </class>
+    
 </mapping>

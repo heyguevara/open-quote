@@ -57,9 +57,13 @@ public class Question extends AttributeField {
     	}
 
     	String title = getExpandedTitle(model);
+    	
+    	String styleClass = getStyleClass();
+    	
+    	String ref = getRef();
 
         PrintWriter w=response.getWriter();
         
-        return QuotationContext.getRenderer().renderQuestion(w, request, response, model, this, title, rowContext);
+        return QuotationContext.getRenderer().renderQuestion(w, request, response, model, this, title, rowContext, styleClass, ref);
     }
 }

@@ -110,6 +110,7 @@ import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 import com.ail.party.Title;
 
+@SuppressWarnings("deprecation")
 public class Html extends Type implements Renderer {
 	private static final long serialVersionUID = 1L;
 	private RenderBrokerQuotationSummaryHelper renderBrokerQuotationSummaryHelper=new RenderBrokerQuotationSummaryHelper();
@@ -118,17 +119,7 @@ public class Html extends Type implements Renderer {
 	private RenderPaymentDetailsHelper renderPaymentDetailsHelper=new RenderPaymentDetailsHelper();
 	private RenderQuotationSummaryHelper renderQuotationSummaryHelper=new RenderQuotationSummaryHelper();
 	private RenderReferralSummaryHelper renderReferralSummaryHelper=new RenderReferralSummaryHelper();
-	
-    /**
-     * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
-     * enumeration must be based on {@link TypeEnum}.
-     * @param Enumeration type
-     * @return Option list as a string.
-     */
-    private static String renderEnumerationAsOptions(Class<? extends TypeEnum> clazz) {
-        return renderEnumerationAsOptions(clazz, null);
-    }
-    
+	    
     /**
      * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
      * enumeration must be based on {@link TypeEnum}.
@@ -380,6 +371,11 @@ public class Html extends Type implements Renderer {
 		return model;
 	}
 
+	public Type renderAttributeField(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AttributeField attributeField, String boundTo, String id, String onChange, String onLoad, String title, String styleClass, String ref) throws IOException {
+		return renderAttributeField(w, request, response, model, attributeField, boundTo, id, onChange, onLoad);
+		}
+
+	
 	public Type renderAttributeFieldPageLevel(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AttributeField attributeField, String boundTo, String id) throws IOException {
 		Attribute attr=(Attribute)model;
 		
@@ -623,6 +619,10 @@ public class Html extends Type implements Renderer {
             w.printf("<script type='text/javascript' src='%s'></script>", request.getContextPath()+"/"+pageScript.getUrl());
         }
     	return model;
+    }
+    
+    public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection, String title, String styleClass, String ref) throws IllegalStateException, IOException {
+    	return renderPageSection(w, request, response, model, pageSection, title);
     }
     
     public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection, String title) throws IllegalStateException, IOException {
@@ -949,6 +949,11 @@ public class Html extends Type implements Renderer {
     	return model;
     }
 
+    public Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext, String styleClass, String ref) throws IllegalStateException, IOException {
+        model = renderQuestion(w, request, response, model, question, title, rowContext);
+    	return model;
+    }    
+    
     public Type renderQuestionPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionPage questionPage, String title) throws IllegalStateException, IOException {
         w.printf("<form name='%s' action='%s' method='post'>", questionPage.getId(), response.createActionURL());
         w.printf(" <table width='100%%' border='0' cols='1'>");
@@ -967,6 +972,10 @@ public class Html extends Type implements Renderer {
         w.printf("</form>");
         
     	return model;
+    }
+    
+    public Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title, String styleClass, String ref) throws IllegalStateException, IOException {
+    	return renderQuestionSection(w, request, response, model, questionSection, title);
     }
     
     public Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title) throws IllegalStateException, IOException {
@@ -1011,6 +1020,10 @@ public class Html extends Type implements Renderer {
         return model;
     }
 
+    public Type renderQuestionWithDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithDetails questionWithDetails, String title, String detailTitle, String rowContext, String questionId, String detailId, String styleClass, String ref) throws IllegalStateException, IOException {
+    	return renderQuestionWithDetails(w, request, response, model, questionWithDetails, title, detailTitle, rowContext, questionId, detailId);
+    }
+    
     public Type renderQuestionWithDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithDetails questionWithDetails, String title, String detailTitle, String rowContext, String questionId, String detailId) throws IllegalStateException, IOException {
     	String onChange = null;
 
@@ -1044,6 +1057,10 @@ public class Html extends Type implements Renderer {
         }
 
         return model;
+    }
+    
+    public Type renderQuestionWithSubSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithSubSection questionWithSubSection, String title, String rowContext, String questionId, String styleClass, String ref) throws IllegalStateException, IOException {
+    	return renderQuestionWithSubSection(w, request, response, model, questionWithSubSection, title, rowContext, questionId);
     }
     
     public Type renderQuestionWithSubSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionWithSubSection questionWithSubSection, String title, String rowContext, String questionId) throws IllegalStateException, IOException {

@@ -24,9 +24,9 @@ import com.ail.core.Type;
 /**
  * Utility class which assist in the rendering of Choice types. The values made
  * available to the user in a choice may be hard wired into the
- * {@link com.ail.core.Atribute Attribute} or derived from a Choice Type.
+ * {@link com.ail.core.Attribute Attribute} or derived from a Choice Type.
  * Typically, a choice Type is used when the number of options becomes
- * unmanagebly large. The Choice type also supports sub-choices, for example
+ * unmanageably large. The Choice type also supports sub-choices, for example
  * vehicle Make and Model choices.
  */
 public class Choice extends Type {
@@ -34,6 +34,7 @@ public class Choice extends Type {
 	private List<Choice> choice = null;
 	private String name;
 	private String compiled;
+	private String xmlCompiled;
 
 	public Choice() {
 		choice = new ArrayList<Choice>();
@@ -78,5 +79,23 @@ public class Choice extends Type {
 		}
 
 		return compiled;
+	}
+	
+	public String renderAsXmlArray(String arrayName) {
+		if (xmlCompiled == null) {
+			StringBuffer buf = new StringBuffer();
+			
+			for (Choice m : choice) {
+				buf.append("<choices><label>").append(m.getName()).append("</label>").append("<value>").append(m.getName()).append("</value>");
+				
+				for (Choice s : m.getChoice()) {
+					buf.append("<item><label>").append(s.getName()).append("</label><value>").append(s.getName()).append("</value></item>");
+				}
+				buf.append("</choices>");
+			}
+			xmlCompiled = buf.toString();
+		}
+
+		return xmlCompiled;
 	}
 }

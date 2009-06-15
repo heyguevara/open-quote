@@ -16,12 +16,10 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.util.Functions.addError;
-import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.addError;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,7 +27,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentSchedule;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;

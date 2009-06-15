@@ -155,7 +155,10 @@ public class QuestionSection extends PageElement {
 
         title = (title!=null) ? i18n(title) : null;
         
-        QuotationContext.getRenderer().renderQuestionSection(w, request, response, localModel, this, title);
+        String styleClass = getStyleClass();
+        String ref = getRef();
+        
+        QuotationContext.getRenderer().renderQuestionSection(w, request, response, localModel, this, title, styleClass, ref);
         
         return model;
 	}

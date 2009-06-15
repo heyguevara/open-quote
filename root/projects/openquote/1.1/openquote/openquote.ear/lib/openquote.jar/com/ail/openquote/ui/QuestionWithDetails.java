@@ -133,9 +133,12 @@ public class QuestionWithDetails extends Question {
         String questionId = xpathToId(rowContext+binding);
         String detailId = xpathToId(rowContext+detailsBinding);
         
+        String styleClass = getStyleClass();
+        String ref = getRef();
+        
         PrintWriter w = response.getWriter();
         
-        QuotationContext.getRenderer().renderQuestionWithDetails(w, request, response, model, this, title, detailTitle, rowContext, questionId, detailId);
+        QuotationContext.getRenderer().renderQuestionWithDetails(w, request, response, model, this, title, detailTitle, rowContext, questionId, detailId, styleClass, ref);
 
         return model;
     }

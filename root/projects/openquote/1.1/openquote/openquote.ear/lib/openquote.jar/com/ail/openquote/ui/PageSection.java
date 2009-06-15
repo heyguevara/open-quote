@@ -59,6 +59,6 @@ public class PageSection extends PageContainer {
     		return model;
     	}
 
-    	return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()));
+    	return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()), getStyleClass(), getRef());
     }
 }

@@ -122,8 +122,11 @@ public class QuestionWithSubSection extends Question {
     	String aTitle = i18n(getExpandedTitle(model));
         PrintWriter w=response.getWriter();
         String questionId=xpathToId(rowContext+binding);
+        
+        String styleClass = getStyleClass();
+        String ref = getRef();
 
-        QuotationContext.getRenderer().renderQuestionWithSubSection(w, request, response, model, this, aTitle, rowContext, questionId);
+        QuotationContext.getRenderer().renderQuestionWithSubSection(w, request, response, model, this, aTitle, rowContext, questionId, styleClass, ref);
 
         return model;
     }
