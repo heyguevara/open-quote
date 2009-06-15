@@ -78,6 +78,11 @@
 </tr>
 <tr>
 	<td>click</td>
+	<td>//input[@name='./attribute[id=#business#]/attribute[id=#generalInsuranceBroker#]' and @value='Yes']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
 	<td>./attribute[id=#financialServices#]</td>
 	<td></td>
 </tr>
