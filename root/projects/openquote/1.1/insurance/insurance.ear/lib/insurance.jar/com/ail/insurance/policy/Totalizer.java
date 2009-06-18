@@ -38,10 +38,10 @@ public class Totalizer extends CalculationLine {
 
     /**
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
-     * @param dependsOn A comma seperated list of the IDs of the lines that this one depends on (will sum).
+     * @param dependsOn A comma separated list of the IDs of the lines that this one depends on (will sum).
      */
     public Totalizer(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn) {
         super(id, reason, relatesTo, contributesTo, null);
@@ -50,10 +50,10 @@ public class Totalizer extends CalculationLine {
 
     /**
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
-     * @param dependsOn A comma seperated list of the IDs of the lines that this one depends on (will sum).
+     * @param dependsOn A comma separated list of the IDs of the lines that this one depends on (will sum).
      * @param priority The priority of this line wrt other lines in the same sheet (lines with higher priority values are processed first)
      */
     public Totalizer(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, int priority) {
@@ -63,7 +63,7 @@ public class Totalizer extends CalculationLine {
 
     /**
      * Get the Ids of the lines that this totalizer depends on. The Ids
-     * are returned as a comma seperated list.
+     * are returned as a comma separated list.
      * @return List of the IDs of the lines that this line depends on.
      */
     public String getDependsOn() {
@@ -72,7 +72,7 @@ public class Totalizer extends CalculationLine {
 
     /**
      * Set the Ids of the lines that this totalizer depends on. The Ids
-     * are passed as a comma seperated list.
+     * are passed as a comma separated list.
      * @param dependsOn List of the IDs of the lines that this line depends on.
      */
     public void setDependsOn(String dependsOn) {
@@ -104,7 +104,7 @@ public class Totalizer extends CalculationLine {
 
         // if this line contributes to another...
         if (getContributesTo()!=null) {
-            // try to get the line that this on contribites to.
+            // try to get the line that this on contributes to.
             FixedSum conTo=(FixedSum)sheets.findAssessmentLine(getContributesTo(), sheet);
 
             // if it doesn't exist yet, create it.

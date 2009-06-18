@@ -360,8 +360,12 @@
 
     <!-- Mappings for quote model related types -->
     <class name="com.ail.insurance.policy.Reference" extends="com.ail.core.Type" auto-complete="false">
-        <field name="id" type="string"/>
-        <field name="type" type="string" get-method="getTypeAsString" set-method="setTypeAsString"/>
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="type" type="string" get-method="getTypeAsString" set-method="setTypeAsString">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
 
     <class name="com.ail.insurance.policy.AssessmentLine" extends="com.ail.core.Type" auto-complete="false">
@@ -491,6 +495,7 @@
       <field name="manuscript" type="boolean">
         <bind-xml node="attribute"/>
       </field>
+      <field name="relatesTo" type="com.ail.insurance.policy.Reference" collection="arraylist"/>
       <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
       <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
     </class>

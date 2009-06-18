@@ -19,7 +19,9 @@ package com.ail.insurance.policy;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.ail.core.Type;
 
@@ -65,10 +67,14 @@ public class Clause extends Type {
     /** The text of the clause if it is a manuscript clause. Null otherwise. */
     private String text = null;
 
+    /** Reference of the asset/section/etc to which this clause relates */ 
+    private List<Reference> relatesTo;
+
     /**
      * Default constructor
      */
     public Clause() {
+        
     }
 
     /**
@@ -358,5 +364,25 @@ public class Clause extends Type {
      */
     public void setText(String text) {
         this.text = text;
+    }
+
+    /** 
+     * Returns a reference to the part of the policy to which this clause relates. In a motor policy for
+     * example, a clause may relate to a specific driver asset or vehicle asset.
+     * @return Related policy item
+     */
+    public List<Reference> getRelatesTo() {
+        if (relatesTo==null) {
+            relatesTo=new ArrayList<Reference>();
+        }
+        return relatesTo;
+    }
+
+    /**
+     * @see #getRelatesTo()
+     * @param relatesTo
+     */
+    public void setRelatesTo(List<Reference> relatesTo) {
+        this.relatesTo = relatesTo;
     }
 }
