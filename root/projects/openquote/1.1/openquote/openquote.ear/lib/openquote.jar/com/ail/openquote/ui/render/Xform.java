@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,6 +48,7 @@ import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.policy.Behaviour;
 import com.ail.insurance.policy.BehaviourType;
+import com.ail.insurance.policy.Clause;
 import com.ail.insurance.policy.RateBehaviour;
 import com.ail.insurance.policy.SumBehaviour;
 import com.ail.openquote.Proposer;
@@ -59,6 +61,7 @@ import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.AttributeField;
 import com.ail.openquote.ui.Blank;
 import com.ail.openquote.ui.BrokerQuotationSummary;
+import com.ail.openquote.ui.ClauseDetails;
 import com.ail.openquote.ui.CommandButtonAction;
 import com.ail.openquote.ui.InformationPage;
 import com.ail.openquote.ui.Label;
@@ -957,7 +960,12 @@ public class Xform extends Type implements Renderer {
     	return model;
     }
 
-    private class RenderQuotationSummaryHelper {
+	public Type renderClauseDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ClauseDetails clauseDetails, String title, Map<String,List<Clause>> groupedClauses) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private class RenderQuotationSummaryHelper {
     	private void renderPremiumSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException {
             CurrencyAmount premium=quote.getTotalPremium();
      

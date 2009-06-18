@@ -335,8 +335,12 @@
     
     <!-- Mappings for quote model related types -->
     <class name="com.ail.insurance.policy.Reference" extends="com.ail.core.Type" auto-complete="false">
-        <field name="id" type="string"/>
-        <field name="type" type="string" get-method="getTypeAsString" set-method="setTypeAsString"/>
+        <field name="id" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="type" type="string" get-method="getTypeAsString" set-method="setTypeAsString">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
 
     <class name="com.ail.insurance.policy.AssessmentLine" extends="com.ail.core.Type" auto-complete="false">
@@ -471,6 +475,7 @@
       <field name="reference" type="string">
         <bind-xml node="attribute"/>
       </field>
+      <field name="relatesTo" type="com.ail.insurance.policy.Reference" collection="arraylist"/>
       <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
       <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
     </class>
@@ -871,6 +876,16 @@
             <bind-xml node="attribute"/>
         </field>
         <field name="question" type="com.ail.openquote.ui.Question" collection="arraylist"/>
+    </class>
+    
+    <class name="com.ail.openquote.ui.ClauseDetails" extends="com.ail.openquote.ui.PageElement">
+        <map-to xml="clauseDetails"/>
+        <field name="title" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="groupBy" type="string">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
     
     <class name="com.ail.openquote.ui.QuotationSummary" extends="com.ail.openquote.ui.PageContainer">

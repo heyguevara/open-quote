@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,6 +61,7 @@ import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Behaviour;
 import com.ail.insurance.policy.BehaviourType;
 import com.ail.insurance.policy.CalculationLine;
+import com.ail.insurance.policy.Clause;
 import com.ail.insurance.policy.FixedSum;
 import com.ail.insurance.policy.Marker;
 import com.ail.insurance.policy.RateBehaviour;
@@ -77,6 +79,7 @@ import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.AttributeField;
 import com.ail.openquote.ui.Blank;
 import com.ail.openquote.ui.BrokerQuotationSummary;
+import com.ail.openquote.ui.ClauseDetails;
 import com.ail.openquote.ui.CommandButtonAction;
 import com.ail.openquote.ui.InformationPage;
 import com.ail.openquote.ui.Label;
@@ -1386,7 +1389,26 @@ public class Html extends Type implements Renderer {
     	return model;
     }
     
-    private class RenderAssessmentSheetDetailsHelper {
+	public Type renderClauseDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ClauseDetails clauseDetails, String title, Map<String,List<Clause>> groupedClauses) {
+		if (groupedClauses.size()!=0) {
+			w.printf("<table width='100%%' border='0' cols='1'>");
+			for(String subTitle: groupedClauses.keySet()) {
+				w.printf("<tr><td class='portlet-section-subheader'>%s</td></tr>", subTitle);
+	
+				for(Clause clause: groupedClauses.get(subTitle)) {
+					w.printf("<tr><td>%s %s</td></tr>", clause.getReference(), clause.getTitle());
+					w.printf("<tr><td>%s</td></tr>", clause.getText());
+					w.printf("<tr><td height='5'>&nbsp;</td></tr>");
+				}
+				w.printf("<tr><td height='15'>&nbsp;</td></tr>");
+			}
+			w.printf("</table>");
+		}
+
+		return model;
+	}
+
+	private class RenderAssessmentSheetDetailsHelper {
 	    private String cellStyle="class='portlet-font' style='border: 1px solid gray;'";
 
 	    public void renderAssessmentSheet(PrintWriter w, String title, AssessmentSheet sheet) {
