@@ -36,66 +36,11 @@ import com.ail.openquote.ui.render.Renderer;
  * calls and are available to any code executed within the portal container during the processing of the request/response.
  */
 public class QuotationContext {
-	private static ThreadLocal<Quotation> quotation = new ThreadLocal<Quotation>() {
-		Quotation quotation;
-		
-		public Quotation get() {
-			return quotation;
-		}
-		
-		public void set(Quotation quotation) {
-			this.quotation=quotation;
-		}
-	};
-	
-	private static ThreadLocal<PageFlow> pageFlow = new ThreadLocal<PageFlow>() {
-		PageFlow pageFlow;
-		
-		public PageFlow get() {
-			return pageFlow;
-		}
-		
-		public void set(PageFlow pageFlow) {
-			this.pageFlow=pageFlow;
-		}
-	};
-	
-	private static ThreadLocal<PortletRequest> request = new ThreadLocal<PortletRequest>() {
-		PortletRequest request;
-		
-		public PortletRequest get() {
-			return request;
-		}
-		
-		public void set(PortletRequest request) {
-			this.request=request;
-			Locale.setThreadLocale(request.getLocale());
-		}
-	};
-	
-	private static ThreadLocal<CoreProxy> core = new ThreadLocal<CoreProxy>() {
-		CoreProxy core;
-		
-		public CoreProxy get() {
-			return core;
-		}
-		
-		public void set(CoreProxy core) {
-			this.core=core;
-		}
-	};
-	
-	private static ThreadLocal<Renderer> renderer = new ThreadLocal<Renderer>() {
-		Renderer renderer;
-		
-		public Renderer get() {
-			return renderer;
-		}
-		
-		public void set(Renderer renderer) {
-			this.renderer=renderer;
-		}
-	};
+	private static ThreadLocal<Quotation> quotation = new ThreadLocal<Quotation>();
+	private static ThreadLocal<PageFlow> pageFlow = new ThreadLocal<PageFlow>();	
+	private static ThreadLocal<PortletRequest> request = new ThreadLocal<PortletRequest>();	
+	private static ThreadLocal<CoreProxy> core = new ThreadLocal<CoreProxy>();
+	private static ThreadLocal<Renderer> renderer = new ThreadLocal<Renderer>();
 	
 	/**
 	 * Initialize the QuotationContext for the current thread. 
@@ -153,6 +98,8 @@ public class QuotationContext {
 		setCore(core);
 		setPageFlow(pageFlow);
     	setRenderer((Renderer)core.newType("Renderer:"+request.getResponseContentType()));
+    	
+    	if (request!=null && quotation!=null) System.out.println("session: "+request.getRequestedSessionId()+" qoute:"+quotation.getSystemId());
     }
     
 	/**
@@ -226,9 +173,5 @@ public class QuotationContext {
 	 */
 	public static void setRenderer(Renderer rendererArg) {
 		renderer.set(rendererArg);
-	}
-	
-	class ThreadLocalFields {
-		
 	}
 }
