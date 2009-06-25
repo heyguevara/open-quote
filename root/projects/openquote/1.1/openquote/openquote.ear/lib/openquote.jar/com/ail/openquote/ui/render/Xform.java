@@ -170,18 +170,20 @@ public class Xform extends Type implements Renderer {
     		String hint = "";
     		String note = "";
     		
-	    	if (attributeField.getAlert() != null){
-	    		if (Functions.findErrors(attr).length() > 6){
-	    			alert = "<alert>" + attributeField.getAlert().getError() + "</alert>";
-	    		}
+    		if (Functions.hasErrorMarkers(attr)) {
+    	    	for(Attribute at: attr.getAttribute()) {
+    	    		if (at.getId().startsWith("error.")) {
+    	    			alert=alert+"<alert>"+at.getValue()+"</alert>";
+    	    		}
+    	    	}
+    		}
+	    	
+	    	if (attributeField.getHintText() != null){
+	    		hint = "<hint>" + attributeField.getHintText().getText() + "</hint>";
 	    	}
 	    	
-	    	if (attributeField.getHint() != null){
-	    		hint = "<hint>" + attributeField.getHint().getError() + "</hint>";
-	    	}
-	    	
-	    	if (attributeField.getNote() != null){
-	    		note = "<note>" + attributeField.getNote().getError() + "</note>";
+	    	if (attributeField.getHelpText() != null){
+	    		note = "<help>" + attributeField.getHelpText() + "</help>";
 	    	}
 	    	
 	        if (model==null) {

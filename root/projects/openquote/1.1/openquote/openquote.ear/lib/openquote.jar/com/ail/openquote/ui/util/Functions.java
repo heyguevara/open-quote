@@ -19,8 +19,11 @@ package com.ail.openquote.ui.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.portlet.ActionRequest;
@@ -177,8 +180,20 @@ public class Functions {
      * @param message Message to be displayed
      * @param model Model to attach the error to
      */
-    public static void addError(String id, String message, Type model) {
-    	model.addAttribute(new Attribute("error."+id, message, "string"));
+    public static void addError(String id, String message, Type model, List<ErrorText> errorList) {
+    	boolean errorFound=false;
+    	if (errorList.size()!=0) {
+    		for(ErrorText e: errorList) {
+    			if (message.equals(e.getError())) {
+    		    	model.addAttribute(new Attribute("error."+id, e.getText(), "string"));
+    		    	errorFound=true;
+    			}
+    		}
+    	}
+
+    	if (!errorFound) {
+	    	model.addAttribute(new Attribute("error."+id, message, "string"));
+    	}
     }
     
     /**
@@ -224,7 +239,7 @@ public class Functions {
     }
     
     /**
-     * Find all the the error (if any) associated with an element in a model, and return them.
+     * Find all the the errors (if any) associated with an element in a model, and return them.
      * @param model The model to look in for the error
      * @return The error message, or "&nbsp;" (an empty String) if no message is found.
      */
@@ -284,5 +299,32 @@ public class Functions {
         else {
             return url;
         }
+    }
+    
+    /**
+     * Convert a list of Strings into a semicolon separated list.
+     * @param list List to be converted
+     * @return semicolon separated list of values from the list.
+     */
+    public static String convertListToCsv(List<String> list) {
+    	StringBuffer ret=new StringBuffer();
+    	
+    	for(Iterator<String> e=list.iterator() ; e.hasNext() ; ) {
+    		ret.append(e.next());
+    		if (e.hasNext()) {
+    			ret.append(";");
+    		}
+    	}
+    	
+    	return ret.toString();
+    }
+
+    /**
+     * Convert a String of values in semicolon separated format into a List<String>.
+     * @param csv String to be converted
+     * @return List of strings
+     */
+    public static List<String> convertCsvToList(String csv) {
+    	return new ArrayList<String>(Arrays.asList(csv.split("[ \t]*+;[ \t]*+")));
     }
 }

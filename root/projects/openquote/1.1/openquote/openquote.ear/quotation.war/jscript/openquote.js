@@ -1,3 +1,13 @@
+/* 'item' is a string, 'list' is a string of semicolon separated values. This
+ * function returns true if 'item' appears in 'list'.
+ */
+function isInList(item, list) {
+	return (item==list) || 
+		   (list.indexOf(item+";")==0) ||
+		   (list.indexOf(";"+item)==(list.length-(item.length+1))) ||
+		   (list.indexOf(";"+item+";")>0); 
+}
+
 /* IE's implementation of getElementsByName is very patchy - works in some 
  * versions and not in others. Hence this local implementation that will work
  * on all versions of IE and other browsers.

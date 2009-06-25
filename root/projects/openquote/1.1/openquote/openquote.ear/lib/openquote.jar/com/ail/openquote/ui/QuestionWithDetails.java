@@ -16,12 +16,16 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
+import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.convertCsvToList;
+import static com.ail.openquote.ui.util.Functions.convertListToCsv;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -41,7 +45,9 @@ import com.ail.openquote.ui.util.QuotationContext;
  * leads to more detail being required. As with the {@link Question Question} page element, the
  * detail question's answer field is rendered based on the properties of the {@link com.ail.core.Attribute Attribute}
  * that it is bound to.</p> 
- * <p>The detail field is only enabled if the question has been answered "Yes".</p>
+ * <p>The detail field is only enabled if the question has been answered appropriately. By default this means that the 
+ * answer is "Yes"; but this may be overridden by setting the detailsEnabledFor property to a semicolon separated list
+ * of the answers that the details should be enabled for..</p>
  * <p>Validation is applied to the YesOrNo question, an answer is considered mandatory. Validation applied
  * to the detail question's answer is again defined by the properties of the {@link com.ail.core.Attribute Attribute}
  * that it is bound to.</p>
@@ -51,12 +57,31 @@ public class QuestionWithDetails extends Question {
     private static final long serialVersionUID = 7118438575837087257L;
     private String detailsTitle;
     private String detailsBinding;
+    private List<String> detailsEnabledFor;
     
     public QuestionWithDetails() {
 		super();
+    	detailsEnabledFor=new ArrayList<String>();
+    	detailsEnabledFor.add("Yes");
 	}
 
-    public String getDetailsBinding() {
+    /**
+     * @see #setDetailsEnabledFor(String)
+     * @return List of answers for which the details field should be enabled.
+     */
+    public String getDetailsEnabledFor() {
+    	return convertListToCsv(detailsEnabledFor);
+	}
+
+    /**
+     * Define the answers for which the details field should be enabled.   
+     * @param detailsEnabledFor A comma separated list of answers for which the details field should be enabled.
+     */
+    public void setDetailsEnabledFor(String detailsEnabledFor) {
+		this.detailsEnabledFor = convertCsvToList(detailsEnabledFor);
+	}
+
+	public String getDetailsBinding() {
         return detailsBinding;
     }
 
@@ -109,8 +134,8 @@ public class QuestionWithDetails extends Question {
 	    // validate the yes/no part of the question
         error|=super.processValidations(request, response, model);
 
-        // if the question's answer is 'Yes', and the detail is empty...
-        if ("Yes".equals(model.xpathGet(getBinding()+"/value"))) {
+        // if the question's answer is one for which details are enabled, validate the details
+        if (detailsEnabledFor.contains(model.xpathGet(getBinding()+"/value"))) {
             error|=applyAttributeValidation(model, getDetailsBinding());
         }
 

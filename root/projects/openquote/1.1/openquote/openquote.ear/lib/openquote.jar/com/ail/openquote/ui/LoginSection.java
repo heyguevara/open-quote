@@ -185,25 +185,25 @@ public class LoginSection extends PageContainer {
             String pc=request.getParameter("cpassword");
             
             if (u==null || u.length()==0) {
-                addError("username", i18n("i18n_required_error"), model);
+                addError("username", i18n("i18n_required_error"), model, getErrorText());
                 error=true;
             }
             else if (!u.equals(uc)) {
-                addError("cusername", i18n("i18n_login_section_username_missmatch_error"), model);
+                addError("cusername", i18n("i18n_login_section_username_missmatch_error"), model, getErrorText());
                 error=true;
             }
 
             if (p==null || p.length()==0) {
-                addError("password", i18n("i18n_required_error"), model);
+                addError("password", i18n("i18n_required_error"), model, getErrorText());
                 error=true;
             }
             else if (!p.equals(pc)) {
-                addError("cpassword", i18n("i18n_login_section_password_missmatch_error"), model);
+                addError("cpassword", i18n("i18n_login_section_password_missmatch_error"), model, getErrorText());
                 error=true;
             }
             else {
                 if (isAnExistingUser(u, request)) {
-                    addError("username", i18n("i18n_login_section_username_taken_error"), model);
+                    addError("username", i18n("i18n_login_section_username_taken_error"), model, getErrorText());
                     error=true;                    
                 }
             }
@@ -212,7 +212,7 @@ public class LoginSection extends PageContainer {
             // is used in renderResponse() to make sure the page is opened with the create form on
             // display.
             if (error) {
-                addError("create", "error", model);
+                addError("create", "error", model, getErrorText());
             }
         }
         else if ("Save".equals(op) && request.getUserPrincipal()==null) {
@@ -223,16 +223,16 @@ public class LoginSection extends PageContainer {
             String p=request.getParameter("password");
             
             if (u==null || u.length()==0) {
-            	addError("username", i18n("i18n_required_error"), model);
+            	addError("username", i18n("i18n_required_error"), model, getErrorText());
                 error=true;
             }
             else if (!isAnExistingUser(u, request)) {
-                addError("username", i18n("i18n_login_section_unknown_username_error"), model);
+                addError("username", i18n("i18n_login_section_unknown_username_error"), model, getErrorText());
                 error=true;                    
             }
 
             if (p==null || p.length()==0) {
-                addError("password", i18n("i18n_required_error"), model);
+                addError("password", i18n("i18n_required_error"), model, getErrorText());
                 error=true;
             }            
 
@@ -240,7 +240,7 @@ public class LoginSection extends PageContainer {
             // is used in renderResponse() to make sure the page is opened with the save form on
             // display.
             if (error) {
-                addError("login", "error", model);
+                addError("login", "error", model, getErrorText());
             }
         }
 

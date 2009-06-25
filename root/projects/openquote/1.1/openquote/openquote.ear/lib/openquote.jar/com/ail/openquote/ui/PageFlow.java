@@ -43,6 +43,9 @@ public class PageFlow extends PageElement {
 
     /** List of pages which are part of this flow */
     private ArrayList<Page> page;
+    
+    /** Optional definition of the page on which the quote process should start. */
+    private String startPage=null;
 
 	/**
 	 * Default constructor
@@ -66,6 +69,24 @@ public class PageFlow extends PageElement {
 	 */
 	public void setPage(ArrayList<Page> page) {
 		this.page = page;
+	}
+
+	/**
+	 * Get the name of the page on which the quote process should start. This can also
+	 * be defined in the Quotation's XML. If defined in both places, the setting here 
+	 * takes precedence. 
+	 * @return Name of the page to start the process on.
+	 */
+	public String getStartPage() {
+		return startPage;
+	}
+
+	/**
+	 * @see #getStartPage()
+	 * @param startPage
+	 */
+	public void setStartPage(String startPage) {
+		this.startPage = startPage;
 	}
 
 	@Override

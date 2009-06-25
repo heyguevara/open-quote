@@ -79,7 +79,7 @@ public class PaymentOptionSelector extends PageElement {
 	    Functions.removeErrorMarkers(quote);
         
         if (quote.getPaymentDetails()==null) {
-            addError("paymentDetails", i18n("i18n_payment_option_select_error"), model);
+            addError("paymentDetails", i18n("i18n_payment_option_select_error"), model, getErrorText());
             return true;
         }
 

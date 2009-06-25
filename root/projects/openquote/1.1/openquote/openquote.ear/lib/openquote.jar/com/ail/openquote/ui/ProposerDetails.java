@@ -108,80 +108,80 @@ public class ProposerDetails extends PageElement {
         
         // Check the proposer for errors.
         if (Title.UNDEFINED.equals(proposer.getTitle())) {
-            addError("title", i18n("i18n_required_error"), proposer.getInstance());
+            addError("title", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (Title.OTHER.equals(proposer.getTitle()) && isEmpty(proposer.getOtherTitle())) {
-            addError("otherTitle", i18n("i18n_required_error"), proposer.getInstance());
+            addError("otherTitle", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
 
         if (isEmpty(proposer.getFirstName())) {
-        	addError("firstName", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("firstName", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!namePattern.matcher(proposer.getFirstName()).find()) {
-        	addError("firstName", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("firstName", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
         
         if (isEmpty(proposer.getSurname())) {
-        	addError("surname", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("surname", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!namePattern.matcher(proposer.getSurname()).find()) {
-        	addError("surname", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("surname", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
         
         if (isEmpty(proposer.getAddress().getLine1())) {
-        	addError("address1", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("address1", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!namePattern.matcher(proposer.getAddress().getLine1()).find()) {
-        	addError("address1", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("address1", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
         
         if (isEmpty(proposer.getAddress().getLine2())) {
-        	addError("address2", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("address2", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!namePattern.matcher(proposer.getAddress().getLine2()).find()) {
-        	addError("address2", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("address2", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
 
         if (!isEmpty(proposer.getAddress().getLine3()) && !namePattern.matcher(proposer.getAddress().getLine3()).find()) {
-        	addError("address3", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("address3", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
 
         if (!isEmpty(proposer.getAddress().getLine4()) && !namePattern.matcher(proposer.getAddress().getLine4()).find()) {
-        	addError("address4", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("address4", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
 
         if (isEmpty(proposer.getAddress().getPostcode())) {
-        	addError("postcode", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("postcode", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!postcodePattern.matcher(proposer.getAddress().getPostcode()).find()) {
-        	addError("postcode", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("postcode", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
 
         if (isEmpty(proposer.getTelephoneNumber())) {
-        	addError("phone", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("phone", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!phonePattern.matcher(proposer.getTelephoneNumber()).find()) {
-        	addError("phone", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("phone", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
 
         if (!mobilePattern.matcher(proposer.getMobilephoneNumber()).find()) {
-        	addError("mobile", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("mobile", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
 
         if (isEmpty(proposer.getEmailAddress())) {
-        	addError("email", i18n("i18n_required_error"), proposer.getInstance());
+        	addError("email", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         }
         else if (!emailPattern.matcher(proposer.getEmailAddress()).find()) {
-        	addError("email", i18n("i18n_invalid_error"), proposer.getInstance());
+        	addError("email", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
         }
         
         if (proposer instanceof CommercialProposer) {
         	String companyName=((CommercialProposer)proposer).getCompanyName();
         	if (isEmpty(companyName)) {
-        		addError("companyName", i18n("i18n_required_error"), proposer.getInstance());
+        		addError("companyName", i18n("i18n_required_error"), proposer.getInstance(), getErrorText());
         	}
             else if (!namePattern.matcher(companyName).find()) {
-            	addError("companyName", i18n("i18n_invalid_error"), proposer.getInstance());
+            	addError("companyName", i18n("i18n_invalid_error"), proposer.getInstance(), getErrorText());
             }
         }
         return Functions.hasErrorMarkers(proposer.getInstance());

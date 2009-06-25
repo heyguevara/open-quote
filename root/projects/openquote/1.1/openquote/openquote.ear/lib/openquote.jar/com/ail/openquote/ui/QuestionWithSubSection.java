@@ -17,10 +17,14 @@
 package com.ail.openquote.ui;
 
 import static com.ail.openquote.ui.messages.I18N.i18n;
+import static com.ail.openquote.ui.util.Functions.convertCsvToList;
+import static com.ail.openquote.ui.util.Functions.convertListToCsv;
 import static com.ail.openquote.ui.util.Functions.xpathToId;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,20 +46,42 @@ import com.ail.openquote.ui.util.QuotationContext;
  * It is more flexible in that any number of additional questions can be asked the sub section (including
  * {@see RowScroller} and {@see SectionScroller} elements); whereas QuestionWithDetails only supports a single
  * question.</p>
+ * <p>The subsection is only enabled if the question has been answered appropriately. By default this means that the 
+ * answer is "Yes"; but this may be overridden by setting the detailsEnabledFor property to a semicolon separated list
+ * of the answers that the subsection should be enabled for..</p>
  * @see QuestionWithDetails
-¤ * @see RowScroller
+ * @see RowScroller
  * @see SectionScroller
  */
 public class QuestionWithSubSection extends Question {
 	private static final long serialVersionUID = 7118438575837087257L;
-    
+    private List<String> detailsEnabledFor;
+
     /** PageElement to be rendered/filled if the Question is answered "Yes". */
     private PageElement subSection=null;
     
     public QuestionWithSubSection() {
         super();
         subSection=new PageSection();
+    	detailsEnabledFor=new ArrayList<String>();
+    	detailsEnabledFor.add("Yes");
     }
+
+    /**
+     * @see #setDetailsEnabledFor(String)
+     * @return List of answers for which the subsection should be enabled.
+     */
+    public String getDetailsEnabledFor() {
+    	return convertListToCsv(detailsEnabledFor);
+	}
+
+    /**
+     * Define the answers for which the subsection should be enabled.   
+     * @param detailsEnabledFor A comma separated list of answers for which the subsection should be enabled.
+     */
+    public void setDetailsEnabledFor(String detailsEnabledFor) {
+		this.detailsEnabledFor = convertCsvToList(detailsEnabledFor);
+	}
 
     /**
      * PageElement to be rendered/filled if the Question is answered "Yes".

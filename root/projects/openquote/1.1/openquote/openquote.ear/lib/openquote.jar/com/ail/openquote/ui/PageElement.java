@@ -20,6 +20,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
@@ -30,6 +31,8 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Identified;
 import com.ail.core.Type;
+import com.ail.openquote.ui.util.HelpText;
+import com.ail.openquote.ui.util.ErrorText;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -64,9 +67,9 @@ public abstract class PageElement extends Type implements Identified, Comparable
     protected String ref;
     
     /** Optional help texts for the elements presentation layer */
-    protected HelpText hint;
-    protected HelpText note;
-    protected HelpText alert;
+    protected HelpText helpText;
+    protected HelpText hintText;
+    protected List<ErrorText> errorText;
 	
     /**
      * List of action associated with this element.
@@ -89,6 +92,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
         id="#"+Integer.toHexString((int)(Math.random()*100000));
         
         action = new ArrayList<Action>();
+        errorText=new ArrayList<ErrorText>();;
     }
     
     public PageElement(String condition) {
@@ -185,54 +189,75 @@ public abstract class PageElement extends Type implements Identified, Comparable
     }    
 	
     /**
-     * Get the hint if any - for this page element. 
+     * Get the hints list if any - for this page element. 
      * @return hint 
      */
-    public HelpText getHint(){
-    	return hint;
+    public HelpText getHintText(){
+    	return hintText;
     }
     
     /**
-     * Set the hint for this page element.
+     * Set the hints for this page element.
      * @see #getHint()
      * @param hint Page element's hint.
      */
-    public void setHint(HelpText hint){
-    	this.hint = hint;
+    public void setHint(HelpText hintText){
+    	this.hintText = hintText;
     }
     
     /**
-     * Get the note if any - for this page element. 
-     * @return note 
+     * Get the help if any - for this page element. 
+     * @return help 
      */
-    public HelpText getNote(){
-    	return note;
+    public HelpText getHelpText(){
+    	return helpText;
     }
     
     /**
-     * Set the note for this page element.
-     * @see #getNote()
-     * @param note Page element's note.
+     * Set the help for this page element.
+     * @see #getHelp()
+     * @param note Page element's help.
      */
-    public void setNote(HelpText note){
-    	this.note = note;
+    public void setHelpText(HelpText helpText){
+    	this.helpText = helpText;
     }
     
     /**
-     * Get the alert if any - for this page element. 
+     * Get the error list if any - for this page element. 
      * @return alert 
      */
-    public HelpText getAlert(){
-    	return alert;
+    public List<ErrorText> getErrorText(){
+    	return errorText;
     }
     
     /**
-     * Set the alert for this page element.
+     * Set the error list for this page element.
      * @see #getAlert()
-     * @param alert Page element's alert.
+     * @param alert Page element's error.
      */
-    public void setAlert(HelpText alert){
-    	this.alert = alert;
+    public void setErrorText(List<ErrorText> errorText){
+    	this.errorText = errorText;
+    }
+    
+    /**
+     * Fetch the errors (from this PageElement's error list) which are applicable to an error ID.
+     * A page element may define any number of errors, each with an optional ID. When the render
+     * process detects a validation error, it inspects the element's error list to determine what
+     * to render and how to render it. Within a page element, the same error ID may be defined
+     * more than once, leading to more than one action being taken.
+     * @param errorId Error to lookup in the element's error list.
+     * @return List of matching errors, may be zero length. Never null.
+     */
+    List<ErrorText> fetchErrors(String errorId) {
+    	List<ErrorText> ret=new ArrayList<ErrorText>();
+    	
+    	for(ErrorText err: errorText) {
+    		if (err.getError()==null || err.getError().equals(errorId)) {
+    			ret.add(err);
+    		}
+    	}
+    	
+    	return ret;
     }
     
     /**

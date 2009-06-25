@@ -228,6 +228,8 @@ public class SandpitPortlet extends GenericPortlet {
 	    	if (quote!=null && quote.getException() != null && quote.getException().size() != 0) {
 	        	w.printf("<table width='100%%'>");
 	
+	        	// Sort exceptions into date order
+	        	
 	        	for(ExceptionRecord er: quote.getException()) {
 	        		// truncate at the very end (i.e. don't truncate at all) by default
 	        		int truncateAtLine=er.getStack().size();

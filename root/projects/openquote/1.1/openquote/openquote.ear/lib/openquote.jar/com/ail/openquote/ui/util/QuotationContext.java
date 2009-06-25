@@ -81,6 +81,11 @@ public class QuotationContext {
 	            Date ved=(quotation.getQuotationDate() != null) ? quotation.getQuotationDate() : new Date();
 	            core.setVersionEffectiveDate(new VersionEffectiveDate(ved));
 	            pageFlow=(PageFlow)core.newProductType(productName, "QuotationPageFlow");
+	            // if the pageflow defines the page to start on, use it. Otherwise
+	            // we rely on the setting defined in the quotation in the product definition.
+	            if (pageFlow.getStartPage()!=null) {
+	            	quotation.setPage(pageFlow.getStartPage());
+	            }
         	}
         }
         catch(Error e) {
@@ -98,8 +103,6 @@ public class QuotationContext {
 		setCore(core);
 		setPageFlow(pageFlow);
     	setRenderer((Renderer)core.newType("Renderer:"+request.getResponseContentType()));
-    	
-    	if (request!=null && quotation!=null) System.out.println("session: "+request.getRequestedSessionId()+" qoute:"+quotation.getSystemId());
     }
     
 	/**

@@ -15,12 +15,12 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.openquote.ui;
+package com.ail.openquote.ui.util;
 
 import com.ail.core.Type;
 
 /**
- * Help text is associated with a PageElement and allows help text to be configured for use in screen display. 
+ * Help text is associated with a PageElement. Allows help text to be configured for use in rendered output. 
  */
 public class HelpText extends Type {
     private static final long serialVersionUID = 6414533098371760797L;
@@ -28,10 +28,11 @@ public class HelpText extends Type {
     /** The text of the hint  */
     private String text = null;
 
-    /** The error type (error, invalid or null) indicating when hint should be displayed */
-    private String error = null;
+    /** Hints to the UI rendering engine specifying details of how this help should be rendered. The values supported
+     * are specific to the type of attribute being rendered. */ 
+    private String renderHint = null;
 
-    /**
+	/**
      * Default constructor
      */
     public HelpText() {
@@ -40,12 +41,10 @@ public class HelpText extends Type {
     /**
      * Create help text specifying all fields.
      * @param text Help Text (may include markup). May be null.
-     * @param error type (error, invalid or null) indicating when the help text should be displayed - null means always display
      */
-    public HelpText(String text, String error) {
+    public HelpText(String text) {
         super();
         this.text = text;
-        this.error = error;
     }
     
     /**
@@ -66,20 +65,18 @@ public class HelpText extends Type {
     }
 
     /**
-     * The error type of the help text if it exists. Null otherwise.
-     * 
-     * @return Returns the error.
+     * Render hint to guide the UI as to how the help should be rendered.
+     * @return RenderHint if defined, null otherwise.
      */
-    public String getError() {
-        return error;
-    }
+    public String getRenderHint() {
+		return renderHint;
+	}
 
     /**
-     * @see #setError(String)
-     * @param error The error to set.
+     * @see #getRenderHint()
+     * @param renderHint
      */
-    public void setError(String error) {
-        this.error = error;
-    }
-
+    public void setRenderHint(String renderHint) {
+		this.renderHint = renderHint;
+	}
 }

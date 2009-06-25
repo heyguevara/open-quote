@@ -1031,13 +1031,13 @@ public class Html extends Type implements Renderer {
     	String onChange = null;
 
     	if ("radio".equals(questionWithDetails.getRenderHint())) {
-        	onChange="enableTargetIf(this.checked && this.value==\"Yes\", \""+detailId+"\")";
+        	onChange="enableTargetIf(this.checked && isInList(this.value, \""+questionWithDetails.getDetailsEnabledFor()+"\"), \""+detailId+"\")";
         }
         else if ("checkbox".equals(questionWithDetails.getRenderHint())) {
         	onChange="enableTargetIf(this.checked, \""+detailId+"\")";
         }
         else {
-        	onChange="enableTargetIf(this.options[this.selectedIndex].text==\"Yes\", \""+detailId+"\")";
+        	onChange="enableTargetIf(isInList(this.options[this.selectedIndex].text, \""+questionWithDetails.getDetailsEnabledFor()+"\"), \""+detailId+"\")";
         }
         
         w.printf("<td>%s</td>", title);
@@ -1047,16 +1047,25 @@ public class Html extends Type implements Renderer {
         
         // Disable the 'detail' textarea unless the question's answer is 'Yes'
         if ("radio".equals(questionWithDetails.getRenderHint())) {
-            w.printf("<script type='text/javascript'>radio=findElementsByName(\"%s\")[1];enableTargetIf(radio.checked, \"%s\")</script>",
+            w.printf("<script type='text/javascript'>"+
+            		   "radio=findElementsByName(\"%s\")[1];"+
+            		   "enableTargetIf(radio.checked, \"%s\")"+
+            		 "</script>",
                     questionId, detailId);
         }
         else if ("checkbox".equals(questionWithDetails.getRenderHint())) {
-            w.printf("<script type='text/javascript'>cbox=findElementsByName(\"%s\")[0];enableTargetIf(cbox.checked, \"%s\")</script>",
+            w.printf("<script type='text/javascript'>"+
+            		   "cbox=findElementsByName(\"%s\")[0];"+
+            		   "enableTargetIf(cbox.checked, \"%s\")"+
+            		 "</script>",
                     questionId, detailId);
         }
         else {
-            w.printf("<script type='text/javascript'>elem=findElementsByName(\"%s\")[0];enableTargetIf(elem.options[elem.selectedIndex].text==\"Yes\", \"%s\")</script>",
-                    questionId, detailId);
+            w.printf("<script type='text/javascript'>"+
+            		   "elem=findElementsByName(\"%s\")[0];"+
+            		   "enableTargetIf(isInList(elem.options[elem.selectedIndex].text, \"%s\"), \"%s\")"+
+            		 "</script>",
+                    questionId, questionWithDetails.getDetailsEnabledFor(), detailId);
         }
 
         return model;
@@ -1070,13 +1079,16 @@ public class Html extends Type implements Renderer {
     	String onChange=null;
 
     	if ("radio".equals(questionWithSubSection.getRenderHint())) {
-        	onChange="showHideDivDisplay(this.checked && this.value==\"Yes\", this.checked && this.value==\"No\", \""+questionWithSubSection.getId()+"\")";
+        	onChange="showHideDivDisplay(this.checked && isInList(this.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+        	                            "this.checked && !isInList(this.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+        	                            "\""+questionWithSubSection.getId()+"\")";
         }
         else if ("checkbox".equals(questionWithSubSection.getRenderHint())) {
         	onChange="showHideDivDisplay(this.checked, !this.checked, \""+questionWithSubSection.getId()+"\")";
         }
         else {
-        	onChange="showHideDivDisplay(this.options[this.selectedIndex].text==\"Yes\", this.value!=\"Yes\", \""+questionWithSubSection.getId()+"\")";
+        	onChange="showHideDivDisplay(isInList(this.options[this.selectedIndex].text, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+        	                           "!isInList(this.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), \""+questionWithSubSection.getId()+"\")";
         }
         
         w.printf("<td>%s</td>", title);
@@ -1093,25 +1105,28 @@ public class Html extends Type implements Renderer {
         // Disable the 'detail' area unless the question's answer is 'Yes'
         if ("radio".equals(questionWithSubSection.getRenderHint())) {
             w.printf("<script type='text/javascript'>"+
-                    "radio=findElementsByName(\"%1$s\")[1];" +
-                    "showHideDivDisplay(radio.checked, !radio.checked, \"%2$s\");"+
-                    "</script>", questionId, questionWithSubSection.getId());
+                       "radio=findElementsByName(\"%1$s\")[1];" +
+                       "showHideDivDisplay(radio.checked && isInList(radio.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"),"+
+                                          "radio.checked && !isInList(radio.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+                                          "\"%2$s\");"+
+                     "</script>", questionId, questionWithSubSection.getId());
         }
         else if ("checkbox".equals(questionWithSubSection.getRenderHint())) {
             w.printf("<script type='text/javascript'>"+
-                    "cbox=findElementsByName(\"%1$s\")[0];" +
-                    "showHideDivDisplay(" +
-                      "cbox.checked,"+
-                      "!cbox.checked, "+
-                      "\"%2$s\")</script>", questionId, questionWithSubSection.getId());
+                       "cbox=findElementsByName(\"%1$s\")[0];" +
+                       "showHideDivDisplay(" +
+                       "cbox.checked, !cbox.checked, "+
+                       "\"%2$s\")"+
+                     "</script>", questionId, questionWithSubSection.getId());
         }
         else {
             w.printf("<script type='text/javascript'>"+
-                    "opt=findElementsByName(\"%1$s\")[0];" +
-                    "showHideDivDisplay(" +
-                      "opt.options[opt.selectedIndex].text==\"Yes\", "+
-                      "opt.options[opt.selectedIndex].text==\"No\", "+
-                      "\"%2$s\")</script>", questionId, questionWithSubSection.getId());
+                       "opt=findElementsByName(\"%1$s\")[0];" +
+                       "showHideDivDisplay(" +
+                       "isInList(opt.options[opt.selectedIndex].text, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+                       "!isInList(opt.options[opt.selectedIndex].text, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+                       "\"%2$s\")"+
+                     "</script>", questionId, questionWithSubSection.getId());
         }
 
         return model;

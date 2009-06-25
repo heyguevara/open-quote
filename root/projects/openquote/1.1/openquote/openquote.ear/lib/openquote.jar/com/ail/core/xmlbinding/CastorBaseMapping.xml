@@ -625,12 +625,33 @@
         <field name="choice" type="com.ail.openquote.ui.util.Choice" collection="arraylist"/>
     </class>
 
+    <class name="com.ail.openquote.ui.util.HelpText">
+      	<field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml node="text"/>
+		</field>
+        <field name="renderHint" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+    
+    <class name="com.ail.openquote.ui.util.ErrorText">
+        <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml node="text"/>
+		</field>
+        <field name="error" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="renderHint" type="string">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
     <class name="com.ail.openquote.ui.PageElement">
         <map-to xml="pageElement"/>
         <field name="action" type="com.ail.openquote.ui.Action" collection="arraylist"/>
-        <field name="hint" type="com.ail.openquote.ui.HelpText"/>
-        <field name="note" type="com.ail.openquote.ui.HelpText"/>
-        <field name="alert" type="com.ail.openquote.ui.HelpText"/>        
+        <field name="helpText" type="com.ail.openquote.ui.util.HelpText"/>
+        <field name="hintText" type="com.ail.openquote.ui.util.HelpText"/>
+        <field name="errorText" type="com.ail.openquote.ui.util.ErrorText" collection="arraylist"/>        
         <field name="id" type="string">
             <bind-xml node="attribute"/>
         </field>
@@ -963,6 +984,9 @@
     <class name="com.ail.openquote.ui.PageFlow" extends="com.ail.openquote.ui.PageElement">
         <map-to xml="pageFlow"/>
         <field name="page" type="com.ail.openquote.ui.Page" collection="collection"/>
+		<field name="startPage" type="string">
+            <bind-xml node="attribute"/>            
+		</field>
     </class>
 
     <!-- services, commands, and their arguments -->
@@ -1004,12 +1028,5 @@
         <field name="namespaceArg" type="string"/>
         <field name="commandScriptArg" type="com.ail.core.CommandScript"/>
     </class>
-    
-    <class name="com.ail.openquote.ui.HelpText">
-      <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
-      <field name="error" type="string">
-            <bind-xml node="attribute"/>
-      </field>
-    </class>
-    
+        
 </mapping>
