@@ -43,7 +43,6 @@ import com.ail.core.XMLException;
 import com.ail.core.command.CommandArg;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
-import com.ail.openquote.ui.BrokerQuotationSummary;
 import com.ail.openquote.ui.render.Html;
 
 /**
@@ -51,7 +50,6 @@ import com.ail.openquote.ui.render.Html;
  */
 public class NotifyBrokerByEmailService extends Service {
     private static final long serialVersionUID = -4915889686192216902L;
-    private static BrokerQuotationSummary brokerQuotationSummaryRenderer=new BrokerQuotationSummary();
     private NotifyPartyArg args = null;
     private String configurationNamespace = null;
     private Core core = null;
