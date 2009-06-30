@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Macro file defining ant macros to support unit and system testing
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
 -->
 
 <project default="dummy" name="BuildTestingMacros.xml">
