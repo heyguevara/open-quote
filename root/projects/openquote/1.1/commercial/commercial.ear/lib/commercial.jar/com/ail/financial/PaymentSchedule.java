@@ -76,7 +76,7 @@ public class PaymentSchedule extends Type {
     }
 
     /**
-     * Fetch the list of money provisions associated withe this schedule. This list will never
+     * Fetch the list of money provisions associated with this schedule. This list will never
      * be null.
      * @return List of money provisions.
      */
