@@ -350,7 +350,7 @@ public class Html extends Type implements Renderer {
 	                w.printf("<td width='25px'>&nbsp;</td><td><textarea name=\"%s\" class='portlet-form-input-field' %s rows='3' style='width:100%%'>%s</textarea></td>", id, onChangeEvent, attr.getValue());
 	            }
 	            
-	            w.printf("<td class='portlet-msg-error'>%s</td></tr></table>", Functions.findErrors(model));
+	            w.printf("<td class='portlet-msg-error'>%s</td></tr></table>", Functions.findErrors(model, attributeField));
 	    
 	            if (onLoad!=null) {
 	                String s=onLoad;
@@ -495,7 +495,7 @@ public class Html extends Type implements Renderer {
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value='%s'/></td>", usernameGuess);
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model, loginSection));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td valign='center'>"+i18n("i18n_login_section_password_label")+"</td>");
@@ -517,22 +517,22 @@ public class Html extends Type implements Renderer {
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td>"+i18n("i18n_login_section_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='username' id='username' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("username", model, loginSection));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td>"+i18n("i18n_login_section_confirm_username_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='text' name='cusername' id='cusername' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cusername", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cusername", model, loginSection));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td valign='center'>"+i18n("i18n_login_section_password_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='password' id='password' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("password", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("password", model, loginSection));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td valign='center'>"+i18n("i18n_login_section_confirm_password_label")+"</td>");
         w.printf(       "<td><input class='portlet-form-input-field' type='password' name='cpassword' id='cpassword' value=''/></td>");
-        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cpassword", model));
+        w.printf(       "<td class='portlet-msg-error'>%s</td>", findError("cpassword", model, loginSection));
         w.printf(      "</tr>");
         w.printf(      "<tr class='portlet-font'>");
         w.printf(       "<td colspan='3'><input type='submit' id='createLoginButton' class='portlet-form-input-field' name='op=Create:page=%s:portal=%s' value='"+i18n("i18n_login_section_create_and_save_button_label")+"'/></td>", loginSection.getForwardToPageName(), nameOfForwardToPortal);
@@ -673,9 +673,9 @@ public class Html extends Type implements Renderer {
     
     public Type renderPaymentDetails(PrintWriter w, RenderRequest request, RenderResponse response, Quotation model, PaymentDetails paymentDetails) {
         w.printf("<table cellpadding='4' width='100%%'>");
-        renderPaymentDetailsHelper.renderSummary(w, model);
-        renderPaymentDetailsHelper.renderPaymentDetails(w, model);
-        renderPaymentDetailsHelper.renderSubmit(w, model);
+        renderPaymentDetailsHelper.renderSummary(w, model, paymentDetails);
+        renderPaymentDetailsHelper.renderPaymentDetails(w, model, paymentDetails);
+        renderPaymentDetailsHelper.renderSubmit(w, model, paymentDetails);
         w.printf("</table>");
         
     	return model;
@@ -688,7 +688,7 @@ public class Html extends Type implements Renderer {
         w.printf("   </tr>");       
 
         // output the error if there is one
-        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", findError("paymentDetails", quotation));
+        w.printf("<tr><tr><td>&nbsp;</td><td align='center' class='portlet-msg-error'>%s</td></tr>", findError("paymentDetails", quotation, paymentOptionSelector));
         
         w.printf("   <tr><td colspan='2' height='15'><hr/></td></tr>");
 
@@ -727,7 +727,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(     "<td>");
 	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", renderEnumerationAsOptions(Title.class, proposer.getTitle()));
 	        w.printf(     "</td>");
-	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
+	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance(), proposerDetails));
 	        w.printf(    "</tr>");
 	        w.printf(   "</table>");
 	        w.printf(  "</td>");
@@ -737,7 +737,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td>");
 	        w.printf(     "<input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
 	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
 	        w.printf( "</tr>");
@@ -749,7 +749,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td>");
 	        w.printf(     "<input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
 	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
 	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
@@ -758,7 +758,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td>");
 	        w.printf(     "<input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
 	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
 	        w.printf( "</tr>");
@@ -771,7 +771,7 @@ public class Html extends Type implements Renderer {
             w.printf(    "<td>");
             w.printf(     "<input name='companyName' class='portlet-form-input-field' type='text' value='%s' size='100'>", (((CommercialProposer)proposer).getCompanyName()));
             w.printf(    "</td>");
-            w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("companyName", proposer.getInstance()));
+            w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("companyName", proposer.getInstance(), proposerDetails));
             w.printf(   "</tr></table>");
             w.printf(  "</td>");
             w.printf( "</tr>");
@@ -786,7 +786,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='address1' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine1());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address1", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address1", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf( "</tr>");
@@ -798,7 +798,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='address2' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getLine2());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address2", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("address2", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf( "</tr>");
@@ -810,7 +810,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='town' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getTown());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("town", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("town", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf( "</tr>");
@@ -822,7 +822,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='county' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getAddress().getCounty());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("county", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("county", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf( "</tr>");
@@ -834,7 +834,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='postcode' class='portlet-form-input-field' type='text' value='%s' size='8' maxlength='8'>", proposer.getAddress().getPostcode());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("postcode", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("postcode", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf( "</tr>");
@@ -856,7 +856,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(     "<td>");
 	        w.printf(      "<select id='title' name='title' class='pn-normal' class='portlet-form-input-field', onchange='disableTargetIf(this.options[this.selectedIndex].text!=\"Other\", \"otherTitle\")'>%s</select>", renderEnumerationAsOptions(Title.class, proposer.getTitle()));
 	        w.printf(     "</td>");
-	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance()));
+	        w.printf(     "<td class='portlet-msg-error'>%s</td>", findError("title", proposer.getInstance(), proposerDetails));
 	        w.printf(    "</tr>");
 	        w.printf(   "</table>");
 	        w.printf(  "</td>");
@@ -866,7 +866,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td>");
 	        w.printf(     "<input name='otherTitle' id='otherTitle' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", hideNull(proposer.getOtherTitle()));
 	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance()));
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("otherTitle", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
 	        w.printf( "</tr>");
@@ -878,7 +878,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td>");
 	        w.printf(     "<input name='firstname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getFirstName());
 	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance()));
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
 	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
@@ -887,7 +887,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td>");
 	        w.printf(     "<input name='surname' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getSurname());
 	        w.printf(    "</td>");
-	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance()));
+	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("surname", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
 	        w.printf( "</tr>");
@@ -900,7 +900,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='phone' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getTelephoneNumber());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("phone", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("phone", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf(  "<td colspan='4'>&nbsp;</td>");
@@ -913,7 +913,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='mobile' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getMobilephoneNumber());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("mobile", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("mobile", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf(  "<td colspan='4'>&nbsp;</td>");
@@ -926,7 +926,7 @@ public class Html extends Type implements Renderer {
         w.printf(    "<td>");
         w.printf(     "<input name='email' class='portlet-form-input-field' type='text' value='%s' size='30' maxlength='100'>", proposer.getEmailAddress());
         w.printf(    "</td>");
-        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("email", proposer.getInstance()));
+        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("email", proposer.getInstance(), proposerDetails));
         w.printf(   "</tr></table>");
         w.printf(  "</td>");
         w.printf(  "<td colspan='4'>&nbsp;</td>");
@@ -1005,7 +1005,7 @@ public class Html extends Type implements Renderer {
     public Type renderQuestionSeparator(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSeparator questionSeparator, String title) {
         if (title==null) {
             if (questionSeparator.getBinding()!=null && hasErrorMarkers(model.xpathGet(questionSeparator.getBinding(), Type.class))) {
-        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class)));
+        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class), questionSeparator));
         	}
         	else {
         		w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
@@ -1015,7 +1015,7 @@ public class Html extends Type implements Renderer {
             w.printf("<td colspan='4'><table width='100%%''>"); 
             w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(title)); 
             if (questionSeparator.getBinding()!=null && hasErrorMarkers(model.xpathGet(questionSeparator.getBinding(), Type.class))) {
-            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class)));
+            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class), questionSeparator));
             }
             w.printf("</table></td>");
         }
@@ -1765,7 +1765,7 @@ public class Html extends Type implements Renderer {
     	private SimpleDateFormat monthFormat=new SimpleDateFormat("MM");
         private SimpleDateFormat yearFormat=new SimpleDateFormat("yy");
 
-        private void renderSummary(PrintWriter w, Quotation quote) {
+        private void renderSummary(PrintWriter w, Quotation quote, PaymentDetails paymentDetails) {
             SimpleDateFormat f=new SimpleDateFormat("d MMMMM, yyyy");
             Proposer proposer=(Proposer)quote.getProposer();
 
@@ -1795,7 +1795,7 @@ public class Html extends Type implements Renderer {
             w.printf("</tr>");
         }
 
-        private void renderPaymentDetails(PrintWriter w, Quotation quote) {
+        private void renderPaymentDetails(PrintWriter w, Quotation quote, PaymentDetails paymentDetails) {
             w.printf("<tr class='portlet-font'>");
             w.printf("    <td class='portlet-section-alternate'>"+i18n("i18n_payment_details_payment_details_title")+"</td>");
             w.printf("</tr> ");
@@ -1803,17 +1803,17 @@ public class Html extends Type implements Renderer {
             w.printf("    <td>");
             for(MoneyProvision mp: quote.getPaymentDetails().getMoneyProvision()) {
                 if (mp.getPaymentMethod() instanceof PaymentCard) {
-                    renderCardDetails(w, quote, mp);
+                    renderCardDetails(w, quote, mp, paymentDetails);
                 }
                 else if (mp.getPaymentMethod() instanceof DirectDebit) {
-                    renderBankDetails(w, quote, mp);
+                    renderBankDetails(w, quote, mp, paymentDetails);
                 }
             }
             w.printf("    </td>");
             w.printf("</tr> ");
         }
 
-        private void renderBankDetails(PrintWriter w, Quotation quote, MoneyProvision mp) {
+        private void renderBankDetails(PrintWriter w, Quotation quote, MoneyProvision mp, PaymentDetails paymentDetails) {
             PaymentSchedule schedule=quote.getPaymentDetails();
 
             DirectDebit dd=(DirectDebit)mp.getPaymentMethod();
@@ -1832,7 +1832,7 @@ public class Html extends Type implements Renderer {
             w.printf("  <td>");
             w.printf("    <table border='0'><tr>");
             w.printf("     <td><input name='acc' size='8' type='text' maxlength='10' value='%s'/></td>", accountNumber);
-            w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.account", schedule));
+            w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.account", schedule, paymentDetails));
             w.printf("   </table>");
             w.printf("  </tr>");
             w.printf(" </tr>");
@@ -1845,7 +1845,7 @@ public class Html extends Type implements Renderer {
             w.printf(       "<input name='sc2' size='2' maxlength='2' type='text' value='%s'/>-", sc2);
             w.printf(       "<input name='sc3' size='2' maxlength='2' type='text' value='%s'/>", sc3);
             w.printf("     </td>");
-            w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.sort", schedule));
+            w.printf("     <td class='portlet-msg-error'>%s</td>", findError("dd.sort", schedule, paymentDetails));
             w.printf("   </table>");
             w.printf("  </tr>");
             w.printf(" </tr>");
@@ -1862,7 +1862,7 @@ public class Html extends Type implements Renderer {
             w.printf("</table>");
         }
 
-        private void renderCardDetails(PrintWriter w, Quotation quote, MoneyProvision mp) {
+        private void renderCardDetails(PrintWriter w, Quotation quote, MoneyProvision mp, PaymentDetails paymentDetails) {
             PaymentSchedule schedule=quote.getPaymentDetails();
             PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
             
@@ -1882,7 +1882,7 @@ public class Html extends Type implements Renderer {
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td><input name='cardNumber' size='20' type='text' value='%s'/></td>", hideNull(pc.getCardNumber()));
-            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardNumber", schedule));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardNumber", schedule, paymentDetails));
             w.printf("   </tr></table>");
             w.printf("  </td>");
             w.printf(" </tr>");
@@ -1895,7 +1895,7 @@ public class Html extends Type implements Renderer {
             w.printf("     <input name='expiryMonth' size='2' maxlength='2' type='text' value='%s'/>", month);
             w.printf("     <input name='expiryYear' size='2' type='text' maxlength='2' value='%s'/>", year);
             w.printf("    </td>");
-            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.expiryDate", schedule));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.expiryDate", schedule, paymentDetails));
             w.printf("   </tr></table>");
             w.printf("  </td>");
             w.printf(" </tr>");
@@ -1905,7 +1905,7 @@ public class Html extends Type implements Renderer {
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td><input name='issueNumber' size='2' maxlength='2' type='text' value='%s'/></td>", hideNull(pc.getIssueNumber()));
-            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.issueNumber", schedule));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.issueNumber", schedule, paymentDetails));
             w.printf("   </tr></table>");
             w.printf("  </td>");
             w.printf(" </tr>");
@@ -1915,7 +1915,7 @@ public class Html extends Type implements Renderer {
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td><input name='cardHoldersName' size='20' type='text' value='%s'/></td>", pc.getCardHoldersName());
-            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardHoldersName", schedule));
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.cardHoldersName", schedule, paymentDetails));
             w.printf("   </tr></table>");
             w.printf("  </td>");
             w.printf(" </tr>");
@@ -1923,7 +1923,7 @@ public class Html extends Type implements Renderer {
             w.printf("</table>");
         }
 
-        private void renderSubmit(PrintWriter w, Quotation quote) {
+        private void renderSubmit(PrintWriter w, Quotation quote, PaymentDetails paymentDetails) {
             w.printf("<tr class='portlet-font'>");
             w.printf("    <td class='portlet-section-alternate'>Submit</td>");
             w.printf("</tr>");
@@ -1932,7 +1932,7 @@ public class Html extends Type implements Renderer {
             w.printf(  i18n("i18n_payment_details_confirm_message"), quote.getBroker().getPaymentTelephoneNumber());
             w.printf(" <table border='0'><tr>");
             w.printf("   <td>"+i18n("i18n_payment_details_confirm_label")+"<input name='confirm' type='checkbox'/></td>");
-            w.printf("   <td class='portlet-msg-error'>%s</td>", findError("confirm", quote.getPaymentDetails()));
+            w.printf("   <td class='portlet-msg-error'>%s</td>", findError("confirm", quote.getPaymentDetails(), paymentDetails));
             w.printf(" </tr></table>");
             w.printf(" </td>");
             w.printf("</tr>");

@@ -32,6 +32,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.Type;
+import com.ail.openquote.ui.PageElement;
 
 /**
  * This class defines a collection of functions used by the classes in {@link com.ail.openquote.ui}.
@@ -180,20 +181,8 @@ public class Functions {
      * @param message Message to be displayed
      * @param model Model to attach the error to
      */
-    public static void addError(String id, String message, Type model, List<ErrorText> errorList) {
-    	boolean errorFound=false;
-    	if (errorList.size()!=0) {
-    		for(ErrorText e: errorList) {
-    			if (message.equals(e.getError())) {
-    		    	model.addAttribute(new Attribute("error."+id, e.getText(), "string"));
-    		    	errorFound=true;
-    			}
-    		}
-    	}
-
-    	if (!errorFound) {
-	    	model.addAttribute(new Attribute("error."+id, message, "string"));
-    	}
+    public static void addError(String id, String message, Type model) {
+    	model.addAttribute(new Attribute("error."+id, message, "string"));
     }
     
     /**
@@ -215,23 +204,38 @@ public class Functions {
         return false;
     }
 
+    private static void lookupErrorTranslation(String error, StringBuffer errors, List<ErrorText> errorList) {
+    	boolean errorFound=false;
+    	
+    	if (errorList.size()!=0) {
+    		for(ErrorText e: errorList) {
+    			if (error.equals(e.getError())) {
+    		    	if (errors.length()!=0) {
+    		    		errors.append(", ");
+    		    	}
+    		    	errors.append(e.getText());
+    		    	errorFound=true;
+    			}
+    		}
+    	}
+
+    	if (!errorFound) {
+    		errors.append(error);
+    	}
+    }
+    
     /**
      * Find the error(s) (if any) associated with an element in a model, and return them.
      * @param errorFilter Which errors to return
      * @param model The model to look in for the error
      * @return The error message, or "&nbsp;" (an empty String) if no message is found.
      */
-    public static String findError(String errorFilter, Type model) {
+    public static String findError(String errorFilter, Type model, PageElement element) {
     	StringBuffer error=new StringBuffer();
 
     	for(Attribute attr: model.getAttribute()) {
     		if (attr.getId().startsWith("error."+errorFilter)) {
-    			if (error.length()==0) {
-    				error.append(attr.getValue());
-    			}
-    			else {
-    				error.append(", ").append(attr.getValue());
-    			}
+    			lookupErrorTranslation(attr.getValue(), error, element.getErrorText());
     		}
     	}
     	
@@ -243,8 +247,8 @@ public class Functions {
      * @param model The model to look in for the error
      * @return The error message, or "&nbsp;" (an empty String) if no message is found.
      */
-    public static String findErrors(Type model) {
-    	return findError("", model);
+    public static String findErrors(Type model, PageElement element) {
+    	return findError("", model, element);
     }
     
     /**

@@ -405,11 +405,11 @@ public class AttributeField extends PageElement {
 	
 	    // Check if the value is undefined or invalid and add the error marker as appropriate
 	    if (attr.isUndefined() && !"no".equals(attr.getFormatOption("required"))) {
-	        Functions.addError("error",  "required", attr, getErrorText());
+	        Functions.addError("error",  "required", attr);
 	        error=true;
 	    }
 	    else if (!attr.isChoiceType() && attr.isInvalid()) {
-	        Functions.addError("error", "invalid", attr, getErrorText());
+	        Functions.addError("error", "invalid", attr);
 	        error=true;
 	    }
 	

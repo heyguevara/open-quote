@@ -104,7 +104,7 @@ public class PaymentDetails extends PageElement {
         Functions.removeErrorMarkers(schedule);
         
         if (request.getParameter("confirm")==null) {
-            addError("confirm", "check to confirm", schedule, getErrorText());
+            addError("confirm", "check to confirm", schedule);
             error=true;
         }
         
@@ -113,30 +113,30 @@ public class PaymentDetails extends PageElement {
                 PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
                 
                 if (isEmpty(pc.getCardNumber())) {
-                    addError("pc.cardNumber", i18n("i18n_required_error"), schedule, getErrorText());
+                    addError("pc.cardNumber", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!pc.getCardNumber().matches("[0-9 ]*")) {
-                    addError("pc.cardNumber", i18n("i18n_invalid_error"), schedule, getErrorText());
+                    addError("pc.cardNumber", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
                 
                 if (pc.getExpiryDate()==null) {
-                    addError("pc.expiryDate", i18n("i18n_required_error"), schedule, getErrorText());
+                    addError("pc.expiryDate", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
 
                 if (!isEmpty(pc.getIssueNumber()) && !pc.getIssueNumber().matches("[0-9]*")) {
-                    addError("pc.issueNumber", i18n("i18n_invalid_error"), schedule, getErrorText());
+                    addError("pc.issueNumber", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
 
                 if (isEmpty(pc.getCardHoldersName())) {
-                    addError("pc.cardHoldersName", i18n("i18n_required_error"), schedule, getErrorText());
+                    addError("pc.cardHoldersName", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!pc.getCardHoldersName().matches("[a-zA-Z0-9 .&]*")) {
-                    addError("pc.cardHoldersName", i18n("i18n_invalid_error"), schedule, getErrorText());
+                    addError("pc.cardHoldersName", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
             }
@@ -144,20 +144,20 @@ public class PaymentDetails extends PageElement {
                 DirectDebit dd=(DirectDebit)mp.getPaymentMethod();
                 
                 if (isEmpty(dd.getAccountNumber())) {
-                    addError("dd.account", i18n("i18n_required_error"), schedule, getErrorText());
+                    addError("dd.account", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!dd.getAccountNumber().matches("[0-9]{8,10}")) {
-                    addError("dd.account", i18n("i18n_invalid_error"), schedule, getErrorText());
+                    addError("dd.account", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
                 
                 if (isEmpty(dd.getSortCode()) || "--".equals(dd.getSortCode())) {
-                    addError("dd.sort", i18n("i18n_required_error"), schedule, getErrorText());
+                    addError("dd.sort", i18n("i18n_required_error"), schedule);
                     error=true;
                 }
                 else if (!dd.getSortCode().matches("[0-9]{2}-[0-9]{2}-[0-9]{2}")) {
-                    addError("dd.sort", i18n("i18n_invalid_error"), schedule, getErrorText());
+                    addError("dd.sort", i18n("i18n_invalid_error"), schedule);
                     error=true;
                 }
             }

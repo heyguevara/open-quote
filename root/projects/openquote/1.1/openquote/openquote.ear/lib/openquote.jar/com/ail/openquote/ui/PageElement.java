@@ -201,7 +201,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @see #getHint()
      * @param hint Page element's hint.
      */
-    public void setHint(HelpText hintText){
+    public void setHintText(HelpText hintText){
     	this.hintText = hintText;
     }
     

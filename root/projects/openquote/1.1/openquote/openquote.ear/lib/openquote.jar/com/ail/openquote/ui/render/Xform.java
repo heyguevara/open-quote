@@ -173,7 +173,7 @@ public class Xform extends Type implements Renderer {
     		if (Functions.hasErrorMarkers(attr)) {
     	    	for(Attribute at: attr.getAttribute()) {
     	    		if (at.getId().startsWith("error.")) {
-    	    			alert=alert+"<alert>"+at.getValue()+"</alert>";
+    	    			alert=alert+"<alert>"+Functions.findError(at.getId().substring(6), model, attributeField)+"</alert>";
     	    		}
     	    	}
     		}
@@ -470,7 +470,7 @@ public class Xform extends Type implements Renderer {
         w.printf(    "<form method='post' action='%s' name='loginform' id='loginForm'>", response.createActionURL());
         w.printf(        "<label>Email address:</label>");
         w.printf(        "<input class='text' type='text' ref='username' id='username' value='%s'/>", usernameGuess);
-        w.printf(        "<alert>%s</alert>", findError("username", model));
+        w.printf(        "<alert>%s</alert>", findError("username", model, loginSection));
         w.printf(        "<label>Password:</label>");
         w.printf(        "<input class='text' type='password' ref='password' id='password' value=''/>");
         w.printf(        "<a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>Forgotten password?</a>");
@@ -483,16 +483,16 @@ public class Xform extends Type implements Renderer {
         w.printf( "<label>Create a new account here. If you have an existing account, please <a onClick='showDivDisplay(\"Proposer Login\");hideDivDisplay(\"Create Login\");'>login here</a>.</label>");
         w.printf(    "<label>Email address:</label>");
         w.printf(    "<input class='text' ref='username' value=''/>");
-        w.printf(    "<alert>%s</alert>", findError("username", model));
+        w.printf(    "<alert>%s</alert>", findError("username", model, loginSection));
         w.printf(    "<label>Confirm email address:</label>");
         w.printf(    "<input class='text' ref='cusername' value=''/>");
-        w.printf(    "<alert>%s</alert>", findError("cusername", model));
+        w.printf(    "<alert>%s</alert>", findError("cusername", model, loginSection));
         w.printf(    "<label>Password:</label>");
         w.printf(    "<input class='password' ref='password' value=''/>");
-        w.printf(    "<alert>%s</alert>", findError("password", model));
+        w.printf(    "<alert>%s</alert>", findError("password", model, loginSection));
         w.printf(    "<label>Confirm password:</label>");
         w.printf(    "<input class='password' ref='cpassword' value=''/>");
-        w.printf(    "<alert>%s</alert>", findError("cpassword", model));
+        w.printf(    "<alert>%s</alert>", findError("cpassword", model, loginSection));
         w.printf(    "<submit ref='op=Create:page=%s:portal=%s'><label>Create & Save</label></submit>", loginSection.getForwardToPageName(), nameOfForwardToPortal);
         w.printf("</group>");
 
@@ -687,7 +687,7 @@ public class Xform extends Type implements Renderer {
     public Type renderQuestionSeparator(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSeparator questionSeparator, String title) {
         if (title==null) {
             if (questionSeparator.getBinding()!=null && hasErrorMarkers(model.xpathGet(questionSeparator.getBinding(), Type.class))) {
-        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class)));
+        		w.printf("<td class='portlet-section-subheader' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class), questionSeparator));
         	}
         	else {
         		w.printf("<td class='portlet-section-subheader' colspan='4'>&nbsp;</td>");
@@ -697,7 +697,7 @@ public class Xform extends Type implements Renderer {
             w.printf("<td colspan='4'><table width='100%%''>"); 
             w.printf("<tr><td class='portlet-section-subheader' colspan='4'>%s</td></tr>", Functions.hideNull(title)); 
             if (questionSeparator.getBinding()!=null && hasErrorMarkers(model.xpathGet(questionSeparator.getBinding(), Type.class))) {
-            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class)));
+            	w.printf("<tr><td class='portlet-msg-error' colspan='4'>%s</td>", findErrors(model.xpathGet(questionSeparator.getBinding(), Type.class), questionSeparator));
             }
             w.printf("</table></td>");
         }
