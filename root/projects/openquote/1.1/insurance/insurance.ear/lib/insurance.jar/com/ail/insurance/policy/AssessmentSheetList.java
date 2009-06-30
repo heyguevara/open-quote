@@ -24,10 +24,6 @@ import java.util.Hashtable;
  * This helper class simplifies the process of mapping assessment line ids to the
  * lines themselves.<p>
  * Each
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/12/19 22:28:30 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/AssessmentSheetList.java,v $
  */
 public class AssessmentSheetList {
     private Hashtable<String,AssessmentSheet> sheets=null;
@@ -92,7 +88,7 @@ public class AssessmentSheetList {
      * Add an assessment line. The line's Id may be in long or short form. If it is in
      * long form, the appropriate sheet will be added to (the line added will have a short Id).
      * If it is in short form, it is added to the current sheet.
-     * @param line Line to be addded
+     * @param line Line to be added
      * @param current Current assessment sheet.
      * @throws java.lang.IllegalArgumentException If the name is in long form, and a sheet by the name cannot be found.
      */
