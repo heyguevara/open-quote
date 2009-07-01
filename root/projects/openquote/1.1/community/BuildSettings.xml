@@ -10,6 +10,7 @@
   <property name="major.version" value="1"/>
   <property name="minor.version" value="1"/>
   <property name="increment.version" value="EA4"/>
+  <property name="build.number" value="(local)"/> <!-- overridden by bamboo -->
 
   <!-- Version of the insurance project to use for this project -->
   <property name="openquote.version" value="1.1"/>

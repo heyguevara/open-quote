@@ -30,6 +30,7 @@
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
         <filter token="increment.version" value="${increment.version}" />
+		<filter token="build.number" value="${build.number}" />
         <filter token="dbname" value="${dbname}" />
       </filterset>
     </copy>
