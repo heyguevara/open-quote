@@ -1,0 +1,13 @@
+<server>
+    <!-- Setup the QuotationDevelopmnetPortlet's even listener. The portlet uses this listener to detect events in
+        the Product Directory portlet. -->
+    <mbean
+        code="org.jboss.portal.core.event.PortalEventListenerServiceImpl"
+        name="portal:service=ListenerService,type=ipc_listener"
+        xmbean-dd=""
+        xmbean-code="org.jboss.portal.common.system.JBossServiceModelMBean">
+        <depends optional-attribute-name="Registry" proxy-type="attribute">portal:service=ListenerRegistry</depends>
+        <attribute name="RegistryId">ipc_listener</attribute>
+        <attribute name="ListenerClassName">com.ail.openquote.portlet.QuotationDevelopmentPortlet$Listener</attribute>
+    </mbean>    
+</server>

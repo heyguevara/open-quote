@@ -1,0 +1,21 @@
+import com.ail.core.Functions;
+import com.ail.core.CoreProxy;
+import com.ail.core.product.executepageaction.ExecutePageActionArgImp;
+import com.ail.insurance.quotation.notifyparty.NotifyPartyCommand;
+
+public class SendNotificationActionService {
+    public static void invoke(ExecutePageActionArgImp args) {
+        /* use the quote's product type as a namespace so we get the product's configuration. */
+        String namespace=Functions.productNameToConfigurationNamespace(args.getQuotationArgRet().getProductTypeId());
+        CoreProxy core=new CoreProxy(namespace);
+
+        try {
+            NotifyPartyCommand command=(NotifyPartyCommand)core.newCommand("SendNotification");
+            command.setQuotationNumberArg(args.getQuotationArgRet().getQuotationNumber());
+            command.invoke();
+        }
+        catch(Exception e) {
+            core.logError("Error in SendNotificationActionService:"+e);
+        }
+    }
+}

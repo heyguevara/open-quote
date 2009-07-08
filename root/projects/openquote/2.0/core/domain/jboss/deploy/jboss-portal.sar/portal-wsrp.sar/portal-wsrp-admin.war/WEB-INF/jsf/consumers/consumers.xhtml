@@ -1,0 +1,78 @@
+<ui:decorate template="consumerTemplate.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:c="http://java.sun.com/jstl/core">
+
+   <ui:param name="title" value="Manage Consumers"/>
+
+   <ui:define name="content">
+
+      <!-- Consumer creation -->
+      <h:form styleClass="createObjectForm">
+         <span class="portlet-font">Create a consumer named: </span>
+         <h:inputText value="#{consumersMgr.selectedId}" id="consumerName" styleClass="portlet-form-input-field"
+                      required="true"/>
+         <h:commandButton action="#{consumersMgr.createConsumer}" value="Create Consumer"
+                          styleClass="portlet-form-button"/>
+         <h:message for="consumerName" errorClass="portlet-msg-error"/>
+      </h:form>
+
+      <!-- Separation -->
+      <hr/>
+
+      <table width="100%" class="portlet-table-body" style="margin-bottom: 1em;">
+         <thead class="portlet-section-header">
+            <tr>
+               <th>Consumer
+                  <div style="font-size: 90%; display:inline; font-weight: normal;">
+                     [status: <span class="active">active</span>, <span class="inactive">inactive</span>,
+                     <span class="needsRefresh">needs refresh</span>]
+                  </div>
+               </th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody>
+            <h:form>
+               <c:forEach items="#{consumersMgr.consumers}" var="consumer" varStatus="status">
+                  <tr>
+                     <td
+                        class="#{consumer.active ? 'active' : 'inactive'} #{consumer.refreshNeeded ? 'needsRefresh' : ''}">
+                        <h:outputText value="#{consumer.producerId} (#{consumer.active ? 'active' : 'inactive'})
+                     #{consumer.refreshNeeded ? '(refresh needed)' : ''}"/>
+                     </td>
+                     <td class="#{status.index % 2 == 0 ? 'portlet-section-body' : 'portlet-section-alternate'}">
+                        <h:commandLink action="#{consumersMgr.configureConsumer}" styleClass="actionConfigure">
+                           <f:param name="id" value="#{consumer.producerId}"/>
+                           <h:outputText value="Configure"/>
+                        </h:commandLink> | <h:commandLink action="#{consumersMgr.refreshConsumer}"
+                                                          styleClass="actionRefresh">
+                        <f:param name="id" value="#{consumer.producerId}"/>
+                        <h:outputText value="Refresh"/>
+                     </h:commandLink> | <h:commandLink action="#{consumersMgr.activateConsumer}"
+                                                       styleClass="#{consumer.active ? 'actionDeactivate' : 'actionActivate'}">
+                        <f:param name="id" value="#{consumer.producerId}"/>
+                        <f:param name="activate" value="#{!consumer.active}"/>
+                        <h:outputText value="#{consumer.active ? 'Deactivate' : 'Activate'}"/>
+                     </h:commandLink>
+                        <c:if
+                           test="#{!consumer.refreshNeeded and consumer.active and consumer.producerInfo.registrationRequired}">
+                           | <h:commandLink action="#{consumersMgr.registerConsumer}"  styleClass="action#{consumer.producerInfo.registered ? 'Deregister' : 'Register'}">
+                           <f:param name="id" value="#{consumer.producerId}"/>
+                           <f:param name="register" value="#{!consumer.producerInfo.registered}"/>
+                           <h:outputText value="#{consumer.producerInfo.registered ? 'Deregister' : 'Register'}"/>
+                        </h:commandLink>
+                        </c:if> | <h:commandLink action="confirmDeleteConsumer" styleClass="actionDelete"
+                                                 actionListener="#{consumersMgr.selectConsumer}">
+                        <f:param name="id" value="#{consumer.producerId}"/>
+                        <h:outputText value="Delete"/>
+                     </h:commandLink>
+                     </td>
+                  </tr>
+               </c:forEach>
+            </h:form>
+         </tbody>
+      </table>
+   </ui:define>
+</ui:decorate>

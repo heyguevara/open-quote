@@ -1,0 +1,52 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:c="http://java.sun.com/jstl/core">
+
+   <ui:composition template="objectTemplate.xhtml">
+
+      <ui:define name="content">
+         <h3 class="sectionTitle tenpx-top-bottom">
+            Manage &#160;
+            <c:choose>
+               <c:when test="#{portalobjectmgr.selectedObject.type == PortalObject.TYPE_CONTEXT}">portals</c:when>
+               <c:otherwise><span class="objectName">#{portalobjectmgr.selectedObject.name}</span> portal</c:otherwise>
+            </c:choose>
+         </h3>
+         <h:form>
+            <h:commandLink action="editProperties" actionListener="#{portalobjectmgr.selectObject}"
+                           styleClass="actionProperties">
+               <f:param name="id" value="#{portalobjectmgr.selectedObject.id}"/>
+               Properties
+            </h:commandLink>
+         </h:form>
+
+         <h3 class="sectionTitle">
+            Manage &#160;
+            <c:choose>
+               <c:when test="#{portalobjectmgr.selectedObject.type == PortalObject.TYPE_CONTEXT}">sub-portals</c:when>
+               <c:otherwise>pages within <span class="objectName">#{portalobjectmgr.selectedObject.name}</span>
+                  portal</c:otherwise>
+            </c:choose>
+         </h3>
+         <!-- Portal addition -->
+         <div class="tenpx-top-bottom">
+         <h:form>
+            <span class="portlet-font">Create a portal named: </span>
+            <h:inputText id="name" value="#{portalAction.portalName}" styleClass="portlet-form-input-field"
+                         required="true"/>
+            <h:commandButton action="#{portalAction.addPortal}" value="Create portal" styleClass="portlet-form-button"/>
+            <h:message for="name" errorClass="portlet-msg-error"/>
+         </h:form>
+         </div>
+        
+
+         <!-- Navigation -->
+         <ui:include src="objectNavigation.xhtml"/>
+      </ui:define>
+
+   </ui:composition>
+
+</div>

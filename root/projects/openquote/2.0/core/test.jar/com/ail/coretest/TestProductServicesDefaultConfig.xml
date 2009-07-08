@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision: 1.6 $
+ $State: Exp $
+ $Date: 2006/10/04 21:30:38 $
+ $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestProductServicesDefaultConfig.xml,v $
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>TestProduct default config</name>
+    <timeout>600000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.6 $</version>
+
+    <types>
+
+        <!--====================================-->
+        <!--   Define the component's services  -->
+        <!--====================================-->
+
+        <service name="CreateProductDefinitionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.product.createproductdefinition.CreateProductDefinitionService</parameter>
+        </service>
+        <service name="DeleteProductDefinitionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.product.deleteproductdefinition.DeleteProductDefinitionService</parameter>
+        </service>
+        <service name="GetProductDefinitionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.product.getproductdefinition.GetProductDefinitionService</parameter>
+        </service>
+        <service name="GetProductDefinitionListService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.product.getproductdefinitionlist.GetProductDefinitionListService</parameter>
+        </service>
+        <service name="InstantiateProductService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.product.instantiateproduct.InstantiateProductService</parameter>
+        </service>
+        <service name="UpdateProductDefinitionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.product.updateproductdefinition.UpdateProductDefinitionService</parameter>
+        </service>
+
+
+        <!--====================================-->
+        <!--  Bind the commands to services     -->
+        <!--====================================-->
+
+        <command name="CreateProductDefinition" builder="ClassBuilder" key="com.ail.core.product.createproductdefinition.CreateProductDefinitionCommand">
+            <parameter name="Service">CreateProductDefinitionService</parameter>
+        </command>
+        <command name="DeleteProductDefinition" builder="ClassBuilder" key="com.ail.core.product.deleteproductdefinition.DeleteProductDefinitionCommand">
+            <parameter name="Service">DeleteProductDefinitionService</parameter>
+        </command>
+        <command name="GetProductDefinitionList" builder="ClassBuilder" key="com.ail.core.product.getproductdefinitionlist.GetProductDefinitionListCommand">
+            <parameter name="Service">GetProductDefinitionListService</parameter>
+        </command>
+        <command name="GetProductDefinition" builder="ClassBuilder" key="com.ail.core.product.getproductdefinition.GetProductDefinitionCommand">
+            <parameter name="Service">GetProductDefinitionService</parameter>
+        </command>
+        <command name="InstantiateProduct" builder="ClassBuilder" key="com.ail.core.product.instantiateproduct.InstantiateProductCommand">
+            <parameter name="Service">InstantiateProductService</parameter>
+        </command>
+        <command name="UpdateProductDefinition" builder="ClassBuilder" key="com.ail.core.product.updateproductdefinition.UpdateProductDefinitionCommand">
+            <parameter name="Service">UpdateProductDefinitionService</parameter>
+        </command>
+
+    </types>
+</configuration>

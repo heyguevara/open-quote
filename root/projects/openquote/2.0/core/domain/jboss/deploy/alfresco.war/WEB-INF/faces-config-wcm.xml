@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+
+   <!-- ==================== COMPONENTS ==================== -->
+   <component>
+      <component-type>org.alfresco.faces.UserSandboxes</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIUserSandboxes</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.SandboxSnapshots</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UISandboxSnapshots</component-class>
+   </component>
+
+   <component>
+      <component-type>org.alfresco.faces.AVMLockIcon</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIAVMLockIcon</component-class>
+   </component>
+
+   <component>
+      <component-type>org.alfresco.faces.FormProcessor</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIFormProcessor</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.DeploymentReports</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIDeploymentReports</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.DeployWebsite</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIDeployWebsite</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.DeploymentServers</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIDeploymentServers</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.PendingSubmissions</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UIPendingSubmissions</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.LinkValidationProgress</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UILinkValidationProgress</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.LinkValidationSummary</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UILinkValidationSummary</component-class>
+   </component>
+   
+   <component>
+      <component-type>org.alfresco.faces.LinkValidationReport</component-type>
+      <component-class>org.alfresco.web.ui.wcm.component.UILinkValidationReport</component-class>
+   </component>
+   
+   <!-- ==================== CONVERTERS ==================== -->
+   
+   
+   <!-- ==================== RENDERERS ==================== -->
+   
+   
+</faces-config>

@@ -1,0 +1,48 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+   <h:form>
+      <table class="full-width datatable">
+         <thead class="portlet-section-header">
+            <tr>
+               <th>Name</th>
+               <th>Description</th>
+               <th>Setting</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="portlet-section-body">
+               <td>Window Renderer</td>
+               <td>Name of the render engine to use to render windows</td>
+               <td>
+                  <h:selectOneMenu id="windowRenderer" value="#{theme.windowRendererName}">
+                     <f:selectItems value="#{applicationScope.LayoutService.renderSetItems}"/>
+                  </h:selectOneMenu>
+               </td>
+            </tr>
+            <tr class="portlet-section-alternate">
+               <td>Decoration Renderer</td>
+               <td>Name of the render engine to use to render window decorations</td>
+               <td>
+                  <h:selectOneMenu id="decorationRenderer" value="#{theme.decorationRendererName}">
+                     <f:selectItems value="#{applicationScope.LayoutService.renderSetItems}"/>
+                  </h:selectOneMenu>
+               </td>
+            </tr>
+            <tr>
+               <td>Portlet Renderer</td>
+               <td>Name of the render engine to use to render portlets</td>
+               <td>
+                  <h:selectOneMenu id="portletRenderer" value="#{theme.portletRendererName}">
+                     <f:selectItems value="#{applicationScope.LayoutService.renderSetItems}"/>
+                  </h:selectOneMenu>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <ui:insert name="form_submit"/>
+   </h:form>
+</div>

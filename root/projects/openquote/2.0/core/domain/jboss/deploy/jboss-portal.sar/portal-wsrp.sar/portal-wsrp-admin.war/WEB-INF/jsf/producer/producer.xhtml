@@ -1,0 +1,92 @@
+<ui:decorate template="producerTemplate.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:c="http://java.sun.com/jstl/core">
+
+   <ui:param name="title" value="Producer configuration"/>
+
+   <ui:define name="content">
+      <h:form>
+         <h:panelGrid columns="2" width="100%">
+            <h:selectBooleanCheckbox value="#{producer.registrationRequiredForFullDescription}"/>
+            <h:outputText value="Access to full service description requires consumers to be registered."/>
+
+            <h:selectBooleanCheckbox value="#{producer.registrationRequired}" immediate="true"
+                                     onchange="this.form.submit()"
+                                     valueChangeListener="#{producer.requireRegistrationListener}"/>
+            <h:outputText
+               value="Requires registration. Modifying this information will trigger invalidation of consumer registrations."/>
+
+            <h:outputText value="  " rendered="#{producer.registrationRequired}"/>
+            <h:panelGroup rendered="#{producer.registrationRequired}">
+               <h:panelGrid columns="2" width="100%">
+                  <h:outputLabel value="Registration policy class name:" for="registrationPolicy"/>
+                  <h:inputText id="registrationPolicy" value="#{producer.registrationPolicyClassName}" size="80"/>
+
+                  <h:outputLabel value="Registration property validator class name:" for="validator"
+                                 rendered="#{producer.defaultRegistrationPolicy}"/>
+                  <h:inputText id="validator" value="#{producer.validatorClassName}" size="80"
+                               rendered="#{producer.defaultRegistrationPolicy}"/>
+
+               </h:panelGrid>
+            </h:panelGroup>
+
+            <h:outputText value="  " rendered="#{producer.registrationRequired}"/>
+            <h:panelGroup rendered="#{producer.registrationRequired}">
+               <h:outputText styleClass="portlet-area-header" value="Registration properties"/>
+               <h:panelGroup styleClass="portlet-area-body">
+                  <c:choose>
+                     <c:when test="#{!empty producer.registrationProperties}">
+                        <h:dataTable var="property" id="registrationProperties" width="100%"
+                                     value="#{producer.registrationProperties}"
+                                     rendered="#{producer.registrationRequired}"
+                                     headerClass="portlet-section-header">
+                           <h:column>
+                              <f:facet name="header">Name</f:facet>
+                              <h:inputText value="#{property.nameAsString}" size="30"/>
+                           </h:column>
+                           <h:column>
+                              <f:facet name="header">Type</f:facet>
+                              <h:selectOneListbox disabled="true">
+                                 <f:selectItems value="#{producer.supportedPropertyTypes}"/>
+                              </h:selectOneListbox>
+                           </h:column>
+                           <h:column>
+                              <f:facet name="header">Label</f:facet>
+                              <h:inputText value="#{property.label}" size="50"/>
+                           </h:column>
+                           <h:column>
+                              <f:facet name="header">Hint</f:facet>
+                              <h:inputText value="#{property.hint}" size="50"/>
+                           </h:column>
+                           <h:column>
+                              <f:facet name="header">Action</f:facet>
+                              <h:commandLink action="confirmPropDeletion" value="Remove"
+                                             styleClass="portlet-form-button"
+                                             actionListener="#{producer.selectProperty}">
+                                 <f:param name="propName" value="#{property.nameAsString}"/>
+                              </h:commandLink>
+                           </h:column>
+                        </h:dataTable>
+                     </c:when>
+                     <c:otherwise>
+                        <h:outputText value="No specified required registration properties."/>
+                     </c:otherwise>
+                  </c:choose>
+                  <h:commandLink action="#{producer.addRegistrationProperty}" value="Add property"
+                                 styleClass="portlet-form-button"/>
+               </h:panelGroup>
+            </h:panelGroup>
+
+            <h:outputText value="  "/>
+            <h:panelGroup styleClass="portlet-section-buttonrow">
+               <h:commandButton action="#{producer.save}" value="Save" styleClass="portlet-form-button"/>
+               <h:commandButton action="#{producer.reloadConfiguration}" value="Cancel"
+                                styleClass="portlet-form-button"/>
+            </h:panelGroup>
+         </h:panelGrid>
+      </h:form>
+
+   </ui:define>
+</ui:decorate>
