@@ -18,6 +18,7 @@
 package com.ail.financial;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ail.core.Type;
 
@@ -27,16 +28,11 @@ import com.ail.core.Type;
  * <li>A single payment of &pound;30 to be made by direct debit; or</li>
  * <li>A payment of &pound;30 to be made by Master Card, followed by 10 monthly payments of &pound;43 to be made by direct debit.</li>
  * </ol>
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/11/04 11:20:23 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/financial/PaymentSchedule.java,v $
- * @stereotype type
  */
 public class PaymentSchedule extends Type {
     private static final long serialVersionUID = 1L;
 
-    private ArrayList<MoneyProvision> moneyProvision;
+    private List<MoneyProvision> moneyProvision;
     
     /** A textual description of the reason for the payment. */
     private String description;
@@ -45,9 +41,8 @@ public class PaymentSchedule extends Type {
      * @param moneyProvision List of money provisions
      * @param description Textual description
      */
-    public PaymentSchedule(ArrayList<MoneyProvision> moneyProvision, String description) {
+    public PaymentSchedule(List<MoneyProvision> moneyProvision, String description) {
         super();
-        // TODO Auto-generated constructor stub
         this.moneyProvision = moneyProvision;
         this.description = description;
     }
@@ -80,7 +75,7 @@ public class PaymentSchedule extends Type {
      * be null.
      * @return List of money provisions.
      */
-    public ArrayList<MoneyProvision> getMoneyProvision() {
+    public List<MoneyProvision> getMoneyProvision() {
         return moneyProvision;
     }
 
