@@ -34,5 +34,4 @@
   <import file="${development.dir}/BuildJBossMacros.xml"/>
   <import file="${development.dir}/BuildTestingMacros.xml"/>
   <import file="${development.dir}/BuildRepositoryMacros.xml" />
-  <import file="${development.dir}/BuildAlfrescoMacros.xml" />
 </project>
