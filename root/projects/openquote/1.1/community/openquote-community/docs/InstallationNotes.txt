@@ -58,7 +58,6 @@ openquote-community/jboss/client folder to the openquote-community/jboss/lib/end
 directory:
           o jboss-jaxrpc.jar
           o jboss-jaxws.jar
-          o jboss-jaxws-ext.jar
           o jboss-saaj.jar
           o jaxb-api.jar 
 
