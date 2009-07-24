@@ -9,7 +9,7 @@
   <!-- Release version numbers (BTW the build number comes from cruise control.) -->
   <property name="major.version" value="1"/>
   <property name="minor.version" value="1"/>
-  <property name="increment.version" value="RC1"/>
+  <property name="increment.version" value=""/>
   <property name="build.number" value="(local)"/> <!-- overridden by bamboo -->
 
   <!-- Version of the insurance project to use for this project -->
