@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Macro file defining a collection of ant macros concerned with managing Alfresco
+-->
+
+<project default="dummy" name="BuildAlfrescoMacros.xml">
+
+    <target name="dummy" />
+
+    <!-- Macro to "compile" content in alfresco's bootstrap content folder.                          -->
+    <!-- When Alfresco is first started (i.e. starts and finds it's repository empty), it creates a  -->
+    <!-- "bootstarp" repostory from the exported content archives it finds under WEB-INF. This macro -->
+    <!-- creates archives in that location.                                                          -->
+    <macrodef name="build-bootstrap-content-macro">
+        <attribute name="basedir" />
+        <sequential>
+            <property name="restore.dir" value="${deploy.dir}/deploy/alfresco.war/WEB-INF/classes/alfresco/extension/restore" />
+            <mkdir dir="${restore.dir}" />
+            <copy file="export_systeminfo.xml" todir="${restore.dir}" />
+            <copy file="restore-context.xml" todir="${restore.dir}/.." />
+            <zip basedir="@{basedir}" destfile="${restore.dir}/@{basedir}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="_content-download-export-file-macro">
+        <attribute name="filename" />
+        <sequential>
+            <mkdir dir="${target.dir}/tmp/" />
+            <get src="http://localhost:8080/alfresco/download/direct?path=/Company20Home/Guest%20Home/@{filename}.acp" dest="${target.dir}/tmp//@{filename}.acp" />
+            <mkdir dir="${export.dir}/@{filename}.acp" />
+            <unjar src="${target.dir}/tmp/@{filename}.acp" dest="${export.dir}/@{filename}.acp" />
+        </sequential>
+    </macrodef>
+
+    <!-- The aim here is to download an alresco "whole repository" export, and put it into a form which will -->
+    <!-- make it easy to compare with the files under the project's content/ folder.                         -->
+    <!-- The process goes like this: Log into alfresco as admin and do a reository export, making sure to    -->
+    <!-- set the export's name to "export" and it's destination to "/Company Home/Guest Home". Once the      -->
+    <!-- export is finished (and it can take a few moments), you'll see the export files sitting in the      -->
+    <!-- "Guest Home" space.                                                                                 -->
+    <!-- Now you can use this macro do download and unpack the export (the .acp files are jars). Once you    -->
+    <!-- have, you can use your favorite directory diff tool (eclipse's "compare" is a good choice) to       -->
+    <!-- compare the new export with the old content/, and merge as necessary.                               -->
+    <macrodef name="content-download-export-macro">
+        <sequential>
+            <property name="export.dir" value="${target.dir}/export-content" />
+            <delete dir="${export.dir}" failonerror="no" />
+            <mkdir dir="${export.dir}" />
+
+            <!-- download the export - i.e. download the syseteminfo file, and download and unpack the .acp files -->
+            <get src="http://localhost:8080/alfresco/download/direct?path=/Company20Home/Guest%20Home/export_systeminfo.xml" dest="${export.dir}/export_systeminfo.xml" />
+            <_content-download-export-file-macro filename="export_models" />
+            <_content-download-export-file-macro filename="export_spaces" />
+            <_content-download-export-file-macro filename="export_users" />
+            <_content-download-export-file-macro filename="export_versions" />
+            <_content-download-export-file-macro filename="export_system" />
+
+            <!-- Copy forward resources from the existing content folder. We're not interested in the spaces_archive   -->
+            <!-- from alfresco, it holds deleted or old versions of artifacts - in the source tree SVN performes that  -->
+            <!-- function, so we can ignore the archite. Also copy forward restore-context.xml. Strictly speaking,     -->
+            <!-- this is not "content" at all, and does not belong in the export, but we want "deploy/export-content/" -->
+            <!-- to be easy to compare with "content/" so it needs to be included.                                     -->
+            <copy todir="${export.dir}">
+                <fileset dir="${project.dir}/content">
+                    <include name="restore-context.xml" />
+                    <include name="export_spaces_archive.acp/**" />
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+</project>
