@@ -233,6 +233,7 @@ public class TestTypeXpath extends CoreUserTestCase {
         assertEquals(22, v.xpathGet("test:age(test:youngest(attribute))"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testCollection() {
         Version v = new Version();
         

@@ -68,7 +68,7 @@ public class TestCoreXMLBinding extends TestCase implements CoreUser, Configurat
         " <author>T.S.Elliot</author>\n"+
         " <source>Peach and mint</source>\n"+
         " <state>state</state>\n"+
-        " <comment>The loganberry's are sweet</comment>\n"+
+        " <comment>The loganberries are sweet</comment>\n"+
         "</version>\n";
 
     /**
@@ -292,7 +292,7 @@ public class TestCoreXMLBinding extends TestCase implements CoreUser, Configurat
             version.setState("state");
             version.setVersion("1.0");
             version.setAuthor("T.S.Elliot");
-            version.setComment("The loganberry's are sweet");
+            version.setComment("The loganberries are sweet");
             version.setCopyright("Copyright us.");
             version.setDate("14/10/2002");
             version.setSource("Peach and mint");
@@ -314,7 +314,7 @@ public class TestCoreXMLBinding extends TestCase implements CoreUser, Configurat
             assertEquals("state", version.getState());
             assertEquals("1.0", version.getVersion());
             assertEquals("T.S.Elliot", version.getAuthor());
-            assertEquals("The loganberry's are sweet", version.getComment());
+            assertEquals("The loganberries are sweet", version.getComment());
             assertEquals("Copyright us.", version.getCopyright());
             assertEquals("14/10/2002", version.getDate());
             assertEquals("Peach and mint", version.getSource());

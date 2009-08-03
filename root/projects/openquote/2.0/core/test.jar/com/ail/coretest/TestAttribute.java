@@ -21,11 +21,6 @@ import static java.util.Locale.CANADA;
 import static java.util.Locale.GERMANY;
 import static java.util.Locale.UK;
 import static java.util.Locale.US;
-
-import java.text.DecimalFormat;
-import java.text.Format;
-import java.text.MessageFormat;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -100,11 +95,24 @@ public class TestAttribute extends TestCase {
     }
 
     public void testAttributeFormatting() {
-        Attribute attr;
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
 
-        attr = new Attribute("amount5", "£12.234", "number;pattern=£#.##");
-        assertEquals("£12.23", attr.getFormattedValue());
-        assertEquals(12.234, attr.getObject());
+        try {
+            Locale.setThreadLocale(UK);
+
+            Attribute attr;
+    
+            attr = new Attribute("amount5", "£12.234", "number;pattern=£#.00");
+            
+            assertEquals("£12.23", attr.getFormattedValue());
+            assertEquals(12.234, attr.getObject());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
     }
 
     public void testReference() {
@@ -142,14 +150,26 @@ public class TestAttribute extends TestCase {
     }
 
     public void testCurrencyAttribute() {
-        Attribute attr = new Attribute("q1", "1002.23", "currency", "GBP");
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
 
-        assertEquals(java.lang.String.class, attr.getValue().getClass());
-        assertEquals(java.lang.Double.class, attr.getObject().getClass());
-
-        assertEquals("GBP1,002.23", attr.getFormattedValue());
-        assertEquals("1002.23", attr.getValue());
-        assertEquals(1002.23, attr.getObject());
+        try {
+            Locale.setThreadLocale(UK);
+    
+            Attribute attr = new Attribute("q1", "1002.23", "currency", "GBP");
+    
+            assertEquals(java.lang.String.class, attr.getValue().getClass());
+            assertEquals(java.lang.Double.class, attr.getObject().getClass());
+    
+            assertEquals("£1,002.23", attr.getFormattedValue());
+            assertEquals("1002.23", attr.getValue());
+            assertEquals(1002.23, attr.getObject());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
     }
     
     /**
@@ -220,7 +240,7 @@ public class TestAttribute extends TestCase {
         Locale runningLocale=Locale.getDefault();
 
         try {
-            Locale.setDefault(new Locale(UK));
+            Locale.setThreadLocale(UK);
             Attribute gbp = new Attribute("q1", "1002.23", "currency", "GBP");
             
             // test that formatting works in the default locale

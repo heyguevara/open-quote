@@ -107,7 +107,7 @@ public class TestFactoryTypeMerging extends CoreUserTestCase {
         Version merged=(Version)getCore().newType("ExtendingType");
         
         assertEquals("H.G.Wells", merged.getAuthor());
-        assertEquals("The loganberry's are sweet", merged.getComment());
+        assertEquals("The loganberries are sweet", merged.getComment());
         assertEquals("Peach and mint", merged.getSource());
         
         assertNotNull(merged.xpathGet("attribute[id='baseattr']"));

@@ -280,7 +280,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
                       "<state>state</state>"+
                       "<date>14/10/2002</date>"+
                       "<author>T.S.Elliot</author>"+
-                      "<comment>The loganberry's are sweet</comment>"+
+                      "<comment>The loganberries are sweet</comment>"+
                       "<copyright>Copyright us.</copyright>"+
                       "<version>1.0</version>"+
                       "<attribute id='one' value='valueone' format='string'/>"+
@@ -312,7 +312,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
                       "<state>state</state>"+
                       "<date>14/10/2002</date>"+
                       "<author>T.S.Elliot</author>"+
-                      "<comment>The loganberry's are sweet</comment>"+
+                      "<comment>The loganberries are sweet</comment>"+
                       "<copyright>Copyright us.</copyright>"+
                       "<version>1.0</version>"+
                       "<attribute id='one' value='valueone' format='string'/>"+
@@ -375,7 +375,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
                          "<state>state</state>"+
                          "<date>14/10/2002</date>"+
                          "<author>T.S.Elliot</author>"+
-                         "<comment>The loganberry's are sweet</comment>"+
+                         "<comment>The loganberries are sweet</comment>"+
                          "<copyright>Copyright us.</copyright>"+
                          "<version>1.0</version>"+
                        "</version>"+
@@ -755,7 +755,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
         assertEquals("Peach and mint", v.getSource());
         assertEquals("state", v.getState());
         assertEquals("14/10/2002", v.getDate());
-        assertEquals("The loganberry's are sweet", v.getComment());
+        assertEquals("The loganberries are sweet", v.getComment());
         assertEquals("Copyright us.", v.getCopyright());
     }
 
@@ -793,7 +793,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
           assertEquals("orange and pineapple", v.getSource());
           assertEquals("state", v.getState());
           assertEquals("14/10/2002", v.getDate());
-          assertEquals("The loganberrys are sweet", v.getComment());
+          assertEquals("The loganberries are sweet", v.getComment());
           assertEquals("Copyright us.", v.getCopyright());
   
           System.out.println("testXSLTFactoryWithExtends ("+i+") took:"+(endAt-startAt)+"ms");
@@ -830,7 +830,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
         assertEquals("Peach and mint", v.getSource());
         assertEquals("state", v.getState());
         assertEquals("14/10/2002", v.getDate());
-        assertEquals("The loganberry's are sweet", v.getComment());
+        assertEquals("The loganberries are sweet", v.getComment());
         assertEquals("Copyright us.", v.getCopyright());
     
         System.out.println("testXSLTFactoryWithoutExtends ("+i+") took:"+(endAt-startAt)+"ms");
@@ -871,7 +871,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
         assertEquals("Peach & lemon", v.getSource());
         assertEquals("state", v.getState());
         assertEquals("14/10/2002", v.getDate());
-        assertEquals("The loganberry's are sweet", v.getComment());
+        assertEquals("The loganberries are sweet", v.getComment());
         assertEquals("Copyright us.", v.getCopyright());
   
         System.out.println("testBeanShellFactoryExtends ("+i+") took :"+(endAt-startAt)+"ms");
@@ -963,7 +963,7 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
         assertEquals("Peach and mint", v.getSource());
         assertEquals("state", v.getState());
         assertEquals("14/10/2002", v.getDate());
-        assertEquals("The loganberry's are sweet", v.getComment());
+        assertEquals("The loganberries are sweet", v.getComment());
         assertEquals("Copyright us.", v.getCopyright());
     }
 

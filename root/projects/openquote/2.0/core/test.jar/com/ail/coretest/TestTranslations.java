@@ -103,9 +103,9 @@ public class TestTranslations extends CoreUserTestCase {
         assertEquals("Second String number one", translations.translate("two", "key1"));
         assertEquals("String number four", translations.translate("two", "key4"));
         assertEquals("String number four", translations.translate("three", "key4"));
-        assertEquals("$$key5$$", translations.translate("three", "key5"));
-        assertEquals("$$key5$$", translations.translate("two", "key5"));
-        assertEquals("$$key5$$", translations.translate("one", "key5"));
+        assertEquals("key5", translations.translate("three", "key5"));
+        assertEquals("key5", translations.translate("two", "key5"));
+        assertEquals("key5", translations.translate("one", "key5"));
         
         System.out.println(getCore().toXML(translations));
     }

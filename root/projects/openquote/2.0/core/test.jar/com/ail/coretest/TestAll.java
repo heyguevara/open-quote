@@ -23,12 +23,6 @@ import junit.textui.TestRunner;
 import com.ail.coretest.configuration.TestEJBConfigurationLoader;
 import com.ail.coretest.configuration.TestJDBCConfigurationLoader;
 
-/**
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2006/09/30 12:35:59 $
- * @source $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestAll.java,v $
- */
 public class TestAll extends TestCase {
    /**
     * Constructs a test case with the given name.
@@ -65,12 +59,14 @@ public class TestAll extends TestCase {
        ts.addTest(TestGenerateDocument.suite());
        ts.addTest(TestConfigurationServices.suite());
        ts.addTest(TestExceptionRecord.suite());
-          
+       ts.addTest(TestLocale.suite());
+       ts.addTest(TestTranslations.suite());
+       ts.addTest(TestExceptionRecord.suite());
+       
        return ts;
    }
 
    public static void main(String[] args) {
        TestRunner.run(suite());
    }
-
 }

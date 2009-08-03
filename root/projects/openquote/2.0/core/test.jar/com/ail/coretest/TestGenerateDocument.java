@@ -214,7 +214,7 @@ public class TestGenerateDocument extends CoreUserTestCase {
 //        out.close();
 
         assertNotNull(doc);
-        assertEquals(4736, doc.length);
+        assertEquals(4752, doc.length);
         
     }
 }
