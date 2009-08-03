@@ -57,7 +57,7 @@ import com.ail.core.XMLString;
  * &nbsp;&nbsp;CmsUpload &lt;repository config file&gt; &lt;repository directory&gt; &lt;source directory&gt;<br/><br/>
  *  
  * DESCRIPTION<br/>
- * The directory scructure under &lt;source directory&gt; is traversed and it's contents are compared with
+ * The directory structure under &lt;source directory&gt; is traversed and it's contents are compared with
  * the CMS repository. Files and folders in the repository are create and updated based on what is found. 
  * Files and folders that don't exist are created. CMS file nodes that are older then the corresponding
  * source file are updated.<br/><br/>
@@ -396,18 +396,10 @@ public class CmsUploader {
             return cause;
         }
 
-        public void setCause(Throwable cause) {
-            this.cause = cause;
-        }
-
         public String getMessage() {
             return message;
         }
 
-        public void setMessage(String message) {
-            this.message = message;
-        }
-    
         public String toString() {
             return cause==null ? message : message+" due to:"+cause;
         }
