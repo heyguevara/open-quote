@@ -17,13 +17,6 @@
 
 package com.ail.core;
 
-import com.ail.core.command.AbstractCommand;
-import com.ail.core.configure.Configuration;
-import com.ail.core.configure.ConfigurationOwner;
-import com.ail.core.configure.ConfigurationResetError;
-import com.ail.core.configure.Group;
-import com.ail.core.configure.Parameter;
-
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -32,16 +25,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import com.ail.core.command.AbstractCommand;
+import com.ail.core.configure.Configuration;
+import com.ail.core.configure.ConfigurationOwner;
+import com.ail.core.configure.ConfigurationResetError;
+import com.ail.core.configure.Group;
+import com.ail.core.configure.Parameter;
+
 /**
  * This class acts as a proxy for those who need to access some of the Core's
  * services, but for whatever reason cannot (or do not want to) implement
  * CoreUser themselves.<p>
  * The versionEffectiveDate of the proxy is taken to be the date at which it was
  * instantiated.
- * @version $Revision: 1.13 $
- * @state $State: Exp $
- * @date $Date: 2007/06/17 21:49:37 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CoreProxy.java,v $
  */
 public class CoreProxy implements CoreUser, ConfigurationOwner {
     public static final String DefaultNamespace="com.ail.core.CoreProxy";
@@ -620,5 +616,38 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      */
     public Core getCore() {
         return core;
+    }
+
+    /**
+     * Reset a specific product. Perform a system reset on the named product returning it
+     * to it's factory state.
+     * @param productName The name of the product to reset
+     * @since 2.0
+     */
+    public void resetProduct(String productName) {
+        core.resetProduct(productName);
+    }
+
+    /**
+     * Clear the configure cache associated with a product. 
+     * @param productName Product to clear the cache for.
+     */
+    public void clearProductCache(String productName) {
+        core.clearProductCache(productName);
+    }
+    
+    /**
+     * Reset the server side cache used to hold configuration information.
+     */
+    public void clearConfigurationCache() {
+        core.clearConfigurationCache();
+    }
+
+    /**
+     * Reset the server side cache used to hold configuration information.
+     * @param namespace The namespace to be cleared from the cache.
+     */
+    public void clearConfigurationCache(String namespace) {
+        core.clearConfigurationCache(namespace);
     }
 }
