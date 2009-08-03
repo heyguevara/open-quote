@@ -103,7 +103,8 @@ public abstract class BaseDownloadContentServlet extends BaseServlet
     * @param redirectToLogin Flag to determine whether to redirect to the login
     *                        page if the user does not have the correct permissions
     */
-   protected void processDownloadRequest(HttpServletRequest req, HttpServletResponse res,
+   @SuppressWarnings("deprecation")
+protected void processDownloadRequest(HttpServletRequest req, HttpServletResponse res,
          boolean redirectToLogin)
          throws ServletException, IOException
    {   
