@@ -332,7 +332,6 @@ public class Attribute extends Type implements Identified {
     
     /**
      * Return the Attribute's value formatted
-     * @param locale The locale to format the result for 
      * @return The formatted attributes value.
      */
     public String getFormattedValue() {
