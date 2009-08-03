@@ -60,13 +60,9 @@ import java.util.Vector;
  * | who           | varchar(32)   |      |     |         |       |
  * | version       | varchar(32)   |      |     |         |       |
  * +---------------+---------------+------+-----+---------+-------+</pre>
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2005/12/18 17:01:18 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/JDBCConfigurationLoader.java,v $
  */
 public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
-    // we don't want to check for table existance every time we're called,
+    // we don't want to check for table existence every time we're called,
     // so we check once and hang onto the result in this static.
     protected static Boolean configTableExists=null;
 
