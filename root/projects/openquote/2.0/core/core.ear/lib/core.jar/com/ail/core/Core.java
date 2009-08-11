@@ -779,10 +779,10 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Instantiate a type associated with a product. A product must define at least one type 
      * (see {@link #newProductType(String)}), but may define any number of additional types for 
-     * use during its lifecycle; this method is used to instantantiate specific types by name.<p>
+     * use during its life-cycle; this method is used to instantiate specific types by name.<p>
      * For example, a complex insurance product may define several different types to describe
      * the assets the product covers. A commercial combined product might define a stock asset, a
-     * vehicle asset, a safe asset, etc. Each of these is described within the product as a seperate
+     * vehicle asset, a safe asset, etc. Each of these is described within the product as a separate
      * named type. A client would use this method to instantiate these different types as and when 
      * they needed to be added to an instance of a commercial combined policy.
      * @param productName The product "owning" the type.
@@ -805,7 +805,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 
     /**
      * Instantiate the default type associated with a product. Each product must define a default
-     * type. This is the type (generally) instantiated at the beginning of the lifecycle. 
+     * type. This is the type (generally) instantiated at the beginning of the life-cycle. 
      * @param productName The name of the product to instantiate for.
      * @return The instantiated type.
      * @since 2.0
