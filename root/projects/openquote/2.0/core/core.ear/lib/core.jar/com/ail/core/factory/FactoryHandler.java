@@ -115,7 +115,7 @@ public class FactoryHandler {
                         }
                     }
                     catch(CloneNotSupportedException e) {
-                        // Tell the world about the clone failure, but don't worry about it. Performace may
+                        // Tell the world about the clone failure, but don't worry about it. Performance may
                         // suffer as a result, but that may not be an issue.
                         core.logWarning("Clone for prototype failed for '"+typeSpec.getName()+"'. Attempt to clone threw:"+e);
                     }
