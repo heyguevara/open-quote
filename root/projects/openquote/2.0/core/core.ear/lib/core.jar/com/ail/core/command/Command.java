@@ -92,7 +92,7 @@ abstract public class Command extends AbstractCommand {
     }
 
   /**
-     * Invoke the serivce itself.
+     * Invoke the service itself.
      * @throws BaseException Thrown by the service.
      */
     public void invoke() throws BaseException {
