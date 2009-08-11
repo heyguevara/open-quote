@@ -54,4 +54,69 @@
       </java>
     </sequential>
   </macrodef>
+  
+  <target name="_run.unit.tests.startjboss=true">
+    <parallel>
+      <start-jboss-macro />
+      <sequential>
+        <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+          <http url="http://localhost:8080/alfresco"/>
+        </waitfor>
+        <mkdir dir="target/test/results"/>
+        <junit filtertrace="yes" haltonerror="no" haltonfailure="no" fork="yes" failureproperty="test.failed" errorproperty="test.failed">
+          <classpath>
+            <dirset dir="${ear.dir}" includes="*.jar" />
+            <dirset dir="${ear.dir}/lib" includes="*.jar" />
+            <fileset dir="${ear.dir}/lib" includes="*.jar" />
+            <dirset dir="${test.dir}" includes="*.jar" />
+            <fileset dir="${test.dir}/lib" includes="*.jar" />
+            <fileset dir="${jboss.dir}">
+              <include name="client/jbossall-client.jar" />
+              <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+              <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+              <include name="server/default/lib/saxon*.jar" />
+              <include name="lib/endorsed/xalan.jar" />
+            </fileset>
+          </classpath>
+          <formatter type="xml"/>
+          <test todir="target/test/results" name="${test}"/>
+        </junit>
+        <stop-jboss-macro />
+      </sequential>
+    </parallel>
+    <fail if="test.failed" message="Build failed due to junit test failure"/>
+  </target>
+    
+  <target name="_run.unit.tests.startjboss=false">
+    <mkdir dir="target/test/results"/>
+    <junit filtertrace="yes" haltonerror="no" haltonfailure="no" fork="yes" failureproperty="test.failed" errorproperty="test.failed">
+      <classpath>
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
+        <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <dirset dir="${test.dir}" includes="*.jar" />
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
+        <fileset dir="${jboss.dir}">
+          <include name="client/jbossall-client.jar" />
+          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+          <include name="server/default/lib/saxon*.jar" />
+          <include name="lib/endorsed/xalan.jar" />
+        </fileset>
+      </classpath>
+      <formatter type="xml"/>
+      <test todir="target/test/results" name="${test}"/>
+    </junit>
+    <fail if="test.failed" message="Build failed due to junit test failure"/>
+  </target>
+  
+  <macrodef name="run-unit-tests-macro">
+    <attribute name="test"/>
+    <attribute name="startjboss"/>
+    <sequential>
+      <antcall target="_run.unit.tests.startjboss=@{startjboss}">
+        <param name="test" value="@{test}"/>
+      </antcall>
+    </sequential>
+  </macrodef>
 </project>

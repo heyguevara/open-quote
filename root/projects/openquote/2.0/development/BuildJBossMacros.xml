@@ -175,7 +175,6 @@
         <attribute name="factory" default="${java.naming.factory.initial}" />
         <attribute name="provider" default="${java.naming.provider.url}" />
         <sequential>
-
             <java fork="yes" classname="com.ail.core.configure.ConfigurationAntTasks">
                 <classpath>
                     <dirset dir="${ear.lib}" includes="core.jar" />
