@@ -38,11 +38,11 @@ import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationOwner;
 
 /**
- * This accessor provides access to services implented using <a href="http://www.janino.net/">Janino</a>. Services
+ * This accessor provides access to services implemented using <a href="http://www.janino.net/">Janino</a>. Services
  * that use this accessor either define a script inline (using a Script parameter in the configuration), of they point
  * at a script via a URL (using the Url parameter). Either way, the script is compiled to java byte code by Janino
  * at runtime and the resulting code is invoked by the accssor.<p/>
- * Compilation is only carried on when the service is initially loaded - on the first attemt to execute the service.
+ * Compilation is only carried on when the service is initially loaded - on the first attempt to execute the service.
  * Once compiled, the resulting class is cached by the accessor for faster access later on.<p/>
  * As used by this accessor, Janino scripts adopt a simple contract: they must define an invoke method which accepts
  * only one argument of a type which is suitable for the command being serviced.<p/>
