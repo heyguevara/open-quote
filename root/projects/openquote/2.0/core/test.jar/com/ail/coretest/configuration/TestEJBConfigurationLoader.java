@@ -32,10 +32,6 @@ import com.ail.core.configure.UnknownNamespaceError;
 
 /**
  * JUnit TestCase for the EJBConfigurationLoader.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/08/04 22:30:15 $
- * @source $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/configuration/TestEJBConfigurationLoader.java,v $
  */
 public class TestEJBConfigurationLoader extends TestCase {
 	private AbstractConfigurationLoader loader=null;
