@@ -39,12 +39,6 @@ import com.ail.core.configure.server.PackageCarCommand;
 import com.ail.core.configure.server.SetCommandScriptCommand;
 import com.ail.coretest.service.TestCommand;
 
-/**
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestConfigurationServices.java,v $
- */
 public class TestConfigurationServices extends CoreUserTestCase {
     /**
      * Constructs a test case with the given name.
@@ -87,7 +81,7 @@ public class TestConfigurationServices extends CoreUserTestCase {
 
     /**
      * Test the script fetching command (GetCommandScript). Some commands in the
-     * system are defined interally as scripts held in strings - rules and highly
+     * system are defined internally as scripts held in strings - rules and highly
      * configurable logic are typically handled this way. This test checks that
      * the service responsible for fetching such scripts for edit or display is
      * working correctly.
