@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for the core project.
- $Revision: 1.84 $
- $State: Exp $
- $Date: 2006/06/20 20:55:56 $
- $Source: /home/bob/CVSRepository/projects/core/Build.xml,v $
 -->
 
 <project default="build" name="core">
@@ -39,13 +35,15 @@
   </target>
 
   <target name="release" description="build this project's releasable outputs">
-    <echo message="buildnumber: ${build.number}"/>
-		<!-- Stop the server if it is running -->
+    <!-- Stop the server if it is running -->
     <ant antfile="BuildCommands.xml" target="jboss: stop server"/>
     
     <!-- Do a clean build before we release -->
     <antcall target="teardown"/>
     <antcall target="setup"/>
+    
+	<!-- Run unit tests - the build will stop here if these fail -->
+    <run-unit-tests-macro test="com.ail.coretest.TestAll" startjboss="true"/>
 
     <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
     <release-jboss-domain-macro/>
