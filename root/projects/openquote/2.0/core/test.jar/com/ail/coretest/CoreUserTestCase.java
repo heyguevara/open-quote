@@ -42,10 +42,6 @@ import com.ail.core.configure.ConfigurationResetError;
  * implements the CoreUser interface on behalf of test itself - making the test class
  * cleaner. It also handles common tasks like cleaning up test data from the database
  * when tests close.
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/CoreUserTestCase.java,v $
  */
 public class CoreUserTestCase extends TestCase implements CoreUser, ConfigurationOwner {
     private AbstractConfigurationLoader loader=null;
