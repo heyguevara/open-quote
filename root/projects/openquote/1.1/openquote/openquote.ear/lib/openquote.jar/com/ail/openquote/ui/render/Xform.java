@@ -911,22 +911,7 @@ public class Xform extends Type implements Renderer {
     }
 
     public Type renderSaveQuotationsFooter(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SavedQuotations savedQuotations) {
-        String pageName=Functions.getPortalPageName(response);
-        String portalName=Functions.getPortalName(response);
-        
-        w.printf(  "<label>"+i18n("i18n_saved_quotations_login_message")+"</label>");
-        w.printf(  "<group id='Proposer Login'>");
-        w.printf(      "<label>"+i18n("i18n_saved_quotations_username_label")+"</label>");
-        w.printf(      "<input class='text' ref='username' value=''/>");
-        w.printf(      "<label>&nbsp;</label>");
-        w.printf(      "<label>"+i18n("i18n_saved_quotations_password_label")+"</label>");
-        w.printf(      "<input class='password' ref='password' value=''/>");
-        w.printf(      "<a onClick='hideDivDisplay(\"Proposer Login\");showDivDisplay(\"Forgotten Password\");'>"+i18n("i18n_saved_quotations_forgotten_password_message")+"</a>");
-        w.printf(      "<submit ref='op=login:portal=%s:page=%s'><label>Login</label></submit>", portalName, pageName);
-        w.printf(  "</group>");
-        // ?? Doubtful that this group will have button functionality atm
-        w.printf("<script type='text/javascript'>hideDivDisplay('Proposer Login')</script>");
-
+    	// Do nothing for XForms
         return model;
     }
 
