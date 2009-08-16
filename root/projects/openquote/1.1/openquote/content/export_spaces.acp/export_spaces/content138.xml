@@ -125,7 +125,7 @@
         <element key="i18n_saved_quotations_quote_date_heading">Quotation Date</element>
         <element key="i18n_saved_quotations_expiry_date_heading">Expiry Date</element>
         <element key="i18n_saved_quotations_premium_heading">Premium</element>
-        <element key="i18n_saved_quotations_login_message"><![CDATA[ Please <a onclick='showDivDisplay(\"Proposer Login\")'>login here</a> if you have previously saved quotes that you would like to view. ]]></element>
+        <element key="i18n_saved_quotations_login_message"><![CDATA[ Please <a onclick='showDivDisplay("Proposer Login")'>login here</a> if you have previously saved quotes that you would like to view. ]]></element>
         <element key="i18n_saved_quotations_username_label">Email address:</element>
         <element key="i18n_saved_quotations_password_label">Password:</element>
         <element key="i18n_saved_quotations_forgotten_password_message">Forgotten password?</element>
