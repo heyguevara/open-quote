@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This is the 'Base' product. This is the base of the openquote product hierarchy.
+ $Revision$
+ $Author$
+ $State$
+ $Date$
+ $Source$
+-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+    <name>Configuration for the Base product</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>$Revision$</version>
+    <manager>com.ail.core.product.resetproduct.ResetProductService</manager>
+    
+    <!-- Next (unique) Number to use in policy number generation. The service -->
+    <!-- updates this parameter as numbers are used up.                       -->
+    <parameter name="NextPolicyNumber">1000</parameter>
+    
+    <!-- To avoid hitting the database every time a policy number is asked for, -->
+    <!-- the service takes a chunk of numbers at a time, keeps track of the     -->
+    <!-- ones it uses, then comes back for more when it runs out. BlockSize     -->
+    <!-- controls the number that are allocated on each call.                   -->
+    <parameter name="PolicyNumberBlockSize">100</parameter>
+
+    <types>
+        <!-- Initialise a new quotation in preperation for a new-business quotation --> 
+        <service name="InitialiseNewBusinessService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/InitialiseNewBusinessService.java</parameter>
+        </service>
+
+        <service name="CalculatePolicyTaxRule" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/CalculatePolicyTaxRule.java</parameter>
+        </service>
+        
+        <service name="CalculatePolicyCommissionRule" builder="CachingClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.NullService</parameter>
+        </service>
+        
+        <service name="CalculatePolicyBrokerageRule" builder="CachingClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.NullService</parameter>
+        </service>
+        
+        <service name="CalculatePolicyMgmtChgRule" builder="CachingClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.NullService</parameter>
+        </service>
+        
+        <service name="GeneratePolicyNumber" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/GeneratePolicyNumber.java</parameter>
+        </service>
+
+        <service name="GenerateQuoteNumber" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/GenerateQuoteNumber.java</parameter>
+        </service>
+
+        <service name="EnforcePolicyComplianceRule" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/EnforcePolicyComplianceRule.java</parameter>
+        </service>
+              
+        <service name="DumpQuoteToConsoleService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/DumpQuoteToConsoleService.java</parameter>
+        </service>
+
+        <service name="SendNotificationActionService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/SendNotificationActionService.java</parameter>
+        </service>
+        
+        <service name="AssessPaymentOptionsActionService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/AssessPaymentOptionsActionService.java</parameter>
+        </service>
+
+        <service name="AcceptQuotationActionService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/AcceptQuotationActionService.java</parameter>
+        </service>
+
+        <service name="CreateQuoteDocumentService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">~/CreateQuoteDocumentService.java</parameter>
+        </service>
+
+        <service name="PremiumCalculationService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor">
+            <parameter name="Url">product://localhost:8080/AIL/Base/PremiumCalculationService.java</parameter>
+        </service>
+        
+        <service name='AssessPaymentOptionsRule' builder='ClassBuilder' key='com.ail.core.command.JaninoAccessor'>
+            <parameter name="Url">~/AssessPaymentOptionsRule.java</parameter>
+        </service>
+
+        <service name="MergeDocumentDataJavaService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.document.generatedocument.JavaMergeDataService</parameter>
+        </service>
+        
+        <service name="StyleDocumentService" builder="ClassBuilder" key="com.ail.core.command.XSLTAccessor">
+            <parameter name="Url">http://localhost:8080/portal-core/themes/phalanx/document/style.xslt</parameter>
+        </service>
+        
+        <service name="RenderPdfDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <!-- Uncomment the following to get a full dump of what goes and and comes back from doc prod -->
+            <!-- parameter name="LoggingIndicatorAsString">FULL</parameter -->
+            <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderPdfDocumentService</parameter>
+        </service>
+
+        <command name="InitialiseNewBusiness" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">InitialiseNewBusinessService</parameter>
+        </command>
+        
+        <!-- Risk assessment rules (command & service) for all products unless they override -->
+        <command name="AssessPolicyRisk" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessPolicyRiskCommand">
+            <parameter name="Service">AssessPolicyRiskRule</parameter>
+        </command>
+        
+        <!-- Tax calc rules (command & service) for this product. By default, a 5% IPT tax line is applied, -->
+        <!-- the calculation assumes that tax is built into the products base rates.                        -->
+        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxCommand">
+            <parameter name="Service">CalculatePolicyTaxRule</parameter>
+        </command>
+        
+        <!-- Commission calc rules (command & service) for this product. By default, no commissions are applied -->
+        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculatePolicyCommissionCommand">
+            <parameter name="Service">CalculatePolicyCommissionRule</parameter>
+        </command>
+
+        <!-- Brokerage calc rules (command & service) for this product. By default, no brokerage is applied -->
+        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculatePolicyBrokerageCommand">
+            <parameter name="Service">NullService</parameter>
+        </command>
+
+        <!-- Management charge rules (command & service) for this product. By default, no charges are applied -->
+        <command name="CalculatePolicyMgmtChg" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculatePolicyMgmtChgCommand">
+            <parameter name="Service">CalculatePolicyMgmtChgRule</parameter>
+        </command>
+
+        <!-- Generate policy number default command & service. -->
+        <command name="GeneratePolicyNumberRule" builder="ClassBuilder" key="com.ail.insurance.quotation.addpolicynumber.GeneratePolicyNumberRuleCommand">
+            <parameter name="Service">GeneratePolicyNumber</parameter>
+        </command>
+
+        <!-- Generate quote number default command & service. -->
+        <command name="GenerateQuoteNumberRule" builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.GenerateQuoteNumberRuleCommand">
+            <parameter name="Service">GenerateQuoteNumber</parameter>
+        </command>
+
+        <!-- Enforce compliance rules (command & service). By default, no rules are applied -->
+        <command name="EnforcePolicyCompliance" builder="ClassBuilder" key="com.ail.insurance.quotation.enforcecompliance.EnforcePolicyComplianceCommand">
+            <parameter name="Service">EnforcePolicyComplianceRule</parameter>
+        </command>        
+
+        <!-- Dump a quotation to the console for debug purposes. --> 
+        <command name="DumpQuoteToConsole" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">DumpQuoteToConsoleService</parameter>
+        </command>
+
+        <!-- Invoked by pageflow action to send a quotation notification to the broker --> 
+        <command name="SendNotificationAction" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">SendNotificationActionService</parameter>
+        </command>
+        
+        <!-- Send all quotation notifications to the JSM Queue Service for processing. --> 
+        <command name="SendNotification" builder="ClassBuilder" key="com.ail.insurance.quotation.notifyparty.NotifyPartyCommand">
+            <parameter name="Service">JMSQueueService</parameter>
+        </command>
+        
+        <!-- Default to sending all notifications by email - unless the product overrides this setting. --> 
+        <command name="NotifyParty" builder="ClassBuilder" key="com.ail.insurance.quotation.notifyparty.NotifyPartyCommand">
+            <parameter name="Service">NotifyPartyByEmailService</parameter>
+        </command>
+        
+        <!-- Wrapper giving access to the AssessPaymentOptions service from a page action --> 
+        <command name="AssessPaymentOptionsAction" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">AssessPaymentOptionsActionService</parameter>
+        </command>
+
+        <!-- Wrapper giving access to the AcceptQuotation service from a page action --> 
+        <command name="AcceptQuotationAction" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">AcceptQuotationActionService</parameter>
+        </command>
+        
+        <command name="CreateQuoteDocumentAction" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">CreateQuoteDocumentService</parameter>
+        </command>
+
+        <!-- Premium calculation service combining assess risk, and calculate premium -->
+        <command name="PremiumCalculation" builder="ClassBuilder" key="com.ail.core.product.executepageaction.ExecutePageActionCommand">
+            <parameter name="Service">PremiumCalculationService</parameter>
+        </command>
+
+        <!-- Service defining which payment options to offer for a given quote -->
+        <command name='AssessPaymentOptions' builder='ClassBuilder' key='com.ail.insurance.acceptance.AssessPaymentOptionsCommand'>
+            <parameter name='Accessor'>AssessPaymentOptionsRule</parameter>
+        </command>
+
+        <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommand">
+            <parameter name="Service">MergeDocumentDataJavaService</parameter>
+        </command>
+        
+        <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommand">
+            <parameter name="Service">StyleDocumentXsltService</parameter>
+        </command>        
+        
+        <command name="RenderIndustrialStyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommand">
+            <parameter name="Service">RenderPdfDocumentService</parameter>
+            <parameter name="RenderOptionsArg">allowCopyContent=FALSE,allowPrint=TRUE</parameter>
+            <parameter name="TranslationUrlArg">http://localhost:8080/portal-core/themes/industrial/document-style.xsl</parameter>
+        </command>        
+        
+        <type builder="CastorXMLBuilder" key="com.ail.openquote.Quotation" name="BaseQuotation">
+            <parameter name="Url">product://localhost:8080/AIL/Base/BaseQuotation.xml</parameter>
+        </type>
+
+        <type builder="CastorXMLBuilder" key="com.ail.openquote.PersonalProposer" name="PersonalProposer">
+            <parameter name="Url">product://localhost:8080/AIL/Base/PersonalProposer.xml</parameter>
+        </type>
+
+        <type builder="CastorXMLBuilder" key="com.ail.openquote.CommercialProposer" name="CommercialProposer">
+            <parameter name="Url">product://localhost:8080/AIL/Base/CommercialProposer.xml</parameter>
+        </type>
+
+        <type name="BaseQuotationPageFlow" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.openquote.ui.PageFlow">
+            <parameter name="Url">product://localhost:8080/AIL/Base/BaseQuotationPageFlow.xml</parameter>
+        </type>
+        
+        <type name='AilDemoBroker' builder='CastorXMLBuilder' key='com.ail.openquote.Broker'>
+            <parameter name="Url">product://localhost:8080/AIL/Base/Acme.xml</parameter>
+        </type>
+
+        <type name="Translations" builder="CastorXMLBuilder" singleInstance="true" key="com.ail.core.language.Translations">
+            <parameter name="Url">product://localhost:8080/AIL/Base/Translations.xml</parameter>
+        </type>
+    </types>
+</configuration>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <name>source-import</name>
+        </general-data>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>source-import</name>
+            <properties>
+                <property name="project.dir">../..</property>
+                <property name="ant.script">${project.dir}/Build.xml</property>
+            </properties>
+            <folders>
+                <source-folder>
+                    <label>insurance</label>
+                    <location>${project.dir}</location>
+                </source-folder>
+                <source-folder>
+                    <label>model</label>
+                    <location>.</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>insurance.ear/acceptance-ejb.jar</label>
+                    <type>java</type>
+                    <location>${project.dir}/insurance.ear/acceptance-ejb.jar</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>insurance.ear/configure-server-ejb.jar</label>
+                    <type>java</type>
+                    <location>${project.dir}/insurance.ear/configure-server-ejb.jar</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>insurance.ear/quotation-ejb.jar</label>
+                    <type>java</type>
+                    <location>${project.dir}/insurance.ear/quotation-ejb.jar</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>insurance.ear/subrogation-ejb.jar</label>
+                    <type>java</type>
+                    <location>${project.dir}/insurance.ear/subrogation-ejb.jar</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>insurance.ear/lib/insurance.jar</label>
+                    <type>java</type>
+                    <location>${project.dir}/insurance.ear/lib/insurance.jar</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <script>${ant.script}</script>
+                    <target>build</target>
+                </action>
+                <action name="clean">
+                    <script>${ant.script}</script>
+                    <target>clean</target>
+                </action>
+                <action name="javadoc">
+                    <script>${ant.script}</script>
+                    <target>_compile-exploded-war-macro-docompile=false</target>
+                </action>
+                <action name="run">
+                    <script>${ant.script}</script>
+                    <target>_kick-jboss-if-jboss-running=false</target>
+                </action>
+                <action name="rebuild">
+                    <script>${ant.script}</script>
+                    <target>clean</target>
+                    <target>build</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="packages">
+                        <label>insurance.ear/acceptance-ejb.jar</label>
+                        <location>${project.dir}/insurance.ear/acceptance-ejb.jar</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>insurance.ear/configure-server-ejb.jar</label>
+                        <location>${project.dir}/insurance.ear/configure-server-ejb.jar</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>insurance.ear/quotation-ejb.jar</label>
+                        <location>${project.dir}/insurance.ear/quotation-ejb.jar</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>insurance.ear/subrogation-ejb.jar</label>
+                        <location>${project.dir}/insurance.ear/subrogation-ejb.jar</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>insurance.ear/lib/insurance.jar</label>
+                        <location>${project.dir}/insurance.ear/lib/insurance.jar</location>
+                    </source-folder>
+                    <source-file>
+                        <location>${ant.script}</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="javadoc"/>
+                    <ide-action name="run"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+            <compilation-unit>
+                <package-root>${project.dir}/insurance.ear/acceptance-ejb.jar</package-root>
+                <classpath mode="compile">${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/alfresco-web-services-1.4.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/ant-1.6.5.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/ant-nodeps-1.6.5.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/antlr-2.7.6.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/antlr-runtime-3.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/asm-1.5.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/avalon-framework-4.2.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/axis-1.4.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/batik-all-1.6.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/bouncycastle-1.29.mg.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/bsh-2.0b4.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/bvfl-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/c3p0-0.8.2.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/castor-xml-1.1-ail.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/cglib-2.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/colt-1.2.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commercial.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-beanutils-1.6.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-collections-3.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-dbcp-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-digester-1.5.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-discovery-0.2.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-io-1.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-jci-core-1.0-406301.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-jci-eclipse-3.2.0.666.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-jci-janino-2.4.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-jxpath-1.2.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-lang-2.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-pool-1.0.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/commons-validator-1.1.4.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/concurrent-1.3.4.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/core.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/dom4j-1.4-dev-7.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/drools-compiler-4.0.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/drools-core-4.0.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/drools-decisiontables-4.0.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/drools-jsr94-4.0.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/eclipse-jtd-core-3.2.3.v_686_R32x.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/fop-0.93.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/hibernate-3.2.1-patched.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/hsqldb-1.7.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/insurance.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/itext-1.2.mg.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jaas-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jakarta-oro-2.0.7.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/janino-2.5.10.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jaxrpc-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jca-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jcs-1.0-dev.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jimi-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jlfgr-1.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jnlp-1.0.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jsr94-1.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jung-1.7.2.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/jxl-2.4.2.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/mvel14-1.2.10.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/odmg-3.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/opensaml-1.0.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/poi-2.5.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/proxool-0.7.2.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/saaj-1.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/stringtemplate-2.3b6.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/wss4j-1.3.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/xmlgraphics-commons-1.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/xmlsec-1.2.1.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/xpp3-1.1.3.4.0.jar:${project.dir}/target/jboss/server/default/deploy/insurance.ear/lib/xstream-1.2.2.jar</classpath>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>${project.dir}/insurance.ear/configure-server-ejb.jar</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>${project.dir}/insurance.ear/quotation-ejb.jar</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>${project.dir}/insurance.ear/subrogation-ejb.jar</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>${project.dir}/insurance.ear/lib/insurance.jar</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+        </java-data>
+    </configuration>
+</project>

@@ -1,0 +1,152 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:jbp="http://www.jboss.com/portal"
+   xmlns:c="http://java.sun.com/jstl/core">
+
+<ui:composition template="instancesTemplate.xhtml">
+
+<ui:define name="content">
+
+<c:if test="#{empty instancemgr.selectedPlugin}">
+   <h:form>
+      <table id="instancesTable2" class="portlet-def-table datatable">
+         <thead class="portlet-section-header">
+            <tr>
+               <th>Instance id</th>
+               <th>Portlet name</th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody>
+            <c:forEach items="#{instancemgr.selectedInstances}" var="instance" varStatus="status">
+               <tr
+                  class="#{instance.id == instancemgr.selectedId ? 'portlet-section-selected' : (status.index % 2 == 0 ? 'portlet-section-body' : 'portlet-section-alternate')}">
+                  <td>
+                     <img src="#{instance.portlet.smallIconLocation}" align="middle" style="margin:0 4px 0 0"/>
+                     <h:commandLink action="#{instancemgr.selectInstance}">
+                        <h:outputText value="#{instance.id}"/>
+                        <f:param name="id" value="#{instance.id}"/>
+                        <f:param name="plugin" value="info"/>
+                     </h:commandLink>
+                  </td>
+                  <td>
+                     <h:outputText value="#{instance.displayName}"/>
+                  </td>
+                  <td><h:commandLink action="#{instancemgr.selectInstance}" styleClass="actionSecurity">
+                     <f:param name="id" value="#{instance.id}"/>
+                     <f:param name="plugin" value="security"/>
+                     Security
+                  </h:commandLink> | <h:panelGroup
+                     rendered="#{! empty(instancemgr.selectedInstancesPrefs[instance.id])}"><h:commandLink
+                     action="#{instancemgr.selectInstance}" styleClass="actionPreferences">
+                     <f:param name="id" value="#{instance.id}"/>
+                     <f:param name="plugin" value="preferences"/>
+                     Preferences
+                  </h:commandLink> | </h:panelGroup><h:commandLink action="confirmDeleteInstance"
+                                                                   styleClass="actionDelete"
+                                                                   actionListener="#{instancemgr.selectInstance}">
+                     <f:param name="id" value="#{instance.id}"/>
+                     Delete
+                  </h:commandLink>
+                  </td>
+               </tr>
+            </c:forEach>
+         </tbody>
+      </table>
+      <ul class="pagination property-container">
+         <c:if test="#{instancemgr.instanceCount > instancemgr.paginationSize}">
+            <c:forEach begin="0" end="#{(instancemgr.instanceCount - 1)/ instancemgr.paginationSize}" step="1"
+                       var="index">
+               <li class="#{index == (instancemgr.selectedFrom / instancemgr.paginationSize)? 'selected' : ''}">
+                  <h:commandLink action="#{instancemgr.selectFrom}">
+                     <f:param name="from" value="#{index * instancemgr.paginationSize}"/>
+                     <h:outputText value="#{index * instancemgr.paginationSize}"/>
+                  </h:commandLink>
+               </li>
+            </c:forEach>
+         </c:if>
+      </ul>
+   </h:form>
+</c:if>
+
+
+<c:if test="#{instancemgr.selectedPlugin == 'info'}">
+   <!-- Path nav -->
+   <h:form>
+      <ul class="objectpath">
+         <li class="pathItem">
+            <h:commandLink action="#{instancemgr.selectInstance}">Portlet Instances</h:commandLink>
+         </li>
+         <li class="pathSeparator"><h:graphicImage url="/img/pathSeparator.png" alt=">"/></li>
+         <li class="selected">
+            <span class="objectName">#{instancemgr.selectedInstance.id}</span> portlet details
+         </li>
+      </ul>
+   </h:form>
+   <br/>
+   <c:choose>
+      <c:when test="#{instancemgr.selectedInstance.portlet != null}">
+         <ui:include src="common/showPortletDetails.xhtml">
+            <ui:param name="portlet" value="#{instancemgr.selectedInstance.portlet}"/>
+            <ui:param name="portletmgr" value="#{portletmgr}"/>
+         </ui:include>
+      </c:when>
+      <c:otherwise>
+         The associated portlet is not available.
+      </c:otherwise>
+   </c:choose>
+</c:if>
+
+<c:if test="#{instancemgr.selectedPlugin == 'preferences'}">
+   <!-- Path nav -->
+   <h:form>
+      <ul class="objectpath">
+         <li class="pathItem">
+            <h:commandLink action="#{instancemgr.selectInstance}">Portlet Instances</h:commandLink>
+         </li>
+         <li class="pathSeparator"><h:graphicImage url="/img/pathSeparator.png" alt=">"/></li>
+         <li class="selected">
+            <span class="objectName">#{instancemgr.selectedInstance.id}</span> preferences
+         </li>
+      </ul>
+   </h:form>
+   <br/>
+   <div class="property-container">
+   <ui:include src="common/editPreferences.xhtml">
+      <ui:param name="prefs" value="#{instancemgr.selectedPrefs}"/>
+   </ui:include>
+   <br />
+   <h:form>
+      <h:commandButton value="Save" action="#{instancemgr.updatePrefs}" styleClass="portlet-form-button"/>
+      <h:commandButton value="Cancel" action="#{instancemgr.cancelPrefs}" styleClass="portlet-form-button"/>
+   </h:form>
+   </div>
+</c:if>
+
+<c:if test="#{instancemgr.selectedPlugin == 'security'}">
+   <!-- Path nav -->
+   <h:form>
+      <ul class="objectpath">
+         <li class="pathItem">
+            <h:commandLink action="#{instancemgr.selectInstance}">Portlet Instances</h:commandLink>
+         </li>
+         <li class="pathSeparator"><h:graphicImage url="/img/pathSeparator.png" alt=">"/></li>
+         <li class="selected">
+            <span class="objectName">#{instancemgr.selectedInstance.id}</span> security settings
+         </li>
+      </ul>
+   </h:form>
+   <br/>
+   <div class="property-container">
+   <ui:decorate template="/WEB-INF/jsf/common/editSecurity.xhtml">
+      <ui:param name="auth" value="#{instancemgr.auth}"/>
+   </ui:decorate>
+   </div>
+</c:if>
+
+</ui:define>
+</ui:composition>
+</div>

@@ -1,0 +1,5 @@
+<jboss-app>
+  <loader-repository>appliedindustriallogic.co.uk:loader=ail-insurance.ear</loader-repository>
+  <loader-repository-config>java2ParentDelegation=false</loader-repository-config>
+</jboss-app>
+

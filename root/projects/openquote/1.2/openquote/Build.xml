@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for the openquote project.
+-->
+
+<project default="build" name="openquote">
+    <import file="./BuildSettings.xml"/>
+    
+    <target name="clean" description="delete everything that the build can generate">
+        <subant-macro target="clean"/>
+    </target>
+    
+    <target name="_build">
+        <subant-macro target="_build"/>
+    </target>
+    
+    <target name="build" description="compile (generate, copy, etc) all build outputs">
+        <antcall target="_build"/>
+        <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
+        <kick-jboss-macro/>
+    </target>
+    
+    <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+      <install-jboss-macro version="${jboss.version}"/>
+      <install-base-domain-macro dar="insurance" version="${insurance.version}" build="${insurance.build}"/>
+
+       <!-- the dar contains some things which will only cause confusion if they're left -->
+       <!-- on the classath - delete them.                                               -->
+      <delete file="${ear.dir}/lib/jaxrpc-1.0.jar"/>
+      <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreDefaultConfig.xml"/>
+      <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreProxyDefaultConfig.xml"/>
+      <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/CoreDefaultConfig.xml"/>
+      <delete file="${ear.dir}/lib/core.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml"/>
+      <delete file="${ear.dir}/lib/core.jar/com/ail/core/product/listproducts/ListProductsDefaultConfig.xml"/>
+      <delete file="${ear.dir}/lib/core.jar/com/ail/core/persistence/hibernate/HibernateConfiguration.xml"/>
+      <delete file="${ear.dir}/lib/core.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml"/>
+      <delete file="${ear.dir}/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServerDefaultConfig.xml"/>
+      <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateConfiguration.xml"/>
+      <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml"/>
+      <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/addquotenumber/AddQuoteNumberDefaultConfig.xml"/>
+      <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml"/>
+      <delete file="${ear.dir}/content-browser.war/WEB-INF/content-browser-object.xml"/>
+      <delete file="${ear.dir}/content-browser.war/WEB-INF/portlet-instances.xml"/>
+      <delete file="${ear.dir}/news-reader.war/WEB-INF/portlet-instances.xml"/>
+      <delete file="${deploy.dir}/deploy/ail-persistence-ds.xml"/>
+      <delete file="${deploy.dir}/deploy/ail-configure-ds.xml"/>
+      <delete file="${deploy.dir}/deploy/alfresco.war/WEB-INF/alfresco-object.xml"/>
+      <delete file="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-news-samples.war/WEB-INF/default-object.xml"/>        
+      <delete dir="${deploy.dir}/data/alf_data"/>
+      <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-samples.war"/>
+      <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.sar"/>
+      <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.war"/>
+      <delete dir="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-weather-samples.war"/>
+      <delete dir="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-jsp-samples.war"/>
+      
+      <!-- 'setup' the sub projects, make sure the domain is built first -->
+      <subant-macro target="setup" includes="domain/Build.xml"/>
+      <subant-macro target="setup" excludes="domain/Build.xml"/>
+      <antcall target="_build"/>
+
+      <parallel>
+        <start-jboss-macro />
+        <sequential>
+          <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+            <http url="http://localhost:8080/alfresco"/>
+          </waitfor>
+          <configuration-macro username="admin" password="bombay2000" operation="resetAllConfigurations"/>
+          <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache"/>    
+          <stop-jboss-macro />
+        </sequential>
+      </parallel>
+    </target>
+    
+    <target name="teardown" description="undo whatever setup did">
+        <uninstall-jboss-macro version="${jboss.version}"/>
+        <subant-macro target="teardown"/>
+        <delete dir="${target.dir}" failonerror="false"/>
+    </target>
+    
+    <target name="release" description="build this project's releasable outputs">
+        <!-- Stop the server if it is running -->
+        <ant antfile="BuildCommands.xml" target="jboss: stop server"/>
+        
+        <!-- Do a clean build before we release -->
+        <antcall target="teardown"/>
+        <antcall target="setup"/>
+        
+        <!-- The only release atrifact openquote makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
+        <release-jboss-domain-macro/>
+        <release-source-macro/>
+    </target>
+</project>

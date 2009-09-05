@@ -1,0 +1,68 @@
+package id12r59d4u63914d4u66ybm;
+
+/**
+@version 2.0
+@physicalPackage
+@__modelType diagram 
+*/
+class diagram {
+/**
+@__ref <oiref:design#Class#id12r59d4u63914d4u66ybm.node8:oiref><oihard>
+@__modelType reference 
+*/
+class reference12 {
+}/**
+@__ref <oiref:java#Class#com.ail.coretest.configuration.TestJDBCConfigurationLoader:oiref><oihard>
+@__modelType reference 
+*/
+class reference {
+}}/**
+@__tags
+@shapeType ClassDiagram 
+*/
+class __tags {
+}/**
+@__options 
+*/
+class __options {
+}/**
+@__positions <oigroup:<oiref:java#Class#com.ail.coretest.configuration.TestJDBCConfigurationLoader:oiref>=322,210,200,275,1:oigroup>
+<oigroup:<oiref:design#Class#id12r59d4u63914d4u66ybm.node8:oiref>=10,10,698,98,1:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.coretest.configuration.ConfigurationTestImpl#com.bob.coretest.configuration.GroupTestImpl:oiref>=1076,600,1076,555:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#test.com.bob.core.configuration.TestJDBCConfigurationLoader#loader:oiref>=210,90,242,90:oigroup>
+<oigroup:<oiref:java#Implements#com.bob.coretest.configuration.GroupTestImpl#com.bob.core.configure.Group:oiref>=1049,253,1049,167:oigroup>
+<oigroup:<oiref:java#Implements#com.bob.coretest.configuration.TypeTestImpl#com.bob.core.configure.Type:oiref>=763,215,763,168:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.core.configure.Parameter#com.bob.core.configure.Component:oiref>=1242,47,1242,309:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.coretest.configuration.TypesTestImpl#com.bob.coretest.configuration.GroupTestImpl:oiref>=911,488,1009,488:oigroup>
+<oigroup:<oiref:java#Implements#com.bob.coretest.configuration.ParameterTestImpl#com.bob.core.configure.Parameter:oiref>=1304,98,1304,47:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.core.configure.Types#com.bob.core.configure.Group:oiref>=759,349,942,167:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.coretest.configuration.GroupTestImpl#com.bob.coretest.configuration.ComponentTestImpl:oiref>=1209,481,1239,481:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.bob.core.configure.AbstractConfigurationLoader#loader:oiref>=409,171,409,214,485,214,485,138,442,138:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.bob.core.configure.Group#lnkProperty:oiref>=989,119,1185,57:oigroup>
+<oigroup:<oiref:java#Implements#com.bob.coretest.configuration.TypesTestImpl#com.bob.core.configure.Types:oiref>=759,444,759,397:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.core.configure.Type#com.bob.core.configure.Group:oiref>=880,148,889,148:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.core.configure.JDBCConfigurationLoader#com.bob.core.configure.AbstractConfigurationLoader:oiref>=282,494,282,171:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.core.configure.Group#com.bob.core.configure.Component:oiref>=1064,167,1180,309:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.coretest.configuration.ParameterTestImpl#com.bob.coretest.configuration.ComponentTestImpl:oiref>=1336,225,1336,430:oigroup>
+<oigroup:<oiref:java#Implements#com.bob.coretest.configuration.ConfigurationTestImpl#com.bob.core.configure.Configuration:oiref>=969,540,969,497:oigroup>
+<oigroup:<oiref:java#Implements#com.bob.coretest.configuration.ComponentTestImpl#com.bob.core.configure.Component:oiref>=1230,418,1230,382:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.bob.core.configure.Group#lnkParameter:oiref>=989,119,1180,47:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.core.configure.Configuration#com.bob.core.configure.Group:oiref>=995,449,995,167:oigroup>
+<oigroup:<oiref:java#Extends#com.bob.coretest.configuration.TypeTestImpl#com.bob.coretest.configuration.GroupTestImpl:oiref>=821,238,1009,269:oigroup>
+<oigroup:MemberLink#<oiref:java#Member#com.bob.core.configure.Group#lnkGroup:oiref>=1049,167,1049,191,1139,191,1139,153,1089,153:oigroup>
+
+*/
+class __positions {
+}/**
+@shapeType Note
+@__modelType node
+@name Note2
+@text Title: Core System configuration tests
+$Revision: 1.2 $
+$State: Exp $
+$Date: 2005/07/16 10:23:28 $
+$Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/configuration/configuration.dfPackage,v $
+@backgroundColor 204,204,204 
+*/
+class node8 {
+}

@@ -1,0 +1,44 @@
+<pageFlow id="QuotationPageFlow" xsi:type="java:com.ail.openquote.ui.PageFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/PageFlow.xsd">
+    <questionPage id="Welcome" title="[PRODUCT NAME]">
+		    <action id="Initialise" when="onRenderResponse" commandName="InitialiseNewBusiness"/>
+        <parsedUrlContent id="Content" order="1" url="product://localhost:8080/AIL/Base/Welcome.html" />
+        <navigationSection id="Navigation" order="2" quitDisabled='true'>
+            <commandButtonAction id="Quote" order="1" label="i18n_quote_button_label" destinationPageId="Proposer"/>
+        </navigationSection>
+        <savedQuotations id="SavedQuotes" order="3" confirmAndPayDestinationPageId="SelectPaymentOption"/>
+    </questionPage>
+    
+    <questionPage id="Proposer" title="i18n_proposer_page_title">
+        <proposerDetails id="Proposer" order="1" binding="/proposer"/>
+        <navigationSection id="Navigation" order="2">
+            <commandButtonAction id="Next" order="1" label="i18n_next_button_label"/>
+        </navigationSection>
+    </questionPage>
+
+    <questionPage id="SelectPaymentOption" title="i18n_payment_options_page_title">
+        <action id="AssessOptions" when="onRenderResponse" commandName="AssessPaymentOptionsAction"/>
+        <paymentOptionSelector id="Optionselector" order="1"/>
+        <navigationSection id="Navigation" order="2">
+            <commandButtonAction id="Next" order="1" label="i18n_next_button_label" destinationPageId="CollectPaymentDetails"/>
+        </navigationSection>
+    </questionPage>
+    
+    <questionPage id="CollectPaymentDetails" title="i18n_payment_details_page_title">
+        <paymentDetails id="PaymentDetails" order="1"/>
+        <navigationSection id="Navigation" order="2">
+            <commandButtonAction id="Previous" order="1" label="i18n_previous_button_label" immediate='true' destinationPageId="SelectPaymentOption"/>
+            <commandButtonAction id="Next" order="2" label="i18n_next_button_label" destinationPageId="Finish">
+                <action id="AcceptQuotation" when="onProcessActions" commandName="AcceptQuotationAction" xsi:type="action"/>
+            </commandButtonAction>
+        </navigationSection>
+    </questionPage>
+    
+    <questionPage id="Finish" title="i18n_finish_page_title">
+        <action id="SendNitification" when="onRenderResponse" commandName="SendNotificationAction" xsi:type="action"/>
+        <parsedUrlContent id="ThankYou" order="1" url="product://localhost:8080/AIL/Base/Thankyou.html"/>
+        <navigationSection id="Navigation" order="2" quitDisabled='true'>
+            <quitButtonAction id="Finish" order="1" label="i18n_finish_button_label" destinationPageId="Finish"/>
+        </navigationSection>
+    </questionPage>
+
+</pageFlow>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC
+   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+   <context-param>
+      <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+      <param-value>true</param-value>
+   </context-param>
+   
+   <listener>
+      <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+   </listener>
+
+   <servlet>
+      <servlet-name>DisplayQuotationServlet</servlet-name>
+      <description>Servlet which streams quotation documents to the client</description>
+      <servlet-class>com.ail.openquote.ui.DisplayQuotationServlet</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+      <servlet-name>DisplayQuotationServlet</servlet-name>
+      <url-pattern>/DisplayQuotationServlet</url-pattern>
+   </servlet-mapping>
+</web-app>

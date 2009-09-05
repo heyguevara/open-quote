@@ -1,0 +1,21 @@
+import com.ail.openquote.Quotation;
+import com.ail.core.product.executepageaction.ExecutePageActionArgImp;
+import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand;
+import com.ail.core.CoreProxy;
+
+public class AcceptQuotationActionService {
+    public static void invoke(ExecutePageActionArgImp args) {
+        CoreProxy core=new CoreProxy();
+
+        try {
+            Quotation quote=args.getQuotationArgRet();  
+            AcceptQuotationCommand command=(AcceptQuotationCommand)core.newCommand("AcceptQuotation");
+            command.setPolicyArgRet(quote);
+            command.invoke();
+            args.setQuotationArgRet((Quotation)command.getPolicyArgRet());
+        }
+        catch(Exception e) {
+            core.logError("Error in AcceptQuotationActionService: "+e);
+        }
+    }
+}

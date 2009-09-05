@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN' 'http://java.sun.com/dtd/ejb-jar_2_0.dtd'>
+<ejb-jar>
+  <display-name>ProductManager</display-name>
+    <enterprise-beans>
+        <session>
+            <display-name>ProductManager</display-name>
+            <ejb-name>ProductManager</ejb-name>
+            <home>com.ail.core.product.ProductManagerHome</home>
+            <remote>com.ail.core.product.ProductManager</remote>
+            <local-home>com.ail.core.product.ProductManagerLocalHome</local-home>
+            <local>com.ail.core.product.ProductManagerLocal</local>
+            <ejb-class>com.ail.core.product.ProductManagerBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <description>Define the concrete configuration loader for the Core.</description>
+                <env-entry-name>ConfigurationLoader.classname</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>com.ail.core.configure.ConnectionPoolConfigurationLoader</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <description>Define parameters to initialise the configuration loader.</description>
+                <env-entry-name>ConfigurationLoader.params</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@connectionpoolloader.params@</env-entry-value>
+            </env-entry>
+        </session>
+    </enterprise-beans>
+
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>ProductManager</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>NotSupported</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
+
+</ejb-jar>

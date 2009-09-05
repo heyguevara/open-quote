@@ -1,0 +1,44 @@
+<pageFlow id="QuotationPageFlow" xsi:type="java:com.ail.openquote.ui.PageFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/PageFlow.xsd">
+    <page id="Welcome" title="[PRODUCT NAME]" xsi:type="questionPage">
+		    <action id="Initialise" when="onRenderResponse" commandName="InitialiseNewBusiness" xsi:type="action"/>
+        <pageElement id="Content" order="1" url="http://localhost:8080/alfresco/cms/Product/AIL/Base/Welcome.html" xsi:type="parsedUrlContent"/>
+        <pageElement id="Navigation" order="2" quitDisabled='true' xsi:type="navigationSection">
+            <pageElement id="Quote" order="1" label="Get A Quote" destinationPageId="Proposer" xsi:type="commandButtonAction"/>
+        </pageElement>
+        <pageElement id="SavedQuotes" order="3" confirmAndPayDestinationPageId="SelectPaymentOption" xsi:type="savedQuotations"/>
+    </page>
+    
+    <page id="Proposer" title="About You - The Proposer" xsi:type="questionPage">
+        <pageElement id="Proposer" order="1" binding="/proposer" xsi:type="proposerDetails"/>
+        <pageElement id="Navigation" order="2" xsi:type="navigationSection">
+            <pageElement id="Next" order="1" label="Next" xsi:type="commandButtonAction"/>
+        </pageElement>
+    </page>
+
+    <page id="SelectPaymentOption" title="Confirm and Pay" xsi:type="questionPage">
+        <action id="AssessOptions" when="onRenderResponse" commandName="AssessPaymentOptionsAction" xsi:type="action"/>
+        <pageElement id="Optionselector" order="1" xsi:type="paymentOptionSelector"/>
+        <pageElement id="Navigation" order="2" xsi:type="navigationSection">
+            <pageElement id="Next" order="1" label="Next" destinationPageId="CollectPaymentDetails" xsi:type="commandButtonAction"/>
+        </pageElement>
+    </page>
+    
+    <page id="CollectPaymentDetails" title="Payment details" xsi:type="questionPage">
+        <pageElement id="PaymentDetails" order="1" xsi:type="paymentDetails"/>
+        <pageElement id="Navigation" order="2" xsi:type="navigationSection">
+            <pageElement id="Previous" order="1" label="Previous" immediate='true' destinationPageId="SelectPaymentOption" xsi:type="commandButtonAction"/>
+            <pageElement id="Next" order="2" label="Next" destinationPageId="Finish" xsi:type="commandButtonAction">
+                <action id="AcceptQuotation" when="onProcessActions" commandName="AcceptQuotationAction" xsi:type="action"/>
+            </pageElement>
+        </pageElement>
+    </page>
+    
+    <page id="Finish" title="Thankyou" xsi:type="questionPage">
+        <action id="SendNitification" when="onRenderResponse" commandName="SendNotificationAction" xsi:type="action"/>
+        <pageElement id="ThankYou" order="1" url="http://localhost:8080/alfresco/cms/Product/AIL/Base/Thankyou.html" xsi:type="parsedUrlContent"/>
+        <pageElement id="Navigation" order="2" quitDisabled='true' xsi:type="navigationSection">
+            <pageElement id="Finish" order="1" label="Finish" destinationPageId="Finish" xsi:type="quitButtonAction"/>
+        </pageElement>
+    </page>
+
+</pageFlow>

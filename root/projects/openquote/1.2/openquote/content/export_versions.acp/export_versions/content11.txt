@@ -1,0 +1,9 @@
+import com.ail.core.CoreProxy;
+import com.ail.core.product.executepageaction.ExecutePageActionArgImp;
+
+public class DumpQuoteToConsoleService {
+    public static void invoke(ExecutePageActionArgImp args) {
+      CoreProxy core=new CoreProxy();
+        core.logInfo(core.toXML(args.getQuotationArgRet()));
+    }
+}

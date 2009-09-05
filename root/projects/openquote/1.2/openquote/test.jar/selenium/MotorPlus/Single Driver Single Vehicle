@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Single Driver Single Vehicle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Single Driver Single Vehicle</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_quote_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>title</td>
+	<td>label=Mr.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>firstname</td>
+	<td>J</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>firstname</td>
+	<td>Jim</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>firstname</td>
+	<td>Jimbo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>surname</td>
+	<td>Clucknasty</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address1</td>
+	<td>Cluck House</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>address2</td>
+	<td>Cluck Road</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>town</td>
+	<td>Clucktown</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>county</td>
+	<td>Cluckingtonshire</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>postcode</td>
+	<td>CL1 2UK</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>phone</td>
+	<td>01923 332112</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>email</td>
+	<td>jimbo@cluck.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#make#]</td>
+	<td>label=AC</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#model#]</td>
+	<td>label=ACE</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cc#]</td>
+	<td>2000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#bodytype#]</td>
+	<td>label=Salon</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#year#]</td>
+	<td>2005</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#registration#]</td>
+	<td>CGO 920P</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#datebought#]</td>
+	<td>01/12/2005</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#cost#]</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#VehicleAsset#][0]attribute[id=#value#]</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>/asset[assetTypeId=#DriverAsset#][0]attribute[id=#name#]</td>
+	<td>Jimbo Clucknasty</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#DriverAsset#][0]attribute[id=#dob#]</td>
+	<td>01/12/1965</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[assetTypeId=#DriverAsset#][0]attribute[id=#occupation#]</td>
+	<td>label=Accountant</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[assetTypeId=#DriverAsset#][0]attribute[id=#licenseType#]</td>
+	<td>label=Full</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>/asset[assetTypeId=#DriverAsset#][0]attribute[id=#yearsLicenseHeld#]</td>
+	<td>20</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#refusedMotorInsurance#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#claimAccidentOrLoss#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#theft#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#motorConviction#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#otherConviction#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#previouslyInsured#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>/asset[id=#driversHistory#]/attribute[id=#claimingNoClaimsBonus#]</td>
+	<td>label=No</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>£302.50</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Comprehensive</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Jimbo Clucknasty</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>01/12/1965</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Accountant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>AC</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>ACE</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>CGO 920P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>05437 367468</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_confirm_and_pay_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>A single payment by payment card of 302.50 GBP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>A single payment by direct debit of 302.50 GBP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>A deposit by payment card followed by nine monthly installments by direct debit totalling 326.70 GBP (includes an 8% admin fee)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>A deposit of 56.70 GBP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Followed by 9 monthly payments of 30.00 GBP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@type=&quot;radio&quot;][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Please enter your credit/debit card details</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Please enter your bank account number and sort code so that we can take payment from your account</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>cardNumber</td>
+	<td>0000111122223333</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>expiryMonth</td>
+	<td>01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>expiryYear</td>
+	<td>11</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>acc</td>
+	<td>01010101</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sc1</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sc2</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sc3</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>confirm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=i18n_next_button_label:immediate=false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Congratulations</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='op=quit:immediate=true']</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

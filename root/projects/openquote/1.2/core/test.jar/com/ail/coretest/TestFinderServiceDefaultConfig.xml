@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision: 1.6 $
+ $State: Exp $
+ $Date: 2006/10/04 21:30:38 $
+ $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestFinderServiceDefaultConfig.xml,v $
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>Default Configuration</name>
+    <timeout>600000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.6 $</version>
+</configuration>

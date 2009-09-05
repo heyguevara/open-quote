@@ -1,0 +1,311 @@
+body {
+	background-image: url(../images/portal_utils/portal_background.gif);
+	margin: 0px;
+	padding: 0px;
+}
+
+table.portal-table {
+	background-image: url(../images/portal_utils/portal_table_background.gif);
+}
+
+/* Links */
+a {
+	color: #5699B7;
+	text-decoration: none;
+}
+a:hover  {
+	color: #242424;
+	text-decoration: none;
+}
+
+/********
+* FONTS *
+*********/
+
+/* Font attributes for the normal  fragment font.
+   Used for the display of non-accentuated information */
+.portlet-font {
+	color:#4A4A4A;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	margin-top: 7px;
+	margin-bottom: 5px;
+}
+
+/* Font attributes similar to the portlet.font but the color is lighter */
+.portlet-font-dim {
+	color:#FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+/********
+* FORMS *
+*********/
+
+/* Text used for the descriptive label of the whole form (not the label for fields) */
+.portlet-form-label {
+	color:#4A4A4A;
+	text-decoration:none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+/* Text of the user-input in an input field */
+.portlet-form-input-field {
+	color:#4A4A4A;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+/* Text on a button */
+.portlet-form-button {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #270F07;
+}
+
+/* Text that appears beside a context dependent action icon */
+.portlet-icon-label {
+
+}
+
+/* Text that appears beside a "standard" icon (e.g Ok, or Cancel) */
+.portlet-dlg-icon-label {
+
+}
+
+/* Text for a separator of fields (e.g. checkboxes, etc.) */
+.portlet-form-field-label {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #4A4A4A;
+
+}
+
+/* Text for a field (not input field, eg. checkboxes, etc.) */
+.portlet-form-field {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #4A4A4A;
+	margin-top: 10px;
+
+}
+/* Links */
+.portal-links:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #242424;
+	text-decoration: none;
+}
+.portal-links:hover  {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #5699B7;
+	text-decoration: none;
+}
+.portal-links:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #242424;
+	text-decoration: none;
+}
+.portal-links:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #242424;
+	text-decoration: none;
+}
+/* title */
+.portal-central-title {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #242424;
+	text-indent: 5px;
+}
+.portal-left-title-white {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.portal-left-title-black {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #242424;
+}
+.portal-right-title-black {
+
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #242424;
+}
+.portal-right-title-white {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+/***********
+* MESSAGES *
+************/
+
+/* Status of the current operation. */
+.portlet-msg-status {
+
+}
+
+/* Help messages, general additional information, etc. */
+.portlet-msg-info {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-style: italic;
+	color: #242424;
+
+}
+
+/* Error messages. */
+.portlet-msg-error {
+	color:red;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+}
+
+/* Warning messages. */
+.portlet-msg-alert {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+
+}
+
+/* Verification of the successful completion of a task. */
+.portlet-msg-success {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #00FF00;
+
+}
+/***********
+* SECTIONS *
+************/
+
+/* Table or section header */
+.portlet-section-header {
+    font-weight: bold;    
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	/*background-image: url(interf/head.jpg);*/
+}
+
+/* Normal text in a table cell */
+.portlet-section-body {
+	background-color: #DBEBF7;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+/* Text in every other row in the cell */
+.portlet-section-alternate {
+	background-color: #C7D6E0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+/* Text in a selected cell range */
+.portlet-section-selected {
+	background-color: #89AEC6;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+/* Text of a subheading */
+.portlet-section-subheader {
+	font-weight: bold;
+	font-size: 9px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	margin: 3px;
+	padding: 3px;
+}
+
+/* Table or section footnote */
+.portlet-section-footer {
+  font-size: 6px;
+}
+
+/* Text that belongs to the table but does not fall in one of the other categories
+  (e.g. explanatory or help text that is associated with the section. */
+.portlet-section-text {
+
+}
+
+/********
+* MENUS *
+*********/
+
+.portlet-menu {
+
+}
+
+.portlet-menu-item {
+	color: #242424;
+	text-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+.portlet-menu-item:hover {
+	color: #5699B7;
+	text-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+}
+
+.portal-title-level1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FF8A00;
+	font-weight: bold;
+}
+.portlet-form-field-middle {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #4A4A4A;
+	margin-top: 10px;
+	width: 91px;
+}
+.portal-title-level2 {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #002F4E;
+	font-weight: bold;
+}
+
+.portal-copyright {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8px;
+	color: #002F4E;
+}
+
+/* Links */
+a.portal-copyright {
+	color: #242424;
+	text-decoration: none;
+}
+a.portal-copyright:hover  {
+	color: #002F4E;
+	text-decoration: none;
+}

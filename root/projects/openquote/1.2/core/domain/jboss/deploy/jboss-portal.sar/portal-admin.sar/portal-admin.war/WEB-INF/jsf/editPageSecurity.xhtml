@@ -1,0 +1,15 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html">
+   <ui:composition template="objectTemplate.xhtml">
+      <ui:param name="portalObjectScreen" value="Security"/>
+      <ui:define name="content">
+         <h3>Please set the page permissions</h3>
+         <ui:decorate template="/WEB-INF/jsf/common/editSecurity.xhtml">
+            <ui:param name="auth" value="#{portalobjectmgr.auth}"/>
+         </ui:decorate>
+      </ui:define>
+   </ui:composition>
+</div>

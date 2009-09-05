@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision: 1.5 $
+ $State: Exp $
+ $Date: 2006/07/15 15:01:44 $
+ $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/service/TestDefaultConfig.xml,v $
+-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+    <name>Default Service Invocation Configuration</name>
+    <timeout>600000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.5 $</version>
+
+    <builders>
+      <builder name="ClassBuilder" factory="com.ail.core.factory.ClassFactory"/>
+    </builders>
+</configuration>
