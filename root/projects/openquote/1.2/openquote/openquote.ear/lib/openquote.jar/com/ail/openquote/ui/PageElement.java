@@ -31,8 +31,10 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Identified;
 import com.ail.core.Type;
+import com.ail.openquote.portlet.QuotationPortlet;
 import com.ail.openquote.ui.util.HelpText;
 import com.ail.openquote.ui.util.ErrorText;
+import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -324,7 +326,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
 	
     /**
      * Life-cycle method invoked following {@link #applyRequestValues(ActionRequest, ActionResponse, Type)}. This 
-     * event is only invoked if the request is marked as {@link QuotationPortlet#immediate(ActionRequest) immediate}, or
+     * event is only invoked if the request is marked as {@link QuotationCommon#immediate(ActionRequest) immediate}, or
      * {@link #processValidations(ActionRequest, ActionResponse, Type)} returned false - indicating that there are no
      * page errors.
      * @param request

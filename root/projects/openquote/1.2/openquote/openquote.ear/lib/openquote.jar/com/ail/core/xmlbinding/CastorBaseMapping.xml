@@ -739,6 +739,12 @@
         <field name="url" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="pageHeader" type="boolean">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="script" type="string">
+            <bind-xml node="attribute"/>
+        </field>
     </class>
 
     <class name="com.ail.openquote.ui.ProposerDetails" extends="com.ail.openquote.ui.PageElement">

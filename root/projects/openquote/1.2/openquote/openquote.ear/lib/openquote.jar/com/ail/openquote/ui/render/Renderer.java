@@ -95,7 +95,7 @@ public interface Renderer {
 
     Type renderPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Page page);
 
-    Type renderPageScriptHeader(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript);
+    Type renderPageScript(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript);
 
     Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection, String title) throws IllegalStateException, IOException;
     

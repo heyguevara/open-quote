@@ -20,7 +20,7 @@ import static com.ail.core.Functions.configurationNamespaceToProductName;
 import static com.ail.core.Functions.expand;
 import static com.ail.core.Functions.loadUrlContentAsString;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
-import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
+import static com.ail.openquote.ui.util.Functions.expandRelativeUrlToProductUrl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -105,7 +105,7 @@ public class ParsedUrlContent extends PageElement {
             try {
                 if (namespace.endsWith("Registry")) {
                     productName=configurationNamespaceToProductName(namespace);
-                    content=expand(loadUrlContentAsString(new URL(expandRelativeUrl(getUrl(), request, productName))), quote);
+                    content=expand(loadUrlContentAsString(new URL(expandRelativeUrlToProductUrl(getUrl(), request, productName))), quote);
                     success=true;
                     break;
                 }

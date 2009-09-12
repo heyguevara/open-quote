@@ -18,7 +18,7 @@ package com.ail.openquote.ui.render;
 
 import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.messages.I18N.i18n;
-import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
+import static com.ail.openquote.ui.util.Functions.expandRelativeUrlToProductUrl;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.findErrors;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
@@ -547,7 +547,7 @@ public class Xform extends Type implements Renderer {
     	return model;
     }
 
-    public Type renderPageScriptHeader(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript) {
+    public Type renderPageScript(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript) {
 		// TODO Auto-generated method stub
     	return model;
     }
@@ -972,7 +972,7 @@ public class Xform extends Type implements Renderer {
             renderTaxSummary(w, quote);
             
             if (quotationSummary.getWordingsUrl()!=null) {
-                w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrl(quotationSummary.getWordingsUrl(), request, quote.getProductTypeId()));
+                w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrlToProductUrl(quotationSummary.getWordingsUrl(), request, quote.getProductTypeId()));
             }
             w.printf("           </ul>");
             w.printf("       </td>");
@@ -1056,7 +1056,7 @@ public class Xform extends Type implements Renderer {
         
         private void renderTermsAndConditions(PrintWriter w, RenderRequest request, Quotation quote, QuotationSummary quotationSummary) {
             if (quotationSummary.getTermsAndConditionsUrl()!=null) {
-                String fullUrl=expandRelativeUrl(quotationSummary.getTermsAndConditionsUrl(), request, quote.getProductTypeId());
+                String fullUrl=expandRelativeUrlToProductUrl(quotationSummary.getTermsAndConditionsUrl(), request, quote.getProductTypeId());
                 
                 w.printf("<label>");
                 try {

@@ -17,6 +17,8 @@
 package com.ail.openquote.ui.util;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -288,15 +290,28 @@ public class Functions {
     }
 
     /**
-     * Products frequently refer to content from their Registry or Pageflows by "relative" URLs. This method
-     * expands relative URLs into absolute product URLs, but leaves other URLs untouched. A relative URL 
-     * is one that starts with "~/".
+     * Product URLs (using the "product" protocol) are only accessible within the OpenQuote
+     * server, by virtue of {@link com.ail.code.urlhandler.product.Handler Handler}. This 
+     * method converts a product URL into a form which can be used externally.
+     * @param url URL to be converted
+     * @return External URL
+     * @throws MalformedURLException 
+     */
+    public static URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
+    	return new URL("http", productUrl.getHost(), productUrl.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+productUrl.getPath()); 
+    }
+    
+    /**
+     * Products frequently refer to content from their Registries or Pageflows by "relative" URLs. This method
+     * expands relative URLs into absolute product URLs - i.e. a URL using the "product:" protocol. A relative URL 
+     * is one that starts with "~/", where "~" is shorthand for the product's home location. None relative URLs are
+     * returned without modification.
      * @param url URL to be checked and expanded if necessary
      * @param request Associated request
      * @param productTypeId Product to be used in the expanded URL
      * @return Expanded URL if it was relative, URL as passed in otherwise.
      */
-    public static String expandRelativeUrl(String url, RenderRequest request, String productTypeId) {
+    public static String expandRelativeUrlToProductUrl(String url, RenderRequest request, String productTypeId) {
         if (url.startsWith("~/")) {
             return "product://"+request.getServerName()+":"+request.getServerPort()+"/"+productTypeId.replace('.', '/')+url.substring(1); 
         }

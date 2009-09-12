@@ -19,7 +19,7 @@ package com.ail.openquote.ui.render;
 import static com.ail.core.Attribute.YES_OR_NO_FORMAT;
 import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.messages.I18N.i18n;
-import static com.ail.openquote.ui.util.Functions.expandRelativeUrl;
+import static com.ail.openquote.ui.util.Functions.expandRelativeUrlToProductUrl;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.findErrors;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
@@ -606,20 +606,20 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Page page) {
-        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'></script>");        
+        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'/>");        
 
         // Always include the openquote script
-        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");
+        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'/>");
         
     	return model;
     }
     
-    public Type renderPageScriptHeader(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript) {
-        if (pageScript.getUrl().indexOf(':')>=0) {
-            w.printf("<script type='text/javascript' src='%s'></script>", pageScript.getUrl());
+    public Type renderPageScript(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageScript pageScript) {
+        if (pageScript.getScript()!=null) {
+            w.printf("<script type='text/javascript'>%s</script>", pageScript.getScript());
         }
         else {
-            w.printf("<script type='text/javascript' src='%s'></script>", request.getContextPath()+"/"+pageScript.getUrl());
+            w.printf("<script type='text/javascript' src='%s'/>", pageScript.getCanonicalUrl());
         }
     	return model;
     }
@@ -1957,7 +1957,7 @@ public class Html extends Type implements Renderer {
             renderTaxSummary(w, quote);
             
             if (quotationSummary.getWordingsUrl()!=null) {
-                w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrl(quotationSummary.getWordingsUrl(), request, quote.getProductTypeId()));
+                w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrlToProductUrl(quotationSummary.getWordingsUrl(), request, quote.getProductTypeId()));
             }
             w.printf("           </ul>");
             w.printf("       </td>");
@@ -2049,7 +2049,7 @@ public class Html extends Type implements Renderer {
             w.printf("<td class='portlet-font' width='50%%'>");
             
             if (quotationSummary.getTermsAndConditionsUrl()!=null) {
-                String fullUrl=expandRelativeUrl(quotationSummary.getTermsAndConditionsUrl(), request, quote.getProductTypeId());
+                String fullUrl=expandRelativeUrlToProductUrl(quotationSummary.getTermsAndConditionsUrl(), request, quote.getProductTypeId());
                 
                 try {
                     expand(w, new URL(fullUrl), quote);
