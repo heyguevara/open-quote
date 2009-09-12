@@ -8,10 +8,10 @@
       
   <!-- Release version numbers (BTW the build number comes from bamboo.) -->
   <property name="major.version" value="2"/>
-  <property name="minor.version" value="2"/>
+  <property name="minor.version" value="3"/>
 
   <!-- Version of Core project to use for this project -->
-  <property name="core.version" value="2.3"/>
+  <property name="core.version" value="2.4"/>
   <property name="core.build" value="28"/>
   
   <!-- Version of JBoss to use for this project -->
