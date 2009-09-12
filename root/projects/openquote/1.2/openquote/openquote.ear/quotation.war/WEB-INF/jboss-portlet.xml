@@ -7,6 +7,10 @@
         <portlet-name>MotorPlusWSRPQuotationPortlet</portlet-name>
         <remotable>true</remotable>
     </portlet>
+    <portlet>
+        <portlet-name>WSRPQuotationPortlet</portlet-name>
+        <remotable>true</remotable>
+    </portlet>
     <service>
         <service-name>UserModule</service-name>
         <service-class>org.jboss.portal.identity.UserModule</service-class>

@@ -18,7 +18,6 @@ package com.ail.openquote.ui.util;
 
 import java.util.Date;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
@@ -50,7 +49,6 @@ public class QuotationContext {
         Quotation quotation = null;
     	PageFlow pageFlow = null;
     	PortletSession session=request.getPortletSession();
-    	PortletPreferences prefs=request.getPreferences();
 
         CoreProxy core = new CoreProxy();
 
@@ -59,7 +57,7 @@ public class QuotationContext {
         	quotation = (Quotation)session.getAttribute("quotation");
 
         	// get the name of the product we're quoting for. In the sandpit this may be null.
-        	String productName=QuotationCommon.productName(session, prefs);
+        	String productName=QuotationCommon.productName(request);
         	
         	if (quotation == null && productName != null) {
                 quotation=(Quotation)core.newProductType(productName, "Quotation");
@@ -93,7 +91,7 @@ public class QuotationContext {
         		quotation.addException(new ExceptionRecord(e));
         	}
         	else {
-        		throw new RenderingError("Failed to initialise quotation instance for product: '"+QuotationCommon.productName(session, prefs)+"'", e);
+        		throw new RenderingError("Failed to initialise quotation instance for product: '"+QuotationCommon.productName(request)+"'", e);
         	}
         }
 

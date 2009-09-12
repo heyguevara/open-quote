@@ -33,13 +33,14 @@ import com.ail.openquote.ui.util.QuotationContext;
  * This Portlet acts as the controller (in MVC terms) for the quotation process. On initially being called, it
  * inspects the value of the 'product' init parameter to discover the name of the product it has been 
  * instantiated to quote for. The product name is used to create an instance of a quotation object (the Model)
- * - which is placed in the session, and an instance of the pageflow (View). As the pageflow holds no state, it 
+ * - which is placed in the session, and an instance of the PageFlow (View). As the PageFlow holds no state, it 
  * can be instantiated by the core each time it is needed without significant overhead (the assumption being that
- * the pageflow type is marked 'singleInstance' in the product's configuration.
+ * the PageFlow type is marked 'singleInstance' in the product's configuration.
  */
 public class QuotationPortlet extends GenericPortlet {
     
     public void processAction(ActionRequest request, ActionResponse response) {
+    	  
     	QuotationContext.initialise(request);
    	
     	try {
@@ -60,6 +61,7 @@ public class QuotationPortlet extends GenericPortlet {
     }
 
     public void doView(RenderRequest request, RenderResponse response) throws IOException {
+
     	QuotationContext.initialise(request);
 
     	try {
@@ -77,5 +79,5 @@ public class QuotationPortlet extends GenericPortlet {
 
             // TODO Forward to an error page
         }
-    }
+    }    
 }

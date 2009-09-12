@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
-import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -91,7 +91,7 @@ public class SandpitPortlet extends GenericPortlet {
                 String selectedView=request.getParameter("selectedView");
                 
                 if (selectedProduct!=null && !"?".equals(selectedProduct)) {
-                    if (!selectedProduct.equals(QuotationCommon.productName(request.getPortletSession(), request.getPreferences()))) {
+                    if (!selectedProduct.equals(QuotationCommon.productName(request))) {
                     	QuotationContext.setQuotation(null);
                         session.setAttribute("product", selectedProduct);
                     	selectedView=WIZARD_MODE;
@@ -114,7 +114,7 @@ public class SandpitPortlet extends GenericPortlet {
                 session.setAttribute("view", selectedView);
             
             }
-            else if (processingQuotation(request.getPortletSession(), request.getPreferences())) {
+            else if (processingQuotation(request)) {
             	Quotation quote=QuotationContext.getQuotation();
             	int exceptionCount = (quote!=null) ? quote.getException().size() : 0;
             	
@@ -162,7 +162,7 @@ public class SandpitPortlet extends GenericPortlet {
                 PrintWriter out = response.getWriter();
                 out.printf("<table width='100%%'><tr><td align='center'>%s</td></tr></table>", statusMessage);
             }
-            else if (processingQuotation(session, request.getPreferences())) {
+            else if (processingQuotation(request)) {
                 if ("Wizard".equals(getCurrentView(request))) {
                 	Quotation quote=QuotationContext.getQuotation();;
                 	int exceptionCount = (quote!=null) ? quote.getException().size() : 0;
@@ -218,8 +218,8 @@ public class SandpitPortlet extends GenericPortlet {
      * @param session Session we're part of
      * @return true if we've been told which product to quote for, false otherwise.
      */
-    private boolean processingQuotation(PortletSession session, PortletPreferences prefs) {
-        return QuotationCommon.productName(session, prefs) != null;
+    private boolean processingQuotation(PortletRequest request) {
+        return QuotationCommon.productName(request) != null;
     }
 
     private void renderQuoteExceptions(RenderRequest request, RenderResponse response, Quotation quote) {
@@ -273,7 +273,7 @@ public class SandpitPortlet extends GenericPortlet {
         String product=null;
          
         // Decide which buttons to turn on/off - they're disabled by default
-        if (processingQuotation(request.getPortletSession(), request.getPreferences())) {
+        if (processingQuotation(request)) {
 
             product=(String)request.getPortletSession().getAttribute("product");
             

@@ -21,6 +21,7 @@ import java.io.IOException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -62,14 +63,23 @@ public class QuotationCommon {
     }
 
     /**
-     * Get the name of the product we're quoting for. This comes from one of two places: in normal operation 
-     * it is picked up from the portlet preference named 'product'. In development mode it is picked up from
-     * the session.
+     * Get the name of the product we're quoting for. This comes from one of three places: in normal operation 
+     * it is picked up from the portlet preference named 'product', or from the request property 
+     * "openquote.product". In development mode it is picked up from the session.
      * @param session
      * @return the name of the product we're quoting for, or null if none is configured.
      */
-    public static String productName(PortletSession session, PortletPreferences prefs) {
-        return prefs.getValue("product", (String)session.getAttribute("product"));
+    public static String productName(PortletRequest request) {
+    	PortletSession session=request.getPortletSession();
+    	PortletPreferences prefs=request.getPreferences();
+    	
+        String productName=prefs.getValue("product", (String)session.getAttribute("product"));
+
+        if (request.getProperty("openquote.product")!=null) { 
+        	productName=request.getProperty("openquote.product");
+        }
+        
+        return productName;
     }
 
     /**

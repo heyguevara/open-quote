@@ -35,6 +35,10 @@
       <mime-type>text/xml</mime-type>
       <portlet-mode>VIEW</portlet-mode>
     </supports>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
     <portlet-info>
       <title>Motor Plus Quotation Portlet</title>
       <short-title>MotorPlus Quotation</short-title>
@@ -47,4 +51,24 @@
       </preference>
     </portlet-preferences>
   </portlet>
+  
+  <portlet>
+    <description>WSRP Portlet</description>
+    <portlet-name>WSRPQuotationPortlet</portlet-name>
+    <display-name>WSRP Quotation</display-name>
+    <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
+    <supports>
+      <mime-type>text/xml</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    <portlet-info>
+      <title>Quotation Portlet</title>
+      <short-title>Quotation</short-title>
+      <keywords>Quotation, Portlet</keywords>
+    </portlet-info>
+   </portlet>
 </portlet-app>
