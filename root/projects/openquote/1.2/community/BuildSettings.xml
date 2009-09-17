@@ -6,18 +6,18 @@
 <project name="BuildSettings" default="dummy">
   <property name="ear.name" value="openquote.ear"/>
       
-  <!-- Release version numbers (BTW the build number comes from cruise control.) -->
+  <!-- Release version numbers -->
   <property name="major.version" value="1"/>
   <property name="minor.version" value="2"/>
-  <property name="increment.version" value=""/>
+  <property name="increment.version" value="EA1"/>
   <property name="build.number" value="(local)"/> <!-- overridden by bamboo -->
 
   <!-- Version of the insurance project to use for this project -->
   <property name="openquote.version" value="1.2"/>
-  <property name="openquote.build" value="4"/>
+  <property name="openquote.build" value="5"/>
   
   <!-- Version of JBoss to use for this project -->
-  <property name="jboss.version" value="4.2.2GA"/>
+  <property name="jboss.version" value="4.2.2GA-P1"/>
 
   <!-- Figure out where everything is - everything's relative to project.dir -->
   <dirname property="project.dir" file="${ant.file.BuildSettings}"/>
@@ -30,7 +30,7 @@
   <property name="test.dir" value="${target.dir}/test"/>
   <property name="dbname" value="oq_community_${major.version}_${minor.version}${increment.version}"/>
   
-  <!-- Pull in the Common stuff - all projects use this. -->
+  <!-- Pull in the Common stuff - all projects use these. -->
   <import file="${development.dir}/BuildCommon.xml"/>
   <import file="${development.dir}/BuildJ2EEMacros.xml"/>
   <import file="${development.dir}/BuildJBossMacros.xml"/>
