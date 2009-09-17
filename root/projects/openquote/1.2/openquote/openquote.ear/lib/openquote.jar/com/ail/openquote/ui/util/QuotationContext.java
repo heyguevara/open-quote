@@ -117,7 +117,9 @@ public class QuotationContext {
 	 */
 	public static void setQuotation(Quotation quotationArg) {
 		quotation.set(quotationArg);
-		request.get().getPortletSession().setAttribute("quotation", quotationArg);
+		if (request!=null && request.get()!=null) {
+			request.get().getPortletSession().setAttribute("quotation", quotationArg);
+		}
 	}
 	
 	public static CoreProxy getCore() {

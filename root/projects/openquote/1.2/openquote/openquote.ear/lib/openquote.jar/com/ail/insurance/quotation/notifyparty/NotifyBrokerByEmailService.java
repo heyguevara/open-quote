@@ -44,6 +44,7 @@ import com.ail.core.command.CommandArg;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.render.Html;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
@@ -159,7 +160,9 @@ public class NotifyBrokerByEmailService extends Service {
         MimeMessage message=null;
         MimeMultipart multipart=null;
 
-        String smtpServer = getCore().getParameterValue("smtp-server", "localhost");
+    	QuotationContext.setQuotation(savedQuotation.getQuotation());
+
+    	String smtpServer = getCore().getParameterValue("smtp-server", "localhost");
         String toAddress = savedQuotation.getQuotation().getBroker().getQuoteEmailAddress();
         String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");
         

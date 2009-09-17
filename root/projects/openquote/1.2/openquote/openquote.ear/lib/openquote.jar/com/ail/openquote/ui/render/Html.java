@@ -1690,7 +1690,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getCounty());
 	        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getPostcode());
 	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_phone_label")+"</td><td>%s</td></tr>", proposer.getTelephoneNumber());
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_email_label")+"</td><td><a href='mailto:%1s'>%1s</a></td></tr>", proposer.getEmailAddress());
+	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_email_label")+"</td><td><a href='mailto:%1$s'>%1$s</a></td></tr>", proposer.getEmailAddress());
 	        w.printf("</table>");
 	    }
 	
