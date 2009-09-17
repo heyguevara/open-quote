@@ -25,7 +25,15 @@
   <target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
     <content-download-export-macro />
   </target>
+	
+  <target name="alfresco: mount product space" description="mount Product space in Alfresco as a file system">
+  	<mount-product-space-macro/>
+  </target>
 
+  <target name="alfresco: unmount product space" description="unmount Product space from local filesystem">
+  	<unmount-product-space-macro/>
+  </target>
+	
   <!-- drop all the tables that portal uses to store it's settins and preferences. These
 	     all get recreated when jboss is restarted. -->
   <target name="jboss: reset portal" description="delete the portal tables - jboss will recreate them on startup">
