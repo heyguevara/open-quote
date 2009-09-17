@@ -1,9 +1,0 @@
-import java.text.MessageFormat;
-import com.ail.insurance.quotation.addquotenumber.GenerateQuoteNumberRuleArgImp;
-
-public class GenerateQuoteNumber {
-    public static void invoke(GenerateQuoteNumberRuleArgImp args) {
-        Object[] a=new Object[]{new Integer(args.getUniqueNumberArg())};
-        args.setQuoteNumberRet(MessageFormat.format("QF{0,number,0000}",a));
-    }
-}
