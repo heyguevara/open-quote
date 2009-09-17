@@ -751,6 +751,16 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     }
 
     /**
+     * Clear the configure cache associated with a product. 
+     * @param productName Product to clear the cache for.
+	 * @since 2.0
+     */
+    public void clearProductCache(String productName) {
+        String configurationNamespace=Functions.productNameToConfigurationNamespace(productName);
+        clearConfigurationCache(configurationNamespace);
+    }
+    
+    /**
      * Fetch a collection of the products know to the system.
      * @return A collection of product names (as instances of java.lang.String).
      * @since 2.0
@@ -1017,5 +1027,20 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logBootWarning(String message) {
         logBootWarning(message, null);
+    }
+
+    /**
+     * Reset the server side cache used to hold configuration information.
+     */
+    public void clearConfigurationCache() {
+        ConfigurationHandler.reset();
+    }
+
+    /**
+     * Reset the server side cache used to hold configuration information.
+     * @param namespace The namespace to be cleared from the cache.
+     */
+    public void clearConfigurationCache(String namespace) {
+        ConfigurationHandler.reset(namespace);
     }
 }

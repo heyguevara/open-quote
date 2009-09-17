@@ -51,6 +51,7 @@ import org.apache.commons.logging.LogFactory;
  * </ul>
  * Note: The core's configure service are invoked via the configureOperationServlet servlet.
  * The servlet's base URL is injected into this class by spring.   
+ * @see com.ail.core.ui.ConfigureOperationServlet
  * @since 2.0
  */
 public class ProductActionExecutor extends ActionExecuterAbstractBase {

@@ -10,7 +10,7 @@
 <project name="BuildSettings" default="dummy">
   <property name="ear.name" value="core.ear" />
 
-  <!-- Release version numbers (BTW the build number comes from the Build.number file.) -->
+  <!-- Release version numbers (BTW the build number comes from bamboo.) -->
   <property name="major.version" value="2" />
   <property name="minor.version" value="4" />
 
@@ -28,7 +28,7 @@
   <property name="test.dir" value="${target.dir}/test" />
   <property name="dbname" value="core_${major.version}_${minor.version}" />
 
-  <!-- Pull in the Common stuff - all projects us this. -->
+  <!-- Pull in the Common stuff - all projects us these. -->
   <import file="${development.dir}/BuildCommon.xml" />
   <import file="${development.dir}/BuildJ2EEMacros.xml" />
   <import file="${development.dir}/BuildJBossMacros.xml" />

@@ -621,4 +621,37 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     public Core getCore() {
         return core;
     }
+
+    /**
+     * Reset a specific product. Perform a system reset on the named product returning it
+     * to it's factory state.
+     * @param productName The name of the product to reset
+     * @since 2.0
+     */
+    public void resetProduct(String productName) {
+        core.resetProduct(productName);
+    }
+
+    /**
+     * Clear the configure cache associated with a product. 
+     * @param productName Product to clear the cache for.
+     */
+    public void clearProductCache(String productName) {
+        core.clearProductCache(productName);
+    }
+    
+    /**
+     * Reset the server side cache used to hold configuration information.
+     */
+    public void clearConfigurationCache() {
+        core.clearConfigurationCache();
+    }
+
+    /**
+     * Reset the server side cache used to hold configuration information.
+     * @param namespace The namespace to be cleared from the cache.
+     */
+    public void clearConfigurationCache(String namespace) {
+        core.clearConfigurationCache(namespace);
+    }
 }
