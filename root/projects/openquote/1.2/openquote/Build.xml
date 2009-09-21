@@ -87,6 +87,5 @@
         
         <!-- The only release atrifact openquote makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
         <release-jboss-domain-macro/>
-        <release-source-macro/>
     </target>
 </project>
