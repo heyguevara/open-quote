@@ -25,7 +25,7 @@
       <install-base-domain-macro dar="insurance" version="${insurance.version}" build="${insurance.build}"/>
 
        <!-- the dar contains some things which will only cause confusion if they're left -->
-       <!-- on the classath - delete them.                                               -->
+       <!-- on the classpath - delete them.                                               -->
       <delete file="${ear.dir}/lib/jaxrpc-1.0.jar"/>
       <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreDefaultConfig.xml"/>
       <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreProxyDefaultConfig.xml"/>
@@ -57,6 +57,8 @@
       <subant-macro target="setup" includes="domain/Build.xml"/>
       <subant-macro target="setup" excludes="domain/Build.xml"/>
       <antcall target="_build"/>
+      
+      <build-product-development-lib-macro/>
 
       <parallel>
         <start-jboss-macro />
