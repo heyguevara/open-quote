@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build Macros for building J2EE projects
- $Revision: 1.27 $
- $State: Exp $
- $Date: 2007/11/23 20:59:04 $
- $Source: /home/bob/CVSRepository/development/BuildJ2EEMacros.xml,v $
 -->
 
 <project default="dummy" name="BuildJ2EEMacros.xml">

@@ -1,9 +1,5 @@
 <!--
  This file defines ant macros related to repository manipulations
- $Revision: 1.41 $
- $State: Exp $
- $Date: 2007/11/23 20:59:04 $
- $Source: /home/bob/CVSRepository/development/BuildCommon.xml,v $
 -->
 
 <project name="BuildRepository.xml" default="dummy">
@@ -11,7 +7,7 @@
 
   <target name="_repo.install.file.fetch" unless="already.downloaded">
     <mkdir dir="${repo.dir}/${group}/${artifact}/${version}" />
-    <get src="http://${repo}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" dest="${repo.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" ignoreerrors="yes"/>
+    <get src="http://${repo}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" dest="${repo.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" ignoreerrors="yes" verbose="yes"/>
   </target>
 
   <target name="_repo.install.file.install" unless="dont.install">
