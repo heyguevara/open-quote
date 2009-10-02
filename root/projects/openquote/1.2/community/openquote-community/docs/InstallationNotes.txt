@@ -52,38 +52,28 @@ OpenQuote community is supplied as a zip file. Simply unpack this zip file
 and follow the instructions below (Installing the OpenQuote database, and
 Starting the OpenQuote server).
 
-Note: If you are installing OpenQuote for use with Java J2SE 6.0, you should
-also do the following: Manually copy the following files from the  
-openquote-community/jboss/client folder to the openquote-community/jboss/lib/endorsed 
-directory:
+Note: If you are installing OpenQuote for use with Java J2SE 6.0, you also
+need to copy the following files from the openquote-community/jboss/client 
+directory to the openquote-community/jboss/lib/endorsed directory:
           o jboss-jaxrpc.jar
           o jboss-jaxws.jar
           o jboss-saaj.jar
           o jaxb-api.jar 
 
-Installing the OpenQuote database 
-=================================
-
-A script is provided in openquote-community/setup which will create the
-necessary database, and populate it. To run the script (make sure you have
-MySql running):
-
-From a command prompt, cd into the openquote-community/setup directory and:
-  
-> mysql -u root -p < MySql-dump.sql
-Enter password: 
-  
-At the prompt enter the MySql root password (the password supplied during
-MySql installation.)
-  
 Starting the OpenQuote server
 =============================
 
 Command scripts are supplied which should be suitable for MS Windows, and Unix
-users. From the command prompt, cd into openquote-community/jboss/bin, then 
-either execute run.sh on Unix, or run.bat on MS Windows.
+users. From the command prompt, cd into openquote-community/bin, then either 
+execute run.sh on Unix, or run.bat on MS Windows.
 
-Depending on the spec of your machine the server may take one of two minutes
+The first time you run OpenQuote it will automatically setup your environment
+for you. Most importantly, it will create and populate a database in MySQL.
+During the setup process, you will be prompted for the database password.
+At that prompt enter the MySql root password (the password supplied during
+MySql installation.)
+  
+Depending on the spec of your machine the server may take one or two minutes
 to start up. It will output progress messages as it starts. Start up is complete
 when you see a line like this:
 
@@ -122,7 +112,7 @@ Upgrading from earlier versions
 
 Installing this release of OpenQuote will not in any way affect any existing 
 installations of older versions. Follow the installation guidelines outlined 
-in the file will result in a completely new and independent installation with
+in this file will result in a completely new and independent installation with
 its own server and database.
 
 You will not be able to run both installations at the same time as they use
@@ -130,13 +120,15 @@ same port numbers, but you will be able to start and stop them independently.
 
 Quote data can be moved between the systems using SQL. There are only two 
 tables concerned: saved_quote and saved_quote_summary. The easiest way to move
-these is using MySQL's mysqldump command. Documentation can be found here: 
-<URL NEEDED!>
+these is to use MySQL's mysqldump command. Documentation can be found here: 
+http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html
 
 Products can be exported from the old system and imported into the new 
 installation using Alfresco's built in import/export facility. A description
-of those tools can be found here: <URL NEEDED>
+of those tools can be found here: 
+http://wiki.alfresco.com/wiki/Export_and_Import#Web_Client_Export_.26_Import_of_Folders_.26_Files
+
 Once imported into the new system you will need to register the products there.
-The "Registering a Product" section in the OpenQuote 1.0 User Guide (you'll
-find it in the same folder as these notes) explains this process.
+The "Registering a Product" section in the OpenQuote 1.0 User Guide explains 
+this process. You'll find a copy of this guide in the same folder as these notes.
 
