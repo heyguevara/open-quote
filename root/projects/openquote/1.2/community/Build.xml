@@ -38,9 +38,9 @@
       </sequential>
     </parallel>
 
-    <mkdir dir="${target.dir}/setup"/>
+    <mkdir dir="${target.dir}/lib"/>
     
-<echo file="${target.dir}/setup/MySql-Dump.sql">
+<echo file="${target.dir}/lib/MySql-Dump.sql">
 -- OpenQuote Community database setup script.
 --
 -- This script will create a database suitable for use with ${major.version}.${minor.version}${increment.version}. The
@@ -63,7 +63,7 @@ USE ${dbname};
 
 </echo>
     
-    <exec executable="sh" dir="${target.dir}/setup" os="Linux,Mac OS X,Solaris,Sun OS">
+    <exec executable="sh" dir="${target.dir}/lib" os="Linux,Mac OS X,Solaris,Sun OS">
       <arg line="-l -c 'mysqldump --user=root --password=bombay2000 --opt ${dbname} >> MySql-Dump.sql'" />
     </exec>
   
