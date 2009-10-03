@@ -606,10 +606,10 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Page page) {
-        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'/>");        
+        w.printf("<script type='text/javascript' src='/quotation/jscript/tiny_mce/tiny_mce.js'></script>");        
 
         // Always include the openquote script
-        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'/>");
+        w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");
         
     	return model;
     }
@@ -619,7 +619,7 @@ public class Html extends Type implements Renderer {
             w.printf("<script type='text/javascript'>%s</script>", pageScript.getScript());
         }
         else {
-            w.printf("<script type='text/javascript' src='%s'/>", pageScript.getCanonicalUrl());
+            w.printf("<script type='text/javascript' src='%s'></script>", pageScript.getCanonicalUrl());
         }
     	return model;
     }
