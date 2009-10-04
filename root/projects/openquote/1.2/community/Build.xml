@@ -67,6 +67,9 @@ USE ${dbname};
       <arg line="-l -c 'mysqldump --user=root --password=bombay2000 --opt ${dbname} >> MySql-Dump.sql'" />
     </exec>
   
+	<exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${target.dir}/bin">
+		<arg line="-c 'chmod 755 *.sh'" />
+	</exec>
   </target>
 
   <target name="teardown" description="undo whatever setup did">
