@@ -37,11 +37,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 
 /**
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2007/01/07 17:38:31 $
- * @source $Source:
- *         /home/bob/CVSRepository/projects/core/test/com/ail/coretest/TestTypeXpath.java,v $
+ * Test the Type class' xpath handling
  */
 public class TestTypeXpath extends CoreUserTestCase {
     boolean initialised=false;
@@ -231,6 +227,10 @@ public class TestTypeXpath extends CoreUserTestCase {
         // invoke the newly registered function
         assertEquals(30, v.xpathGet("test:age(attribute[id='dob1'])"));
         assertEquals(22, v.xpathGet("test:age(test:youngest(attribute))"));
+        
+        // check that the "standard" functions still work
+        assertEquals(3.0, v.xpathGet("count(/attribute)", Double.class));
+        System.out.println(v.xpathGet("contains(plop,plopplop)"));
     }
 
     public void testCollection() {
