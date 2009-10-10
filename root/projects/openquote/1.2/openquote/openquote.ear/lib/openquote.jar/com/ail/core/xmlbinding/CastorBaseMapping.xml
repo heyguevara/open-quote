@@ -848,6 +848,9 @@
     
     <class name="com.ail.openquote.ui.QuestionWithDetails" extends="com.ail.openquote.ui.Question">
         <map-to xml="questionWithDetails"/>
+        <field name="detailsEnabledFor" type="string">
+        	<bind-xml node="attribute"/>
+        </field>
         <field name="detailsTitle" type="string">
             <bind-xml node="attribute"/>
         </field>
@@ -894,7 +897,10 @@
     
     <class name="com.ail.openquote.ui.QuestionWithSubSection" extends="com.ail.openquote.ui.Question">
         <map-to xml="questionWithSubSection"/>
-        <field name="subSection" type="com.ail.openquote.ui.PageElement"/>
+        <field name="detailsEnabledFor" type="string">
+        	<bind-xml node="attribute"/>
+        </field>
+        <field name="subSection" type="com.ail.openquote.ui.PageElement" collection="arraylist"/>
     </class>
     
     <class name="com.ail.openquote.ui.QuestionSection" extends="com.ail.openquote.ui.PageElement">
