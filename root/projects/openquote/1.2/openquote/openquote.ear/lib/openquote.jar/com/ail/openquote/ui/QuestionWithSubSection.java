@@ -58,11 +58,11 @@ public class QuestionWithSubSection extends Question {
     private List<String> detailsEnabledFor;
 
     /** PageElement to be rendered/filled if the Question is answered "Yes". */
-    private PageElement subSection=null;
+    private List<PageElement> subSection=new ArrayList<PageElement>();
     
     public QuestionWithSubSection() {
         super();
-        subSection=new PageSection();
+        subSection.add(new PageSection());
     	detailsEnabledFor=new ArrayList<String>();
     	detailsEnabledFor.add("Yes");
     }
@@ -87,7 +87,7 @@ public class QuestionWithSubSection extends Question {
      * PageElement to be rendered/filled if the Question is answered "Yes".
      * @return sub section page element
      */
-    public PageElement getSubSection() {
+    public List<PageElement> getSubSection() {
         return subSection;
     }
 
@@ -95,7 +95,7 @@ public class QuestionWithSubSection extends Question {
      * @see #getSubSection()
      * @param subSection sub section page element
      */
-    public void setSubSection(PageElement subSection) {
+    public void setSubSection(List<PageElement> subSection) {
         this.subSection = subSection;
     }
 
@@ -107,13 +107,17 @@ public class QuestionWithSubSection extends Question {
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
 		model=super.processActions(request, response, model);
-		model=subSection.processActions(request, response, model);
+		for(PageElement ss:subSection) {
+			model=ss.processActions(request, response, model);
+		}
 		return model;
     }
 
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
         model=super.applyRequestValues(request, response, model, rowContext);
-        model=subSection.applyRequestValues(request, response, model);
+		for(PageElement ss:subSection) {
+			model=ss.applyRequestValues(request, response, model);
+		}
         return model;
     }
 
@@ -126,8 +130,10 @@ public class QuestionWithSubSection extends Question {
 
         // If 'Yes' is selected, validate the subsection
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(getBinding());
-        if (attr.isYesornoType() && "Yes".equals(attr.getValue())) {
-            error|=subSection.processValidations(request, response, model);
+        if (attr.isYesornoType() && detailsEnabledFor.contains(attr.getValue())) {
+    		for(PageElement ss:subSection) {
+    			error|=ss.processValidations(request, response, model);
+    		}
         }
         
         return error;
@@ -160,6 +166,8 @@ public class QuestionWithSubSection extends Question {
 	@Override
 	public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 		super.renderPageHeader(request, response, model);
-		subSection.renderPageHeader(request, response, model);
+		for(PageElement ss: subSection) {
+			ss.renderPageHeader(request, response, model);
+		}
 	}
 }

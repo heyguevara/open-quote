@@ -756,8 +756,10 @@ public class Xform extends Type implements Renderer {
     	w.printf("</select1>");    	
         w.printf("<switch><case id=\"%s_0\" class=\"hide\">",questionId); 
         w.printf("</case>");
-        w.printf("<case id=\"%s_1\">",questionId);        
-        model=questionWithSubSection.getSubSection().renderResponse(request, response, model);
+        w.printf("<case id=\"%s_1\">",questionId);
+        for(PageElement ss: questionWithSubSection.getSubSection()) {
+        	model=ss.renderResponse(request, response, model);
+        }
         w.printf("</case></switch>");
        	
         return model;    	

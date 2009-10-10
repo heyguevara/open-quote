@@ -1097,7 +1097,9 @@ public class Html extends Type implements Renderer {
         w.printf("<tr><td colspan='4'>");
         w.printf(" <div id='%s' style='visibility:hidden;display:none'>", questionWithSubSection.getId());
         w.print("   <table width='90%'><tr><td width='5%'/><td>");
-        model=questionWithSubSection.getSubSection().renderResponse(request, response, model);
+		for(PageElement ss:questionWithSubSection.getSubSection()) {
+			model=ss.renderResponse(request, response, model);
+		}
         w.printf("  </td></tr></table>");
         w.printf(" </div>");
         w.printf("</td>");
