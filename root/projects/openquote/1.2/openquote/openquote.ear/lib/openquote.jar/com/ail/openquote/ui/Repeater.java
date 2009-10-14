@@ -303,7 +303,7 @@ public abstract class Repeater extends PageElement {
                     xpath=getBinding();
                 }
     
-                // get the collection and add the new object to it.
+                // get the collection and remove the object from it.
                 Collection c=(Collection)model.xpathGet(xpath);
                 c.remove(obj);
             }
@@ -366,5 +366,14 @@ public abstract class Repeater extends PageElement {
             }
         }
     }
+
+    @Override
+    public void applyElementId(String basedId) {
+    	int idx=0;
+    	for(PageElement e: item) {
+    		e.applyElementId(basedId+"."+(idx++));
+    	}
+    	super.applyElementId(basedId);
+   	}
 }
 

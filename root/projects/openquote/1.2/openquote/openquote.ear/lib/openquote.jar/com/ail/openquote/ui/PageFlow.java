@@ -46,6 +46,8 @@ public class PageFlow extends PageElement {
     
     /** Optional definition of the page on which the quote process should start. */
     private String startPage=null;
+    
+    private transient boolean appliedElementId=false;
 
 	/**
 	 * Default constructor
@@ -134,5 +136,15 @@ public class PageFlow extends PageElement {
 			}
 		}
 		return model;
+	}
+
+	public void applyElementId(String baseId) {
+		if (!appliedElementId) {
+			int idx=-0;
+			for(Page p: page) {
+				p.applyElementId(baseId+"."+(idx++));
+			}
+			appliedElementId=true;
+		}
 	}
 }

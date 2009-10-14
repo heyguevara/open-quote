@@ -170,4 +170,13 @@ public class QuestionSection extends PageElement {
             q.renderPageHeader(request, response, localModel);
         }
     }
+
+    @Override
+    public void applyElementId(String basedId) {
+    	int idx=0;
+    	for(PageElement e: question) {
+    		e.applyElementId(basedId+"."+(idx++));
+    	}
+    	super.applyElementId(basedId);
+   	}
 }

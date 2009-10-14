@@ -73,7 +73,7 @@ public abstract class PageContainer extends PageElement {
      * @param pageElement list of elements
      */
     public void setPageElement(List<PageElement> pageElement) {
-        this.pageElement = pageElement;
+         this.pageElement=pageElement;
     }
 
     /**
@@ -118,4 +118,13 @@ public abstract class PageContainer extends PageElement {
         }
         return model;
     }
+
+    @Override
+    public void applyElementId(String basedId) {
+    	int idx=0;
+    	for(PageElement e: pageElement) {
+    		e.applyElementId(basedId+"."+(idx++));
+    	}
+    	super.applyElementId(basedId);
+   	}
 }

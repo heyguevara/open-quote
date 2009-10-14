@@ -90,9 +90,6 @@ public abstract class PageElement extends Type implements Identified, Comparable
      */
     public PageElement() {
         super();
-
-        id="#"+Integer.toHexString((int)(Math.random()*100000));
-        
         action = new ArrayList<Action>();
         errorText=new ArrayList<ErrorText>();;
     }
@@ -156,7 +153,13 @@ public abstract class PageElement extends Type implements Identified, Comparable
 		this.id = id;
 	}
     
-    /**
+	public void applyElementId(String id) {
+		if (this.id==null) {
+			setId(id);
+		}
+	}
+
+	/**
      * Get the style class if any - for this page element. 
      * @return style class name
      */

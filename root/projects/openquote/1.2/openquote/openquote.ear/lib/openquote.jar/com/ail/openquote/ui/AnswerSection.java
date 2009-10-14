@@ -152,4 +152,13 @@ public class AnswerSection extends PageElement {
 
         return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, i18n(title));
 	}
+
+    @Override
+    public void applyElementId(String basedId) {
+    	int idx=0;
+    	for(PageElement e: answer) {
+    		e.applyElementId(basedId+"."+(idx++));
+    	}
+    	super.applyElementId(basedId);
+   	}
 }

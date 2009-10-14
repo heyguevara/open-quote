@@ -57,7 +57,7 @@ public class Action extends PageElement {
      * "onApplyRequestValues", "onProcessActions", "onProcessValidations", "onRenderResponse"
      * @see PageElement for details of the page processing cycle.
      */
-    private String when;
+    private String when="onProcessActions";
 
     /** 
      * The name of the command to be invoked. This command must be a service which implements 
