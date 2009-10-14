@@ -153,7 +153,15 @@ public abstract class PageElement extends Type implements Identified, Comparable
 		this.id = id;
 	}
     
-	public void applyElementId(String id) {
+    /**
+     * Apply the specified ID to this element (see {@link #getId()}/{@link #setId(String)}). The ID
+     * should only be applied if one is not already defined. By default, the elements of a PageFlow
+     * may be defined with or without IDs, however for page actions also need to be able to 
+     * identify the element they relate to. For this reason, once the PageFlow is created, this 
+     * method is invoked in the {@link PageFlow} object in order to generate IDs for all elements.
+     * @param id
+     */
+    public void applyElementId(String id) {
 		if (this.id==null) {
 			setId(id);
 		}

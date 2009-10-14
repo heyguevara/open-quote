@@ -47,6 +47,7 @@ public class PageFlow extends PageElement {
     /** Optional definition of the page on which the quote process should start. */
     private String startPage=null;
     
+    /** Set true when elements IDs have been applied so we can avoid applying them twice. */
     private transient boolean appliedElementId=false;
 
 	/**
@@ -138,6 +139,7 @@ public class PageFlow extends PageElement {
 		return model;
 	}
 
+	@Override
 	public void applyElementId(String baseId) {
 		if (!appliedElementId) {
 			int idx=-0;
