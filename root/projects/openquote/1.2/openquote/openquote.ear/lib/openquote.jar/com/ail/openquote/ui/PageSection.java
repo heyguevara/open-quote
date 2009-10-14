@@ -19,6 +19,7 @@ package com.ail.openquote.ui;
 import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -60,5 +61,12 @@ public class PageSection extends PageContainer {
     	}
 
     	return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()), getStyleClass(), getRef());
+    }
+
+    @Override
+    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        for(PageElement element: getPageElement()) {
+            element.renderPageHeader(request, response, model);
+        }
     }
 }
