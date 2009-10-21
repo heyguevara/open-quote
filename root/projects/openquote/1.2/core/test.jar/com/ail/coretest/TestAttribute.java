@@ -386,5 +386,57 @@ public class TestAttribute extends TestCase {
             Locale.setDefault(runningLocale);
         }
     }
+    
+    public void testNumberLocaleFormatting() throws Exception {
+        // This test class may get run by developers anywhere in the world, 
+        // so put the JVM into a known locale for testing - and be sure to 
+        // switch back to the real one before returning.
+        Locale runningLocale=Locale.getDefault();
+
+        try {
+            Locale.setDefault(new Locale(GERMANY));
+            Locale.setThreadLocale(GERMANY);
+
+            Attribute percent;
+            
+            percent = new Attribute("q1", "1000", "number,patter=#,###");
+            assertEquals("1000", percent.getValue());
+            assertEquals("1.000", percent.getFormattedValue());
+        }
+        finally {
+            Locale.setDefault(runningLocale);
+        }
+    }
+    
+    public void testYesOrNoWithRequiredEqualsNo() throws Exception {
+        Attribute attr;
+        attr=new Attribute("id", "Yes", "yesorno");
+        assertTrue(attr.isYesornoType());
+        assertFalse(attr.isUndefined());
+
+        attr=new Attribute("id", "No", "yesorno");
+        assertTrue(attr.isYesornoType());
+        assertFalse(attr.isUndefined());
+
+        attr=new Attribute("id", "?", "yesorno");
+        assertTrue(attr.isYesornoType());
+        assertTrue(attr.isUndefined());
+
+        attr=new Attribute("id", "?", "yesorno;required=no");
+        assertTrue(attr.isYesornoType());
+        assertTrue(attr.isUndefined());
+    }
+
+    public void testChoiceWithNonstandardBlank() throws Exception {
+        Attribute attr;
+
+        attr=new Attribute("id", "-", "choice,options=-1#-|1#Salon|2#Coupe|3#Convertible");
+        assertTrue(attr.isUndefined());
+        
+        attr.setValue("Salon");
+        assertFalse(attr.isUndefined());
+
+        
+    }
 }
 

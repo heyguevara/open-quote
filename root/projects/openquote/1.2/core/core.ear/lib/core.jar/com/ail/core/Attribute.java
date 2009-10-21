@@ -547,7 +547,9 @@ public class Attribute extends Type implements Identified {
         else if (isNumberType()) {
             String pattern = getFormatOption("pattern");
             if (pattern!=null) {
-                return new MessageFormat("{0, number"+(pattern==null ? "" : ","+pattern)+"}");
+                DecimalFormat df=new DecimalFormat(pattern);
+                df.setDecimalFormatSymbols(new DecimalFormatSymbols(locale));
+                return df;
             }
             else {
                 if (getFormatOption("percent")!=null) {
@@ -629,8 +631,14 @@ public class Attribute extends Type implements Identified {
         if (isNumberType() || isStringType() || isNoteType() || isCurrencyType() || isDateType()) {
             return value==null || value.length()==0;
         }
+        else if (isChoiceType() && !isFreeChoiceType()){
+            return (Double)getObject() < 0;
+        }
+        else if (isYesornoType()) {
+            return (Double)getObject() < 0;
+        }
         else {
-            return value.indexOf('?')>=0;
+            return true;
         }
     }
 
@@ -772,7 +780,7 @@ public class Attribute extends Type implements Identified {
             return false;
         }
         
-        return ("yesorno".equals(getLocalFormat()));
+        return (getLocalFormat().startsWith("yesorno"));
     }
 
     /**
