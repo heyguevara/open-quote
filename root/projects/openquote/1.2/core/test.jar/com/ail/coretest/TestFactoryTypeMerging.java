@@ -154,4 +154,28 @@ public class TestFactoryTypeMerging extends CoreUserTestCase {
         History h=(History)getCore().newType("IncluderRelative");
         assertTrue(getCore().toXML(h).toString().indexOf("bloody hell")!=-1);
     }
+    
+    public void testMapMerge() throws Exception {
+        Version version;
+        MapTestType donor=new MapTestType();
+        MapTestType subject=new MapTestType();
+        
+        version=new Version();
+        version.setVersion("1");
+        donor.getMyMap().put("one", version);
+        
+        version=new Version();
+        version.setVersion("2");
+        donor.getMyMap().put("two", version);
+        
+        version=new Version();
+        version.setVersion("3");
+        subject.getMyMap().put("three", version);
+        
+        subject.mergeWithDataFrom(donor, getCore());
+        
+        assertTrue(subject.getMyMap().containsKey("one"));
+        assertTrue(subject.getMyMap().containsKey("two"));
+        assertTrue(subject.getMyMap().containsKey("three"));
+    }
 }

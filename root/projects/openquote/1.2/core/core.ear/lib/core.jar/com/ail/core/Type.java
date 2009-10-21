@@ -38,10 +38,6 @@ import com.ail.core.command.CommandArg;
  * <i>Type</i> is the base of all 'type model' classes that are part of the domain
  * model. All model classes must either extend this class, or
  * another that itself extends this class.
- * @version $Revision: 1.22 $
- * @state $State: Exp $
- * @date $Date: 2007/05/05 13:25:37 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Type.java,v $
  */
 public class Type implements Serializable, Cloneable {
     static final long serialVersionUID = -7687502065734633603L;
@@ -472,7 +468,7 @@ public class Type implements Serializable, Cloneable {
      *   double: 0
      *   float: 0
      *   char: 0
-     *   bute: 0
+     *   byte: 0
      *   long: 0
      *   String null or ""
      *   Object: null
@@ -532,10 +528,40 @@ public class Type implements Serializable, Cloneable {
                             callSetter(fieldName, fieldType, subject, callGetter(fieldName, donor));
                         }
                     }
+                    else if (Map.class.isAssignableFrom(fieldType)) {
+                        Map donorMap=(Map)callGetter(fieldName, donor);
+                        Map subjectMap=(Map)callGetter(fieldName, subject);
+
+                        // if the donor has a map, but the subject's corresponding map is null...
+                        if (donorMap==null && subjectMap==null) {
+                            // output a warning. Well behaved classes should always initialise maps.
+                            core.logWarning("Subject class "+subject.getClass().getName()+" has null collection for field: "+fieldName+". Class constructors should initialise collections. Collection not merged.");
+                            continue;
+                        }
+                        
+                        // if there is no donor map, then ignore it - we can't merge nothing!
+                        if (donorMap!=null) {
+                            // for each key that the donor map defines...
+                            for(Object key: donorMap.keySet()) {
+                                Type obj=(Type)donorMap.get(key);
+    
+                                // if the subject already contains this key, merge it's object with the donor's
+                                // object for the same key.
+                                if (subjectMap.containsKey(key)) {
+                                    mergeDonorIntoSubject(obj, (Type)subjectMap.get(key), core);
+                                }
+                                else {
+                                    // the subject's map doesn't contain the key, so add a clone of the donor's object.
+                                    key=(key instanceof Type) ? ((Type)key).clone() : key;
+                                    subjectMap.put(key, obj.clone());
+                                }
+                            }
+                        }
+                    }
                     else if (Collection.class.isAssignableFrom(fieldType)) {
                         // if the donor has a collection, but the subject's corresponding collection is null...
                         if (callGetter(fieldName, donor)!=null && callGetter(fieldName, subject)==null) {
-                            // output q warning. Well behaved classes should always initialise collections.
+                            // output a warning. Well behaved classes should always initialise collections.
                             core.logWarning("Subject class "+subject.getClass().getName()+" has null collection for field: "+fieldName+". Class constructors should initialise collections. Collection not merged.");
                             continue;
                         }

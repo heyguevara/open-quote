@@ -238,7 +238,6 @@ public class ConfigurationHandler {
                         // it the latest (validTo==null).
                         config.setValidFrom(new VersionEffectiveDate(0));
                         config.setValidTo(null);
-                        core.logBootWarning("Configuration: '"+owningNamespace+"' not found, using blank dummy.");
                     }
         
                     // add the loaded (or dummy) config to the cache

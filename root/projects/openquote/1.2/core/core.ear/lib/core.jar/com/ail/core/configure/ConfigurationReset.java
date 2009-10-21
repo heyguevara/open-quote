@@ -51,16 +51,13 @@ import com.ail.core.CoreProxy;
 public class ConfigurationReset {
 
     private static void reset(String args[]) {
-        System.out.println("Resetting: Core");
         CoreProxy cp = new CoreProxy();
         cp.resetCoreConfiguration();
     
-        System.out.println("Resetting: CoreProxy");
         cp = new CoreProxy();
         cp.resetConfiguration();
     
         for(int i=0 ; i<args.length ; i++) {
-            System.out.println("Resetting: "+args[i]);
             cp.resetConfiguration(args[i]);
         }
     }

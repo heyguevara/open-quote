@@ -146,7 +146,6 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
             // reset the Core config first
             core.resetConfiguration();
             ConfigurationHandler.reset();
-            core.logDebug("Reset successful for:com.ail.core.Core");
 
             // loop through the AllNamespaceReset group, and reset all the configs named
             for(Parameter p: core.getGroup("NamespacesToResetOnResetAll").getParameter()) {
@@ -181,7 +180,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * The methods are invoked on the context's local interface if possible (if one
      * exists). If no local interface is found then the remote interface is used instead.
      * Invoking methods via the local/remote interface means that the deployment settings
-     * for security and transacts will be honoured.
+     * for security and transacts will be honored.
      * @param xml XML argument to be passed to the service.
      * @return XML returned from the service.
      */
