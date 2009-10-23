@@ -70,16 +70,28 @@ public class Translations extends Type {
      * @return Locale specific string, or the value of key if a match cannot be found. 
      */
     public String translate(String key) {
-        return translate(com.ail.core.Locale.getThreadLocale().toString(), key);
+        return translate(com.ail.core.Locale.getThreadLocale().toString(), key, key);
     }
+    
+    /**
+     * Return the translation matching the specified key. The thread's current locale is
+     * used (i.e. the locale returned by {@link com.ail.core.Locale#getThreadLocale()}.
+     * @param key Key to find a match for
+     * @param alternative the value to be returned in key is not found
+     * @return Locale specific string, or the value of <i>alternative</i> if a match cannot be found. 
+     */
+    public String translate(String key, String alternative) {
+        return translate(com.ail.core.Locale.getThreadLocale().toString(), key, alternative);
+    } 
     
     /**
      * Return the translation matching a specific language and key. 
      * @param language Language in locale format, e.g. en, en_US, de, etc.
      * @param key key identifying the string to be returned.
-     * @return Locale specific string, or the value of key if a match cannot be found. 
+     * @param alternative the value to be returned in key is not found
+     * @return Locale specific string, or the value of <i>alternative</i> if a match cannot be found. 
      */
-    public String translate(String language, String key) {
+    public String translate(String language, String key, String alternative) {
         boolean languageFound=false;
         String result=null;
         String nextLanguage=null;
@@ -100,18 +112,18 @@ public class Translations extends Type {
         
         if (!languageFound) {
             if (language.indexOf('_')>-1) {
-                return translate(language.split("_")[0], key);
+                return translate(language.split("_")[0], key, alternative);
             }
             else {
-                return translate(defaultLanguage, key);
+                return translate(defaultLanguage, key, alternative);
             }
         }
         
         if (nextLanguage!=null) {
-            return translate(nextLanguage, key);
+            return translate(nextLanguage, key, alternative);
         }
         else {
-            return key;
+            return alternative;
         }
     }
 }
