@@ -16,8 +16,8 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.core.Functions.expand;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -129,7 +129,13 @@ public class Answer extends PageElement {
             return dateFormat.format((Date)answer);
         }
         else if (answer instanceof com.ail.core.Attribute) {
-            return ((Attribute)answer).getFormattedValue();
+        	Attribute a=(Attribute)answer;
+        	if (a.isYesornoType() || a.isChoiceType()) {
+       			return i18n("i18n_"+a.getValue(), a.getValue());
+        	}
+        	else {
+        		return ((Attribute)answer).getFormattedValue();
+        	}
         }
         else if (answer instanceof CurrencyAmount) {
         	return ((CurrencyAmount)answer).toFormattedString();
