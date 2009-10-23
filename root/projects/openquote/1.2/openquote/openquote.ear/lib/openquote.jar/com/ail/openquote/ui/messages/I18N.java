@@ -21,12 +21,29 @@ import com.ail.core.language.Translations;
 import com.ail.openquote.ui.util.QuotationContext;
 
 public class I18N {
+
+    /**
+     * Return the translation matching a specific message (aka key). The translation is
+     * based on the message passed in and the thread's current locale.
+     * @param message key identifying the string to be returned.
+     * @return Locale specific string, or the value of <i>message</i> if a match cannot be found. 
+     */
 	public static String i18n(String message) {
+		return(i18n(message, message));
+	}
+
+    /**
+     * Return the translation matching a specific message (aka key). The translation is
+     * based on the message passed in and the thread's current locale.
+     * @param message key identifying the string to be returned.
+     * @return Locale specific string, or the value of <i>alternative</i> if a match cannot be found. 
+     */
+	public static String i18n(String message, String alternative) {
 		if (message!=null) {
 	    	try {
 	    		String product=QuotationContext.getQuotation().getProductTypeId();
 	    		Translations trans=(Translations)new CoreProxy().newProductType(product, "Translations");
-	    		return trans.translate(message);
+	    		return trans.translate(message, alternative);
 	    	}
 	    	catch(Throwable e) {
 	    		e.printStackTrace();
