@@ -313,11 +313,8 @@ public class AttributeField extends PageElement {
 	 */
 	public String renderAttribute(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
 		// If we're not bound to anything, output nothing.
-	    if (boundTo==null) {
-	        return "";
-	    }
-	
-    	if (!conditionIsMet(model)) {
+		// If our condition isn't met, output nothing.
+	    if (boundTo==null || !conditionIsMet(model)) {
     		return "";
     	}
 
@@ -356,11 +353,8 @@ public class AttributeField extends PageElement {
 	
 	public String renderAttributeWithTitle(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad, String title) throws IllegalStateException, IOException {
 		// If we're not bound to anything, output nothing.
-	    if (boundTo==null) {
-	        return "";
-	    }
-	
-    	if (!conditionIsMet(model)) {
+		// If our condition isn't met, output nothing.
+	    if (boundTo==null || !conditionIsMet(model)) {
     		return "";
     	}
 
@@ -390,10 +384,11 @@ public class AttributeField extends PageElement {
 	 */
 	protected boolean applyAttributeValidation(Type model, String boundTo) {
 	    // If we're not bound to anything, don't validate anything.
-	    if (boundTo==null) {
+		// If the fields condition is not met, don't validate anything. 
+	    if (boundTo==null || !conditionIsMet(model)) {
 	        return false;
 	    }
-	
+	    
 	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 	    boolean error=false;
 	    
@@ -440,14 +435,11 @@ public class AttributeField extends PageElement {
 
 	protected String renderAttributePageLevel(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext) throws IllegalStateException, IOException {
 	    // If we're not bound to anything, output nothing.
-	    if (boundTo==null) {
+		// If our condition is not met, output nothing.
+	    if (boundTo==null || !conditionIsMet(model)) {
 	        return "";
 	    }
 	
-    	if (!conditionIsMet(model)) {
-    		return "";
-    	}
-
     	StringWriter ret=new StringWriter();
 	    PrintWriter w=new PrintWriter(ret);
 	
@@ -471,17 +463,20 @@ public class AttributeField extends PageElement {
 	 */
 	protected Type applyAttributeValues(Type model, String boundTo, String rowContext, ActionRequest request) {
 	    // If we're not bound to anything, apply nothing.
-	    if (boundTo!=null) {
-	        String name=Functions.xpathToId(rowContext+boundTo);
-	        String value=request.getParameter(name);
-	        
-	        if (value!=null) {
-        		model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
-	        }
-	        else if (value==null && "checkbox".equals(getRenderHint())) {
-	            model.xpathSet(boundTo+"/value", "No");
-	        }
-	    }
+		// If our condition isn't met, apply nothing.
+    	if (boundTo==null || !conditionIsMet(model)) {
+    		return model;
+    	}
+
+        String name=Functions.xpathToId(rowContext+boundTo);
+        String value=request.getParameter(name);
+        
+        if (value!=null) {
+    		model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
+        }
+        else if (value==null && "checkbox".equals(getRenderHint())) {
+            model.xpathSet(boundTo+"/value", "No");
+        }
 	    
 	    return model;
 	}
