@@ -27,6 +27,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.insurance.policy.PolicyStatus;
+import com.ail.insurance.policy.Section;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
@@ -61,6 +62,10 @@ public class RequoteButtonAction extends CommandButtonAction {
             quote.setPage(getDestinationPageId());
             quote.setStatus(PolicyStatus.APPLICATION);
             quote.setQuotationNumber(null);
+            quote.getAssessmentSheet().getAssessmentLine().clear();
+            for(Section section: quote.getSection()) {
+            	section.getAssessmentSheet().getAssessmentLine().clear();
+            }
             quote.setUserSaved(false);
             quote.markAsNotPersisted();
             super.processActions(request, response, model);
