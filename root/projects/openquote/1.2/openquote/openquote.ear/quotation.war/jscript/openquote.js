@@ -131,6 +131,15 @@ function updateSlaveChoiceOptions(masterSelect, array, master, slave) {
     }
 }
 
+function formatnumber(obj, decimalSeparator, thousandsSeparator, places) {
+	var num = new NumberFormat();
+	num.setInputDecimal(decimalSeparator);
+	num.setPlaces(places, places!=-1);
+	num.setSeparators(true, thousandsSeparator, decimalSeparator);
+	num.setNumber(obj.value);
+	obj.value = num.toFormatted();
+}
+
 tinyMCE.init({
 	// General options
 	mode : "textareas",
