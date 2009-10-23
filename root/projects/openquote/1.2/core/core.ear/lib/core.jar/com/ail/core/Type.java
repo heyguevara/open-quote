@@ -316,12 +316,13 @@ public class Type implements Serializable, Cloneable {
                         // We'll clone into this clonedMap
                         Map clonedMap=(Map)map.getClass().newInstance();
 
-                        Type value=null;
+                        Object value=null;
 
                         // Loop through the map cloning each element into cloneMap.
                         for(Object key: map.keySet() ) {
-                            value=(Type)map.get(key);
-                            clonedMap.put(key, (Type)value.clone());;
+                            value=map.get(key);
+                            value=(value instanceof Type) ? ((Type)value).clone() : value;
+                            clonedMap.put(key, value);;
                         }
 
                         // Set the cloned map into the clone
@@ -543,17 +544,21 @@ public class Type implements Serializable, Cloneable {
                         if (donorMap!=null) {
                             // for each key that the donor map defines...
                             for(Object key: donorMap.keySet()) {
-                                Type obj=(Type)donorMap.get(key);
+                                Object obj=donorMap.get(key);
     
                                 // if the subject already contains this key, merge it's object with the donor's
                                 // object for the same key.
                                 if (subjectMap.containsKey(key)) {
-                                    mergeDonorIntoSubject(obj, (Type)subjectMap.get(key), core);
+                                    if (obj instanceof Type) {
+                                        Type tObj=(Type)obj;
+                                        mergeDonorIntoSubject((Type)tObj.clone(), (Type)subjectMap.get(key), core);
+                                    }
                                 }
                                 else {
                                     // the subject's map doesn't contain the key, so add a clone of the donor's object.
                                     key=(key instanceof Type) ? ((Type)key).clone() : key;
-                                    subjectMap.put(key, obj.clone());
+                                    obj=(key instanceof Type) ? ((Type)obj).clone() : obj;
+                                    subjectMap.put(key, obj);
                                 }
                             }
                         }
@@ -589,7 +594,8 @@ public class Type implements Serializable, Cloneable {
     
                                 // if a match wasn't found in the subject, then add a clone of the donor's
                                 if (!merged) {
-                                    ((Collection)callGetter(fieldName, subject)).add(((Type)dObj).clone());
+                                    dObj = (dObj instanceof Type) ? ((Type)dObj).clone() : dObj;
+                                    ((Collection)callGetter(fieldName, subject)).add(dObj);
                                 }
                             }
                         }
