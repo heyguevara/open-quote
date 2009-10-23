@@ -622,6 +622,12 @@
         <field name="name" type="string">
             <bind-xml node="attribute"/>
         </field>
+        <field name="value" type="int">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="undefinedName" type="string">
+            <bind-xml node="attribute"/>
+        </field>
         <field name="choice" type="com.ail.openquote.ui.util.Choice" collection="arraylist"/>
     </class>
 
