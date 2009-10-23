@@ -19,7 +19,6 @@ package com.ail.openquote.ui;
 import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
