@@ -35,7 +35,9 @@ public class Choice extends Type {
 	private String name;
 	private String compiled;
 	private String xmlCompiled;
-
+	private int value=0;
+	private String undefinedName="?";
+	
 	public Choice() {
 		choice = new ArrayList<Choice>();
 	}
@@ -54,6 +56,39 @@ public class Choice extends Type {
 
 	public void setChoice(List<Choice> choice) {
 		this.choice = choice;
+	}
+
+	/**
+	 * Optional integer value to associate with this element. The value here is analogous to the
+	 * integer values associated with option list defined in-line with an attribute's format. For
+	 * example the following format defines values of -1, 1, 2 and 3 for the options.
+	 * choice,options=-1#?|1#Increased power|2#Left hand drive conversion|3#Other 
+	 * @return value
+	 */
+	public int getValue() {
+		return value;
+	}
+
+	/**
+	 * @see #getValue()
+	 * @param value
+	 */
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	/**
+	 * Define the option which should be considered as "undefined" if selected. This defaults
+	 * to "?" if not specified. If the attribute associated with this choice has this value
+	 * during validation it will be treated as though no option has been selected. 
+	 * @param undefinedName
+	 */
+	public void setUndefinedName(String undefinedName) {
+		this.undefinedName = undefinedName;
+	}
+
+	public String getUndefinedName() {
+		return undefinedName;
 	}
 
 	public String renderAsJavaScriptArray(String arrayName) {
