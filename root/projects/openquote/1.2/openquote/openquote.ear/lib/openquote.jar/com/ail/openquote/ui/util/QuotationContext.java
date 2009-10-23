@@ -70,7 +70,10 @@ public class QuotationContext {
         		quotation.setLocale(new Locale(request.getLocale()));
         	}
         	
-            // Fetch the appropriate pageflow object for this session. The 'appropriate' pageflow
+    		// Set the thread's locale 
+        	Locale.setThreadLocale(request.getLocale());
+
+    		// Fetch the appropriate pageflow object for this session. The 'appropriate' pageflow
             // is the one associated with the product we're quoting for in this session. We get
             // the product's name from the quote.
             // If the quote has a quote date, use that as the ved - if it doesn't (as in the case of
@@ -80,7 +83,7 @@ public class QuotationContext {
 	            core.setVersionEffectiveDate(new VersionEffectiveDate(ved));
 	            pageFlow=(PageFlow)core.newProductType(productName, "QuotationPageFlow");
 
-	            pageFlow.applyElementId("0");
+	            pageFlow.applyElementId("OQ:0");
 	            
 	            // if the pageflow defines the page to start on, use it. Otherwise
 	            // we rely on the setting defined in the quotation in the product definition.
