@@ -32,11 +32,14 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +51,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
+import com.ail.core.Locale;
 import com.ail.core.Type;
 import com.ail.core.TypeEnum;
 import com.ail.financial.CurrencyAmount;
@@ -267,9 +271,34 @@ public class Html extends Type implements Renderer {
 	            }
 	            else if (attr.isNumberType()) {
 	                String pattern=attr.getFormatOption("pattern");
-	                String trailer=(attr.getFormat().endsWith("percent")) ? "%" : ""; 
-	                int size=(pattern==null) ? 7 : pattern.length();
-	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%s", id, size, onChangeEvent, attr.getValue(), trailer);
+	                int size=(pattern==null) ? 7 : pattern.length()+(pattern.length()/3)+1;
+	                
+	                String numberformat=null;
+	                DecimalFormatSymbols dfs=new DecimalFormatSymbols(Locale.getThreadLocale());
+	                if (pattern==null) {
+	                	numberformat="formatnumber(this, '"+dfs.getDecimalSeparator()+"', '"+dfs.getGroupingSeparator()+"', -1)";
+	                }
+	                else {
+	                	DecimalFormat df=new DecimalFormat(pattern);
+	                	df.setDecimalFormatSymbols(dfs);
+	                	numberformat="formatnumber(this, '"+dfs.getDecimalSeparator()+"', '"+dfs.getGroupingSeparator()+"', '"+df.getMaximumFractionDigits()+"')";
+	                }
+	           
+	                if (onChange==null) {
+	                	onChangeEvent="onchange=\""+numberformat+"\"";
+	                }
+	                else {
+	                	onChangeEvent="onchange=\""+numberformat+onChange+";\"";
+	                }
+	                
+	                // for percentages, use getValue rather than getFormattedValue as the latter will add a trailing % symbol
+	                // to the field's content. Also, add the symbol outside of the field.
+	                if (attr.getFormatOption("percent")!=null) {
+	                	w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%%", id, size, onChangeEvent, attr.getValue());
+	                }
+	                else {
+	                	w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getFormattedValue());
+	                }
 	            }
 	            else if (attr.isCurrencyType()) {
 	            	String value, pre, post;
@@ -291,6 +320,17 @@ public class Html extends Type implements Renderer {
 		            	post=attr.getUnit();
 	            	}
 	                
+	                DecimalFormatSymbols dfs=new DecimalFormatSymbols(Locale.getThreadLocale());
+	                int places=Currency.getInstance(attr.getUnit()).getDefaultFractionDigits();
+	                String numberformat="formatnumber(this, '"+dfs.getDecimalSeparator()+"', '"+dfs.getGroupingSeparator()+"', "+places+")";
+	           
+	                if (onChange==null) {
+	                	onChangeEvent="onchange=\""+numberformat+"\"";
+	                }
+	                else {
+	                	onChangeEvent="onchange=\""+numberformat+onChange+";\"";
+	                }
+	                
 	            	w.printf("<td align='right' width='25px'>%s</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' %s size='10' type='text' value='%s'/>%s</td>", pre, id, onChangeEvent, value, post);
 	            }
 	            else if (attr.isChoiceMasterType()) {
@@ -309,10 +349,13 @@ public class Html extends Type implements Renderer {
 	                	if ("radio".equals(attributeField.getRenderHint())) {
 	                        String[] opts=attr.getFormatOption("options").split("[|#]");
 
-
 	                        for(int i=1 ; i<opts.length ; i+=2) {
 	                        	if (!"?".equals(opts[i])) {
-	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>&nbsp;&nbsp;", id, opts[i], (opts[i].equals(attr.getValue())) ? "checked='checked'" : "", opts[i]);
+	                        		String name=id;
+	                        		String value=opts[i];
+	                        		String checked=(opts[i].equals(attr.getValue())) ? "checked='checked'" : "";
+	                        		String label=i18n("i18n_"+opts[i], opts[i]);
+	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>&nbsp;&nbsp;", name, value, checked, label);
 	                        	}
 	                        }
 	                	}
@@ -338,8 +381,8 @@ public class Html extends Type implements Renderer {
 	            		w.printf("<input name=\"%s\" type='checkbox' value='Yes' class='pn-normal' %s %s/>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
 	            	}
 	            	else if("radio".equals(attributeField.getRenderHint())) {
-	            		w.printf("<input name=\"%s\" type='radio' value='No' class='pn-normal' %s %s>No</input>&nbsp;&nbsp;", id, ("No".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
-	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>Yes</input>&nbsp;&nbsp;", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
+	            		w.printf("<input name=\"%s\" type='radio' value='No' class='pn-normal' %s %s>%s</input>&nbsp;&nbsp;", id, ("No".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent, i18n("i18n_No"));
+	            		w.printf("<input name=\"%s\" type='radio' value='Yes' class='pn-normal' %s %s>%s</input>&nbsp;&nbsp;", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent, i18n("i18n_Yes"));
 	            	}
 	            	else {
 	            		w.printf("<select name=\"%s\" class='pn-normal' %s>%s</select>", id, onChangeEvent, renderAttributeFieldHelper.renderEnumerationAsOptions(YES_OR_NO_FORMAT, attr.getValue()));
@@ -610,6 +653,9 @@ public class Html extends Type implements Renderer {
 
         // Always include the openquote script
         w.printf("<script type='text/javascript' src='/quotation/jscript/openquote.js'></script>");
+        
+        // Include the locale savy number formatter
+        w.printf("<script type='text/javascript' src='/quotation/jscript/numberformat.js'></script>");
         
     	return model;
     }
@@ -1037,7 +1083,7 @@ public class Html extends Type implements Renderer {
         	onChange="enableTargetIf(this.checked, \""+detailId+"\")";
         }
         else {
-        	onChange="enableTargetIf(isInList(this.options[this.selectedIndex].text, \""+questionWithDetails.getDetailsEnabledFor()+"\"), \""+detailId+"\")";
+        	onChange="enableTargetIf(isInList(this.options[this.selectedIndex].value, \""+questionWithDetails.getDetailsEnabledFor()+"\"), \""+detailId+"\")";
         }
         
         w.printf("<td>%s</td>", title);
@@ -1063,7 +1109,7 @@ public class Html extends Type implements Renderer {
         else {
             w.printf("<script type='text/javascript'>"+
             		   "elem=findElementsByName(\"%s\")[0];"+
-            		   "enableTargetIf(isInList(elem.options[elem.selectedIndex].text, \"%s\"), \"%s\")"+
+            		   "enableTargetIf(isInList(elem.options[elem.selectedIndex].value, \"%s\"), \"%s\")"+
             		 "</script>",
                     questionId, questionWithDetails.getDetailsEnabledFor(), detailId);
         }
@@ -1087,7 +1133,7 @@ public class Html extends Type implements Renderer {
         	onChange="showHideDivDisplay(this.checked, !this.checked, \""+questionWithSubSection.getId()+"\")";
         }
         else {
-        	onChange="showHideDivDisplay(isInList(this.options[this.selectedIndex].text, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+        	onChange="showHideDivDisplay(isInList(this.options[this.selectedIndex].value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
         	                           "!isInList(this.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), \""+questionWithSubSection.getId()+"\")";
         }
         
@@ -1125,8 +1171,8 @@ public class Html extends Type implements Renderer {
             w.printf("<script type='text/javascript'>"+
                        "opt=findElementsByName(\"%1$s\")[0];" +
                        "showHideDivDisplay(" +
-                       "isInList(opt.options[opt.selectedIndex].text, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
-                       "!isInList(opt.options[opt.selectedIndex].text, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+                       "isInList(opt.options[opt.selectedIndex].value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
+                       "!isInList(opt.options[opt.selectedIndex].value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
                        "\"%2$s\")"+
                      "</script>", questionId, questionWithSubSection.getId());
         }
@@ -1648,14 +1694,16 @@ public class Html extends Type implements Renderer {
 	        String[] opts=format.split("[|#]");
 
 	        for(int i=1 ; i<opts.length ; i+=2) {
+	        	String value=opts[i];
+	        	String label=i18n("i18n_"+opts[i], opts[i]);
 	            if (opts[i].equals(selected)) {
-	                ret.append("<option selected='yes'>"+opts[i]+"</option>");
+	                ret.append("<option selected='yes' value='"+value+"'>"+label+"</option>");
 	            }
 	            else {
-	                ret.append("<option>"+opts[i]+"</option>");
+	                ret.append("<option value='"+value+"'>"+label+"</option>");
 	            }
 	        }
-	        
+
 	        return ret.toString();
 	    }
 	}
