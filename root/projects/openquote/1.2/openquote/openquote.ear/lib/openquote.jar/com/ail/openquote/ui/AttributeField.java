@@ -30,6 +30,8 @@ import javax.portlet.RenderResponse;
 import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
+import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.util.Choice;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 
@@ -404,11 +406,31 @@ public class AttributeField extends PageElement {
 	    }
 	
 	    // Check if the value is undefined or invalid and add the error marker as appropriate
-	    if (attr.isUndefined() && !"no".equals(attr.getFormatOption("required"))) {
-	        Functions.addError("error",  "required", attr);
-	        error=true;
+	    if (!"no".equals(attr.getFormatOption("required"))) {
+	        if (!attr.isChoiceType()) {
+	        	if (attr.isUndefined()) {
+	        		Functions.addError("error",  "required", attr);
+   	    	        error=true;
+	        	}
+	        }
+	        else if (!attr.isFreeChoiceType()) {
+	        	if (attr.isUndefined()) {
+	        		Functions.addError("error",  "required", attr);
+   	    	        error=true;
+	        	}
+	        }
+	        else {
+        		Quotation quote=QuotationContext.getQuotation();
+        		Choice choice=(Choice)QuotationContext.getCore().newProductType(quote.getProductTypeId(), attr.getChoiceTypeName());
+        		String undefined=choice.getUndefinedName();
+        		if (undefined!=null && undefined.equals(attr.getValue())) {
+   	        		Functions.addError("error",  "required", attr);
+   	    	        error=true;
+	        	}
+	        }
 	    }
-	    else if (!attr.isChoiceType() && attr.isInvalid()) {
+	    
+	    if (!error && !attr.isChoiceType() && attr.isInvalid()) {
 	        Functions.addError("error", "invalid", attr);
 	        error=true;
 	    }
@@ -451,11 +473,12 @@ public class AttributeField extends PageElement {
 	    // If we're not bound to anything, apply nothing.
 	    if (boundTo!=null) {
 	        String name=Functions.xpathToId(rowContext+boundTo);
+	        String value=request.getParameter(name);
 	        
-	        if (request.getParameter(name)!=null) {
-	            model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
+	        if (value!=null) {
+        		model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
 	        }
-	        else if (request.getParameter(name)==null && "checkbox".equals(getRenderHint())) {
+	        else if (value==null && "checkbox".equals(getRenderHint())) {
 	            model.xpathSet(boundTo+"/value", "No");
 	        }
 	    }
