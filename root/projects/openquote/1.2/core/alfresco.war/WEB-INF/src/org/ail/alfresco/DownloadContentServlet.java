@@ -23,5 +23,10 @@ public class DownloadContentServlet extends org.alfresco.web.app.servlet.Downloa
                 response.sendError(404);
             }
         }
+        catch(RuntimeException e) {
+            if (e.getMessage().contains("Failed to authenticate")) {
+                response.sendError(401);
+            }
+        }
     }
 }
