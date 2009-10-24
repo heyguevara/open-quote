@@ -18,6 +18,7 @@ package com.ail.openquote.ui.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import com.ail.core.Type;
 
@@ -94,16 +95,18 @@ public class Choice extends Type {
 	public String renderAsJavaScriptArray(String arrayName) {
 		if (compiled == null) {
 			StringBuffer buf = new StringBuffer();
+			String name=null;
 			int i = 1;
 
 			buf.append("<script type='text/javascript'>");
 			buf.append(arrayName).append("=new Array();");
 
 			for (Choice m : choice) {
-				buf.append(arrayName).append("[").append(i++).append(
-						"]=new Array('").append(m.getName().replace("'", "\\'")).append("'");
+				name=i18n("i18n_"+m.getName(), m.getName()).replace("'", "\\'");
+				buf.append(arrayName).append("[").append(i++).append("]=new Array('").append(name).append("'");
 				for (Choice s : m.getChoice()) {
-					buf.append(",'").append(s.getName().replace("'", "\\'")).append("'");
+					name=i18n("i18n_"+s.getName(), s.getName()).replace("'", "\\'");
+					buf.append(",'").append(name).append("'");
 				}
 				buf.append(");");
 			}
@@ -119,12 +122,15 @@ public class Choice extends Type {
 	public String renderAsXmlArray(String arrayName) {
 		if (xmlCompiled == null) {
 			StringBuffer buf = new StringBuffer();
+			String name;
 			
 			for (Choice m : choice) {
-				buf.append("<choices><label>").append(m.getName()).append("</label>").append("<value>").append(m.getName()).append("</value>");
+				name=i18n("i18n_"+m.getName(), m.getName());
+				buf.append("<choices><label>").append(name).append("</label>").append("<value>").append(name).append("</value>");
 				
 				for (Choice s : m.getChoice()) {
-					buf.append("<item><label>").append(s.getName()).append("</label><value>").append(s.getName()).append("</value></item>");
+					name=i18n("i18n_"+s.getName(), s.getName());
+					buf.append("<item><label>").append(name).append("</label><value>").append(name).append("</value></item>");
 				}
 				buf.append("</choices>");
 			}

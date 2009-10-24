@@ -103,7 +103,7 @@ function loadSlaveChoiceOptions(select, selected, array, master, slave) {
     select.options.length=0;
     for(var m=1 ; m<array.length ; m++) {
         if (array[m][0]==masterSelectValue) {
-            _addOption(select,'?', '?');
+            _addOption(select,array[1][0], array[1][0]);
             for(var i=1 ; i<array[m].length ; i++) {
                 _addOption(select, array[m][i], array[m][i]==selected);
             }
@@ -123,7 +123,7 @@ function updateSlaveChoiceOptions(masterSelect, array, master, slave) {
     slaveSelect.options.length=0;
     for(var m=1 ; m<array.length ; m++) {
         if (array[m][0]==masterSelectValue) {
-            _addOption(slaveSelect,'?', '?');
+            _addOption(slaveSelect,array[1][0], array[1][0]);
             for(var i=1 ; i<array[m].length ; i++) {
                 _addOption(slaveSelect, array[m][i], false);
             }
