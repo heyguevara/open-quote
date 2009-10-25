@@ -20,19 +20,35 @@ import com.ail.core.CoreProxy;
 import com.ail.core.language.Translations;
 import com.ail.openquote.ui.util.QuotationContext;
 
+/**
+ * Implements a wrapper to the Core's language translation service to simplify common
+ * types of message lookup.
+ */
 public class I18N {
 
     /**
      * Return the translation matching a specific message (aka key). The translation is
-     * based on the message passed in and the thread's current locale.
+     * based on the message passed in and the thread's current locale. The argument passed 
+     * in is not assumed to be an i18n key itself (i.e. it does not have to have the 
+     * conventional "i18n_" prefix). If the prefix is not present, it will be added and 
+     * the resulting key looked up.
      * @param message key identifying the string to be returned.
      * @return Locale specific string, or the value of <i>message</i> if a match cannot be found. 
      */
 	public static String i18n(String message) {
-		return(i18n(message, message));
+		if (message==null) {
+			return null;
+		}
+
+		if (message.indexOf("i18n_")==0) {
+			return(i18n(message, message));
+		}
+		else {
+			return(i18n("i18n_"+message, message));
+		}
 	}
 
-    /**
+	/**
      * Return the translation matching a specific message (aka key). The translation is
      * based on the message passed in and the thread's current locale.
      * @param message key identifying the string to be returned.
@@ -46,10 +62,9 @@ public class I18N {
 	    		return trans.translate(message, alternative);
 	    	}
 	    	catch(Throwable e) {
-	    		e.printStackTrace();
 	    		// ignore this - let the default return handle it
 	    	}
 		}
-		return message;
+		return alternative;
 	}
 }

@@ -131,7 +131,7 @@ public class Answer extends PageElement {
         else if (answer instanceof com.ail.core.Attribute) {
         	Attribute a=(Attribute)answer;
         	if (a.isYesornoType() || a.isChoiceType()) {
-       			return i18n("i18n_"+a.getValue(), a.getValue());
+       			return i18n(a.getValue());
         	}
         	else {
         		return ((Attribute)answer).getFormattedValue();

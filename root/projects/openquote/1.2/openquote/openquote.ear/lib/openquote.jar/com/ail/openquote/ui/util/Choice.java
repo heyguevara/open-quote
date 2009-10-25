@@ -102,10 +102,10 @@ public class Choice extends Type {
 			buf.append(arrayName).append("=new Array();");
 
 			for (Choice m : choice) {
-				name=i18n("i18n_"+m.getName(), m.getName()).replace("'", "\\'");
+				name=i18n(m.getName()).replace("'", "\\'");
 				buf.append(arrayName).append("[").append(i++).append("]=new Array('").append(name).append("'");
 				for (Choice s : m.getChoice()) {
-					name=i18n("i18n_"+s.getName(), s.getName()).replace("'", "\\'");
+					name=i18n(s.getName()).replace("'", "\\'");
 					buf.append(",'").append(name).append("'");
 				}
 				buf.append(");");
@@ -125,11 +125,11 @@ public class Choice extends Type {
 			String name;
 			
 			for (Choice m : choice) {
-				name=i18n("i18n_"+m.getName(), m.getName());
+				name=i18n(m.getName());
 				buf.append("<choices><label>").append(name).append("</label>").append("<value>").append(name).append("</value>");
 				
 				for (Choice s : m.getChoice()) {
-					name=i18n("i18n_"+s.getName(), s.getName());
+					name=i18n(s.getName());
 					buf.append("<item><label>").append(name).append("</label><value>").append(name).append("</value></item>");
 				}
 				buf.append("</choices>");

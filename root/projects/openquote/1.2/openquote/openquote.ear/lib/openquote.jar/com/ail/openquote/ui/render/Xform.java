@@ -277,7 +277,7 @@ public class Xform extends Type implements Renderer {
 	                        for(int i=1 ; i<opts.length ; i+=2) {
 	                        	if (!"?".equals(opts[i])) {
 	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>", id, opts[i], (opts[i].equals(attr.getValue())) ? "checked='checked'" : "");
-	                        		w.printf("%s", i18n("i18n_"+opts[i], opts[i]));
+	                        		w.printf("%s", i18n(opts[i]));
 	    	    					w.printf("%s", hint);
 	    	    					w.printf("%s", note);
 	    	    	                w.printf("%s", alert);
@@ -310,7 +310,7 @@ public class Xform extends Type implements Renderer {
 
 	                    for(Choice c: choice.getChoice()) {
 	                    	w.printf("<item>");
-	                    	w.printf("<label>%s</label>", i18n("i18n_"+c.getName(), c.getName()));
+	                    	w.printf("<label>%s</label>", i18n(c.getName()));
 	                    	w.printf("<value>%s</value>", c.getName());
 	                    	w.printf("</item>");
 	                    }
@@ -356,7 +356,7 @@ public class Xform extends Type implements Renderer {
 	            		w.printf("<select ref=\"%s\" appearance=\"full\" %s>", id, classAttribute);
 						w.printf("<label>%s</label>",choiceTitle);
 						w.printf("%s", attrValue);
-	            		w.printf("<item><label>"+i18n("i18n_Yes", "Yes")+"</label><value>Yes</value></item>");
+	            		w.printf("<item><label>"+i18n("Yes")+"</label><value>Yes</value></item>");
 						w.printf("%s", hint);
 						w.printf("%s", note);
 	            		w.printf("%s", alert);
@@ -368,8 +368,8 @@ public class Xform extends Type implements Renderer {
 						w.printf("<label>%s</label>",choiceTitle);
 	            		//w.printf("<value>%s</value>",attr.getValue());
 						w.printf("%s", attrValue);
-	            		w.printf("<item><label>"+i18n("i18n_Yes", "Yes")+"</label><value>Yes</value></item>");
-	            		w.printf("<item><label>"+i18n("i18n_No", "No")+"</label><value>No</value></item>");
+	            		w.printf("<item><label>"+i18n("Yes")+"</label><value>Yes</value></item>");
+	            		w.printf("<item><label>"+i18n("No")+"</label><value>No</value></item>");
 						w.printf("%s", hint);
 						w.printf("%s", note);
 	            		w.printf("%s", alert);
@@ -381,8 +381,8 @@ public class Xform extends Type implements Renderer {
 						w.printf("<label>%s</label>",choiceTitle);
 	            		//w.printf("<value>%s</value>",attr.getValue());
 	            		w.printf("%s", attrValue);
-	            		w.printf("<item><label>"+i18n("i18n_Yes", "Yes")+"</label><value>Yes</value></item>");
-	            		w.printf("<item><label>"+i18n("i18n_No", "No")+"</label><value>No</value></item>");
+	            		w.printf("<item><label>"+i18n("Yes")+"</label><value>Yes</value></item>");
+	            		w.printf("<item><label>"+i18n("No")+"</label><value>No</value></item>");
 						w.printf("%s", hint);
 						w.printf("%s", note);
 	            		w.printf("%s", alert);

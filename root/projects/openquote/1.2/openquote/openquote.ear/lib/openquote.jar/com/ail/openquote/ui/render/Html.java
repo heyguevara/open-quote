@@ -354,7 +354,7 @@ public class Html extends Type implements Renderer {
 	                        		String name=id;
 	                        		String value=opts[i];
 	                        		String checked=(opts[i].equals(attr.getValue())) ? "checked='checked'" : "";
-	                        		String label=i18n("i18n_"+opts[i], opts[i]);
+	                        		String label=i18n(opts[i]);
 	                        		w.printf("<input type='radio' name=\"%s\" value='%s' %s>%s</input>&nbsp;&nbsp;", name, value, checked, label);
 	                        	}
 	                        }
@@ -1695,7 +1695,7 @@ public class Html extends Type implements Renderer {
 
 	        for(int i=1 ; i<opts.length ; i+=2) {
 	        	String value=opts[i];
-	        	String label=i18n("i18n_"+opts[i], opts[i]);
+	        	String label=i18n(opts[i]);
 	            if (opts[i].equals(selected)) {
 	                ret.append("<option selected='yes' value='"+value+"'>"+label+"</option>");
 	            }
