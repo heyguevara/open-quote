@@ -1153,11 +1153,11 @@ public class Html extends Type implements Renderer {
         // Disable the 'detail' area unless the question's answer is 'Yes'
         if ("radio".equals(questionWithSubSection.getRenderHint())) {
             w.printf("<script type='text/javascript'>"+
-                       "radio=findElementsByName(\"%1$s\")[1];" +
-                       "showHideDivDisplay(radio.checked && isInList(radio.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"),"+
-                                          "radio.checked && !isInList(radio.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), "+
-                                          "\"%2$s\");"+
-                     "</script>", questionId, questionWithSubSection.getId());
+                       "showHideDivDisplayForRadioChoice(\"%s\", \"%s\", \"%s\");"+
+                     "</script>", 
+                     questionId, 
+                     questionWithSubSection.getDetailsEnabledFor(),
+                     questionWithSubSection.getId());
         }
         else if ("checkbox".equals(questionWithSubSection.getRenderHint())) {
             w.printf("<script type='text/javascript'>"+
