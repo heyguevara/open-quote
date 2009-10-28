@@ -73,6 +73,16 @@ function showHideDivDisplay(showCondition, hideCondition, id) {
     }
 }
 
+function showHideDivDisplayForRadioChoice(radioId, enableForValues, id) {
+	radios=findElementsByName(radioId);
+	hideDivDisplay(id);
+	for(var i=0 ; i<radios.length ; i++) {
+	    if (radios[i].checked && isInList(radios[i].value, enableForValues)) {
+	        showDivDisplay(id);
+	    }
+	}
+}
+
 function _addOption(selectbox, text, selected) {
     var optn = document.createElement("OPTION");
     optn.text = text;
