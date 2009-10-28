@@ -605,7 +605,7 @@ public class Type implements Serializable, Cloneable {
                         if (callGetter(fieldName, subject)==null) {
                             Type t=(Type)callGetter(fieldName, donor);
                             if (t!=null) {
-                                callSetter(fieldName, fieldType, this, t.clone());
+                                callSetter(fieldName, fieldType, subject, t.clone());
                             }
                         }
                         // if the subject does have an instance, then merge the donor's values into it.
