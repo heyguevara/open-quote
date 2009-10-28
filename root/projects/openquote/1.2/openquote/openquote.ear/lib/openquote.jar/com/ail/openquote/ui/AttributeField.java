@@ -17,6 +17,7 @@
 package com.ail.openquote.ui;
 
 import static com.ail.core.Functions.expand;
+import static com.ail.openquote.ui.messages.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -415,10 +416,7 @@ public class AttributeField extends PageElement {
 	        	}
 	        }
 	        else {
-        		Quotation quote=QuotationContext.getQuotation();
-        		Choice choice=(Choice)QuotationContext.getCore().newProductType(quote.getProductTypeId(), attr.getChoiceTypeName());
-        		String undefined=choice.getUndefinedName();
-        		if (undefined!=null && undefined.equals(attr.getValue())) {
+        		if (attr.getValue().equals(i18n("i18n_?"))) {
    	        		Functions.addError("error",  "required", attr);
    	    	        error=true;
 	        	}
