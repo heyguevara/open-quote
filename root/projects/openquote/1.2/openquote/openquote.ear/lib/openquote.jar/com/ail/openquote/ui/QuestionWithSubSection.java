@@ -99,6 +99,20 @@ public class QuestionWithSubSection extends Question {
         this.subSection = subSection;
     }
 
+    /**
+     * Apply the specified ID to this element and cascade to sub-elements (see {@link #getId()}/{@link #setId(String)}). 
+     * The ID will only applied if one is not already defined.
+     * @param id
+     */
+    @Override
+    public void applyElementId(String basedId) {
+    	int idx=0;
+    	for(PageElement e: subSection) {
+    		e.applyElementId(basedId+"."+(idx++));
+    	}
+    	super.applyElementId(basedId);
+	}
+
     @Override
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         return applyRequestValues(request, response, model, "");
