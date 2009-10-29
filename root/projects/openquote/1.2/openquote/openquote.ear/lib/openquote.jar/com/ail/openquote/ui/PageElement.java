@@ -38,11 +38,14 @@ import com.ail.openquote.ui.util.QuotationCommon;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
- * with implementations of lifecycle methods.
+ * with implementations of life-cycle methods.
  */
 public abstract class PageElement extends Type implements Identified, Comparable<PageElement> {
     private static final long serialVersionUID = 1L;
-    private static Pattern outlineFormat=Pattern.compile("^[0-9.]*$");
+    private static Pattern OUTLINE_FORMAT=Pattern.compile("^[0-9.]*$");
+    
+    /** Separator used in the {@link #id} property */ 
+    protected static final char ID_SEPARATOR='-';
     private transient PropertyChangeSupport changes=new PropertyChangeSupport(this);
 
     /** Id which is unique within the element's container */
@@ -431,7 +434,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
         else if (this.order.equals(that.order)) {
             return 0;
         }
-        else if (outlineFormat.matcher(this.order).matches() && outlineFormat.matcher(that.order).matches()) {
+        else if (OUTLINE_FORMAT.matcher(this.order).matches() && OUTLINE_FORMAT.matcher(that.order).matches()) {
             String[] saThis=this.order.split("\\.");
             String[] saThat=that.order.split("\\.");
 

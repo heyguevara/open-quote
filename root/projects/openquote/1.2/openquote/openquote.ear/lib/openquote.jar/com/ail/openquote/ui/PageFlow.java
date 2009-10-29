@@ -144,7 +144,7 @@ public class PageFlow extends PageElement {
 		if (!appliedElementId) {
 			int idx=-0;
 			for(Page p: page) {
-				p.applyElementId(baseId+"."+(idx++));
+				p.applyElementId(baseId+ID_SEPARATOR+(idx++));
 			}
 			appliedElementId=true;
 		}

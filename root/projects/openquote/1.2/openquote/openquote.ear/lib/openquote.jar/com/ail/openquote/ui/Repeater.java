@@ -371,7 +371,7 @@ public abstract class Repeater extends PageElement {
     public void applyElementId(String basedId) {
     	int idx=0;
     	for(PageElement e: item) {
-    		e.applyElementId(basedId+"."+(idx++));
+    		e.applyElementId(basedId+ID_SEPARATOR+(idx++));
     	}
     	super.applyElementId(basedId);
    	}

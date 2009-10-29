@@ -83,7 +83,7 @@ public class QuotationContext {
 	            core.setVersionEffectiveDate(new VersionEffectiveDate(ved));
 	            pageFlow=(PageFlow)core.newProductType(productName, "QuotationPageFlow");
 
-	            pageFlow.applyElementId("OQ:0");
+	            pageFlow.applyElementId("OQ0");
 	            
 	            // if the pageflow defines the page to start on, use it. Otherwise
 	            // we rely on the setting defined in the quotation in the product definition.
