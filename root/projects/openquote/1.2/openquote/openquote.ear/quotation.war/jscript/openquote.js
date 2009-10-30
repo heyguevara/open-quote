@@ -36,7 +36,10 @@ function findElementsByName(name) {
  * otherwise enable it.
  */
 function disableTargetIf(condition, targetName) {
-    findElementsByName(targetName)[0].disabled=condition;
+	var elements=findElementsByName(targetName);
+    for (var i=0 ; i < elements.length ; i++) {
+        elements[i].disabled=condition;
+    }
 }
 
 /* If 'condition' is true then enable the 'target' page element, 
