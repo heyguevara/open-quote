@@ -105,6 +105,11 @@ public class NavigationSection extends PageContainer {
 
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
+		// If our condition isn't met, validate nothing.
+	    if (!conditionIsMet(model)) {
+    		return false;
+    	}
+
     	boolean error=false;
     	
         for(PageElement element: getPageElement()) {

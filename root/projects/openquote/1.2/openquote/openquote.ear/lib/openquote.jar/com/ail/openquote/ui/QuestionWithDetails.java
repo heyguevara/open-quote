@@ -57,7 +57,10 @@ public class QuestionWithDetails extends Question {
     private static final long serialVersionUID = 7118438575837087257L;
     private String detailsTitle;
     private String detailsBinding;
-    private List<String> detailsEnabledFor;
+    /** Hints to the UI rendering engine specifying details of how the details field should be rendered. The values supported
+     * are specific to the type of attribute being rendered. */ 
+    private String detailsRenderHint=null;
+	private List<String> detailsEnabledFor;
     
     public QuestionWithDetails() {
 		super();
@@ -99,9 +102,26 @@ public class QuestionWithDetails extends Question {
         return detailsTitle;
     }
 
-    public void setDetailsTitle(String detailsTitle) {
+   /**
+    * @see #getDetailsTitle()
+    * @param detailsTitle
+    */
+   public void setDetailsTitle(String detailsTitle) {
         this.detailsTitle = detailsTitle;
     }
+
+   /** 
+    * Hints to the UI rendering engine specifying details of how the details field should be rendered. The values supported
+    * are specific to the type of attribute being rendered.  
+    * @return the renderHint
+    */
+   public String getDetailsRenderHint() {
+		return detailsRenderHint;
+	}
+
+	public void setDetailsRenderHint(String detailsRenderHint) {
+		this.detailsRenderHint = detailsRenderHint;
+	}
 
     /**
      * Get the title with all variable references expanded. References are expanded with 

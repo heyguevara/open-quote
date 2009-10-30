@@ -173,6 +173,11 @@ public class LoginSection extends PageContainer {
 
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
+		// If our condition isn't met, validate nothing.
+	    if (!conditionIsMet(model)) {
+    		return false;
+    	}
+
         boolean error=false;
         String op=Functions.getOperationParameters(request).getProperty("op");
 

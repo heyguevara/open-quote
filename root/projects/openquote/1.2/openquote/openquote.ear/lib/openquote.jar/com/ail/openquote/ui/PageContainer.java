@@ -102,7 +102,12 @@ public abstract class PageContainer extends PageElement {
 
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
-        boolean result = false;
+		// If our condition isn't met, validate nothing.
+	    if (!conditionIsMet(model)) {
+    		return false;
+    	}
+
+	    boolean result = false;
 
         for (PageElement e : getPageElement()) {
             result |= e.processValidations(request, response, model);
