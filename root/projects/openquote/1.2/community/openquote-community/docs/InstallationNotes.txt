@@ -52,6 +52,11 @@ OpenQuote community is supplied as a zip file. Simply unpack this zip file
 and follow the instructions below (Installing the OpenQuote database, and
 Starting the OpenQuote server).
 
+If you are installing on Windows, we recommend that you don't use window's
+built-in zip file support. A number of issues have been reported on the 
+forums which seem to point at file corruption caused by the build-in tool.
+We're recommend that you use winzip, unrar, or jar to unpack the .zip. 
+
 Note: If you are installing OpenQuote for use with Java J2SE 6.0, you also
 need to copy the following files from the openquote-community/jboss/client 
 directory to the openquote-community/jboss/lib/endorsed directory:
