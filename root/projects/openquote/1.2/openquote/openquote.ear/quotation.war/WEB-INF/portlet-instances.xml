@@ -2,6 +2,18 @@
 <deployments>
     <deployment>
         <instance>
+            <instance-id>LifePlusQuotationPortletInstance</instance-id>
+            <portlet-ref>QuotationPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>product</name>
+                    <value>AIL.Demo.LifePlus</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
             <instance-id>MotorPlusQuotationPortletInstance</instance-id>
             <portlet-ref>QuotationPortlet</portlet-ref>
             <preferences>
