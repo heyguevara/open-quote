@@ -19,12 +19,12 @@
   <property name="keystore" value="${basedir}/../development/data/keystore" />
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
-  <property name="serverBaseUrl" value="localhost:8080" />
   <property name="java.naming.factory.initial" value="org.jnp.interfaces.NamingContextFactory" />
   <property name="java.naming.provider.url" value="jnp://localhost:1099" />
   <property name="grinder.properties" value="${basedir}/grinder.properties" />
   <property name="connectionpoolloader.params" value="jndiname=java:/ConfigureDS;table=config" />
   <property name="build.sysclasspath" value="last"/>
+  <property name="hsql.data.dir" value="${jboss.dir}/server/default/data/hypersonic"/>
   <!-- default build.type is developer, cruisecontrol overrides this with a -D on the command line -->
   <property name="build.type" value="developer"/>
 
@@ -108,40 +108,41 @@
     </sequential>
   </macrodef>
 
+  <target name="ail-reset-timedout=false">
+    <echo message="Configurations reset"/>
+  </target>
+  
+  <target name="ail-reset-timedout=true">
+    <fail message="Configuration reset failed"/>
+  </target>
+  
+  <target name="ail-reset-configurations-if-jboss-running" if="jboss-running">
+    <waitfor maxwait="30" maxwaitunit="minute" timeoutproperty="ail-reset-timedout">
+      <http url="http://localhost:8080/configure/configureOperationServlet?op=resetNamedConfiguration&amp;namespace=all"/>
+    </waitfor>
+    <property name="ail-reset-timedout" value="false"/>
+    <antcall target="ail-reset-timedout=${ail-reset-timedout}"/>    
+  </target>
+  
+  <target name="ail-reset-configurations-if-jboss-not-running" unless="jboss-running">
+    <parallel>
+      <start-jboss-macro />
+      <sequential>
+        <waitfor maxwait="30" maxwaitunit="minute" timeoutproperty="ail-reset-timedout">
+          <http url="http://localhost:8080/configure/configureOperationServlet?op=resetNamedConfiguration&amp;namespace=all"/>
+        </waitfor>
+        <stop-jboss-macro />
+      </sequential>
+    </parallel>
+    <property name="ail-reset-timedout" value="false"/>
+    <antcall target="ail-reset-timedout=${ail-reset-timedout}"/>    
+  </target>
+
   <macrodef name="ail-reset-configurations-macro">
-    <element name="configs" optional="no"/>
-    <element name="paths" optional="no"/>
     <sequential>
-
-      <echo message="resetting configurations in database ${dbname}"/>
-
-      <path id="reset.classpath">
-        <paths/>
-        <dirset dir="${ear.dir}" includes="*.jar"/>
-        <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes"/>
-        <fileset dir="${ear.lib}" includes="*.jar"/>
-        <dirset dir="${ear.lib}" includes="*.jar"/>
-        <fileset dir="${test.dir}" includes="**/*.jar"/>
-        <fileset dir="${jboss.dir}">
-          <include name="lib/endorsed/xercesImpl.jar"/>
-          <include name="client/jbossall-client.jar"/>
-          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar"/>
-        </fileset>
-      </path>
-
-      <java classname="com.ail.core.configure.ConfigurationReset" fork="yes" failonerror="yes" classpathref="reset.classpath">
-        <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=root"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=bombay2000"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.table=config"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}"/>
-        <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/>
-        <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl"/>
-        <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler"/>
-        <configs/>
-      </java>
+		<set-jboss-running-property-macro/>
+      	<antcall target="ail-reset-configurations-if-jboss-running"/>
+    	<antcall target="ail-reset-configurations-if-jboss-not-running"/>
     </sequential>
   </macrodef>
 

@@ -34,8 +34,6 @@
   <macrodef name="compile-ear-descriptors-macro">
     <attribute name="overlay" default="false"/>
     <sequential>
-      <_set_output_dir_property_macro/>
-
       <copy todir="${output.dir}/META-INF">
         <filterset filtersfile="${copyfilter.file}"/>
         <fileset dir="META-INF" includes="**/*.properties, **/*.xml, **/*.MF"/>
@@ -44,7 +42,6 @@
   </macrodef>
 
   <target name="_delete-ear-descriptors-overlay=false">
-    <_set_output_dir_property_macro/>
     <delete dir="${output.dir}/META-INF" failonerror="no"/>
   </target>
 
@@ -52,7 +49,6 @@
   <!-- the tree contains the source. In effect we're overlaying this tree's descriptors -->
   <!-- on those from another project.                                                   -->
   <target name="_delete-ear-descriptors-overlay=true">
-    <_set_output_dir_property_macro/>
     <delete failonerror="no">
       <fileset dir="${output.dir}/META-INF" includes="**/*.MF, **/*.xml" excludes="Build.xml">
         <present targetdir="${basedir}/META-INF">
@@ -77,8 +73,6 @@
     <attribute name="overlay" default="false"/>
     <element name="javac-classpath" optional="no"/>
     <sequential>
-
-      <_set_output_dir_property_macro/>
 
       <mkdir dir="${output.dir}"/>
 
@@ -110,8 +104,6 @@
     <attribute name="overlay" default="false"/>
     <element name="javac-classpath" optional="no"/>
     <sequential>
-
-      <_set_output_dir_property_macro/>
 
       <mkdir dir="${output.dir}"/>
 
@@ -153,10 +145,6 @@
     <attribute name="overlay" default="false"/>
     <element name="javac-classpath" optional="no"/>
     <sequential>
-
-      <!-- this will set ${deploy.unit} based on the current projects name -->
-      <_set_output_dir_property_macro/>
-
       <path id="_temp">
         <javac-classpath />
       </path>
@@ -188,8 +176,6 @@
     <attribute name="name"/>
     <attribute name="namespace"/>
     <sequential>
-      <_set_output_dir_property_macro/>
-
       <mkdir dir="${output.dir}/META-INF/wsdl"/>
 
       <!-- build wsdl for service -->
@@ -215,7 +201,6 @@
   <!-- project has we delete the corresponding .class file - but other .class    -->
   <!-- files are left alone.                                                     -->
   <target name="_delete-exploded-jar-overlay=true">
-    <_set_output_dir_property_macro/>
     <delete failonerror="no">
       <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml">
         <present targetdir="${basedir}">
@@ -235,7 +220,6 @@
   <!-- project has we delete the corresponding .class file - but other .class    -->
   <!-- files are left alone.                                                     -->
   <target name="_delete-exploded-war-overlay=true">
-    <_set_output_dir_property_macro/>
     <delete failonerror="no">
       <fileset dir="${output.dir}" includes="**/*.MF, **/*.jsp, **/*.xml, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml, WEB-INF/src/*">
         <present targetdir="${basedir}">
@@ -258,14 +242,12 @@
   <!-- Deleting a exploded jar in non-overlay mode is simple - just delete the -->
   <!-- whole exploded jar.                                                     -->
   <target name="_delete-exploded-jar-overlay=false">
-    <_set_output_dir_property_macro/>
     <delete dir="${output.dir}" failonerror="no"/>
   </target>
 
   <!-- Deleting a exploded war in non-overlay mode is simple - just delete the -->
   <!-- whole exploded war.                                                     -->
   <target name="_delete-exploded-war-overlay=false">
-    <_set_output_dir_property_macro/>
     <delete dir="${output.dir}" failonerror="no"/>
   </target>
 
@@ -302,18 +284,12 @@
 
   <macrodef name="release-ear-macro">
     <sequential>
-      <!-- this will set ${deploy.unit} based on the current projects name -->
-      <_set_output_dir_property_macro/>
-
       <echo level="info" message="release-ear-macro - output.dir: ${output.dir}"/>
     </sequential>
   </macrodef>
 
   <macrodef name="release-jar-macro">
     <sequential>
-      <!-- this will set ${deploy.unit} based on the current projects name -->
-      <_set_output_dir_property_macro/>
-
       <echo level="info" message="release-jar-macro - output.dir: ${output.dir}"/>
     </sequential>
   </macrodef>

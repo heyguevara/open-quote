@@ -99,7 +99,7 @@
     </target>
 
     <target name="_kick-jboss-if-jboss-running=false" unless="jboss-running">
-        <echo level="info" message="Doesn't look like jboss is running, so I can't kick the server" />
+        <echo level="info" message="Jboss isn't running (no response on jnp://localhost:1099). Skipping forced deployment scan." />
     </target>
 
     <!-- Macro to force jboss to rescan the deployment directory and takeup any changes. -->

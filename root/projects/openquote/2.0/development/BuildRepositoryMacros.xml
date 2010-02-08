@@ -1,9 +1,5 @@
 <!--
- This file defines ant macros related to repository manipulations
- $Revision: 1.41 $
- $State: Exp $
- $Date: 2007/11/23 20:59:04 $
- $Source: /home/bob/CVSRepository/development/BuildCommon.xml,v $
+ This file defines ant macros related to jar repository manipulations
 -->
 
 <project name="BuildRepository.xml" default="dummy">
@@ -83,9 +79,6 @@
     <attribute name="version" />
     <attribute name="type" />
     <sequential>
-      <!-- this will set ${deploy.unit} based on the current projects name -->
-      <_set_output_dir_property_macro />
-
       <!-- get the file from the repository, and copy into ./lib -->
       <repo-get-macro dest="${get.libs.macro.todir}" repo="@{repo}" group="@{group}" artifact="@{artifact}" version="@{version}" type="@{type}" />
 
