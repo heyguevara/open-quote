@@ -1,4 +1,0 @@
-type=new com.ail.core.Version(); 
-
-type.setAuthor("Jim"); 
-type.setVersion("1.3");
