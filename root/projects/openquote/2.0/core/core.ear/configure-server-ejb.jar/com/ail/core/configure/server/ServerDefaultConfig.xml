@@ -35,9 +35,6 @@
         <service name="SetCommandScriptService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.core.configure.server.SetCommandScriptService</parameter>
         </service>
-        <service name="GetClassListService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.configure.finder.GetClassListService</parameter>
-        </service>
 
         <!--=======================================================================-->
         <!-- Bind the default core services (above) to Commands used by Core.class -->
@@ -56,9 +53,6 @@
         </command>
         <command name="SetCommandScript" builder="ClassBuilder" key="com.ail.core.configure.server.SetCommandScriptCommand">
             <parameter name="Service">SetCommandScriptService</parameter>
-        </command>
-        <command name="GetClassList" builder="ClassBuilder" key="com.ail.core.configure.finder.GetClassListCommand">
-            <parameter name="Service">GetClassListService</parameter>
         </command>
     </types>
 </configuration>

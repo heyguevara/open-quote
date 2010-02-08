@@ -75,7 +75,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
     public Connection openConnection() {
         // load the JDBC driver
         try {
-            Class.forName(getLoaderParams().getProperty("driver"));
+            Class.forName(getLoaderParams().getProperty("driver"), true, Thread.currentThread().getContextClassLoader());
 
             return DriverManager.getConnection(getLoaderParams().getProperty("url"), getLoaderParams());
         }

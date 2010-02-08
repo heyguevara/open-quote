@@ -25,14 +25,10 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.ConfigurationResetError;
 
 /**
- * This class is the abstract supclass of all Components. A component is
+ * This class is the abstract superclass of all Components. A component is
  * simply a way of grouping entry points together. It isn't required
  * that all components extend this class, but it does save implementation
  * effort.
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Component.java,v $
  */
 public abstract class Component implements CoreUser, ConfigurationOwner {
 

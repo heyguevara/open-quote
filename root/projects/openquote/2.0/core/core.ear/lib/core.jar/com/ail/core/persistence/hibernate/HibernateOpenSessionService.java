@@ -18,6 +18,7 @@
 package com.ail.core.persistence.hibernate;
 
 import org.hibernate.classic.Session;
+import org.hibernate.context.ManagedSessionContext;
 
 import com.ail.core.Core;
 import com.ail.core.PreconditionException;
@@ -93,7 +94,8 @@ public class HibernateOpenSessionService extends Service {
 
     /** The 'business logic' of the entry point. */
     public void invoke() throws PreconditionException, UpdateException {
-        Session session=HibernateFunctions.getSessionFactory().getCurrentSession();
+        Session session=HibernateFunctions.getSessionFactory().openSession();
+        ManagedSessionContext.bind(session);
         session.beginTransaction();
     }
 }

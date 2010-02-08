@@ -254,10 +254,10 @@ public class Group extends Component {
     }
 
     /**
-     * Find a group using a dot seperated group name. This method
-     * will search down throught the group layers of this configuration
+     * Find a group using a dot separated group name. This method
+     * will search down thought the group layers of this configuration
      * to locate a group with the nested group name specified.
-     * @param groupName Dot seperated group name (e.g. one.two.three).
+     * @param groupName Dot separated group name (e.g. one.two.three).
      * @return The located group, or null if it cannot be found.
      */
     public Group findGroup(String groupName) {
@@ -277,7 +277,7 @@ public class Group extends Component {
 
     /**
      * Find a nested parameter in this configuration. This method will
-     * search throught the group structure to find the named parameter.
+     * search through the group structure to find the named parameter.
      * @param paramNameArg Nested name (e.g. outter.inner.parameter).
      * @return The located parameter, or null if it cannot be found.
      */

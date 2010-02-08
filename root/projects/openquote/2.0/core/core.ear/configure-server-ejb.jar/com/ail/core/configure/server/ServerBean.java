@@ -28,6 +28,7 @@ import com.ail.core.BaseError;
 import com.ail.core.BaseException;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
+import com.ail.core.CoreProxy;
 import com.ail.core.CoreUser;
 import com.ail.core.EJBComponent;
 import com.ail.core.Version;
@@ -36,7 +37,6 @@ import com.ail.core.command.AbstractCommand;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
-import com.ail.core.configure.finder.GetClassListArg;
 
 /**
  * @version $Revision: 1.8 $
@@ -117,7 +117,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
     private void resetConfig(String name) {
         try {
             core.logDebug("Requesting reset for:"+name);
-            Class clazz=Class.forName(name);
+            Class clazz=Class.forName(name, true, Thread.currentThread().getContextClassLoader());
             ConfigurationOwner owner=(ConfigurationOwner)clazz.newInstance();
             owner.resetConfiguration();
             core.logDebug("Reset successful for:"+name);
@@ -143,14 +143,19 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
     public void resetNamedConfiguration(String name) throws EJBException  {
         if (name.equalsIgnoreCase("all")) {
 
-            // reset the Core config first
-            core.resetConfiguration();
-            ConfigurationHandler.reset();
-            core.logDebug("Reset successful for:com.ail.core.Core");
+            CoreProxy cp = new CoreProxy();
+
+            cp.resetCoreConfiguration();
+            cp.setVersionEffectiveDateToNow();
+            cp.clearConfigurationCache();
+
+            cp.resetConfiguration();
+            cp.setVersionEffectiveDateToNow();
+            cp.clearConfigurationCache();
 
             // loop through the AllNamespaceReset group, and reset all the configs named
-            for(Parameter p: core.getGroup("NamespacesToResetOnResetAll").getParameter()) {
-                resetConfig(p.getName());
+            for(Parameter p: cp.getGroup("NamespacesToResetOnResetAll").getParameter()) {
+                cp.resetConfiguration(p.getName());
             }
         }
         else {
@@ -281,27 +286,6 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
     }
 
 
-    /**
-     * Service wrapper business method for the GetClassList service.
-     * @param arg The argument to pass to the service.
-     * @return The objects returned from the service.
-     * @throws BaseServerException In response to any exception thrown by the service.
-     */
-    public GetClassListArg getClassList(GetClassListArg arg) throws EJBException  {
-            try {
-                AbstractCommand command = core.newCommand("GetClassList");
-                command.setArgs(arg);
-                command.invoke();
-                return (GetClassListArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-    }
-    
     /**
      * Service wrapper business method for the DeployCar service.
      * @param arg The argument to pass to the service.

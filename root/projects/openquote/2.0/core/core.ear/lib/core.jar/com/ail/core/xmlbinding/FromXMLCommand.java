@@ -27,10 +27,6 @@ import com.ail.core.configure.XMLMapping;
  * of the objects they represent.
  * The arguments and returns used during this process are described in (and
  * encapsulated by an instance of) FromXMLArg.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/FromXMLCommand.java,v $
  */
 @SuppressWarnings("unchecked")
 public class FromXMLCommand extends Command implements FromXMLArg {

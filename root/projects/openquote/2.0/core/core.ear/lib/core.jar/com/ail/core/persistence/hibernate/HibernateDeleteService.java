@@ -29,12 +29,7 @@ import com.ail.core.persistence.CreateException;
 import com.ail.core.persistence.DeleteArg;
 
 /**
- * Implemention of the delete service for Hibernate
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateDeleteService.java,v $
- * @stereotype service
+ * Implementation of the delete service for Hibernate
  */
 public class HibernateDeleteService extends Service {
     private DeleteArg args = null;

@@ -130,7 +130,9 @@ public class CommonsValidatorService extends Service {
 		// pass xml to validator
 		Validator validator = new Validator(resources, key);
 
-		// Tell the validator which bean to validate against.
+        validator.setClassLoader(Thread.currentThread().getContextClassLoader());
+
+        // Tell the validator which bean to validate against.
 		validator.addResource(Validator.BEAN_KEY, value);
 
 		// run validation

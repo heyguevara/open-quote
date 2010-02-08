@@ -101,7 +101,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
      * insert a new record with validFrom set to now+1ms, and validTo set to zero.<p>
      * If either the database or table specified in loader.properties does not
      * exist on the first attempt to save a configuration, this method will
-     * attempt to create both. For this to work the db user specified in loader.properties
+     * attempt to create both. For this to work the DB user specified in loader.properties
      * must have the necessary 'GRANTS' for table and database creation.
      * @param namespace The namespace the configuration is associated with.
      * @param config The configuration to be saved.

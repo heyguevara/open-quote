@@ -27,10 +27,6 @@ import com.ail.core.configure.XMLMapping;
  * represent them.
  * The arguments and returns used during this process are described in (and
  * encapsulated by an instance of) ToXMLArg.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/ToXMLCommand.java,v $
  */
 public class ToXMLCommand extends Command implements ToXMLArg {
 	/** instance of arg to deligate to. */

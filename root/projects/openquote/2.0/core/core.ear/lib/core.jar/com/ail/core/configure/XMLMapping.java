@@ -20,19 +20,14 @@ package com.ail.core.configure;
 import com.ail.core.Type;
 
 /**
- * This class holds XML databinding information for a configuration. It holds
+ * This class holds XML data binding information for a configuration. It holds
  * the mapping description - which is generally a string of XML, and transient
- * instances of a marshaller and unmarshaller object.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/XMLMapping.java,v $
+ * instances of a bindingContext object.
  */
 public class XMLMapping extends Type {
     static final long serialVersionUID = 5193477041052835669L;
     private String definition = null;
-    private transient Object marshaller = null;
-    private transient Object unmarshaller = null;
+    private transient Object bindingContext = null;
 
     /**
      * Default constructor.
@@ -41,8 +36,8 @@ public class XMLMapping extends Type {
     }
 
     /**
-     * Get the XML mapping defnition. The actual format of the information
-     * returned depends upon the data binding mechenism being used, but it
+     * Get the XML mapping definition. The actual format of the information
+     * returned depends upon the data binding mechanism being used, but it
      * is generally an XML string that describes how XML nodes are mapped into
      * object instances.
      * @return String describing the mapping.
@@ -65,39 +60,21 @@ public class XMLMapping extends Type {
     }
 
     /**
-     * Get the XML marshaller. The XML databinding handlers may use this
-     * property to cache an instance of the marshaller. The configuration
+     * Get the XML bindingContext. The XML data binding handlers may use this
+     * property to cache an instance of the bindingContext. The configuration
      * handler will ensure that this is handled in a version safe fashion.
-     * @return An instance of a marshaller.
+     * @return An instance of a bindingContext.
      */
-    public Object getMarshaller() {
-        return marshaller;
+    public Object getBindingContext() {
+        return bindingContext;
     }
 
     /**
-     * Set the marshaller for this mapping.
+     * Set the bindingContext for this mapping.
      * @see #getMarshaller
-     * @param marshaller The marshaller instance
+     * @param bindingContext The bindingContext instance
      */
-    public void setMarshaller(Object marshaller) {
-        this.marshaller = marshaller;
-    }
-
-    /**
-     * Get the unmarshaller.
-     * @see #getMarshaller
-     * @return An instance of the marshaller.
-     */
-    public Object getUnmarshaller() {
-        return unmarshaller;
-    }
-
-    /**
-     * Set the unmarshaller.
-     * @see #getMarshaller
-     * @param unmarshaller The XML Unmarshaller.
-     */
-    public void setUnmarshaller(Object unmarshaller) {
-        this.unmarshaller = unmarshaller;
+    public void setBindingContext(Object bindingContext) {
+        this.bindingContext = bindingContext;
     }
 }

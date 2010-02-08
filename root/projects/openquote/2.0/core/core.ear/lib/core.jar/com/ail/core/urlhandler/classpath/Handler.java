@@ -39,7 +39,11 @@ public class Handler extends URLStreamHandler {
         String pkg="/"+u.getHost().replace('.', '/');
         String res=u.getPath();
         
-        URL actualURL = getClass().getResource(pkg+res);
+        URL actualURL = Thread.currentThread().getContextClassLoader().getResource(pkg+res);
+        
+        if (actualURL == null) {
+            actualURL=getClass().getResource(pkg+res);
+        }
 
         if (actualURL == null) {
             throw new FileNotFoundException(u.toExternalForm());

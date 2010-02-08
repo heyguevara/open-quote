@@ -36,10 +36,6 @@ import java.security.Principal;
  * Each entry point has associated version and configuration information. The version
  * details are burned into the entry point's source code at build time. The entry point's
  * configuration can be modified at run-time using the setter provided.
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Service.java,v $
  */
 public abstract class Service extends Type implements CoreUser, ConfigurationOwner {
 
@@ -65,7 +61,7 @@ public abstract class Service extends Type implements CoreUser, ConfigurationOwn
     public abstract void invoke() throws BaseException;
 
 	/**
-     * A default entry point implemention returning the version effective date.
+     * A default entry point implementation returning the version effective date.
   	 * Entry points with a critical dependency on selecting the
      * version effective date should override this method. The default behaviour is
      * to use the version effective date from the CallersCore supplied in the Args
@@ -174,7 +170,7 @@ public abstract class Service extends Type implements CoreUser, ConfigurationOwn
 
     /**
      * This method may be used by configuration owners who "share" a
-     * configuration. It reset the configuration based on their
+     * configuration. It resets the configuration based on their
      * namespace rather than their classname.<br>
      * To use it they would overload the resetConfiguration method
      * as follows:<br>

@@ -20,7 +20,7 @@ package com.ail.core.factory;
 
 /**
  * This factory instantiates the class specified as it's key, and initialises the properties of the instance
- * based on the parameters nested in the types definition.<p>
+ * based on the parameters nested in the type's definition.<p>
  * The following section of configuration shows how this factory can be used to create an instance of 
  * {@link com.ail.core.Version Version} and populate some of it's properties:
  * <pre>
@@ -31,21 +31,17 @@ package com.ail.core.factory;
  *    
  *    &lt;types&gt;
  *      &lt;type name="MyVersion" builder="ClassBuilder" key="com.ail.core.Version"&gt;
- *          &lt;parameter name="date"&gt;01/01/2005&lt/parameter&gt;
- *          &lt;parameter name="author"&gt;H.G.Wells&lt/parameter&gt;
- *          &lt;parameter name="comment"&gt;This coffee smells yellow&lt/parameter&gt;
+ *          &lt;parameter name="date"&gt;01/01/2005&lt;/parameter&gt;
+ *          &lt;parameter name="author"&gt;H.G.Wells&lt;/parameter&gt;
+ *          &lt;parameter name="comment"&gt;This coffee smells yellow&lt;/parameter&gt;
  *      &lt;/type&gt;
  *    &lt;/types&gt;
- * &lt;/configuration&gt>
+ * &lt;/configuration&gt;
  * </pre>
  * The example shows the factory itself being bound to a builder name (<code>ClassBuilder</code>). This
  * builder is then used to define the type <code>MyVersion</code>. When an instance of <code>MyVersion</code>
  * is requested, the class <code>com.ail.core.Version</code> will be instantiated, and the setters setDate, setAuthor,
  * and setComment are each invoked in turn and passed the value for corresponding <code>parameter</code>.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/10/24 19:49:59 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/ClassFactory.java,v $
  */
 public class ClassFactory extends AbstractFactory {
     @SuppressWarnings("unchecked")
@@ -53,7 +49,7 @@ public class ClassFactory extends AbstractFactory {
 		String className=typeSpec.getKey();
 
 		try {
-	        Class clazz=Class.forName(className);
+	        Class clazz=Class.forName(className, true, Thread.currentThread().getContextClassLoader());
 	        Object instance=clazz.newInstance();
 	        return instance;
 		}

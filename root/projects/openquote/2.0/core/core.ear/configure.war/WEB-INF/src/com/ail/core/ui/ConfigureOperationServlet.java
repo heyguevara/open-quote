@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.CoreProxy;
+import com.ail.core.configure.server.ServerDeligate;
 
 /**
  * This servlet performs common operations on the core configure system in response to user requests.
@@ -34,7 +35,9 @@ import com.ail.core.CoreProxy;
  * <ul><li>Reset product: op=resetProduct&productName=&lt;path of product to reset&gt;<br/>
  * Resets the specified product and clears it's configuration cache.</li>
  * <li>Clear a product cache: op=clearProductCache&productName=&lt;path of product to reset&gt;<br/>
- * Clears the specified product cache.
+ * Clears the specified product cache.</li>
+ * <li>Reset a configuration namespace: op=resetNamedConfiguration&namespace=&lt;namespace&gt;<br/>
+ * Reset the named configuration namespace to the factory default settings.</li>
  * </ul>
  * </p>
  * @since 2.0
@@ -59,6 +62,13 @@ public class ConfigureOperationServlet extends HttpServlet {
                 core.clearProductCache(productName);
                 core.logInfo("Cache cleared for product: "+productName);
                 response.getWriter().append("<html><body>Cache cleared for product: "+productName+"</body></html>");
+            }
+            else if ("resetNamedConfiguration".equals(op)) {
+                String namespace=request.getParameter("namespace");
+                new ServerDeligate(request.getUserPrincipal()).resetNamedConfiguration(namespace);
+                core.setVersionEffectiveDateToNow();
+                core.logInfo("Configuration reset for namespace: "+namespace);
+                response.getWriter().append("<html><body>Reset configuration namespace: "+namespace+"</body></html>");
             }
         }
         catch(Exception e) {

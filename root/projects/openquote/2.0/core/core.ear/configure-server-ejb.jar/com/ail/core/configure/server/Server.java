@@ -17,16 +17,16 @@
 
 package com.ail.core.configure.server;
 
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+import javax.ejb.EJBObject;
+
+import org.w3c.dom.Element;
+
 import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.configure.finder.GetClassListArg;
-
-import javax.ejb.EJBObject;
-import java.rmi.RemoteException;
-import javax.ejb.EJBException;
-
-import org.w3c.dom.Element;
 
 public interface Server extends EJBObject {
     /** @link dependency */
@@ -65,8 +65,6 @@ public interface Server extends EJBObject {
     GetCommandScriptArg getCommandScript(GetCommandScriptArg arg) throws RemoteException, EJBException;
 
     SetCommandScriptArg setCommandScript(SetCommandScriptArg arg) throws RemoteException, EJBException;
-
-    GetClassListArg getClassList(GetClassListArg arg) throws RemoteException, EJBException;
 
     DeployCarArg deployCar(DeployCarArg arg) throws RemoteException, EJBException;
     

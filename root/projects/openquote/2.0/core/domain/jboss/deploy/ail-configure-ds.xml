@@ -1,24 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ===================================================================== -->
-<!--  JBoss Server Configuration                                           -->
-<!--                                                                       -->
-<!--  Development datasource config for Core Configure system              -->
-<!--                                                                       -->
-<!-- $Revision: 1.2 $                                                     -->
-<!-- $State: Exp $                                                         -->
-<!-- $Date: 2005/07/16 10:23:28 $                                          -->
-<!-- $Source: /home/bob/CVSRepository/projects/core/domain/jboss/deploy/ail-configure-ds.xml,v $          -->
+<!--  Development datasource config for Core's "Configure" system.         -->
+<!--  The core uses this data source to persist system configuration       -->
+<!--  information. The core's loader.properties file (which can be found   -->
+<!--  in the com.ail.core.configure package within core.jar) defines how   -->
+<!--  configuration information should be stored; in the default setup     -->
+<!--  it refers to this data source.                                       -->
 <!-- ===================================================================== -->
-
 
 <datasources>
   <local-tx-datasource>
+
     <jndi-name>ConfigureDS</jndi-name>
-    <connection-url>jdbc:mysql://localhost:3306/core_@major.version@_@minor.version@</connection-url>
-    <driver-class>org.gjt.mm.mysql.Driver</driver-class>
-    <user-name>coreuser</user-name>
-    <password>bombay</password>
+
+    <connection-url>jdbc:hsqldb:${jboss.server.data.dir}${/}hypersonic${/}configureDB</connection-url>
+
+    <driver-class>org.hsqldb.jdbcDriver</driver-class>
+
+    <user-name>sa</user-name>
+    <password></password>
+
+    <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
+    <min-pool-size>5</min-pool-size>
+  
+    <!-- The maximum connections in a pool/sub-pool -->
+    <max-pool-size>20</max-pool-size>
+  
+    <!-- The time before an unused connection is destroyed -->
+    <!-- NOTE: This is the check period. It will be destroyed somewhere between 1x and 2x this timeout after last use -->
+    <!-- TEMPORARY FIX! - Disable idle connection removal, HSQLDB has a problem with not reaping threads on closed connections -->
+    <idle-timeout-minutes>0</idle-timeout-minutes>
+  
+    <!-- Use the security domain defined in conf/login-config.xml -->
+    <security-domain>ConfigureDBRealm</security-domain>
+  
+    <!-- HSQL DB benefits from prepared statement caching -->
+    <prepared-statement-cache-size>32</prepared-statement-cache-size>
+  
+    <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
+    <metadata>
+       <type-mapping>Hypersonic SQL</type-mapping>
+    </metadata>
+  
+    <!-- When using in-process (standalone) mode -->
+    <depends>jboss:service=Hypersonic,database=configureDB</depends>
+
   </local-tx-datasource>
 
+  <!-- For hsqldb accessed from jboss only, in-process (standalone) mode --> 
+  <mbean code="org.jboss.jdbc.HypersonicDatabase" name="jboss:service=Hypersonic,database=configureDB">
+   <attribute name="Database">configureDB</attribute>
+   <attribute name="InProcessMode">true</attribute>
+  </mbean>
+   
 </datasources>

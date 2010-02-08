@@ -18,8 +18,10 @@
 package com.ail.core.persistence.hibernate;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
 import org.hibernate.StaleObjectStateException;
 import org.hibernate.classic.Session;
+import org.hibernate.context.ManagedSessionContext;
 
 import com.ail.core.Core;
 import com.ail.core.PreconditionException;
@@ -30,14 +32,7 @@ import com.ail.core.persistence.CloseSessionArg;
 import com.ail.core.persistence.UpdateException;
 
 /**
- * Implemention of the open session service for Hibernate
- * 
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/08/20 15:03:54 $
- * @source $Source:
- *         /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateUpdateService.java,v $
- * @stereotype service
+ * Implementation of the close session service for Hibernate
  */
 public class HibernateCloseSessionService extends Service {
     private CloseSessionArg args = null;
@@ -86,19 +81,27 @@ public class HibernateCloseSessionService extends Service {
     /**
      * Getter returning the arguments used by this entry point.
      * 
-     * @return An instance of UpdateArgs.
+     * @return An instance of CloseSessionArg.
      */
     public CommandArg getArgs() {
         return args;
     }
 
-    /** The 'business logic' of the entry point. */
+    /** 
+     * The 'business logic' of the entry point. Note that we do not actually
+     * close close the hibernate session here - which is somewhat counterintuitive.
+     * Instead we are making the assumption that Hibernate is configured to use
+     * either "thread" or "jta" as it's "current_session_context_class", and as 
+     * such the session will be closed for us.
+     * */
     public void invoke() throws PreconditionException, UpdateException {
+        SessionFactory factory=null;
         Session session=null;
-
+        
         try {
-            session=HibernateFunctions.getSessionFactory().getCurrentSession();
-            session.flush();
+            factory=HibernateFunctions.getSessionFactory();
+            session=factory.getCurrentSession();
+            session.getTransaction().commit();
         }
         catch (StaleObjectStateException e) {
             throw new UpdateException(e.toString(), e);
@@ -107,7 +110,15 @@ public class HibernateCloseSessionService extends Service {
             throw new UpdateException(e.toString(), e);
         }
         finally {
-            session.close();
+            try {
+                session.close();
+            }
+            catch (StaleObjectStateException e) {
+                throw new UpdateException(e.toString(), e);
+            }
+            finally {
+                ManagedSessionContext.unbind(factory);
+            }
         }
     }
 }

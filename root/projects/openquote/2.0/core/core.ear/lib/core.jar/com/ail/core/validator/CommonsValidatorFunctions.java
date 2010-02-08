@@ -28,10 +28,6 @@ import org.exolab.castor.xml.ValidationException;
 
 /**
  * Commons validator functions
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/CommonsValidatorFunctions.java,v $
  **/
 @SuppressWarnings("deprecation")
 public class CommonsValidatorFunctions {

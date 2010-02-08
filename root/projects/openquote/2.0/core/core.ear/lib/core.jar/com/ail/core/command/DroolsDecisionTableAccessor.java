@@ -18,7 +18,6 @@
 package com.ail.core.command;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.security.Principal;
@@ -144,7 +143,7 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
 
         // first we compile the decision table into a whole lot of rules.
         SpreadsheetCompiler compiler = new SpreadsheetCompiler();
-        String drl = compiler.compile((InputStream)drlUrl.getContent(), InputType.XLS);
+        String drl = compiler.compile(drlUrl.openStream(), InputType.XLS);
 
         if (AccessorLoggingIndicator.FULL.equals(getLoggingIndicator())) {
             core.logInfo("Rules derived from "+getUrl()+"\n"+drl);

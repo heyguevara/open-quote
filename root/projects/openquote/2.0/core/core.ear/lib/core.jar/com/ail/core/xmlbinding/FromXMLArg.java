@@ -24,10 +24,6 @@ import com.ail.core.configure.XMLMapping;
 /**
  * Interface defining the bean class to encapsulate the arguments and returns
  * used by the FromXML entry point(s).
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/FromXMLArg.java,v $
  */
 public interface FromXMLArg extends CommandArg {
 

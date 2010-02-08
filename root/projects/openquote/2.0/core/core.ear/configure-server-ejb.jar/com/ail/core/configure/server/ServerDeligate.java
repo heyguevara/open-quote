@@ -25,14 +25,9 @@ import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
 import com.ail.core.Version;
-import com.ail.core.configure.finder.GetClassListArg;
 
 /**
  * This class acts as a business delegate to the ConfigureServer EJB.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/server/ServerDeligate.java,v $
  */
 public class ServerDeligate {
     private Principal user=null;
@@ -119,10 +114,6 @@ public class ServerDeligate {
 
     public SetCommandScriptArg setCommandScript(SetCommandScriptArg arg) throws Exception {
         return configureServer().setCommandScript(arg);
-    }
-
-    public GetClassListArg getClassList(GetClassListArg arg) throws Exception  {
-        return configureServer().getClassList(arg);
     }
 
     public DeployCarArg deployCar(DeployCarArg arg) throws Exception  {

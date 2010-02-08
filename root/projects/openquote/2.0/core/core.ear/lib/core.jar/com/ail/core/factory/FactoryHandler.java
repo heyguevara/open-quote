@@ -55,7 +55,7 @@ public class FactoryHandler {
 
         if (builder.getInstance()==null) {
 			try {
-				Class clazz=Class.forName(builder.getFactory());
+				Class clazz=Class.forName(builder.getFactory(), true, Thread.currentThread().getContextClassLoader());
 				builder.setInstance((AbstractFactory)clazz.newInstance());
 			}
             catch(ClassNotFoundException e) {

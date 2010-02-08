@@ -112,7 +112,7 @@ abstract public class Command extends AbstractCommand {
 
     /**
      * Set the service's configuration. This method simply
-     * deligates to the service's setConfiguration method.
+     * delegates to the service's setConfiguration method.
      * @see #getConfiguration
      * @param config The configuration to pass to the service.
      */

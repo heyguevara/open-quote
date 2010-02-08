@@ -23,10 +23,6 @@ import com.ail.core.configure.XMLMapping;
 
 /**
  * This is a concrete implementation of the CommandArg for the ToXML entry point.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/ToXMLArgImp.java,v $
  */
 public class ToXMLArgImp extends CommandArgImp implements ToXMLArg {
     private Object objectIn = null;

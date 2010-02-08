@@ -47,7 +47,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     private String namespace=null;
 
     /**
-     * Default constructor. This creates a core proxy with the default configation namespace ("com.ail.core.CoreProxy"),  
+     * Default constructor. This creates a core proxy with the default configuration namespace ("com.ail.core.CoreProxy"),  
      * a default version effective date of Date.now() and a security principal set to null.
      */
     public CoreProxy() {
@@ -287,7 +287,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     public boolean resetConfiguration(String configOwnerClassName) {
 		try {
 			// get hold of the config owners class
-            Class configOwner=Class.forName(configOwnerClassName);
+            Class configOwner=Class.forName(configOwnerClassName, true, Thread.currentThread().getContextClassLoader());
 
 			// Create an instance of the owner class
 			ConfigurationOwner co=(ConfigurationOwner)configOwner.newInstance();
@@ -532,7 +532,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The parameter's name may be dot seperated indicating
+     * The parameter's name may be dot separated indicating
      * that the parameter is nested within one of more groups.
      * @param name The name of the parameter to be returned.
      * @return The parameter, or null if one is not defined for this namespace and version effective date.

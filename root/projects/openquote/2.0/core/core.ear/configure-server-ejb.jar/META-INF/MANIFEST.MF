@@ -4,6 +4,7 @@ Created-By: 1.4.1_06-b01 (Sun Microsystems Inc.)
 Built-By: Applied Industrial Logic
 Class-Path: lib/core.jar
   @castor-xml.jar@
+  @castor-core.jar@
   @commons-jxpath.jar@
   @commons-beanutils.jar@
   @commons-collections.jar@

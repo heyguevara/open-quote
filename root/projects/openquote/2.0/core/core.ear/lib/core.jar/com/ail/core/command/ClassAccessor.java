@@ -57,7 +57,7 @@ public class ClassAccessor extends Accessor {
 
 	public void setServiceClass(String serviceClass) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.serviceClass=serviceClass;
-		this.instance=(Service)Class.forName(serviceClass).newInstance();
+		this.instance=(Service)Class.forName(serviceClass, true, Thread.currentThread().getContextClassLoader()).newInstance();
     }
 
 	public String getServiceClass() {

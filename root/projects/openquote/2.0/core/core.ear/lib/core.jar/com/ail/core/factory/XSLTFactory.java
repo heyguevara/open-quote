@@ -21,11 +21,8 @@
  */
 package com.ail.core.factory;
 
-import javax.xml.transform.TransformerException;
-
 import com.ail.core.Core;
 import com.ail.core.TypeXPathException;
-import com.ail.core.XMLException;
 import com.ail.core.XMLString;
 import com.ail.core.configure.Type;
 
@@ -41,7 +38,7 @@ import com.ail.core.configure.Type;
  * "orange and pineapple" rather than "Peach and mint".<p>
  * <pre>
  * &lt;type name="OtherVersion" builder="CastorBuilder" key="com.ail.core.Version"&gt;
- *   &lt;patameter name="script"&gt;&lt;![CDATA[
+ *   &lt;parameter name="script"&gt;&lt;![CDATA[
  *     &lt;?xml version="1.0" encoding="UTF-8"?&gt;
  *     &lt;version serialVersion='0' lock='false' xsi:type='java:com.ail.core.Version' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'&gt;" +
  *       &lt;source&gt;Peach and mint&lt;/source&gt;
@@ -57,7 +54,7 @@ import com.ail.core.configure.Type;
  *
  * &lt;type name="NewVersion" builder="XSLTBuilder" key="com.ail.core.Version"&gt;
  *   &lt;parameter name="extends"&gt;OtherVersion&lt;/parameter&gt;
- *   &lt;patameter name="script"&gt;&lt;![CDATA[
+ *   &lt;parameter name="script"&gt;&lt;![CDATA[
  *      &lt;?xml version="1.0" encoding="UTF-8"?&gt;
  *      &lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"&gt;
  *      &lt;xsl:output encoding="UTF-8" indent="no" method="xml" version="1.0"/&gt;
@@ -111,27 +108,23 @@ public class XSLTFactory extends AbstractFactory {
 
               return core.fromXML(xml.getType(), xml);
           }
-          catch (ClassNotFoundException e) {
-              e.printStackTrace();
-              throw new FactoryConfigurationError("Type script: '" + typeSpec.getName() + "' " + e.getMessage());
-          }
-          catch (XMLException e) {
-              e.printStackTrace();
-              throw new FactoryConfigurationError("Type script: '" + typeSpec.getName() + "' " + e.getMessage());
-          }
-          catch (TransformerException e) {
+          catch (Exception e) {
               e.printStackTrace();
               throw new FactoryConfigurationError("Type script: '" + typeSpec.getName() + "' " + e.getMessage());
           }
       }
-      catch (Throwable e) {
+      catch(TypeXPathException e) {
           throw new FactoryConfigurationError("TypeXML for: '" + typeSpec.getName() + "' does not define variable 'script'");
+      }
+      catch (Throwable e) {
+          e.printStackTrace();
+          throw new FactoryConfigurationError("Type script: '" + typeSpec.getName() + "' " + e.getMessage());
       }
   }
 
     /**
      * Creating types using this factory is potentially expensive in terms of
-     * performace. At a minimum we have to run and XSLT, but a more normal usage
+     * performance. At a minimum we have to run and XSLT, but a more normal usage
      * of this factory where a type is based on another type is far more
      * intensive. It means creating an instance of the base type, marshalling
      * it, running the XSLT, then unmarshal the result of the XSLT. Creating an

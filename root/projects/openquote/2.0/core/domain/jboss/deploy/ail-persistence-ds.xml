@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ===================================================================== -->
-<!--  JBoss Server Configuration                                           -->
-<!--                                                                       -->
-<!--  Development datasource config for Core Persistence system            -->
-<!--                                                                       -->
-<!-- $Revision: 1.2 $                                                      -->
-<!-- $State: Exp $                                                         -->
-<!-- $Date: 2005/07/16 10:23:28 $                                          -->
-<!-- $Source: /home/bob/CVSRepository/projects/core/domain/jboss/deploy/ail-persistence-ds.xml,v $ -->
+<!--  Development datasource config for Core's "Persistence" system.       -->
+<!--  The persistence components of the core are used to store user data.  -->
+<!--  In the default configuration this is achieved using a Hibernate      -->
+<!--  plugin which picks up this data source by virtue of the settings in  -->
+<!--  HibernateConfiguration.xml within the com.ail.core.persistence.      -->
+<!--  hibernate package.                                                   -->
 <!-- ===================================================================== -->
-
 
 <datasources>
   <local-tx-datasource>
     <jndi-name>PersistenceDS</jndi-name>
-    <connection-url>jdbc:mysql://localhost:3306/core_@major.version@_@minor.version@</connection-url>
-    <driver-class>org.gjt.mm.mysql.Driver</driver-class>
-    <user-name>coreuser</user-name>
-    <password>bombay</password>
+
+    <connection-url>jdbc:hsqldb:${jboss.server.data.dir}${/}hypersonic${/}persistenceDB</connection-url>
+
+    <driver-class>>org.hsqldb.jdbcDriver</driver-class>
+
+    <user-name>sa</user-name>
+    <password></password>
+
+    <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
+    <min-pool-size>5</min-pool-size>
+  
+    <!-- The maximum connections in a pool/sub-pool -->
+    <max-pool-size>20</max-pool-size>
+  
+    <!-- The time before an unused connection is destroyed -->
+    <!-- NOTE: This is the check period. It will be destroyed somewhere between 1x and 2x this timeout after last use -->
+    <!-- TEMPORARY FIX! - Disable idle connection removal, HSQLDB has a problem with not reaping threads on closed connections -->
+    <idle-timeout-minutes>0</idle-timeout-minutes>
+  
+    <!-- Use the security domain defined in conf/login-config.xml -->
+    <security-domain>PersistenceDBRealm</security-domain>
+  
+    <!-- HSQL DB benefits from prepared statement caching -->
+    <prepared-statement-cache-size>32</prepared-statement-cache-size>
+  
+    <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
+    <metadata>
+       <type-mapping>Hypersonic SQL</type-mapping>
+    </metadata>
+  
+    <!-- When using in-process (standalone) mode -->
+    <depends>jboss:service=Hypersonic,database=persistenceDB</depends>
+
   </local-tx-datasource>
 
+  <!-- For hsqldb accessed from jboss only, in-process (standalone) mode --> 
+  <mbean code="org.jboss.jdbc.HypersonicDatabase" name="jboss:service=Hypersonic,database=persistenceDB">
+   <attribute name="Database">persistenceDB</attribute>
+   <attribute name="InProcessMode">true</attribute>
+  </mbean>
 </datasources>

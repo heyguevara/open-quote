@@ -24,10 +24,6 @@ import com.ail.core.BaseException;
 
 /**
  * This is the super class of all command objects.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/AbstractCommand.java,v $
  */
 public abstract class AbstractCommand extends Type {
 	/**

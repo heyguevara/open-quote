@@ -421,7 +421,7 @@ that the code has already taken care of checking the '&amp;' which much prefix e
  and setters, and the following castor mapping: &lt;pre&gt;&lt;small&gt;
     ...
     &amp;lt;class name="com.core.MyObject"&amp;gt;
-       &amp;lt;field name="myBitOfXml" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler"&amp;gt;
+       &amp;lt;field name="myBitOfXml" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.castor.CastorXMLStringFieldHandler"&amp;gt;
            &amp;lt;bind-xml type="any" node="element"/&amp;gt; 
        &amp;lt;/field&amp;gt;
    &amp;lt;/class&amp;gt;
@@ -545,7 +545,7 @@ that the code has already taken care of checking the '&amp;' which much prefix e
  If defined, castor uses the handler to marshal objects to XML.&lt;p&gt;
  To use this handler, set the field up as follows in the mapping file:&lt;p&gt;
  &amp;lt;field name="value" type="string" required="false"&lt;p&gt;
- &amp;nbsp;&amp;nbsp;direct="false" transient="false" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"&amp;gt;&lt;p&gt;
+ &amp;nbsp;&amp;nbsp;direct="false" transient="false" handler="com.ail.core.xmlbinding.castor.CastorCDataFieldHandler"&amp;gt;&lt;p&gt;
  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;bind-xml node="text" reference="false"/&amp;gt;&lt;p&gt;
  &amp;nbsp;&amp;nbsp;&amp;lt;/field&amp;gt;&lt;p&gt;
  @version $Revision: 1.3 $
@@ -3636,7 +3636,7 @@ that the code has already taken care of checking the '&amp;' which much prefix e
  "H.G.Wells" has replaced "T.S.Elliot". But where ExtendingType doesn't define a value ('comment' for example), BaseType's 
  value appears in the result. Also, notice that the merge is 'deep'; if you look at the properties on the 'id="two"' attribute 
  you can see that the same merging rules have been applied to them. 
- @see com.ail.core.xmlbinding.CastorFromXMLService
+ @see com.ail.core.xmlbinding.castor.CastorFromXMLService
  @version $Revision: 1.8 $
  @state $State: Exp $
  @date $Date: 2007/06/13 21:24:36 $

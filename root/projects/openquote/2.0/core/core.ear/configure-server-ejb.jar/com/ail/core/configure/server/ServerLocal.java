@@ -17,19 +17,14 @@
 
 package com.ail.core.configure.server;
 
-import javax.ejb.EJBLocalObject;
-import com.ail.core.VersionEffectiveDate;
 import javax.ejb.EJBException;
-import com.ail.core.Version;
-import java.lang.String;
-import com.ail.core.configure.server.GetNamespacesArg;
-import com.ail.core.configure.server.GetConfigurationArg;
-import com.ail.core.configure.server.SetConfigurationArg;
-import com.ail.core.configure.server.GetCommandScriptArg;
-import com.ail.core.configure.server.SetCommandScriptArg;
-import com.ail.core.configure.Configuration;
-import com.ail.core.configure.finder.GetClassListArg;
+import javax.ejb.EJBLocalObject;
+
 import org.w3c.dom.Element;
+
+import com.ail.core.Version;
+import com.ail.core.VersionEffectiveDate;
+import com.ail.core.configure.Configuration;
 
 public interface ServerLocal extends EJBLocalObject {
     /** @link dependency */
@@ -66,8 +61,6 @@ public interface ServerLocal extends EJBLocalObject {
     GetCommandScriptArg getCommandScript(GetCommandScriptArg arg) throws EJBException;
 
     SetCommandScriptArg setCommandScript(SetCommandScriptArg arg) throws EJBException;
-
-    GetClassListArg getClassList(GetClassListArg arg) throws EJBException;
 
     DeployCarArg deployCar(DeployCarArg arg) throws EJBException;
     

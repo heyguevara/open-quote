@@ -18,19 +18,12 @@
 package com.ail.core.factory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 
-import org.castor.mapping.BindingType;
-import org.castor.mapping.MappingUnmarshaller;
-import org.exolab.castor.mapping.Mapping;
-import org.exolab.castor.mapping.MappingLoader;
-import org.exolab.castor.xml.ClassDescriptorResolverFactory;
 import org.exolab.castor.xml.Unmarshaller;
-import org.exolab.castor.xml.XMLClassDescriptorResolver;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -38,6 +31,7 @@ import org.xml.sax.SAXException;
 import com.ail.core.Core;
 import com.ail.core.Functions;
 import com.ail.core.configure.Type;
+import com.ail.core.xmlbinding.castor.CastorMappingContext;
 
 /**
  * Factory to create class instances from XML using the core's FromXML service.
@@ -99,15 +93,15 @@ import com.ail.core.configure.Type;
  *            &lt;attribute id="two" value="overriden-two" format='string,32'/&gt;
  *          &lt;/type&gt;
  * </small></pre> 
- * As you can see, in the resulting instance the property values defined in ExtendingType have overriden those is BaseType. So, 
+ * As you can see, in the resulting instance the property values defined in ExtendingType have overridden those is BaseType. So, 
  * "H.G.Wells" has replaced "T.S.Elliot". But where ExtendingType doesn't define a value ('comment' for example), BaseType's 
  * value appears in the result. Also, notice that the merge is 'deep'; if you look at the properties on the 'id="two"' attribute 
  * you can see that the same merging rules have been applied to them. 
- * @see com.ail.core.xmlbinding.CastorFromXMLService
+ * @see com.ail.core.xmlbinding.castor.CastorFromXMLService
  */
 public class CastorXMLFactory extends AbstractFactory {
-    private XMLClassDescriptorResolver xmlClassResolver;
-    
+    private CastorMappingContext castorMappingContext=new CastorMappingContext(); 
+
     /**
      * Nothing to do here, leave all the work to initialiseType.
      */
@@ -115,37 +109,6 @@ public class CastorXMLFactory extends AbstractFactory {
         return null;
     }
 
-    /**
-     * Fetch the castor mapping and return it. This class shares the castor mapping used by the
-     * Castor[ToFrom]Xml services.
-     * @return Mapping instance.
-     */
-    private XMLClassDescriptorResolver fetchXmlClassResolver() {
-        if (xmlClassResolver==null) {
-            try {
-                // ... create a new Mapping
-                Mapping mapping=new Mapping();
-                
-                // add the default mapping to it
-                InputStream stream=getClass().getResourceAsStream("/com/ail/core/xmlbinding/CastorBaseMapping.xml");
-                mapping.loadMapping(new InputSource(stream));
-
-                xmlClassResolver = (XMLClassDescriptorResolver) ClassDescriptorResolverFactory.createClassDescriptorResolver(BindingType.XML);
-                MappingUnmarshaller mum = new MappingUnmarshaller();
-                MappingLoader loader = mum.getMappingLoader(mapping, BindingType.XML);
-                xmlClassResolver.setMappingLoader(loader);
-                
-                stream.close();
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-                throw new FactoryConfigurationError("Failed to load castor mapping file");
-            }
-        }
-
-        return xmlClassResolver;
-    }
-    
     @SuppressWarnings("unchecked")
     protected Object initialiseType(Object o, Type typeSpec, Core core) {
         String script=typeSpec.findParameterValue("Script");
@@ -173,12 +136,10 @@ public class CastorXMLFactory extends AbstractFactory {
                 configurationURL=configureUrl.toExternalForm();
             }
 
-            Class type=Class.forName(typeSpec.getKey());
+            Class type=Class.forName(typeSpec.getKey(), true, Thread.currentThread().getContextClassLoader());
             
-            Unmarshaller unmarshaller=new Unmarshaller(type, this.getClass().getClassLoader());
-
-            unmarshaller.setResolver(fetchXmlClassResolver());
-
+            Unmarshaller unmarshaller=castorMappingContext.createUnmarshaller();
+            unmarshaller.setClass(type);
             unmarshaller.setEntityResolver(new RelativeURLEntityResolver(configurationURL));
             
             Object ret=unmarshaller.unmarshal(reader);
@@ -212,8 +173,8 @@ public class CastorXMLFactory extends AbstractFactory {
      * EntityResolver to convert '~/' URIs into a URI relative to the URI from which the 
      * type is being loaded. If the string defining a type is read from a url (see URL Parameter here: 
      * {@link CastorXMLFactory}) we want the contents of that URL to be able to 'xinclude' other
-     * content from the same location. However, by defalt xinclude doesn't support relative href
-     * (this is a simplification, but for us using xml:base doesn't help becuase it has to defined
+     * content from the same location. However, by default xinclude doesn't support relative href
+     * (this is a simplification, but for us using xml:base doesn't help because it has to defined
      * an absolute URI too). This Resolver turns any 'href' found in the type's string into 
      * a URI relative to the file that xincludes it.
      */

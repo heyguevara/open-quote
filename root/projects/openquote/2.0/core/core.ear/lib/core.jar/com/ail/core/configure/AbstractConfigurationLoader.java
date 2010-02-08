@@ -230,7 +230,7 @@ public abstract class AbstractConfigurationLoader {
                 }
 
                 // get hold of the loader class itself
-                Class loaderClass = Class.forName(loaderClassName);
+                Class loaderClass = Class.forName(loaderClassName, true, Thread.currentThread().getContextClassLoader());
 
                 addDefaultProperties();
 

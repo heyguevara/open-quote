@@ -24,7 +24,7 @@ import com.ail.core.Type;
 /**
  * This class acts as a grouping for sets of related translations (@link Translation).
  * Helper methods are also supplied to assist in the act of translation (@link {@link #translate(String)} and {@link #translate(String, String)})
- * Translatons define a default language
+ * Translations define a default language
  */
 public class Translations extends Type {
     private String defaultLanguage=null;

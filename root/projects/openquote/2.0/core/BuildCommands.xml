@@ -18,25 +18,12 @@
     <kick-jboss-macro />
   </target>
 
-	<target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
-		<content-download-export-macro/>
-	</target>
-  
+  <target name="alfresco: download export"
+    description="Download a repository export from alfresco and unpack into the folder deploy/export">
+    <content-download-export-macro />
+  </target>
+
   <target name="ail: reset configurations" description="reset all the ail configurations">
-		<ail-reset-configurations-macro>
-			<paths>
-	      <dirset dir="${project.dir}/core.ear" includes="*.jar"/>
-	      <dirset dir="${project.dir}/core.ear" includes="*.war/WEB-INF/src"/>
-			</paths>
-		  <configs>
-	      <arg value="com.ail.core.configure.server.ServerBean"/>
-	      <arg value="com.ail.core.validator.CommonsValidatorService"/>
-	      <arg value="com.ail.core.persistence.PersistenceServerBean"/>
-	      <arg value="com.ail.core.product.ProductManagerBean"/>
-	      <arg value="com.ail.core.command.CommandServerBean"/>
-	      <arg value="com.ail.core.product.listproducts.ListProductsService"/>
-	      <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
-			</configs>
-    </ail-reset-configurations-macro>
+    <ail-reset-configurations-macro/>
   </target>
 </project>

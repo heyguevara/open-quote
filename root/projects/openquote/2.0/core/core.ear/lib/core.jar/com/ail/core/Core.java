@@ -39,7 +39,6 @@ import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.Types;
 import com.ail.core.configure.XMLMapping;
-import com.ail.core.configure.finder.GetClassListArg;
 import com.ail.core.document.Document;
 import com.ail.core.document.generatedocument.GenerateDocumentCommand;
 import com.ail.core.factory.Factory;
@@ -112,7 +111,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     }
 
 	/**
-     * Get the core's version effective date. This date is used to determin
+     * Get the core's version effective date. This date is used to determine
      * which versions of object and configurations to use when handling requests
      * made by the core. The client (coreUser) will have defines their own
      * version effective date, this one is only used as a fallback.<p>
@@ -148,7 +147,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * then its configuration (the configuration associated with the owner) is
      * returned. Otherwise the core system's configuration is returned. The
      * configuration returned is version dependent - the callers getVersionEffectiveDate()
-     * method will be invoked to determin which version of configuration to return.
+     * method will be invoked to determine which version of configuration to return.
      * @return The configuration associated with the current namespace.
      * @see com.ail.core.configure.ConfigurationOwner
      * @see com.ail.core.CoreUser#getVersionEffectiveDate
@@ -195,7 +194,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         t.setKey("com.ail.core.command.ClassAccessor");
         Parameter p=new Parameter();
         p.setName("ServiceClass");
-        p.setValue("com.ail.core.xmlbinding.CastorFromXMLService");
+        p.setValue("com.ail.core.xmlbinding.castor.CastorFromXMLService");
         t.addParameter(p);
         
         t=new com.ail.core.configure.Type();
@@ -254,7 +253,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The group's name may be dot seperated indicating
+     * The group's name may be dot separated indicating
      * that the group is nested within other groups.
      * @param name The name of the group to be returned.
      * @return The configuration group, or null if one is not defined for this namespace and version effective date.
@@ -286,7 +285,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The parameter's name may be dot seperated indicating
+     * The parameter's name may be dot separated indicating
      * that the parameter is nested within one of more groups.
      * @param name The name of the parameter to be returned.
      * @return The parameter, or null if one is not defined for this namespace and version effective date.
@@ -452,8 +451,8 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Output a message to the Warning logging channel.
 	 * Messages written to this channel indicate that something unexpected
-     * occured, but that it was dealt with and is not thought (by the developer)
-     * to be if great importence.
+     * happened, but that it was dealt with and is not thought (by the developer)
+     * to be if great importance.
      * @param message The text of the message to be output.
      */
     public void logWarning(String message, Throwable cause) {
@@ -737,10 +736,6 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         
         return result;
 	}
-
-    public GetClassListArg getClassList(GetClassListArg arg) {
-        throw new NotImplementedError("Core.getClassList");
-    }
 
     /**
      * Return the security principal associated with this core's core user.

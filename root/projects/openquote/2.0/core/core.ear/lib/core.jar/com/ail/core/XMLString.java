@@ -57,10 +57,6 @@ import org.xml.sax.SAXException;
  * attempt to be a complete replacement for using javax.xml
  * directly, it just takes some of the pain out of the most
  * common usages.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/04/15 22:18:33 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/XMLString.java,v $
  **/
 public class XMLString implements Cloneable, Serializable {
     static final long serialVersionUID = -7687502065734633603L;
@@ -150,7 +146,7 @@ public class XMLString implements Cloneable, Serializable {
     }
 
     /**
-     * Constructor that builds an XMLString based the docuemnt read from
+     * Constructor that builds an XMLString based the document read from
      * the specified input stream.
      * @param inputStream Stream to read document from.
      * @throws IOException if the input stream cannot be read.
@@ -474,7 +470,7 @@ public class XMLString implements Cloneable, Serializable {
             throw new ClassNotFoundException("Class not found, xsi type was not present on root element.");
         }
         else {
-            return Class.forName(type);
+            return Class.forName(type, true, Thread.currentThread().getContextClassLoader());
         }
     }
 

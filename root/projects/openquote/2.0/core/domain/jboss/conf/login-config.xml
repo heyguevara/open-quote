@@ -78,6 +78,42 @@ $Revision: 64598 $
        </authentication>
     </application-policy>
 
+    <application-policy name = "PersistenceDBRealm">
+       <authentication>
+          <login-module code = "org.jboss.resource.security.ConfiguredIdentityLoginModule"
+             flag = "required">
+             <module-option name = "principal">sa</module-option>
+             <module-option name = "userName">sa</module-option>
+             <module-option name = "password"></module-option>
+             <module-option name = "managedConnectionFactoryName">jboss.jca:service=LocalTxCM,name=PersistenceDS</module-option>
+          </login-module>
+       </authentication>
+    </application-policy>
+
+    <application-policy name = "PortalDBRealm">
+       <authentication>
+          <login-module code = "org.jboss.resource.security.ConfiguredIdentityLoginModule"
+             flag = "required">
+             <module-option name = "principal">sa</module-option>
+             <module-option name = "userName">sa</module-option>
+             <module-option name = "password"></module-option>
+             <module-option name = "managedConnectionFactoryName">jboss.jca:service=LocalTxCM,name=PortalDS</module-option>
+          </login-module>
+       </authentication>
+    </application-policy>
+
+    <application-policy name = "ConfigureDBRealm">
+       <authentication>
+          <login-module code = "org.jboss.resource.security.ConfiguredIdentityLoginModule"
+             flag = "required">
+             <module-option name = "principal">sa</module-option>
+             <module-option name = "userName">sa</module-option>
+             <module-option name = "password"></module-option>
+             <module-option name = "managedConnectionFactoryName">jboss.jca:service=LocalTxCM,name=ConfigureDS</module-option>
+          </login-module>
+       </authentication>
+    </application-policy>
+
     <application-policy name = "JmsXARealm">
        <authentication>
           <login-module code = "org.jboss.resource.security.ConfiguredIdentityLoginModule"

@@ -1,0 +1,29 @@
+# List of test classes that will be listed and executable from
+# the TestServlet (http://localhost:8080/test/TestServlet)
+#
+com.ail.coretest.configuration.TestJDBCConfigurationLoader
+com.ail.coretest.configuration.TestEJBConfigurationLoader
+com.ail.coretest.TestConfigurationServices
+com.ail.coretest.TestCoreConfigReset
+com.ail.coretest.TestCoreConfiguration
+com.ail.coretest.TestCoreFactory
+com.ail.coretest.TestCoreHibernatePersistence
+com.ail.coretest.TestCoreLogging
+com.ail.coretest.TestCoreValidator
+com.ail.coretest.TestCoreXMLBinding
+com.ail.coretest.TestCoreXMLMapping
+com.ail.coretest.TestFinderService
+com.ail.coretest.TestProductServices
+com.ail.coretest.TestServiceInvocation
+com.ail.coretest.TestTypeClone
+com.ail.coretest.TestTypeXpath
+com.ail.coretest.TestUrlHandlers
+com.ail.coretest.TestXMLString
+com.ail.coretest.TestFactoryTypeMerging
+com.ail.coretest.TestAttribute
+com.ail.coretest.TestUtilityFunctions
+com.ail.coretest.TestCoreXMLStringMapping
+com.ail.coretest.TestGenerateDocument
+com.ail.coretest.TestExceptionRecord
+com.ail.coretest.TestLocale
+com.ail.coretest.TestTranslations

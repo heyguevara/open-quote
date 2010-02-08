@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for the core project.
- $Revision: 1.20 $
- $State: Exp $
- $Date: 2007/12/22 10:40:49 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/Build.xml,v $
 -->
 
 <project default="build" name="core:core.ear">
@@ -24,6 +20,7 @@
     <ant dir="./configure.war" antfile="Build.xml" target="_build" />
     <ant dir="./content-browser.war" antfile="Build.xml" target="_build" />
     <ant dir="./news-reader.war" antfile="Build.xml" target="_build" />
+    <ant dir="./test.war" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro />
   </target>
 
@@ -55,7 +52,6 @@
         <get-lib-macro artifact="commons-lang" group="commons-lang" version="2.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-pool" group="commons-pool" version="1.0.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-validator" group="commons-validator" version="1.1.4" type="jar" repo="repo1.maven.org/maven2" />
-        <get-lib-macro artifact="jaxrpc" group="jaxrpc" version="1.0" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="opensaml" group="xfire" version="1.0.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="saaj" group="sun" version="1.1" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="wss4j" group="wss4j" version="1.3" type="jar" repo="75.101.150.249/repo" />
@@ -69,7 +65,8 @@
         <get-lib-macro artifact="batik-all" group="batik" version="1.6" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="bvfl" group="bvfl" version="1.0" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="c3p0" group="c3p0" version="0.8.2" type="jar" repo="75.101.150.249/repo" />
-        <get-lib-macro artifact="castor-xml" group="castor" version="1.1-ail" type="jar" repo="75.101.150.249/repo" />
+        <get-lib-macro artifact="castor-core" group="castor" version="1.3.1" type="jar" repo="75.101.150.249/repo" />
+        <get-lib-macro artifact="castor-xml" group="castor" version="1.3.1" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="cglib" group="cglib" version="2.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="colt" group="colt" version="1.2.0" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="concurrent" group="concurrent" version="1.3.4" type="jar" repo="repo1.maven.org/maven2" />
@@ -81,7 +78,6 @@
         <get-lib-macro artifact="drools-decisiontables" group="drools" version="4.0.3" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="fop" group="fop" version="0.93" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="hibernate" group="hibernate" version="3.2.1-patched" type="jar" repo="75.101.150.249/repo" />
-        <get-lib-macro artifact="hsqldb" group="hsqldb" version="1.7.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="itext" group="itext" version="1.2.mg" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="jaas" group="jaas" version="1.0" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="jakarta-oro" group="jakarta-oro" version="2.0.7" type="jar" repo="75.101.150.249/repo" />
@@ -102,7 +98,6 @@
         <get-lib-macro artifact="xpp3" group="xpp3" version="1.1.3.4.0" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="xstream" group="xstream" version="1.2.2" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="xmlgraphics-commons" group="xmlgraphics-commons" version="1.1" type="jar" repo="75.101.150.249/repo" />
-        <!--get-lib-macro name="development.jar" jarname="development-0.0.9.jar" /-->
       </libs-list>
     </get-libs-macro>
 
@@ -110,7 +105,7 @@
         connectionpoolloader.params=jndiname=java:/ConfigureDS;table=config
         major.version=${major.version}
         minor.version=${minor.version}
-        dbname=${dbname}
+        hsql.data.dir=${hsql.data.dir}
     </echo>
 
     <subant-macro target="setup" />

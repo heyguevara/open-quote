@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision$
+ $Author$
+ $State$
+ $Date$
+ $Source$
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+    <name>Default XMLString XML Mapping test Configuration</name>
+    <timeout>600000</timeout>
+    <who>factory</who>
+    <version>$Revision$</version>
+
+    <XMLMapping>
+    	<definition><![CDATA[
+<mapping>
+    <class name="com.ail.core.document.generatedocument.StyleDocumentCommand">
+        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.castor.CastorXMLStringFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
+        <field name="styledDocumentRet" type="com.ail.core.XMLString"/>
+    </class>
+</mapping>
+      ]]></definition>
+    </XMLMapping>
+</configuration>

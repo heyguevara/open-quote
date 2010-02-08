@@ -23,10 +23,6 @@ import com.ail.core.configure.XMLMapping;
 
 /**
  * This is the implementation of FromXMLArg used to pass arguments to and from the FromXML entry point(s).
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/FromXMLArgImp.java,v $
  */
 @SuppressWarnings("unchecked")
 public class FromXMLArgImp extends CommandArgImp implements FromXMLArg {

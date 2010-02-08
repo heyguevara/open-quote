@@ -81,7 +81,7 @@ public final class TypeXPathFunctionRegister {
                         if (functionGroup!=null) {
                             for(Parameter p:functionGroup.getParameter()) {
                                 try {
-                                    clazz = Class.forName(p.getValue());
+                                    clazz = Class.forName(p.getValue(), true, Thread.currentThread().getContextClassLoader());
                                     fl.addFunctions(new ClassFunctions(clazz, p.getName()));
                                     cp.logInfo("Loaded JXPath function class: '"+p.getValue()+"' into namespace:"+p.getName());
                                 }
