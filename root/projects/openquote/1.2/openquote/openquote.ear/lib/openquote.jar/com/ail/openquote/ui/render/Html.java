@@ -20,6 +20,7 @@ import static com.ail.core.Attribute.YES_OR_NO_FORMAT;
 import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.messages.I18N.i18n;
 import static com.ail.openquote.ui.util.Functions.expandRelativeUrlToProductUrl;
+import static com.ail.openquote.ui.util.Functions.convertProductUrlToExternalForm;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.findErrors;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
@@ -2006,8 +2007,18 @@ public class Html extends Type implements Renderer {
             
             renderTaxSummary(w, quote);
             
+            // if a wordings URL was supplied...
             if (quotationSummary.getWordingsUrl()!=null) {
-                w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", expandRelativeUrlToProductUrl(quotationSummary.getWordingsUrl(), request, quote.getProductTypeId()));
+            	String wordingUrl;
+            	
+            	// ... pick it out of the model...
+            	wordingUrl=quotationSummary.getWordingsUrl();
+            	// ... make it absolute (it may be a product relative URL starting with a ~)
+            	wordingUrl=expandRelativeUrlToProductUrl(wordingUrl, request, quote.getProductTypeId());
+            	// ... we're giving it back to the client, so put it into a form that the client can consume...
+            	wordingUrl=convertProductUrlToExternalForm(new URL(wordingUrl)).toExternalForm();
+            	// ... and output the link.
+            	w.printf("               <li>"+i18n("i18n_quotation_summary_sample_wording_message")+"</li>", wordingUrl);
             }
             w.printf("           </ul>");
             w.printf("       </td>");
