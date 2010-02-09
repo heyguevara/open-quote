@@ -31,8 +31,6 @@ import javax.portlet.RenderResponse;
 import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
-import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.util.Choice;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 
