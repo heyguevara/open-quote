@@ -21,11 +21,6 @@ import static java.util.Locale.CANADA;
 import static java.util.Locale.GERMANY;
 import static java.util.Locale.UK;
 import static java.util.Locale.US;
-
-import java.text.DecimalFormat;
-import java.text.Format;
-import java.text.MessageFormat;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

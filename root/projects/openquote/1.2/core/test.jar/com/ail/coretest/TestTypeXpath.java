@@ -233,6 +233,7 @@ public class TestTypeXpath extends CoreUserTestCase {
         System.out.println(v.xpathGet("contains(plop,plopplop)"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testCollection() {
         Version v = new Version();
         
