@@ -22,6 +22,9 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
+/*
+ * @deprecated Use Alfresco's bootstap mechanism, or smb instead.
+ */
 public class CmsUploaderAntTask extends Task {
     private String host;
     private String username;

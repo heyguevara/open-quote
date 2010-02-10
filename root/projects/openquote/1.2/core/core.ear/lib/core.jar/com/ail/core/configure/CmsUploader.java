@@ -64,6 +64,7 @@ import com.ail.core.XMLString;
  * All file nodes are created in CMS for the system's default locale.</br><br/>
  * When file nodes are created, the 'mixin:versionable' property is set. Any subsequent update creates a 
  * new version. All nodes that are updated or created are labeled as "LIVE".
+ * @deprecated Use Alfresco's bootstap mechanism, or smb instead.
  */
 public class CmsUploader {
     protected static final Store STORE = new Store(Constants.WORKSPACE_STORE, "SpacesStore");
@@ -396,18 +397,10 @@ public class CmsUploader {
             return cause;
         }
 
-        public void setCause(Throwable cause) {
-            this.cause = cause;
-        }
-
         public String getMessage() {
             return message;
         }
 
-        public void setMessage(String message) {
-            this.message = message;
-        }
-    
         public String toString() {
             return cause==null ? message : message+" due to:"+cause;
         }
