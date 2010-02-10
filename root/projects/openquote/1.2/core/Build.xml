@@ -35,7 +35,7 @@
   <target name="teardown" description="undo whatever setup did">
     <uninstall-jboss-macro version="${jboss.version}"/>
     <subant-macro target="teardown"/>
-    <delete dir="${project.dir}/deploy" failonerror="false"/>
+    <delete dir="${target.dir}" failonerror="false"/>
   </target>
 
   <target name="release" description="build this project's releasable outputs">
