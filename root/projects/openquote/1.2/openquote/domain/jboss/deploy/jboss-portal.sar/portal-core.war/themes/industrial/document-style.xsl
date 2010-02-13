@@ -172,10 +172,10 @@
                     <xsl:copy-of select="$empty-cell"/>
                     <fo:table-cell border-color="{$colour}"
                         xsl:use-attribute-sets="full-border-no-colour">
-                        <!-- RA Hack starts here -->
-                        <fo:block>&#x00A0;</fo:block>
-                        <!-- RA hack ends here -->
-                        <xsl:apply-templates select="node()"/>&#x00A0; </fo:table-cell>
+                        <fo:block>
+                            <xsl:apply-templates select="node()"/>
+                        </fo:block>
+                    </fo:table-cell>
                     <xsl:copy-of select="$empty-cell"/>
                 </fo:table-row>
             </fo:table-body>
