@@ -309,14 +309,6 @@
                                                   <xsl:value-of select="."/>
                                                 </fo:block>
                                             </fo:table-cell>
-                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
-                                                <xsl:call-template name="set-term-border">
-                                                  <xsl:with-param name="border"
-                                                  select="$styles/Styles/Terms/Title/Border[@type='body']"
-                                                  />
-                                                </xsl:call-template>
-                                                <fo:block>&#x00A0;</fo:block>
-                                            </fo:table-cell>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:copy-of select="$empty-cell"/>
