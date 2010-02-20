@@ -6,28 +6,44 @@
     <!--    UK  -->
     <xsl:attribute-set name="UkPageSize" use-attribute-sets="A4 Helvetica Non-print-margins"/>
     <xsl:variable name="ail-regions-first">
-        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="40mm" margin-left="0mm" margin-right="0mm" padding="0mm"/>
+        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
+            <xsl:attribute name="background-image">
+                <xsl:value-of select="/documentData/watermark/text()"/>
+            </xsl:attribute>
+        </fo:region-body>
         <fo:region-before region-name="first-before" extent="40mm"/>
         <fo:region-after region-name="first-after" extent="5mm"/>
         <fo:region-start region-name="first-start" extent="0mm"/>
         <fo:region-end region-name="first-end" extent="0mm"/>
     </xsl:variable>
     <xsl:variable name="ail-regions-blank">
-        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="40mm" margin-left="0mm" margin-right="0mm" padding="0mm"/>
+        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
+            <xsl:attribute name="background-image">
+                <xsl:value-of select="/documentData/watermark/text()"/>
+            </xsl:attribute>
+        </fo:region-body>
         <fo:region-before region-name="blank-before" extent="40mm"/>
         <fo:region-after region-name="blank-after" extent="5mm"/>
         <fo:region-start region-name="blank-start" extent="0mm"/>
         <fo:region-end region-name="blank-end" extent="0mm"/>
     </xsl:variable>
     <xsl:variable name="ail-regions-rest-right">
-        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-right="0mm" margin-left="5mm" padding="0mm"/>
+        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
+            <xsl:attribute name="background-image">
+                <xsl:value-of select="/documentData/watermark/text()"/>
+            </xsl:attribute>
+        </fo:region-body>
         <fo:region-before region-name="right-before" extent="25mm"/>
         <fo:region-after region-name="right-after" extent="5mm"/>
         <fo:region-start region-name="right-start" extent="0mm"/>
         <fo:region-end region-name="right-end" extent="5mm"/>
     </xsl:variable>
     <xsl:variable name="ail-regions-rest-left">
-        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm"/>
+        <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
+            <xsl:attribute name="background-image">
+                <xsl:value-of select="/documentData/watermark/text()"/>
+            </xsl:attribute>
+        </fo:region-body>
         <fo:region-before region-name="left-before" extent="25mm"/>
         <fo:region-after region-name="left-after" extent="5mm"/>
         <fo:region-start region-name="left-start" extent="5mm"/>
@@ -50,9 +66,6 @@
                     master-reference="blank-pages" 
                     blank-or-not-blank="blank" />
             </fo:repeatable-page-master-alternatives>
-        
-            <!--<fo:single-page-master-reference master-reference="first-page"/>
-            <fo:repeatable-page-master-reference master-reference="other-pages"/>-->
         </fo:page-sequence-master>
 
         <fo:simple-page-master xsl:use-attribute-sets="UkPageSize" master-name="first-page">
@@ -397,9 +410,4 @@
     <xsl:variable name="font-header-colour">
         <xsl:value-of select="$styles/Styles/Colours/@font-header"/>
     </xsl:variable>
-    
-    <!--<xsl:variable name="light-colour">#000080</xsl:variable>-->
-    <!--<xsl:variable name="dark-colour">#000080</xsl:variable>-->
-    <!--<xsl:variable name="font-colour">#000040</xsl:variable>-->
-    <!--<xsl:variable name="font-header-colour">#E0E0FF</xsl:variable>-->
 </xsl:stylesheet>

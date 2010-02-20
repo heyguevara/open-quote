@@ -2,12 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0" xmlns:java="java">
     <xsl:import href="http://localhost:8080/portal-core/themes/common/generic-layouts-fo.xsl"/>
-    <!--<xsl:import href="../common/generic-layouts-fo.xsl"/>-->
     <!-- imported styles-->
     <xsl:param name="style-doc" select="'styles.xml'"/>
     <xsl:variable name="styles" select="document('http://localhost:8080/portal-core/themes/industrial/styles.xml')"/>
-    <!--<xsl:variable name="stylesBook" select="document('styles.xml')"/>
-    <xsl:variable name="styles" select="$stylesBook/Book/Styles[@type= /documentData/style]"/>-->
     <!-- imported styles-->
     <xsl:template match="/">
         <fo:root xsl:use-attribute-sets="normal-font">
@@ -324,14 +321,6 @@
                                                   select="$styles/Styles/Terms/Body/Border"/>
                                                 </xsl:call-template>
                                                 <fo:block>
-                                                  <!--
-                                                    Need to add hyphenation xml documents
-                                                <xsl:if test="$styles/Styles/Terms/Body/@hyphenate!=''">
-                                                    <xsl:attribute name="hypenate">true</xsl:attribute>
-                                                    <xsl:attribute name="language">
-                                                        <xsl:value-of select="$styles/Styles/Terms/Body/@hyphenate"/>
-                                                    </xsl:attribute>
-                                                </xsl:if>-->
                                                   <xsl:apply-templates select="."/>
                                                 </fo:block>
                                             </fo:table-cell>
@@ -522,8 +511,5 @@
                 </xsl:otherwise>
             </xsl:choose>
         </fo:table-row>
-        
     </xsl:template>
-
-
 </xsl:stylesheet>
