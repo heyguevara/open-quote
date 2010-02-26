@@ -54,7 +54,7 @@ public class Section extends Type {
      */
     private YesNo included;
 
-    /** A collecion of the IDs of the excesses associated with this section */
+    /** A collection of the IDs of the excesses associated with this section */
     private List<String> excessId = new ArrayList<String>();
 
     /**
@@ -75,7 +75,7 @@ public class Section extends Type {
     }
 
     /**
-     * Get the collection of Coverages associagted with this section. Coverages exist at both the
+     * Get the collection of Coverages associated with this section. Coverages exist at both the
      * section and section levels, this method will only return those associated with the section. 
      * Use {@link Section#getCoverage} to get those associated with specific sections.
      * @return A collection of Coverages
@@ -324,7 +324,7 @@ public class Section extends Type {
     }
 
     /**
-     * Fetch a spacific com.ail.insurance.policy.Wording from the collection by index number.
+     * Fetch a specific com.ail.insurance.policy.Wording from the collection by index number.
      * @param i Index of element to return
      * @return The instance of com.ail.insurance.policy.Wording at the specified index
      */
