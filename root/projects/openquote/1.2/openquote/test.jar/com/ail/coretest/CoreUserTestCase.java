@@ -179,7 +179,7 @@ public class CoreUserTestCase extends TestCase implements CoreUser, Configuratio
         
         System.setProperty("com.ail.core.configure.loader", "com.ail.core.configure.JDBCConfigurationLoader");
         System.setProperty("com.ail.core.configure.loaderParam.driver", "org.gjt.mm.mysql.Driver");
-        System.setProperty("com.ail.core.configure.loaderParam.url", "jdbc:mysql://localhost:3306/openquote_1_0");
+        System.setProperty("com.ail.core.configure.loaderParam.url", "jdbc:mysql://localhost:3306/openquote_1_2");
         System.setProperty("com.ail.core.configure.loaderParam.table", "config");
         System.setProperty("com.ail.core.configure.loaderParam.user", "openquote");
         System.setProperty("com.ail.core.configure.loaderParam.password", "openquote");
