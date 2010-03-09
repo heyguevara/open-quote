@@ -240,8 +240,7 @@
 
     <xsl:template match="itemData">
         <!--        resolve classes-->
-        <xsl:if test="text()!=''">
-
+        <xsl:if test="text()!='' or count(descendant::*)">
             <xsl:variable name="column1">
                 <xsl:choose>
                     <xsl:when test="ancestor::repeatingData">1</xsl:when>
