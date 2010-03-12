@@ -55,7 +55,7 @@ Starting the OpenQuote server).
 If you are installing on Windows, we recommend that you don't use window's
 built-in zip file support. A number of issues have been reported on the 
 forums which seem to point at file corruption caused by the build-in tool.
-We're recommend that you use winzip, unrar, or jar to unpack the .zip. 
+We recommend that you use winzip, unrar, or jar to unpack the .zip. 
 
 Note: If you are installing OpenQuote for use with Java J2SE 6.0, you also
 need to copy the following files from the openquote-community/jboss/client 
@@ -102,15 +102,13 @@ Trouble shooting
 
 If you have any issues during installation, or while you are using OpenQuote, 
 the best place to start looking for information is in our new forum here: 
-http://openquote.opensourceinsurance.org/index.php/support/support-forum
-(and our old forums here: http://sourceforge.net/forum/?group_id=215808) and 
+http://openquote.opensourceinsurance.org/index.php/support/support-forum and 
 feel free to post a question if you can't find the answer you need.
 
-As this is an EA release, we do anticipate there being bugs. If you believe
-you have found one please check our bug tracker. However, do please search 
-carefully first, and only look at raising a new bug if you are sure your 
-particular problem is not already covered. The bug tracker can be found 
-here: http://openquotecommunity.org/jira 
+If you believe you have found one please check our bug tracker. However, do 
+please search carefully first, and only look at raising a new bug if you are 
+sure your particular problem is not already covered. The bug tracker can be 
+found here: http://openquotecommunity.org/jira 
 
 Upgrading from earlier versions
 ===============================
@@ -134,6 +132,6 @@ of those tools can be found here:
 http://wiki.alfresco.com/wiki/Export_and_Import#Web_Client_Export_.26_Import_of_Folders_.26_Files
 
 Once imported into the new system you will need to register the products there.
-The "Registering a Product" section in the OpenQuote 1.0 User Guide explains 
+The "Registering a Product" section in the OpenQuote 1.2 User Guide explains 
 this process. You'll find a copy of this guide in the same folder as these notes.
 
