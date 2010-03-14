@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file defines the default (factory) configuration for the
+ AddPolicyNumber Service. This configuration is used by the entry point's
+ resetConfiguration() method.
+ This configuration doesn't represent a real live configuration. This
+ is only the core service and as such it doesn't define any product
+ rules. For these you have to look at the specialisations that use this
+ service.
+ $Revision: 1.3 $
+ $State: Exp $
+ $Date: 2006/10/04 22:03:13 $
+ $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/addpolicynumber/AddPolicyNumberDefaultConfig.xml,v $
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>AddPolicyNumber service default configuration</name>
+    <timeout>60000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.3 $</version>
+
+    <!-- Next (unique) Number to use in policy number generation. The service -->
+    <!-- updates this parameter as numbers are used up.                       -->
+    <parameter name="NextNumber">1000</parameter>
+
+    <!-- To avoid hitting the database every time a policy number is asked for, -->
+    <!-- the service takes a chunk of numbers at a time, keeps track of the     -->
+    <!-- ones it uses, then comes back for more when it runs out. BlockSize     -->
+    <!-- controls the number that are allocated on each call.                   -->
+    <parameter name="BlockSize">100</parameter>
+</configuration>

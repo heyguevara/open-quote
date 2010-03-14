@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file to deploy the jboss domain. The insurance project's domain build simply
+ unpacks the commercial project's dar (domain archive) and overlays the specifics of this 
+ projects domain.
+ $Revision: 1.3 $
+ $State: Exp $
+ $Date: 2006/09/30 15:10:54 $
+ $Source: /home/bob/CVSRepository/projects/insurance/domain/Build.xml,v $
+-->
+
+<project default="build" name="insurance:domain">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <!-- create the databases we'll need for unit testing etc. -->
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
+
+      delete from ${dbname}.config;
+      
+      delete from ${dbname}.core_Attribute;
+      delete from ${dbname}.core_Type;
+      delete from ${dbname}.insurance_AssessmentLine;
+      delete from ${dbname}.insurance_AssessmentSheet;
+      delete from ${dbname}.insurance_Asset;
+      delete from ${dbname}.insurance_Coverage;
+      delete from ${dbname}.insurance_Policy;
+      delete from ${dbname}.insurance_Section;
+      delete from ${dbname}.party_Address;
+      delete from ${dbname}.party_Party;
+      delete from ${dbname}.party_Person;
+      
+    </sql>
+  </target>
+  <target name="_build">
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+
+    <!-- copy files that don't need filters to be applied -->
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="./jboss" includes="**" excludes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties" />
+    </copy>
+
+		<!-- copy files that do need filters to be applied -->
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="./jboss" includes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties" />
+      <filterset>
+        <filter token="major.version" value="${major.version}" />
+        <filter token="minor.version" value="${minor.version}" />
+        <filter token="dbname" value="${dbname}"/>
+      </filterset>
+    </copy>
+
+    <set-mysql-running-property-macro/>
+    <antcall target="setup-db-if"/>
+    <antcall target="setup-db-unless"/>
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <!-- delete the deployed directory -->
+    <delete dir="${deploy.dir}" />
+
+    <set-mysql-running-property-macro/>
+    <antcall target="teardown-db-if"/>
+    <antcall target="teardown-db-unless"/>
+  </target>
+
+  <target name="teardown-db-if" if="mysql-running">
+    <!-- drop all the databases -->
+		<sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
+	  	    -- Make sure the database and users are there before we try to delete them!
+	        create database if not exists ${dbname};
+	        grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
+	        grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
+	  	  
+	        -- Now do the actual tidy up 
+	  	    drop database if exists ${dbname};
+	        revoke all privileges, grant option from 'coreuser'@'localhost';
+	  	    drop user 'coreuser'@'localhost';
+		</sql>
+  </target>  
+  
+  <target name="teardown-db-unless" unless="mysql-running">
+    <!-- drop all the databases -->
+    <echo message="Database has not been cleared - mysql doesn't appear to be running"/>
+  </target>  
+
+  <target name="setup-db-if" if="mysql-running">
+    <!-- create the databases we'll need for unit testing etc. -->
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
+      create database if not exists ${dbname};
+      grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
+      grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
+
+      create table if not exists ${dbname}.core_Type (
+            systemId int auto_increment primary key,
+            versionId int,
+            type varchar(20)
+      );
+
+      create table if not exists ${dbname}.core_Attribute (
+             systemId int primary key,
+             parentSystemId int,
+             id varchar(255),
+             value varchar(255),
+             format varchar(255),
+	           unit varchar(255),
+	           rank int
+      );
+      
+      create table if not exists ${dbname}.insurance_Policy (
+			      systemId int primary key,
+    	      id varchar(20),
+            productTypeId varchar(80),
+            policyNumber varchar(40),
+            quotationNumber varchar(40),
+            inceptionDate datetime,
+            expiryDate datetime,
+            status varchar(20),
+            policyHolderPartyId long,
+            policyHolderPartyType char(15),
+            assessmentSheetId long
+      );
+
+      create table if not exists ${dbname}.party_Party (
+            systemId int primary key,
+            type varchar(20),
+            legalName varchar(80),
+            addressId long
+      );
+      
+      create table if not exists ${dbname}.party_Person (
+			      systemId int primary key,
+            title varchar(20),
+            otherTitle varchar(20),
+            firstname varchar(80),
+            surname varchar(80),
+            dateOfBirth date
+      );
+
+      create table if not exists ${dbname}.party_Address (
+            systemId int primary key,
+            line1 varchar(80),
+            line2 varchar(80),
+            line3 varchar(80),
+            line4 varchar(80),
+            line5 varchar(80),
+            town varchar(80),
+            county varchar(80),
+            country varchar(80),
+            postcode varchar(80)
+      );
+
+      create table if not exists ${dbname}.insurance_Asset (
+            systemId int primary key,
+            parentSystemId int,
+            rank int,
+            id varchar(20),
+            assetTypeId varchar(80)
+      );
+    
+      create table if not exists ${dbname}.insurance_Section (
+            systemId int primary key,
+            parentSystemId int,
+            rank int,
+            id varchar(20),
+            sectionTypeId varchar(80),
+            included varchar(5),
+            excluded varchar(5)
+      );
+      
+      create table if not exists ${dbname}.insurance_Coverage (
+            systemId int primary key,
+            parentSystemId int,
+            rank int,
+            id varchar(20),
+            description varchar(256),
+            enabled bit,
+            optional bit,
+            limitAmount double,
+            limitCurrency char(4),
+            deductibleAmount double,
+            deductibleCurrency char(4)
+      );
+
+      create table if not exists ${dbname}.insurance_AssessmentSheet (
+            systemId int primary key,
+            lockingActor varchar(20)
+      );
+
+      create table if not exists ${dbname}.insurance_AssessmentLine (
+						systemId int auto_increment primary key,
+            versionId int,
+            parentSystemId int,
+            rank int,
+	          type varchar(20),
+            id varchar(20),
+            reason varchar(255),
+            disabled bit,
+            priority int,
+            origin varchar(20),
+            referenceType varchar(20),
+            referenceId varchar(20),
+            behaviourId varchar(20),
+            markerType varchar(20),
+            createdDate datetime,
+            expiryDate datetime,
+            reminderDate datetime,
+            isManuscript bit,
+            subjectivityText varchar(255),
+            contributesTo varchar(255),
+            amount double,
+            currency char(4)
+      );
+    </sql>
+  </target>
+
+  <target name="setup-db-unless" unless="mysql-running">
+    <!-- drop all the databases -->
+    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
+  </target>  
+</project>
