@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployments>
+    <deployment>
+        <instance>
+            <instance-id>ConfigurePortletInstance</instance-id>
+            <portlet-ref>ConfigurePortlet</portlet-ref>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
+            <instance-id>ConfigureUploadPortletInstance</instance-id>
+            <portlet-ref>ConfigureUploadPortlet</portlet-ref>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
+            <instance-id>ConfigureDownloadPortletInstance</instance-id>
+            <portlet-ref>ConfigureDownloadPortlet</portlet-ref>
+        </instance>
+    </deployment>
+</deployments>

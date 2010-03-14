@@ -1,0 +1,25 @@
+package com.ail.coretest
+ 
+import com.ail.coretest.service.TestArgImp;
+
+rule "Add numbers when X less than 100"
+	when
+		args : TestArgImp( x < 100 )
+	then
+		args.setR(args.getX() + args.getY());
+end
+ 
+rule "Add numbers when X more than 100"
+	when
+		args : TestArgImp( x > 100 )
+	then
+		args.setR( (2*args.getX())+args.getY() );
+end
+ 
+rule "Test for existance of an object in WM"
+	when
+		args : TestArgImp()
+	then 
+		System.out.println("got one!");
+end
+ 

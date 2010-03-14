@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision: 1.7 $
+ $State: Exp $
+ $Date: 2006/10/25 21:32:10 $
+ $Source: /home/bob/CVSRepository/projects/core/test.jar/com/ail/coretest/TestGenerateDocumentDefaultConfig.xml,v $
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>TestProduct default config</name>
+    <timeout>600000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.7 $</version>
+
+    <group name="ListOfThings">
+        <parameter name="Thing One">2000</parameter>
+        <parameter name="Thing Two">House</parameter>
+        <parameter name="Thing Three">A long windy road</parameter>
+        <parameter name="Thing Three and a half">Toad in the hole</parameter>
+    </group>
+
+    <types>
+
+        <!--====================================-->
+        <!--   Define the component's services  -->
+        <!--====================================-->
+
+        <service name="GenDocService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.document.generatedocument.GenerateDocumentService</parameter>
+        </service>
+
+        <!--====================================-->
+        <!--  Bind the commands to services     -->
+        <!--====================================-->
+
+        <command name="GenerateQuoteDocument" builder="ClassBuilder" key="com.ail.core.document.generatedocument.GenerateDocumentCommand">
+            <parameter name="Service">GenDocService</parameter>
+        </command>
+
+    </types>
+</configuration>

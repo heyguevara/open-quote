@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:element name="contentDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="space" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="content" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="space">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="description" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="content">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="mimeType" type="mimeTypes" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="encoding" type="encodings" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="aspect" type="aspectNames" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="property" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="file" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="property">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="propertyNames"  minOccurs="1" maxOccurs="1"/>
+        <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:simpleType name="mimeTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="text/plain"/>
+      <xs:enumeration value="text/html"/>
+      <xs:enumeration value="text/css"/>
+      <xs:enumeration value="text/xml"/>
+      <xs:enumeration value="application/xhtml+xml"/>
+      <xs:enumeration value="application/pdf"/>
+      <xs:enumeration value="application/msword"/>
+      <xs:enumeration value="application/vnd.excel"/>
+      <xs:enumeration value="application/octet-stream"/>
+      <xs:enumeration value="application/vnd.powerpoint"/>
+      <xs:enumeration value="application/x-shockwave-flash"/>
+      <xs:enumeration value="image/gif"/>
+      <xs:enumeration value="image/jpeg"/>
+      <xs:enumeration value="image/x-rgb"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="encodings">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UTF-8"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="aspectNames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="{http://www.alfresco.org/model/application/1.0}inlineeditable"/>
+      <xs:enumeration value="{http://www.alfresco.org/model/content/1.0}versionable"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="propertyNames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="{http://www.alfresco.org/model/application/1.0}editInline"/>
+      <xs:enumeration value="{http://www.alfresco.org/model/application/1.0}icon"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

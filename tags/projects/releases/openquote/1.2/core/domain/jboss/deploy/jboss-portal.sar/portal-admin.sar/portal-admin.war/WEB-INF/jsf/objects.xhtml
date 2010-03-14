@@ -1,0 +1,28 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:c="http://java.sun.com/jstl/core">
+
+   <c:choose>
+      <c:when test="#{portalobjectmgr.selectedObject.type == PortalObject.TYPE_CONTEXT}">
+         <ui:include src="editContext.xhtml"/>
+      </c:when>
+      <c:when test="#{portalobjectmgr.selectedObject.type == PortalObject.TYPE_PORTAL}">
+         <ui:include src="editPage.xhtml"/>
+      </c:when>
+      <c:when test="#{portalobjectmgr.selectedObject.type == PortalObject.TYPE_PAGE}">
+         <ui:include src="editPage.xhtml"/>
+      </c:when>
+      <c:when test="#{portalobjectmgr.selectedObject.type == PortalObject.TYPE_WINDOW}">
+         <ui:include src="editWindow.xhtml"/>
+      </c:when>
+      <c:otherwise>FIXME</c:otherwise>
+   </c:choose>
+
+   <h:form>
+      <p style="text-align: right"><h:commandLink action="#{newWindowWizard.reset}">Switch to wizard
+         mode</h:commandLink></p>
+   </h:form>
+
+</div>
