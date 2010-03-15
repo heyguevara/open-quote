@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for starting utilities & servers etc..
+ $Revision: 1.10 $
+ $State: Exp $
+ $Date: 2007/03/09 22:01:24 $
+ $Source: /home/bob/CVSRepository/projects/openquote/BuildCommands.xml,v $
+-->
+
+<project default="" name="openquote:commands">
+  <import file="./BuildSettings.xml" />
+
+  <target name="jboss: start server" description="start the jboss server">
+    <start-jboss-macro />
+  </target>
+
+  <target name="jboss: stop server" description="start the jboss server">
+    <stop-jboss-macro />
+  </target>
+
+  <target name="jboss: force scan" description="force jboss to scan 'deploy/' for changes">
+    <kick-jboss-macro />
+  </target>
+
+  <target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
+    <content-download-export-macro />
+  </target>
+	
+  <target name="alfresco: mount product space" description="mount Product space in Alfresco as a file system">
+  	<mount-product-space-macro/>
+  </target>
+
+  <target name="alfresco: unmount product space" description="unmount Product space from local filesystem">
+  	<unmount-product-space-macro/>
+  </target>
+	
+  <!-- drop all the tables that portal uses to store it's settins and preferences. These
+	     all get recreated when jboss is restarted. -->
+  <target name="jboss: reset portal" description="delete the portal tables - jboss will recreate them on startup">
+    <reset-portal-macro />
+  </target>
+
+  <target name="ail: clear server cache" description="Clear the config cache in jboss">
+    <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache" />
+  </target>
+
+  <target name="ail: reset configurations" description="reset all the ail configurations">
+    <configuration-macro username="admin" password="bombay2000" operation="resetAllConfigurations" />
+    <configuration-macro username="admin" password="bombay2000" operation="clearConfigurationCache" />
+  </target>
+	
+  <target name="ail: build product development lib" description="Create a lib folder in target suitable for product development">
+    <build-product-development-lib-macro/>
+  </target>
+
+  <target name="grinder: start console" description="start The Grinder's console">
+    <start-grinder-console-macro />
+  </target>
+
+  <target name="grinder: start agent" description="start The Grinder's agent">
+    <start-grinder-agent-macro />
+  </target>
+
+  <target name="grinder: start tcp proxy" description="start The Grinder's TCP Proxy">
+    <start-grinder-proxy-macro />
+  </target>
+</project>
