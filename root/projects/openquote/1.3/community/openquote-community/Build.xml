@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the community zip project
+-->
+
+<project default="build" name="community:openquote-community">
+  <import file="../BuildSettings.xml"/>
+
+  <target name="clean" description="delete everything that the build can generate">
+  </target>
+  
+  <target name="_build">
+    <copy todir="${target.dir}">
+      <fileset dir="." excludes="Build.xml" includes="**/*"/>
+      <filterset>
+        <filter token="major.version" value="${major.version}" />
+        <filter token="minor.version" value="${minor.version}" />
+        <filter token="increment.version" value="${increment.version}" />
+        <filter token="dbname" value="${dbname}"/>
+      </filterset>
+    </copy>
+  </target>
+  
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build"/>
+  </target>
+  
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>

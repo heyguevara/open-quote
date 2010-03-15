@@ -1,0 +1,137 @@
+OpenQuote Release Candidate - Installation Notes
+================================================
+
+Welcome to OpenQuote @major.version@.@minor.version@@increment.version@, and thank you for your 
+interest in this project.
+
+The notes included here are intended to get you up and running with OpenQuote
+in the shortest possible time; around 10 minutes if you already have the
+prerequisites installed. 
+
+Beyond this basic configuration there are a host of other more detailed 
+customizations that are possible; some of which would be considered necessary
+before you think about using OpenQuote in a production environment. These will
+be covered later and elsewhere, for now this will be enough to get you off the 
+ground.
+
+Note: You will need to be happy working from a command line to complete the
+installation. If you're not, consider taking a look at our online demo at
+http://ail-ltd.com:8080/portal
+
+There is no automated process to upgrade the installation of previous version
+of OpenQuote, but there are some notes at the end of this file which you may 
+find helpful.
+
+Prerequisites
+=============
+
+- Java Development Kit (aka J2SE SDK) available from http://java.sun.com
+- MySql Database available from http://www.mysql.com
+
+Installing the Java Development Kit
+===================================
+
+- Browse to http://java.sun.com/javase/downloads.
+- Select the appropriate J2SE download for your environment, making sure it
+  is J2SE 5.0 or 6.0.
+- Once downloaded, follow the installation wizard.
+
+Installing MySql
+================
+
+- Browse to http://dev.mysql.com/downloads.
+- Select the appropriate download for your environment. You will need 
+  version 4.1 or higher.
+- Once downloaded, follow the installation wizard - as part of this you will
+  be prompted to select a password. You will need this later on.
+  
+Installing OpenQuote
+====================
+
+OpenQuote community is supplied as a zip file. Simply unpack this zip file
+and follow the instructions below (Installing the OpenQuote database, and
+Starting the OpenQuote server).
+
+If you are installing on Windows, we recommend that you don't use window's
+built-in zip file support. A number of issues have been reported on the 
+forums which seem to point at file corruption caused by the build-in tool.
+We recommend that you use winzip, unrar, or jar to unpack the .zip. 
+
+Note: If you are installing OpenQuote for use with Java J2SE 6.0, you also
+need to copy the following files from the openquote-community/jboss/client 
+directory to the openquote-community/jboss/lib/endorsed directory:
+          o jboss-jaxrpc.jar
+          o jboss-jaxws.jar
+          o jboss-saaj.jar
+          o jaxb-api.jar 
+
+Starting the OpenQuote server
+=============================
+
+Command scripts are supplied which should be suitable for MS Windows, and Unix
+users. From the command prompt, cd into openquote-community/bin, then either 
+execute run.sh on Unix, or run.bat on MS Windows.
+
+The first time you run OpenQuote it will automatically setup your environment
+for you. Most importantly, it will create and populate a database in MySQL.
+During the setup process, you will be prompted for the database password.
+At that prompt enter the MySql root password (the password supplied during
+MySql installation.)
+  
+Depending on the spec of your machine the server may take one or two minutes
+to start up. It will output progress messages as it starts. Start up is complete
+when you see a line like this:
+
+INFO  [Server] JBoss (MX MicroKernel) [4.2.2.GA (build: SVNTag=JBoss_4_2_2_GA 
+date=200710221139)] Started in 1m:41s:308ms
+
+Accessing OpenQuote
+===================
+
+Once the server is running, you can access OpenQuote by pointing your browser
+at http://localhost:8080/portal
+
+Stopping the OpenQuote server
+=============================
+
+Either closing the command prompt window, or hitting CTRL-C will close the 
+server down cleanly.
+
+Trouble shooting
+================
+
+If you have any issues during installation, or while you are using OpenQuote, 
+the best place to start looking for information is in our new forum here: 
+http://openquote.opensourceinsurance.org/index.php/support/support-forum and 
+feel free to post a question if you can't find the answer you need.
+
+If you believe you have found one please check our bug tracker. However, do 
+please search carefully first, and only look at raising a new bug if you are 
+sure your particular problem is not already covered. The bug tracker can be 
+found here: http://openquotecommunity.org/jira 
+
+Upgrading from earlier versions
+===============================
+
+Installing this release of OpenQuote will not in any way affect any existing 
+installations of older versions. Follow the installation guidelines outlined 
+in this file will result in a completely new and independent installation with
+its own server and database.
+
+You will not be able to run both installations at the same time as they use
+same port numbers, but you will be able to start and stop them independently.
+
+Quote data can be moved between the systems using SQL. There are only two 
+tables concerned: saved_quote and saved_quote_summary. The easiest way to move
+these is to use MySQL's mysqldump command. Documentation can be found here: 
+http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html
+
+Products can be exported from the old system and imported into the new 
+installation using Alfresco's built in import/export facility. A description
+of those tools can be found here: 
+http://wiki.alfresco.com/wiki/Export_and_Import#Web_Client_Export_.26_Import_of_Folders_.26_Files
+
+Once imported into the new system you will need to register the products there.
+The "Registering a Product" section in the OpenQuote 1.2 User Guide explains 
+this process. You'll find a copy of this guide in the same folder as these notes.
+
