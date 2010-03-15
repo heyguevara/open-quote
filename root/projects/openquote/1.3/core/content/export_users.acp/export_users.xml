@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view:view xmlns:view="http://www.alfresco.org/view/repository/1.0">
+  <view:metadata>
+    <view:exportBy>admin</view:exportBy>
+    <view:exportDate>2008-04-08T08:20:05.624+01:00</view:exportDate>
+    <view:exporterVersion>2.9.0 (C_dev @build-number@)</view:exporterVersion>
+    <view:exportOf>/</view:exportOf>
+  </view:metadata>
+  <view:reference xmlns:act="http://www.alfresco.org/model/action/1.0" xmlns:app="http://www.alfresco.org/model/application/1.0" xmlns:ver="http://www.alfresco.org/model/versionstore/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:wcm="http://www.alfresco.org/model/wcmmodel/1.0" xmlns:wcmwf="http://www.alfresco.org/model/wcmworkflow/1.0" xmlns:rule="http://www.alfresco.org/model/rule/1.0" xmlns:fm="http://www.alfresco.org/model/forum/1.0" xmlns:emailserver="http://www.alfresco.org/model/emailserver/1.0" xmlns:alf="http://www.alfresco.org" xmlns:d="http://www.alfresco.org/model/dictionary/1.0" xmlns:view="http://www.alfresco.org/view/repository/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:blg="http://www.alfresco.org/model/blogintegration/1.0" xmlns:wf="http://www.alfresco.org/model/workflow/1.0" xmlns:usr="http://www.alfresco.org/model/user/1.0" xmlns:cm="http://www.alfresco.org/model/content/1.0" xmlns:ia="com.infoaxon.alfresco.calendar" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:sys="http://www.alfresco.org/model/system/1.0" xmlns:wca="http://www.alfresco.org/model/wcmappmodel/1.0" xmlns:bpm="http://www.alfresco.org/model/bpm/1.0" xmlns:custom="custom.model" xmlns:reg="http://www.alfresco.org/system/registry/1.0" xmlns:module="http://www.alfresco.org/system/modules/1.0" xmlns="" view:pathref="/">
+    <view:aspects>
+      <sys:aspect_root></sys:aspect_root>
+    </view:aspects>
+    <view:properties>
+      <sys:node-uuid>39313b63-053b-11dd-ae5b-29f55a03ae20</sys:node-uuid>
+      <sys:node-dbid>1</sys:node-dbid>
+      <sys:store-protocol>user</sys:store-protocol>
+      <cm:name>f2136153-fc28-11dc-b2b2-4798120be4e3</cm:name>
+      <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+    </view:properties>
+    <view:associations>
+      <sys:children>
+        <sys:container view:childName="sys:system">
+          <view:aspects>
+            <sys:referenceable></sys:referenceable>
+          </view:aspects>
+          <view:properties>
+            <sys:node-uuid>f2d10c05-fc28-11dc-b2b2-4798120be4e3</sys:node-uuid>
+            <sys:node-dbid>2</sys:node-dbid>
+            <sys:store-protocol>user</sys:store-protocol>
+            <cm:name>f2d10c05-fc28-11dc-b2b2-4798120be4e3</cm:name>
+            <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+          </view:properties>
+          <view:associations>
+            <sys:children>
+              <sys:container view:childName="sys:people">
+                <view:aspects>
+                  <sys:referenceable></sys:referenceable>
+                </view:aspects>
+                <view:properties>
+                  <sys:node-uuid>f2fef9d8-fc28-11dc-b2b2-4798120be4e3</sys:node-uuid>
+                  <sys:node-dbid>3</sys:node-dbid>
+                  <sys:store-protocol>user</sys:store-protocol>
+                  <cm:name>f2fef9d8-fc28-11dc-b2b2-4798120be4e3</cm:name>
+                  <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                </view:properties>
+                <view:associations>
+                  <sys:children>
+                    <usr:user view:childName="usr:user">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:properties>
+                        <usr:accountExpires>false</usr:accountExpires>
+                        <usr:credentialsExpire>false</usr:credentialsExpire>
+                        <usr:password>209c6174da490caeb422f3fa5a7ae634</usr:password>
+                        <sys:node-uuid>f30366ab-fc28-11dc-b2b2-4798120be4e3</sys:node-uuid>
+                        <usr:accountLocked>false</usr:accountLocked>
+                        <sys:node-dbid>4</sys:node-dbid>
+                        <usr:username>admin</usr:username>
+                        <sys:store-protocol>user</sys:store-protocol>
+                        <cm:name>f30366ab-fc28-11dc-b2b2-4798120be4e3</cm:name>
+                        <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                        <usr:enabled>true</usr:enabled>
+                      </view:properties>
+                    </usr:user>
+                    <usr:user view:childName="usr:user">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:properties>
+                        <usr:accountExpires>false</usr:accountExpires>
+                        <usr:password>2924cf7d7a99856d5923ec7ce900a054</usr:password>
+                        <usr:credentialsExpire>false</usr:credentialsExpire>
+                        <sys:node-uuid>2373a181-053c-11dd-ae5b-29f55a03ae20</sys:node-uuid>
+                        <usr:accountLocked>false</usr:accountLocked>
+                        <sys:node-dbid>462</sys:node-dbid>
+                        <usr:username>productreader</usr:username>
+                        <usr:salt>
+                          <view:value view:isNull="true"></view:value>
+                        </usr:salt>
+                        <sys:store-protocol>user</sys:store-protocol>
+                        <cm:name>2373a181-053c-11dd-ae5b-29f55a03ae20</cm:name>
+                        <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                        <usr:enabled>true</usr:enabled>
+                      </view:properties>
+                    </usr:user>
+                  </sys:children>
+                </view:associations>
+              </sys:container>
+              <sys:container view:childName="sys:authorities">
+                <view:aspects>
+                  <sys:referenceable></sys:referenceable>
+                </view:aspects>
+                <view:acl>
+                  <view:ace view:access="ALLOWED">
+                    <view:authority>GROUP_EVERYONE</view:authority>
+                    <view:permission>Read</view:permission>
+                  </view:ace>
+                </view:acl>
+                <view:properties>
+                  <sys:node-uuid>f30b2ede-fc28-11dc-b2b2-4798120be4e3</sys:node-uuid>
+                  <sys:node-dbid>5</sys:node-dbid>
+                  <sys:store-protocol>user</sys:store-protocol>
+                  <cm:name>f30b2ede-fc28-11dc-b2b2-4798120be4e3</cm:name>
+                  <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                </view:properties>
+                <view:associations>
+                  <sys:children>
+                    <usr:authorityContainer view:childName="usr:GROUP_EMAIL_CONTRIBUTORS">
+                      <view:aspects>
+                        <sys:referenceable></sys:referenceable>
+                      </view:aspects>
+                      <view:properties>
+                        <sys:node-uuid>GROUP_EMAIL_CONTRIBUTORS</sys:node-uuid>
+                        <sys:node-dbid>6</sys:node-dbid>
+                        <sys:store-protocol>user</sys:store-protocol>
+                        <usr:members>
+                          <view:values>
+                            <view:value>admin</view:value>
+                            <view:value view:isNull="true"></view:value>
+                          </view:values>
+                        </usr:members>
+                        <cm:name>GROUP_EMAIL_CONTRIBUTORS</cm:name>
+                        <usr:authorityName>GROUP_EMAIL_CONTRIBUTORS</usr:authorityName>
+                        <sys:store-identifier>alfrescoUserStore</sys:store-identifier>
+                      </view:properties>
+                    </usr:authorityContainer>
+                  </sys:children>
+                </view:associations>
+              </sys:container>
+            </sys:children>
+          </view:associations>
+        </sys:container>
+      </sys:children>
+    </view:associations>
+  </view:reference>
+</view:view>

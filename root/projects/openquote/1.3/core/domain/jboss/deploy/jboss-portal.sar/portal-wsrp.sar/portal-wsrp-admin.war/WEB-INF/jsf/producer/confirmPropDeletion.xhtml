@@ -1,0 +1,35 @@
+<ui:decorate template="producerTemplate.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:jbp="http://www.jboss.org/portal"
+             xmlns:c="http://java.sun.com/jstl/core">
+
+   <ui:param name="title" value=""/>
+   <ui:define name="content">
+
+      <div class="portlet-msg">
+         <div class="portlet-msg-icon"><h:graphicImage url="/img/msgIcon_Warning.gif" alt="/!\"/></div>
+         <div class="portlet-msg-body">
+            <h3>Delete '#{producer.selectedPropertyName}' registration property description?</h3>
+
+            <p class="portlet-msg-alert">
+               You are about to delete the '#{producer.selectedPropertyName}' registration property description!
+               This will trigger invalidation of consumer registrations which will have to modify their registration
+               information.
+            </p>
+
+            <p class="portlet-class">Are you sure you want to proceed?</p>
+
+            <h:form>
+               <h:commandButton value="Delete" action="#{producer.deleteRegistrationProperty}"
+                                styleClass="portlet-form-button portlet-section-buttonrow"/>
+               <h:commandButton value="Cancel" action="producer"
+                                styleClass="portlet-form-button portlet-section-buttonrow"/>
+            </h:form>
+         </div>
+      </div>
+
+   </ui:define>
+
+</ui:decorate>
