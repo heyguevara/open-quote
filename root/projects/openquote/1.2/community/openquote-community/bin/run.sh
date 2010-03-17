@@ -32,7 +32,7 @@ if [ ! -f "$TMP/setup" ]; then
 
 	read -s -p "Please enter your MySQL password: " pw
 
-	log "\nRunning database script..."
+	log "/nRunning database script..."
 
 	mysql -u root --password=$pw < $LIB/MySql-Dump.sql
 
