@@ -121,4 +121,30 @@ public class AssessmentSheetList {
     public Collection<AssessmentSheet> getSheets() {
         return sheets.values();
     }
+
+    /**
+     * Apply the supplied stage value to all the assessment sheets in the list.
+     * @param stage
+     */
+    public void setAssessmentStage(AssessmentStage stage) {
+        for(AssessmentSheet sheet:sheets.values()) {
+            sheet.setAssessmentStage(stage);
+        }
+    }
+    
+    /**
+     * Execute all the control lines within all sheets against the lines in those sheets.
+     * @param beforeRating
+     */
+    public void executeControlLinesForAssessmentStage(AssessmentStage stage) {
+        setAssessmentStage(stage);
+
+        for(AssessmentSheet sheet: sheets.values()) {
+            for(ControlLine control: sheet.getLinesOfType(ControlLine.class).values()) {
+                for(CalculationLine line: sheet.getLinesOfType(CalculationLine.class).values()) {
+                    control.execute(sheet, line);
+                }
+            }
+        }
+    }
 }

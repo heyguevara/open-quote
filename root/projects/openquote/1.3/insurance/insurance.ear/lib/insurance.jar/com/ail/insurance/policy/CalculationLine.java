@@ -20,7 +20,7 @@ package com.ail.insurance.policy;
 import com.ail.financial.CurrencyAmount;
 
 /**
- * A Calculation Line is an assessment line which contains a calculated element.
+ * A calculation line is a type of assessment line which contains a calculated element.
  */
 public abstract class CalculationLine extends AssessmentLine {
     private static final long serialVersionUID = 8951155134050544922L;
@@ -62,10 +62,19 @@ public abstract class CalculationLine extends AssessmentLine {
         this.amount=amount;
     }
 
+    /**
+     * An optional property (may be null) which defines another line in the assessment sheet to which
+     * the calculated value of this line will be added.
+     * @return
+     */
     public String getContributesTo() {
         return contributesTo;
     }
 
+    /**
+     * @see #getContributesTo()
+     * @param contributesTo
+     */
     public void setContributesTo(String contributesTo) {
         this.contributesTo = contributesTo;
     }
@@ -78,12 +87,25 @@ public abstract class CalculationLine extends AssessmentLine {
      */
     public abstract boolean calculate(AssessmentSheetList sheets, AssessmentSheet sheet);
 
+    /**
+     * The calculated amount. This field is populated by the {@link #calculate(AssessmentSheetList, AssessmentSheet) calculate}
+     * method and holds the result of the calculation.
+     * @return
+     */
     public CurrencyAmount getAmount() {
         return amount;
     }
 
+    /**
+     * Get the amount associated with this line. Note that control lines are applied as part of this
+     * setter which means that the amount actually held as a result of calling this method may vary
+     * from that which is passed into this method.
+     * @see #getAmount()
+     * @param amount
+     */
     public void setAmount(CurrencyAmount amount) {
         this.amount = amount;
+        executeControlLines();
     }
 
     /**
@@ -92,5 +114,18 @@ public abstract class CalculationLine extends AssessmentLine {
      */
     public String getAmountAsString() {
         return (amount==null) ? "" : amount.toFormattedString();
+    }
+
+    /**
+     * Execute any control lines which apply to this line.
+     * @param amount
+     * @return
+     */
+    private void executeControlLines() {
+        if (getAssessmentSheet()!=null && getId()!=null) {
+            for(ControlLine controlLine: getAssessmentSheet().getLinesOfType(ControlLine.class).values()) {
+                controlLine.execute(getAssessmentSheet(), this);
+            }
+        }
     }
 }

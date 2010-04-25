@@ -38,14 +38,17 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.JDBCConfigurationLoader;
 import com.ail.core.product.listproducts.ListProductsService;
 import com.ail.core.product.resetallproducts.ResetAllProductsService;
-import com.ail.financial.Currency;
+import static com.ail.financial.Currency.GBP;
 import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.acceptance.AssessPaymentOptionsCommand;
 import com.ail.insurance.policy.AssessmentSheet;
+import com.ail.insurance.policy.CalculationLine;
+import com.ail.insurance.policy.ConstrainValueOutOfBounds;
 import com.ail.insurance.policy.FixedSum;
 import com.ail.insurance.policy.MarkerResolution;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
+import com.ail.insurance.policy.ReferValueOutOfBounds;
 import com.ail.insurance.policy.Reference;
 import com.ail.insurance.policy.ReferenceType;
 import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand;
@@ -56,13 +59,11 @@ import com.ail.insurance.quotation.assessrisk.AssessRiskCommand;
 import com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand;
 import com.ail.insurance.quotation.calculatepremium.CalculatePremiumService;
 import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceCommand;
+import com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand;
 import com.ail.util.Rate;
 
 /**
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 11:05:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/test.jar/com/ail/insurancetest/TestQuotation.java,v $
+ * Tests related to premium calculations.
  */
 public class TestQuotation extends TestCase implements CoreUser, ConfigurationOwner {
     private static final long serialVersionUID = 2030295330203910171L;
@@ -331,18 +332,22 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
 
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
         assertEquals(1, policy.getAssessmentSheet().getLineCount());
+        
+        System.out.println(core.toXML(policy));
 
         CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
 
+        System.out.println(core.toXML(policy));
+
         assertEquals(PolicyStatus.QUOTATION, policy.getStatus());
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
         assertEquals(6, policy.getAssessmentSheet().getLineCount());
         // make sure there's a tax line
         assertNotNull(policy.getAssessmentSheet().findLineById("tax"));
-        assertTrue(332.63 == policy.getTotalPremium().getAmount().doubleValue());
+        assertEquals(332.63, policy.getTotalPremium().getAmount().doubleValue());
     }
 
     /**
@@ -385,9 +390,9 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
 
         // without ordering
         sheet.setLockingActor("me");
-        sheet.addFixedSum("base", null, null, "total premium", new CurrencyAmount(100.0, Currency.GBP));
+        sheet.addFixedSum("base", null, null, "total premium", new CurrencyAmount(100.0, GBP));
         sheet.addLoading("load1", null, "total premium", "total premium", new Rate("5%"), 2);
-        sheet.addFixedSum("load2", null, "total premium", new CurrencyAmount(10.0, Currency.GBP), 1);
+        sheet.addFixedSum("load2", null, "total premium", new CurrencyAmount(10.0, GBP), 1);
         sheet.addLoading("load3", null, "total premium", "total premium", new Rate("5%"), 3);
         sheet.clearLockingActor();
 
@@ -409,9 +414,9 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         sheet = new AssessmentSheet();
 
         sheet.setLockingActor("me");
-        sheet.addFixedSum("base", null, null, "total premium", new CurrencyAmount(100.0, Currency.GBP));
+        sheet.addFixedSum("base", null, null, "total premium", new CurrencyAmount(100.0, GBP));
         sheet.addLoading("load1", null, "total premium", "total premium", new Rate("5%"), 1);
-        sheet.addFixedSum("load2", null, "total premium", new CurrencyAmount(10.0, Currency.GBP), 2);
+        sheet.addFixedSum("load2", null, "total premium", new CurrencyAmount(10.0, GBP), 2);
         sheet.addLoading("load3", null, "total premium", "total premium", new Rate("5%"), 3);
         sheet.clearLockingActor();
 
@@ -433,10 +438,10 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
      * process any calculations.
      * <ol>
      * <li>Create a policy (based on TestPolicy1).</li>
-     * <li>Creata a section level assessment sheet</li>
+     * <li>Create a section level assessment sheet</li>
      * <ol>
      * <li>Add a base premium line of &pound;20</li>
-     * <li>Add a refer (Id=ref1)</ll>
+     * <li>Add a refer (Id=ref1)</li>
      * </ol>
      * <li>Create an empty policy level assessment sheet</li>
      * <li>Pass the policy into calculate premium</li>
@@ -471,10 +476,10 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
      * process any calculations.
      * <ol>
      * <li>Create a policy (based on TestPolicy1).</li>
-     * <li>Creata a section level assessment sheet</li>
+     * <li>Create a section level assessment sheet</li>
      * <ol>
      * <li>Add a base premium line of &pound;20</li>
-     * <li>Add a decline (Id=dec1)</ll>
+     * <li>Add a decline (Id=dec1)</li>
      * </ol>
      * <li>Create an empty policy level assessment sheet</li>
      * <li>Pass the policy into calculate premium</li>
@@ -509,11 +514,11 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
      * declined.
      * <ol>
      * <li>Create a policy (based on TestPolicy1).</li>
-     * <li>Creata a section level assessment sheet</li>
+     * <li>Create a section level assessment sheet</li>
      * <ol>
      * <li>Add a base premium line of &pound;20</li>
      * <li>Add a referral (Id=ref1)</li>
-     * <li>Add a decline (Id=dec1)</ll>
+     * <li>Add a decline (Id=dec1)</li>
      * </ol>
      * <li>Create an empty policy level assessment sheet</li>
      * <li>Pass the policy into calculate premium</li>
@@ -547,7 +552,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
      * Single resolution, single refer. Ensure that a resolved referral is ignored, and the quotataion goes ahead.
      * <ol>
      * <li>Create a policy (based on TestPolicy1).</li>
-     * <li>Creata a section level assessment sheet</li>
+     * <li>Createa section level assessment sheet</li>
      * <ol>
      * <li>Add a base premium line of &pound;20</li>
      * <li>Add a referral (Id=ref1)</li>
@@ -602,7 +607,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
      * referred status.
      * <ol>
      * <li>Create a policy (based on TestPolicy1).</li>
-     * <li>Creata a section level assessment sheet</li>
+     * <li>Create section level assessment sheet</li>
      * <ol>
      * <li>Add a base premium line of &pound;20</li>
      * <li>Add two referrals (Ids=ref1 and ref1)</li>
@@ -742,7 +747,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         
         quote.setAssessmentSheet(new AssessmentSheet());
         quote.getAssessmentSheet().setLockingActor("test");
-        quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(120, Currency.GBP)));
+        quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(120, GBP)));
         quote.getAssessmentSheet().clearLockingActor();
         
         AssessPaymentOptionsCommand command = (AssessPaymentOptionsCommand) core.newCommand("AssessPaymentOptions");
@@ -754,7 +759,7 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
 
         quote.setAssessmentSheet(new AssessmentSheet());
         quote.getAssessmentSheet().setLockingActor("test");
-        quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(621.10, Currency.GBP)));
+        quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(621.10, GBP)));
         quote.getAssessmentSheet().clearLockingActor();
         
         command = (AssessPaymentOptionsCommand) core.newCommand("AssessPaymentOptions");
@@ -762,7 +767,371 @@ public class TestQuotation extends TestCase implements CoreUser, ConfigurationOw
         command.invoke();
         
         assertEquals(3, command.getOptionsRet().size());
+    }
+    
+    /**
+     * Test that the constrain type of control line works with a max value. The constrain
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the max constraint works on FixedSum
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with three lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 100GBP and max of 200GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 120GBP</li>
+     *  <li>fixed sum line with a value of 120GP with a contributesTo set to "total premium"</li></ul></li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 200GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testFixedSumMaxConstrainpedValueControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
         
-        System.out.println("res"+core.toXML(command.getOptionsRet()));
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(100, GBP), new CurrencyAmount(200, GBP)));
+        quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(120, GBP)));
+        quote.getAssessmentSheet().addLine(new FixedSum("contributor", "", null, "total premium", new CurrencyAmount(120, GBP)));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(200, GBP), quote.getTotalPremium());
+        System.out.println(core.toXML(quote));
+    }
+
+    /**
+     * Test that the constrain type of control line works with a min value. The constrain
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the min constraint works on FixedSum
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with three lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 300GBP and max of 800GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 120GBP</li>
+     *  <li>fixed sum line with a value of 120GP with a contributesTo set to "total premium"</li></ul></li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 300GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testFixedSumMinConstrainedValueControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(800, GBP)));
+        quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(120, GBP));
+        quote.getAssessmentSheet().addFixedSum("contributor", "", "total premium", new CurrencyAmount(120, GBP));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(300, GBP), quote.getTotalPremium());
+    }
+
+    /**
+     * Test that the constrain type of control line works with a min value. The constrain
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the min constraint works on Totalizer
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 300GBP and max of 800GBP</li>
+     *  <li>fixed sum line called "value1" with a value of 120GBP</li>
+     *  <li>fixed sum line called "value2" with a value of 80GBP</li>
+     *  <li>fixed sum line called "value3" with a value of 20GBP</li>
+     *  <li>a totalizer called "total premium" with dependsOn="value1, value2, value3"</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 300GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testSumMinConstrainedValueControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(800, GBP)));
+        quote.getAssessmentSheet().addFixedSum("value1", "", new CurrencyAmount(120, GBP));
+        quote.getAssessmentSheet().addFixedSum("value2", "", new CurrencyAmount(80, GBP));
+        quote.getAssessmentSheet().addFixedSum("value3", "", new CurrencyAmount(20, GBP));
+        quote.getAssessmentSheet().addTotalizer("total premium", "", "value1, value2, value3");
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(300, GBP), quote.getTotalPremium());
+    }
+
+    /**
+     * Test that the constrain type of control line works with a max value. The constrain
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the max constraint works on Totalizer
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 300GBP and max of 310GBP</li>
+     *  <li>fixed sum line called "value1" with a value of 120GBP</li>
+     *  <li>fixed sum line called "value2" with a value of 120GBP</li>
+     *  <li>fixed sum line called "value3" with a value of 120GBP</li>
+     *  <li>a totalizer called "total premium" with dependsOn="value1, value2, value3"</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 310GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testSumMaxConstrainedValueControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(310, GBP)));
+        quote.getAssessmentSheet().addFixedSum("value1", "", new CurrencyAmount(120, GBP));
+        quote.getAssessmentSheet().addFixedSum("value2", "", new CurrencyAmount(120, GBP));
+        quote.getAssessmentSheet().addFixedSum("value3", "", new CurrencyAmount(120, GBP));
+        quote.getAssessmentSheet().addTotalizer("total premium", "", "value1, value2, value3");
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(310, GBP), quote.getTotalPremium());
+    }
+
+    /**
+     * Test that the constraint type of control line works with a min value. The constraint
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the min constraint works on SumBehaviour
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 300GBP and max of 800GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 400GBP</li>
+     *  <li>fixed sum discount called of 200GBP</li>
+     *  <li>fixed sum discount called of 80GBP</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 300GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testSumBehaviourConstrainedValueControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(800, GBP)));
+        quote.getAssessmentSheet().addDiscount("value1", "dicsount 1", "total premium", new CurrencyAmount(200, GBP));
+        quote.getAssessmentSheet().addDiscount("value2", "discount 2", "total premium", new CurrencyAmount(80, GBP));
+        quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(400, GBP));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(300, GBP), quote.getTotalPremium());
+    }
+
+    /**
+     * Test that the constraint type of control line works with a max value. The constraint
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the max constraint works on RateBehaviour
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 300GBP and max of 800GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 600GBP</li>
+     *  <li>fixed rate based loading of 50%</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 800GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testRateBehaviourConstrainedValueControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(800, GBP)));
+        quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(600, GBP));
+        quote.getAssessmentSheet().addLoading("rate1", "loading 1", "total premium", "total premium", new Rate("50%"));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(800, GBP), quote.getTotalPremium());
+    }
+
+    /**
+     * Test that the constraint type of control line works with a max value. The constraint
+     * type of control line allows the a line's value to be constrained between
+     * a min and max value. This test checks that the max constraint works on RateBehaviour
+     * lines.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>control line referring to "total premium" with a min of 100GBP and max of 200GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 200GBP</li>
+     *  <li>2 X fixed rate based loading of 10%</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>Test that the value in "total premium" is 200GBP, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testRateBehaviourConstrainedValueControlLinesWithTwoLoadings() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(100, GBP), new CurrencyAmount(200, GBP)));
+        quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(200, GBP));
+        quote.getAssessmentSheet().addLoading("rate1", "loading 1", "total premium", "total premium", new Rate("10%"));
+        quote.getAssessmentSheet().addLoading("rate2", "loading 2", "total premium", "total premium", new Rate("10%"));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertEquals(new CurrencyAmount(200, GBP), quote.getTotalPremium());
+    }
+
+    /**
+     * Test that the referral type of control line works with a max value. The referral
+     * type of control line allows the a line's value to be monitored through out the
+     * rating process and for a referral to be automatically raised if that line's value
+     * goes outside of predefined limits.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>referral control line monitoring "total premium" with a min of 300GBP and max of 800GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 600GBP</li>
+     *  <li>fixed sum loading of 300GBP</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>A referral should be found in the assessment sheet, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testReferControlLines() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ReferValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(800, GBP)));
+        quote.getAssessmentSheet().addFixedSum("total premium", "premium", new CurrencyAmount(600, GBP));
+        quote.getAssessmentSheet().addLoading("loading", "loading 1", "total premium", new CurrencyAmount(300, GBP));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        assertTrue(quote.getAssessmentSheet().isMarkedForRefer());
+        
+        System.out.println(core.toXML(quote));
+    }
+
+    /**
+     * Test that the referral type of control line works with a max value. The referral
+     * type of control line allows the a line's value to be monitored through out the
+     * rating process and for a referral to be automatically raised if that line's value
+     * goes outside of predefined limits.
+     * <ol>
+     * <li>Create a test policy with an assessment sheet with the following lines:<ul>
+     *  <li>referral control line monitoring "total premium" with a min of 300GBP and max of 800GBP</li>
+     *  <li>fixed sum line called "total premium" with a value of 600GBP</li>
+     *  <li>fixed sum loading of 300GBP</li>
+     * <li>Invoke the RefreshAssessmentSheets service with the test policy.</li>
+     * <li>A referral should be found in the assessment sheet, fail otherwise.</li>
+     * <li>Fail if any exceptions are thrown.</li>
+     * </ol>
+     * @throws Exception
+     */
+    public void testDependAndContribute() throws Exception {
+        Policy quote = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
+
+        quote.setStatus(PolicyStatus.QUOTATION);
+        
+        quote.setAssessmentSheet(new AssessmentSheet());
+        quote.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
+        quote.getAssessmentSheet().setLockingActor("test");
+        quote.getAssessmentSheet().addLine(new ConstrainValueOutOfBounds("premium constraint", "premium out of range.", "total premium", new CurrencyAmount(300, GBP), new CurrencyAmount(800, GBP)));
+        quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(100, GBP));
+        quote.getAssessmentSheet().addLoading("tax line", "tax line", "total premium", "total premium", new Rate("15%"));
+        quote.getAssessmentSheet().clearLockingActor();
+        
+        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        command.setPolicyArgRet(quote);
+        command.setOriginArg("test-new");
+        command.invoke();
+
+        quote=command.getPolicyArgRet();
+        
+        CalculationLine tax=(CalculationLine)quote.getAssessmentSheet().findLineById("tax line");
+        assertEquals(new CurrencyAmount(15, GBP), tax.getAmount());
     }
 }

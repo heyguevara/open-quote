@@ -14,33 +14,38 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 package com.ail.insurance.policy;
 
 import com.ail.core.Functions;
 import com.ail.core.TypeEnum;
 
 /**
- * The type of a behaviour, e.g.: load, discount, tax, etc.
+ * Defines the stages which the assessment process goes though as premiums are calculated.
+ * The following stages are supported:<ul>
+ * <li>RATING - The control line is applied whenever the line that it depends on
+ * changes.</li>
+ * <li>AFTER_RATING - The line is applied just once after all other rating operations 
+ * have completed.</li>
+ * <li>BEFORE_RATING - The line is applied before any other rating operations have
+ * taken place.</li></ul>
+ * @see RefreshAssessmentSheetsService, ControlLine
+ * @since Insurance 2.4, OpenQuote 1.3
  */
-public enum BehaviourType implements TypeEnum {
-    LOAD("Load"),
-    DISCOUNT("Discount"),
-    TAX("Tax"),
-    COMMISSION("Commission"),
-    BROKERAGE("Brokerage"),
-    MANAGEMENT_CHARGE("Management charge");
+public enum AssessmentStage implements TypeEnum {
+    RATING("Rating"),
+    AFTER_RATING("After rating"),
+    BEFORE_RATING("Before rating");
     
     private final String longName;
     
-    BehaviourType() {
+    AssessmentStage() {
         this.longName=name();
     }
     
-    BehaviourType(String longName) {
+    AssessmentStage(String longName) {
         this.longName=longName;
     }
-   
+    
     public String valuesAsCsv() {
         return Functions.valuesAsCsv(values());
     }
@@ -55,10 +60,10 @@ public enum BehaviourType implements TypeEnum {
      * @param name The name to lookup
      * @return The matching Enum, or IllegalArgumentException if there isn't a match.
      */
-    public static BehaviourType forName(String name) {
-        return (BehaviourType)Functions.enumForName(name, values());
+    public static AssessmentStage forName(String name) {
+        return (AssessmentStage)Functions.enumForName(name, values());
     }
-    
+
     public String getName() {
         return name();
     }

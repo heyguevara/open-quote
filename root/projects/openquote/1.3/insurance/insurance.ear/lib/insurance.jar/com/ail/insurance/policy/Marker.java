@@ -18,12 +18,12 @@
 package com.ail.insurance.policy;
 
 /**
- * A marker assessment line represents a generalization of a referral or decline.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 19:49:05 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Marker.java,v $
- * @stereotype type 
+ * A marker assessment line indicates referral and decline conditions. When risk assessment rules detect a condition
+ * that calls for a referral or decline, a line of this type is added to the assessment sheet. The presents of these
+ * lines does not necessarily stop premium calculation, but other services may refuse to process quotations when 
+ * any of these markers are present. For example, {@link com.ail.insurance.quotation.calculatepremium.CalculatePremiumService
+ * CalculatePremium} will not move a policy to QUOTATION status if any of these markers are present.
+ * @see MarkerResolution
  */
 public class Marker extends AssessmentLine {
     private static final long serialVersionUID = -5791683969972762091L;
@@ -41,7 +41,7 @@ public class Marker extends AssessmentLine {
      * Constructor
      * @param id This line's Id
      * @param reason Free text reason for why this marker was applied.
-     * @param relatesTo Optionl reference to the part of the policy that caused the marker.
+     * @param relatesTo Optional reference to the part of the policy that caused the marker.
      * @param type This marker's type.
      */
     public Marker(String id, String reason, Reference relatesTo, MarkerType type) {
@@ -53,7 +53,7 @@ public class Marker extends AssessmentLine {
      * Constructor
      * @param id This line's Id
      * @param reason Free text reason for why this marker was applied.
-     * @param relatesTo Optionl reference to the part of the policy that caused the marker.
+     * @param relatesTo Optional reference to the part of the policy that caused the marker.
      * @param type This marker's type.
      * @param priority The priority of this line wrt other lines in the same sheet (lines with higher priority values are processed first)
      */

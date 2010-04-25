@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.Vector;
 
 import com.ail.core.Core;
 import com.ail.core.PreconditionException;
@@ -32,14 +31,10 @@ import com.ail.insurance.policy.AssessmentLine;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.AssessmentSheetList;
 import com.ail.insurance.policy.CalculationLine;
+import com.ail.insurance.policy.AssessmentStage;
 import com.ail.insurance.policy.Policy;
 
 /**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/02/12 23:10:04 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/refreshassessmentsheets/RefreshAssessmentSheetsService.java,v $
- * @stereotype service
  */
 public class RefreshAssessmentSheetsService extends Service {
     private static final long serialVersionUID = 3642886757932052003L;
@@ -110,6 +105,11 @@ public class RefreshAssessmentSheetsService extends Service {
         sortedLines=new ArrayList<CalculationLine>(sheet.getLinesOfType(CalculationLine.class).values());
         Collections.sort(sortedLines);
         
+        // make sure that each line knows about the assessment sheet it is in
+        for(CalculationLine line: sortedLines) {
+            line.setAssessmentSheet(sheet);
+        }
+        
         // iterate through the lines
         for(Iterator<CalculationLine> it=sortedLines.iterator() ; it.hasNext() ; ) {
             cl=it.next();
@@ -133,8 +133,14 @@ public class RefreshAssessmentSheetsService extends Service {
         boolean again=false;
         int calculationOrder=0;
         AssessmentSheetList sheets=new AssessmentSheetList(policy);
-        Collection<AssessmentLine> processed=new Vector<AssessmentLine>();
+        Collection<AssessmentLine> processed=new ArrayList<AssessmentLine>();
 
+        // execute all the control lines appropriate to the before phase
+        sheets.executeControlLinesForAssessmentStage(AssessmentStage.BEFORE_RATING);
+
+        // the following loop performs all the rating calcs, so set the phase accordingly
+        sheets.setAssessmentStage(AssessmentStage.RATING);
+        
         do {
             again=false;
 
@@ -148,6 +154,9 @@ public class RefreshAssessmentSheetsService extends Service {
                 }
             }
         } while(again==true);
+
+        // execute all the control lines appropriate to the before phase
+        sheets.executeControlLinesForAssessmentStage(AssessmentStage.AFTER_RATING);
     }
 
     /** The 'business logic' of the entry point. */

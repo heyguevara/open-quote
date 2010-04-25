@@ -199,9 +199,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setStatus(PolicyStatus.ON_RISK);
 
 		// create prepayment
-		CurrencyAmount amount = new CurrencyAmount();
-		amount.setAmountAsString("100");
-		amount.setCurrencyAsString(Currency.GBP.name());
+		CurrencyAmount amount = new CurrencyAmount(100, Currency.GBP);
 
 		// run command
 		CollectPremiumCommand command = (CollectPremiumCommand) getCore().newCommand("CollectPremiumService");

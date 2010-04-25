@@ -21,11 +21,6 @@ package com.ail.insurance.policy;
  * Any number of assessment notes may be added to an assessment sheet. Notes have no effect on 
  * the assessment or calculation process, they simply provide a place for rules (or other actors)
  * to include some textual information into the assessment sheet.
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/AssessmentNote.java,v $
- * @stereotype type
  */
 public class AssessmentNote extends AssessmentLine {
     private static final long serialVersionUID = -4519518497757725779L;
@@ -39,7 +34,7 @@ public class AssessmentNote extends AssessmentLine {
     /**
      * Constructor
      * @param id The Id for this line.
-     * @param reason Free text reson for the marker
+     * @param reason Free text reason for the marker
      * @param relatedTo Reference to the policy object that caused the marker.
      */
     public AssessmentNote(String id, String reason, Reference relatedTo) {
@@ -49,7 +44,7 @@ public class AssessmentNote extends AssessmentLine {
     /**
      * Constructor
      * @param id The Id for this line.
-     * @param reason Free text reson for the marker
+     * @param reason Free text reason for the marker
      * @param relatedTo Reference to the policy object that caused the marker.
      * @param priority The priority of this line (lines with higher priority values are processed first)
      */

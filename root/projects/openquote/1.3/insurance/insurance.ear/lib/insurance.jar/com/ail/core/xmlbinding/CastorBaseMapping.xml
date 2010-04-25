@@ -280,10 +280,10 @@
 
     <!-- Mappings for financial model types -->
     <class name="com.ail.financial.CurrencyAmount" extends="com.ail.core.Type" auto-complete="false">
-        <field name="amount" type="string" get-method="getAmountAsString" set-method="setAmountAsString">
+        <field name="amount" type="string" get-method="getAmountAsString" set-method="%1">
             <bind-xml node="attribute"/>
         </field>
-        <field name="currency" type="string" get-method="getCurrencyAsString" set-method="setCurrencyAsString">
+        <field name="currency" type="string" get-method="getCurrencyAsString" set-method="%2">
             <bind-xml node="attribute"/>
         </field>
     </class>
@@ -379,6 +379,25 @@
     </class>
 
     <class name="com.ail.insurance.policy.AssessmentNote" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false"/>
+
+    <class name="com.ail.insurance.policy.ControlLine" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
+		<field name="assessmentStage" type="string" get-method="getAssessmentStageAsString" set-method="setAssessmentStageAsString"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.ConstrainValueOutOfBounds" extends="com.ail.insurance.policy.ControlLine" auto-complete="false">
+        <field name="minimum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="maximum" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.ReferValueOutOfBounds" extends="com.ail.insurance.policy.ControlLine" auto-complete="false">
+        <field name="minimum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="maximum" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.DeclineValueOutOfBounds" extends="com.ail.insurance.policy.ControlLine" auto-complete="false">
+        <field name="minimum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="maximum" type="com.ail.financial.CurrencyAmount"/>
+    </class>
 
     <class name="com.ail.insurance.policy.CalculationLine" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
         <field name="contributesTo" type="string"/>

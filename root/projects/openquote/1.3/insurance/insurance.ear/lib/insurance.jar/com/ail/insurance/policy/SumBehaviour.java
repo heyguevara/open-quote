@@ -20,12 +20,12 @@ package com.ail.insurance.policy;
 import com.ail.financial.CurrencyAmount;
 
 /**
- * An assessment line which contributes a fixed sum to another line.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/02/18 16:50:43 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/SumBehaviour.java,v $
- * @stereotype type 
+ * An assessment line which contributes a fixed sum to another line. This type of line applies a fixed amount to the
+ * value of another line. How the amount is applied depends upon the behaviour type of this line. For example, if this
+ * line is a loading (i.e. {@link #getType() type}=={@link BehaviourType#LOAD}) then the amount will be added to the value
+ * of the line indicated by {@link #getContributesTo() contributesTo}. If this line is a discount (i.e. {@link #getType()
+ * type}=={@link BehaviourType#DISCOUNT}) the amount will be subtracted from the indicated line.
+ * @see FixedSum
  */
 public class SumBehaviour extends Behaviour {
     private static final long serialVersionUID = 264541471718824407L;
@@ -57,7 +57,7 @@ public class SumBehaviour extends Behaviour {
      * @param contributesTo The Id of the line that this line contributes to.
      * @param type The type of behaviour being represented.
      * @param amount The amount (value) represented by this line.
-     * @param priority The priority of this line wrt other lines in the same sheet (lines with higher priority values are processed first)
+     * @param priority The priority of this line WRT other lines in the same sheet (lines with higher priority values are processed first)
      */
     public SumBehaviour(String id, String reason, Reference relatesTo, String contributesTo, BehaviourType type, CurrencyAmount amount, int priority) {
         super(id, reason, relatesTo, contributesTo, type, amount, priority);
@@ -73,26 +73,8 @@ public class SumBehaviour extends Behaviour {
      * @return always true. FixedSum lines cannot fail to calculate.
      */
     public boolean calculate(AssessmentSheetList sheets, AssessmentSheet sheet) {
-        // try to get the line that this on contributes to.
-        FixedSum conTo=(FixedSum)sheets.findAssessmentLine(getContributesTo(), sheet);
-
-        // if it doesn't exist, create it.
-        if (conTo==null) {
-            conTo=new FixedSum(getContributesTo(), "calculated", null, null, new CurrencyAmount(0, getAmount().getCurrency()));
-            sheets.addAssessmentLine(conTo, sheet);
-        }
-
-        // If we're loading add our calculated amount to contributed to,
-        // if we are a discount subtract it.
-        if (getType().equals(BehaviourType.LOAD)) {
-            conTo.getAmount().add(getAmount());
-        }
-        else if (getType().equals(BehaviourType.DISCOUNT)) {
-            conTo.getAmount().subtract(getAmount());
-        }
-        else if (getType().equals(BehaviourType.TAX)) {
-            conTo.getAmount().add(getAmount());
-        }
+        // Pass on the result of this calculation to any 'contributeTo' line
+        contribute(sheets, sheet);
 
         return true;
     }

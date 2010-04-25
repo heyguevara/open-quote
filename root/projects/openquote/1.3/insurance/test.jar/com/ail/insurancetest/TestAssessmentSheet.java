@@ -33,13 +33,9 @@ import com.ail.util.Rate;
 
 /**
  * The assessment sheet is at the center of the quotation process. It can be thought of as
- * a restricted spreadsheet. Entries can be absulute amounts (Sums) or rates (Percentage). Each entry may
+ * a restricted spreadsheet. Entries can be absolute amounts (Sums) or rates (Percentage). Each entry may
  * depend on a maximum of one other entry, and may contribute to another. Most of what the calculatePremium
  * service does is to run through this table processing it and producing results from it.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 23:19:08 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/test.jar/com/ail/insurancetest/TestAssessmentSheet.java,v $
  */
 public class TestAssessmentSheet extends TestCase {
     /**
@@ -109,7 +105,7 @@ public class TestAssessmentSheet extends TestCase {
      * <li>Lock the sheet to the actor "me"</li>
      * <li>Attempt to lock the sheet for the actor "you"</li>
      * <li>Fail if an IllegalStateException isn't thrown</li>
-     * <li>File if anyother exception is thrown</li>
+     * <li>File if any other exception is thrown</li>
      * <li>Lock the sheet as the actor "me" again</li>
      * <li>Fail if any exceptions af thrown</li>
      * </ol>
@@ -184,7 +180,7 @@ public class TestAssessmentSheet extends TestCase {
      * <li>Unlock the sheet, and re-lock as "you"</li>
      * <li>Add three further lines to the sheet</li>
      * <li>Check that the sheet has five lines</li>
-     * <li>Unlock hte sheet</li>
+     * <li>Unlock the sheet</li>
      * <li>use 'removeLInesByOrigin' to remove all of the lines created by "me"</li>
      * <li>Check that the sheet has three lines</li>
      * <li>Check that the lines are those added by "you" - by checking their IDs</li>

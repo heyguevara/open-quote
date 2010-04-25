@@ -20,13 +20,13 @@ package com.ail.insurance.policy;
 /**
  * An assessment line indicating that a 'Marker' has been resolved. Also know as an override. These are attached to 
  * markers (referrals and declines) raised by the system to indicate that they should be ignored when the assessment
- * sheet is processed. Typically the system indicates applies a marker to indicate that the policy should be referred,
- * but an underwriter "resolves" the marker to indicate that he/she is happy for the referral to be ignored. 
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/MarkerResolution.java,v $
- * @stereotype type
+ * sheet is processed. Typically the system applies a marker to indicate that the policy should be referred,
+ * but an underwriter "resolves" the marker to indicate that he/she is happy for the referral to be ignored.<p/>
+ * The optional {@link #getBehaviourId() behaviourID} property may be used to indicate some behaviour (e.g. loading)
+ * that was applied in the process of resolving the marker. For example, on reviewing a referral the underwrite might
+ * choose to accept the risk, but only with an addition loading being applied to the premium. The assessment line which
+ * applies that additional loading would be indicated by the {@link #getBehaviourId() behaviourID}.
+ * @see Marker
  */
 public class MarkerResolution extends AssessmentLine {
     private static final long serialVersionUID = -5354541886808104720L;
@@ -42,7 +42,7 @@ public class MarkerResolution extends AssessmentLine {
     /**
      * Constructor
      * @param id The Id for this line.
-     * @param reason Free text reson for the marker
+     * @param reason Free text reason for the marker
      * @param relatedTo Reference to the policy object that caused the marker.
      * @param behaviourId The behaviour created as part of this resolution
      */
@@ -54,7 +54,7 @@ public class MarkerResolution extends AssessmentLine {
     /**
      * Constructor
      * @param id The Id for this line.
-     * @param reason Free text reson for the marker
+     * @param reason Free text reason for the marker
      * @param relatedTo Reference to the policy object that caused the marker.
      * @param behaviourId The behaviour created as part of this resolution
      * @param priority The priority of this line wrt other lines in the same sheet (lines with higher priority values are processed first)
@@ -64,10 +64,18 @@ public class MarkerResolution extends AssessmentLine {
       this.behaviourId=behaviourId;
     }
 
+    /**
+     * The ID of another assessment line that was added as part of the process of resolving the marker.
+     * @return
+     */
     public String getBehaviourId() {
         return behaviourId;
     }
 
+    /**
+     * @see #getBehaviourId()
+     * @param behaviourId
+     */
     public void setBehaviourId(String behaviourId) {
         this.behaviourId = behaviourId;
     }

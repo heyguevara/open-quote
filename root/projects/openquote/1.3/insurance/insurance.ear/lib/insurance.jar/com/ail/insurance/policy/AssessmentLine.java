@@ -20,11 +20,11 @@ package com.ail.insurance.policy;
 import com.ail.core.Type;
 
 /**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/02/12 23:10:04 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/AssessmentLine.java,v $
- * @stereotype type
+ * Base class for all types of assessment lines. Assessment lines record the detail of the calculations
+ * to be made in order to arrive at a premium. During the premium calculation process, any number of these
+ * lines will be added to the {@link AssessmentSheet AssessmentSheets} of a policy to both define and record
+ * how the premium is arrived at. This may well include factors like tax and brokerage, and also will may
+ * list the reasons why rating isn't possible in the form or referral or decline indications.
  */
 public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
     private static final long serialVersionUID = 1357488757251866318L;
@@ -33,10 +33,7 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
     private boolean disabled=false;
     private int priority=0;
     private int calculatedOrder=0;
-
-    /**
-     * @link aggregationByValue 
-     */
+    private transient AssessmentSheet assessmentSheet=null;
     private Reference relatesTo;
 
     /** Origin describes the actor (system or user) who created this AssessmenLine. */
@@ -74,26 +71,55 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
         this.priority=priority;
     }
 
+    /**
+     * The lines Id. This is unique value within an assessment sheet.
+     * @return
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * @see #getId()
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * An optional pointer to the object in the policy which this lines relates to. 
+     * For example, a motor policy may have 3 vehicles on it, one of which doesn't
+     * have an alarm fitted and therefore caused a loading to be added. This property
+     * would identify which vehicle.
+     * This is for indication only, the property's value is not used by the system. 
+     * @return
+     */
     public Reference getRelatesTo(){ 
       return relatesTo; 
     }
 
+    /**
+     * @see #getRelatesTo()
+     * @param relatesTo
+     */
     public void setRelatesTo(Reference relatesTo){ 
       this.relatesTo = relatesTo; 
     }
 
+    /**
+     * Human readable textual description of why this line exists. For example: 
+     * "Loading added because the driver is less than 20 years or age"
+     * @return
+     */
     public String getReason() {
         return reason;
     }
 
+    /**
+     * @see #getReason()
+     * @param reason
+     */
     public void setReason(String reason) {
         this.reason = reason;
     }
@@ -138,7 +164,7 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
     }
 
     /**
-     * The priority of a line affects the order in which it is processed (with respect to other lines) by services. 
+     * The priority of a line affects the order in which it is processed with respect to other lines. 
      * Some services (for example {@link com.ail.insurance.quotation.refreshassessmentsheet.RefreshAssessmentSheetService RefreshAssessmentSheetService})
      * process all the lines in an assessment sheet. Such services use the priority of the lines to determine the order in 
      * which the lines should be processed.<p>
@@ -159,7 +185,8 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
       this.priority = priority;
     }
 
-    /* Order lines based on each lines priority.
+    /**
+     * Order lines based on each line's priority.
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(AssessmentLine that)
@@ -167,11 +194,39 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
       return  that.priority - this.priority;
     }
 
+    /**
+     * Records the order in which lines were processed relative to other lines. When an assessment sheet has
+     * been through some process (e.g. {@link com.ail.insurance.quotation.refreshassessmentsheet.RefreshAssessmentSheetService RefreshAssessmentSheetService})
+     * the service will set the value of this property to indicate the order in which it processed the lines.
+     * @return
+     */
     public int getCalculatedOrder() {
         return calculatedOrder;
     }
 
+    /**
+     * @see #getCalculatedOrder()
+     * @param calculatedOrder
+     */
     public void setCalculatedOrder(int calculatedOrder) {
         this.calculatedOrder = calculatedOrder;
+    }
+
+    /**
+     * Set the assessment sheet which this line is part of. During the processing of
+     * assessment sheets, lines may need the context of the sheet that they exist 
+     * within in order to complete their operations. For example, to be able to 
+     * check for {@link ControlLine ControlLines} which might affect them.
+     * @param assessmentSheet
+     */
+    public void setAssessmentSheet(AssessmentSheet assessmentSheet) {
+        this.assessmentSheet = assessmentSheet;
+    }
+
+    /**
+     * @see #setAssessmentSheet(AssessmentSheet)
+     */
+    public AssessmentSheet getAssessmentSheet() {
+        return assessmentSheet;
     }
 }

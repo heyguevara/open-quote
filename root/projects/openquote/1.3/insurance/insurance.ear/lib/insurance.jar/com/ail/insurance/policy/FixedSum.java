@@ -21,12 +21,9 @@ import com.ail.financial.CurrencyAmount;
 
 /**
  * A type of assessment line representing a fixed amount (as opposed to one that is calculated by applying a rate to
- * another line).
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/02/18 16:50:43 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/FixedSum.java,v $
- * @stereotype type
+ * another line). If the {@link #getContributesTo() contributesTo} property is defined, the value of this line will
+ * simply be added to the value of the indicated line.
+ * @see SumBehaviour
  */
 public class FixedSum extends CalculationLine {
     private static final long serialVersionUID = 399954132621176151L;
@@ -40,7 +37,7 @@ public class FixedSum extends CalculationLine {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
@@ -52,14 +49,37 @@ public class FixedSum extends CalculationLine {
     /**
      * Constructor
      * @param id This line's Id
-     * @param reason Free text reson for this behaviour being created.
+     * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
-     * @param priority The priority of this line wrt other lines in the same sheet (lines with higher priority values are processed first)
+     * @param priority The priority of this line WRT other lines in the same sheet (lines with higher priority values are processed first)
      */
     public FixedSum(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount, int priority) {
       super(id, reason, relatesTo, contributesTo, amount, priority);
+    }
+
+    /**
+     * Constructor
+     * @param id This line's Id
+     * @param reason Free text reason for this behaviour being created.
+     * @param amount The amount to be contributed.
+     * @param priority The priority of this line WRT other lines in the same sheet (lines with higher priority values are processed first)
+     */
+    public FixedSum(String id, String reason, CurrencyAmount amount) {
+        this(id, reason, null, null, amount);
+    }
+
+    /**
+     * Constructor
+     * @param id This line's Id
+     * @param reason Free text reason for this behaviour being created.
+     * @param contributesTo The Id of the line that this one will contribute to.
+     * @param amount The amount to be contributed.
+     * @param priority The priority of this line WRT other lines in the same sheet (lines with higher priority values are processed first)
+     */
+    public FixedSum(String id, String reason, String contributesTo, CurrencyAmount amount) {
+        this(id, reason, null, contributesTo, amount);
     }
 
     /**
@@ -72,7 +92,7 @@ public class FixedSum extends CalculationLine {
         // Do we contribute to anything?
         if (getContributesTo()!=null) {
             // yes, then does the line we contribute to exist?
-            FixedSum conTo=(FixedSum)sheets.findAssessmentLine(getContributesTo(), sheet);
+            CalculationLine conTo=(CalculationLine)sheets.findAssessmentLine(getContributesTo(), sheet);
 
             // if not, create it.
             if (conTo==null) {
@@ -81,7 +101,7 @@ public class FixedSum extends CalculationLine {
             }
 
             // add to the 'contributeTo' line.
-            conTo.getAmount().add(getAmount());
+            conTo.setAmount(conTo.getAmount().add(getAmount()));
         }
 
         return true;

@@ -21,13 +21,17 @@ import com.ail.financial.CurrencyAmount;
 import com.ail.util.Rate;
 
 /**
- * An assessment line which applies a rate behaviour - i.e. it applies a rate to the value of another line and 
- * optionally contributes the result to another line.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/02/18 16:50:43 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/RateBehaviour.java,v $
- * @stereotype type
+ * An assessment line which applies a rate behaviour. This type of line applies a rate to the value of one line and 
+ * optionally contributes the result to another line. How the rate is applied depends upon the behaviour 
+ * type of this line. For example, if this line is a loading (i.e. {@link #getType() type}=={@link BehaviourType#LOAD})
+ * then the calculated value will be added to the value of the line indicated by {@link #getContributesTo() 
+ * contributesTo}. If the line is a discount (i.e. {@link #getType() type}=={@link BehaviourType#DISCOUNT}) the 
+ * value will be subtracted from the indicated line.<p/>
+ * The rate may be of any type supported by {@link com.ail.util.Rate Rate}, including percent (e.g. <code>new Rate("15%")</code>), 
+ * permil (e.g. <code>new Rate("5Permil")</code>), and fraction (e.g. <code>new Rate("16/18")</code>). 
+ * 
+ * @see BehaviourType BehaviourType
+ * 
  */
 public class RateBehaviour extends Behaviour {
     private static final long serialVersionUID = -1646835026437040884L;
@@ -115,54 +119,21 @@ public class RateBehaviour extends Behaviour {
      */
     public boolean calculate(AssessmentSheetList sheets, AssessmentSheet sheet) {
         // try to get the line that this one depends on
-        FixedSum depOn=(FixedSum)sheets.findAssessmentLine(getDependsOn(), sheet);
+        CalculationLine depOn=(CalculationLine)sheets.findAssessmentLine(getDependsOn(), sheet);
 
         // If the line doesn't exist (yet) give up
         if (depOn==null) {
             return false;
         }
 
-        // Copy the currency amount from the line, and apply the rate to it
-        CurrencyAmount amnt=new CurrencyAmount(depOn.getAmount().getAmount(), depOn.getAmount().getCurrency());
-        amnt.apply(rate);
+        // Copy the currency amount from the line
+        CurrencyAmount amnt=new CurrencyAmount(depOn.getAmount());
 
-        // A line may not contribute to anything. For example, tax may have been included in the
-        // base rates - but the tax line still needs to appear in the assessment sheet. In this case
-        // the contributesTo will be null.
-        if (getContributesTo()!=null) {
-            // try to get the line that this one contribites to.
-            FixedSum conTo=(FixedSum)sheets.findAssessmentLine(getContributesTo(), sheet);
-
-            // if it doesn't exist, create it.
-            if (conTo==null) {
-                conTo=new FixedSum(getContributesTo(), "calculated", null, null, new CurrencyAmount(0, amnt.getCurrency()));
-                sheets.addAssessmentLine(conTo, sheet);
-            }
-
-            // If we're loading add our calculated amount to contributed to,
-            // if we are a discount subtract it.
-            if (getType().equals(BehaviourType.LOAD)) {
-                conTo.getAmount().add(amnt);
-            }
-            else if (getType().equals(BehaviourType.TAX)) {
-                conTo.getAmount().add(amnt);
-            }
-            else if (getType().equals(BehaviourType.COMMISSION)) {
-                conTo.getAmount().add(amnt);
-            }
-            else if (getType().equals(BehaviourType.BROKERAGE)) {
-                conTo.getAmount().add(amnt);
-            }
-            else if (getType().equals(BehaviourType.MANAGEMENT_CHARGE)) {
-                conTo.getAmount().add(amnt);
-            }
-            else if (getType().equals(BehaviourType.DISCOUNT)) {
-                conTo.getAmount().subtract(amnt);
-            }
-        }
-
-        // set this lines amount now we have it.
-        setAmount(amnt);
+        // apply the rate and set this lines amount now we have it.
+        setAmount(amnt.apply(rate));
+        
+        // Pass on the result of this calculation to any 'contributeTo' line
+        contribute(sheets, sheet);
 
         return true;
     }

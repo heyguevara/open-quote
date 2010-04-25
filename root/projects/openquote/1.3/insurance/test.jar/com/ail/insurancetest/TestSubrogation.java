@@ -308,15 +308,15 @@ public class TestSubrogation extends TestCase implements CoreUser, Configuration
             command.invoke();
 
             // Now check the results, first that the claim's totals have been modified
-            assertTrue(command.getClaim().getOutstandingTotal().getAmount().doubleValue()==50520.0);
-            assertTrue(command.getClaim().getTotalRecovered().getAmount().doubleValue()==480.0);
+            assertEquals(50520.0, command.getClaim().getOutstandingTotal().getAmount().doubleValue());
+            assertEquals(480.0, command.getClaim().getTotalRecovered().getAmount().doubleValue());
 
             // Check that the sections totals have been modified
             ClaimSection section=command.getClaim().getClaimSectionByID("SECTION1");
             assertNotNull(section);
-            assertTrue(section.getEstimatedReserve().getAmount().doubleValue()==720.0);
-            assertTrue(section.getTotalRecovered().getAmount().doubleValue()==280.0);
-            assertTrue(section.getOutstandingClaim().getAmount().doubleValue()==320.0);
+            assertEquals(720.0, section.getEstimatedReserve().getAmount().doubleValue());
+            assertEquals(280.0, section.getTotalRecovered().getAmount().doubleValue());
+            assertEquals(320.0, section.getOutstandingClaim().getAmount().doubleValue());
 
             // Check that the recovery has been added to the section.
             Iterator<Recovery> it=section.getRecoveries().iterator();

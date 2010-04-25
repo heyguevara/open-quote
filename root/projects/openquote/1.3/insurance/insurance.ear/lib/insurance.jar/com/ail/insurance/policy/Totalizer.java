@@ -21,13 +21,10 @@ import java.util.StringTokenizer;
 import com.ail.financial.CurrencyAmount;
 
 /**
- * The totalizer calculation line adds any number of other named lines up to make a
- * total, and optionally contributes that total to another line.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/02/18 16:50:43 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Totalizer.java,v $
- * @stereotype type
+ * The totalizer calculation line sums the value of any number of other named lines up to make a
+ * total and optionally contributes that total to another line. The totalizer's value will only
+ * calculate when all of the lines which it depends on themselves have values. If one or more of
+ * them does not exist, it will not perform its calculation.
  */
 public class Totalizer extends CalculationLine {
     private static final long serialVersionUID = 1048697316607294623L;
@@ -62,6 +59,16 @@ public class Totalizer extends CalculationLine {
     }
 
     /**
+     * @param id This line's Id
+     * @param reason Free text reason for this behaviour being created.
+     * @param dependsOn A comma separated list of the IDs of the lines that this one depends on (will sum).
+     */
+    public Totalizer(String id, String reason, String dependsOn) {
+        super(id, reason, null, null, null);
+        this.dependsOn=dependsOn;
+    }
+
+    /**
      * Get the Ids of the lines that this totalizer depends on. The Ids
      * are returned as a comma separated list.
      * @return List of the IDs of the lines that this line depends on.
@@ -80,22 +87,27 @@ public class Totalizer extends CalculationLine {
     }
 
     public boolean calculate(AssessmentSheetList sheets, AssessmentSheet sheet) {
-        CurrencyAmount total=new CurrencyAmount();
+        CurrencyAmount total=null;
         CalculationLine cl=null;
 
         // loop through all the named dependsOn lines, and add their values to the total
-        for(StringTokenizer st=new StringTokenizer(dependsOn, ",") ; st.hasMoreTokens() ; ) {
+        for(StringTokenizer st=new StringTokenizer(dependsOn, ", ") ; st.hasMoreTokens() ; ) {
             cl=(CalculationLine)sheets.findAssessmentLine(st.nextToken(), sheet);
 
             if (cl==null || cl.getAmount()==null) {
                 return false;
             }
 
-            total.add(cl.getAmount());
+            if (total==null) {
+                total=new CurrencyAmount(cl.getAmount());
+            }
+            else {
+                total=total.add(cl.getAmount());
+            }
         }
 
         // no baseCurrency means no lines found - could be an empty dependsOn?
-        if (total.getCurrency()==null) {
+        if (total==null) {
             return false;
         }
 
@@ -105,7 +117,7 @@ public class Totalizer extends CalculationLine {
         // if this line contributes to another...
         if (getContributesTo()!=null) {
             // try to get the line that this on contributes to.
-            FixedSum conTo=(FixedSum)sheets.findAssessmentLine(getContributesTo(), sheet);
+            CalculationLine conTo=(CalculationLine)sheets.findAssessmentLine(getContributesTo(), sheet);
 
             // if it doesn't exist yet, create it.
             if (conTo==null) {
@@ -113,7 +125,7 @@ public class Totalizer extends CalculationLine {
                 sheets.addAssessmentLine(conTo, sheet);
             }
             else {
-                conTo.getAmount().add(getAmount());
+                conTo.setAmount(conTo.getAmount().add(getAmount()));
             }
         }
 

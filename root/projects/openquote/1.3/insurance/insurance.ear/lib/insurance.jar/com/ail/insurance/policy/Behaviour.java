@@ -131,4 +131,41 @@ public abstract class Behaviour extends CalculationLine {
         }
         return null;
     }
+    
+    protected void contribute(AssessmentSheetList sheets, AssessmentSheet sheet) {
+        // A line may not contribute to anything. For example, tax may have been included in the
+        // base rates - but the tax line still needs to appear in the assessment sheet. In this case
+        // the contributesTo will be null.
+        if (getContributesTo()!=null) {
+            // try to get the line that this one contributes to.
+            CalculationLine conTo=(CalculationLine)sheets.findAssessmentLine(getContributesTo(), sheet);
+
+            // if it doesn't exist, create it.
+            if (conTo==null) {
+                conTo=new FixedSum(getContributesTo(), "calculated", null, null, new CurrencyAmount(0, getAmount().getCurrency()));
+                sheets.addAssessmentLine(conTo, sheet);
+            }
+
+            // If we're loading add our calculated amount to contributed to,
+            // if we are a discount subtract it.
+            if (getType().equals(BehaviourType.LOAD)) {
+                conTo.setAmount(conTo.getAmount().add(getAmount()));
+            }
+            else if (getType().equals(BehaviourType.TAX)) {
+                conTo.setAmount(conTo.getAmount().add(getAmount()));
+            }
+            else if (getType().equals(BehaviourType.COMMISSION)) {
+                conTo.setAmount(conTo.getAmount().add(getAmount()));
+            }
+            else if (getType().equals(BehaviourType.BROKERAGE)) {
+                conTo.setAmount(conTo.getAmount().add(getAmount()));
+            }
+            else if (getType().equals(BehaviourType.MANAGEMENT_CHARGE)) {
+                conTo.setAmount(conTo.getAmount().add(getAmount()));
+            }
+            else if (getType().equals(BehaviourType.DISCOUNT)) {
+                conTo.setAmount(conTo.getAmount().subtract(getAmount()));
+            }
+        }
+    }
 }

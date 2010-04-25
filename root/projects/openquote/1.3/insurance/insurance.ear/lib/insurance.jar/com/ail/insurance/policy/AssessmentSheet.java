@@ -29,21 +29,10 @@ import com.ail.util.Rate;
 
 /**
  * Groups together a collection of assessment lines and provides utility methods for manipulating them.
- * @version $Revision: 1.11 $
- * @state $State: Exp $
- * @date $Date: 2007/03/27 23:00:27 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/AssessmentSheet.java,v $
- * @stereotype type
  */
 public class AssessmentSheet extends Type {
     private static final long serialVersionUID = 4050081334317365104L;
 
-    /**
-     * @link aggregationByValue
-     * @clientCardinality 1
-     * @supplierCardinality 0..*
-     */
-    /*# AssessmentLine lnkAssessmentLine; */
     private Map<String,AssessmentLine> assessmentLine = new Hashtable<String,AssessmentLine>();
 
     /**
@@ -56,6 +45,8 @@ public class AssessmentSheet extends Type {
      * Holds the next priority level to be used by the auto priority generator.
      */
     private int autoPriority=1;
+
+    private transient AssessmentStage assessmentStage;
     
     /**
      * Default constructor
@@ -466,32 +457,16 @@ public class AssessmentSheet extends Type {
      * Add a rate based loading entry to the sheet. This helper method simply
      * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
      * supplied and adds that instance to the sheet as a new line.<p>
-     * The suggested rule syntax is:<pre>
-     * Load by {rate} of {dependsOn} to {contributesTo} because {reason}. This relates to {relatesTo}. Use id {id}.
-     * </pre>
-     * Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
      * @param id The Id to use for this line
      * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
      */
-    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.LOAD, rate, generateAutoPriority()));
-    }
-
-    /**
-     * Add a loading with a generated lineId, and the specified arguments.
-     * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
-     * @param reason Free text reason for this behaviour being created.
-     * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
-     * @param contributesTo The Id of the line that this one contributes to.
-     * @param dependsOn The Id of the line that this on is derived from.
-     * @param rate The rate to be used in the calculation.
-     */
-    public void addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addLine(new RateBehaviour(generateLineId(), reason, relatesTo, contributesTo, dependsOn,  BehaviourType.LOAD, rate));
+    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
+        addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.LOAD, rate, priority));
     }
 
     /**
@@ -504,41 +479,136 @@ public class AssessmentSheet extends Type {
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
      */
     public void addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
-        addLine(new RateBehaviour(generateLineId(), reason, relatesTo, contributesTo, dependsOn,  BehaviourType.LOAD, rate, priority));
+        addLoading(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate, priority);
+    }
+
+    /**
+     * Add a rate based loading entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line.<p>
+     * Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
+     * @param id The Id to use for this line
+     * @param reason Free text reason for this behaviour being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this on is derived from.
+     * @param rate The rate to be used in the calculation.
+     */
+    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
+        addLoading(id, reason, relatesTo, contributesTo, dependsOn, rate, generateAutoPriority());
+    }
+
+    /**
+     * Add a rate based loading with a generated lineId, and the specified arguments.
+     * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
+     * @param reason Free text reason for this behaviour being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this on is derived from.
+     * @param rate The rate to be used in the calculation.
+     */
+    public void addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
+        addLoading(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate);
+    }
+
+    /**
+     * Add a rate based loading with a generated lineId, and the specified arguments.
+     * <br/>Note: Lines added using this method are automatically assigned a priority based on the order they are added.
+     * @param reason Free text reason for this behaviour being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this on is derived from.
+     * @param rate The rate to be used in the calculation.
+     */
+    public void addLoading(String reason, String contributesTo, String dependsOn, Rate rate) {
+        addLoading(reason, (Reference)null, contributesTo, dependsOn, rate);
+    }
+
+    /**
+     * Add a rate based loading with a generated lineId, and the specified arguments.
+     * <br/>Note: Lines added using this method are automatically assigned a priority based on the order they are added.
+     * @param id The Id to use for this line
+     * @param reason Free text reason for this behaviour being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this on is derived from.
+     * @param rate The rate to be used in the calculation.
+     */
+    public void addLoading(String id, String reason, String contributesTo, String dependsOn, Rate rate) {
+        addLoading(id, reason, null, contributesTo, dependsOn, rate);
+    }
+
+    /**
+     * Add a fixed sum based loading entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line.
+     * @param id The Id to use for this line
+     * @param reason Free text reason for this Loading being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this Loading.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be loaded
+     * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     */
+    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount, int priority) {
+        addLine(new SumBehaviour(generateLineId(), reason, relatesTo, contributesTo,  BehaviourType.LOAD, currencyAmount, priority));
+    }
+    
+    /**
+     * Add a fixed sum based loading entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line.
+     * The line's priority and id are automatically generated.
+     * @param reason Free text reason for this Loading being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this Loading.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be loaded
+     */
+    public void addLoading(String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount) {
+        addLoading(generateLineId(), reason, relatesTo, contributesTo, currencyAmount, generateAutoPriority());
+    }
+    
+    /**
+     * Add a fixed sum based loading entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line. 
+     * The line's priority and id are automatically generated.
+     * @param reason Free text reason for this Loading being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be loaded
+     */
+    public void addLoading(String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        addLoading(reason, (Reference)null, contributesTo, currencyAmount);
+    }
+
+    /**
+     * Add a fixed sum based loading entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line. 
+     * The line's priority and id are automatically generated.
+     * @param reason Free text reason for this Loading being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be loaded
+     */
+    public void addLoading(String id, String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        addLoading(id, reason, null, contributesTo, currencyAmount, generateAutoPriority());
     }
 
     /**
      * Add a rate based discount entry to the sheet. This helper method simply
      * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
      * supplied and adds that instance to the sheet as a new line.
-     * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
      * @param id The Id to use for this line
      * @param reason Free text reason for this discount being created.
      * @param relatesTo Optional reference to the part of the policy that caused this discount.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
      */
-    public void addDiscount(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.DISCOUNT, rate));
+    public void addDiscount(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
+        addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.DISCOUNT, rate, priority));
     }
 
     /**
-     * Same as addDiscount, but generates the line id automatically.
-     * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
-     * @param reason Free text reason for this discount being created.
-     * @param relatesTo Optional reference to the part of the policy that caused this discount.
-     * @param contributesTo The Id of the line that this one contributes to.
-     * @param dependsOn The Id of the line that this on is derived from.
-     * @param rate The rate to be used in the calculation.
-     * @see #addDiscount
-     */
-    public void addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addLine(new RateBehaviour(generateLineId(), reason, relatesTo, contributesTo, dependsOn,  BehaviourType.DISCOUNT, rate));
-    }
-
-    /**
-     * Same as addDiscount, but generates the line id automatically.
+     * Add a rate based discount with a generated line id.
      * @param reason Free text reason for this discount being created.
      * @param relatesTo Optional reference to the part of the policy that caused this discount.
      * @param contributesTo The Id of the line that this one contributes to.
@@ -548,7 +618,99 @@ public class AssessmentSheet extends Type {
      * @see #addDiscount
      */
     public void addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
-        addLine(new RateBehaviour(generateLineId(), reason, relatesTo, contributesTo, dependsOn,  BehaviourType.DISCOUNT, rate, priority));
+        addDiscount(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate, priority);
+    }
+
+    /**
+     * Add a rate based discount with a generated line id and priority.
+     * @param reason Free text reason for this discount being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this discount.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this on is derived from.
+     * @param rate The rate to be used in the calculation.
+     * @see #addDiscount
+     */
+    public void addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
+        addDiscount(reason, relatesTo, contributesTo, dependsOn, rate, generateAutoPriority());
+    }
+
+    /**
+     * Add a rate based discount with a generated priority and id.
+     * @param reason Free text reason for this discount being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this one is derived from.
+     * @param rate The rate to be used in the calculation.
+     */
+    public void addDiscount(String reason, String contributesTo, String dependsOn, Rate rate) {
+        addDiscount(reason, (Reference)null, contributesTo, dependsOn, rate);
+    }
+
+    /**
+     * Add a rate based discount with a generated priority and id.
+     * @param id The Id to use for this line
+     * @param reason Free text reason for this discount being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param dependsOn The Id of the line that this one is derived from.
+     * @param rate The rate to be used in the calculation.
+     */
+    public void addDiscount(String id, String reason, String contributesTo, String dependsOn, Rate rate) {
+        addDiscount(id, reason, null, contributesTo, dependsOn, rate, generateAutoPriority());
+    }
+
+    /**
+     * Add a fixed sum based discount entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line.
+     * @param id The Id to use for this line
+     * @param reason Free text reason for this discount being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this discount.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be discounted
+     * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     */
+    public void addDiscount(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount, int priority) {
+        addLine(new SumBehaviour(generateLineId(), reason, relatesTo, contributesTo,  BehaviourType.DISCOUNT, currencyAmount, priority));
+    }
+
+    /**
+     * Add a fixed sum based discount entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line.
+     * The line's priority and id are automatically generated.
+     * @param reason Free text reason for this discount being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this discount.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be discounted
+     */
+    public void addDiscount(String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount) {
+        addDiscount(generateLineId(), reason, relatesTo, contributesTo, currencyAmount, generateAutoPriority());
+    }
+
+    /**
+     * Add a fixed sum based discount entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line. 
+     * The line's priority and id are automatically generated.
+     * @param reason Free text reason for this discount being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be discounted
+     */
+    public void addDiscount(String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        addDiscount(reason, (Reference)null, contributesTo, currencyAmount);
+    }
+
+    /**
+     * Add a fixed sum based discount entry to the sheet. This helper method simply
+     * creates a {@link RateBehaviour RateBehaviour} instance with the arguments
+     * supplied and adds that instance to the sheet as a new line. 
+     * The line's priority and id are automatically generated.
+     * @param id The Id to use for this line
+     * @param reason Free text reason for this discount being created.
+     * @param contributesTo The Id of the line that this one contributes to.
+     * @param currencyAmount The amount to be discounted
+     */
+    public void addDiscount(String id, String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        addDiscount(id, reason, null, contributesTo, currencyAmount, generateAutoPriority());
     }
 
     /**
@@ -570,7 +732,16 @@ public class AssessmentSheet extends Type {
      * @see #addReferral
      */
     public void addReferral(String reason, Reference relatesTo) {
-        addLine(new Marker(generateLineId(), reason, relatesTo, MarkerType.REFER));
+        addReferral(generateLineId(), reason, relatesTo);
+    }
+
+    /**
+     * Same as addReferral, but automatically generates the line id.
+     * @param reason Free text reason for this referral being created.
+     * @see #addReferral
+     */
+    public void addReferral(String reason) {
+        addReferral(reason, null);
     }
 
     /**
@@ -592,7 +763,31 @@ public class AssessmentSheet extends Type {
      * @see #addDecline
      */
     public void addDecline(String reason, Reference relatesTo) {
-        addLine(new Marker(generateLineId(), reason, relatesTo, MarkerType.DECLINE));
+        addDecline(generateLineId(), reason, relatesTo);
+    }
+
+    /**
+     * Same as addDecline, but automatically generates a line id
+     * @param reason Free text reason for this decline being created.
+     * @see #addDecline
+     */
+    public void addDecline(String reason) {
+        addDecline(reason, null);
+    }
+
+    /**
+     * Add a fixed sum line to this sheet. This helper method simply creates a
+     * {@link FixedSum FixedSum} instance using the arguments supplied and adds
+     * it to the sheet as a new line.
+     * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
+     * @param id This line's Id
+     * @param reason Free text reason for this behaviour being created.
+     * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
+     * @param contributesTo The Id of the line that this one will contribute to.
+     * @param amount The amount to be contributed.
+     */
+    public void addFixedSum(String id, String reason, CurrencyAmount amount) {
+        addLine(new FixedSum(id, reason, amount));
     }
 
     /**
@@ -640,6 +835,19 @@ public class AssessmentSheet extends Type {
 
     /**
      * Same as addFixedSum, but generates a line id automatically.
+     * <br/>Note: Lines added using this methods are automatically assigned a priority based on the order they are added.
+     * @param id This line's Id
+     * @param reason Free text reason for this behaviour being created.
+     * @param contributesTo The Id of the line that this one will contribute to.
+     * @param amount The amount to be contributed.
+     * @see #addFixedSum
+     */
+    public void addFixedSum(String id, String reason, String contributesTo, CurrencyAmount amount) {
+        addLine(new FixedSum(id, reason, null, contributesTo, amount));
+    }
+
+    /**
+     * Same as addFixedSum, but generates a line id automatically.
      * @param reason Free text reason for this behaviour being created.
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
@@ -649,6 +857,16 @@ public class AssessmentSheet extends Type {
      */
     public void addFixedSum(String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount, int priority) {
         addLine(new FixedSum(generateLineId(), reason, relatesTo, contributesTo, amount, priority));
+    }
+
+    /**
+     * Add an assessment note to this sheet. This helper method simply creates a {@link AssessmentNote AssessmentNote}
+     * to the sheet using the reason passed in. The line's ID is automatically generated.
+     * @param reason Free text of note.
+     * @see #addAssessmentNote
+     */
+    public void addAssessmentNote(String reason) {
+        addLine(new AssessmentNote(generateLineId(), reason, null));
     }
 
     /**
@@ -672,6 +890,19 @@ public class AssessmentSheet extends Type {
      */
     public void addAssessmentNote(String id, String reason, Reference relatesTo) {
         addLine(new AssessmentNote(id, reason, relatesTo));
+    }
+    
+    /**
+     * Add a totalizer to this sheet. This helper method simply creates a {@link Totalizer Totalizer}
+     * to the sheet using the id, reason and releatesTo values passed in. The line's ID is automatically 
+     * generated and it's priority is set to follow on from the previous line that was added.
+     * @param id The Id to use for this line
+     * @param reason Free text of note.
+     * @param dependsOn A comma separated list of the IDs of the lines that this one depends on (will sum).
+     * @see #addAssessmentNote
+     */
+    public void addTotalizer(String id, String reason, String dependsOn) {
+        addLine(new Totalizer(id, reason, dependsOn));
     }
     
     /**
@@ -736,5 +967,23 @@ public class AssessmentSheet extends Type {
      */
     public void setAutoPriority(int autoPriority) {
         this.autoPriority = autoPriority;
+    }
+
+    /**
+     * Get the assessment stage that the sheet is currently in. The process
+     * of calculating assessment sheets involves a number of stages. Assessment lines have
+     * the option of responding differently depending upon which stage they are invoked in.
+     * @return current stage
+     */
+    public AssessmentStage getAssessmentStage() {
+        return assessmentStage;
+    }
+
+    /**
+     * @see #getAssessmentStage()
+     * @param stage
+     */
+    public void setAssessmentStage(AssessmentStage stage) {
+        this.assessmentStage=stage;
     }
 }

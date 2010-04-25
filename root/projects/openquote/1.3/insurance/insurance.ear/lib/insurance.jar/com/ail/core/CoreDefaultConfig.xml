@@ -131,6 +131,9 @@
         <service name="CalculatePremiumService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.insurance.quotation.calculatepremium.CalculatePremiumService</parameter>
         </service>
+        <service name="RefreshAssessmentSheetsService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsService</parameter>
+        </service>
         <service name="AddQuoteNumberService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService</parameter>
         </service>
@@ -254,6 +257,9 @@
         </command>
         <command name="CalculatePremium" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand">
             <parameter name="Accessor">CalculatePremiumService</parameter>
+        </command>
+        <command name="RefreshAssessmentSheets" builder="ClassBuilder" key="com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand">
+            <parameter name="Service">RefreshAssessmentSheetsService</parameter>
         </command>
         <command name="AddQuoteNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand">
             <parameter name="Accessor">AddQuoteNumberService</parameter>
