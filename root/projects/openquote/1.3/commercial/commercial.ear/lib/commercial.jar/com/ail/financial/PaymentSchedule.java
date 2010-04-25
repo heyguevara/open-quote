@@ -92,11 +92,25 @@ public class PaymentSchedule extends Type {
         }
     }
     
+    /**
+     * Calculate the total amount represented by this schedule.
+     * @return 
+     * @throws IllegalStateException if the schedule is empty.
+     */
     public CurrencyAmount calculateTotal() {
-        CurrencyAmount total=new CurrencyAmount();
+         if (getMoneyProvision()==null || getMoneyProvision().size()==0) {
+             throw new IllegalStateException("getMoneyProvision()==null || getMoneyProvision().size()==0");
+         }
+         
+        CurrencyAmount total=null;
         
         for(MoneyProvision prov: getMoneyProvision()) {
-            total.add(prov.calculateTotal());
+            if (total==null) {
+                total=new CurrencyAmount(prov.calculateTotal());
+            }
+            else {
+                total=total.add(prov.calculateTotal());
+            }
         }
         
         return total;

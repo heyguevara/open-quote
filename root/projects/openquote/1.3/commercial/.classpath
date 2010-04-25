@@ -33,5 +33,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/core.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

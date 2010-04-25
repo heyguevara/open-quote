@@ -17,17 +17,17 @@
 
 package com.ail.financial;
 
-import com.ail.core.Locale;
-import com.ail.core.Type;
-import com.ail.util.Rate;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import com.ail.core.Locale;
+import com.ail.core.Type;
+import com.ail.util.Rate;
+
 /**
  * Instances of this class represent amounts of money.
- * todo This currently assumes a BigDecimal scale of 2 for all currencies.
+ * @since Commercial 2.4 this class is immutable.
  */
 public class CurrencyAmount extends Type {
     static final long serialVersionUID = -7610940646036255844L;
@@ -36,12 +36,20 @@ public class CurrencyAmount extends Type {
     private Currency currency=null;
 
     /**
-     * Default constructor. This constructor is provided to use by frameworks
-     * (like castor) that demand a default constructor. Its use from code is
-     * discouraged as it creates an instance that is unusable until the
-     * setters for amount and currency have been invoked.
+     * @deprecated This constructor is not safe. It only exists to satisfy frameworks
+     * like Castor which insist on a default constructor. Use one of the other 
+     * constructors instead.
      */
     public CurrencyAmount() {
+    }
+    /**
+     * Create a new instance of CurrencyAmount matching the value and currency of
+     * the supplied instance.
+     * @param that instance to copy values from.
+     */
+    public CurrencyAmount(CurrencyAmount that) {
+        setAmount(that.getAmount());
+        setCurrency(that.getCurrency());
     }
 
     /**
@@ -50,7 +58,7 @@ public class CurrencyAmount extends Type {
      * @param currency The currency
      */
     public CurrencyAmount(BigDecimal amount, Currency currency) {
-        amount.setScale(2, BigDecimal.ROUND_HALF_UP);
+        amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
         setAmount(amount);
         setCurrency(currency);
     }
@@ -74,16 +82,15 @@ public class CurrencyAmount extends Type {
     }
 
     /**
-     * Initialise ourself based on another currency instance
-     * @param that The instance to base ourself on.
+     * Constructor
+     * @param amount The amount as a String
+     * @param currency The currency as a String
      */
-    private void autoCreate(CurrencyAmount that) {
-        if (currency==null) {
-            currency=that.currency;
-            amount=new BigDecimal(0);
-        }
+    public CurrencyAmount(String amount, String currency) {
+        this.setCurrencyAsString(currency);
+        this.setAmountAsString(amount);
     }
-
+    
     /**
      * Get the amount represented
      * @return the amount.
@@ -96,7 +103,7 @@ public class CurrencyAmount extends Type {
      * Set the amount property.
      * @param amount
      */
-    public void setAmount(BigDecimal amount) {
+    private void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -105,9 +112,11 @@ public class CurrencyAmount extends Type {
      * @throws NumberFormatException If string does not represent a valid decimal amount.
      * @param amount
      */
-    public void setAmountAsString(String amount) throws NumberFormatException {
+    private void setAmountAsString(String amount) throws NumberFormatException {
         this.amount=new BigDecimal(amount);
-        this.amount.setScale(2);
+        if (currency!=null) {
+            this.amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
+        }
     }
 
     public String getAmountAsString() {
@@ -118,32 +127,32 @@ public class CurrencyAmount extends Type {
      * Subtract another currency amount from this one, saving the result in this one.
      * @throws IllegalArgumentException If the currency types does not match.
      * @param that Currency amount to subtract
+     * @return The result (instance of <i>this</i> to allow chaining e.g. c.add(2).subtract(4);) 
      */
-    public void subtract(CurrencyAmount that) throws IllegalArgumentException {
-        autoCreate(that);
+    public CurrencyAmount subtract(CurrencyAmount that) throws IllegalArgumentException {
+        if (this.currency!=null && !this.currency.equals(that.currency)) {
+            throw new IllegalArgumentException("Currencies do not match, cannot subtract "+that.toFormattedString()+" from "+this.toFormattedString());
+        }
 
-        if (this.currency.equals(that.currency)) {
-            setAmount(amount.subtract(that.amount));
-        }
-        else {
-            throw new IllegalArgumentException("Currencies do not match");
-        }
+        CurrencyAmount ret=new CurrencyAmount(amount.subtract(that.amount), that.currency);
+
+        return ret;
     }
 
     /**
-     * Add another currency amount to this one, saving the result in this one.
-     * @throws IllegalArgumentException If the curerncies do not match.
-     * @param that Currenct amount to add
+     * Add another currency amount to this one creating, and returning, a new instance.
+     * @throws IllegalArgumentException If the currencies do not match.
+     * @param that CurrencyAmount to add
+     * @return The result (instance of <i>this</i> to allow chaining e.g. c.add(2).subtract(4);) 
      */
-    public void add(CurrencyAmount that) throws IllegalArgumentException {
-        autoCreate(that);
+    public CurrencyAmount add(CurrencyAmount that) throws IllegalArgumentException {
+        if (this.currency!=null && !this.currency.equals(that.currency)) {
+            throw new IllegalArgumentException("Currencies do not match, cannot add "+that.toFormattedString()+" from "+this.toFormattedString());
+        }
 
-        if (this.currency.equals(that.currency)) {
-            setAmount(amount.add(that.amount));
-        }
-        else {
-            throw new IllegalArgumentException("Currencies do not match");
-        }
+        CurrencyAmount ret=new CurrencyAmount(amount.add(that.amount), that.currency);
+
+        return ret;
     }
 
     /**
@@ -217,8 +226,11 @@ public class CurrencyAmount extends Type {
      * @param currency
      * @throws IndexOutOfBoundsException
      */
-    public void setCurrencyAsString(String currency) throws IndexOutOfBoundsException {
+    private void setCurrencyAsString(String currency) throws IndexOutOfBoundsException {
         this.currency=Currency.valueOf(currency);
+        if (amount!=null) {
+            amount.setScale(this.currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
+        }
     }
 
     /**
@@ -247,7 +259,15 @@ public class CurrencyAmount extends Type {
      * @return
      */
     public String toString() {
-        return getAmountAsString()+" "+currency;
+        return toFormattedString();
+    }
+    
+    /**
+     * Get the String representation of this amount.
+     * @return
+     */
+    public String getFormattedValue() {
+        return toFormattedString();
     }
     
     /**
@@ -258,16 +278,19 @@ public class CurrencyAmount extends Type {
     public String toFormattedString() {
         NumberFormat fmt=NumberFormat.getCurrencyInstance(Locale.getThreadLocale());
         fmt.setCurrency(java.util.Currency.getInstance(getCurrencyAsString()));
+        fmt.setMaximumFractionDigits(currency.getFractionDigits());
         return fmt.format(amount);
     }
 
     /**
      * Apply a percentage to this currency amount.
      * @param rate Percentage to apply.
+     * @return The result (a new instance of CurrencyAmount) 
      */
-    public void apply(Rate rate) {
-        amount=rate.applyTo(amount, 2, BigDecimal.ROUND_HALF_UP);
-        amount.setScale(2, BigDecimal.ROUND_HALF_UP);
+    public CurrencyAmount apply(Rate rate) {
+        CurrencyAmount ret=new CurrencyAmount(rate.applyTo(amount, getCurrency().getFractionDigits(), BigDecimal.ROUND_HALF_UP), getCurrency());
+        ret.getAmount().setScale(getCurrency().getFractionDigits(), BigDecimal.ROUND_HALF_UP);
+        return ret;
     }
 
     /**
@@ -291,7 +314,7 @@ public class CurrencyAmount extends Type {
     public boolean equals(Object obj) {
         if (obj instanceof CurrencyAmount) {
             CurrencyAmount that=(CurrencyAmount)obj;
-            return this.currency.equals(that.currency) && this.amount.equals(that.amount);
+            return this.currency.equals(that.currency) && this.amount.compareTo(that.amount)==0;
         }
         else {
             return false;

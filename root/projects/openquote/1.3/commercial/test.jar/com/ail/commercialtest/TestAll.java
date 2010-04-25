@@ -22,10 +22,7 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/16 21:08:54 $
- * @source $Source: /home/bob/CVSRepository/projects/common/test.jar/com/ail/commercialtest/TestAll.java,v $
+ * Roll up test for everything in the project.
  */
 public class TestAll extends TestCase {
    /**
@@ -41,6 +38,7 @@ public class TestAll extends TestCase {
        ts.addTest(TestCurrencyAmount.suite());
        ts.addTest(TestDateOfBirth.suite());
        ts.addTest(TestRate.suite());
+       ts.addTest(TestParty.suite());
        return ts;
    }
 

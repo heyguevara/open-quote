@@ -17,14 +17,18 @@
 
 package com.ail.commercialtest;
 
-import com.ail.util.Rate;
-import com.ail.core.Locale;
-import com.ail.financial.CurrencyAmount;
-import com.ail.financial.Currency;
+import static com.ail.financial.Currency.GBP;
+import static com.ail.financial.Currency.USD;
+
+import java.math.BigDecimal;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 
-import java.math.BigDecimal;
+import com.ail.core.Locale;
+import com.ail.financial.Currency;
+import com.ail.financial.CurrencyAmount;
+import com.ail.util.Rate;
 
 /**
  * @version $Revision: 1.1 $
@@ -58,18 +62,18 @@ public class TestCurrencyAmount extends TestCase {
     }
 
     public void testGoodValues() {
-        new CurrencyAmount("110.21", Currency.USD);
-        new CurrencyAmount(110.21, Currency.USD);
-        new CurrencyAmount(new BigDecimal("110.21"), Currency.USD);
+        new CurrencyAmount("110.21", USD);
+        new CurrencyAmount(110.21, USD);
+        new CurrencyAmount(new BigDecimal("110.21"), USD);
     }
 
     public void testCurrencyScale() {
         CurrencyAmount ca;
 
-        ca=new CurrencyAmount("100", Currency.USD);
+        ca=new CurrencyAmount("100", USD);
         assertEquals("100.00", ca.getAmountAsString());
 
-        ca=new CurrencyAmount(".24", Currency.USD);
+        ca=new CurrencyAmount(".24", USD);
         assertEquals("0.24", ca.getAmountAsString());
     }
 
@@ -78,8 +82,8 @@ public class TestCurrencyAmount extends TestCase {
         Rate rate;
 
         rate=new Rate("25%");
-        ca=new CurrencyAmount(50, Currency.USD);
-        ca.apply(rate);
+        ca=new CurrencyAmount(50, USD);
+        ca=ca.apply(rate);
         assertEquals("12.50", ca.getAmountAsString());
     }
 
@@ -91,14 +95,14 @@ public class TestCurrencyAmount extends TestCase {
     public void testAutoCreate() {
         CurrencyAmount test;
 
-        test=new CurrencyAmount();
-        test.add(new CurrencyAmount(10, Currency.USD));
-        assertEquals(Currency.USD, test.getCurrency());
+        test=new CurrencyAmount(0, USD);
+        test=test.add(new CurrencyAmount(10, USD));
+        assertEquals(USD, test.getCurrency());
         assertTrue(10.0==test.getAmount().doubleValue());
 
-        test=new CurrencyAmount();
-        test.subtract(new CurrencyAmount(10, Currency.GBP));
-        assertEquals(Currency.GBP, test.getCurrency());
+        test=new CurrencyAmount(0, GBP);
+        test=test.subtract(new CurrencyAmount(10, GBP));
+        assertEquals(GBP, test.getCurrency());
         assertTrue(-10.0==test.getAmount().doubleValue());
     }
 
@@ -119,16 +123,16 @@ public class TestCurrencyAmount extends TestCase {
     public void testGreaterThan() {
         CurrencyAmount test1, test2;
 
-        test1=new CurrencyAmount(100.00, Currency.USD);
-        test2=new CurrencyAmount(101.00, Currency.USD);
+        test1=new CurrencyAmount(100.00, USD);
+        test2=new CurrencyAmount(101.00, USD);
 
         assertTrue(test2.greaterThan(test1));
         assertTrue(!test1.greaterThan(test2));
 
-        assertTrue(test2.greaterThan(100.00, Currency.USD));
-        assertTrue(!test1.greaterThan(101.00, Currency.USD));
+        assertTrue(test2.greaterThan(100.00, USD));
+        assertTrue(!test1.greaterThan(101.00, USD));
 
-        CurrencyAmount test3=new CurrencyAmount(101.00, Currency.GBP);
+        CurrencyAmount test3=new CurrencyAmount(101.00, GBP);
 
         try {
             test1.greaterThan(test3);
@@ -142,7 +146,7 @@ public class TestCurrencyAmount extends TestCase {
         }
 
         try {
-            test3.greaterThan(100.00, Currency.USD);
+            test3.greaterThan(100.00, USD);
             fail("IllegalArgumentException not thrown");
         }
         catch(IllegalArgumentException e) {
@@ -160,26 +164,26 @@ public class TestCurrencyAmount extends TestCase {
      * test2 to 100USD.</li>
      * <li>Fail if test2.lessThan(test1) returns false.</li>
      * <li>Fail if test1.lessThan(test2) returns true.</li>
-     * <li>Repeate the previous tests using the overloaded amount, currency method.</li>
+     * <li>Repeat the previous tests using the overloaded amount, currency method.</li>
      * <li>Create another CurrencyAmount (test3) for 100GBP.</li>
      * <li>Fail if test1.lessThan(test3) does anything other than throwing an IllegalArgumentException.</li>
      * <li>Fail if test3.lessThan(test1) does anything other than throwing an IllegalArgumentException.</li>
-     * <li>Repeate the previous test using the overloaded amount, currency method.</li>
+     * <li>Repeat the previous test using the overloaded amount, currency method.</li>
      * </ol>
      */
     public void testLessThan() {
         CurrencyAmount test1, test2;
 
-        test1=new CurrencyAmount(101.00, Currency.USD);
-        test2=new CurrencyAmount(100.00, Currency.USD);
+        test1=new CurrencyAmount(101.00, USD);
+        test2=new CurrencyAmount(100.00, USD);
 
         assertTrue(test2.lessThan(test1));
         assertTrue(!test1.lessThan(test2));
 
-        assertTrue(test2.lessThan(101.00, Currency.USD));
-        assertTrue(!test1.lessThan(100.00, Currency.USD));
+        assertTrue(test2.lessThan(101.00, USD));
+        assertTrue(!test1.lessThan(100.00, USD));
 
-        CurrencyAmount test3=new CurrencyAmount(101.00, Currency.GBP);
+        CurrencyAmount test3=new CurrencyAmount(101.00, GBP);
 
         try {
             test1.lessThan(test3);
@@ -193,7 +197,7 @@ public class TestCurrencyAmount extends TestCase {
         }
 
         try {
-            test3.lessThan(100.00, Currency.USD);
+            test3.lessThan(100.00, USD);
             fail("IllegalArgumentException not thrown");
         }
         catch(IllegalArgumentException e) {
@@ -212,7 +216,7 @@ public class TestCurrencyAmount extends TestCase {
         CurrencyAmount test;
 
         Locale.setThreadLocale(java.util.Locale.UK);
-        test=new CurrencyAmount(100000, Currency.GBP);
+        test=new CurrencyAmount(100000, GBP);
         assertEquals("£100,000.00", test.toFormattedString());
 
         Locale.setThreadLocale(java.util.Locale.US);
@@ -220,5 +224,32 @@ public class TestCurrencyAmount extends TestCase {
 
         Locale.setThreadLocale(java.util.Locale.GERMANY);
         assertEquals("100.000,00 GBP", test.toFormattedString());
+    }
+    
+    public void testFractionalDigits() {
+        CurrencyAmount test;
+
+        Locale.setThreadLocale(java.util.Locale.UK);
+        test=new CurrencyAmount(100000, Currency.JPY);
+        assertEquals("JPY100,000", test.toFormattedString());
+
+        test=new CurrencyAmount(100000, Currency.USD);
+        assertEquals("USD100,000.00", test.toFormattedString());
+}
+    
+    public void testChaining() {
+        CurrencyAmount test;
+        
+        test=new CurrencyAmount(100, GBP);
+        test=test.add(new CurrencyAmount(10, GBP)).add(new CurrencyAmount(10, GBP));
+        assertEquals(new CurrencyAmount(120, GBP), test);
+
+        test=new CurrencyAmount(100, GBP);
+        test=test.subtract(new CurrencyAmount(10, GBP)).subtract(new CurrencyAmount(10, GBP));
+        assertEquals(new CurrencyAmount(80, GBP), test);
+
+        test=new CurrencyAmount(90, GBP);
+        test=test.add(new CurrencyAmount(10, GBP)).apply(new Rate("40%"));
+        assertEquals(new CurrencyAmount(40, GBP), test);
     }
 }
