@@ -18,6 +18,7 @@
 package com.ail.financial;
 
 import com.ail.core.Functions;
+import com.ail.core.Locale;
 import com.ail.core.TypeEnum;
 
 /** @stereotype enumeration */
@@ -220,6 +221,23 @@ public enum Currency implements TypeEnum {
 
     public String longName() {
         return longName;
+    }
+    
+    /** 
+     * Get the number of fractional digits typically used for this currency.
+     * @return number of digits
+     */
+    public int getFractionDigits() {
+        return java.util.Currency.getInstance(name()).getDefaultFractionDigits();
+    }
+    
+    /**
+     * Get the symbol appropriate to this currency in the current locale.
+     * @see com.ail.core.Locale#getThreadLocale()
+     * @return Currency symbol.
+     */
+    public String getSymbol() {
+        return java.util.Currency.getInstance(name()).getSymbol(Locale.getThreadLocale());
     }
     
     /**
