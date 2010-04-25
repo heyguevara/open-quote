@@ -148,11 +148,11 @@ public class MakeARecoveryService extends Service {
     
                 section=args.getClaim().getClaimSectionByID(sectionID);
     
-                section.getEstimatedReserve().subtract(recovery);
-                section.getTotalRecovered().add(recovery);
-                section.getOutstandingClaim().subtract(recovery);
-                args.getClaim().getOutstandingTotal().subtract(recovery);
-                args.getClaim().getTotalRecovered().add(recovery);
+                section.setEstimatedReserve(section.getEstimatedReserve().subtract(recovery));
+                section.setTotalRecovered(section.getTotalRecovered().add(recovery));
+                section.setOutstandingClaim(section.getOutstandingClaim().subtract(recovery));
+                args.getClaim().setOutstandingTotal(args.getClaim().getOutstandingTotal().subtract(recovery));
+                args.getClaim().setTotalRecovered(args.getClaim().getTotalRecovered().add(recovery));
     
                 recoveryRec=(Recovery)core.newType("Recovery");
                 recoveryRec.setRecoveredDate(new Date());
