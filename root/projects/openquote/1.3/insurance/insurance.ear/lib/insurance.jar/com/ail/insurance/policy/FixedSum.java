@@ -98,6 +98,7 @@ public class FixedSum extends CalculationLine {
             if (conTo==null) {
                 conTo=new FixedSum(getContributesTo(), "calculated", null, null, new CurrencyAmount(0, getAmount().getCurrency()));
                 sheets.addAssessmentLine(conTo, sheet);
+                conTo.setAssessmentSheet(sheet);
             }
 
             // add to the 'contributeTo' line.

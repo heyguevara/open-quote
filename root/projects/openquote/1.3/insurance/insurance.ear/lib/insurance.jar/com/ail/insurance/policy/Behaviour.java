@@ -144,6 +144,7 @@ public abstract class Behaviour extends CalculationLine {
             if (conTo==null) {
                 conTo=new FixedSum(getContributesTo(), "calculated", null, null, new CurrencyAmount(0, getAmount().getCurrency()));
                 sheets.addAssessmentLine(conTo, sheet);
+                conTo.setAssessmentSheet(sheet);
             }
 
             // If we're loading add our calculated amount to contributed to,

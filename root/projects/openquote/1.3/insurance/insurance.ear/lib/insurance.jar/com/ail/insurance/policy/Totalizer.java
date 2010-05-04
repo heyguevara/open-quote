@@ -123,6 +123,7 @@ public class Totalizer extends CalculationLine {
             if (conTo==null) {
                 conTo=new FixedSum(getContributesTo(), "calculated", null, null, new CurrencyAmount(total.getAmount(), total.getCurrency()));
                 sheets.addAssessmentLine(conTo, sheet);
+                conTo.setAssessmentSheet(sheet);
             }
             else {
                 conTo.setAmount(conTo.getAmount().add(getAmount()));
