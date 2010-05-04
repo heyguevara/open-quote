@@ -228,8 +228,8 @@
             <get src="${export.src.base.url}/export_models.acp" dest="${export.dst.base.dir}/export_models.acp" />
             <get src="${export.src.base.url}/export_spaces.acp" dest="${export.dst.base.dir}/export_spaces.acp" />
             <get src="${export.src.base.url}/export_users.acp" dest="${export.dst.base.dir}/export_users.acp" />
-            <get src="${export.src.base.url}/export_versions.acp" dest="${export.dst.base.dir}/export_versions.acp" />
             <get src="${export.src.base.url}/export_system.acp" dest="${export.dst.base.dir}/export_system.acp" />
+        	<get src="${export.src.base.url}/export_versions.acp" dest="${export.dst.base.dir}/export_versions.acp" />
         </sequential>
     </macrodef>
 
