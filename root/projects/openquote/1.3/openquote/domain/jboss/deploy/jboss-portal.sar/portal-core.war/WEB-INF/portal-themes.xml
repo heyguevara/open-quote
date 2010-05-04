@@ -55,16 +55,4 @@
       <link rel="shortcut icon" href="/themes/ail/images/favicon.ico"/>
       <link rel="icon" href="/themes/ail/images/animated_favicon1.gif" type="image/gif"/>
    </theme>
-   <theme>
-      <name>openquote</name>
-      <link rel="stylesheet" id="main_css" href="/themes/openquote/portal_style.css" type="text/css"/>
-      <link rel="shortcut icon" href="/themes/openquote/images/favicon.ico"/>
-      <link rel="icon" href="/themes/openquote/images/favicon.ico" type="image/gif"/>
-   </theme>
-   <theme>
-      <name>openquotedemo</name>
-      <link rel="stylesheet" id="main_css" href="/themes/openquotedemo/portal_style.css" type="text/css"/>
-      <link rel="shortcut icon" href="/themes/openquotedemo/images/favicon.ico"/>
-      <link rel="icon" href="/themes/openquotedemo/images/favicon.ico" type="image/gif"/>
-   </theme>
 </themes>

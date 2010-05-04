@@ -67,4 +67,11 @@
             <context-root>news-reader</context-root>
         </web>
     </module>
+
+    <module>
+        <web>
+            <web-uri>openquote-theme.war</web-uri>
+            <context-root>openquote-theme</context-root>
+        </web>
+    </module>
 </application>
