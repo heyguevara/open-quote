@@ -32,7 +32,8 @@ import com.ail.core.document.generatedocument.StyleDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.insurance.claim.SectionNotFoundException;
 import static com.ail.insurance.policy.PolicyStatus.REFERRED;
-import static com.ail.insurance.policy.PolicyStatus.QUOTATION;;
+import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
+import static com.ail.insurance.policy.PolicyStatus.SUBMITTED;
 
 /**
  * Service to generate a quotation document. This service delegates to the three document
@@ -115,8 +116,8 @@ public class GenerateDocumentService extends Service {
             throw new PreconditionException("args.getPolicyArg()==null");
         }
 
-		if (!QUOTATION.equals(args.getPolicyArg().getStatus()) && !REFERRED.equals(args.getPolicyArg().getStatus())) {
-            throw new PreconditionException("!QUOTATION.equals(args.getPolicyArg().getStatus()) && !REFERRED.equals(args.getPolicyArg().getStatus())");
+		if (!QUOTATION.equals(args.getPolicyArg().getStatus()) && !REFERRED.equals(args.getPolicyArg().getStatus()) && !SUBMITTED.equals(args.getPolicyArg().getStatus())) {
+            throw new PreconditionException("!QUOTATION.equals(args.getPolicyArg().getStatus()) && !REFERRED.equals(args.getPolicyArg().getStatus()) &&  && !SUBMITTED.equals(args.getPolicyArg().getStatus())");
         }
         
         if (args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0) {
