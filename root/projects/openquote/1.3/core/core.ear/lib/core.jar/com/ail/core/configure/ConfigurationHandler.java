@@ -361,7 +361,7 @@ public class ConfigurationHandler {
     }
 
     /**
-     * Fetch the named group the from current configuration.
+     * Fetch the named group from current configuration.
      * The "current configuration" is defined by the namespace (taken from
      * <code>owner</code>), and the versionEffectiveDate (taken from <code>
      * core</code>). The group's name may be dot separated indicating
