@@ -39,7 +39,7 @@ public class OrderedLinkedList<E extends PageElement> extends LinkedList<E> impl
     
     /**
      * Add a new element to the list. Elements are placed into the list based on the value of their 'order' property. The result
-     * being that the list is sorted by assending value of 'order'. An element that has no value in it's 'order' property
+     * being that the list is sorted by ascending value of 'order'. An element that has no value in it's 'order' property
      * is appended to the end of the list.
      */
     @Override

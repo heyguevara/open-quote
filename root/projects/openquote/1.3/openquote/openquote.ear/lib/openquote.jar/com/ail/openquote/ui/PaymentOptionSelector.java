@@ -57,16 +57,10 @@ public class PaymentOptionSelector extends PageElement {
         
         // if an option was selected...
         if (request.getParameter("selectedOption")!=null) {
-            // the option's value will be the hashcode of the payment option in the model.
+            // the option's value will be the index of the payment option in the model.
             int selectedOption=Integer.parseInt(request.getParameter("selectedOption"));
 
-            // loop though the model's payment options looking for one with a matching hashcode
-            for(PaymentSchedule ps: quote.getPaymentOption()) {
-                if (ps.hashCode()==selectedOption) {
-                    // bingo!
-                    quote.setPaymentDetails(ps);
-                }
-            }
+            quote.setPaymentDetails(quote.getPaymentOption().get(selectedOption));
         }
         
         return quote;

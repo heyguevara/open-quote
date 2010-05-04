@@ -102,6 +102,14 @@ public class Fact extends Type {
                 Number n=(Number)attributeValue.getObject();
                 return n.doubleValue();
             }
+            else if (attributeValue.isStringType()) {
+            	try {
+            		return Double.parseDouble(attributeValue.getValue());
+            	}
+            	catch(NumberFormatException e) {
+                    throw new IllegalArgumentException("Attribute: "+attributeValue+" ("+name+") cannot be converted to a number.");
+            	}
+            }
             else {
                 throw new IllegalArgumentException("Attribute: "+attributeValue+" ("+name+") cannot be converted to a number.");
             }
@@ -109,9 +117,16 @@ public class Fact extends Type {
         else if (value instanceof Number) {
             return ((Number)value).doubleValue();
         }
-        else {
-            throw new IllegalArgumentException("Fact ("+name+") cannot be converted to a number");
+        else if (value instanceof String) {
+        	try {
+        		return Double.parseDouble((String)value);
+        	}
+        	catch(Throwable e) {
+        		// ignore, let the fall through handle it
+        	}
         }
+
+        throw new IllegalArgumentException("Fact ("+name+") cannot be converted to a number");
     }
 
     /**

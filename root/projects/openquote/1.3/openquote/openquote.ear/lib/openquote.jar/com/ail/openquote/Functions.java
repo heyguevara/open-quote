@@ -19,8 +19,10 @@ package com.ail.openquote;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.drools.spi.KnowledgeHelper;
 
@@ -29,6 +31,8 @@ import com.ail.core.CoreProxy;
 import com.ail.core.Locale;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
+import com.ail.insurance.policy.Asset;
+import com.ail.insurance.policy.Section;
 
 /**
  * This class defines a set of unrelated functions which are intended to be
@@ -304,5 +308,94 @@ public class Functions {
     	}
     	
    		return string.substring(beginIndex, endIndex);
+    }
+    
+    /**
+     * Automatically assert all of the assets found in the supplied quotation into 
+     * the rule engine's working memory.
+     * @param drools KnowledgeHelper to assert the new fact into.
+     * @param quotation The quotation to assert elements from. 
+     */
+    public static void autoAssertAssets(KnowledgeHelper drools, Quotation quotation) {
+    	for(Asset asset: quotation.getAsset()) {
+    		drools.insert(asset);
+    	}
+    }
+
+    /**
+     * Automatically assert all of the sections found in the supplied quotation into
+     * the rule engine's working memory;
+     * @param drools KnowledgeHelper to assert the new fact into.
+     * @param quotation The quotation to assert elements from. 
+     */
+    public static void autoAssertSections(KnowledgeHelper drools, Quotation quotation) {
+    	for(Section section: quotation.getSection()) {
+    		drools.insert(section);
+    	}
+    }
+
+    /**
+     * Automatically assert all of the attributes from single instance assets into 
+     * the rule engine's working memory as {@link Fact Facts}. A single instance asset is one for which
+     * there is only one instance with that assetTypeId in the quotation. A Fact is 
+     * created for each of the attributes that these assets contain using the name of
+     * the attribute as the Fact name, and the value of the attribute as the Fact's
+     * value.<p/>
+     * Some care must be taken during product design to avoid two assets of different
+     * types from using the same attribute name. Otherwise this method will may create
+     * multiple instance of Facts with the same name which the rules will not be able
+     * to differentiate.
+     * @param drools KnowledgeHelper to assert the new fact into.
+     * @param quotation The quotation to assert elements from. 
+     */
+    public static void autoAssertAssetAttributes(KnowledgeHelper drools, Quotation quotation) {
+    	Map<String, Integer> assetTypeIds=new HashMap<String, Integer>();
+    	
+    	// loop through all the assets, and count the number of instances of each assetTypeId
+    	for(Asset asset: quotation.getAsset()) {
+    		if (assetTypeIds.containsKey(asset.getAssetTypeId())) {
+    			Integer val=assetTypeIds.get(asset.getAssetTypeId());
+    			assetTypeIds.put(asset.getAssetTypeId(), val+1);
+    		}
+    		else {
+    			assetTypeIds.put(asset.getAssetTypeId(), 1);
+    		}
+    	}
+
+    	// for every assetTypeId that appears once in the quotation, assert all of it's attributes
+    	for(String assetTypeId: assetTypeIds.keySet()) {
+    		if (assetTypeIds.get(assetTypeId)==1) {
+    			autoAssertAttributes(drools, quotation.getAssetByTypeId(assetTypeId).get(0));
+    		}
+    	}
+    }
+
+    /**
+     * Assert all of the attributes associated with an object into the rule engine's working memory as {@link Fact Facts}.
+	 * A Fact is created for each of the attributes that these assets contain using the name of
+     * the attribute as the Fact name, and the value of the attribute as the Fact's
+     * value.<p/>
+     * @param drools KnowledgeHelper to assert the new fact into.
+     * @param type The type to assert elements from. 
+     */
+    public static void autoAssertAttributes(KnowledgeHelper drools, Type type) {
+    	for(Attribute a: type.getAttribute()) {
+    		drools.insert(new Fact(a.getId(), a.getValue()));
+    	}
+    }
+
+    /**
+     * Automatically assert all of the assets, section, and attributes of any single instance
+     * assets into the rule engine's working memory.
+     * @see #autoAssertAssets(KnowledgeHelper, Quotation)
+     * @see #autoAssertSections(KnowledgeHelper, Quotation)
+     * @see #autoAssertAssetAttributes(KnowledgeHelper, Quotation)
+     * @param drools KnowledgeHelper to assert the new fact into.
+     * @param quotation The quotation to assert elements from. 
+     */
+    public static void autoAssertAll(KnowledgeHelper drools, Quotation quotation) {
+    	autoAssertAssets(drools, quotation);
+    	autoAssertSections(drools, quotation);
+    	autoAssertAssetAttributes(drools, quotation);
     }
 }

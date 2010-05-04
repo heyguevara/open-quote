@@ -194,6 +194,9 @@ public class SandpitPortlet extends GenericPortlet {
         catch(Throwable t)  {
         	Quotation quote=QuotationContext.getQuotation();;
         	
+        	// All exceptions are associated with a quotation. However, if the quote itself could not
+        	// be initialised (which is quite likely if the product's Quotation.xml has errors) then
+        	// create a dummy quote here so that the sandpit's exception view can work normally.
         	if (quote==null) {
         		quote=new Quotation();
         		QuotationContext.setQuotation(quote);
@@ -208,7 +211,9 @@ public class SandpitPortlet extends GenericPortlet {
         	// so the doView() below gets a clean start.
         	response.resetBuffer();
 
-        	doView(request, response);
+            renderProductDebugPanel(request, response);
+
+        	renderQuoteExceptions(request, response, QuotationContext.getQuotation());
         }
     }
     

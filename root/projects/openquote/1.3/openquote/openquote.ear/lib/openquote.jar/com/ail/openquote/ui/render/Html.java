@@ -739,6 +739,8 @@ public class Html extends Type implements Renderer {
         
         w.printf("   <tr><td colspan='2' height='15'><hr/></td></tr>");
 
+        int id=0;
+        
         // loop through the options outputting each to its own row
         for(PaymentSchedule ps: quotation.getPaymentOption()) {
             w.printf("   <tr class='portlet-font'>");
@@ -751,7 +753,7 @@ public class Html extends Type implements Renderer {
             }
             w.printf("       </td>");
             w.printf("       <td align='center'><input name='selectedOption' value='%d' %s type='radio'/></td>", 
-                 ps.hashCode(), (quotation.getPaymentDetails()==ps) ? "checked='yes'" : "");
+                 id++, (quotation.getPaymentDetails()==ps) ? "checked='yes'" : "");
             w.printf("   </tr>");
             w.printf("   <tr><td colspan='2'><hr/></td></tr>");
         }
