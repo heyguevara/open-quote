@@ -13,7 +13,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package com.ail.core.contentbrowser;
+package com.ail.core.portlet.contentbrowser;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -56,16 +56,22 @@ public class ContentBrowserPortlet extends GenericPortlet {
     @Override
     public void init(PortletConfig pconfig) throws PortletException {
         super.init(pconfig);
-        homePageUrl = this.getInitParameter("homePageUrl");
-        
-        try {
-            URL home=new URL(homePageUrl);
-            homePageProtocol = home.getProtocol();
-            homePageHost = home.getHost();
-            homePagePort = home.getPort();
-        }
-        catch(MalformedURLException e) {
-            throw new PortletException("Failed to initialise portlet from. The parameter 'homePageUrl' is not a valid URL");
+
+        initContentURL(this.getInitParameter("homePageUrl"));
+    }
+
+    private void initContentURL(String url) throws PortletException {
+        if (url!=null && url.length()>0) {
+            try {
+                homePageUrl = url;
+                URL home=new URL(homePageUrl);
+                homePageProtocol = home.getProtocol();
+                homePageHost = home.getHost();
+                homePagePort = home.getPort();
+            }
+            catch(MalformedURLException e) {
+                throw new PortletException("Failed to initialise portlet from. The parameter 'homePageUrl' is not a valid URL");
+            }
         }
     }
 
@@ -83,12 +89,13 @@ public class ContentBrowserPortlet extends GenericPortlet {
     @Override
     public void doView(final RenderRequest req, final RenderResponse resp) throws PortletException, PortletSecurityException, IOException {
         String path = req.getParameter("path");
-
+        
         if (path!=null) {
             path=new URL(homePageProtocol, homePageHost, homePagePort, path).toExternalForm();
         }
         else {
             path=req.getPreferences().getValue("homePageUrl", homePageUrl);
+            initContentURL(path);
         }
         
         resp.setContentType("text/html");

@@ -4,12 +4,7 @@
         <description>AIL Content Browser Portlet</description>
         <portlet-name>ContentBrowserPortlet</portlet-name>
         <display-name>Content Browser</display-name>
-        <portlet-class>com.ail.core.contentbrowser.ContentBrowserPortlet</portlet-class>
-
-        <init-param>
-           <name>homePageUrl</name>
-           <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Greetings</value>
-        </init-param>
+        <portlet-class>com.ail.core.portlet.contentbrowser.ContentBrowserPortlet</portlet-class>
 
         <supports>
             <mime-type>text/html</mime-type>
@@ -20,5 +15,12 @@
             <title>Content Browser Portlet</title>
             <short-title>content-browser</short-title>
         </portlet-info>
+        
+        <portlet-preferences>
+          <preference>
+            <name>homePageUrl</name>
+            <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Greetings</value>
+          </preference>
+        </portlet-preferences>
     </portlet>
 </portlet-app>
