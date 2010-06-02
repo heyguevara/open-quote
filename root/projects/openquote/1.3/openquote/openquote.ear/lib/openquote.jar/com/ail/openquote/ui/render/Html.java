@@ -764,6 +764,16 @@ public class Html extends Type implements Renderer {
     }
 
     public Proposer renderProposerDetails(PrintWriter w, RenderRequest request, RenderResponse response, Proposer proposer, ProposerDetails proposerDetails) {
+        if (proposer==null) {
+            w.printf("Proposer details cannot be renderend as the quotation does not contain a proposer.");
+            return proposer;
+        }
+        
+        if (proposer.getAddress()==null) {
+            w.printf("Proposer details cannot be rendered as the quotation's proposer does not contain an addrees placeholder.");
+            return proposer;
+        }
+        
         w.printf("<table width='100%%' border='0' cols='6'>");
         w.printf( "<tr><td height='15' colspan='6'>&nbsp;</td></tr>");
         
@@ -1337,7 +1347,12 @@ public class Html extends Type implements Renderer {
         SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
 
         w.printf("<table width='100%%' border='0' cols='5'>");
-        w.printf(  "<tr><td cols='5'>"+i18n("i18n_saved_quotations_title")+"</td></tr>", quotationSummaries.size()==1 ? "quote" : "quotes");
+        if (quotationSummaries.size()==1) {
+        	w.printf(  "<tr><td colspan='5'>"+i18n("i18n_saved_quotations_title_quote")+"</td></tr>");
+        }
+        else {
+        	w.printf(  "<tr><td colspan='5'>"+i18n("i18n_saved_quotations_title_quotes")+"</td></tr>");
+        }
         w.printf(  "<tr><td height='10' cols='5'/></tr>");
         w.printf(  "<tr class='portlet-font'>");
         w.printf(    "<td align='center' class='portlet-section-alternate'>"+i18n("i18n_saved_quotations_quote_number_heading")+"</td>");
@@ -1350,10 +1365,10 @@ public class Html extends Type implements Renderer {
         for(Object o: quotationSummaries) {
             SavedQuotationSummary savedQuote=(SavedQuotationSummary)o;
             w.printf("<tr>");
-            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getQuotationNumber());
-            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
-            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
-            w.printf(  "<td align='center' class='portal-form-label'>%s</td>", savedQuote.getPremium().toFormattedString());
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", savedQuote.getQuotationNumber());
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", savedQuote.getPremium().toFormattedString());
             w.printf(  "<td align='left'>");
             w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(saveedQuotations.getConfirmAndPayLabel()));
             w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(saveedQuotations.getRequoteLabel()));
