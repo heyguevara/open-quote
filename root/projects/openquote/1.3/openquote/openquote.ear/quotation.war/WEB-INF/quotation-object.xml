@@ -29,33 +29,6 @@
             </security-constraint>
 
             <page>
-                <page-name>LifePlus</page-name>
-                <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>quotation</value>
-                    </property>
-                </properties>
-                <window>
-                    <window-name>QuoteWindow</window-name>
-                    <instance-ref>LifePlusQuotationPortletInstance</instance-ref>
-                    <default>true</default>
-                    <region>center</region>
-                    <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
-                </window>
-            </page>
-
-            <page>
                 <page-name>MotorPlus</page-name>
                 <properties>
                     <property>
@@ -140,6 +113,32 @@
                         <action-name>personalizerecursive</action-name>
                     </policy-permission>
                 </security-constraint>
+            </page>
+            <page>
+                <page-name>FreightPlus</page-name>
+                <properties>
+                    <property>
+                        <name>layout.id</name>
+                        <value>quotation</value>
+                    </property>
+                </properties>
+                <window>
+                    <window-name>QuoteWindow</window-name>
+                    <instance-ref>FreightPlusQuotationPortletInstance</instance-ref>
+                    <default>true</default>
+                    <region>center</region>
+                    <height>1</height>
+                    <properties>
+                        <property>
+                            <name>theme.windowRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                        <property>
+                            <name>theme.decorationRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                    </properties>
+                </window>
             </page>
         </portal>
     </deployment>

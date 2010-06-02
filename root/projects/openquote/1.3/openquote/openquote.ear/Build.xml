@@ -24,6 +24,7 @@
     <ant dir="./content-browser.war" antfile="Build.xml" target="_build" />
     <ant dir="./news-reader.war" antfile="Build.xml" target="_build" />
     <ant dir="./openquote-theme.war" antfile="Build.xml" target="_build" />
+    <ant dir="./lifeplus.war" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro overlay="true"/>
   </target>
 

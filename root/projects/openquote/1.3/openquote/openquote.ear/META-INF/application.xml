@@ -74,4 +74,11 @@
             <context-root>openquote-theme</context-root>
         </web>
     </module>
+
+    <module>
+        <web>
+            <web-uri>lifeplus.war</web-uri>
+            <context-root>lifeplus</context-root>
+        </web>
+    </module>
 </application>
