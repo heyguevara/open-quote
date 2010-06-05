@@ -19,11 +19,41 @@
 
 <layouts>
    <layout>
-      <name>quotation</name>
-      <uri>/layouts/quotation/index.jsp</uri>
-      <uri state="maximized">/layouts/generic/maximized.jsp</uri>
+      <name>Quotation</name>
+      <uri>/layouts/Quotation/index.jsp</uri>
+      <uri state="maximized">/layouts/common/maximized.jsp</uri>
       <regions>
          <region name="center"/>
+      </regions>
+   </layout>
+
+   <layout>
+      <name>OneColumn</name>
+      <uri>/layouts/OneColumn/index.jsp</uri>
+      <uri state="maximized">/layouts/common/maximized.jsp</uri>
+      <regions>
+         <region name="center"/>
+      </regions>
+   </layout>
+
+   <layout>
+      <name>TwoColumns</name>
+      <uri>/layouts/TwoColumns/index.jsp</uri>
+      <uri state="maximized">/layouts/common/maximized.jsp</uri>
+      <regions>
+         <region name="left"/>
+         <region name="right"/>
+      </regions>
+   </layout>
+
+   <layout>
+      <name>OneColumnTwoColumns</name>
+      <uri>/layouts/OneColumnTwoColumns/index.jsp</uri>
+      <uri state="maximized">/layouts/generic/maximized.jsp</uri>
+      <regions>
+         <region name="top-center"/>
+         <region name="bottom-left"/>
+         <region name="bottom-right"/>
       </regions>
    </layout>
 </layouts>

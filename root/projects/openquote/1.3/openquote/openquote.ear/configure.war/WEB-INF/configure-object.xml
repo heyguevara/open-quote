@@ -9,7 +9,6 @@
             <window>
                 <window-name>ConfigureWindow</window-name>
                 <instance-ref>ConfigurePortletInstance</instance-ref>
-                <!-- <default>true</default> -->
                 <region>center</region>
                 <height>0</height>
             </window>

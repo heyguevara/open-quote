@@ -106,8 +106,6 @@ done to avoid overlapping of tab navigation in header */
    height: 0;
 }
 
-/* end IE min-width hack */
-
 /* table that contains all regions. does not include header */
 
 #content-container {
@@ -115,14 +113,6 @@ done to avoid overlapping of tab navigation in header */
    text-align: left;
    width: 100%;
    min-width: 770px;
-   /*
-   position: absolute;
-   top: 70px;
-   left: 0px; / * z-index: 1; * /
-   / * part of below IE hack
-padding: 0 350px 0 350px; * /
-   padding: 0px 100px 0px 0px;
-   */
 }
 
 /* Login JSP Selectors */
@@ -173,34 +163,33 @@ padding: 0 350px 0 350px; * /
 
 /* portlet regions within content-container. this includes footer-container. */
 #regionA {
-   /* test to swap columns...
-      float: right; 	*/
-
    width: 30%;
    float: left;
    margin: 0px;
    padding: 0px;
-   min-width: 250px; /*height: 300px;*/
+   min-width: 250px;
 }
 
 #regionB {
-   /* test to swap columns..
-margin: 0 30% 0 0; */
-
-   /*two column layout
-margin: 0 0 0 30%;*/
-   padding: 0px; /* test to add 3rd region in layout...*/
+   padding: 0px;
    width: 67%;
-   float: left; /*height: 300px;*/
+   float: left;
 }
 
 #regionC {
-/* inclusion of 3rd region - comment out for 2 region testing */
    padding: 0px;
    margin: 0px;
    width: 28%;
    float: left; /*hide 3rd region*/
    display: none;
+}
+
+#regionD {
+   width: 100%;
+   float: left;
+   margin: 0px;
+   padding: 0px;
+   min-width: 250px;
 }
 
 #footer-container {
@@ -238,8 +227,8 @@ ul#tabsHeader {
    padding-left: 0px;
    margin-top: 39px;
    min-width: 550px;
-   z-index: 100; /* added for submenu hover */
-/*position: relative;  added for submenu hover */
+   z-index: 100; 
+   visibility: hidden;
 }
 
 ul#tabsHeader li {
@@ -452,6 +441,7 @@ html>body ul#tabsHeader a {
    padding: 6px 12px 0px 0px;
    color: #fff;
    z-index: 20;
+   visibility: hidden;
 }
 
 #dashboardnav a {

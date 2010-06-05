@@ -97,7 +97,7 @@ done to avoid overlapping of tab navigation in header */
 }
 
 /* end IE min-width hack */
-	/* table that contains all regions. does not include header */
+/* table that contains all regions. does not include header */
 #content-container {
 	height: 100%;
 	text-align: left;
@@ -150,13 +150,14 @@ done to avoid overlapping of tab navigation in header */
 }
 
 /* end Login Page Selectors */
-	/* portlet regions within content-container. this includes footer-container. */
+
+/* portlet regions within content-container. this includes footer-container. */
 #regionA {
 	width: 30%;
 	float: left;
 	margin: 0px;
 	padding: 0px;
-	min-width: 250px; /*height: 300px;*/
+	min-width: 250px;
 }
 
 #regionB {
@@ -167,12 +168,19 @@ done to avoid overlapping of tab navigation in header */
 }
 
 #regionC {
-	/* inclusion of 3rd region - comment out for 2 region testing */
 	padding: 0px;
 	margin: 0px;
 	width: 28%;
 	float: left; /*hide 3rd region*/
 	display: none;
+}
+
+#regionD {
+   width: 100%;
+   float: left;
+   margin: 0px;
+   padding: 0px;
+   min-width: 250px;
 }
 
 #footer-container {

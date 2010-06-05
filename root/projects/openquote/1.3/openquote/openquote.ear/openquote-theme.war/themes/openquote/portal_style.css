@@ -77,10 +77,7 @@ done to avoid overlapping of tab navigation in header */
 
 /* wrapper for entire portal. starts/ends after/before body tag */
 #portal-container {
-/* part of below IE hack to preserve min-width for portlet regions */
-/*width: 100%;*/
    margin: 4px 2% 0px 2%;
-
    padding: 0 350px 0 350px;
 }
 
@@ -88,9 +85,8 @@ done to avoid overlapping of tab navigation in header */
 #expander {
    position: relative;
    padding: 0 0 0 0;
-
    margin: 0 -350px 0 -350px;
-   min-width: 770px;
+   min-width: 800px;
    padding: 0 0 0 0;
 }
 
@@ -114,15 +110,7 @@ done to avoid overlapping of tab navigation in header */
    height: 100%;
    text-align: left;
    width: 100%;
-   min-width: 770px;
-   /*
-   position: absolute;
-   top: 70px;
-   left: 0px; / * z-index: 1; * /
-   / * part of below IE hack
-padding: 0 350px 0 350px; * /
-   padding: 0px 100px 0px 0px;
-   */
+   min-width: 800px;
 }
 
 /* Login JSP Selectors */
@@ -173,34 +161,34 @@ padding: 0 350px 0 350px; * /
 
 /* portlet regions within content-container. this includes footer-container. */
 #regionA {
-   /* test to swap columns...
-      float: right; 	*/
-
    width: 30%;
    float: left;
    margin: 0px;
    padding: 0px;
-   min-width: 250px; /*height: 300px;*/
+   min-width: 250px;
 }
 
 #regionB {
-   /* test to swap columns..
-margin: 0 30% 0 0; */
-
-   /*two column layout
-margin: 0 0 0 30%;*/
-   padding: 0px; /* test to add 3rd region in layout...*/
-   width: 67%;
-   float: left; /*height: 300px;*/
+   padding: 0px;
+   width: 70%;
+   float: left;
+   min-width: 70%;
 }
 
 #regionC {
-/* inclusion of 3rd region - comment out for 2 region testing */
    padding: 0px;
    margin: 0px;
    width: 28%;
    float: left; /*hide 3rd region*/
    display: none;
+}
+
+#regionD {
+   width: 100%;
+   float: left;
+   margin: 0px;
+   padding: 0px;
+   min-width: 250px;
 }
 
 #footer-container {
@@ -218,8 +206,6 @@ margin: 0 0 0 30%;*/
 
 /* used to clear float in regionA,B,C divs so that
 footer spans bottom of page */
-/* used to clear float in regionA,B,C divs so that
-footer spans bottom of page */
 hr.cleaner {
    clear: both;
    height: 1px;
@@ -229,17 +215,16 @@ hr.cleaner {
    visibility: hidden;
 }
 
-/***************************
+/************************************
 *  Primary Navigation (Tabbed Nav)  *
-*****************************/
+************************************/
 
 ul#tabsHeader {
    margin: 0;
    padding-left: 0px;
    margin-top: 39px;
    min-width: 550px;
-   z-index: 100; /* added for submenu hover */
-/*position: relative;  added for submenu hover */
+   z-index: 100; 
 }
 
 ul#tabsHeader li {
@@ -286,7 +271,7 @@ ul#tabsHeader a {
    font: 11px / normal Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
    font-weight: bold;
    color: #8a8a8a;
-   padding: 5px 15px 3px 15px; /*background-image: url(../images/tab_left.gif);*/
+   padding: 5px 15px 3px 15px;
    background-repeat: no-repeat;
    background-position: top left;
    width: 110px;
@@ -296,7 +281,7 @@ ul#tabsHeader a {
 
 ul#tabsHeader a:hover {
    text-decoration: none;
-   color: #000000; /*background-image: url(../images/tab_left_hover2.gif);*/
+   color: #000000;
    background-repeat: no-repeat;
    background-position: top left;
    white-space: nowrap;
@@ -312,7 +297,7 @@ ul#tabsHeader #current {
 ul#tabsHeader #current a, #current a:hover {
    font: 11px / normal Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
    font-weight: bold;
-   color: #000; /*   background-image: url(../images/tab_left_current.gif); */
+   color: #000;
    background-repeat: no-repeat;
    background-position: top left;
    line-height: 22px;
@@ -529,11 +514,6 @@ html>body ul#tabsHeader a {
    background-repeat: repeat-y;
    width: 9px;
    min-width: 9px;
-   /*
-      width:20px;
-      background-color:#FFFFFF;
-      border-left: 1px solid #dfe8ed;
-   */
 }
 
 .portlet-content-center {
@@ -557,11 +537,6 @@ html>body ul#tabsHeader a {
    min-width: 5px;
    padding: 0;
    margin: 0;
-   /*
-      width:5px;
-      background-color:#FFFFFF;
-      border-right: 1px solid #dfe8ed;
-   */
 }
 
 .portlet-footer-left {
@@ -573,22 +548,12 @@ html>body ul#tabsHeader a {
    min-width: 9px;
    padding: 0;
    margin: 0;
-   /*
-   background-color:#FFFFFF;
-   border-bottom: 1px solid #98b7c6;
-   border-left: 1px solid #dfe8ed;
-   height:5px;
-   */
 }
 
 .portlet-footer-center {
    background-image: url( images/portlet-bottom-middle.gif );
    height: 4px;
    background-repeat: repeat-x;
-   /*	background-color:#FFFFFF;
-      border-bottom: 1px solid #98b7c6;
-      height:5px;
-   */
 }
 
 .portlet-footer-right {
@@ -597,12 +562,6 @@ html>body ul#tabsHeader a {
    height: 4px;
    background-repeat: no-repeat;
    min-width: 5px;
-   /*
-      background-color:#FFFFFF;
-      border-bottom: 1px solid #98b7c6;
-      border-right: 1px solid #dfe8ed;
-      height:5px;
-   */
 }
 
 /***********************
@@ -938,7 +897,7 @@ not sure if we need this one?.. */
 .portlet-form-field {
    font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
    font-size: 10px;
-   color: #000; /*margin-top: 10px;*/
+   color: #000;
 }
 
 .requiredfield {
@@ -1229,17 +1188,6 @@ a.addicon {
    background-position: left;
    padding-left: 16px;
 }
-
-/*
-a.addicondisabled {
-   font-weight: bold;
-   color: #d5d5d5;
-   background-image: url( images/ico_addcontent_disa.gif );
-   background-repeat: no-repeat;
-   background-position: left;
-   padding-left: 16px;
-}
-*/
 
 /************** Foat Style (used to float objects on the page) **********************/
 

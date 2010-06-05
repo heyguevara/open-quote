@@ -8,6 +8,18 @@
                     <name>theme.id</name>
                     <value>openquotedemo</value>
                 </property>
+                <property>
+                    <name>theme.windowRendererId</name>
+                    <value>emptyRenderer</value>
+                </property>
+                <property>
+                    <name>theme.decorationRendererId</name>
+                    <value>emptyRenderer</value>
+                </property>
+                <property>
+                    <name>layout.id</name>
+                    <value>OneColumn</value>
+                </property>
             </properties>
             <portal-name>quote</portal-name>
             <supported-modes>
@@ -30,81 +42,29 @@
 
             <page>
                 <page-name>MotorPlus</page-name>
-                <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>quotation</value>
-                    </property>
-                </properties>
                 <window>
                     <window-name>QuoteWindow</window-name>
                     <instance-ref>MotorPlusQuotationPortletInstance</instance-ref>
-                    <default>true</default>
                     <region>center</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
             </page>
-
             <page>
                 <page-name>EquinePlus</page-name>
-                <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>quotation</value>
-                    </property>
-                </properties>
                 <window>
                     <window-name>QuoteWindow</window-name>
                     <instance-ref>EquinePlusQuotationPortletInstance</instance-ref>
-                    <default>true</default>
                     <region>center</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
             </page>
             <page>
                 <page-name>IrishBrokerPI</page-name>
-                <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>quotation</value>
-                    </property>
-                </properties>
                 <window>
                     <window-name>QuoteWindow</window-name>
                     <instance-ref>IrishBrokerPIPortletInstance</instance-ref>
-                    <default>true</default>
                     <region>center</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
                 <security-constraint>
                     <policy-permission>
@@ -116,28 +76,11 @@
             </page>
             <page>
                 <page-name>FreightPlus</page-name>
-                <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>quotation</value>
-                    </property>
-                </properties>
                 <window>
                     <window-name>QuoteWindow</window-name>
                     <instance-ref>FreightPlusQuotationPortletInstance</instance-ref>
-                    <default>true</default>
                     <region>center</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
             </page>
         </portal>

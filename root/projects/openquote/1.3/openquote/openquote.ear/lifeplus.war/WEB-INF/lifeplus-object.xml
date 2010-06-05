@@ -9,8 +9,12 @@
                     <value>greentree</value>
                 </property>
                 <property>
+                    <name>theme.decorationRendererId</name>
+                    <value>emptyRenderer</value>
+                </property>
+                <property>
                     <name>layout.id</name>
-                    <value>generic</value>
+                    <value>TwoColumns</value>
                 </property>
                 <property>
                     <name>portal.defaultObjectName</name>
@@ -41,10 +45,6 @@
                 <default>true</default>
                 <properties>
                     <property>
-                        <name>layout.id</name>
-                        <value>generic</value>
-                    </property>
-                    <property>
                         <name>order</name>
                         <value>1</value>
                     </property>
@@ -54,75 +54,31 @@
                     <instance-ref>LifePlusLeftNavInstance</instance-ref>
                     <region>left</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
                 <window>
                     <window-name>LifePlusTestimonialsWindow</window-name>
                     <instance-ref>LifePlusTestimonialsInstance</instance-ref>
                     <region>left</region>
                     <height>2</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
                 <window>
                     <window-name>LifePlusBannerWindow</window-name>
                     <instance-ref>LifePlusBannerInstance</instance-ref>
-                    <region>center</region>
+                    <region>right</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
                 <window>
                     <window-name>LifePlusQuotationWindow</window-name>
                     <instance-ref>LifePlusQuotationInstance</instance-ref>
                     <default>true</default>
-                    <region>center</region>
+                    <region>right</region>
                     <height>2</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
             </page>
 
             <page>
                 <page-name>About Life Plus</page-name>
                 <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>generic</value>
-                    </property>
                     <property>
                         <name>order</name>
                         <value>2</value>
@@ -133,43 +89,19 @@
                     <instance-ref>LifePlusLeftNavInstance</instance-ref>
                     <region>left</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
                 <window>
                     <window-name>LifePlusAboutLifePlusWindow</window-name>
                     <instance-ref>LifePlusAboutLifePlusInstance</instance-ref>
                     <default>true</default>
-                    <region>center</region>
+                    <region>right</region>
                     <height>2</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
             </page>
 
             <page>
                 <page-name>About Us</page-name>
                 <properties>
-                    <property>
-                        <name>layout.id</name>
-                        <value>generic</value>
-                    </property>
                     <property>
                         <name>order</name>
                         <value>3</value>
@@ -180,33 +112,13 @@
                     <instance-ref>LifePlusLeftNavInstance</instance-ref>
                     <region>left</region>
                     <height>1</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
                 <window>
                     <window-name>LifePlusAboutUsWindow</window-name>
                     <instance-ref>LifePlusAboutUsInstance</instance-ref>
                     <default>true</default>
-                    <region>center</region>
+                    <region>right</region>
                     <height>2</height>
-                    <properties>
-                        <property>
-                            <name>theme.windowRendererId</name>
-                            <value>default</value>
-                        </property>
-                        <property>
-                            <name>theme.decorationRendererId</name>
-                            <value>emptyRenderer</value>
-                        </property>
-                    </properties>
                 </window>
             </page>
         </portal>
