@@ -64,7 +64,7 @@ USE ${dbname};
 </echo>
     
     <exec executable="sh" dir="${target.dir}/lib" os="Linux,Mac OS X,Solaris,Sun OS">
-      <arg line="-l -c 'mysqldump --user=root --password=bombay2000 --opt ${dbname} >> MySql-Dump.sql'" />
+      <arg line="-l -c '/usr/local/mysql-5.1.34-osx10.5-x86_64/bin/mysqldump --user=root --password=bombay2000 --opt ${dbname} >> MySql-Dump.sql'" />
     </exec>
   
 	<exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${target.dir}/bin">
