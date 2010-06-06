@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>OpenQuote @major.version@.@minor.version@</title>
+<%@include file="/layouts/common/header.jsp"%>
 <meta http-equiv="Content-Type" content="text/html;" />
 <!-- to correct the unsightly Flash of Unstyled Content. -->
 <!-- IE fix for alpha in .PNGs -->
@@ -50,11 +50,7 @@
 </div>
 </div>
 
-<!-- TODO: Fix the auto jump in this tag -->
-<div id="footer-container" class="portal-copyright">Powered by <a
-	class="portal-copyright"
-	href="http://openquote.opensourceinsurance.org">OpenQuote</a><br />
-</div>
+<%@include file="/layouts/common/footer.jsp"%>
 
 <p:region regionName='AJAXFooter' regionID='AJAXFooter' />
 
