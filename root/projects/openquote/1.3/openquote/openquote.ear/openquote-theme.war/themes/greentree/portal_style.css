@@ -1156,12 +1156,6 @@ not sure if we need this one?.. */
 	border: #E6E8E5 1px solid;
 }
 
-/*******************************************************************************************************************************
-
-  New Selectors added by JBoss.ORG UI Design for theme development
-
-******************************************************************************************************************************** */
-	/****************** link styles (active and disabled) for the "Add" icon ***************************/
 a.addicon {
 	font-weight: bold;
 	background-image: url( images/ico_addcontent.gif );
