@@ -748,6 +748,10 @@ a {
    text-decoration: none;
 }
 
+a img {
+	border: none;
+}
+
 a:hover {
    color: #7eacd6;
    text-decoration: underline;

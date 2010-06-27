@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="alfresco.war"/>
-	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure.war/|content-browser.war/|lib/openquote.jar/|motorplus.war/|motorplus.war/WEB-INF/src/|motorplus.war/images/|motorplus.war/pages/|openquote.jar/|product-manager.war/|product-manager.war/WEB-INF/src/|product-manager.war/images/|product-manager.war/pages/|quotation.war/|quotation.war/WEB-INF/src/|news-reader.war/|openquote-theme.war/|openquote-theme.war/themes/|openquote-theme.war/layouts/|lifeplus-product.war/|lifeplus.war/" kind="src" path="openquote.ear"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/lib/openquote.jar" path="openquote.ear/lib/openquote.jar"/>
+	<classpathentry kind="src" output="target/jboss/server/default/deploy/alfresco.war" path="alfresco.war"/>
+	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure.war/|content-browser.war/|lib/openquote.jar/|motorplus.war/|motorplus.war/WEB-INF/src/|motorplus.war/images/|motorplus.war/pages/|openquote.jar/|product-manager.war/|product-manager.war/WEB-INF/src/|product-manager.war/images/|product-manager.war/pages/|quotation.war/|quotation.war/WEB-INF/src/|news-reader.war/|openquote-theme.war/|openquote-theme.war/themes/|openquote-theme.war/layouts/|lifeplus-product.war/|lifeplus.war/|irishbrokerpi.war/|theme.war/|openquote-theme.war/" kind="src" path="openquote.ear"/>
+	<classpathentry kind="src" path="openquote.ear/lib/openquote.jar"/>
 	<classpathentry excluding="Build.xml, **/MANIFEST.MF" kind="src" path="openquote.ear/configure-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml, **/MANIFEST.MF" kind="src" path="openquote.ear/command-server-ejb.jar"/>
 	<classpathentry kind="src" path="openquote.ear/configure.war"/>
 	<classpathentry kind="src" path="openquote.ear/content-browser.war"/>
 	<classpathentry kind="src" path="openquote.ear/news-reader.war"/>
 	<classpathentry excluding="WEB-INF/src/|pages/|images/" kind="src" path="openquote.ear/product-manager.war"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/WEB-INF/classes" path="openquote.ear/product-manager.war/WEB-INF/src"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/product-manager.war/pages" path="openquote.ear/product-manager.war/pages"/>
+	<classpathentry kind="src" path="openquote.ear/product-manager.war/WEB-INF/src"/>
+	<classpathentry kind="src" path="openquote.ear/product-manager.war/pages"/>
 	<classpathentry excluding="WEB-INF/src/|images/|jscript/" kind="src" path="openquote.ear/quotation.war"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/quotation.war/WEB-INF/classes" path="openquote.ear/quotation.war/WEB-INF/src"/>
-	<classpathentry excluding="themes/|layouts/" kind="src" path="openquote.ear/openquote-theme.war"/>
-	<classpathentry kind="src" path="openquote.ear/lifeplus.war"/>
-	<classpathentry kind="src" output="target/test/test.jar" path="test.jar"/>
+	<classpathentry kind="src" path="openquote.ear/quotation.war/WEB-INF/src"/>
+	<classpathentry excluding="layouts/|themes/" kind="src" output="target/jboss/server/default/deploy/openquote.ear/openquote-theme.war" path="openquote.ear/openquote-theme.war"/>
+	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/lifeplus.war" path="openquote.ear/lifeplus.war"/>
+	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/irishbrokerpi.war" path="openquote.ear/irishbrokerpi.war"/>
+	<classpathentry kind="src" path="test.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/proxool-0.7.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/odmg-3.0.jar"/>

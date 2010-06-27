@@ -14,9 +14,10 @@ try
    HibernateRoleImpl adminRole = new HibernateRoleImpl("Admin", "Administrators");
    HibernateRoleImpl userRole = new HibernateRoleImpl("User", "Users");
 
-	// OpeQuote roles
+   // OpeQuote roles
    HibernateRoleImpl developerRole = new HibernateRoleImpl("Developer", "Developers");
    HibernateRoleImpl proposerRole = new HibernateRoleImpl("Proposer", "Proposers");
+   HibernateRoleImpl brokerRole = new HibernateRoleImpl("Broker", "Brokers");
 	
    //
    HibernateUserImpl admin = new HibernateUserImpl("admin");
@@ -58,15 +59,26 @@ try
    productreader.getRoles().add(developerRole);
    developerRole.getUsers().add(productreader);
 
+   // OpenQuote broker
+   HibernateUserImpl broker = new HibernateUserImpl("broker");
+   broker.setPassword(Tools.md5AsHexString("broker"));
+   broker.setRealEmail("broker@openquote");
+   broker.setViewRealEmail(true);
+   broker.setEnabled(true);
+   broker.getRoles().add(brokerRole);
+   developerRole.getUsers().add(broker);
+
    //
    session.save(adminRole);
    session.save(userRole);
    session.save(developerRole);
    session.save(proposerRole);
+   session.save(brokerRole);
    session.save(admin);
    session.save(user);
    session.save(davy);
    session.save(productreader);
+   session.save(broker);
 
    tx.commit();
 }

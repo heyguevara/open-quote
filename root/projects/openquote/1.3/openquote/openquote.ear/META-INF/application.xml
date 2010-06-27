@@ -81,4 +81,11 @@
             <context-root>lifeplus</context-root>
         </web>
     </module>
+
+    <module>
+        <web>
+            <web-uri>irishbrokerpi.war</web-uri>
+            <context-root>irishbrokerpi</context-root>
+        </web>
+    </module>
 </application>

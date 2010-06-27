@@ -35,7 +35,7 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>LifePus Content Browser Portlet</title>
+            <title>LifePlus Content Browser Portlet</title>
             <short-title>content-browser</short-title>
         </portlet-info>
         <portlet-preferences>
