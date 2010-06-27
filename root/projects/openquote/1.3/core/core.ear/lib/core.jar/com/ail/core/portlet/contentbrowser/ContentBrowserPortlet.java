@@ -83,6 +83,9 @@ public class ContentBrowserPortlet extends GenericPortlet {
     
     private String path2Title(String path) {
         String p=path.substring(path.lastIndexOf('/')+1);
+        if (p.endsWith(".html")) {
+            p=p.substring(0, p.lastIndexOf('.'));
+        }
         return p.replaceAll("%20", " ");
     }
     
