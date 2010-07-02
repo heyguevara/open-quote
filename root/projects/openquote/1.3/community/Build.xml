@@ -100,6 +100,9 @@ USE ${dbname};
     <unexplode-jar-macro jar="${ear.dir}/news-reader.war"/>
     <unexplode-jar-macro jar="${ear.dir}/product-manager.war"/>
     <unexplode-jar-macro jar="${ear.dir}/quotation.war"/>
+    <unexplode-jar-macro jar="${ear.dir}/openquote-theme.war"/>
+    <unexplode-jar-macro jar="${ear.dir}/lifeplus.war"/>
+    <unexplode-jar-macro jar="${ear.dir}/irishbrokerpi.war"/>
 
     <unexplode-jar-macro jar="${ear.dir}"/>
     
