@@ -74,8 +74,8 @@
                     <height>1</height>
                 </window>
                 <window>
-                    <window-name>IrishBrokerPILoginWindow</window-name>
-                    <instance-ref>IrishBrokerPILoginInstance</instance-ref>
+                    <window-name>IrishBrokerPIUserWindow</window-name>
+                    <instance-ref>IrishBrokerPIUserInstance</instance-ref>
                     <default>true</default>
                     <region>bottom-right</region>
                     <height>2</height>
@@ -166,8 +166,15 @@
                     </property>
                 </properties>
                 <window>
-                    <window-name>IrishBrokerPIAboutWindow</window-name>
-                    <instance-ref>IrishBrokerPIAboutInstance</instance-ref>
+                    <window-name>IrishBrokerPIPortletWindow</window-name>
+                    <display-name>Irish Broker PI Quotation</display-name>
+                    <properties>
+                        <property>
+                            <name>theme.decorationRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                    </properties>
+                    <instance-ref>IrishBrokerPIPortletInstance</instance-ref>
                     <default>true</default>
                     <region>center</region>
                     <height>1</height>

@@ -26,18 +26,6 @@
     </deployment>
     <deployment>
         <instance>
-            <instance-id>IrishBrokerPIPortletInstance</instance-id>
-            <portlet-ref>QuotationPortlet</portlet-ref>
-            <preferences>
-                <preference>
-                    <name>product</name>
-                    <value>AIL.Demo.IrishBrokerPI</value>
-                </preference>
-            </preferences>
-        </instance>
-    </deployment>
-    <deployment>
-        <instance>
             <instance-id>FreightPlusQuotationPortletInstance</instance-id>
             <portlet-ref>QuotationPortlet</portlet-ref>
             <preferences>

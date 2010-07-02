@@ -38,12 +38,24 @@
     </deployment>
     <deployment>
         <instance>
-            <instance-id>IrishBrokerPILoginInstance</instance-id>
+            <instance-id>IrishBrokerPIUserInstance</instance-id>
             <portlet-ref>IrishBrokerPIContentBrowserPortlet</portlet-ref>
             <preferences>
                 <preference>
                     <name>homePageUrl</name>
-                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/AIL/Demo/IrishBrokerPI/HTML/Login.html</value>
+                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/AIL/Demo/IrishBrokerPI/HTML/User.html</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
+            <instance-id>IrishBrokerPIPortletInstance</instance-id>
+            <portlet-ref>QuotationPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>product</name>
+                    <value>AIL.Demo.IrishBrokerPI</value>
                 </preference>
             </preferences>
         </instance>

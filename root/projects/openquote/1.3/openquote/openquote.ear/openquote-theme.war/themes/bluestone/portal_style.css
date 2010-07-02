@@ -162,7 +162,10 @@
 }
 
 #regionD {
-   display: none;
+	padding: 0px 0px 0px 0px;
+	margin: 15px 0px 0px 0px;
+	width: 100%;
+	float: left; 
 }
 
 #footer-container {
@@ -385,6 +388,7 @@ html>body ul#tabsHeader a {
 *  Utility Navigation  *
 *****************************/
 #dashboardnav {
+	display: none;
 	float: right;
 	font-size: 10px;
 	padding: 0px 12px 0px 0px;
