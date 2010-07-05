@@ -166,7 +166,7 @@
                     </property>
                 </properties>
                 <window>
-                    <window-name>IrishBrokerPIPortletWindow</window-name>
+                    <window-name>IrishBrokerPIQuotationWindow</window-name>
                     <display-name>Irish Broker PI Quotation</display-name>
                     <properties>
                         <property>
@@ -174,7 +174,7 @@
                             <value>emptyRenderer</value>
                         </property>
                     </properties>
-                    <instance-ref>IrishBrokerPIPortletInstance</instance-ref>
+                    <instance-ref>IrishBrokerPIQuotationInstance</instance-ref>
                     <default>true</default>
                     <region>center</region>
                     <height>1</height>

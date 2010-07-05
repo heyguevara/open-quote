@@ -50,8 +50,8 @@
     </deployment>
     <deployment>
         <instance>
-            <instance-id>IrishBrokerPIPortletInstance</instance-id>
-            <portlet-ref>QuotationPortlet</portlet-ref>
+            <instance-id>IrishBrokerPIQuotationInstance</instance-id>
+            <portlet-ref>IrishBrokerPIQuotationPortlet</portlet-ref>
             <preferences>
                 <preference>
                     <name>product</name>
