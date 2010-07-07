@@ -143,6 +143,7 @@ public class SandpitPortlet extends GenericPortlet {
         	}
 
     		quote.addException(new ExceptionRecord(t));
+    		QuotationCommon.persistQuotation(quote);
 
         	session.setAttribute("view", EXCEPTION_MODE);
         }
@@ -203,6 +204,7 @@ public class SandpitPortlet extends GenericPortlet {
         	}
 
     		quote.addException(new ExceptionRecord(t));
+    		QuotationCommon.persistQuotation(quote);
 
         	session.setAttribute("view", EXCEPTION_MODE);
 

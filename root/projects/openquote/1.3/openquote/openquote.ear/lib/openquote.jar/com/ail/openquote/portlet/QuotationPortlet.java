@@ -54,6 +54,7 @@ public class QuotationPortlet extends GenericPortlet {
             }
             else {
             	quotation.addException(new ExceptionRecord(t));
+            	QuotationCommon.persistQuotation(quotation);
             }
             
             // TODO Forward to an error page
@@ -75,6 +76,7 @@ public class QuotationPortlet extends GenericPortlet {
             }
             else {
             	quotation.addException(new ExceptionRecord(t));
+            	QuotationCommon.persistQuotation(quotation);
             }
 
             // TODO Forward to an error page
