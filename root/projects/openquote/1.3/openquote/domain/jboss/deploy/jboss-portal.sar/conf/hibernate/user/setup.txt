@@ -62,6 +62,8 @@ try
    // OpenQuote broker
    HibernateUserImpl broker = new HibernateUserImpl("broker");
    broker.setPassword(Tools.md5AsHexString("broker"));
+   broker.setGivenName("Demo");
+   broker.setFamilyName("Broker");
    broker.setRealEmail("broker@openquote");
    broker.setViewRealEmail(true);
    broker.setEnabled(true);
