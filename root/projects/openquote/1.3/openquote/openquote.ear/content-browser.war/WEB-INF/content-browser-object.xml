@@ -7,9 +7,9 @@
         <parent-ref>default.default</parent-ref>
         <properties />
         <window>
-            <window-name>ContentBrowserWindow</window-name>
-            <instance-ref>ContentBrowserInstance</instance-ref>
-            <region>center</region>
+            <window-name>ContentBrowserWelcomeWindow</window-name>
+            <instance-ref>ContentBrowserWelcomeInstance</instance-ref>
+            <region>right</region>
             <height>0</height>
         </window>
         <security-constraint>

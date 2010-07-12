@@ -36,7 +36,7 @@
                 -->
                 <property>
                     <name>layout.id</name>
-                    <value>generic</value>
+                    <value>TwoColumns</value>
                 </property>
                 <!--
                     | Set the theme for the default portal, see also portal-themes.xml.

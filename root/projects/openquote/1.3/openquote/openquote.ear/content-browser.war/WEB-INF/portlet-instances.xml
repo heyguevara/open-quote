@@ -2,7 +2,7 @@
 <deployments>
     <deployment>
         <instance>
-            <instance-id>ContentBrowserInstance</instance-id>
+            <instance-id>ContentBrowserWelcomeInstance</instance-id>
             <portlet-ref>ContentBrowserPortlet</portlet-ref>
             <preferences>
                 <preference>

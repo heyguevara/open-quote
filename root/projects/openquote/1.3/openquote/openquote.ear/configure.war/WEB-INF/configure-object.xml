@@ -9,7 +9,7 @@
             <window>
                 <window-name>ConfigureWindow</window-name>
                 <instance-ref>ConfigurePortletInstance</instance-ref>
-                <region>center</region>
+                <region>right</region>
                 <height>0</height>
             </window>
             <window>
