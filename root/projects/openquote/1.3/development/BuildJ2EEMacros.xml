@@ -93,7 +93,7 @@
 
       <!-- copy binary files with the filter turned off -->
       <copy todir="${output.dir}">
-        <fileset dir="." includes="**/*.gif, **/*.jpg, **/*.xls"/>
+        <fileset dir="." includes="**/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls"/>
       </copy>
     </sequential>
   </macrodef>
@@ -126,7 +126,7 @@
 
       <!-- copy binary files with the filter turned off -->
       <copy todir="${output.dir}">
-        <fileset dir="." includes="**/*.gif, **/*.jpg, **/*.xls"/>
+        <fileset dir="." includes="**/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls"/>
       </copy>
     </sequential>
   </macrodef>
@@ -139,7 +139,7 @@
 
     <copy todir="${output.dir}/WEB-INF/classes">
       <filterset filtersfile="${copyfilter.file}"/>
-      <fileset dir="./WEB-INF/src" excludes="Build.xml, **/*.gif, **/*.jpg, **/*.java"/>
+      <fileset dir="./WEB-INF/src" excludes="Build.xml, **/*.gif, **/*.jpg, **/*.png, **/*.ico, **/*.java"/>
     </copy>
   </target>
   <target name="_compile-exploded-war-macro-docompile=false"/>
@@ -164,12 +164,12 @@
       <!-- copy text files (properties, xml, etc) with the filter turned on -->
       <copy todir="${output.dir}">
         <filterset filtersfile="${copyfilter.file}"/>
-        <fileset dir="." excludes="WEB-INF/src/**, Build.xml, **/*.gif, **/*.jpg, **/*.java, **/*.jar"/>
+        <fileset dir="." excludes="WEB-INF/src/**, Build.xml, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.java, **/*.jar"/>
       </copy>
 
       <!-- copy binary files with the filter turned off -->
       <copy todir="${output.dir}">
-        <fileset dir="." includes="**/*.gif, **/*.jpg, **/*.jar" excludes="WEB-INF/src/**"/>
+        <fileset dir="." includes="**/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.jar" excludes="WEB-INF/src/**"/>
       </copy>
 
       <!-- compile java code if there is any -->
@@ -213,7 +213,7 @@
   <target name="_delete-exploded-jar-overlay=true">
     <_set_output_dir_property_macro/>
     <delete failonerror="no">
-      <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml">
+      <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.png, **/*.ico, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml">
         <present targetdir="${basedir}">
           <mapper type="identity"/>
         </present>
@@ -233,7 +233,7 @@
   <target name="_delete-exploded-war-overlay=true">
     <_set_output_dir_property_macro/>
     <delete failonerror="no">
-      <fileset dir="${output.dir}" includes="**/*.MF, **/*.jsp, **/*.xml, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml, WEB-INF/src/*">
+      <fileset dir="${output.dir}" includes="**/*.MF, **/*.jsp, **/*.xml, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.jar" excludes="Build.xml, WEB-INF/src/*">
         <present targetdir="${basedir}">
           <mapper type="identity"/>
         </present>
