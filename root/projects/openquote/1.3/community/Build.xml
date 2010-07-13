@@ -22,7 +22,16 @@
     <install-jboss-macro version="${jboss.version}" />
     <install-base-domain-macro dar="openquote" version="${openquote.version}" build="${openquote.build}" name="openquote.ear" />
     <delete dir="${deploy.dir}/data/alf_data"/>
-    <subant-macro target="setup" includes="domain/Build.xml"/>
+
+  	<echo file="${copyfilter.file}" append="yes">
+      	major.version=${major.version}
+        minor.version=${minor.version}
+        increment.version=${increment.version}
+    	build.number=${build.number}
+        dbname=${dbname}
+    </echo>
+
+  	<subant-macro target="setup" includes="domain/Build.xml"/>
 
     <antcall target="_build" />
 

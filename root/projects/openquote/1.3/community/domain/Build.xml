@@ -26,13 +26,7 @@
     <!-- copy files that do need filters to be applied -->
     <copy todir="${deploy.dir}" overwrite="true">
       <fileset dir="./jboss" includes="deploy/*-ds.xml, **/*.jsp, deploy/alfresco.war/**/repository.properties" />
-      <filterset>
-        <filter token="major.version" value="${major.version}" />
-        <filter token="minor.version" value="${minor.version}" />
-        <filter token="increment.version" value="${increment.version}" />
-		<filter token="build.number" value="${build.number}" />
-        <filter token="dbname" value="${dbname}" />
-      </filterset>
+      <filterset filtersfile="${copyfilter.file}"/>
     </copy>
 
     <set-mysql-running-property-macro/>
