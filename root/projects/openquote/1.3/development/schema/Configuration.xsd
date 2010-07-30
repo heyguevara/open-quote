@@ -122,11 +122,12 @@
             <xs:enumeration value="com.ail.core.command.DroolsAccessor"/>
             <xs:enumeration value="com.ail.core.command.DroolsDecisionTableAccessor"/>
             <xs:enumeration value="com.ail.core.command.EJBAccessor"/>
-            <xs:enumeration value="com.ail.core.command.QuickRulesAccessor"/>
-            <xs:enumeration value="com.ail.core.command.WebServiceAccessor"/>
-            <xs:enumeration value="com.ail.core.command.XSLTAccessor"/>
             <xs:enumeration value="com.ail.core.command.JaninoAccessor"/>
             <xs:enumeration value="com.ail.core.command.JMSAccessor"/>
+            <xs:enumeration value="com.ail.core.command.QuickRulesAccessor"/>
+            <xs:enumeration value="com.ail.core.command.VelocityAccessor"/>
+            <xs:enumeration value="com.ail.core.command.WebServiceAccessor"/>
+            <xs:enumeration value="com.ail.core.command.XSLTAccessor"/>
         </xs:restriction>
     </xs:simpleType>
     

@@ -88,7 +88,7 @@
       <!-- Install text files (properties, xml, etc) with the filter turned on -->
       <copy todir="${output.dir}">
         <filterset filtersfile="${copyfilter.file}"/>
-        <fileset dir="." includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino" excludes="Build.xml"/>
+        <fileset dir="." includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm" excludes="Build.xml"/>
       </copy>
 
       <!-- copy binary files with the filter turned off -->
