@@ -98,6 +98,14 @@ public class TestCommand extends Command implements TestArg {
         args.setR(r);
     }
 
+    public void setStringRet(String string) {
+        args.setStringRet(string);
+    }
+
+    public String getStringRet() {
+        return args.getStringRet();
+    }
+
     /**
      * {@inheritDoc}
      * @see #setPreConditionFlag

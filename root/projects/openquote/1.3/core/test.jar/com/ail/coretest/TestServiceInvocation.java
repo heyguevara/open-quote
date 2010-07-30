@@ -47,12 +47,6 @@ import com.ail.coretest.service.TestService;
 /**
  * Test that basic service invocation works as specified. Note: These tests
  * assume that the JDBCConfigurationLoader is being used.
- * 
- * @version $Revision: 1.21 $
- * @state $State: Exp $
- * @date $Date: 2007/03/20 22:18:39 $
- * @source $Source:
- *         /home/bob/CVSRepository/projects/core/test/com/ail/coretest/TestServiceInvocation.java,v $
  */
 public class TestServiceInvocation extends CoreUserTestCase {
     private static boolean oneTimeSetupDone=false;
@@ -575,4 +569,19 @@ public class TestServiceInvocation extends CoreUserTestCase {
         assertEquals(24, command.getR());
     }
     
+    public void testVelocity() throws Exception {
+        TestCommand command = (TestCommand) getCore().newCommand("TestVelocityService");
+        command.setX(21);
+        command.setY(34);
+
+        Timer.start("testVelocity");
+        command.invoke();
+        Timer.split("testVelocity");
+        command.invoke();
+        Timer.stop("testVelocity");
+        
+        assertTrue("Result does not contain expected string: 'The value of X is: 21'", command.getStringRet().contains("The value of X is: 21"));
+        assertTrue("Result does not contain expected string: 'The value of Y is: 34'", command.getStringRet().contains("The value of Y is: 34"));
+        assertTrue("Result does not contain expected string: 'Total is: 55'", command.getStringRet().contains("Total is: 55"));
+    }
 }

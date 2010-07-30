@@ -32,6 +32,7 @@ public class TestArgImp extends CommandArgImp implements TestArg {
     private int x;
     private int y;
     private int r;
+    private String string;
     private Version versionArgRet;
     private boolean preconditionflag;
     private boolean postconditionflag;
@@ -103,6 +104,14 @@ public class TestArgImp extends CommandArgImp implements TestArg {
      */
     public void setR(int r) {
         this.r = r;
+    }
+
+    public void setStringRet(String string) {
+        this.string=string;
+    }
+
+    public String getStringRet() {
+        return this.string;
     }
 
     /**

@@ -169,6 +169,11 @@ public class JaninoInheritanceService {
           <parameter name="Queue">queue/AilCommandQueue</parameter>
       </service>
             
+      <service name="VelocityService" builder="ClassBuilder" key="com.ail.core.command.VelocityAccessor">
+          <parameter name="Url">classpath://com.ail.coretest/TestServiceInvocationVelocity.vm</parameter>
+      </service>
+
+
       <!--=======================================================================-->
       <!-- Bind the default core services (above) to Commands used by Core.class -->
       <!--=======================================================================-->
@@ -258,6 +263,10 @@ public class JaninoInheritanceService {
 
       <command name="TestXSLTService" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommand">
           <parameter name="Service">XSLTService</parameter>
+      </command>
+      
+      <command name="TestVelocityService" builder="ClassBuilder" key="com.ail.coretest.service.TestCommand">
+          <parameter name="Service">VelocityService</parameter>
       </command>
       
   </types>

@@ -84,6 +84,10 @@ public interface TestArg extends CommandArg {
      */
     void setR(int r);
 
+    void setStringRet(String string);
+    
+    String getStringRet();
+    
     /**
      * Fetch the value of the postconditionflag argument. Flag set by the pre-condition service to show that it has been run.
      * @see #setPostConditionFlag
