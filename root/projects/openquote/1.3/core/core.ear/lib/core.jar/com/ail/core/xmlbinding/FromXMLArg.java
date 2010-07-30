@@ -65,15 +65,13 @@ public interface FromXMLArg extends CommandArg {
      * an instance of.
      * @return The class to be unmarshalled into.
      */
-	@SuppressWarnings("unchecked")
-    Class getClassIn();
+    Class<?> getClassIn();
 
 	/**
      * Set the value of the ClassIn property.
      * @param classIn The value to be set.
      */
-	@SuppressWarnings("unchecked")
-    void setClassIn(Class classIn);
+    void setClassIn(Class<?> classIn);
 
     /**
      * Get the value of XmlMapping. This describes how to map from xml into

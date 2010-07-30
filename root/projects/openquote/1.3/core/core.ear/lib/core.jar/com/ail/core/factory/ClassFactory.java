@@ -48,12 +48,11 @@ package com.ail.core.factory;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/ClassFactory.java,v $
  */
 public class ClassFactory extends AbstractFactory {
-    @SuppressWarnings("unchecked")
     public Object instantiateType(com.ail.core.configure.Type typeSpec) {
 		String className=typeSpec.getKey();
 
 		try {
-	        Class clazz=Class.forName(className);
+	        Class<?> clazz=Class.forName(className);
 	        Object instance=clazz.newInstance();
 	        return instance;
 		}

@@ -40,8 +40,7 @@ public class BootLogger {
 	 * @param message Message to display
 	 * @param cause Cause of the problem, this may be null.
 	 */
-	@SuppressWarnings("unchecked")
-    public static void log(Class caller, VersionEffectiveDate ved, Severity severity, String message, Throwable cause) {
+    public static void log(Class<?> caller, VersionEffectiveDate ved, Severity severity, String message, Throwable cause) {
 		// default to writing to error stream.
 		PrintStream logTo=System.err;
 

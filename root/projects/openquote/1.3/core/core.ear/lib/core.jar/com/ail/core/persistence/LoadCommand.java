@@ -65,8 +65,7 @@ public class LoadCommand extends Command implements LoadArg {
 	 * {@inheritDoc}
 	 * @return @{inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
-    public Class getTypeArg() {
+    public Class<?> getTypeArg() {
 		return args.getTypeArg();
 	}
 
@@ -74,8 +73,7 @@ public class LoadCommand extends Command implements LoadArg {
 	 * {@inheritDoc}
 	 * @param objectArg @{inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
-    public void setTypeArg(Class typeArg) {
+    public void setTypeArg(Class<?> typeArg) {
 		args.setTypeArg(typeArg);
 	}
 

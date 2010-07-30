@@ -41,8 +41,7 @@ public abstract class ConfigurationOwnerImpl extends CoreUserImpl implements Con
      * @param configSelectionFlag
      * @param caller
      */
-    @SuppressWarnings("unchecked")
-    public ConfigurationOwnerImpl(int configSelectionFlag, Class caller) {
+    public ConfigurationOwnerImpl(int configSelectionFlag, Class<?> caller) {
         super(configSelectionFlag, caller.getName(), null);
 
         String namespace=caller.getClass().getName();
@@ -64,8 +63,7 @@ public abstract class ConfigurationOwnerImpl extends CoreUserImpl implements Con
      * @param caller Callers class from which the configuration's namespace is derived.
      * @param securityPrincipal Principal of the caller.
      */
-    @SuppressWarnings("unchecked")
-    public ConfigurationOwnerImpl(int configSelectionFlag, Class caller, Principal securityPrincipal) {
+    public ConfigurationOwnerImpl(int configSelectionFlag, Class<?> caller, Principal securityPrincipal) {
         super(configSelectionFlag, caller.getName(), securityPrincipal);
 
         String namespace=caller.getClass().getName();

@@ -54,8 +54,7 @@ public final class TypeXPathFunctionRegister {
      * @param functionClass Class containing functions to be added.
      * @param namespace Namespace to register the class as.
      */
-    @SuppressWarnings("unchecked")
-    public void registerFunctionLibrary(String namespace, Class clazz) {
+    public void registerFunctionLibrary(String namespace, Class<?> clazz) {
         getFunctionLibrary().addFunctions(new ClassFunctions(clazz, namespace));
     }
     
@@ -63,7 +62,6 @@ public final class TypeXPathFunctionRegister {
      * Return the currently defined function library. 
      * @return FunctionLibrary.
      */
-    @SuppressWarnings("unchecked")
     public FunctionLibrary getFunctionLibrary() {
         if (functionLibrary!=null) {
             return functionLibrary;
@@ -73,7 +71,7 @@ public final class TypeXPathFunctionRegister {
                 if (functionLibrary==null) {
                     FunctionLibrary fl=new FunctionLibrary();
                     CoreProxy cp=new CoreProxy();
-                    Class clazz=null;
+                    Class<?> clazz=null;
                 
                     try {
                         Group functionGroup=cp.getGroup("JXPathExtensions");

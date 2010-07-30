@@ -126,6 +126,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.XMLClassDescriptorResolver#resolveXML(java.lang.Class)
      */
+    @SuppressWarnings("rawtypes")
     public XMLClassDescriptor resolveXML(Class type) throws ResolverException {
         if (type == null) {
             return null;
@@ -161,7 +162,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.ClassDescriptorResolver#resolve(java.lang.Class)
      */
-    public ClassDescriptor resolve(Class type) throws ResolverException {
+    public ClassDescriptor resolve(@SuppressWarnings("rawtypes") Class type) throws ResolverException {
         return resolveXML(type);
     }
 
@@ -197,7 +198,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
         }
 
         // -- try to load class for creating a descriptor via introspection
-        Class _class = _classCache.loadClass(className, classLoader);
+        Class<?> _class = _classCache.loadClass(className, classLoader);
         if (_class != null) {
             descriptor = this.createDescriptor(_class);
             if (descriptor != null) {
@@ -214,6 +215,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.XMLClassDescriptorResolver#resolveByXMLName(java.lang.String, java.lang.String, java.lang.ClassLoader)
      */
+    @SuppressWarnings("rawtypes")
     public XMLClassDescriptor resolveByXMLName(String xmlName, String namespaceURI, ClassLoader loader) {
         if (xmlName == null || xmlName.length() == 0) {
             throw new IllegalArgumentException("Cannot resolve a null or zero-length xml name.");
@@ -299,6 +301,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.ClassDescriptorResolver#setMappingLoader(org.exolab.castor.mapping.MappingLoader)
      */
+    @SuppressWarnings("rawtypes")
     public void setMappingLoader(MappingLoader mappingLoader) {
         _mappingLoader = (XMLMappingLoader) mappingLoader;
 
@@ -329,7 +332,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      * @throws ResolverException
      *             If creating the descriptor failed.
      */
-    private XMLClassDescriptor createDescriptor(Class type) throws ResolverException {
+    private XMLClassDescriptor createDescriptor(Class<?> type) throws ResolverException {
         if (!_useIntrospection) {
             return null;
         }
@@ -393,7 +396,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      */
     private XMLClassDescriptor loadDescriptorClass(String className, ClassLoader loader) {
         String descriptorClassName = className + XMLConstants.DESCRIPTOR_SUFFIX;
-        Class descriptorClass = _classCache.loadClass(descriptorClassName, this.getClassLoader(loader));
+        Class<?> descriptorClass = _classCache.loadClass(descriptorClassName, this.getClassLoader(loader));
         if (descriptorClass == null) {
             return null;
         }
@@ -538,6 +541,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
         /**
          * A list of classes that could not be loaded.
          */
+        @SuppressWarnings("rawtypes")
         private List _missingClasses = new ArrayList();
 
         /**
@@ -558,7 +562,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *         class could not be loaded or is contained in the list of
          *         missing classes.
          */
-        public Class loadClass(String className, ClassLoader loader) {
+        public Class<?> loadClass(String className, ClassLoader loader) {
             if (this._missingClasses.contains(className)) {
                 return null;
             }
@@ -605,24 +609,29 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
         /**
          * List of class names a descriptor is not available for.
          */
+        @SuppressWarnings("rawtypes")
         private List                _missingTypes;
         /**
          * Map of cached descriptors with the class names they describe as key.
          */
+        @SuppressWarnings("rawtypes")
         private Map                 _typeMap;
         /**
          * Map of cached descriptors with their XML names as key.
          */
+        @SuppressWarnings("rawtypes")
         private Map                 _xmlNameMap;
         /**
          * List of package mapping name that haven already been tried to load.
          * (Both successfully and unsuccessfully).
          */
+        @SuppressWarnings("rawtypes")
         private List                _loadedPackageMappings;
         /**
          * List of CDR file that have already been tried to load. (Both
          * successfully and unsuccessfully).
          */
+        @SuppressWarnings("rawtypes")
         private List                _loadedCDRLists;
         /**
          * Flag indicating whether package mappings should be loaded or not.
@@ -636,6 +645,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * <br>
          * Initializes alls list and maps.
          */
+        @SuppressWarnings("rawtypes")
         public DescriptorCache() {
             super();
 
@@ -666,6 +676,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *
          * @see #INTERNAL_CONTAINER_NAME
          */
+        @SuppressWarnings("rawtypes")
         private void addDescriptor(String className, XMLClassDescriptor descriptor) {
             _typeMap.put(className, descriptor);
 
@@ -743,6 +754,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *         list if no such descriptor is stored in this cache. This
          *         method will never return <code>null</code>!
          */
+        @SuppressWarnings("rawtypes")
         public List getDescriptorList(String xmlName) {
             List list = (List) _xmlNameMap.get(xmlName);
 
@@ -775,6 +787,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @see ConcurrentModificationException
          * @see List#iterator()
          */
+        @SuppressWarnings("rawtypes")
         public Iterator getDescriptors(String xmlName) {
             return this.getDescriptorList(xmlName).iterator();
         }
@@ -828,6 +841,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @throws ResolverException
          *             If a CDR file is available but cannot be opened or read.
          */
+        @SuppressWarnings("rawtypes")
         public synchronized void loadCDRList(String packageName, ClassLoader loader) throws ResolverException {
             if (_loadedCDRLists.contains(packageName)) {
                 return;
@@ -847,7 +861,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
                     String className = (String) classes.nextElement();
                     String descriptorClassName = (String) cdrList.get(className);
                     try {
-                        Class descriptorClass = loader.loadClass(descriptorClassName);
+                        Class<?> descriptorClass = loader.loadClass(descriptorClassName);
                         this.addDescriptor(className, ((XMLClassDescriptor) descriptorClass.newInstance()));
                     } catch (Exception e) {
                         // -- TODO: report error, but continue
@@ -883,6 +897,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @see #setLoadPackageMappings(boolean)
          * @see MappingLoader
          */
+        @SuppressWarnings("rawtypes")
         public synchronized void loadPackageMapping(String packageName, ClassLoader loader) {
             if (!_loadPackageMappings || _loadedPackageMappings.contains(packageName)) {
                 return;
@@ -1000,11 +1015,13 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      */
     static class XCDEnumerator implements ClassDescriptorEnumeration {
 
+        @SuppressWarnings("rawtypes")
         private final Iterator _descriptors;
 
         /**
          * Creates an XCDEnumerator
          */
+        @SuppressWarnings("rawtypes")
         XCDEnumerator(Iterator descriptors) {
             super();
 

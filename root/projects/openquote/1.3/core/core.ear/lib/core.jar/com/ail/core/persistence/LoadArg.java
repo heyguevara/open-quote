@@ -47,15 +47,13 @@ public interface LoadArg extends CommandArg {
      * @see #getTypeArg
 	 * @param typeArg new value for property.
 	 */
-	@SuppressWarnings("unchecked")
-    void setTypeArg(Class typeArg);
+    void setTypeArg(Class<?> typeArg);
 
     /**
      * Getter for the typeArg property. Type to load
      * @return Value of typeArg
      */
-    @SuppressWarnings("unchecked")
-    Class getTypeArg();
+    Class<?> getTypeArg();
 
 	/**
 	 * Setter for the idArg property. 

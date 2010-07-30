@@ -154,12 +154,12 @@ public class CommonsValidatorService extends Service {
 			org.apache.commons.validator.ValidatorResult result = (org.apache.commons.validator.ValidatorResult) results.getValidatorResult(propertyName);
 
 			// Get all the actions run against the property, and iterate over their names.
-			Map actionMap = result.getActionMap();
-			Iterator keys = actionMap.keySet().iterator();
+			Map<String,Object> actionMap = result.getActionMap();
+			Iterator<String> keys = actionMap.keySet().iterator();
 
 			// loop through the dependencies
 			while (keys.hasNext()) {
-				String actName = (String) keys.next();
+				String actName = keys.next();
 				// Get the Action for that name.
 				ValidatorAction action = resources.getValidatorAction(actName);
 

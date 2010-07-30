@@ -146,7 +146,6 @@ public class CastorXMLFactory extends AbstractFactory {
         return xmlClassResolver;
     }
     
-    @SuppressWarnings("unchecked")
     protected Object initialiseType(Object o, Type typeSpec, Core core) {
         String script=typeSpec.findParameterValue("Script");
         String url=typeSpec.findParameterValue("Url");
@@ -173,7 +172,7 @@ public class CastorXMLFactory extends AbstractFactory {
                 configurationURL=configureUrl.toExternalForm();
             }
 
-            Class type=Class.forName(typeSpec.getKey());
+            Class<?> type=Class.forName(typeSpec.getKey());
             
             Unmarshaller unmarshaller=new Unmarshaller(type, this.getClass().getClassLoader());
 

@@ -437,7 +437,7 @@ public static User getUser(HttpServletRequest httpRequest, HttpServletResponse h
 // AIL mod: followin if commented out to avoid inappropriate authentication re-use    	  
 //         if (portalUserKeyName.get() == null)
 //         {
-            Enumeration enumNames = session.getAttributeNames();
+            Enumeration<String> enumNames = session.getAttributeNames();
             while (enumNames.hasMoreElements())
             {
                String name = (String)enumNames.nextElement();

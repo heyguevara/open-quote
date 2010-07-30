@@ -27,12 +27,7 @@ import com.ail.core.configure.XMLMapping;
  * of the objects they represent.
  * The arguments and returns used during this process are described in (and
  * encapsulated by an instance of) FromXMLArg.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/FromXMLCommand.java,v $
  */
-@SuppressWarnings("unchecked")
 public class FromXMLCommand extends Command implements FromXMLArg {
 	/** instance of arg to delegate to. */
     private FromXMLArg args=null;
@@ -103,7 +98,7 @@ public class FromXMLCommand extends Command implements FromXMLArg {
      * an instance of.
      * @return The class to be unmarshalled into.
      */
-    public Class getClassIn(){
+    public Class<?> getClassIn(){
         return args.getClassIn();
     }
 
@@ -111,7 +106,7 @@ public class FromXMLCommand extends Command implements FromXMLArg {
      * Set the value of the ClassIn property.
      * @param classIn The value to be set.
      */
-    public void setClassIn(Class classIn){
+    public void setClassIn(Class<?> classIn){
         args.setClassIn(classIn);
     }
 

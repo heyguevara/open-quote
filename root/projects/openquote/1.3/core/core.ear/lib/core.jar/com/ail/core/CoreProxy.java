@@ -287,11 +287,10 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * a named configuration owner to its factory default settings.
      * @param configOwnerClassName The fully qualified name of the class to reset the config for.
      */
-	@SuppressWarnings("unchecked")
     public boolean resetConfiguration(String configOwnerClassName) {
 		try {
 			// get hold of the config owners class
-            Class configOwner=Class.forName(configOwnerClassName);
+            Class<?> configOwner=Class.forName(configOwnerClassName);
 
 			// Create an instance of the owner class
 			ConfigurationOwner co=(ConfigurationOwner)configOwner.newInstance();

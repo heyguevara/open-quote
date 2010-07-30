@@ -60,6 +60,32 @@ public class TestUrlHandlers extends TestCase {
     }
 
     /**
+     * Test raw access to the alfresco repository. This test uses the same method of access
+     * as the alfresco content URL handler uses.
+     * @throws Exception
+     */
+    public void testProdctUrlAccess() throws Exception {
+        URL url=null;
+
+        // try to access the content that does not exist
+        try {
+            url=new URL("product://localhost:8080/Demo/Demo/ContentThatDoesNotExist.html");
+            Functions.loadUrlContentAsString(url);
+            fail("got content which doesn't exist!");
+        }
+        catch(FileNotFoundException e) {
+            // expected
+        }
+        catch(Throwable t) {
+            fail("Caught unexpected "+t.getClass().getName());
+        }
+
+        // try to access the content that does exist
+        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
+        Functions.loadUrlContentAsString(url);
+    }
+
+    /**
      * This test checks that a URL pointing at an existing resource correctly opens that
      * resource.
      * <ul>
@@ -114,18 +140,23 @@ public class TestUrlHandlers extends TestCase {
      * as the alfresco content URL handler uses.
      * @throws Exception
      */
-    public void testAlfrescoUrlAccess() throws Exception {
+    public void testAlfrescoUrlAccessWithoutATicket() throws Exception {
         URL url=null;
 
         // try to access the content without a ticket
         try {
             url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl");
-            Functions.loadUrlContentAsString(url);
+            String p=Functions.loadUrlContentAsString(url);
+            System.out.println("res:"+p);
             fail("got content even though we didn't pass a vaid ticket in");
         }
         catch(IOException e) {
-            assertTrue(e.getMessage().contains("response code: 500"));
+            assertTrue("expected error to contain: 'HTTP response code: 401', but message was: '"+e.getMessage()+"'", e.getMessage().contains("HTTP response code: 401"));
         }
+    }
+
+    public void testAlfrescoUrlAccessWithATicket() throws Exception {
+        URL url=null;
 
         // get a ticket for admin/admin
         url=new URL("http://localhost:8080/alfresco/service/api/login?u=admin&pw=admin");
@@ -135,29 +166,6 @@ public class TestUrlHandlers extends TestCase {
 
         // try to access the content again, but with a ticket
         url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl&ticket="+ticket);
-        Functions.loadUrlContentAsString(url);
-    }
-
-    /**
-     * Test raw access to the alfresco repository. This test uses the same method of access
-     * as the alfresco content URL handler uses.
-     * @throws Exception
-     */
-    public void testProdctUrlAccess() throws Exception {
-        URL url=null;
-
-        // try to access the content that does not exist
-        try {
-            url=new URL("product://localhost:8080/Demo/Demo/ContentThatDoesNotExist.html");
-            Functions.loadUrlContentAsString(url);
-            fail("got content which doesn't exist!");
-        }
-        catch(IOException e) {
-            assertTrue(e.getMessage().contains("response code: 500"));
-        }
-
-        // try to access the content that does exist
-        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
         Functions.loadUrlContentAsString(url);
     }
 

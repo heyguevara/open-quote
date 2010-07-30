@@ -79,7 +79,7 @@ public class ExceptionRecord extends Type {
         // Set catching class to whoever called us
         StackTraceElement[] here=Thread.currentThread().getStackTrace();
         if (here!=null && here.length >= 1) {
-            catchingClassName = here[3].getClassName();
+            catchingClassName = here[2].getClassName();
         }
         
         StackTraceElement[] stackToDump=null;

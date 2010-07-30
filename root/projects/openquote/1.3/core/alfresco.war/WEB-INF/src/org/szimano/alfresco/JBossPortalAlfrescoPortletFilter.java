@@ -137,7 +137,7 @@ public class JBossPortalAlfrescoPortletFilter implements PortletFilter {
    public void destroy() {
    }
 
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings({ "unchecked", "rawtypes" })
 private void ensureLogin(PortletRequest request) throws PortletException,
          IOException, ServletException {
 
@@ -196,9 +196,9 @@ private void ensureLogin(PortletRequest request) throws PortletException,
             sesMap.put(AuthenticationHelper.SESSION_INVALIDATED, true);
          }
          
-         Enumeration en = request.getPortletSession().getAttributeNames();
+         Enumeration<String> en = request.getPortletSession().getAttributeNames();
          while (en.hasMoreElements()) {
-            String key = (String)en.nextElement();
+            String key = en.nextElement();
             
             if (key.endsWith(AuthenticationHelper.AUTHENTICATION_USER)) {
                request.getPortletSession().removeAttribute(key);

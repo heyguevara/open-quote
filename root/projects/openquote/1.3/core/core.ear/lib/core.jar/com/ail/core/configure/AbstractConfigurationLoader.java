@@ -117,7 +117,6 @@ public abstract class AbstractConfigurationLoader {
      * Try to get loader properties from System properties
      * @return loaderClassName, or null if not found.
      */
-    @SuppressWarnings("unchecked")
     private static String loadFromSystemProperties() {
         String loaderClassName = null;
 
@@ -127,7 +126,7 @@ public abstract class AbstractConfigurationLoader {
             loaderClassName = System.getProperty("com.ail.core.configure.loader");
 
             // loop through the properties looking for params
-            for(Enumeration en = System.getProperties().keys(); en.hasMoreElements();) {
+            for(Enumeration<?> en = System.getProperties().keys(); en.hasMoreElements();) {
                 propKey = (String) en.nextElement();
                 if (propKey.startsWith("com.ail.core.configure.loaderParam.")) {
                     params.put(propKey.substring(35), System.getProperty(propKey));
@@ -189,13 +188,12 @@ public abstract class AbstractConfigurationLoader {
      * these settings in the loader.properties file simplifies things.
      * @throws IOException If the property file cannot be loaded.
      */
-    @SuppressWarnings("unchecked")
     private static void addDefaultProperties() throws IOException {
         String key=null;
         Properties defaultProp=new Properties();
         defaultProp.load(AbstractConfigurationLoader.class.getResourceAsStream("loader.properties"));
 
-        for(Enumeration en=defaultProp.keys() ; en.hasMoreElements() ; ) {
+        for(Enumeration<?> en=defaultProp.keys() ; en.hasMoreElements() ; ) {
             key=(String)en.nextElement();
             if (params.getProperty(key)==null) {
                 params.setProperty(key, defaultProp.getProperty(key));
@@ -208,7 +206,6 @@ public abstract class AbstractConfigurationLoader {
      * what parameters to pass to it are loaded from the loader.properties file.
      * @return The loader instance to use in this JVM.
      */
-    @SuppressWarnings("unchecked")
     public static synchronized AbstractConfigurationLoader loadLoader() {
         if (loader == null) {
             try {
@@ -230,7 +227,7 @@ public abstract class AbstractConfigurationLoader {
                 }
 
                 // get hold of the loader class itself
-                Class loaderClass = Class.forName(loaderClassName);
+                Class<?> loaderClass = Class.forName(loaderClassName);
 
                 addDefaultProperties();
 

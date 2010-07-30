@@ -251,15 +251,15 @@ public class ConfigureManager {
     /**
      * Action invoked when the "donwload selected" button on the download page is selected.
      */
-    @SuppressWarnings("unchecked")
     public String downloadSelectedAction() {
-        Collection<ConfigurationSummary> rows=(Collection)getForm().getNamespaces().getWrappedData();
+        @SuppressWarnings("unchecked")
+        Collection<ConfigurationSummary> rows=(Collection<ConfigurationSummary>)getForm().getNamespaces().getWrappedData();
 
         getForm().setCarFileName(null);
         
         try {
             PackageCarCommand pcc=(PackageCarCommand)core.newCommand("PackageCar");
-            pcc.setNamespacesArg(new ArrayList());
+            pcc.setNamespacesArg(new ArrayList<String>());
             
             for(ConfigurationSummary summary: rows ) {
                 if (summary.getLock()) {

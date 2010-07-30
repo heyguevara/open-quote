@@ -87,7 +87,6 @@ public class XSLTFactory extends AbstractFactory {
       return null;
   }
 
-  @SuppressWarnings("unchecked")
   protected Object initialiseType(Object o, Type typeSpec, Core core) {
       XMLString xml = new XMLString("<root/>");
 

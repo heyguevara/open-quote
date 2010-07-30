@@ -38,11 +38,11 @@ import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationOwner;
 
 /**
- * This accessor provides access to services implented using <a href="http://www.janino.net/">Janino</a>. Services
+ * This accessor provides access to services implemented using <a href="http://www.janino.net/">Janino</a>. Services
  * that use this accessor either define a script inline (using a Script parameter in the configuration), of they point
  * at a script via a URL (using the Url parameter). Either way, the script is compiled to java byte code by Janino
  * at runtime and the resulting code is invoked by the accssor.<p/>
- * Compilation is only carried on when the service is initially loaded - on the first attemt to execute the service.
+ * Compilation is only carried on when the service is initially loaded - on the first attempt to execute the service.
  * Once compiled, the resulting class is cached by the accessor for faster access later on.<p/>
  * As used by this accessor, Janino scripts adopt a simple contract: they must define an invoke method which accepts
  * only one argument of a type which is suitable for the command being serviced.<p/>
@@ -106,8 +106,7 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
     private String script=null;
     private String url=null;
     private String extend=null;
-    @SuppressWarnings("unchecked")
-    private transient List<Class> clazz=null;
+    private transient List<Class<?>> clazz=null;
     private String name=null;
     
     public void setArgs(CommandArg args) {
@@ -125,8 +124,7 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
      * @return The Class representing the compiled source
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
-    private Class loadClass(String name, String source) throws Exception {
+    private Class<?> loadClass(String name, String source) throws Exception {
         SimpleCompiler sc=new SimpleCompiler();
         sc.setParentClassLoader(this.getClass().getClassLoader());
         sc.cook(name, new StringReader(source));
@@ -155,13 +153,17 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
         }
     }
     
-    @SuppressWarnings("unchecked")
+    /**
+     * Factory life cycle method. See {@link AbstractFactory} for details.
+     * @param core
+     * @param typeSpec
+     */
     public void activate(Core core, com.ail.core.configure.Type typeSpec) {
         if (clazz==null) {
             try {
                 name=typeSpec.getName();
                 
-                clazz=new ArrayList<Class>();
+                clazz=new ArrayList<Class<?>>();
                 
                 this.core=core;
     
@@ -191,7 +193,6 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
         }
     }
     
-    @SuppressWarnings("unchecked")
     public void invoke() throws BaseException {
         super.logEntry();
 
@@ -200,7 +201,7 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
         }
         
         try {
-            for(Class c: clazz) {
+            for(Class<?> c: clazz) {
                 Method m=c.getMethod("invoke", args.getClass());
                 m.invoke(null, args);
             }

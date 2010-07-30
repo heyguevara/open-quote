@@ -681,8 +681,7 @@ public class SchemaBootstrap extends AbstractLifecycleBean
      * 
      * @return Returns an input stream onto the script, otherwise null
      */
-    @SuppressWarnings("unchecked")
-	private InputStream getScriptInputStream(Class dialectClazz, String scriptUrl) throws Exception
+	private InputStream getScriptInputStream(Class<?> dialectClazz, String scriptUrl) throws Exception
     {
         // replace the dialect placeholder
         String dialectScriptUrl = scriptUrl.replaceAll(PLACEHOLDER_SCRIPT_DIALECT, dialectClazz.getName());
@@ -692,7 +691,7 @@ public class SchemaBootstrap extends AbstractLifecycleBean
         if (!resource.exists())
         {
             // it wasn't found.  Get the superclass of the dialect and try again
-            Class superClazz = dialectClazz.getSuperclass();
+            Class<?> superClazz = dialectClazz.getSuperclass();
             if (Dialect.class.isAssignableFrom(superClazz))
             {
                 // we still have a Dialect - try again
@@ -853,10 +852,9 @@ public class SchemaBootstrap extends AbstractLifecycleBean
      * Performs dialect-specific checking.  This includes checking for InnoDB, dumping the dialect being used
      * as well as setting any runtime, dialect-specific properties.
      */
-    @SuppressWarnings("unchecked")
 	private void checkDialect(Dialect dialect)
     {
-        Class dialectClazz = dialect.getClass();
+        Class<?> dialectClazz = dialect.getClass();
         LogUtil.info(logger, MSG_DIALECT_USED, dialectClazz.getName());
         if (dialectClazz.equals(MySQLDialect.class) || dialectClazz.equals(MySQL5Dialect.class))
         {
@@ -1114,7 +1112,6 @@ public class SchemaBootstrap extends AbstractLifecycleBean
         System.exit(exitCode);
     }
     
-    @SuppressWarnings("unchecked")
 	private static int dumpDialects(String[] dialectClassNames)
     {
         if (dialectClassNames.length == 0)
@@ -1146,7 +1143,7 @@ public class SchemaBootstrap extends AbstractLifecycleBean
         }
         for (String dialectClassName : dialectClassNames)
         {
-            Class dialectClazz = null;
+            Class<?> dialectClazz = null;
             try
             {
                 dialectClazz = Class.forName(dialectClassName);
@@ -1171,8 +1168,7 @@ public class SchemaBootstrap extends AbstractLifecycleBean
         return 0;
     }
     
-    @SuppressWarnings("unchecked")
-	private static void dumpDialectScript(Configuration configuration, Class dialectClazz, File directory)
+	private static void dumpDialectScript(Configuration configuration, Class<?> dialectClazz, File directory)
     {
         // Set the dialect
         configuration.setProperty("hibernate.dialect", dialectClazz.getName());

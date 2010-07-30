@@ -24,16 +24,15 @@ import com.ail.core.Type;
 /**
  * Form object used to back the CAR file upload portlet 
  */
-@SuppressWarnings("unchecked")
 public class ConfigureUploadForm extends Type {
-    private Collection namespaceItems;
+    private Collection<String> namespaceItems;
     private byte[] uploadedFile;
     
-    public Collection getNamespaceItems() {
+    public Collection<String> getNamespaceItems() {
         return namespaceItems;
     }
     
-    public void setNamespaceItems(Collection namespaceItems) {
+    public void setNamespaceItems(Collection<String> namespaceItems) {
         this.namespaceItems=namespaceItems;
     }
     

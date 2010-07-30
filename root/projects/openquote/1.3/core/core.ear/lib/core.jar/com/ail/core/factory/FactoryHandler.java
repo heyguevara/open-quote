@@ -48,14 +48,13 @@ public class FactoryHandler {
      * @param core The core to use to get configs.
      * @return The Factory to use to create instances of type 't'.
      */
-	@SuppressWarnings("unchecked")
     private AbstractFactory fetchBuilder(String builderName, Core core) {
 		// Fetch the Builder to use to create instance of this type.
 		Builder builder=(Builder)core.getGroup("_Builders."+builderName);
 
         if (builder.getInstance()==null) {
 			try {
-				Class clazz=Class.forName(builder.getFactory());
+				Class<?> clazz=Class.forName(builder.getFactory());
 				builder.setInstance((AbstractFactory)clazz.newInstance());
 			}
             catch(ClassNotFoundException e) {

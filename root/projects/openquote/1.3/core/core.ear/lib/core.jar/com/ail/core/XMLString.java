@@ -466,8 +466,7 @@ public class XMLString implements Cloneable, Serializable {
      * element.
      * @return the Class represented by the string, or null.
      */
-    @SuppressWarnings("unchecked")
-    public Class getType() throws ClassNotFoundException {
+    public Class<?> getType() throws ClassNotFoundException {
         String type=getXsiType();
 
         if (type==null) {

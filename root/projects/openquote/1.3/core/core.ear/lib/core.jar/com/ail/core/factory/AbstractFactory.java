@@ -50,16 +50,15 @@ public abstract class AbstractFactory {
      * @param arg String representing the argument to be passed to the method.
 	 * @param core Core class - for logging etc.
      **/
-    @SuppressWarnings("unchecked")
     private void invokeSetter(Object obj, String propertyName, String arg, Core core) {
-		Class c=obj.getClass();
+		Class<?> c=obj.getClass();
 		Method[] m=c.getMethods();
 		String methodName="set"+propertyName;
 
 		try {
 			for(int i=0 ; i<m.length ; i++) {
 				if (m[i].getName().equals(methodName)) {
-					Class p[]=m[i].getParameterTypes();
+					Class<?> p[]=m[i].getParameterTypes();
 
 					if (p.length==1) {
 						Object[] args=new Object[1];
@@ -67,8 +66,8 @@ public abstract class AbstractFactory {
 						// Create the argument to be passed into the setter. This is
 						// an instance of p[0] created by invoking p[0]'s string constructor.
                         if (p[0].isPrimitive() || p[0]==String.class) {
-							Class[] cargs={String.class};
-							Constructor constructor=p[0].getConstructor(cargs);
+							Class<?>[] cargs={String.class};
+							Constructor<?> constructor=p[0].getConstructor(cargs);
 		    			    Object[] oargs={arg};
 
 							// invoke the setter - passing in the new type as the arg
@@ -199,9 +198,8 @@ public abstract class AbstractFactory {
      * @param core Instance of the Core to pass into the activate method.
      * @return Activated object.
      */
-    @SuppressWarnings("unchecked")
     protected Object activateType(Object obj, Core core, Type typeSpec) {
-        Class clazz=obj.getClass();
+        Class<?> clazz=obj.getClass();
         
         try {
             clazz.getMethod("activate", Core.class, Type.class).invoke(obj, core, typeSpec);

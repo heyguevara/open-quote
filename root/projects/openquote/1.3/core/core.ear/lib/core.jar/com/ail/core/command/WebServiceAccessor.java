@@ -92,7 +92,6 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
      * the command object's setters. Once invoke has been called, the
      * object's getters are used to retrieve the results.
      */
-    @SuppressWarnings("unchecked")
     public void invoke() throws BaseException {
         super.logEntry();
 
@@ -104,7 +103,7 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
             ServiceFactory factory=ServiceFactory.newInstance();
             Service service=factory.createService(url, qname);
             
-            Class endpointClass=Class.forName(getEndpointClass());
+            Class<?> endpointClass=Class.forName(getEndpointClass());
             Remote endpoint=service.getPort(endpointClass);
 
             Method method=endpoint.getClass().getDeclaredMethod(getOperationName(), new Class[]{String.class});

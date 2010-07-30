@@ -32,8 +32,7 @@ public class LoadArgImp extends CommandArgImp implements LoadArg {
     static final long serialVersionUID = 1199346453402049909L;
 
     /** type of object to load */
-    @SuppressWarnings("unchecked")
-    private Class typeArg;
+    private Class<?> typeArg;
 
 	/** Object loaded */
 	private Type objectRet;
@@ -65,8 +64,7 @@ public class LoadArgImp extends CommandArgImp implements LoadArg {
      * {@inheritDoc}
      * @return @{inheritDoc}
      */
-    @SuppressWarnings("unchecked")
-    public Class getTypeArg() {
+    public Class<?> getTypeArg() {
         return typeArg;
     }
 
@@ -74,8 +72,7 @@ public class LoadArgImp extends CommandArgImp implements LoadArg {
      * {@inheritDoc}
      * @param typeArg @{inheritDoc}
      */
-    @SuppressWarnings("unchecked")
-    public void setTypeArg(Class typeArg) {
+    public void setTypeArg(Class<?> typeArg) {
         this.typeArg = typeArg;
     }
 

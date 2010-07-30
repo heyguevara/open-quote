@@ -106,7 +106,7 @@ public class ConfigureUploadPortlet extends GenericPortlet {
                 Collection<String> toDeploy=new ArrayList<String>();
                 String paramName;
                 
-                for(Enumeration en=request.getParameterNames() ; en.hasMoreElements() ; ) {
+                for(Enumeration<String> en=request.getParameterNames() ; en.hasMoreElements() ; ) {
                     paramName=(String)en.nextElement();
                     if ("true".equals(request.getParameter(paramName))) {
                         toDeploy.add(paramName);
@@ -126,19 +126,19 @@ public class ConfigureUploadPortlet extends GenericPortlet {
         actionResponse.setRenderParameters(request.getParameterMap());
     }
 
-    @SuppressWarnings("unchecked")
     private byte[] readFileFromRequest(ActionRequest request) throws FileUploadException, IOException {
         StringBuffer file=new StringBuffer();
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         PortletFileUpload upload = new PortletFileUpload(factory);
 
-        List fileItems = upload.parseRequest(request);
+        @SuppressWarnings("unchecked")
+        List<FileItem> fileItems = (List<FileItem>)upload.parseRequest(request);
 
-        Iterator itr = fileItems.iterator();
+        Iterator<FileItem> itr = fileItems.iterator();
         
         if (itr.hasNext()) {
-            FileItem item = (FileItem) itr.next();
+            FileItem item = itr.next();
             byte[] block=new byte[4096];
 
             // check if the current item is a form field or an uploaded file

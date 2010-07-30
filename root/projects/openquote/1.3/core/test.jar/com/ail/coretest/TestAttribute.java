@@ -49,6 +49,16 @@ public class TestAttribute extends TestCase {
         TestRunner.run(suite());
     }
 
+    public void setUp() throws Exception {
+        super.setUp();
+        Locale.setThreadLocale(UK);
+    }
+    
+    public void teadDown() throws Exception {
+        super.tearDown();
+        Locale.setThreadLocale(UK);
+    }
+    
     public void testAttributeValidation() throws Exception {
         Attribute attr;
 
@@ -97,7 +107,7 @@ public class TestAttribute extends TestCase {
     public void testAttributeFormatting() {
         Attribute attr;
 
-        attr = new Attribute("amount5", "£12.234", "number;pattern=£#.##");
+        attr = new Attribute("amount5", "£12.234", "number;pattern=£#.00");
         assertEquals("£12.23", attr.getFormattedValue());
         assertEquals(12.234, attr.getObject());
     }
@@ -142,7 +152,7 @@ public class TestAttribute extends TestCase {
         assertEquals(java.lang.String.class, attr.getValue().getClass());
         assertEquals(java.lang.Double.class, attr.getObject().getClass());
 
-        assertEquals("GBP1,002.23", attr.getFormattedValue());
+        assertEquals("£1,002.23", attr.getFormattedValue());
         assertEquals("1002.23", attr.getValue());
         assertEquals(1002.23, attr.getObject());
     }
@@ -225,7 +235,7 @@ public class TestAttribute extends TestCase {
     
             // USD formatted for Canada
             Locale.setThreadLocale(CANADA);
-            assertEquals("USD1,002.23", usd.getFormattedValue());
+            assertEquals("US$1,002.23", usd.getFormattedValue());
             
             // USD formatted for USA
             Locale.setThreadLocale(US);

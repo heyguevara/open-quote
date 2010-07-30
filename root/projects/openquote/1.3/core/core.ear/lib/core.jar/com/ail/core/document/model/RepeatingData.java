@@ -28,7 +28,6 @@ import static com.ail.core.document.model.Placement.FOOTER;
 public class RepeatingData extends ItemContainer {
     private String binding;
     
-    @SuppressWarnings("unchecked")
     public void render(RenderContext context) {
         context.getOutput().printf("<repeatingData%s%s%s%s>", idAsAttribute(), styleClassAsAttribute(), orderAsAttribute(), titleAsAttribute());
 
@@ -38,7 +37,8 @@ public class RepeatingData extends ItemContainer {
             }
         }
         
-        for(Iterator it=context.getModel().xpathIterate(getBinding()) ; it.hasNext() ; ) {
+        for(@SuppressWarnings("rawtypes")
+        Iterator it=context.getModel().xpathIterate(getBinding()) ; it.hasNext() ; ) {
             RenderContext ctx=new RenderContext(context.getOutput(), (Type)it.next());
             
             for(ItemData idata: getItem()) {

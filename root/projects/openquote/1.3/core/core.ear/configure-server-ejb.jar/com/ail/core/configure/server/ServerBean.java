@@ -113,11 +113,10 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * Reset a single named config.
      * @param name Name of config to reset
      */
-    @SuppressWarnings("unchecked")
     private void resetConfig(String name) {
         try {
             core.logDebug("Requesting reset for:"+name);
-            Class clazz=Class.forName(name);
+            Class<?> clazz=Class.forName(name);
             ConfigurationOwner owner=(ConfigurationOwner)clazz.newInstance();
             owner.resetConfiguration();
             core.logDebug("Reset successful for:"+name);

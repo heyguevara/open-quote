@@ -66,8 +66,7 @@ public class CastorToXMLService extends Service {
      * @param type Class to insert name of.
      * @return Modified XML string
      */
-    @SuppressWarnings("unchecked")
-    private String insertRootXsiType(String xml, Class type) {
+    private String insertRootXsiType(String xml, Class<?> type) {
         // find the second '>' we'll insert the xsi:type just before it.
         // Note: the first '>' will be closing the header.
         int indx = xml.indexOf('>', xml.indexOf('>') + 1);

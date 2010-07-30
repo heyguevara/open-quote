@@ -52,7 +52,7 @@
         <get-lib-macro artifact="commons-jci-eclipse" group="eclipse" version="3.2.0.666" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="commons-jci-janino" group="eclipse" version="2.4.3" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="commons-jxpath" group="commons-jxpath" version="1.2" type="jar" repo="repo1.maven.org/maven2" />
-        <get-lib-macro artifact="commons-lang" group="commons-lang" version="2.1" type="jar" repo="repo1.maven.org/maven2" />
+        <get-lib-macro artifact="commons-lang" group="commons-lang" version="2.4" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-pool" group="commons-pool" version="1.0.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-validator" group="commons-validator" version="1.1.4" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="jaxrpc" group="jaxrpc" version="1.0" type="jar" repo="75.101.150.249/repo" />
@@ -99,10 +99,10 @@
         <get-lib-macro artifact="poi" group="poi" version="2.5.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="proxool" group="proxool" version="0.7.2" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="stringtemplate" group="stringtemplate" version="2.3b6" type="jar" repo="75.101.150.249/repo" />
+        <get-lib-macro artifact="velocity" group="apache" version="1.6.4" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="xpp3" group="xpp3" version="1.1.3.4.0" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="xstream" group="xstream" version="1.2.2" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="xmlgraphics-commons" group="xmlgraphics-commons" version="1.1" type="jar" repo="75.101.150.249/repo" />
-        <!--get-lib-macro name="development.jar" jarname="development-0.0.9.jar" /-->
       </libs-list>
     </get-libs-macro>
 

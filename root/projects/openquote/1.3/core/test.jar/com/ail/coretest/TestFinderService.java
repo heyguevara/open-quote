@@ -135,7 +135,7 @@ public class TestFinderService extends CoreUserTestCase {
      * </ol>
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public void testForClassesOutsideComAil() throws Exception {
         GetClassListCommand command = (GetClassListCommand)getCore().newCommand("GetClassList");
         command.setSearchClassArg("java.io.Serializable");
@@ -161,7 +161,7 @@ public class TestFinderService extends CoreUserTestCase {
      * </ol>
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes" )
     public void testForClassesOutsideSpecifiedPackage() throws Exception {
         GetClassListCommand command = (GetClassListCommand)getCore().newCommand("GetClassList");
         command.setSearchClassArg("java.lang.Exception");

@@ -58,11 +58,10 @@ public abstract class EJBComponent extends Component {
      * @param xml Service arg as XML
      * @return Service arg returned from the service
      */
-    @SuppressWarnings("unchecked")
     protected String invokeServiceXML(String xml, SessionContext ctx) throws EJBException {
         try {
             Object ejb=null;
-            Class argType=null;
+            Class<?> argType=null;
 
             XMLString xmls=new XMLString(xml);
             argType=xmls.getType();

@@ -48,18 +48,18 @@ public class TestExceptionRecord extends TestCase {
     }
     
     public void testProperties() throws Exception {
-        Exception e=new IllegalStateException("On no!");
+        Exception e=new IllegalStateException("Oh no!");
         ExceptionRecord er=new ExceptionRecord(e);
         assertEquals(this.getClass().getName(), er.getCatchingClassName());
-        assertEquals("java.lang.IllegalStateException: On no!", er.getReason());
+        assertEquals("java.lang.IllegalStateException: Oh no!", er.getReason());
     }
 
     public void testXmlBinding() throws Exception {
-        Exception e=new IllegalStateException("On no!");
+        Exception e=new IllegalStateException("Oh no!");
         ExceptionRecord er=new ExceptionRecord(e);
         String xml=new CoreProxy().toXML(er).toString();
         assertTrue(xml.indexOf("<stack")>0);
-        assertTrue(xml.indexOf("java.lang.IllegalStateException: On no!")>0);
+        assertTrue(xml.indexOf("java.lang.IllegalStateException: Oh no!")>0);
         assertTrue(xml.indexOf("catchingClassName=\"com.ail.coretest.TestExceptionRecord\"")>0);
     }
 }

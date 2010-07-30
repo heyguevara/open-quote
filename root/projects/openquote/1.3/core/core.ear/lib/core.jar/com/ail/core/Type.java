@@ -126,13 +126,12 @@ public class Type implements Serializable, Cloneable {
      * @param clazz Class to collect fields for
      * @return An ArrayList of instances of {@link java.lang.reflect.Field Field} 
      */
-    @SuppressWarnings("unchecked")
-    private ArrayList<Field> getAllDeclaredFields(Class clazz) {
+    private ArrayList<Field> getAllDeclaredFields(Class<?> clazz) {
         ArrayList<Field> al=new ArrayList<Field>(20);
         ArrayList<String> names=new ArrayList<String>();
 
         // Go up the class tree as far as Type, but DONT include Type itself. Also, take care not to add the same field twice.
-        for(Class c=clazz ; c!=Type.class ; c=c.getSuperclass()) {
+        for(Class<?> c=clazz ; c!=Type.class ; c=c.getSuperclass()) {
             for(Field f: c.getDeclaredFields()) {
                 if (!names.contains(f.getName())) {
                     al.add(f);
@@ -185,10 +184,26 @@ public class Type implements Serializable, Cloneable {
      * @exception TypeXPathException If evaluation of the expression fails.
      * @return Result of evaluation.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public Iterator xpathIterate(String xpath) {
         try {
-            return fetchJXPathContext().iterate(xpath);
+            return (Iterator)fetchJXPathContext().iterate(xpath);
+        } catch (JXPathException e) {
+            throw new TypeXPathException(e);
+        }
+    }
+
+    /**
+     * Execute the given xpath expression on <i>this</i>. The expectation is that the xpath expression
+     * evaluates to more than one node. This method returns the matching nodes as an iteration.
+     * @param xpath Expression to evaluate
+     * @exception TypeXPathException If evaluation of the expression fails.
+     * @return Result of evaluation.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Object> Iterator<T> xpathIterate(String xpath, Class<T> clazz) {
+        try {
+            return (Iterator<T>)fetchJXPathContext().iterate(xpath);
         } catch (JXPathException e) {
             throw new TypeXPathException(e);
         }
@@ -238,7 +253,7 @@ public class Type implements Serializable, Cloneable {
 
             Field field=null;
             String fieldName=null;
-            Class fieldType=null;
+            Class<?> fieldType=null;
             Method method=null;
             String methodBaseName=null;
 
@@ -279,23 +294,20 @@ public class Type implements Serializable, Cloneable {
 
                         // Get the List we're going to clone
                         method=this.getClass().getMethod("get"+methodBaseName);
-                        List list=(List)method.invoke(this);
+                        List<Object> list=(List<Object>)method.invoke(this);
 
                         // We'll clone into this List
                         List<Object> clonedList=(List<Object>)list.getClass().newInstance();
 
-                        Object type=null;
-
                         // Loop through the ArrayList cloning each element into cloneList.
                         // Note: ArrayLists of Strings are quite common, so we'll handle them too,
                         // but generally only classes based on Type can be cloned in this way.
-                        for(int j=0 ; j<list.size() ; j++) {
-                            type=list.get(j);
-                            if (type instanceof String) {
-                                clonedList.add(type);
+                        for(Object type: list) {
+                            if (type instanceof Type) {
+                                clonedList.add(((Type)type).clone());
                             }
                             else {
-                                clonedList.add(((Type)type).clone());
+                                clonedList.add(type);
                             }
                         }
 
@@ -311,10 +323,10 @@ public class Type implements Serializable, Cloneable {
 
                         // Get the Map we're going to clone
                         method=this.getClass().getMethod("get"+methodBaseName);
-                        Map map=(Map)method.invoke(this);
+                        Map<Object,Object> map=(Map<Object,Object>)method.invoke(this);
 
                         // We'll clone into this clonedMap
-                        Map clonedMap=(Map)map.getClass().newInstance();
+                        Map<Object,Object> clonedMap=(Map<Object,Object>)map.getClass().newInstance();
 
                         Object value=null;
 
@@ -338,7 +350,7 @@ public class Type implements Serializable, Cloneable {
                         Set<Type> set=(Set<Type>)method.invoke(this);
 
                         // We'll clone into this clonedSet
-                        Set clonedSet=(Set)set.getClass().newInstance();
+                        Set<Object> clonedSet=(Set<Object>)set.getClass().newInstance();
 
                         // Loop through the set cloning each element into cloneSet.
                         for(Type value: set ) {
@@ -375,7 +387,7 @@ public class Type implements Serializable, Cloneable {
                     }
                     else if(fieldType.isEnum()) {
                         method=this.getClass().getMethod("get"+methodBaseName);
-                        Enum fieldValue=(Enum)method.invoke(this);
+                        Enum<?> fieldValue=(Enum<?>)method.invoke(this);
                         
                         method=this.getClass().getMethod("set"+methodBaseName, fieldType);
                         method.invoke(cloneObject, fieldValue);
@@ -430,8 +442,7 @@ public class Type implements Serializable, Cloneable {
         }
     }
     
-	@SuppressWarnings("unchecked")
-    private void callSetter(String fieldName, Class fieldType, Object on, Object value) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    private void callSetter(String fieldName, Class<?> fieldType, Object on, Object value) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         String methodName="set"+Character.toUpperCase(fieldName.charAt(0))+fieldName.substring(1);
         Method method=on.getClass().getMethod(methodName, fieldType);
         method.invoke(on, value);
@@ -492,7 +503,7 @@ public class Type implements Serializable, Cloneable {
         ArrayList<Field> donorFields=getAllDeclaredFields(donor.getClass());
         ArrayList<Field> subjectFields=getAllDeclaredFields(subject.getClass());
         
-        Class fieldType=null;
+        Class<?> fieldType=null;
         String fieldName=null;
 
         for(Field field: donorFields) {
@@ -530,8 +541,8 @@ public class Type implements Serializable, Cloneable {
                         }
                     }
                     else if (Map.class.isAssignableFrom(fieldType)) {
-                        Map donorMap=(Map)callGetter(fieldName, donor);
-                        Map subjectMap=(Map)callGetter(fieldName, subject);
+                        Map<Object,Object> donorMap=(Map<Object,Object>)callGetter(fieldName, donor);
+                        Map<Object,Object> subjectMap=(Map<Object,Object>)callGetter(fieldName, subject);
 
                         // if the donor has a map, but the subject's corresponding map is null...
                         if (donorMap==null && subjectMap==null) {
@@ -571,7 +582,7 @@ public class Type implements Serializable, Cloneable {
                             continue;
                         }
                         
-                        Collection c=(Collection)callGetter(fieldName, donor);
+                        Collection<?> c=(Collection<?>)callGetter(fieldName, donor);
                         
                         // if the collection is null, ignore it - we cant't merge nothing!
                         if (c!=null) {
@@ -579,7 +590,7 @@ public class Type implements Serializable, Cloneable {
                             for(Object dObj: c) {
                                 boolean merged=false;
                                 // if the subject's collection has an object with the same id
-                                for(Object sObj: (Collection)callGetter(fieldName, subject)) {
+                                for(Object sObj: (Collection<?>)callGetter(fieldName, subject)) {
                                     // merge the objects if: 
                                     //  dObj and sObj both implement Identified and are equal by their identifier, or
                                     //  neither dObj or sObj implement Identifier but they are equal by 'equals()'.
@@ -595,7 +606,7 @@ public class Type implements Serializable, Cloneable {
                                 // if a match wasn't found in the subject, then add a clone of the donor's
                                 if (!merged) {
                                     dObj = (dObj instanceof Type) ? ((Type)dObj).clone() : dObj;
-                                    ((Collection)callGetter(fieldName, subject)).add(dObj);
+                                    ((Collection<Object>)callGetter(fieldName, subject)).add(dObj);
                                 }
                             }
                         }

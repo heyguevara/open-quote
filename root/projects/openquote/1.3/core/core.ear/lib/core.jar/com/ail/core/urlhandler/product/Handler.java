@@ -17,7 +17,6 @@
 
 package com.ail.core.urlhandler.product;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -56,7 +55,7 @@ public class Handler extends URLStreamHandler {
                 ticket.append(rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<")));
 
                 ticketExpiryTime=System.currentTimeMillis()+TICKET_TIMEOUT;
-                
+
                 // Workaround for a bug in Alfresco 2.9.0 (C_dev 816) schema 124. In this version it appears that
                 // authentication of any content request depends on the alfresco web-client having a fully initialized
                 // JSF context, which it will only have when the /alfresco page has been opened. Attempting to make
@@ -79,10 +78,6 @@ public class Handler extends URLStreamHandler {
 
         URL actualURL = new URL("http", u.getHost(), u.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+u.getPath()+"&ticket="+getTicket(u)+language);
         
-        if (actualURL == null) {
-            throw new FileNotFoundException(u.toExternalForm());
-        }
-
         return actualURL.openConnection();
     }
 }

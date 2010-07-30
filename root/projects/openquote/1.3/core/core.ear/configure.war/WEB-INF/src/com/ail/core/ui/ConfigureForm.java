@@ -39,7 +39,6 @@ import com.ail.core.configure.server.GetNamespacesHistoryCommand;
  * @date $Date: 2005/09/27 05:30:51 $
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure.war/WEB-INF/src/com/ail/core/ui/ConfigureForm.java,v $
  */
-@SuppressWarnings("unchecked")
 public class ConfigureForm {
     private CoreProxy core=new CoreProxy();
     private ListDataModel namespaces=new ListDataModel();
@@ -58,7 +57,7 @@ public class ConfigureForm {
         return namespaces;
     }
 
-    public void setNamespaces(Collection namespaces) {
+    public void setNamespaces(Collection<ConfigurationSummary> namespaces) {
         this.namespaces.setWrappedData(namespaces);
     }
     
@@ -66,7 +65,7 @@ public class ConfigureForm {
         return history;
     }
 
-    public void setHistory(Collection history) {
+    public void setHistory(Collection<ConfigurationSummary> history) {
         this.history.setWrappedData(history);
     }
     

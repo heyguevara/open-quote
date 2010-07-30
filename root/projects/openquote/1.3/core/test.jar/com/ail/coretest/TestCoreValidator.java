@@ -119,6 +119,7 @@ public class TestCoreValidator extends CoreUserTestCase {
 	 * Test direct access to the validator
 	 * @throws Exception
 	 */
+    @SuppressWarnings("rawtypes")
     public void testCommonsValidatorFail() throws Exception {
 		// set up key & value
 		String key = "TestForm";
@@ -138,7 +139,7 @@ public class TestCoreValidator extends CoreUserTestCase {
 
 		// run validation
 		ValidatorResults results = validator.validate();
-		Iterator propertyNames = results.get();
+		Iterator<String> propertyNames = results.get();
 
 		boolean errorsFound = false;
 		while (propertyNames.hasNext()) {
@@ -178,7 +179,8 @@ public class TestCoreValidator extends CoreUserTestCase {
 	 * Test direct access to the validator
 	 * @throws Exception
 	 */
-	public void testCommonsValidatorSuccess() throws Exception {
+	@SuppressWarnings("rawtypes")
+    public void testCommonsValidatorSuccess() throws Exception {
 		// set up key & value
 		String key = "TestForm";
 		Version value = (Version)getCore().newType("Version");
@@ -1519,13 +1521,13 @@ public class TestCoreValidator extends CoreUserTestCase {
 		String creditCardValue;
 		String dateValue;
 		String[] arrayValue;
-		Collection collectionValue;
+		Collection<String> collectionValue;
 		TestTypesObject subObjectValue;		
 				
 		/**
 		 * @return
 		 */
-		public Collection getCollectionValue() {
+		public Collection<String> getCollectionValue() {
 			return collectionValue;
 		}
 				
@@ -1623,7 +1625,7 @@ public class TestCoreValidator extends CoreUserTestCase {
 		/**
 		 * @param collection
 		 */
-		public void setCollectionValue(Collection collection) {
+		public void setCollectionValue(Collection<String> collection) {
 			collectionValue = collection;
 		}
 						
