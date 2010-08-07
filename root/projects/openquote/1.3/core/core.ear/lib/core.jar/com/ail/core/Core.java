@@ -79,6 +79,7 @@ import com.ail.core.xmlbinding.XMLBinding;
  */
 public class Core implements ConfigurationOwner, Configure, Factory, Logging, Persistence, XMLBinding, Validator, Product, Document, Serializable {
 	public static final String CoreNamespace=Core.class.getName();
+    private static final String MODIFIER_SEPARATOR = "/";
 	private CoreUser coreUser=null;
 
     /**
@@ -91,7 +92,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 		this.coreUser=coreUser;
     }
 
-	private void setCoreUser(CoreUser coreUser) {
+    private void setCoreUser(CoreUser coreUser) {
         this.coreUser=coreUser;
 	}
 
@@ -254,7 +255,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The group's name may be dot seperated indicating
+     * The group's name may be dot separated indicating
      * that the group is nested within other groups.
      * @param name The name of the group to be returned.
      * @return The configuration group, or null if one is not defined for this namespace and version effective date.
@@ -368,6 +369,53 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         return command;
     }
 
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param commandName The name of the command to create an instance of
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of the command.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractCommand> T newCommand(String commandName, Class<T> clazz) {
+        return (T)FactoryHandler.getInstance().newCommand(commandName, getConfigurationOwner(), this);
+    }
+
+    /**
+     * Create a new instance of the command specified with a modifier. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param commandName The name of the command to create an instance of
+     * @param modifier A modifier to apply to the command name.
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of the command.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractCommand> T newCommand(String commandName, String modifier, Class<T> clazz) {
+        return (T)FactoryHandler.getInstance().newCommand(commandName+MODIFIER_SEPARATOR+modifier, getConfigurationOwner(), this);
+    }
+
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param clazz The class of the type to be created.
+     * @return An instance of the command.
+     */
+    public <T extends AbstractCommand> T newCommand(Class<T> clazz) {
+        return FactoryHandler.getInstance().newCommand(clazz, getConfigurationOwner(), this);
+    }
+
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration based on the 
+     * clazz's name and the additional modifier.
+     * @param clazz The class of the type to be created.
+     * @param modifier select the specific configuration required. 
+     * @return An instance of the command.
+     */
+    public <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier) {
+        return FactoryHandler.getInstance().newCommand(clazz, modifier, getConfigurationOwner(), this);
+    }
+
 	/**
      * Create a instance of the named type object.
 	 * The named type is looked up in the current configuration, and
@@ -379,18 +427,58 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 		return FactoryHandler.getInstance().newType(typeName, getConfigurationOwner(), this);
     }
 
-	/**
-     * Create a instance of the named object.
-	 * The named object is looked up in the current configuration, and
-     * created from the specification held.
-     * @param objectName The name of the object to create.
-     * @return The object ready for use.
+    /**
+     * Create a new instance of the named type. The typeName argument
+     * relates to a type in the callers configuration which defines the
+     * specifics of the type to be created. 
+     * the name of the type required.
+     * @param typeName The name use to load the type's details.
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of a type.
      */
-    public Object newObject(String objectName) {
-        throw new NotImplementedError("Core.newObject");
+    @SuppressWarnings("unchecked")
+    public <T extends Type> T newType(String typeName, Class<T> clazz) {
+        return (T)FactoryHandler.getInstance().newType(typeName, getConfigurationOwner(), this);
     }
 
-	/**
+    /**
+     * Create a new instance of the named type with a modifier. The typeName argument
+     * relates to a type in the callers configuration which defines the specifics of 
+     * the type to be created. The modifier is applied to the typeName to arrive at
+     * the name of the type required.
+     * @param typeName The name use to load the type's details.
+     * @param modifer to be applied
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of a type.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Type> T newType(String typeName, String modifier, Class<T> clazz) {
+        return (T)FactoryHandler.getInstance().newType(typeName+MODIFIER_SEPARATOR+modifier, getConfigurationOwner(), this);
+    }
+
+    /**
+     * Create a new instance of the specified type. The clazz argument
+     * relates to a type in the callers configuration which defines the
+     * specifics of the type to be created.
+     * @param clazz The class to return an instance for.
+     * @return An instance of a type.
+     */
+	public <T extends Type> T newType(Class<T> clazz) {
+	    return FactoryHandler.getInstance().newType(clazz, getConfigurationOwner(), this);
+    }
+
+    /**
+     * Create a new instance of the specified type. The clazz and modifier arguments
+     * relate to a type in the callers configuration which defines the
+     * specifics of the type to be created.
+     * @param clazz The class to return an instance for.
+     * @return An instance of a type.
+     */
+    public <T extends Type> T newType(Class<T> clazz, String modifier) {
+        return FactoryHandler.getInstance().newType(clazz, modifier, getConfigurationOwner(), this);
+    }
+
+    /**
      * Output a message to the Debug logging channel.
      * Messages written to this channel are of interest to developers, and to
      * anyone trying to debug a system problem. The channel would generally
@@ -452,8 +540,8 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Output a message to the Warning logging channel.
 	 * Messages written to this channel indicate that something unexpected
-     * occured, but that it was dealt with and is not thought (by the developer)
-     * to be if great importence.
+     * occurred, but that it was dealt with and is not thought (by the developer)
+     * to be if great importance.
      * @param message The text of the message to be output.
      */
     public void logWarning(String message, Throwable cause) {
@@ -779,10 +867,10 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Instantiate a type associated with a product. A product must define at least one type 
      * (see {@link #newProductType(String)}), but may define any number of additional types for 
-     * use during its lifecycle; this method is used to instantantiate specific types by name.<p>
+     * use during its life-cycle; this method is used to instantiate specific types by name.<p>
      * For example, a complex insurance product may define several different types to describe
      * the assets the product covers. A commercial combined product might define a stock asset, a
-     * vehicle asset, a safe asset, etc. Each of these is described within the product as a seperate
+     * vehicle asset, a safe asset, etc. Each of these is described within the product as a separate
      * named type. A client would use this method to instantiate these different types as and when 
      * they needed to be added to an instance of a commercial combined policy.
      * @param productName The product "owning" the type.
@@ -805,7 +893,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 
     /**
      * Instantiate the default type associated with a product. Each product must define a default
-     * type. This is the type (generally) instantiated at the beginning of the lifecycle. 
+     * type. This is the type (generally) instantiated at the beginning of the life-cycle. 
      * @param productName The name of the product to instantiate for.
      * @return The instantiated type.
      * @since 2.0
