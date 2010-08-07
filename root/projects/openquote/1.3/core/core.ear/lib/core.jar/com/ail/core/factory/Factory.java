@@ -17,6 +17,7 @@
 
 package com.ail.core.factory;
 
+import com.ail.core.Type;
 import com.ail.core.command.AbstractCommand;
 
 /**
@@ -24,39 +25,102 @@ import com.ail.core.command.AbstractCommand;
  * sub-system. It defines the methods that Core is expected to expose on behalf
  * of the Factory, and for which the Factory provides Entry Points based
  * implementations.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:29 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/Factory.java,v $
  */
 public interface Factory {
 
 	/**
      * Create a new instance of the named command. The details of the type
      * to be created are loaded from the callers configuration.
-     * @param version The version of the command to create.
      * @param commandName The name to be used to locate the commands details.
 	 * @return An instance of the command.
      */
 	AbstractCommand newCommand(String commandName);
 
-	/**
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param commandName The name of the command to create an instance of
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of the command.
+     */
+    <T extends AbstractCommand> T newCommand(String commandName, Class<T> clazz);
+    
+    /**
+     * Create a new instance of the command specified with a modifier. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param commandName The name of the command to create an instance of
+     * @param modifier A modifier to apply to the command name.
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of the command.
+     */
+    <T extends AbstractCommand> T newCommand(String commandName, String modifier, Class<T> clazz);
+    
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param clazz The class of the type to be created.
+     * @return An instance of the command.
+     */
+	<T extends AbstractCommand> T newCommand(Class<T> clazz);
+	
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration based on the 
+     * clazz's name and the additional modifier.
+     * @param clazz The class of the type to be created.
+     * @param modifier select the specific configuration required. 
+     * @return An instance of the command.
+     */
+    <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier);
+
+    /**
      * Create a new instance of the named type. The typeName argument
      * relates to a type in the callers configuration which defines the
      * specifics of the type to be created.
-     * @param version The version of the type to create
-     * @param typeName The name use to loafe the type's details.
+     * @param typeName The name use to load the type's details.
      * @return An instance of a type.
      */
-	com.ail.core.Type newType(String typeName);
+	Type newType(String typeName);
 
-	/**
-     * Create an instance of the specific object. The objectName argument
-     * relates to an object described in the callers configuration. This
-     * in turn defines the specifics of the object to be created.
-	 * @param version The version of the object to create.
-     * @param objectName The name of the object in the callers configuration.
-     * @return The instantiated object.
+    /**
+     * Create a new instance of the named type with a modifier. The typeName argument
+     * relates to a type in the callers configuration which defines the specifics of 
+     * the type to be created. The modifier is applied to the typeName to arrive at
+     * the name of the type required.
+     * @param typeName The name use to load the type's details.
+     * @param modifer to be applied
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of a type.
      */
-	Object newObject(String objectName);
+    <T extends Type> T newType(String typeName, String modifier, Class<T> clazz);
+
+    /**
+     * Create a new instance of the named type. The typeName argument
+     * relates to a type in the callers configuration which defines the
+     * specifics of the type to be created. 
+     * the name of the type required.
+     * @param typeName The name use to load the type's details.
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of a type.
+     */
+    <T extends Type> T newType(String typeName, Class<T> clazz);
+
+    /**
+     * Create a new instance of the specified type. The clazz argument
+     * relates to a type in the callers configuration which defines the
+     * specifics of the type to be created.
+     * @param clazz The class to return an instance for.
+     * @return An instance of a type.
+     */
+    <T extends Type> T newType(Class<T> clazz);
+    
+    /**
+     * Create a new instance of the specified type with modifier. The clazz and modifier 
+     * arguments relate to a type in the callers configuration which defines the
+     * specifics of the type to be created.
+     * @param clazz The class to return an instance for.
+     * @param modifier A modifier to be applied
+     * @return An instance of a type.
+     */
+    <T extends Type> T newType(Class<T> clazz, String modifier);
 }

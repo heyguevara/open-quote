@@ -18,10 +18,10 @@
 package com.ail.core.factory;
 
 import com.ail.core.Core;
-import com.ail.core.NotImplementedError;
 import com.ail.core.Type;
 import com.ail.core.command.AbstractCommand;
 import com.ail.core.configure.Builder;
+import com.ail.core.configure.ConfigurationError;
 import com.ail.core.configure.ConfigurationOwner;
 
 public class FactoryHandler {
@@ -41,7 +41,7 @@ public class FactoryHandler {
 
 	/**
      * Fetch the builder associated with a type. This method
-     * operates a cache to speed type creation. The hashtable
+     * operates a cache to speed type creation. The Hashtable
      * 'builders' maps builder names to instances of the appropriate
      * sub-class of AbstractFactory.
      * @param builderName The name of the builder.
@@ -51,6 +51,10 @@ public class FactoryHandler {
     private AbstractFactory fetchBuilder(String builderName, Core core) {
 		// Fetch the Builder to use to create instance of this type.
 		Builder builder=(Builder)core.getGroup("_Builders."+builderName);
+		
+		if (builder==null) {
+		    throw new ConfigurationError("Underfined builder referenced: "+builderName);
+		}
 
         if (builder.getInstance()==null) {
 			try {
@@ -158,11 +162,27 @@ public class FactoryHandler {
         return (Type)createInstance(type, core);
     }
 
+    @SuppressWarnings("unchecked")
+    public <T extends Type> T newType(Class<T> clazz, ConfigurationOwner owner, Core core) {
+        return (T)newType(clazz.getName(), owner, core);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Type> T newType(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
+        return (T)newType(clazz.getName()+"/"+modifier, owner, core);
+    }
+
     public AbstractCommand newCommand(String name, ConfigurationOwner owner, Core core) {
         return (AbstractCommand)newType(name, owner, core);
     }
 
-    public Object newObject(String name, ConfigurationOwner owner, Core core) {
-        throw new NotImplementedError("FactoryHandler.newObject");
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractCommand> T newCommand(Class<T> clazz, ConfigurationOwner owner, Core core) {
+        return (T)newCommand(clazz.getName(), owner, core);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
+        return (T)newCommand(clazz.getName()+"/"+modifier, owner, core);
     }
 }

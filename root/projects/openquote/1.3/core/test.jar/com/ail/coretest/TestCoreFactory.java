@@ -385,6 +385,32 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
         
         t=new Type();
         ts.addType(t);
+        t.setName("com.ail.core.Version");
+        t.setKey("com.ail.core.Version");
+        t.setBuilder("classBuilder");
+        
+        t=new Type();
+        ts.addType(t);
+        t.setName("com.ail.core.Version/one");
+        t.setKey("com.ail.core.Version");
+        t.setBuilder("classBuilder");
+        p=new Parameter();
+        p.setName("Version");
+        p.setValue("one");
+        t.addParameter(p);
+        
+        t=new Type();
+        ts.addType(t);
+        t.setName("com.ail.core.Version/two");
+        t.setKey("com.ail.core.Version");
+        t.setBuilder("classBuilder");
+        p=new Parameter();
+        p.setName("Version");
+        p.setValue("two");
+        t.addParameter(p);
+        
+        t=new Type();
+        ts.addType(t);
         t.setName("BeanShellExtendsVersion");
         t.setBuilder("BeanShellBuilder");
         t.setKey("com.ail.core.Version");
@@ -985,5 +1011,31 @@ public class TestCoreFactory extends TestCase implements CoreUser, Configuration
         v=(Version)core.newType("BeanShellVersionByUrl");
         assertEquals("Jim", v.getAuthor());
         assertEquals("1.3", v.getVersion());
+    }
+    
+    public void testTypeByClass() {
+        core.setConfiguration(this.createConfigurationOne());
+        ConfigurationHandler.reset();
+        versionEffectiveDate=new VersionEffectiveDate();
+
+        Version v=core.newType(Version.class);
+        
+        assertNotNull(v);
+    }
+
+    public void testTypeByClassAndModifier() {
+        core.setConfiguration(this.createConfigurationOne());
+        ConfigurationHandler.reset();
+        versionEffectiveDate=new VersionEffectiveDate();
+        
+        Version v;
+
+        v=core.newType(Version.class, "one");        
+        assertNotNull(v);
+        assertEquals(v.getVersion(), "one");
+
+        v=core.newType(Version.class, "two");        
+        assertNotNull(v);
+        assertEquals(v.getVersion(), "two");
     }
 }

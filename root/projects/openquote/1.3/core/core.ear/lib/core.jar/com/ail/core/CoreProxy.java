@@ -17,13 +17,6 @@
 
 package com.ail.core;
 
-import com.ail.core.command.AbstractCommand;
-import com.ail.core.configure.Configuration;
-import com.ail.core.configure.ConfigurationOwner;
-import com.ail.core.configure.ConfigurationResetError;
-import com.ail.core.configure.Group;
-import com.ail.core.configure.Parameter;
-
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -32,16 +25,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import com.ail.core.command.AbstractCommand;
+import com.ail.core.configure.Configuration;
+import com.ail.core.configure.ConfigurationOwner;
+import com.ail.core.configure.ConfigurationResetError;
+import com.ail.core.configure.Group;
+import com.ail.core.configure.Parameter;
+
 /**
  * This class acts as a proxy for those who need to access some of the Core's
  * services, but for whatever reason cannot (or do not want to) implement
  * CoreUser themselves.<p>
  * The versionEffectiveDate of the proxy is taken to be the date at which it was
  * instantiated.
- * @version $Revision: 1.13 $
- * @state $State: Exp $
- * @date $Date: 2007/06/17 21:49:37 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CoreProxy.java,v $
  */
 public class CoreProxy implements CoreUser, ConfigurationOwner {
     public static final String DefaultNamespace="com.ail.core.CoreProxy";
@@ -149,6 +145,51 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
 		return core.newCommand(commandName);
     }
 
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param commandName The name of the command to create an instance of
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of the command.
+     */
+    public <T extends AbstractCommand> T newCommand(String commandName, Class<T> clazz) {
+        return core.newCommand(commandName, clazz);
+    }
+
+    /**
+     * Create a new instance of the command specified with a modifier. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param commandName The name of the command to create an instance of
+     * @param modifier A modifier to apply to the command name.
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of the command.
+     */
+    public <T extends AbstractCommand> T newCommand(String commandName, String modifier, Class<T> clazz) {
+        return core.newCommand(commandName, modifier, clazz);
+    }
+
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration.
+     * @param clazz The class of the type to be created.
+     * @return An instance of the command.
+     */
+    public <T extends AbstractCommand> T newCommand(Class<T> clazz) {
+        return core.newCommand(clazz);
+    }
+
+    /**
+     * Create a new instance of the command specified. The details of the type
+     * to be created are loaded from the callers configuration based on the 
+     * clazz's name and the additional modifier.
+     * @param clazz The class of the type to be created.
+     * @param modifier select the specific configuration required. 
+     * @return An instance of the command.
+     */
+    public <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier) {
+        return core.newCommand(clazz, modifier);
+    }
+
 	/**
      * Create a instance of the named type object.
 	 * The named type is looked up in the current configuration, and
@@ -160,15 +201,53 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
 		return core.newType(typeName);
     }
 
-	/**
-     * Create a instance of the named object.
-	 * The named object is looked up in the current configuration, and
-     * created from the specification held.
-     * @param objectName The name of the object to create.
-     * @return The object ready for use.
+    /**
+     * Create a new instance of the named type. The typeName argument
+     * relates to a type in the callers configuration which defines the
+     * specifics of the type to be created. 
+     * the name of the type required.
+     * @param typeName The name use to load the type's details.
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of a type.
      */
-    public Object newObject(String objectName) {
-		return core.newObject(objectName);
+    public <T extends Type> T newType(String typeName, Class<T> clazz) {
+        return core.newType(typeName, clazz);
+    }
+
+    /**
+     * Create a new instance of the named type with a modifier. The typeName argument
+     * relates to a type in the callers configuration which defines the specifics of 
+     * the type to be created. The modifier is applied to the typeName to arrive at
+     * the name of the type required.
+     * @param typeName The name use to load the type's details.
+     * @param modifer to be applied
+     * @param clazz The expected type of the resulting command 
+     * @return An instance of a type.
+     */
+    public <T extends Type> T newType(String typeName, String modifier, Class<T> clazz) {
+        return core.newType(typeName, modifier, clazz);
+    }
+
+    /**
+     * Create a new instance of the specified type. The clazz argument
+     * relates to a type in the callers configuration which defines the
+     * specifics of the type to be created.
+     * @param clazz The class to return an instance for.
+     * @return An instance of a type.
+     */
+    public <T extends Type> T newType(Class<T> clazz) {
+        return core.newType(clazz);
+    }
+
+    /**
+     * Create a new instance of the specified type. The clazz and modifier arguments
+     * relate to a type in the callers configuration which defines the
+     * specifics of the type to be created.
+     * @param clazz The class to return an instance for.
+     * @return An instance of a type.
+     */
+    public <T extends Type> T newType(Class<T> clazz, String modifier) {
+        return core.newType(clazz, modifier);
     }
 
 	/**

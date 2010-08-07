@@ -221,9 +221,18 @@ public class Group extends Component {
     }
 
     /**
-     * Find a group using a dot notation name.
-     * @param name Dot seperated group names
-     * @param group Group to start serach from
+     * Find a group by name within another group. There are two possible ways in 
+     * which a match may be found: 1) A group with the exact specified name exists; 
+     * 2) name includes '.' characters and a sub-group does include a match.</p>
+     * Groups may contain other groups and so create a hierarchical structure. The
+     * normal convention is to locate a specific group within that structure by
+     * dot separated names. However, it is also quite valid for a single group
+     * within the hierarchy to have a periods in it's name. This method allows for
+     * both by first searching for and exact match for the full name (which might
+     * include periods); if none is found it will attempt to use the name to to
+     * navigate down the group hierarchy. 
+     * @param name Dot separated group names
+     * @param group Group to start search from
      * @return The located group, or null.
      */
     private Group getGroup(String name, Group group) {
@@ -231,6 +240,15 @@ public class Group extends Component {
             return group;
         }
         else {
+            // if there an exact match for the whole name...
+            for(Group g: group.getGroupList()) {
+                if (name.equals(g.getName())) {
+                    // ...return it.
+                    return g;
+                }
+            }
+
+            // if there was no exact match for the whole name, break it down by dot separation.
             int dotidx=name.indexOf('.');
             String groupName=name;
 
@@ -254,10 +272,10 @@ public class Group extends Component {
     }
 
     /**
-     * Find a group using a dot seperated group name. This method
-     * will search down throught the group layers of this configuration
+     * Find a group using a dot separated group name. This method
+     * will search down through the group layers of this configuration
      * to locate a group with the nested group name specified.
-     * @param groupName Dot seperated group name (e.g. one.two.three).
+     * @param groupName Dot separated group name (e.g. one.two.three).
      * @return The located group, or null if it cannot be found.
      */
     public Group findGroup(String groupName) {
