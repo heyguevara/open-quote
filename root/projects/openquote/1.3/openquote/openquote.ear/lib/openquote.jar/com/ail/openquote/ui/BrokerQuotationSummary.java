@@ -17,14 +17,15 @@
 package com.ail.openquote.ui;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.BaseException;
 import com.ail.core.Type;
+import com.ail.openquote.ui.render.RenderCommand;
 import com.ail.openquote.ui.util.QuotationContext;
 
 /**
@@ -72,11 +73,24 @@ public class BrokerQuotationSummary extends PageContainer {
 
 
     /**
+     * @throws  
      * @inheritDoc
      */
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        return QuotationContext.getRenderer().renderBrokerQuotationSummary(w, request, response, model, this);
+    	try {
+	    	RenderCommand command=QuotationContext.getCore().newCommand("RenderBrokerQuotationSummary", 
+	    																QuotationContext.getRenderer().getMimeType(),
+	    																RenderCommand.class);
+	    	command.setRequestArg(request);
+	    	command.setResponseArgRet(response);
+	    	command.setModelArg(model);
+	    	command.setPageElementArg(this);
+			command.invoke();
+	    	response.getWriter().print(command.getRenderedOutputRet());
+	    	return model;
+		} catch (BaseException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 }

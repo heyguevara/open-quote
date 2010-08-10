@@ -256,7 +256,6 @@ public abstract class Repeater extends PageElement {
         this.addAndDeleteEnabled = addAndDeleteEnabled;
     }
 
-    @SuppressWarnings("unchecked")
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if (isAddAndDeleteEnabled()) {
             Properties opParams=Functions.getOperationParameters(request);
@@ -280,7 +279,8 @@ public abstract class Repeater extends PageElement {
                 }
     
                 // get the collection and add the new object to it.
-                Collection c=(Collection)model.xpathGet(xpath);
+                @SuppressWarnings("unchecked")
+				Collection<Object> c=(Collection<Object>)model.xpathGet(xpath);
                 c.add(t);
             }
             else if ("delete".equals(op) && (id==null || id.equals(opId))) {
@@ -288,7 +288,7 @@ public abstract class Repeater extends PageElement {
                 int row=Integer.parseInt(opParams.getProperty("row"));
     
                 // Loop through the collection the scroller is bound to and find the object to be removed.
-                Iterator it=model.xpathIterate(getBinding());
+                Iterator<?> it=model.xpathIterate(getBinding());
                 for( ; row>0 ; row--, it.next() );
                 Object obj=it.next();
                 
@@ -304,7 +304,8 @@ public abstract class Repeater extends PageElement {
                 }
     
                 // get the collection and remove the object from it.
-                Collection c=(Collection)model.xpathGet(xpath);
+                @SuppressWarnings("unchecked")
+				Collection<Object> c=(Collection<Object>)model.xpathGet(xpath);
                 c.remove(obj);
             }
         }
@@ -312,14 +313,13 @@ public abstract class Repeater extends PageElement {
         return model;
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         int rowCount=0;
 
         // Loop through the rows
-        for(Iterator it=model.xpathIterate(getBinding()) ; it.hasNext() ; ) {
-            Type subModel=(Type)it.next();
+        for(Iterator<Type> it=model.xpathIterate(getBinding(), Type.class) ; it.hasNext() ; ) {
+            Type subModel=it.next();
 
             // loop through the columns
             for(AttributeField a: item) {

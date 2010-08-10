@@ -50,7 +50,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-core-lib.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-common-lib.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-identity-lib.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/commons-jxpath-1.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/jboss-portlet-api-lib.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-api-lib.jar"/>
@@ -107,5 +106,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/insurance"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercial"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

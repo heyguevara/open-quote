@@ -25,8 +25,7 @@ public class MockRenderRequest implements RenderRequest {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Enumeration getAttributeNames() {
+	public Enumeration<String> getAttributeNames() {
 		return null;
 	}
 
@@ -42,7 +41,7 @@ public class MockRenderRequest implements RenderRequest {
 		return locale;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Enumeration getLocales() {
 		return null;
 	}
@@ -51,12 +50,12 @@ public class MockRenderRequest implements RenderRequest {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Map getParameterMap() {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Enumeration getParameterNames() {
 		return null;
 	}
@@ -78,7 +77,7 @@ public class MockRenderRequest implements RenderRequest {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Enumeration getProperties(String arg0)
 			throws IllegalArgumentException {
 		return null;
@@ -88,7 +87,7 @@ public class MockRenderRequest implements RenderRequest {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Enumeration getPropertyNames() {
 		return null;
 	}
@@ -105,7 +104,7 @@ public class MockRenderRequest implements RenderRequest {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Enumeration getResponseContentTypes() {
 		return null;
 	}

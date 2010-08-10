@@ -13,7 +13,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package com.ail.insurance.quotation.notifyparty;
+package com.ail.insurance.quotation.notifybrokerbyemail;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
@@ -44,6 +44,7 @@ import com.ail.core.command.CommandArg;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.render.Html;
+import com.ail.openquote.ui.render.RenderCommand;
 import com.ail.openquote.ui.util.QuotationContext;
 
 /**
@@ -51,7 +52,7 @@ import com.ail.openquote.ui.util.QuotationContext;
  */
 public class NotifyBrokerByEmailService extends Service {
     private static final long serialVersionUID = -4915889686192216902L;
-    private NotifyPartyArg args = null;
+    private NotifyBrokerByEmailArg args = null;
     private String configurationNamespace = null;
     private Core core = null;
 
@@ -88,7 +89,7 @@ public class NotifyBrokerByEmailService extends Service {
      * @param args for invoke
      */
     public void setArgs(CommandArg args) {
-        this.args = (NotifyPartyArg)args;
+        this.args = (NotifyBrokerByEmailArg)args;
     }
 
     /**
@@ -204,14 +205,19 @@ public class NotifyBrokerByEmailService extends Service {
      * @param savedQuotation Quote to render the assessment sheet for.
      * @return BodyPart containing rendered output.
      * @throws MessagingException
-     * @throws XMLException
+     * @throws BaseException 
      */
-    private BodyPart createBrokerSummaryAttachment(SavedQuotation savedQuotation) throws MessagingException, XMLException {
+    private BodyPart createBrokerSummaryAttachment(SavedQuotation savedQuotation) throws MessagingException, BaseException {
         // Use the UI's rendered to create the HTML output - email is a kind of UI after all!
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
         insertStyles(writer);
-        new com.ail.openquote.ui.render.Html().renderBrokerQuotationSummary(writer, null, null, savedQuotation.getQuotation(), null);
+
+        RenderCommand rbqs=getCore().newCommand("RenderBrokerQuotationSummary", "text/html", RenderCommand.class);
+        rbqs.setModelArg(savedQuotation.getQuotation());
+        rbqs.invoke();
+
+        writer.append(rbqs.getRenderedOutputRet());
         writer.close();
         String content=new String(baos.toByteArray());
         

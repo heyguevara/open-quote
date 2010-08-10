@@ -60,7 +60,6 @@ import com.ail.openquote.ui.AnswerSection;
 import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.AttributeField;
 import com.ail.openquote.ui.Blank;
-import com.ail.openquote.ui.BrokerQuotationSummary;
 import com.ail.openquote.ui.ClauseDetails;
 import com.ail.openquote.ui.CommandButtonAction;
 import com.ail.openquote.ui.InformationPage;
@@ -99,17 +98,20 @@ public class Xform extends Type implements Renderer {
 	private RenderQuotationSummaryHelper renderQuotationSummaryHelper=new RenderQuotationSummaryHelper();
 	private RenderAttributeFieldHelper renderAttributeFieldHelper=new RenderAttributeFieldHelper();
 
-    public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) {
+	public String getMimeType() {
+		return "text/xml";
+	}
+	
+	public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) {
 		w.printf("<group><label>%s</label><hint>%s</hint></group>", title, answerText);
 		return model;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller)	throws IOException {
 		int rowCount=0;
 		
-        for(Iterator it=model.xpathIterate(answerScroller.getBinding()) ; it.hasNext() ; rowCount++) {
-            Type t=(Type)it.next();
+        for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; rowCount++) {
+            Type t=it.next();
                
             for (Answer a: answerScroller.getAnswer()) {
                 a.renderResponse(request, response, t);
@@ -417,12 +419,6 @@ public class Xform extends Type implements Renderer {
 
 	public Type renderBlank(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Blank blank) throws IOException {
 		// TODO Auto-generated method stub
-		return model;
-	}
-
-    public Type renderBrokerQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Type model, BrokerQuotationSummary brokerQuotationSummary) {
-		// TODO Auto-generated method stub
-    	//w.printf("<test_renderBrokerQuotationSummary/>");
 		return model;
 	}
 
@@ -817,7 +813,6 @@ public class Xform extends Type implements Renderer {
     	return model;
     }
 
-    @SuppressWarnings("unchecked")
 	public Type renderRowScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, RowScroller rowScroller) throws IllegalStateException, IOException {
 
     	w.printf("<group class=\"horizontal_cols\">");    
@@ -828,8 +823,8 @@ public class Xform extends Type implements Renderer {
                 
         // Now output the rows of data
         int rowCount=0;
-        for(Iterator it=model.xpathIterate(rowScroller.getBinding()) ; it.hasNext() ; ) {
-            Type t=(Type)it.next();
+        for(Iterator<Type> it=model.xpathIterate(rowScroller.getBinding(), Type.class) ; it.hasNext() ; ) {
+            Type t=it.next();
             w.printf("<repeat bind=\"%s\">", rowScroller.getId()); 
             for(AttributeField a: rowScroller.getItem()) {
                 a.renderResponse(request, response, t, rowScroller.getBinding()+"["+rowCount+"]");

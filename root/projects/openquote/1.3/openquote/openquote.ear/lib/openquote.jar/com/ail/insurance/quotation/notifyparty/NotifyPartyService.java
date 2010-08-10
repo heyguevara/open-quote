@@ -27,12 +27,6 @@ import com.ail.openquote.SavedQuotation;
 
 /**
  * This service simply delegates to the service specified by the quotation's product.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype service
  */
 public class NotifyPartyService extends Service {
     private static final long serialVersionUID = -4915889686192216902L;

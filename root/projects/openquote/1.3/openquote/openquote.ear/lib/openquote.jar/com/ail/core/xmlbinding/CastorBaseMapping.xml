@@ -1029,7 +1029,7 @@
     <!-- services, commands, and their arguments -->
     <class name="com.ail.core.command.CommandArgImp" extends="com.ail.core.Type"/>
     
-    <class name="com.ail.insurance.quotation.notifyparty.NotifyPartyArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
+    <class name="com.ail.insurance.quotation.notifybrokerbyemail.NotifyBrokerByEmailArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
 
     <class name="com.ail.core.document.generatedocument.StyleDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
         <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">

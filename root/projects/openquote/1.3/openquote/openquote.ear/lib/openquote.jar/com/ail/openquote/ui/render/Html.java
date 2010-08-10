@@ -19,8 +19,8 @@ package com.ail.openquote.ui.render;
 import static com.ail.core.Attribute.YES_OR_NO_FORMAT;
 import static com.ail.core.Functions.expand;
 import static com.ail.openquote.ui.messages.I18N.i18n;
-import static com.ail.openquote.ui.util.Functions.expandRelativeUrlToProductUrl;
 import static com.ail.openquote.ui.util.Functions.convertProductUrlToExternalForm;
+import static com.ail.openquote.ui.util.Functions.expandRelativeUrlToProductUrl;
 import static com.ail.openquote.ui.util.Functions.findError;
 import static com.ail.openquote.ui.util.Functions.findErrors;
 import static com.ail.openquote.ui.util.Functions.hasErrorMarker;
@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -83,7 +82,6 @@ import com.ail.openquote.ui.AnswerSection;
 import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.AttributeField;
 import com.ail.openquote.ui.Blank;
-import com.ail.openquote.ui.BrokerQuotationSummary;
 import com.ail.openquote.ui.ClauseDetails;
 import com.ail.openquote.ui.CommandButtonAction;
 import com.ail.openquote.ui.InformationPage;
@@ -121,14 +119,13 @@ import com.ail.party.Title;
 @SuppressWarnings("deprecation")
 public class Html extends Type implements Renderer {
 	private static final long serialVersionUID = 1L;
-	private RenderBrokerQuotationSummaryHelper renderBrokerQuotationSummaryHelper=new RenderBrokerQuotationSummaryHelper();
 	private RenderAssessmentSheetDetailsHelper renderAssessmentSheetDetailsHelper=new RenderAssessmentSheetDetailsHelper();
 	private RenderAttributeFieldHelper renderAttributeFieldHelper=new RenderAttributeFieldHelper();
 	private RenderPaymentDetailsHelper renderPaymentDetailsHelper=new RenderPaymentDetailsHelper();
 	private RenderQuotationSummaryHelper renderQuotationSummaryHelper=new RenderQuotationSummaryHelper();
 	private RenderReferralSummaryHelper renderReferralSummaryHelper=new RenderReferralSummaryHelper();
 	    
-    /**
+	/**
      * Render a Java Enumeration as an HTML option list to be used in a select. Note that the
      * enumeration must be based on {@link TypeEnum}.
      * @param clazz Enumeration type
@@ -156,6 +153,10 @@ public class Html extends Type implements Renderer {
             throw new AssertionError("Failed to build an option list for: "+clazz.getName()+". Cause was: "+e.toString());
         }
     }
+    
+    public String getMimeType() {
+    	return "text/html";
+    }
 
 	public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException {
 		 w.printf("<tr><td>%s</td><td>%s</td></tr>", title, answerText);
@@ -163,12 +164,11 @@ public class Html extends Type implements Renderer {
 		 return model;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller) throws IOException {
 		int rowCount=0;
 		
-        for(Iterator it=model.xpathIterate(answerScroller.getBinding()) ; it.hasNext() ; rowCount++) {
-            Type t=(Type)it.next();
+        for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; rowCount++) {
+            Type t=it.next();
                
             for (Answer a: answerScroller.getAnswer()) {
                 w.printf("<tr>");
@@ -440,60 +440,6 @@ public class Html extends Type implements Renderer {
 		w.write("&nbsp;");
 		return model;
 	}
-
-    /**
-     * Render the page element. This method is split out from {@link #renderResponse(RenderRequest, RenderResponse, Type) renderResponse()}
-     * to allow it to be used outside of a PageFlow - i.e. for inclusion in broker notification emails.
-     * @param w Writer to render to.
-     * @param model Model (Quotation) to render data for.
-     */
-    public Type renderBrokerQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Type model, BrokerQuotationSummary brokerQuotationSummary) {
-        Quotation quote=(com.ail.openquote.Quotation)model;
-        
-        w.printf("<table width='100%%' align='center'>");
-        w.printf(  "<tr>");
-        w.printf(    "<td>");
-        w.printf(      "<table width='100%%' style='border-collapse: collapse;'>");
-        w.printf(        "<tr class='portlet-section-header'>");
-        w.printf(           "<td>%s: %s</td>",quote.getStatus().longName(), quote.getQuotationNumber());
-        renderBrokerQuotationSummaryHelper.renderPremium(w, quote);
-        w.printf(        "</tr>");
-        w.printf(        "<tr>");
-        w.printf(          "<td colspan='2'>");
-        w.printf(            "<table cellpadding='15' width='100%%'>");
-        w.printf(              "<tr>");
-        w.printf(                "<td colspan='2' class='portlet-font' valign='top'>");
-        renderBrokerQuotationSummaryHelper.renderSummary(w, quote);
-
-        switch(quote.getStatus()) {
-        case SUBMITTED:
-            w.printf("<br/>");
-            renderBrokerQuotationSummaryHelper.renderPayments(w, quote);
-            // fall through
-        case QUOTATION:
-            w.printf("<br/>");
-            renderBrokerQuotationSummaryHelper.renderPremiumDetail(w, quote);
-            break;                
-        default:
-        	w.printf("<br/>");
-        	renderBrokerQuotationSummaryHelper.renderAssessmentSummary(w, quote);
-        }
-                
-        w.printf(                "</td>");
-        w.printf(                "<td rowspan='2' valign='top' align='center'>");
-        renderBrokerQuotationSummaryHelper.renderProposerDetails(w, quote);
-        w.printf(                "</td>");
-        w.printf(              "</tr>");
-        w.printf(            "</table>");
-        w.printf(          "</td>");
-        w.printf(        "</tr>");
-        w.printf(      "</table>");
-        w.printf(    "</td>");
-        w.printf(  "</tr>");
-        w.printf("</table>");
-        
-        return model;
-    }
 
     public Type renderCommandButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label, boolean immediate) {
         w.printf("<input type='submit' name='op=%s:immediate=%b' value='%s' class='portlet-form-input-field'/>", label, immediate, i18n(label));
@@ -1247,7 +1193,6 @@ public class Html extends Type implements Renderer {
     	return model;
     }
 
-    @SuppressWarnings("unchecked")
 	public Type renderRowScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, RowScroller rowScroller) throws IllegalStateException, IOException {
         // Start the table for the scroller (size()+1 to allow for the trash can column)
         int columns=rowScroller.isAddAndDeleteEnabled() ? rowScroller.getItem().size()+1 : rowScroller.getItem().size();
@@ -1279,8 +1224,8 @@ public class Html extends Type implements Renderer {
         
         // Now output the rows of data
         int rowCount=0;
-        for(Iterator it=model.xpathIterate(rowScroller.getBinding()) ; it.hasNext() ; ) {
-            Type t=(Type)it.next();
+        for(Iterator<Type> it=model.xpathIterate(rowScroller.getBinding(), Type.class) ; it.hasNext() ; ) {
+            Type t=it.next();
             
             w.printf("<tr>");
 
@@ -1422,7 +1367,6 @@ public class Html extends Type implements Renderer {
         return model;
     }
     
-    @SuppressWarnings("unchecked")
 	public Type renderSectionScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SectionScroller sectionScroller) throws IllegalStateException, IOException {
         w.printf("<table width='100%%' border='0' cols='1' cellpadding='0'>");
         
@@ -1433,7 +1377,7 @@ public class Html extends Type implements Renderer {
         }
 
         int rowCount=0;
-        for(Iterator<Type> it=(Iterator<Type>)model.xpathIterate(sectionScroller.getBinding()) ; it.hasNext() ; rowCount++) {
+        for(Iterator<Type> it=model.xpathIterate(sectionScroller.getBinding(), Type.class) ; it.hasNext() ; rowCount++) {
             Type t=it.next();
             
             w.printf("<tr><td>");
@@ -1726,108 +1670,6 @@ public class Html extends Type implements Renderer {
 	    }
 	}
 
-    private class RenderBrokerQuotationSummaryHelper {
-        /** Define the types of lines to include in the premium detail table */
-        private List<BehaviourType> PREMIUM_DETAIL_LINE_TYPES = new ArrayList<BehaviourType>();
-        
-        RenderBrokerQuotationSummaryHelper() {
-            PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.TAX);
-            PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.COMMISSION);
-            PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.MANAGEMENT_CHARGE);
-            PREMIUM_DETAIL_LINE_TYPES.add(BehaviourType.BROKERAGE);
-        }
-
-	    private void renderPremium(PrintWriter w, Quotation quote) {
-			// We'll get an IllegalStateException if there is no premium on the quote; which is the case sometimes for Referrals and Declines.
-			try {
-	            w.printf("<td align='right'>"+i18n("i18n_broker_quotation_summary_premium_title")+"</td>", quote.getTotalPremium());
-			}
-			catch(IllegalStateException e) {
-	            w.printf("<td>&nbsp;</td>");
-	        }
-		}
-	
-	    private void renderProposerDetails(PrintWriter w, Quotation quote) {
-	    	Proposer proposer=(Proposer)quote.getProposer();
-	        w.printf("<table width='100%%' class='portlet-font'>");
-	        w.printf(  "<tr><td class='portlet-section-selected' colspan='2'>"+i18n("i18n_broker_quotation_summary_proposer_title")+"</td></tr>");
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_legal_name_label")+"</td><td>%s</td></tr>", proposer.getLegalName());
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_address_label")+"</td><td>%s</td></tr>", proposer.getAddress().getLine1());
-	        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getLine2());
-	        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getTown());
-	        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getCounty());
-	        w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getPostcode());
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_phone_label")+"</td><td>%s</td></tr>", proposer.getTelephoneNumber());
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_email_label")+"</td><td><a href='mailto:%1$s'>%1$s</a></td></tr>", proposer.getEmailAddress());
-	        w.printf("</table>");
-	    }
-	
-	    private void renderPremiumDetail(PrintWriter w, Quotation quote) {
-	        w.printf("<table width='100%%' class='portlet-font'>");
-	        w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>Premium detail</td></tr>");
-	        w.printf(  "<tr><td colspan='5'>"+i18n("i18n_broker_quotation_summary_premium_message")+"</td></tr>");
-	        for(Behaviour line: quote.getAssessmentSheet().getLinesOfType(Behaviour.class).values()) {
-	            if (PREMIUM_DETAIL_LINE_TYPES.contains(line.getType())) {
-	                w.printf("<tr><td>&nbsp;</td><td>%s</td><td>%s</td><td align='right'>%s</td><td align='right'>%s</td></tr>", 
-	                        line.getType().getLongName(),
-	                        line.getReason(),
-	                        (line instanceof RateBehaviour) ? ((RateBehaviour)line).getRate().getRate() : "&nbsp;",
-	                        line.getAmountAsString());
-	            }
-	        }
-	        w.printf("</table>");
-	    }
-	
-	    private void renderPayments(PrintWriter w, Quotation quote) {
-	        if (quote.getPaymentDetails()!=null) {
-	            w.printf("<table width='100%%' class='portlet-font'>");
-	            w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>"+i18n("i18n_broker_quotation_summary_payments_title")+"</td></tr>");
-	            w.printf(  "<tr><td colspan='5'>%s</td></tr>", quote.getPaymentDetails().getDescription());
-	            
-	            for(MoneyProvision provision: quote.getPaymentDetails().getMoneyProvision()) {
-	                if (provision.getPaymentMethod() instanceof PaymentCard) {
-	                    DateFormat expiry=new SimpleDateFormat("dd/yy");
-	                    PaymentCard card=(PaymentCard)provision.getPaymentMethod();
-	                    w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>"+i18n("i18n_broker_quotation_summary_card_details_title")+"</u></td></tr>");
-	                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_broker_quotation_summary_card_number_label")+"</td><td>%s</td></tr>", card.getCardNumber());
-	                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_broker_quotation_summary_name_on_card_label")+"</td><td>%s</td></tr>", card.getCardHoldersName());
-	                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_broker_quotation_summary_issue_number_label")+"</td><td>%s</td></tr>", card.getIssueNumber());
-	                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_broker_quotation_summary_expiry_date_label")+"</td><td>%s</td></tr>", expiry.format(card.getExpiryDate()));
-	                }
-	                else if (provision.getPaymentMethod() instanceof DirectDebit) {
-	                    DirectDebit dd=(DirectDebit)provision.getPaymentMethod();
-	                    w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>"+i18n("i18n_broker_quotation_summary_account_details_title")+"</u></td></tr>");
-	                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_broker_quotation_summary_account_number_label")+"</td><td>%s</td></tr>", dd.getAccountNumber());
-	                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_broker_quotation_summary_sort_code_label")+"</td><td>%s</td></tr>", dd.getSortCode());
-	                }
-	            }
-	            
-	            w.printf("</table>");
-	        }
-	    }
-	
-	    private void renderSummary(PrintWriter w, Quotation quote) {
-	        w.printf("<table width='100%%' class='portlet-font'>");
-	        w.printf(  "<tr class='portlet-section-selected'><td colspan='2'>"+i18n("i18n_broker_quotation_summary_title")+"</td></tr>");
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_product_label")+"</td><td>%s</td></tr>", quote.getProductName());
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_quotation_date_label")+"</td><td>%s</td></tr>", longDate(quote.getQuotationDate()));
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_quotation_expiry_date_label")+"</td><td>%s</td></tr>", longDate(quote.getQuotationExpiryDate()));
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_cover_start_date_label")+"</td><td>%s</td></tr>", longDate(quote.getInceptionDate()));
-	        w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_cover_end_date_label")+"</td><td>%s</td></tr>", longDate(quote.getExpiryDate()));
-	        w.printf("</table>");
-	    }
-	    
-	    private void renderAssessmentSummary(PrintWriter w, Quotation quote) {
-	        w.printf("<table width='100%%' class='portlet-font'>");
-	        w.printf(  "<tr class='portlet-section-selected'><td colspan='5'>"+i18n("i18n_broker_quotation_summary_assessment_sheet_title")+"</td></tr>");
-	        for(Marker line: quote.getAssessmentSheet().getLinesOfType(Marker.class).values()) {
-	            w.printf("<tr><td>%s</td><td>%s</td></tr>", 
-	                    line.getType().getLongName(),
-	                    line.getReason());
-	        }
-	        w.printf("</table>");
-	    }
-    }
     
     private class RenderPaymentDetailsHelper {
     	private SimpleDateFormat monthFormat=new SimpleDateFormat("MM");

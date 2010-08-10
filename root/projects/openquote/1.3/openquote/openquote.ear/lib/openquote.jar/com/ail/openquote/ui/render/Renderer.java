@@ -34,7 +34,6 @@ import com.ail.openquote.ui.AnswerSection;
 import com.ail.openquote.ui.AssessmentSheetDetails;
 import com.ail.openquote.ui.AttributeField;
 import com.ail.openquote.ui.Blank;
-import com.ail.openquote.ui.BrokerQuotationSummary;
 import com.ail.openquote.ui.ClauseDetails;
 import com.ail.openquote.ui.CommandButtonAction;
 import com.ail.openquote.ui.InformationPage;
@@ -65,6 +64,8 @@ import com.ail.openquote.ui.ViewQuotationButtonAction;
 
 @SuppressWarnings("deprecation")
 public interface Renderer {
+	String getMimeType();
+	
 	Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException;
 	
 	Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller) throws IOException;
@@ -81,8 +82,6 @@ public interface Renderer {
 
 	Type renderBlank(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Blank blank) throws IOException;
 	
-    Type renderBrokerQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Type model, BrokerQuotationSummary brokerQuotationSummary);
-
     Type renderCommandButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label, boolean immediate); 
     
     Type renderInformationPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, InformationPage informationPage, String title, List<PageElement> pageElements) throws IOException;

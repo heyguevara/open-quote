@@ -125,7 +125,6 @@ public class TestQuotationPersistence extends CoreUserTestCase {
  
     /**
      */
-    @SuppressWarnings("unchecked")
     public void testSaveSomeQuotationsAndQueryThem() throws Exception {
         Timer.start("testSaveSomeQuotationsAndQueryThem");
         
@@ -158,7 +157,7 @@ public class TestQuotationPersistence extends CoreUserTestCase {
 
             getCore().openPersistenceSession();
             
-            List sl=getCore().query("get.savedQuotationSummary.by.username", "jimbo");
+            List<?> sl=getCore().query("get.savedQuotationSummary.by.username", "jimbo");
             assertEquals(7, sl.size());
             Timer.stop("query");
 

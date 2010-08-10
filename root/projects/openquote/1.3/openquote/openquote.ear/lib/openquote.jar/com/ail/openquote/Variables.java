@@ -54,8 +54,7 @@ public class Variables extends Type {
      * @param it Iterator to read object from
      * @return Collection containing object
      */
-    @SuppressWarnings("unchecked")
-    public void add(String name, Iterator it) {
+    public void add(String name, Iterator<?> it) {
         ArrayList<Object> ret=new ArrayList<Object>();
         
         while (it.hasNext()) {
@@ -173,15 +172,14 @@ public class Variables extends Type {
     }
 
     /**
-     * Determin if the iterable variable 'name' contains the object 'o'. The variable
+     * Determine if the iterable variable 'name' contains the object 'o'. The variable
      * is assumed to be iterable (i.e. implements {@link java.lang.Iterable}).
      * @param name Name of the variable to search
      * @param o Object to search for
      * @return true if 'o' is found in the variable 'name', false otherwise.
      */
-    @SuppressWarnings("unchecked")
     public boolean contains(String name, Object o) {
-        Iterable it=(Iterable)get(name);
+        Iterable<?> it=(Iterable<?>)get(name);
         
         for(Object c: it) {
             if (c.equals(o)) {
@@ -193,15 +191,14 @@ public class Variables extends Type {
     }
     
     /**
-     * Determin if the iterable variable 'name' contains only objects that equal
+     * Determine if the iterable variable 'name' contains only objects that equal
      * 'o'. The variable is assumed to be iterable (i.e. implements {@link java.lang.Iterable}).
      * @param name Name of the variable to search
      * @param o Object to search for
      * @return true if 'o' is found in the variable 'name', false otherwise.
      */
-    @SuppressWarnings("unchecked")
     public boolean containsOnly(String name, Object o) {
-        Iterable it=(Iterable)get(name);
+        Iterable<?> it=(Iterable<?>)get(name);
         
         for(Object c: it) {
             if (!c.equals(o)) {

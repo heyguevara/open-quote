@@ -206,10 +206,9 @@ public class Functions {
      * @param source Object to evaluate xpath against
      * @param xpath Xpath itself
      */
-    @SuppressWarnings("unchecked")
     public static void assertFact(KnowledgeHelper drools, String name, Type source, String xpath) {
        try {
-           Iterator it=source.xpathIterate(xpath);
+           Iterator<?> it=source.xpathIterate(xpath);
        
            while(it.hasNext()) {
                drools.insert(new Fact(name, it.next()));
@@ -258,9 +257,8 @@ public class Functions {
         return new Integer(age);
     }
 
-    @SuppressWarnings("unchecked")
     public static Object test(Object c) {
-        return ((List)c).size()!=0;
+        return ((List<?>)c).size()!=0;
     }
 
     /**

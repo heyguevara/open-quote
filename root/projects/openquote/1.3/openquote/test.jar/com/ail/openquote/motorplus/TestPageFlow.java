@@ -23,6 +23,7 @@ import com.ail.openquote.ui.PageFlow;
 import com.ail.openquote.ui.SectionScroller;
 import com.ail.openquote.ui.util.Binding;
 
+@SuppressWarnings("deprecation")
 public class TestPageFlow extends CoreUserTestCase {
     private static final long serialVersionUID = 0L;
 

@@ -28,13 +28,11 @@ public class MockPortletSession implements PortletSession {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Enumeration getAttributeNames() throws IllegalStateException {
+	public Enumeration<String> getAttributeNames() throws IllegalStateException {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Enumeration getAttributeNames(int arg0) throws IllegalStateException {
+	public Enumeration<String> getAttributeNames(int arg0) throws IllegalStateException {
 		return null;
 	}
 
