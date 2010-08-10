@@ -21,14 +21,6 @@ import com.ail.core.command.Command;
 import com.ail.core.command.CommandArg;
 import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
 public class NotifyPartyCommand extends Command implements NotifyPartyArg {
     private static final long serialVersionUID = -7959013380819203127L;
     private NotifyPartyArg args = null;

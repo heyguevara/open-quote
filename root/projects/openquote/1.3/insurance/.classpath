@@ -40,7 +40,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/opensaml-1.0.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xalan.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/commons-jci-janino-2.4.3.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/commons-jci-eclipse-3.2.0.666.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/commons-jxpath-1.2.jar"/>
@@ -67,5 +66,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/hibernate-3.2.1-patched.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercial"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

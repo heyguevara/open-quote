@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 2007. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2010. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -14,22 +14,27 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+package com.ail.insurance.quotation.notifyproposer;
 
-package com.ail.insurance.quotation.notifyparty;
-
-import com.ail.core.command.CommandArgImp;
+import com.ail.core.command.CommandArg;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.quotation.notifyparty.NotifyPartyCommand;
 
-public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
-    static final long serialVersionUID = 1199346453402049909L;
+public class NotifyProposerCommand extends NotifyPartyCommand {
+    private static final long serialVersionUID = 1744383290180191469L;
+    private NotifyProposerArg args = null;
 
-    /** The policy to generate a quote number for, and to which the number is added. */
-    private String quotationNumberArg;
-    
-    private Policy policyArg;
+    public NotifyProposerCommand() {
+        super();
+        args = new NotifyProposerArgImp();
+    }
 
-    /** Default constructor */
-    public NotifyPartyArgImp() {
+    public void setArgs(CommandArg arg) {
+        this.args = (NotifyProposerArg)arg;
+    }
+
+    public CommandArg getArgs() {
+        return args;
     }
 
     /**
@@ -37,7 +42,7 @@ public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
      * @return @{inheritDoc}
      */
     public String getQuotationNumberArg() {
-        return quotationNumberArg;
+        return args.getQuotationNumberArg();
     }
 
     /**
@@ -45,14 +50,15 @@ public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
      * @param quotationNumberArg @{inheritDoc}
      */
     public void setQuotationNumberArg(String quotationNumberArg) {
-        this.quotationNumberArg = quotationNumberArg;
+        args.setQuotationNumberArg(quotationNumberArg);
     }
 
     /**
      * {@inheritDoc}
+     * @return @{inheritDoc}
      */
     public Policy getPolicyArg() {
-        return policyArg;
+        return args.getPolicyArg();
     }
 
     /**
@@ -60,8 +66,6 @@ public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
      * @param quotationArg @{inheritDoc}
      */
     public void setPolicyArg(Policy policyArg) {
-        this.policyArg = policyArg;
+        args.setPolicyArg(policyArg);
     }
 }
-
-

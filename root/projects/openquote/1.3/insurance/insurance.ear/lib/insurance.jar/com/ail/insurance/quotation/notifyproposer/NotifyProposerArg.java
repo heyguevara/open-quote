@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 2006. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2010. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -14,19 +14,18 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
-package com.ail.insurance.quotation.notifyparty;
+package com.ail.insurance.quotation.notifyproposer;
 
 import com.ail.core.command.CommandArg;
 import com.ail.insurance.policy.Policy;
 
 /**
- * Service to notify a party of the existence of a quote. Typical implementations of this service include
- * notifying proposers, brokers and/or carriers of the creation of a new quotation. The implementation might
- * send notification by a number of channels including emails and web service calls.</p>
+ * Service to notify a proposer of the existence of a quote. Typical implementations of this service include
+ * notifying proposer of the creation of a new quotation. The implementation might send notification 
+ * by a number of channels including emails and web service calls.</p>
  * The caller may specify the quotation either by quote number or by the instance of the quote itself.
  */
-public interface NotifyPartyArg extends CommandArg {
+public interface NotifyProposerArg extends CommandArg {
     String getQuotationNumberArg();
     
     void setQuotationNumberArg(String quotationNumberArg);

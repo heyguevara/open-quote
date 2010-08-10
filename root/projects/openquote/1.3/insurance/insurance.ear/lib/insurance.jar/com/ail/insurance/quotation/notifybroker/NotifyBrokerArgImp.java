@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 2007. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2010. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -14,14 +14,13 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
-package com.ail.insurance.quotation.notifyparty;
+package com.ail.insurance.quotation.notifybroker;
 
 import com.ail.core.command.CommandArgImp;
 import com.ail.insurance.policy.Policy;
 
-public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
-    static final long serialVersionUID = 1199346453402049909L;
+public class NotifyBrokerArgImp extends CommandArgImp implements NotifyBrokerArg {
+    private static final long serialVersionUID = 4473189523716866043L;
 
     /** The policy to generate a quote number for, and to which the number is added. */
     private String quotationNumberArg;
@@ -29,7 +28,7 @@ public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
     private Policy policyArg;
 
     /** Default constructor */
-    public NotifyPartyArgImp() {
+    public NotifyBrokerArgImp() {
     }
 
     /**
@@ -63,5 +62,3 @@ public class NotifyPartyArgImp extends CommandArgImp implements NotifyPartyArg {
         this.policyArg = policyArg;
     }
 }
-
-
