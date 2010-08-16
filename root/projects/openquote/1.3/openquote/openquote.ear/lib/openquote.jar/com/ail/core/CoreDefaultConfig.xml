@@ -240,6 +240,10 @@
       <parameter name="ServiceClass">com.ail.openquote.ui.render.html.BrokerQuotationSummaryService</parameter>
     </service>
     
+    <service name="RenderProposerQuotationSummaryService/html" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.openquote.ui.render.html.ProposerQuotationSummaryService</parameter>
+    </service>
+    
     
     <!--=======================================================================-->
     <!-- Bind the default core services (above) to Commands used by Core.class -->
@@ -410,6 +414,14 @@
     </command>
     
     <command name="RenderBrokerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
+        <parameter name="Service">NullService</parameter>
+    </command>
+
+    <command name="RenderProposerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
+        <parameter name="Service">RenderProposerQuotationSummaryService/html</parameter>
+    </command>
+    
+    <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
         <parameter name="Service">NullService</parameter>
     </command>
 

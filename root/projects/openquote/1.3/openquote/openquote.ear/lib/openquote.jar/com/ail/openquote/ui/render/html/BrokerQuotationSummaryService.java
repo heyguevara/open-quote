@@ -116,9 +116,7 @@ public class BrokerQuotationSummaryService extends Service {
 
     	StringWriter output=new StringWriter();
     	
-    	renderBrokerQuotationSummary(
-    			new PrintWriter(output),
-    			(Quotation)args.getModelArg());
+    	renderBrokerQuotationSummary(new PrintWriter(output), (Quotation)args.getModelArg());
     	
     	args.setRenderedOutputRet(output.toString());
 

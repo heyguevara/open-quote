@@ -589,6 +589,7 @@
         <field name="paymentTelephoneNumber" type="string"/>
         <field name="quoteTelephoneNumber" type="string"/>
         <field name="claimTelephoneNumber" type="string"/>
+        <field name="emailAddress" type="string"/>
         <field name="quoteEmailAddress" type="string"/>
         <field name="contactName" type="string"/>
         <field name="directDebitIdentificationNumber" type="string"/>
@@ -705,6 +706,14 @@
         <field name="pageElement" type="com.ail.openquote.ui.PageElement" collection="collection" get-method="getPageElementCollection" set-method="setPageElementCollection"/>
     </class>
     
+    <class name="com.ail.openquote.ui.ProposerQuotationSummary" extends="com.ail.openquote.ui.PageContainer">
+        <map-to xml="proposerQuotationSummary"/>
+    </class>
+
+    <class name="com.ail.openquote.ui.BrokerQuotationSummary" extends="com.ail.openquote.ui.PageContainer">
+        <map-to xml="brokerQuotationSummary"/>
+    </class>
+
     <class name="com.ail.openquote.ui.Action" extends="com.ail.openquote.ui.PageElement">
         <map-to xml="action"/>
         <field name="when" type="string">
@@ -1030,6 +1039,8 @@
     <class name="com.ail.core.command.CommandArgImp" extends="com.ail.core.Type"/>
     
     <class name="com.ail.insurance.quotation.notifybrokerbyemail.NotifyBrokerByEmailArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
+
+    <class name="com.ail.insurance.quotation.notifyproposerbyemail.NotifyProposerByEmailArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
 
     <class name="com.ail.core.document.generatedocument.StyleDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
         <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">

@@ -23,7 +23,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/c3p0-0.8.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/bvfl-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xalan.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/commons-jxpath-1.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/castor-xml-1.1-ail.jar"/>
@@ -34,5 +33,6 @@
 	<classpathentry kind="lib" path="target/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/core.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

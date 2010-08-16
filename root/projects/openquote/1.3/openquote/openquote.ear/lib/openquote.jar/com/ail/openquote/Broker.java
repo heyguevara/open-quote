@@ -22,11 +22,6 @@ import com.ail.party.Organisation;
  * Type represents a broker who owns products in the system. It acts as a repository for
  * all the contact information (etc) which is needed to identify the organisation, and
  * defines values for various fields on the UI.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/08/28 17:36:36 $
- * @source $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/openquote.jar/com/ail/openquote/Broker.java,v $
- * @stereotype type
  */
 public class Broker extends Organisation {
 	private static final long serialVersionUID = -4521508279619758949L;

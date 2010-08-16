@@ -16,8 +16,16 @@
             <parameter name="ServiceClass">com.ail.insurance.quotation.notifybrokerbyemail.NotifyBrokerByEmailService</parameter>
         </service>
 
+        <service name="NotifyProposerByEmailService" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.insurance.quotation.notifyproposerbyemail.NotifyProposerByEmailService</parameter>
+        </service>
+
         <command name="NotifyBrokerByEmailArgImp" key="com.ail.insurance.quotation.notifybrokerbyemail.NotifyBrokerByEmailCommand">
             <parameter name="Service">NotifyBrokerByEmailService</parameter>
+        </command>
+
+        <command name="NotifyProposerByEmailArgImp" key="com.ail.insurance.quotation.notifyproposerbyemail.NotifyProposerByEmailCommand">
+            <parameter name="Service">NotifyProposerByEmailService</parameter>
         </command>
     </types>
 </configuration>
