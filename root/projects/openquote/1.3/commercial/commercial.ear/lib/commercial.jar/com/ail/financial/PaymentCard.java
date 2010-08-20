@@ -17,18 +17,16 @@
 
 package com.ail.financial;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Represents the details of a payment card. Payment card encompasses both credit and debit cards.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/05/21 12:41:18 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/financial/PaymentCard.java,v $
- * @stereotype type
  */
 public class PaymentCard extends PaymentMethod {
     private static final long serialVersionUID = 1L;
+    private DateFormat dateFormatter=new SimpleDateFormat("MM/yy");
 
     /** The type of card (issuer) */
     private CardIssuer issuer;
@@ -42,8 +40,14 @@ public class PaymentCard extends PaymentMethod {
     /** The card's issues number (optional based on card type) */
     private String issueNumber;
 
-    /** Date (month & year only) when the card expirs */
+    /** Date (month & year only) when the card expires */
     private Date expiryDate;
+    
+    /** Date (month & year only) when the card starts */
+    private Date startDate;
+    
+    /** The security code which appears on the back of the card (optional based on card type) */
+    private String securityCode;
     
     public PaymentCard() {
         super();
@@ -57,9 +61,6 @@ public class PaymentCard extends PaymentMethod {
         this.issueNumber = issueNumber;
         this.securityCode = securityCode;
     }
-
-    /** The security code which appears on the back of the card (optional based on card type) */
-    private String securityCode;
 
     public String getCardHoldersName() {
         return cardHoldersName;
@@ -75,6 +76,20 @@ public class PaymentCard extends PaymentMethod {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+    
+    /**
+     * Get the card number with the first part masked for security. This
+     * will return a string in the form '**** **** **** 1234"
+     * @return masked card number
+     */
+    public String getMaskedCardNumber() {
+        if (cardNumber!=null && cardNumber.length() > 4) {
+            return "**** **** **** "+cardNumber.substring(cardNumber.length()-4);
+        }
+        else {
+            return "**** **** **** ****";            
+        }
     }
 
     public String getIssueNumber() {
@@ -120,5 +135,39 @@ public class PaymentCard extends PaymentMethod {
 
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
+    }
+    
+    /**
+     * Fetch a formatted string representation of the expiry date. This method
+     * will return a string in the format "MM/yy"
+     * @return formatted date, or an empty string if expiryDate is null
+     */
+    public String getFormattedExpiryDate() {
+        if (expiryDate==null) {
+            return "";
+        }
+        
+        return dateFormatter.format(expiryDate);
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * Fetch a formatted string representation of the start date. This method
+     * will return a string in the format "MM/yy"
+     * @return formatted date, or an empty string if expiryDate is null
+     */
+    public String getFormattedStartDate() {
+        if (startDate==null) {
+            return "";
+        }
+
+        return dateFormatter.format(startDate);
     }
 }

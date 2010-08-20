@@ -18,11 +18,7 @@
 package com.ail.financial;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/04/21 19:57:33 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/financial/DirectDebit.java,v $
- * @stereotype type
+ * Represents the details of a direct debit.
  */
 public class DirectDebit extends PaymentMethod {
     private static final long serialVersionUID = 1L;
@@ -51,6 +47,15 @@ public class DirectDebit extends PaymentMethod {
         return accountNumber;
     }
 
+    public String getMaskedAccountNumber() {
+        if (accountNumber!=null && accountNumber.length() > 3) {
+            return "*****"+accountNumber.substring(accountNumber.length()-3);
+        }
+        else {
+            return "********";            
+        }
+    }
+    
     /**
      * Setter to update the value of the accountNumber property. The bank account's number
      * @param accountNumber New value for the accountNumber property
