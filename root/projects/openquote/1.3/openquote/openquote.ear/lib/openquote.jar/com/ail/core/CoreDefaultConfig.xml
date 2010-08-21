@@ -36,6 +36,7 @@
   <group name="JXPathExtensions">
     <parameter name="c">com.ail.core.Functions</parameter>
     <parameter name="m">com.ail.openquote.Functions</parameter>
+    <parameter name="u">com.ail.openquote.ui.util.Functions</parameter>
   </group>
   
   <builders>

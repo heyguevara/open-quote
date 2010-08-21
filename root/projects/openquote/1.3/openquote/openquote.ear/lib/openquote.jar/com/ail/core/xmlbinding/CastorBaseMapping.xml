@@ -235,6 +235,7 @@
         <field name="cardNumber" type="string"/>
         <field name="issueNumber" type="string"/>
         <field name="issuer" type="string" get-method="getIssuerAsString" set-method="setIssuerAsString"/>
+        <field name="startDate" type="date"/>
         <field name="expiryDate" type="date"/>
     </class> 
 

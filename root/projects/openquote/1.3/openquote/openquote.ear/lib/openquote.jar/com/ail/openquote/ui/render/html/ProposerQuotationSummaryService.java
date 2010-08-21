@@ -242,19 +242,19 @@ public class ProposerQuotationSummaryService extends Service {
             w.printf(  "<tr><td colspan='5'>%s</td></tr>", quote.getPaymentDetails().getDescription());
             
             for(MoneyProvision provision: quote.getPaymentDetails().getMoneyProvision()) {
-                if (provision.getPaymentMethod() instanceof PaymentCard) {
-                    DateFormat expiry=new SimpleDateFormat("dd/yy");
+            	if (provision.getPaymentMethod() instanceof PaymentCard) {
                     PaymentCard card=(PaymentCard)provision.getPaymentMethod();
                     w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>"+i18n("i18n_proposer_quotation_summary_card_details_title")+"</u></td></tr>");
-                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_card_number_label")+"</td><td>%s</td></tr>", card.getCardNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_card_number_label")+"</td><td>%s</td></tr>", card.getMaskedCardNumber());
                     w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_name_on_card_label")+"</td><td>%s</td></tr>", card.getCardHoldersName());
                     w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_issue_number_label")+"</td><td>%s</td></tr>", card.getIssueNumber());
-                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_expiry_date_label")+"</td><td>%s</td></tr>", expiry.format(card.getExpiryDate()));
+                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_start_date_label")+"</td><td>%s</td></tr>", card.getFormattedStartDate());
+                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_expiry_date_label")+"</td><td>%s</td></tr>", card.getFormattedExpiryDate());
                 }
                 else if (provision.getPaymentMethod() instanceof DirectDebit) {
                     DirectDebit dd=(DirectDebit)provision.getPaymentMethod();
                     w.printf(  "<tr><td>&nbsp;</td><td colspan='4'><u>"+i18n("i18n_proposer_quotation_summary_account_details_title")+"</u></td></tr>");
-                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_account_number_label")+"</td><td>%s</td></tr>", dd.getAccountNumber());
+                    w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_account_number_label")+"</td><td>%s</td></tr>", dd.getMaskedAccountNumber());
                     w.printf(  "<tr><td>&nbsp;</td><td>"+i18n("i18n_proposer_quotation_summary_sort_code_label")+"</td><td>%s</td></tr>", dd.getSortCode());
                 }
             }

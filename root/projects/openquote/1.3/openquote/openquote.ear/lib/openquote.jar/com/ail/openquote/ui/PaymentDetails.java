@@ -79,6 +79,14 @@ public class PaymentDetails extends PageElement {
                 pc.setCardHoldersName(request.getParameter("cardHoldersName"));
                 
                 try {
+                    Date d=monthYearFormat.parse(request.getParameter("startMonth")+request.getParameter("startYear"));
+                    pc.setStartDate(d);
+                }
+                catch (Exception e) {
+                    pc.setExpiryDate(null);
+                }
+
+                try {
                     Date d=monthYearFormat.parse(request.getParameter("expiryMonth")+request.getParameter("expiryYear"));
                     pc.setExpiryDate(d);
                 }
@@ -121,6 +129,11 @@ public class PaymentDetails extends PageElement {
                     error=true;
                 }
                 
+                if (pc.getStartDate()==null) {
+                    addError("pc.startDate", i18n("i18n_required_error"), schedule);
+                    error=true;
+                }
+
                 if (pc.getExpiryDate()==null) {
                     addError("pc.expiryDate", i18n("i18n_required_error"), schedule);
                     error=true;

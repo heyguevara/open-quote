@@ -1776,8 +1776,10 @@ public class Html extends Type implements Renderer {
             PaymentSchedule schedule=quote.getPaymentDetails();
             PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
             
-            String month=pc.getExpiryDate()!=null ? monthFormat.format(pc.getExpiryDate()) : "";
-            String year=pc.getExpiryDate()!=null ? yearFormat.format(pc.getExpiryDate()) : "";
+            String expiryMonth=pc.getExpiryDate()!=null ? monthFormat.format(pc.getExpiryDate()) : "";
+            String expiryYear=pc.getExpiryDate()!=null ? yearFormat.format(pc.getExpiryDate()) : "";
+            String startMonth=pc.getExpiryDate()!=null ? monthFormat.format(pc.getStartDate()) : "";
+            String startYear=pc.getExpiryDate()!=null ? yearFormat.format(pc.getStartDate()) : "";
             
             if (pc.getCardHoldersName()==null) {
             	Proposer proposer=(Proposer)quote.getProposer();
@@ -1798,12 +1800,25 @@ public class Html extends Type implements Renderer {
             w.printf(" </tr>");
 
             w.printf(" <tr class='portlet-font'>");
+            w.printf("  <td width='15%%'><b>Start date</b></td>");
+            w.printf("  <td>");
+            w.printf("   <table border='0'><tr>");
+            w.printf("    <td>");
+            w.printf("     <input name='startMonth' size='2' maxlength='2' type='text' value='%s'/>", startMonth);
+            w.printf("     <input name='startYear' size='2' type='text' maxlength='2' value='%s'/>", startYear);
+            w.printf("    </td>");
+            w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.startDate", schedule, paymentDetails));
+            w.printf("   </tr></table>");
+            w.printf("  </td>");
+            w.printf(" </tr>");
+            
+            w.printf(" <tr class='portlet-font'>");
             w.printf("  <td width='15%%'><b>Expiry date</b></td>");
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td>");
-            w.printf("     <input name='expiryMonth' size='2' maxlength='2' type='text' value='%s'/>", month);
-            w.printf("     <input name='expiryYear' size='2' type='text' maxlength='2' value='%s'/>", year);
+            w.printf("     <input name='expiryMonth' size='2' maxlength='2' type='text' value='%s'/>", expiryMonth);
+            w.printf("     <input name='expiryYear' size='2' type='text' maxlength='2' value='%s'/>", expiryYear);
             w.printf("    </td>");
             w.printf("    <td class='portlet-msg-error'>%s</td>", findError("pc.expiryDate", schedule, paymentDetails));
             w.printf("   </tr></table>");
