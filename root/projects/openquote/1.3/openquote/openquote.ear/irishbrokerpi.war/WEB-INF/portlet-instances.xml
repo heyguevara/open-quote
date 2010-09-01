@@ -50,6 +50,42 @@
     </deployment>
     <deployment>
         <instance>
+            <instance-id>IrishBrokerPIProductsInstance</instance-id>
+            <portlet-ref>IrishBrokerPIContentBrowserPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>homePageUrl</name>
+                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/AIL/Demo/IrishBrokerPI/HTML/Products.html</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
+            <instance-id>IrishBrokerPIContactsInstance</instance-id>
+            <portlet-ref>IrishBrokerPIContentBrowserPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>homePageUrl</name>
+                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/AIL/Demo/IrishBrokerPI/HTML/Contacts.html</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
+            <instance-id>IrishBrokerPIServicesInstance</instance-id>
+            <portlet-ref>IrishBrokerPIContentBrowserPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>homePageUrl</name>
+                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/AIL/Demo/IrishBrokerPI/HTML/Services.html</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
             <instance-id>IrishBrokerPIQuotationInstance</instance-id>
             <portlet-ref>IrishBrokerPIQuotationPortlet</portlet-ref>
             <preferences>

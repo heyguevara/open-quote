@@ -92,16 +92,40 @@
                 <page-name>Products</page-name>
                 <properties>
                     <property>
+                        <name>layout.id</name>
+                        <value>OneColumnTwoColumns</value>
+                    </property>
+                    <property>
                         <name>order</name>
                         <value>2</value>
                     </property>
                 </properties>
                 <window>
-                    <window-name>IrishBrokerPIAboutWindow</window-name>
-                    <instance-ref>IrishBrokerPIAboutInstance</instance-ref>
+                    <window-name>IrishBrokerPIProductsWindow</window-name>
+                    <properties>
+                        <property>
+                            <name>theme.decorationRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                    </properties>
+                    <instance-ref>IrishBrokerPIProductsInstance</instance-ref>
                     <default>true</default>
-                    <region>center</region>
+                    <region>bottom-left</region>
                     <height>1</height>
+                </window>
+                <window>
+                    <window-name>IrishBrokerPIMainMenuWindow</window-name>
+                    <instance-ref>IrishBrokerPIMainMenuInstance</instance-ref>
+                    <default>true</default>
+                    <region>bottom-right</region>
+                    <height>1</height>
+                </window>
+                <window>
+                    <window-name>IrishBrokerPIUserWindow</window-name>
+                    <instance-ref>IrishBrokerPIUserInstance</instance-ref>
+                    <default>true</default>
+                    <region>bottom-right</region>
+                    <height>2</height>
                 </window>
                 <security-constraint>
                     <policy-permission>
@@ -115,16 +139,40 @@
                 <page-name>Services</page-name>
                 <properties>
                     <property>
+                        <name>layout.id</name>
+                        <value>OneColumnTwoColumns</value>
+                    </property>
+                    <property>
                         <name>order</name>
                         <value>3</value>
                     </property>
                 </properties>
                 <window>
-                    <window-name>IrishBrokerPIAboutWindow</window-name>
-                    <instance-ref>IrishBrokerPIAboutInstance</instance-ref>
+                    <window-name>IrishBrokerPIServicesWindow</window-name>
+                    <properties>
+                        <property>
+                            <name>theme.decorationRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                    </properties>
+                    <instance-ref>IrishBrokerPIServicesInstance</instance-ref>
                     <default>true</default>
-                    <region>center</region>
+                    <region>bottom-left</region>
                     <height>1</height>
+                </window>
+                <window>
+                    <window-name>IrishBrokerPIMainMenuWindow</window-name>
+                    <instance-ref>IrishBrokerPIMainMenuInstance</instance-ref>
+                    <default>true</default>
+                    <region>bottom-right</region>
+                    <height>1</height>
+                </window>
+                <window>
+                    <window-name>IrishBrokerPIUserWindow</window-name>
+                    <instance-ref>IrishBrokerPIUserInstance</instance-ref>
+                    <default>true</default>
+                    <region>bottom-right</region>
+                    <height>2</height>
                 </window>
                 <security-constraint>
                     <policy-permission>
@@ -138,16 +186,40 @@
                 <page-name>Contacts</page-name>
                 <properties>
                     <property>
+                        <name>layout.id</name>
+                        <value>OneColumnTwoColumns</value>
+                    </property>
+                    <property>
                         <name>order</name>
                         <value>3</value>
                     </property>
                 </properties>
                 <window>
-                    <window-name>IrishBrokerPIAboutWindow</window-name>
-                    <instance-ref>IrishBrokerPIAboutInstance</instance-ref>
+                    <window-name>IrishBrokerPIContactsWindow</window-name>
+                    <properties>
+                        <property>
+                            <name>theme.decorationRendererId</name>
+                            <value>emptyRenderer</value>
+                        </property>
+                    </properties>
+                    <instance-ref>IrishBrokerPIContactsInstance</instance-ref>
                     <default>true</default>
-                    <region>center</region>
+                    <region>bottom-left</region>
                     <height>1</height>
+                </window>
+                <window>
+                    <window-name>IrishBrokerPIMainMenuWindow</window-name>
+                    <instance-ref>IrishBrokerPIMainMenuInstance</instance-ref>
+                    <default>true</default>
+                    <region>bottom-right</region>
+                    <height>1</height>
+                </window>
+                <window>
+                    <window-name>IrishBrokerPIUserWindow</window-name>
+                    <instance-ref>IrishBrokerPIUserInstance</instance-ref>
+                    <default>true</default>
+                    <region>bottom-right</region>
+                    <height>2</height>
                 </window>
                 <security-constraint>
                     <policy-permission>
