@@ -26,16 +26,18 @@
 
     <!-- copy files that don't need filters to be applied -->
     <copy todir="${deploy.dir}" overwrite="true">
-      <fileset dir="./jboss" includes="**" excludes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties" />
+      <fileset dir="./jboss" includes="**" excludes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties, conf/alfresco-global.properties" />
     </copy>
 
 		<!-- copy files that do need filters to be applied -->
     <copy todir="${deploy.dir}" overwrite="true">
-      <fileset dir="./jboss" includes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties" />
+      <fileset dir="./jboss" includes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties, conf/alfresco-global.properties" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
-        <filter token="dbname" value="${dbname}"/>
+      	<filter token="dbname" value="${dbname}"/>
+      	<filter token="dbusername" value="${dbusername}"/>
+      	<filter token="dbpassword" value="${dbpassword}"/>
       </filterset>
     </copy>
 
@@ -58,13 +60,13 @@
 		<sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
 	  	    -- Make sure the database and users are there before we try to delete them!
 	        create database if not exists ${dbname};
-	        grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
-	        grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
+	        grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
+	        grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
 	  	  
 	        -- Now do the actual tidy up 
 	  	    drop database if exists ${dbname};
-	        revoke all privileges, grant option from 'coreuser'@'localhost';
-	  	    drop user 'coreuser'@'localhost';
+	        revoke all privileges, grant option from '${dbusername}'@'localhost';
+	  	    drop user '${dbusername}'@'localhost';
 		</sql>
   </target>  
   
@@ -76,9 +78,9 @@
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
-      create database if not exists ${dbname};
-      grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
-      grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
+      create database if not exists ${dbname} default character set utf8 collate utf8_bin;
+      grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
+      grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
 
       create table if not exists ${dbname}.attribute (
         id varchar(255) primary key,

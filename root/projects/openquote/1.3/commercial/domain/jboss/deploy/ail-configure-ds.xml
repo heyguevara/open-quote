@@ -15,10 +15,10 @@
 <datasources>
   <local-tx-datasource>
     <jndi-name>ConfigureDS</jndi-name>
-    <connection-url>jdbc:mysql://localhost:3306/commercial_@major.version@_@minor.version@</connection-url>
+    <connection-url>jdbc:mysql://localhost:3306/${dbname}</connection-url>
     <driver-class>org.gjt.mm.mysql.Driver</driver-class>
-    <user-name>coreuser</user-name>
-    <password>bombay</password>
+    <user-name>${dbusername}</user-name>
+    <password>${dbpassword}</password>
   </local-tx-datasource>
 
 </datasources>
