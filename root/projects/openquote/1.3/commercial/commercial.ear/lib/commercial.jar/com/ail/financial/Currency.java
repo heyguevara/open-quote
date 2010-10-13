@@ -21,6 +21,9 @@ import com.ail.core.Functions;
 import com.ail.core.Locale;
 import com.ail.core.TypeEnum;
 
+/**
+ * Enum of valid currency codes. Source is: http://www.iso.org/iso/support/currency_codes_list-1.htm
+ */
 public enum Currency implements TypeEnum {
     AED("UNITED ARAB EMIRATES", "UAE Dirham", "784"),
     AFN("AFGHANISTAN", "Afghani", "971"),
