@@ -266,9 +266,10 @@ public class Html extends Type implements Renderer {
 	        }
 	        else {
 	            if (attr.isStringType()) {
+	                String type=attributeField.getRenderHint()!=null ? attributeField.getRenderHint() : "text";
 	                String size=attr.getFormatOption("size");
-	                size=(size!=null) ? "size='"+size+"'" : "";                
-	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s %s type='text' value='%s'/></td>", id, size, onChangeEvent, attr.getValue());
+	                size=(size!=null) ? "size='"+size+"'" : "";
+	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s %s type='%s' value='%s'/></td>", id, size, onChangeEvent, type, attr.getValue());
 	            }
 	            else if (attr.isNumberType()) {
 	                String pattern=attr.getFormatOption("pattern");
@@ -344,7 +345,7 @@ public class Html extends Type implements Renderer {
 	                w.printf("<td width='25px'>&nbsp;</td><td><select name=\"%s\" class='pn-normal'/></td>", id);
 	            }
 	            else if (attr.isChoiceType()) {
-                    w.printf("<td width='25px'>&nbsp;</td><td>");
+                    w.printf("<td width='25px'>&nbsp;</td><td style='white-space: nowrap'>");
 
                     if (attr.getFormatOption("type")==null) {
 	                	if ("radio".equals(attributeField.getRenderHint())) {
@@ -377,7 +378,7 @@ public class Html extends Type implements Renderer {
 	                w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' %s size='%d' type='text' value='%s'/></td>", id, onChangeEvent, size, attr.getValue());
 	            }
 	            else if (attr.isYesornoType()) {
-                    w.printf("<td width='25px'>&nbsp;</td><td>");
+                    w.printf("<td width='25px'>&nbsp;</td><td style='white-space: nowrap'>");
 	            	if ("checkbox".equals(attributeField.getRenderHint())) {
 	            		w.printf("<input name=\"%s\" type='checkbox' value='Yes' class='pn-normal' %s %s/>", id, ("Yes".equals(attr.getValue())) ? "checked='checked'" : "", onChangeEvent);
 	            	}
