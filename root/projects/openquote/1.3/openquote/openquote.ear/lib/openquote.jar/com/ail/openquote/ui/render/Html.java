@@ -443,7 +443,8 @@ public class Html extends Type implements Renderer {
 	}
 
     public Type renderCommandButtonAction(PrintWriter w, RenderRequest request, RenderResponse response, Type model, CommandButtonAction commandButtonAction, String label, boolean immediate) {
-        w.printf("<input type='submit' name='op=%s:immediate=%b' value='%s' class='portlet-form-input-field'/>", label, immediate, i18n(label));
+    	String cssClass=(commandButtonAction.getStyleClass()!=null) ? "class='"+commandButtonAction.getStyleClass()+"'" : "";
+        w.printf("<input id='%s'%s type='submit' name='op=%s:immediate=%b' value='%s' class='portlet-form-input-field'/>", commandButtonAction.getId(), cssClass, label, immediate, i18n(label));
     	return model;
     }
     
@@ -577,14 +578,16 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderNavigationSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, NavigationSection navigationSection) throws IllegalStateException, IOException {
-        w.print("<table width='100%' border='0' align='center'><tr>");
-        w.print("<td width='15%'>&nbsp;</td>");
-        w.print("<td width='70%' align='center'>");
+    	String cssClass=(navigationSection.getStyleClass()!=null) ? "class='"+navigationSection.getStyleClass()+"'" : "";
+
+    	w.printf("<table id='%s'%s width='100%%' border='0' align='center'><tr>", navigationSection.getId(), cssClass);
+        w.printf("<td id='%s-left' width='15%%'>&nbsp;</td>", navigationSection.getId());
+        w.printf("<td id='%s-center' width='70%%' align='center'>", navigationSection.getId());
         for(PageElement element: navigationSection.getPageElement()) {
 			model=element.renderResponse(request, response, model);
 		}
-		w.print("</td>");
-        w.print("<td width='15%' align='right'>");
+		w.printf("</td>");
+        w.printf("<td id='%s-right' width='15%%' align='right'>", navigationSection.getId());
         if (navigationSection.isQuitDisabled()) {
             w.print("&nbsp;");
         }
@@ -652,7 +655,9 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderParsedUrlContent(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ParsedUrlContent parsedUrlContent, String content) {
-        w.printf("<table>");
+    	String cssClass=(parsedUrlContent.getStyleClass()!=null) ? "class='"+parsedUrlContent.getStyleClass()+"'" : "";
+
+    	w.printf("<table id='%s'%s>", parsedUrlContent.getId(), cssClass);
         w.printf("<tr>");
         w.printf("<td class='portlet-font' width='100%%'>");
         
@@ -953,8 +958,9 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext) throws IllegalStateException, IOException {
-        w.printf("<td>%s</td>", title);
-        w.printf("<td colspan='3' align='left'>%s</td>", question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
+    	String cssClass=(question.getStyleClass()!=null) ? "class='"+question.getStyleClass()+"'" : "";
+    	w.printf("<td id='%s-label'%s>%s</td>", question.getId(), cssClass, title);
+        w.printf("<td id='%s-field'%s colspan='3' align='left'>%s</td>", question.getId(), cssClass, question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
     	return model;
     }
 
@@ -988,7 +994,8 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title) throws IllegalStateException, IOException {
-        w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
+    	String cssClass=(questionSection.getStyleClass()!=null) ? "class='"+questionSection.getStyleClass()+"'" : "";
+    	w.printf(" <table id='%s'%s width='100%%' border='0' cols='4' cellpadding='4'>", questionSection.getId(), cssClass);
 
         // output the title row if a title was defined
         if (title!=null) {
@@ -998,8 +1005,9 @@ public class Html extends Type implements Renderer {
         Iterator<? extends Question> it=questionSection.getQuestion().iterator();
         
         while(it.hasNext()) {
-            w.printf("<tr>");
-            it.next().renderResponse(request, response, model);
+        	Question question=it.next();
+            w.printf("<tr id='%s'>", question.getId());
+            question.renderResponse(request, response, model);
             w.printf("</tr>");
         }
 
