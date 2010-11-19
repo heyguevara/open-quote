@@ -1006,7 +1006,7 @@ public class Html extends Type implements Renderer {
         
         while(it.hasNext()) {
         	Question question=it.next();
-            w.printf("<tr id='%s'>", question.getId());
+            w.printf("<tr>");
             question.renderResponse(request, response, model);
             w.printf("</tr>");
         }
