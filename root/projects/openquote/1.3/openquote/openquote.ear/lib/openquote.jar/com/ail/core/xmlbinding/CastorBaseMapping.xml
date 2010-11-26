@@ -866,6 +866,10 @@
         </field>
     </class>
     
+    <class name="com.ail.openquote.ui.GenerateQuotationDocumentAction" extends="com.ail.openquote.ui.Action">
+        <map-to xml="generateQuotationDocumentAction"/>
+    </class>
+    
     <class name="com.ail.openquote.ui.NavigationSection" extends="com.ail.openquote.ui.PageContainer">
         <map-to xml="navigationSection"/>
         <field name="quitDisabled" type="boolean">
