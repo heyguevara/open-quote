@@ -112,7 +112,7 @@ public class PaymentDetails extends PageElement {
         Functions.removeErrorMarkers(schedule);
         
         if (request.getParameter("confirm")==null) {
-            addError("confirm", "check to confirm", schedule);
+            addError("confirm", i18n("i18n_payment_details_confirm_error_label"), schedule);
             error=true;
         }
         

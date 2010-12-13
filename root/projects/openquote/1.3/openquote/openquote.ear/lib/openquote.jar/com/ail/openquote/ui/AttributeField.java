@@ -403,26 +403,26 @@ public class AttributeField extends PageElement {
 	    if (!"no".equals(attr.getFormatOption("required"))) {
 	        if (!attr.isChoiceType()) {
 	        	if (attr.isUndefined()) {
-	        		Functions.addError("error",  "required", attr);
+	        		Functions.addError("error", i18n("i18n_required_error"), attr);
    	    	        error=true;
 	        	}
 	        }
 	        else if (!attr.isFreeChoiceType()) {
 	        	if (attr.isUndefined()) {
-	        		Functions.addError("error",  "required", attr);
+	        		Functions.addError("error", i18n("i18n_required_error"), attr);
    	    	        error=true;
 	        	}
 	        }
 	        else {
         		if (attr.getValue().equals(i18n("i18n_?"))) {
-   	        		Functions.addError("error",  "required", attr);
+   	        		Functions.addError("error", i18n("i18n_required_error"), attr);
    	    	        error=true;
 	        	}
 	        }
 	    }
 	    
 	    if (!error && !attr.isChoiceType() && attr.isInvalid()) {
-	        Functions.addError("error", "invalid", attr);
+	        Functions.addError("error", i18n("i18n_invalid_error"), attr);
 	        error=true;
 	    }
 	
