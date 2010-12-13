@@ -252,14 +252,14 @@
                 <xsl:choose>
                     <xsl:when test="ancestor::repeatingData">29</xsl:when>
                     <xsl:when test="parent::block[@class='address']">31</xsl:when>
-                    <xsl:otherwise>30</xsl:otherwise>
+                    <xsl:otherwise>40</xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
             <xsl:variable name="column3">
                 <xsl:choose>
                     <xsl:when test="ancestor::repeatingData">70</xsl:when>
                     <xsl:when test="parent::block[@class='address']">69</xsl:when>
-                    <xsl:otherwise>70</xsl:otherwise>
+                    <xsl:otherwise>60</xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
             <fo:table xsl:use-attribute-sets="base-table-layout">
