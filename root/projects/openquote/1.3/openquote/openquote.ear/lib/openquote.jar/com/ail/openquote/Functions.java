@@ -340,7 +340,7 @@ public class Functions {
      * the attribute as the Fact name, and the value of the attribute as the Fact's
      * value.<p/>
      * Some care must be taken during product design to avoid two assets of different
-     * types from using the same attribute name. Otherwise this method will may create
+     * types from using the same attribute name. Otherwise this method will create
      * multiple instance of Facts with the same name which the rules will not be able
      * to differentiate.
      * @param drools KnowledgeHelper to assert the new fact into.
