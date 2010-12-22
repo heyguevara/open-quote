@@ -391,7 +391,6 @@ ul#tabsHeader #admin a:hover {
 
 ul#tabsHeader #addpage {
    display: inline;
-   background-color: none;
    background-image: none;
    margin-bottom: -3px;
    padding-top: 1px;
@@ -749,7 +748,7 @@ a {
 }
 
 a img {
-	border: none;
+    border: none;
 }
 
 a:hover {
@@ -1135,7 +1134,7 @@ not sure if we need this one?.. */
 
 }
 
-/* ===== WSRP 2.0 - As of now proposed additions are:	===== */
+/* ===== WSRP 2.0 - As of now proposed additions are:    ===== */
 
 /* A separator bar similar to a horizontal rule, but with styling matching the page */
 .portlet-horizontal-separator {
@@ -1316,4 +1315,21 @@ Currently for Role management admin portlet
    background-color: #eef8fd;
    padding: 10px;
    border: 1px solid #000000;
+}
+
+.required-field-indicator {
+    background-image: url( images/required-field-indicator.png );
+    background-repeat: no-repeat;
+    background-position: center;
+    float: left;   
+    min-height: 16px;
+    min-width: 9px;
+    margin: 0px 5px 0px 0px;
+}
+
+.optional-field-indicator {
+    float: left;   
+    min-height: 16px;
+    min-width: 9px;
+    margin: 0px 5px 0px 0px;
 }

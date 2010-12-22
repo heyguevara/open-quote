@@ -440,8 +440,19 @@ public class TestAttribute extends TestCase {
         
         attr.setValue("Salon");
         assertFalse(attr.isUndefined());
+    }
+    
+    public void testRequiredOption() {
+        Attribute attr;
 
-        
+        attr=new Attribute("id", "-", "string");
+        assertTrue(attr.isRequired());
+
+        attr=new Attribute("id", "-", "string,required=yes");
+        assertTrue(attr.isRequired());
+
+        attr=new Attribute("id", "-", "string,required=no");
+        assertFalse(attr.isRequired());
     }
 }
 

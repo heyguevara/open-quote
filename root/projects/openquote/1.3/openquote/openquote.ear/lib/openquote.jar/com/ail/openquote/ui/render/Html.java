@@ -731,7 +731,7 @@ public class Html extends Type implements Renderer {
         
         if (proposer instanceof PersonalProposer) {
             w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"<div class='required-field-indicator'/></td>");
             w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'>");
 	        w.printf(    "<tr>");
@@ -742,7 +742,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "</tr>");
 	        w.printf(   "</table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"<div class='optional-field-indicator'/></td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -754,7 +754,7 @@ public class Html extends Type implements Renderer {
 	        w.printf( "</tr>");
 
 	        w.printf( "<tr class='portlet-font'>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"<div class='required-field-indicator'/></td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -763,7 +763,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"<div class='required-field-indicator'/></td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -776,7 +776,7 @@ public class Html extends Type implements Renderer {
         }
         else if (proposer instanceof CommercialProposer) {
             w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_company_label")+"</td>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_company_label")+"<div class='required-field-indicator'/></td>");
             w.printf(  "<td colspan='4'>");
             w.printf(   "<table border='0'><tr>");
             w.printf(    "<td>");
@@ -791,7 +791,7 @@ public class Html extends Type implements Renderer {
         w.printf( "<tr><td height='15'></td></tr>");
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_address_label")+"</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_address_label")+"<div class='required-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -803,7 +803,7 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td>&nbsp;<div class='required-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -815,7 +815,7 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td>&nbsp;<div class='optional-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -827,7 +827,7 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td>&nbsp;<div class='optional-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -839,7 +839,7 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
 
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td>&nbsp;</td>");
+        w.printf(  "<td>"+i18n("i18n_proposer_details_postcode_label")+"<div class='required-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -860,7 +860,7 @@ public class Html extends Type implements Renderer {
             w.printf( "<tr><td height='15'></td></tr>");
             w.printf( "<tr><td class='portlet-section-subheader' colspan='4'>Contact details</td></tr>");
             w.printf( "<tr class='portlet-font'>");
-            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"</td>");
+            w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_title_label")+"<div class='required-field-indicator'/></td>");
             w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'>");
 	        w.printf(    "<tr>");
@@ -871,7 +871,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "</tr>");
 	        w.printf(   "</table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_other_title_label")+"<div class='optional-field-indicator'/></td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -883,7 +883,7 @@ public class Html extends Type implements Renderer {
 	        w.printf( "</tr>");
 
 	        w.printf( "<tr class='portlet-font'>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_first_name_label")+"<div class='required-field-indicator'/></td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -892,7 +892,7 @@ public class Html extends Type implements Renderer {
 	        w.printf(    "<td class='portlet-msg-error'>%s</td>", findError("firstName", proposer.getInstance(), proposerDetails));
 	        w.printf(   "</tr></table>");
 	        w.printf(  "</td>");
-	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"</td>");
+	        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_surname_label")+"<div class='required-field-indicator'/></td>");
 	        w.printf(  "<td colspan='2'>");
 	        w.printf(   "<table border='0'><tr>");
 	        w.printf(    "<td>");
@@ -905,7 +905,7 @@ public class Html extends Type implements Renderer {
         }
         
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_telephone_label")+"</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_telephone_label")+"<div class='required-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -918,7 +918,7 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
 
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_mobilephone_label")+"</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_mobilephone_label")+"<div class='optional-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -931,7 +931,7 @@ public class Html extends Type implements Renderer {
         w.printf( "</tr>");
 
         w.printf( "<tr class='portlet-font'>");
-        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_email_label")+"</td>");
+        w.printf(  "<td class='portal-form-label'>"+i18n("i18n_proposer_details_email_label")+"<div class='required-field-indicator'/></td>");
         w.printf(  "<td colspan='2'>");
         w.printf(   "<table border='0'><tr>");
         w.printf(    "<td>");
@@ -959,8 +959,15 @@ public class Html extends Type implements Renderer {
     
     public Type renderQuestion(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Question question, String title, String rowContext) throws IllegalStateException, IOException {
     	String cssClass=(question.getStyleClass()!=null) ? "class='"+question.getStyleClass()+"'" : "";
-    	w.printf("<td id='%s-label'%s>%s</td>", question.getId(), cssClass, title);
-        w.printf("<td id='%s-field'%s colspan='3' align='left'>%s</td>", question.getId(), cssClass, question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
+
+    	Attribute attr=model.xpathGet(question.getBinding(), Attribute.class);
+    	
+    	String req=attr.isRequired() ? "<div class='required-field-indicator'/>" : "<div class='optional-field-indicator'/>";
+
+    	w.printf("<td id='%s-label'%s>%s%s</td>", question.getId(), cssClass, title, req);
+        
+    	w.printf("<td id='%s-field'%s colspan='3' align='left'>%s</td>", question.getId(), cssClass, question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
+    	
     	return model;
     }
 
@@ -1054,7 +1061,10 @@ public class Html extends Type implements Renderer {
         	onChange="enableTargetIf(isInList(this.options[this.selectedIndex].value, \""+questionWithDetails.getDetailsEnabledFor()+"\"), \""+detailId+"\")";
         }
         
-        w.printf("<td>%s</td>", title);
+    	Attribute attr=model.xpathGet(questionWithDetails.getBinding(), Attribute.class);
+    	String req=attr.isRequired() ? "<div class='required-field-indicator'/>" : "<div class='optional-field-indicator'/>";
+
+    	w.printf("<td>%s%s</td>", title, req);
         w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getBinding(), rowContext, onChange, questionWithDetails.getOnLoad()));
         w.printf("<td>%s</td>", detailTitle);
         w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getDetailsBinding(), rowContext, questionWithDetails.getOnChange(), questionWithDetails.getOnLoad()));
@@ -1105,7 +1115,9 @@ public class Html extends Type implements Renderer {
         	                           "!isInList(this.value, \""+questionWithSubSection.getDetailsEnabledFor()+"\"), \""+questionWithSubSection.getId()+"\")";
         }
         
-        w.printf("<td>%s</td>", title);
+    	Attribute attr=model.xpathGet(questionWithSubSection.getBinding(), Attribute.class);
+    	String req=attr.isRequired() ? "<div class='required-field-indicator'/>" : "<div class='optional-field-indicator'/>";
+    	w.printf("<td>%s%s</td>", title, req);
         w.printf("<td colspan='3'>%s</td>", questionWithSubSection.renderAttribute(request, response, model, questionWithSubSection.getBinding(), rowContext, onChange, questionWithSubSection.getOnLoad()));
         w.printf("</tr>");
         w.printf("<tr><td colspan='4'>");
@@ -1216,13 +1228,25 @@ public class Html extends Type implements Renderer {
         
         // Output the column headers
         w.printf(" <tr class='portlet-section-alternate'>");
-        for(AttributeField a: rowScroller.getItem()) {
-            if (a.getExpandedSubTitle(model)!=null) {
-                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s<br/>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)), i18n(a.getExpandedSubTitle(model)));
-            }
-            else {
-                w.printf("<td align='center'><table><tr><td valign='middle' align='center'>%s</td><td>&nbsp;</td></tr></table></td>", i18n(a.getExpandedTitle(model)));
-            }
+        for(int col=0 ; col<rowScroller.getItem().size() ; col++) {
+        	AttributeField a=rowScroller.getItem().get(col);
+
+        	String mainTitle=a.getExpandedTitle(model)!=null ? a.getExpandedTitle(model) : "";
+        	String subTitle=a.getExpandedSubTitle(model)!=null ? a.getExpandedSubTitle(model) : "";
+        	String clazz=rowScroller.isBoundToRequiredColumnAttribute(model, rowScroller.getBinding(), col) ? "required-field-indicator" : "optional-field-indicator";
+
+        	w.printf("<td align='center'><table>"); 
+        	w.printf( "<tr>");
+        	w.printf(  "<td>");
+        	w.printf(   "<div>");
+        	w.printf(    "<div class='%s'></div>%s", clazz, mainTitle);
+        	w.printf(   "</div>");
+        	w.printf(  "</td>");
+            w.printf( "</tr>");
+        	w.printf(  "<td>");
+        	w.printf(    "%s", subTitle);
+            w.printf( "</tr>");
+            w.printf("</table></td>");
         }
 
         // Add a column for the trash can, if it's enabled
@@ -1747,7 +1771,7 @@ public class Html extends Type implements Renderer {
             w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getLegalName()+", "+quote.getBroker().getAddress());
             w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_id_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getDirectDebitIdentificationNumber());
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_account_number_label")+"</b></td>");
+            w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_account_number_label")+"</b><div class='required-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("    <table border='0'><tr>");
             w.printf("     <td><input name='acc' size='8' type='text' maxlength='10' value='%s'/></td>", accountNumber);
@@ -1756,7 +1780,7 @@ public class Html extends Type implements Renderer {
             w.printf("  </tr>");
             w.printf(" </tr>");
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_sort_code_label")+"</b></td>");
+            w.printf("  <td width='25%%'><b>"+i18n("i18n_payment_details_sort_code_label")+"</b><div class='required-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("    <table border='0'><tr>");
             w.printf("     <td>");
@@ -1799,7 +1823,7 @@ public class Html extends Type implements Renderer {
             w.printf(" <tr class='portlet-font'><td width='15%%' colspan='2'>"+i18n("i18n_payment_details_direct_debit_title")+"</td></tr>");
 
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='15%%'><b>Card number</b></td>");
+            w.printf("  <td width='15%%'><b>Card number</b><div class='required-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td><input name='cardNumber' size='20' type='text' value='%s'/></td>", hideNull(pc.getCardNumber()));
@@ -1809,7 +1833,7 @@ public class Html extends Type implements Renderer {
             w.printf(" </tr>");
 
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='15%%'><b>Start date</b></td>");
+            w.printf("  <td width='15%%'><b>Start date</b><div class='required-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td>");
@@ -1822,7 +1846,7 @@ public class Html extends Type implements Renderer {
             w.printf(" </tr>");
             
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='15%%'><b>Expiry date</b></td>");
+            w.printf("  <td width='15%%'><b>Expiry date</b><div class='required-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td>");
@@ -1835,7 +1859,7 @@ public class Html extends Type implements Renderer {
             w.printf(" </tr>");
             
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='15%%'><b>Issue number</b></td>");
+            w.printf("  <td width='15%%'><b>Issue number</b><div class='optional-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td><input name='issueNumber' size='2' maxlength='2' type='text' value='%s'/></td>", hideNull(pc.getIssueNumber()));
@@ -1845,7 +1869,7 @@ public class Html extends Type implements Renderer {
             w.printf(" </tr>");
 
             w.printf(" <tr class='portlet-font'>");
-            w.printf("  <td width='15%%'><b>Cardholders name</b></td>");
+            w.printf("  <td width='15%%'><b>Cardholders name</b><div class='required-field-indicator'/></td>");
             w.printf("  <td>");
             w.printf("   <table border='0'><tr>");
             w.printf("    <td><input name='cardHoldersName' size='20' type='text' value='%s'/></td>", pc.getCardHoldersName());
@@ -1865,7 +1889,7 @@ public class Html extends Type implements Renderer {
             w.printf(" <td>");
             w.printf(  i18n("i18n_payment_details_confirm_message"), quote.getBroker().getPaymentTelephoneNumber());
             w.printf(" <table border='0'><tr>");
-            w.printf("   <td>"+i18n("i18n_payment_details_confirm_label")+"<input name='confirm' type='checkbox'/></td>");
+            w.printf("   <td>"+i18n("i18n_payment_details_confirm_label")+"<div class='required-field-indicator'/><input name='confirm' type='checkbox'/></td>");
             w.printf("   <td class='portlet-msg-error'>%s</td>", findError("confirm", quote.getPaymentDetails(), paymentDetails));
             w.printf(" </tr></table>");
             w.printf(" </td>");

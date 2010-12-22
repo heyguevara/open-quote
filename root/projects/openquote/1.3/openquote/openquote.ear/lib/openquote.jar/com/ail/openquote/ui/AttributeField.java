@@ -349,7 +349,6 @@ public class AttributeField extends PageElement {
 	 * @throws IOException
 	 * @throws PostconditionException 
 	 */
-	
 	public String renderAttributeWithTitle(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad, String title) throws IllegalStateException, IOException {
 		// If we're not bound to anything, output nothing.
 		// If our condition isn't met, output nothing.
@@ -362,7 +361,7 @@ public class AttributeField extends PageElement {
 	    PrintWriter w=new PrintWriter(ret);
 	
 	    String id=Functions.xpathToId(rowContext+boundTo);
-	    //com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(id);
+
 	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 	    
 	    String styleClass = getStyleClass();

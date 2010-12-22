@@ -1295,3 +1295,12 @@ Currently for Role management admin portlet
 	padding: 10px;
 	border: 1px solid #000000;
 }
+
+.required-field-indicator {
+	background-color: black;
+    background-image: url( images/required-field-indicator.png );
+    background-repeat: no-repeat;
+    background-position: center;   
+    min-height: 16px;
+    min-width: 9px;
+}

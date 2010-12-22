@@ -821,6 +821,27 @@ public class Attribute extends Type implements Identified {
         
         return (getLocalFormat().startsWith("date"));
     }
+    
+    /**
+     * Return true if the attribute is "required" - i.e. it is mandatory. This will
+     * be the case if the attribute's format contains the "required" option and that 
+     * option has the value of "yes".
+     * @return true if the attribute is required, false otherwise.
+     */
+    public boolean isRequired() {
+        if (getLocalFormat()==null) {
+            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            return false;
+        }
+        
+        String required=getFormatOption("required");
+
+        if (required==null || required.length()==0 || "yes".equalsIgnoreCase(required)) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * If <i>that</i> is an Attribute, and has the same Id as <i>this</i> they are considered equal.

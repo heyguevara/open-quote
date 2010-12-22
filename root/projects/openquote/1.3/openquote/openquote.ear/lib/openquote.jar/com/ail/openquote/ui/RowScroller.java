@@ -59,5 +59,18 @@ public class RowScroller extends Repeater {
         
         return model;
     }
+
+    /**
+     * SHOULD BE ON ROWSCROLLER NO?
+     */
+    public boolean isBoundToRequiredColumnAttribute(Type model, String binding, int column) {
+		Type t=model.xpathGet(binding, Type.class);
+		if (t!=null) {
+			return t.getAttribute(column).isRequired();
+		}
+		else {
+			return false;
+		}
+    }
 }
 
