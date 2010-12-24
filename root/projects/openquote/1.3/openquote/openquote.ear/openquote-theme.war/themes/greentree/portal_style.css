@@ -1297,10 +1297,18 @@ Currently for Role management admin portlet
 }
 
 .required-field-indicator {
-	background-color: black;
     background-image: url( images/required-field-indicator.png );
     background-repeat: no-repeat;
-    background-position: center;   
+    background-position: center;
+    float: left;   
     min-height: 16px;
     min-width: 9px;
+    margin: 0px 5px 0px 0px;
+}
+
+.optional-field-indicator {
+    float: left;   
+    min-height: 16px;
+    min-width: 9px;
+    margin: 0px 5px 0px 0px;
 }
