@@ -876,7 +876,7 @@ public class Xform extends Type implements Renderer {
    	public List<?> renderSaveQuotations(PrintWriter w, RenderRequest request, RenderResponse response, List<?> quotationSummaries, SavedQuotations savedQuotations) throws IllegalStateException, IOException {
         SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
 
-        w.printf("<table width='100%%' border='0' cols='5'>");
+        w.printf("<table width='100%%' border='0'>");
         w.printf(  "<tr><td cols='5'>"+i18n("i18n_saved_quotations_title")+"</td></tr>", quotationSummaries.size()==1 ? "quote" : "quotes");
         w.printf(  "<tr><td height='10' cols='5'/></tr>");
         w.printf(  "<tr class='portlet-font'>");

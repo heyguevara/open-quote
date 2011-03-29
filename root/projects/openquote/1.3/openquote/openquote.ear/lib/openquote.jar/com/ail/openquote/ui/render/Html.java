@@ -171,9 +171,9 @@ public class Html extends Type implements Renderer {
             Type t=it.next();
                
             for (Answer a: answerScroller.getAnswer()) {
-                w.printf("<tr>");
+                //w.printf("<tr>");
                 a.renderResponse(request, response, t);
-                w.printf("</tr>");
+                //w.printf("</tr>");
             }
 
             w.printf("<tr><td height='4' colspan='2'></td></tr>");
@@ -183,7 +183,7 @@ public class Html extends Type implements Renderer {
 	}
 
 	public Type renderAnswerSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerSection answerSection, String title)	throws IOException {
-		w.printf(" <table width='100%%' border='0' cols='2'>");
+		w.printf(" <table width='100%%' border='0'>");
 		
 		// output the title row if a title was defined
 		if (title!=null) {
@@ -454,7 +454,7 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderInformationPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, InformationPage informationPage, String title, List<PageElement> pageElements) throws IOException {
-        w.printf(" <table width='100%%' border='0' cols='1'>");
+        w.printf(" <table width='100%%' border='0'>");
 
         if (title!=null) {
             w.printf("<tr class='portlet-section-header'><td>%s</td></tr>", title);
@@ -626,7 +626,7 @@ public class Html extends Type implements Renderer {
     }
     
     public Type renderPageSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, PageSection pageSection, String title) throws IllegalStateException, IOException {
-        w.printf(" <table width='100%%' border='0' cols='%d'>", pageSection.getColumns());
+        w.printf(" <table width='100%%' border='0'>");
 
         // Output the section title if there is one.
         if (!Functions.isEmpty(title)) {
@@ -726,7 +726,7 @@ public class Html extends Type implements Renderer {
             return proposer;
         }
         
-        w.printf("<table width='100%%' border='0' cols='6'>");
+        w.printf("<table width='100%%' border='0'>");
         w.printf( "<tr><td height='15' colspan='6'>&nbsp;</td></tr>");
         
         if (proposer instanceof PersonalProposer) {
@@ -854,7 +854,7 @@ public class Html extends Type implements Renderer {
         
         w.printf("</table>");
 
-        w.printf("<table border='0' cols='6'>");
+        w.printf("<table border='0'>");
 
         if (proposer instanceof CommercialProposer) {
             w.printf( "<tr><td height='15'></td></tr>");
@@ -978,7 +978,7 @@ public class Html extends Type implements Renderer {
     
     public Type renderQuestionPage(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionPage questionPage, String title) throws IllegalStateException, IOException {
         w.printf("<form name='%s' action='%s' method='post'>", questionPage.getId(), response.createActionURL());
-        w.printf(" <table width='100%%' border='0' cols='1'>");
+        w.printf(" <table width='100%%' border='0'>");
 
         if (title!=null) {
             w.printf("  <tr class='portlet-section-header'><td>%s</td></tr>", title);
@@ -1002,7 +1002,7 @@ public class Html extends Type implements Renderer {
     
     public Type renderQuestionSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, QuestionSection questionSection, String title) throws IllegalStateException, IOException {
     	String cssClass=(questionSection.getStyleClass()!=null) ? "class='"+questionSection.getStyleClass()+"'" : "";
-    	w.printf(" <table id='%s'%s width='100%%' border='0' cols='4' cellpadding='4'>", questionSection.getId(), cssClass);
+    	w.printf(" <table id='%s'%s width='100%%' border='0' cellpadding='4'>", questionSection.getId(), cssClass);
 
         // output the title row if a title was defined
         if (title!=null) {
@@ -1167,7 +1167,7 @@ public class Html extends Type implements Renderer {
     }
 
     public Quotation renderQuotationSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, QuotationSummary quotationSummary) throws IOException {
-        w.printf("<form name='%s' action='%s' method='post'>", quotationSummary.getId(), response.createActionURL());
+//        w.printf("<form name='%s' action='%s' method='post'>", quotationSummary.getId(), response.createActionURL());
 
         w.printf("<table width='100%%' cellpadding='15'>");
         w.printf(" <tr>");
@@ -1185,13 +1185,13 @@ public class Html extends Type implements Renderer {
         w.printf(" </tr>");
         w.printf("</table>");
         
-        w.printf("</form>");
+//        w.printf("</form>");
 
         return quote;
     }
     
     public Quotation renderReferralSummary(PrintWriter w, RenderRequest request, RenderResponse response, Quotation quote, ReferralSummary referralSummary) throws IOException {
-        w.printf("<table columns='2' width='100%%' cellpadding='15'>");
+        w.printf("<table width='100%%' cellpadding='15'>");
         w.printf(" <tr>");
         w.printf("  <td>");
         renderReferralSummaryHelper.renderReferralNotification(w, request, response, quote, referralSummary);
@@ -1218,7 +1218,7 @@ public class Html extends Type implements Renderer {
         // Start the table for the scroller (size()+1 to allow for the trash can column)
         int columns=rowScroller.isAddAndDeleteEnabled() ? rowScroller.getItem().size()+1 : rowScroller.getItem().size();
 
-        w.printf("<table width='100%%' border='0' cols='%d'>", columns);
+        w.printf("<table width='100%%' border='0'>");
 
         if (rowScroller.getTitle()!=null) {
             w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>", columns);
@@ -1324,7 +1324,7 @@ public class Html extends Type implements Renderer {
     public List<?> renderSaveQuotations(PrintWriter w, RenderRequest request, RenderResponse response, List<?> quotationSummaries, SavedQuotations saveedQuotations) throws IllegalStateException, IOException {
         SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
 
-        w.printf("<table width='100%%' border='0' cols='5'>");
+        w.printf("<table width='100%%' border='0'>");
         if (quotationSummaries.size()==1) {
         	w.printf(  "<tr><td colspan='5'>"+i18n("i18n_saved_quotations_title_quote")+"</td></tr>");
         }
@@ -1364,7 +1364,7 @@ public class Html extends Type implements Renderer {
         String pageName=Functions.getPortalPageName(response);
         String portalName=Functions.getPortalName(response);
         
-        w.printf("<table width='100%%' cols='3'>");
+        w.printf("<table width='100%%'>");
         w.printf( "<tr>");
         w.printf(  "<td colspan='3' class='portlet-font'>"+i18n("i18n_saved_quotations_login_message")+"</td>");
         w.printf( "</tr>");
@@ -1401,7 +1401,7 @@ public class Html extends Type implements Renderer {
     }
     
 	public Type renderSectionScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SectionScroller sectionScroller) throws IllegalStateException, IOException {
-        w.printf("<table width='100%%' border='0' cols='1' cellpadding='0'>");
+        w.printf("<table width='100%%' border='0' cellpadding='0'>");
         
         if (sectionScroller.getTitle()!=null) {
             w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
@@ -1414,7 +1414,7 @@ public class Html extends Type implements Renderer {
             Type t=it.next();
             
             w.printf("<tr><td>");
-            w.printf(" <table width='100%%' border='0' cols='4' cellpadding='4'>");
+            w.printf(" <table width='100%%' border='0' cellpadding='4'>");
             
             // TODO sectionTitle should be removed for 2.0
             if (sectionScroller.getSectionTitle()!=null) {
@@ -1449,7 +1449,7 @@ public class Html extends Type implements Renderer {
     
 	public Type renderClauseDetails(PrintWriter w, RenderRequest request, RenderResponse response, Type model, ClauseDetails clauseDetails, String title, Map<String,List<Clause>> groupedClauses) {
 		if (groupedClauses.size()!=0) {
-			w.printf("<table width='100%%' border='0' cols='1'>");
+			w.printf("<table width='100%%' border='0'>");
 			for(String subTitle: groupedClauses.keySet()) {
 				w.printf("<tr><td class='portlet-section-subheader'>%s</td></tr>", subTitle);
 	
@@ -1766,7 +1766,7 @@ public class Html extends Type implements Renderer {
             String sc2=sortCode.substring(sortCode.indexOf('-')+1, sortCode.lastIndexOf('-'));
             String sc3=sortCode.substring(sortCode.lastIndexOf('-')+1);
             
-            w.printf("<table width='100%%' cols='2'>");
+            w.printf("<table width='100%%'>");
             w.printf(" <tr class='portlet-font'><td width='25%%' colspan='2'>"+i18n("i18n_payment_details_bank_account_message")+"</td></tr>");
             w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getLegalName()+", "+quote.getBroker().getAddress());
             w.printf(" <tr class='portlet-font'><td width='25%%'><b>"+i18n("i18n_payment_details_originator_id_label")+"</b></td><td>%s</td></tr>", quote.getBroker().getDirectDebitIdentificationNumber());
@@ -1819,7 +1819,7 @@ public class Html extends Type implements Renderer {
                 pc.setCardHoldersName(proposer.getFirstName()+" "+proposer.getSurname());
             }
             
-            w.printf("<table width='100%%' cols='2'>");
+            w.printf("<table width='100%%'>");
             w.printf(" <tr class='portlet-font'><td width='15%%' colspan='2'>"+i18n("i18n_payment_details_direct_debit_title")+"</td></tr>");
 
             w.printf(" <tr class='portlet-font'>");
@@ -1941,8 +1941,12 @@ public class Html extends Type implements Renderer {
 
             w.printf( "<tr>");
             w.printf(  "<td class='portlet-font'>");
+            
+            w.printf("<form name='%s' action='%s' method='post'>", quotationSummary.getId(), response.createActionURL());
 
             quotationSummary.navigationSection().renderResponse(request, response, quote);
+
+            w.printf(  "</form>");
 
             w.printf(  "</td>");
             w.printf( "</tr>");

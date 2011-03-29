@@ -1,7 +1,6 @@
 <%@page import="org.jboss.portal.server.ServerURL"%>
 <%@page import="org.jboss.portal.server.AbstractServerURL"%>
 <script src="<%=request.getContextPath()%>/js/modal.js" type="text/javascript"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/modal.css" type="text/css" />
 <div id="login-modal" style="display:none">
      <div id="login-modal-msg" style="display:none;width:257px;height:157px">
         <% String loginHeight = "100%"; %>

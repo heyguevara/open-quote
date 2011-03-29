@@ -16,6 +16,7 @@
    <p:theme themeName="renaissance"/>
    <!-- insert header content that was possibly set by portlets on the page -->
    <p:headerContent/>
+<%@include file="/layouts/common/modalHeaderContent.jsp"%>
 </head>
 
 <body id="body">
