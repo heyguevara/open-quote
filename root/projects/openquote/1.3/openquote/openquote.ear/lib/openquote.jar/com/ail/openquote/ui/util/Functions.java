@@ -143,18 +143,31 @@ public class Functions {
      *    /portal/portal/<portal-name>/<page-name>/<window-name>
      * When authenticated the same URL looks like this:
      *    /portal/auth/portal/<portal-name>/<page-name>/<window-name>
+     * Alternative URL's may contain no portal name
+     *    /wsrp_rewrite?wsrp-urlType=blockingAction&amp;wsrp-interactionState=JBPNS_/wsrp_rewrite
      */
     public static String getPortalName(RenderResponse response) {
-        String[] actionUrlPart=response.createActionURL().toString().split("/");
+    	String actionUrl = response.createActionURL().toString();
+        String[] actionUrlPart=actionUrl.split("/");
         
-        if ("auth".equals(actionUrlPart[2])) {
-            return actionUrlPart[4];
+        // find index in url of portal name
+        int nameIndex = 0;
+        if (actionUrlPart.length>2 && "auth".equals(actionUrlPart[2])) {
+        	nameIndex = 4;
         }
-        else {
-            return actionUrlPart[3];
+        else{
+        	nameIndex = 3;
         }
-    }
+        
+        // if none found return nothing
+        if(nameIndex == 0 || actionUrlPart.length<=nameIndex){
+        	return "";
+        }
+        
+        // return portal name
+    	return actionUrlPart[nameIndex];
 
+    }
 
     
     /**
