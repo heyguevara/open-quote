@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE deployments PUBLIC "-//JBoss Portal//DTD Portal Object 2.6//EN" "http://www.jboss.org/portal/dtd/portal-object_2_6.dtd"> 
+
+<deployments>
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties/>
+        <page>
+            <page-name>Configure Editor</page-name>
+            <properties/>
+            <window>
+                <window-name>ConfigureWindow</window-name>
+                <instance-ref>ConfigurePortletInstance</instance-ref>
+                <!-- <default>true</default> -->
+                <region>center</region>
+                <height>0</height>
+            </window>
+            <window>
+                <window-name>ConfigureDownloadPortletWindow1</window-name>
+                <instance-ref>ConfigureDownloadPortletInstance</instance-ref>
+                <default>false</default>
+                <region>left</region>
+                <height>2</height>
+            </window>
+            <window>
+                <window-name>ConfigureUploadPortletWindow1</window-name>
+                <instance-ref>ConfigureUploadPortletInstance</instance-ref>
+                <default>false</default>
+                <region>left</region>
+                <height>3</height>
+            </window>
+        </page>
+    </deployment>
+</deployments>

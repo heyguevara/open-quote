@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC
+   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <context-param>
+        <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>CarFileDownloadServlet</servlet-name>
+        <description>Servlet to frontend the Car file downloader</description>
+        <servlet-class>com.ail.core.ui.CarFileDownloadServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ConfigureOperationServlet</servlet-name>
+        <description>Servlet to expose common configure operations</description>
+        <servlet-class>com.ail.core.ui.ConfigureOperationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CarFileDownloadServlet</servlet-name>
+        <url-pattern>/downloadCarFileServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConfigureOperationServlet</servlet-name>
+        <url-pattern>/configureOperationServlet</url-pattern>
+    </servlet-mapping>
+</web-app>

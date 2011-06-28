@@ -1,0 +1,30 @@
+<alfresco-config>
+
+   <!-- Global Config -->
+   <config>
+      <!-- GenericConfigElement test -->
+      <foo name="foo" title="Foo">
+         <bar id="bar1Id" />
+         <bar id="bar2Id" />
+         <bar id="bar3Id">bar3Value</bar>
+         <baz>bazValue</baz>
+      </foo>
+      
+      <!-- Override test -->
+      <param>hello</param>
+   </config>
+   
+   <!-- Scoped Config -->
+   <config evaluator="string-compare" condition="ServerConfigElementTest">
+      <server>
+         <scheme>http</scheme>
+         <hostname>localhost</hostname>
+         <port>8080</port>
+      </server>
+   </config>
+   
+   <config evaluator="string-compare" condition="OverrideTest">
+      <param>goodbye</param>
+   </config>
+
+</alfresco-config>

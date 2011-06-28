@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<ejb-jar  xmlns="http://java.sun.com/xml/ns/j2ee" version="2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd">
+    <display-name>ConfigureServer</display-name>
+    <enterprise-beans>
+        <session>
+            <display-name>CoreConfigure</display-name>
+            <ejb-name>ConfigureServer</ejb-name>
+            <home>com.ail.core.configure.server.ServerHome</home>
+            <remote>com.ail.core.configure.server.Server</remote>
+            <local-home>com.ail.core.configure.server.ServerLocalHome</local-home>
+            <local>com.ail.core.configure.server.ServerLocal</local>
+            <ejb-class>com.ail.core.configure.server.ServerBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <description>Define the concrete configuration loader for the Core.</description>
+                <env-entry-name>ConfigurationLoader.classname</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>com.ail.core.configure.ConnectionPoolConfigurationLoader</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <description>Define parameters to initialise the configuration loader.</description>
+                <env-entry-name>ConfigurationLoader.params</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@connectionpoolloader.params@</env-entry-value>
+            </env-entry>
+        </session>
+        <session>
+            <display-name>Configure Server Web Service Endpoint</display-name>
+            <ejb-name>ServerEndpointBean</ejb-name>
+            <service-endpoint>com.ail.core.configure.server.ServerEndpoint</service-endpoint>
+            <ejb-class>com.ail.core.configure.server.ServerEndpointBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+        <session>
+            <display-name>EJB configuration loader</display-name>
+            <ejb-name>EJBLoader</ejb-name>
+            <home>com.ail.core.configure.EJBLoaderHome</home>
+            <remote>com.ail.core.configure.EJBLoader</remote>
+            <local-home>com.ail.core.configure.EJBLoaderLocalHome</local-home>
+            <local>com.ail.core.configure.EJBLoaderLocal</local>
+            <ejb-class>com.ail.core.configure.EJBLoaderBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <description>Define the concrete configuration loader for the Core.</description>
+                <env-entry-name>ConfigurationLoader.classname</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>com.ail.core.configure.ConnectionPoolConfigurationLoader</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <description>Define parameters to initialise the configuration loader.</description>
+                <env-entry-name>ConfigurationLoader.params</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@connectionpoolloader.params@</env-entry-value>
+            </env-entry>
+        </session>
+    </enterprise-beans>
+
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>EJBLoader</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <method>
+                <ejb-name>ConfigureServer</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>NotSupported</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
+
+</ejb-jar>
