@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for the core project.
- $Revision: 1.84 $
- $State: Exp $
- $Date: 2006/06/20 20:55:56 $
- $Source: /home/bob/CVSRepository/projects/core/Build.xml,v $
 -->
 
 <project default="build" name="core">
@@ -12,11 +8,6 @@
 
   <target name="clean" description="delete everything that the build can generate">
     <subant-macro target="clean"/>
-  </target>
-  
-  <target name="_build">
-    <subant-macro target="_build"/>
-    <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
   </target>
   
   <target name="build" description="compile (generate, copy, etc) all build outputs">
@@ -50,5 +41,11 @@
     <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
     <release-jboss-domain-macro/>
   </target>
+
+  <target name="_build">
+    <subant-macro target="_build"/>
+    <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
+  </target>
+  
 </project>
 

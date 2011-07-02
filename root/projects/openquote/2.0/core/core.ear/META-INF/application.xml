@@ -27,18 +27,4 @@
             <context-root>configure</context-root>
         </web>
     </module>
-
-    <module>
-        <web>
-            <web-uri>content-browser.war</web-uri>
-            <context-root>content-browser</context-root>
-        </web>
-    </module>
-
-    <module>
-        <web>
-            <web-uri>news-reader.war</web-uri>
-            <context-root>news-readerr</context-root>
-        </web>
-    </module>
 </application>

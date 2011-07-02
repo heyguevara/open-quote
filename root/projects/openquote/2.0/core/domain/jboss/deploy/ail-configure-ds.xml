@@ -1,17 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+5.1.0-liferay-6.0.6<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ===================================================================== -->
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!--  Development datasource config for Core Configure system              -->
-<!--                                                                       -->
-<!-- $Revision: 1.2 $                                                     -->
-<!-- $State: Exp $                                                         -->
-<!-- $Date: 2005/07/16 10:23:28 $                                          -->
-<!-- $Source: /home/bob/CVSRepository/projects/core/domain/jboss/deploy/ail-configure-ds.xml,v $          -->
 <!-- ===================================================================== -->
-
-
 <datasources>
   <local-tx-datasource>
     <jndi-name>ConfigureDS</jndi-name>
@@ -20,5 +13,4 @@
     <user-name>coreuser</user-name>
     <password>bombay</password>
   </local-tx-datasource>
-
 </datasources>

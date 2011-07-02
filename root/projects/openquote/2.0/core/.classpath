@@ -10,12 +10,6 @@
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/configure.war/pages" path="core.ear/configure.war/pages"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/configure.war/images" path="core.ear/configure.war/images"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/classes" path="core.ear/configure.war/WEB-INF/src"/>
-	<classpathentry excluding="WEB-INF/src/" kind="src" path="core.ear/content-browser.war"/>
-	<classpathentry excluding="Build.xml|WEB-INF/src/|xsd/|jsp/|xls/" kind="src" path="core.ear/news-reader.war"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/news-reader.war/WEB-INF/classes" path="core.ear/news-reader.war/WEB-INF/src"/>
-	<classpathentry excluding="Build.xml|WEB-INF/alfresco-object.xml|WEB-INF/jboss-app.xml|WEB-INF/jboss-portlet.xml|WEB-INF/portlet.xml|WEB-INF/src/|WEB-INF/web.xml|asset-editor.jar/|jsp/" kind="src" path="alfresco.war"/>
-	<classpathentry kind="src" output="target/jboss/server/default/deploy/alfresco.war/jsp" path="alfresco.war/jsp"/>
-	<classpathentry excluding="alfresco/repository.properties" kind="src" output="target/jboss/server/default/deploy/alfresco.war/WEB-INF/classes" path="alfresco.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/test/test.jar" path="test.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/proxool-0.7.2.jar"/>

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for the core project.
- $Revision: 1.20 $
- $State: Exp $
- $Date: 2007/12/22 10:40:49 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/Build.xml,v $
 -->
 
 <project default="build" name="core:core.ear">
@@ -22,8 +18,6 @@
     <ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure.war" antfile="Build.xml" target="_build" />
-    <ant dir="./content-browser.war" antfile="Build.xml" target="_build" />
-    <ant dir="./news-reader.war" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro />
   </target>
 

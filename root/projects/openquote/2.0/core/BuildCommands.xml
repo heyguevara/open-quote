@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for starting utilities & servers etc..
- $Revision: 1.12 $
- $State: Exp $
- $Date: 2007/10/05 22:47:50 $
- $Source: /home/bob/CVSRepository/projects/core/BuildCommands.xml,v $
 -->
 
 <project default="" name="core:commands">

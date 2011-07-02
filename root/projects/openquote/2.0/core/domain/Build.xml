@@ -78,7 +78,7 @@
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
-      create database if not exists ${dbname};
+      create database if not exists ${dbname} character set utf8 ;
       grant all on ${dbname}.* to 'coreuser'@'localhost' identified by 'bombay' with grant option;
       grant all on ${dbname}.* to 'coreuser'@'localhost.localdomain' identified by 'bombay' with grant option;
       
