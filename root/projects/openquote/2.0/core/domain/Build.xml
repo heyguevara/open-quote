@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file to deploy the jboss domain
- $Revision: 1.7 $
- $State: Exp $
- $Date: 2006/08/05 09:48:28 $
- $Source: /home/bob/CVSRepository/projects/core/domain/Build.xml,v $
 -->
 
 <project default="build" name="core:domain">
