@@ -19,12 +19,12 @@
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
 
     <!-- copy the domain into <jboss>/server/default -->
-    <copy todir="${deploy.dir}">
-      <fileset dir="./jboss" includes="**" excludes="deploy/ail-*-ds.xml" />
+    <copy todir="${jboss.dir}">
+      <fileset dir="./jboss" includes="**" excludes="server/default/deploy/ail-*-ds.xml" />
     </copy>
 
-    <copy todir="${deploy.dir}">
-      <fileset dir="./jboss" includes="deploy/ail-*-ds.xml" />
+    <copy todir="${jboss.dir}">
+      <fileset dir="./jboss" includes="server/default/deploy/ail-*-ds.xml" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
@@ -107,31 +107,31 @@
             rank int);
 
 
-      create table if not exists ${dbname}.party (
+      create table if not exists ${dbname}.core_party (
             systemId int primary key,
             addressId int,
             parentSystemId int,
             rank int);
       
-      create table if not exists ${dbname}.person (
+      create table if not exists ${dbname}.core_person (
             systemId int primary key,
             firstname varchar(80),
             surname varchar(80));
 
-      create table if not exists ${dbname}.organisation (
+      create table if not exists ${dbname}.core_organisation (
             systemId int primary key,
             name varchar(80));
         
-      create table if not exists ${dbname}.company (
+      create table if not exists ${dbname}.core_company (
             systemId int primary key,
             companyNumber varchar(20));
 
-      create table if not exists ${dbname}.addressbook (
+      create table if not exists ${dbname}.core_addressbook (
             systemId int primary key,
             mePartyType char(3),
             mePartyId int);
 
-      create table if not exists ${dbname}.address (
+      create table if not exists ${dbname}.core_address (
             systemId int primary key,
             line1 varchar(20),
             line2 varchar(20),

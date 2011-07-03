@@ -6,6 +6,15 @@
 <project name="BuildCommon.xml" default="dummy">
   <!-- set global properties for this build -->
   <property environment="env" />
+
+  <!-- Figure out where everything is - everything's relative to project.dir -->
+  <property name="target.dir" value="${project.dir}/target" />
+  <property name="jboss.dir" value="${target.dir}/jboss" />
+  <property name="deploy.dir" value="${jboss.dir}/server/default" />
+  <property name="ear.dir" value="${deploy.dir}/deploy/${ear.name}" />
+  <property name="ear.lib" value="${ear.dir}/lib" />
+  <property name="test.dir" value="${target.dir}/test" />
+
   <property name="repo.dir" value="${development.dir}/repo" />
   <property name="domain.dir" value="${basedir}/domain/jboss" />
   <property name="lib" value="${basedir}/jars" />
