@@ -78,7 +78,6 @@ public class ConfigureUploadPortlet extends GenericPortlet {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, java.io.IOException {
         String op = request.getParameter("op");
 

@@ -32,7 +32,6 @@
         <truncate-filter-macro />
       </options>
       <libs-list>
-        <get-lib-macro artifact="alfresco-web-services" group="alfresco" version="1.4" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="axis" group="axis" version="1.4" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="bouncycastle" group="bouncycastle" version="1.29.mg" type="jar" repo="75.101.150.249/repo" />
         <get-lib-macro artifact="bsh" group="bsh" version="2.0b4" type="jar" repo="75.101.150.249/repo" />

@@ -37,12 +37,9 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/asm-1.5.3.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-validator-1.1.4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-beanutils-1.6.1.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-3.1.12-bin.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jimi-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/poi-2.5.1.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-core-lib.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-lib.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xalan.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/serializer.jar"/>
@@ -53,7 +50,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jxl-2.4.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-jxpath-1.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/axis-1.4.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/alfresco-web-services-1.4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/fop-0.93.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/batik-all-1.6.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/avalon-framework-4.2.0.jar"/>
@@ -70,28 +66,22 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/drools-compiler-4.0.3.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/antlr-runtime-3.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/mvel14-1.2.10.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/myfaces-api-1.1.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/tomahawk-1.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-repository.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/spring-2.0.2.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-core.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/bouncycastle-1.29.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/castor-xml-1.1-ail.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/itext-1.2.mg.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jlfgr-1.0.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/commons-fileupload.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-web-client.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/commons-io-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/hibernate-3.2.1-patched.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/portals-bridges-portletfilter-1.0.4.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/acegi-security-0.8.2_patched.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/velocity-1.6.4.jar" sourcepath="/Users/richarda/Downloads/velocity-1.6.4/src/java"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="target/jboss/lib/log4j-boot.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/portlet.jar"/>
+	<classpathentry kind="lib" path="target/jboss/common/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
