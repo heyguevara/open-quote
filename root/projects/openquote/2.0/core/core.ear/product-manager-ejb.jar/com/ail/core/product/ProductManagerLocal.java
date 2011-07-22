@@ -17,7 +17,7 @@
 
 package com.ail.core.product;
 
-import javax.ejb.EJBLocalObject;
+import javax.ejb.Local;
 
 import com.ail.core.BaseException;
 import com.ail.core.Version;
@@ -31,13 +31,8 @@ import com.ail.core.product.resetallproducts.ResetAllProductsArg;
 import com.ail.core.product.resetproduct.ResetProductArg;
 import com.ail.core.product.updateproduct.UpdateProductArg;
 
-/**
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManagerLocal.java,v $
- */
-public interface ProductManagerLocal extends EJBLocalObject {
+@Local
+public interface ProductManagerLocal {
     String invokeServiceXML(String xml);
 
     VersionEffectiveDate getVersionEffectiveDate();

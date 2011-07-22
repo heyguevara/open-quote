@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the configure war project
- $Revision: 1.8 $
- $State: Exp $
- $Date: 2006/12/07 21:18:19 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/configure.war/Build.xml,v $
 -->
-
 <project default="build" name="core:core.ear/configure.war">
   <import file="../../BuildSettings.xml" />
 
@@ -30,7 +25,7 @@
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
     <antcall target="_build" />
-    <kick-jboss-macro />
+    <jboss-force-deployment-macro/>
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">

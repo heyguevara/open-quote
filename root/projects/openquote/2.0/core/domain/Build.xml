@@ -18,12 +18,17 @@
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
 
+	<!-- remove the liferay 7cogs demo site -->
+    <delete dir="${jboss.dir}/server/default/deploy/sevencogs-hook.war"/>
+    <delete dir="${jboss.dir}/server/default/deploy/sevencogs-mobile-theme.war"/>
+    <delete dir="${jboss.dir}/server/default/deploy/sevencogs-theme.war"/>
+    
     <!-- copy the domain into <jboss>/server/default -->
-    <copy todir="${jboss.dir}">
+    <copy todir="${jboss.dir}" overwrite="true">
       <fileset dir="./jboss" includes="**" excludes="server/default/deploy/ail-*-ds.xml" />
     </copy>
 
-    <copy todir="${jboss.dir}">
+    <copy todir="${jboss.dir}" overwrite="true">
       <fileset dir="./jboss" includes="server/default/deploy/ail-*-ds.xml" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
@@ -31,12 +36,20 @@
       </filterset>
     </copy>
 
-	<condition property="mysql-running">
+    <get-libs-macro todir="${jboss.dir}/server/default/lib">
+      <libs-list>
+        <get-lib-macro repo="75.101.150.249/repo" group="net.sf.saxon" artifact="saxon" version="8.9" type="jar"/>
+        <get-lib-macro repo="75.101.150.249/repo" group="net.sf.saxon" artifact="saxon-xpath" version="8.9" type="jar" />
+        <get-lib-macro repo="75.101.150.249/repo" group="net.sf.saxon" artifact="saxon-dom" version="8.9" type="jar" />
+      </libs-list>
+    </get-libs-macro>
+
+    <condition property="mysql-running">
 		<socket server="localhost" port="3306"/>
     </condition>
     
 	<antcall target="setup-db-if"/>
-	<antcall target="setup-db-unless"/>
+	<antcall target="setup-db-unless"/> 
   </target>
 
   <target name="teardown" description="undo whatever setup did">

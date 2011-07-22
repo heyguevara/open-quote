@@ -29,12 +29,8 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 /**
- * The core provides servlets giving access to content in CMS. The tests defined in the test case check that the servlets are
- * present and operating as expected.
- * 
- * @version $Revision$
- * @date $Date$
- * @source $Source: /home/bob/CVSRepository/projects/core/test/com/ail/coretest/TestTypeXpath.java,v $
+ * The core provides servlets giving access to content in CMS. The tests defined in the test case check 
+ * that the servlets are present and operating as expected.
  */
 public class TestContentServlets extends TestCase {
 

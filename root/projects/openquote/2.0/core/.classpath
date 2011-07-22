@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure-server-ws.jar/|configure.war/|configure.war/WEB-INF/src/|configure.war/WEB-INF/src/|configure.war/images/|configure.war/pages/|configure.wsr/|core.jar/|persistence-server-ejb.jar/|product-manager-ejb.jar/|test-ejb.jar/|lib/core.jar/|content-browser.war/|content-browser.war/WEB-INF/src/|news-reader.war/|news-reader.war/WEB-INF/src/|news-reader.war/xsd/|news-reader.war/jsp/|news-reader.war/xls/" kind="src" path="core.ear"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/lib/core.jar" path="core.ear/lib/core.jar"/>
-	<classpathentry including="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/command-server-ejb.jar" path="core.ear/command-server-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/command-server-ejb.jar" path="core.ear/command-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/configure-server-ejb.jar" path="core.ear/configure-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/persistence-server-ejb.jar" path="core.ear/persistence-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/product-manager-ejb.jar" path="core.ear/product-manager-ejb.jar"/>
@@ -53,9 +53,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/fop-0.93.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/batik-all-1.6.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/avalon-framework-4.2.0.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9-xpath.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9-dom.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/ant-nodeps-1.6.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/janino-2.5.10.jar"/>
@@ -83,5 +80,9 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/portlet.jar"/>
 	<classpathentry kind="lib" path="target/jboss/common/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="target/jboss/common/lib/jboss-javaee.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon-8.9.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon-dom-8.9.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon-xpath-8.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

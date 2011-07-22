@@ -16,8 +16,9 @@
  */
 package com.ail.core.command;
 
+import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJBContext;
-import javax.ejb.MessageDrivenBean;
+import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -31,13 +32,12 @@ import com.ail.core.XMLString;
 
 /**
  * Message Driven Bean which listens on a queue for commands to execute.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
  */
-public class CommandServerBean extends EJBComponent implements MessageDrivenBean, MessageListener {
+@MessageDriven(activationConfig = {
+@ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
+@ActivationConfigProperty(propertyName="destination", propertyValue="queue/AilCommandQueue")}
+)
+public class CommandServerBean extends EJBComponent implements MessageListener {
     private MessageDrivenContext ctx = null;
     private Core core=null;
     private VersionEffectiveDate versionEffectiveDate=null;
@@ -57,7 +57,6 @@ public class CommandServerBean extends EJBComponent implements MessageDrivenBean
     public void ejbRemove() {
     }
                 
-    @SuppressWarnings("unchecked")
     public void onMessage(Message msg) {
         try {
             TextMessage tm = (TextMessage) msg;

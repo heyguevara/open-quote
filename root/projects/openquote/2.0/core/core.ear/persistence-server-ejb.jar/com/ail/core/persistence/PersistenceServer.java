@@ -17,48 +17,38 @@
 
 package com.ail.core.persistence;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBObject;
+import javax.ejb.Remote;
 
 import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/08/20 15:03:54 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServer.java,v $
- */
-public interface PersistenceServer extends EJBObject {
-    /** @link dependency */
+@Remote
+public interface PersistenceServer {
 
-    /*# PersistenceServerBean lnkPersistenceServerBean; */
+    String invokeServiceXML(String xml);
 
-    String invokeServiceXML(String xml) throws RemoteException;
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
+    void setConfiguration(Configuration config);
 
-    void setConfiguration(Configuration config) throws RemoteException;
+    Configuration getConfiguration();
 
-    Configuration getConfiguration() throws RemoteException;
+    String getConfigurationNamespace();
 
-    String getConfigurationNamespace() throws RemoteException;
+    void resetConfiguration();
 
-    void resetConfiguration() throws RemoteException;
+    Version getVersion();
 
-    Version getVersion() throws RemoteException;
+    CreateArg createCommand(CreateArg arg);
 
-    CreateArg createCommand(CreateArg arg) throws RemoteException;
+	UpdateArg updateCommand(UpdateArg arg);
 
-	UpdateArg updateCommand(UpdateArg arg) throws RemoteException;
+	LoadArg loadCommand(LoadArg arg);
 
-	LoadArg loadCommand(LoadArg arg) throws RemoteException;
+	QueryArg queryCommand(QueryArg arg);
 
-	QueryArg queryCommand(QueryArg arg) throws RemoteException;
-
-	DeleteArg deleteCommand(DeleteArg arg) throws RemoteException;
+	DeleteArg deleteCommand(DeleteArg arg);
 }
 
 

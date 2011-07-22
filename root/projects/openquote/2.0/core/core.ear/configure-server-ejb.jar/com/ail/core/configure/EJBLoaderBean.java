@@ -25,8 +25,9 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 
 import javax.ejb.CreateException;
-import javax.ejb.SessionBean;
+import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.core.BaseError;
 import com.ail.core.VersionEffectiveDate;
@@ -36,18 +37,9 @@ import com.ail.core.VersionEffectiveDate;
  * server side. It is use by the EJBConfigurationLoader (client) to provide
  * access to server side configuration for remote clients (e.g. web start apps)
  * which need to access the server's configuration information.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/EJBLoaderBean.java,v $
- * @ejbHome <{EJBLoaderHome}>
- * @ejbRemote <{EJBLoader}>
- * @undefined
- * @displayName
- * @ejbLocal <{EJBLoaderLocal}>
- * @ejbLocalHome <{EJBLoaderLocalHome}>
  */
-public class EJBLoaderBean implements SessionBean {
+@Stateless
+public class EJBLoaderBean implements EJBLoaderLocal{
     SessionContext ctx=null;
     AbstractConfigurationLoader loader=null;
 

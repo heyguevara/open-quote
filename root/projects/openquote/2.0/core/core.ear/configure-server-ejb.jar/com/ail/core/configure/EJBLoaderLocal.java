@@ -17,16 +17,14 @@
 
 package com.ail.core.configure;
 
-import javax.ejb.EJBLocalObject;
-import com.ail.core.configure.Configuration;
 import java.util.Collection;
+
+import javax.ejb.Local;
 
 import com.ail.core.VersionEffectiveDate;
 
-public interface EJBLoaderLocal extends EJBLocalObject {
-    /** @link dependency */
-    /*# EJBLoaderBean lnkEJBLoaderBean; */
-
+@Local
+public interface EJBLoaderLocal {
     public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws EJBConfigurationException;
 
     public void saveConfiguration(String namespace, Configuration config) throws EJBConfigurationException;

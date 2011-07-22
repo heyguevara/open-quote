@@ -18,8 +18,8 @@
 package com.ail.core.product;
 
 import javax.ejb.CreateException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
@@ -36,17 +36,8 @@ import com.ail.core.product.resetallproducts.ResetAllProductsArg;
 import com.ail.core.product.resetproduct.ResetProductArg;
 import com.ail.core.product.updateproduct.UpdateProductArg;
 
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManagerBean.java,v $
- * @undefined
- * @displayName
- * @ejbHome <{ProductManagerHome}>
- * @ejbRemote <{ProductManager}>
- */
-public class ProductManagerBean extends EJBComponent implements SessionBean {
+@Stateless
+public class ProductManagerBean extends EJBComponent implements ProductManager, ProductManagerLocal {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;
     private SessionContext ctx = null;

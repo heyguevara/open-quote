@@ -17,41 +17,34 @@
 
 package com.ail.core.configure;
 
-import com.ail.core.VersionEffectiveDate;
-
-import javax.ejb.EJBObject;
-import java.rmi.RemoteException;
 import java.util.Collection;
-import javax.ejb.EJBException;
+
+import javax.ejb.Remote;
+
+import com.ail.core.VersionEffectiveDate;
 
 /**
  * Remote interface for the EJBLoader bean.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/EJBLoader.java,v $
  */
-public interface EJBLoader extends EJBObject {
-    /** @link dependency */
-    /*# ServerBean lnkEJBLoaderBean; */
+@Remote
+public interface EJBLoader {
+    public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws EJBConfigurationException;
 
-    public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws RemoteException, EJBConfigurationException;
+    public void saveConfiguration(String namespace, Configuration config) throws EJBConfigurationException;
 
-    public void saveConfiguration(String namespace, Configuration config) throws RemoteException, EJBConfigurationException, EJBException;
+    public Collection<String> getNamespaces() throws EJBConfigurationException;
 
-    public Collection<String> getNamespaces() throws RemoteException, EJBConfigurationException, EJBException;
+    public Collection<ConfigurationSummary> getNamespacesHistoryDetail(String namespace) throws EJBConfigurationException;
 
-    public Collection<ConfigurationSummary> getNamespacesHistoryDetail(String namespace) throws RemoteException, EJBConfigurationException, EJBException;
+    public Collection<ConfigurationSummary> getNamespacesDetail() throws EJBConfigurationException;
 
-    public Collection<ConfigurationSummary> getNamespacesDetail() throws RemoteException, EJBConfigurationException, EJBException;
+    public byte[] loadConfigurationAsByteArray(String namespace, VersionEffectiveDate date);
 
-    public byte[] loadConfigurationAsByteArray(String namespace, VersionEffectiveDate date) throws EJBException, RemoteException;
+    public int saveConfiguration(String namespace, byte[] config);
 
-    public int saveConfiguration(String namespace, byte[] config) throws EJBException, RemoteException;
+    public int reset();
 
-    public int reset() throws RemoteException;
+    public int purgeAllConfigurations();
 
-    public int purgeAllConfigurations() throws RemoteException;
-
-    public int deleteConfigurationRepository() throws RemoteException;
+    public int deleteConfigurationRepository();
 }

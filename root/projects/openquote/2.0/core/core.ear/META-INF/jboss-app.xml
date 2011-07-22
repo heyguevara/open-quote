@@ -1,5 +1,4 @@
 <jboss-app>
   <loader-repository>appliedindustriallogic.co.uk:loader=core.ear</loader-repository>
-  <loader-repository-config>java2ParentDelegation=false</loader-repository-config>
 </jboss-app>
 
