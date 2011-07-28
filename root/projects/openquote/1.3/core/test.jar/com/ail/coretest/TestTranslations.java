@@ -21,7 +21,11 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
+import static java.util.Locale.US;
+import static java.util.Locale.UK;
+
 import com.ail.core.Core;
+import com.ail.core.Locale;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
@@ -84,36 +88,43 @@ public class TestTranslations extends CoreUserTestCase {
      * @throws Exception
      */
     public void testLocaleConstruction() throws Exception {
-        Translations translations=new Translations("one");
+        Translations translations=new Translations(UK.toString());
 
-        Translation translation=new Translation("one");
+        Translation translation=new Translation(UK.toString());
         translation.getKey().put("key1", "String number one");
         translation.getKey().put("key2", "String number two");
         translation.getKey().put("key3", "String number three");
         translation.getKey().put("key4", "String number four");
         translations.getTranslation().add(translation);
         
-        translation=new Translation("two", "one");
+        translation=new Translation(US.toString(), UK.toString());
         translation.getKey().put("key1", "Second String number one");
         translation.getKey().put("key2", "Second String number two");
         translation.getKey().put("key3", "Second String number three");
         translations.getTranslation().add(translation);
 
-        assertEquals("String number one", translations.translate("one", "key1"));
-        assertEquals("Second String number one", translations.translate("two", "key1"));
-        assertEquals("String number four", translations.translate("two", "key4"));
-        assertEquals("String number four", translations.translate("three", "key4"));
-        assertEquals("$$key5$$", translations.translate("three", "key5"));
-        assertEquals("$$key5$$", translations.translate("two", "key5"));
-        assertEquals("$$key5$$", translations.translate("one", "key5"));
+        java.util.Locale saved=Locale.getThreadLocale();
+        Locale.setThreadLocale(US);
+
+        assertEquals("Second String number one", translations.translate("key1", "two"));
+        assertEquals("String number four", translations.translate("key4", "two"));
+        assertEquals("String number four", translations.translate("key4", "three"));
+        assertEquals("three", translations.translate("key5", "three"));
+        assertEquals("two", translations.translate("key5", "two"));
         
-        System.out.println(getCore().toXML(translations));
+        Locale.setThreadLocale(saved);
     }
     
     public void testFromXML() throws Exception {
         XMLString instanceXml = new XMLString(this.getClass().getResourceAsStream("TestTranslations.xml"));
         Translations instanceObj = (Translations) super.getCore().fromXML(Translations.class, instanceXml);
         assertNotNull(instanceObj);
-        assertEquals("Second <b>String</b> number two", instanceObj.translate("two", "key2"));
-    }
+
+        java.util.Locale saved=Locale.getThreadLocale();
+        Locale.setThreadLocale(US);
+
+        assertEquals("Second <b>String</b> number two", instanceObj.translate("key2", "two"));
+
+        Locale.setThreadLocale(saved);
+}
 }
