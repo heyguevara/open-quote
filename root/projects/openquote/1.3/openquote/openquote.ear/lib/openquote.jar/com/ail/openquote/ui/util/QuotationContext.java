@@ -33,7 +33,7 @@ import com.ail.openquote.ui.RenderingError;
 import com.ail.openquote.ui.render.Renderer;
 
 /**
- * This class acts wraps a number of ThreadLocal objects which are initialized at the beginning of each Portal request/response 
+ * This class wraps a number of ThreadLocal objects which are initialized at the beginning of each Portal request/response 
  * calls and are available to any code executed within the portal container during the processing of the request/response.
  */
 public class QuotationContext {
