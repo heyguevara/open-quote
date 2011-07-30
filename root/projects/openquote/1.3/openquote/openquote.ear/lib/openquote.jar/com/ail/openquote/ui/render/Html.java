@@ -1218,16 +1218,16 @@ public class Html extends Type implements Renderer {
         // Start the table for the scroller (size()+1 to allow for the trash can column)
         int columns=rowScroller.isAddAndDeleteEnabled() ? rowScroller.getItem().size()+1 : rowScroller.getItem().size();
 
-        w.printf("<table width='100%%' border='0'>");
+        w.printf("<table id='%s' width='100%%' border='0'>", rowScroller.getId());
 
         if (rowScroller.getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='%d'>", columns);
+            w.printf("  <tr id='title' class='portlet-section-subheader'><td colspan='%d'>", columns);
             w.print(rowScroller.getExpandedRepeatedTitle(model));
             w.printf("  </td></tr>");
         }
         
         // Output the column headers
-        w.printf(" <tr class='portlet-section-alternate'>");
+        w.printf(" <tr id='heading' class='portlet-section-alternate'>");
         for(int col=0 ; col<rowScroller.getItem().size() ; col++) {
         	AttributeField a=rowScroller.getItem().get(col);
 
@@ -1263,7 +1263,7 @@ public class Html extends Type implements Renderer {
             w.printf("<tr>");
 
             for(AttributeField a: rowScroller.getItem()) {
-                w.printf("<td align='center'>");
+                w.printf("<td id='record' align='center'>");
                 a.renderResponse(request, response, t, rowScroller.getBinding()+"["+rowCount+"]");
                 w.printf("</td>");
             }
@@ -1272,7 +1272,7 @@ public class Html extends Type implements Renderer {
             if (rowScroller.isAddAndDeleteEnabled()) {
                 if (rowCount>=rowScroller.getMinRows()) {
                     w.printf("<td align='center'>");
-                    w.printf("<input type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", rowScroller.getId(), rowCount);
+                    w.printf("<input id='delete' type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", rowScroller.getId(), rowCount);
                     w.printf("</td>");
                 }
                 else {
@@ -1296,10 +1296,10 @@ public class Html extends Type implements Renderer {
 
             // disabled the button if we've reached 'maxRows'.
             if (rowScroller.getMaxRows()!=-1 && rowCount==rowScroller.getMaxRows()) {
-                w.printf("<input type='image' src='/quotation/images/add-disabled.gif' name='op=add:id=%s:immediate=true:' disabled='true'/>", rowScroller.getId());
+                w.printf("<input id='add-disabled' type='image' src='/quotation/images/add-disabled.gif' name='op=add:id=%s:immediate=true:' disabled='true'/>", rowScroller.getId());
             }
             else {
-                w.printf("<input type='image' src='/quotation/images/add.gif' name='op=add:id=%s:immediate=true:'/>", rowScroller.getId());
+                w.printf("<input id='add' type='image' src='/quotation/images/add.gif' name='op=add:id=%s:immediate=true:'/>", rowScroller.getId());
             }
             
             w.printf("</td></tr>");
@@ -1401,10 +1401,10 @@ public class Html extends Type implements Renderer {
     }
     
 	public Type renderSectionScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, SectionScroller sectionScroller) throws IllegalStateException, IOException {
-        w.printf("<table width='100%%' border='0' cellpadding='0'>");
+        w.printf("<table id='%s' width='100%%' border='0' cellpadding='0'>", sectionScroller.getId());
         
         if (sectionScroller.getTitle()!=null) {
-            w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+            w.printf("  <tr id='title' class='portlet-section-subheader'><td colspan='4'>");
             w.print(i18n(sectionScroller.getExpandedRepeatedTitle(model)));
             w.printf("  </td></tr>");
         }
@@ -1414,29 +1414,62 @@ public class Html extends Type implements Renderer {
             Type t=it.next();
             
             w.printf("<tr><td>");
-            w.printf(" <table width='100%%' border='0' cellpadding='4'>");
+            w.printf(" <table id='section' width='100%%' border='0' cellpadding='4'>");
             
             // TODO sectionTitle should be removed for 2.0
             if (sectionScroller.getSectionTitle()!=null) {
-                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+                w.printf("  <tr class='portlet-section-subheader'>");
+                w.printf("    <td id='title' colspan='4'>");
                 sectionScroller.getSectionTitle().renderResponse(request, response, t);
-                w.printf("  </td></tr>");
+                if (sectionScroller.isAddAndDeleteEnabled() && rowCount>=sectionScroller.getMinRows()) {
+                	w.printf("&nbsp;&nbsp;<input type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", sectionScroller.getId(), rowCount);
+                }
+                else {
+                	w.printf("&nbsp;");
+                }
+                w.printf("    </td>");
+                w.printf("  </tr>");
             }
 
             if (sectionScroller.getRepeatedTitle()!=null) {
-                w.printf("  <tr class='portlet-section-subheader'><td colspan='4'>");
+                w.printf("  <tr class='portlet-section-subheader'>");
+                w.printf("    <td id='title' colspan='4'>");
                 w.print(i18n(sectionScroller.getExpandedRepeatedTitle(t)));
-                w.printf("  </td></tr>");
+                if (sectionScroller.isAddAndDeleteEnabled() && rowCount>=sectionScroller.getMinRows()) {
+                	w.printf("&nbsp;&nbsp;<input id='delete' type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", sectionScroller.getId(), rowCount);
+                }
+                else {
+                	w.printf("&nbsp;");
+                }
+                w.printf("   </td>");
+                w.printf("  </tr>");
             }
     
             for (Iterator<AttributeField> question=sectionScroller.getItem().iterator() ; question.hasNext() ; ) {
-                w.printf("<tr>");
+                w.printf("<tr id='record'>");
                 question.next().renderResponse(request, response, t, sectionScroller.getBinding()+"["+rowCount+"]");
                 w.printf("</tr>");
             }
             w.printf(" </table>");
             w.printf("</td></tr>");
         }
+
+        // if Add and Delete are enabled, put an 'Add' button to the bottom right of the scroller.
+        if (sectionScroller.isAddAndDeleteEnabled()) {
+            w.print("<tr>");
+            w.printf("<td align='left'>");
+
+            // disabled the button if we've reached 'maxRows'.
+            if (sectionScroller.getMaxRows()!=-1 && rowCount==sectionScroller.getMaxRows()) {
+                w.printf("<input id='add-disabled' type='image' src='/quotation/images/add-disabled.gif' name='op=add:id=%s:immediate=true:' disabled='true'/>", sectionScroller.getId());
+            }
+            else {
+                w.printf("<input id='add' type='image' src='/quotation/images/add.gif' name='op=add:id=%s:immediate=true:'/>", sectionScroller.getId());
+            }
+            
+            w.printf("</td></tr>");
+        }
+
         w.printf("</table>");
 
         return model;
