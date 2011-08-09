@@ -116,8 +116,9 @@ public class CurrencyAmount extends Type {
      * @param amount
      */
     private void setAmountAsString(String amount) throws NumberFormatException {
-        char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.getThreadLocale()).getDecimalSeparator();
-        char groupSeparator = DecimalFormatSymbols.getInstance(Locale.getThreadLocale()).getGroupingSeparator();
+        DecimalFormatSymbols dfs=new DecimalFormatSymbols(Locale.getThreadLocale());
+        char decimalSeparator = dfs.getDecimalSeparator();
+        char groupSeparator = dfs.getGroupingSeparator();
 
         int decimalPlace = amount.indexOf(decimalSeparator);
         int scale = amount.length() - (decimalPlace + 1);
