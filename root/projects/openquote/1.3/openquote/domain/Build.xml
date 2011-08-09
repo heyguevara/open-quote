@@ -56,8 +56,8 @@
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
           -- Make sure the database and users are there before we try to delete them!
           create database if not exists ${dbname};
-          grant all on ${dbname}.* to 'openquote'@'localhost' identified by 'bombay' with grant option;
-          grant all on ${dbname}.* to 'openquote'@'localhost.localdomain' identified by 'bombay' with grant option;
+          grant all on ${dbname}.* to 'openquote'@'localhost' identified by 'openquote' with grant option;
+          grant all on ${dbname}.* to 'openquote'@'localhost.localdomain' identified by 'openquote' with grant option;
         
           -- Now do the actual tidy up 
           drop database if exists ${dbname};
