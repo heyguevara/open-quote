@@ -18,7 +18,9 @@
 package com.ail.financial;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 
 import com.ail.core.Locale;
@@ -31,7 +33,7 @@ import com.ail.util.Rate;
  */
 public class CurrencyAmount extends Type {
     static final long serialVersionUID = -7610940646036255844L;
-    private static DecimalFormat format=new DecimalFormat("#0.00");
+    private static String format="#0.00";
     private BigDecimal amount=null;
     private Currency currency=null;
 
@@ -42,6 +44,7 @@ public class CurrencyAmount extends Type {
      */
     public CurrencyAmount() {
     }
+    
     /**
      * Create a new instance of CurrencyAmount matching the value and currency of
      * the supplied instance.
@@ -113,14 +116,28 @@ public class CurrencyAmount extends Type {
      * @param amount
      */
     private void setAmountAsString(String amount) throws NumberFormatException {
-        this.amount=new BigDecimal(amount);
-        if (currency!=null) {
+        char decimalSeparator = DecimalFormatSymbols.getInstance(Locale.getThreadLocale()).getDecimalSeparator();
+        char groupSeparator = DecimalFormatSymbols.getInstance(Locale.getThreadLocale()).getGroupingSeparator();
+
+        int decimalPlace = amount.indexOf(decimalSeparator);
+        int scale = amount.length() - (decimalPlace + 1);
+        
+        StringBuffer integerVal=new StringBuffer();
+        for(int i=0 ; i<amount.length() ; i++) {
+            if (amount.charAt(i)!=decimalSeparator && amount.charAt(i)!=groupSeparator) {
+                integerVal.append(amount.charAt(i));
+            }
+        }
+        
+        this.amount = new BigDecimal(new BigInteger(integerVal.toString()), scale);
+
+        if (currency != null) {
             this.amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
         }
     }
 
     public String getAmountAsString() {
-        return format.format(amount.doubleValue());
+        return new DecimalFormat(format).format(amount.doubleValue());
     }
 
     /**

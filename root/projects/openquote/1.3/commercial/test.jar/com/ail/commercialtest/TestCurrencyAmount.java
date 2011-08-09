@@ -252,4 +252,22 @@ public class TestCurrencyAmount extends TestCase {
         test=test.add(new CurrencyAmount(10, GBP)).apply(new Rate("40%"));
         assertEquals(new CurrencyAmount(40, GBP), test);
     }
+    
+    public void testCurrencyAmountForBrazil() {
+        java.util.Locale saved=java.util.Locale.getDefault();
+        try {
+            Locale.setThreadLocale(new java.util.Locale("pt", "BR"));
+            assertEquals(new BigDecimal("113.40"), new CurrencyAmount("113,40", "GBP").getAmount());
+            assertEquals(new BigDecimal("-113.40"), new CurrencyAmount("-113,40", "GBP").getAmount());
+            assertEquals(new BigDecimal("1113.40"), new CurrencyAmount("1.113,40", "GBP").getAmount());
+
+            Locale.setThreadLocale(new java.util.Locale("en", "GB"));
+            assertEquals(new BigDecimal("113.40"), new CurrencyAmount("113.40", "GBP").getAmount());
+            assertEquals(new BigDecimal("-113.40"), new CurrencyAmount("-113.40", "GBP").getAmount());
+            assertEquals(new BigDecimal("1113.40"), new CurrencyAmount("1,113.40", "GBP").getAmount());
+        }
+        finally {
+            java.util.Locale.setDefault(saved);
+        }
+    }
 }
