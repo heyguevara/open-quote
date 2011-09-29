@@ -358,6 +358,8 @@
 
     <class name="com.ail.insurance.policy.ControlLine" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
 		<field name="assessmentStage" type="string" get-method="getAssessmentStageAsString" set-method="setAssessmentStageAsString"/>
+        <field name="controlLineType" type="string" get-method="getControlLineTypeAsString" set-method="setControlLineTypeAsString"/>
+        <field name="fired" type="boolean" get-method="hasFired" set-method="setFired"/>
     </class>
 
     <class name="com.ail.insurance.policy.ConstrainValueOutOfBounds" extends="com.ail.insurance.policy.ControlLine" auto-complete="false">
@@ -374,7 +376,25 @@
         <field name="minimum" type="com.ail.financial.CurrencyAmount"/>
         <field name="maximum" type="com.ail.financial.CurrencyAmount"/>
     </class>
-    
+
+    <class name="com.ail.insurance.policy.LoadValueOutOfBounds" extends="com.ail.insurance.policy.ControlLine" auto-complete="false">
+        <field name="minimum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="maximum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="dependsOn" type="string"/>
+        <field name="contributesTo" type="string"/>
+        <field name="rate" type="com.ail.util.Rate"/>
+        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+
+    <class name="com.ail.insurance.policy.DiscountValueOutOfBounds" extends="com.ail.insurance.policy.ControlLine" auto-complete="false">
+        <field name="minimum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="maximum" type="com.ail.financial.CurrencyAmount"/>
+        <field name="dependsOn" type="string"/>
+        <field name="contributesTo" type="string"/>
+        <field name="rate" type="com.ail.util.Rate"/>
+        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
+    </class>
+
     <class name="com.ail.insurance.policy.CalculationLine" extends="com.ail.insurance.policy.AssessmentLine" auto-complete="false">
         <field name="contributesTo" type="string"/>
         <field name="amount" type="com.ail.financial.CurrencyAmount"/>
@@ -869,6 +889,10 @@
     <class name="com.ail.openquote.ui.GenerateQuotationDocumentAction" extends="com.ail.openquote.ui.Action">
         <map-to xml="generateQuotationDocumentAction"/>
     </class>
+    
+    <!-- class name="com.ail.openquote.ui.GenerateInvoiceDocumentAction" extends="com.ail.openquote.ui.Action">
+        <map-to xml="generateInvoiceDocumentAction"/>
+    </class -->
     
     <class name="com.ail.openquote.ui.NavigationSection" extends="com.ail.openquote.ui.PageContainer">
         <map-to xml="navigationSection"/>
