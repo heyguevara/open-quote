@@ -24,6 +24,8 @@ package com.ail.insurance.policy;
 public abstract class ControlLine extends AssessmentLine {
     private static final long serialVersionUID = -4519518497757725779L;
     private AssessmentStage assessmentStage;
+    private ControlLineType controlLineType=ControlLineType.OUTSIDE;
+    private boolean fired;
 
     public ControlLine() {
     }
@@ -80,5 +82,55 @@ public abstract class ControlLine extends AssessmentLine {
      * @param line The line on which the control is to be applied.
      */
     public void execute(AssessmentSheet sheet, CalculationLine line) {
+    }
+
+    /**
+     * Set the control line's type. The type defines how the limits are to be applied.
+     * @return Control line's type
+     */
+    public ControlLineType getControlLineType() {
+        return controlLineType;
+    }
+
+    /**
+     * Set the control line's type. The type defines how the limits are to be applied.
+     * @return Control line's type
+     */
+    public String getControlLineTypeAsString() {
+        return controlLineType.toString();
+    }
+
+
+    /**
+     * @see #getControlLineType()
+     * @param controlLineType
+     */
+    public void setControlLineType(ControlLineType controlLineType) {
+        this.controlLineType = controlLineType;
+    }
+
+    /**
+     * @see #getControlLineType()
+     * @param controlLineType
+     */
+    public void setControlLineTypeAsString(String controlLineType) {
+        this.controlLineType = ControlLineType.valueOf(controlLineType);
+    }
+
+    /**
+     * A control line can only fire once. Once it has fired, this 
+     * property is set to true to prevent it from firing again.
+     * @return true if this line has fired, false otherwise
+     */
+    public boolean hasFired() {
+        return fired;
+    }
+
+    /**
+     * @see #hasFired()
+     * @param fired
+     */
+    public void setFired(boolean fired) {
+        this.fired = fired;
     }
 }

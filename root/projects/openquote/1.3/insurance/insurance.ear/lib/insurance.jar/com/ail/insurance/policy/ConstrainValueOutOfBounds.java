@@ -82,15 +82,20 @@ public class ConstrainValueOutOfBounds extends ControlLine {
 
     @Override
     public void execute(AssessmentSheet sheet, CalculationLine line) {
+        if (hasFired()) {
+            return;
+        }
         if (line.getId()!=null && getRelatesTo()!=null && line.getId().equals(getRelatesTo().getId())) {
             if (sheet.getAssessmentStage().equals(getAssessmentStage())) {
                 if (line.getAmount().greaterThan(getMaximum())) {
                     line.getAssessmentSheet().addAssessmentNote("Maximum value for line:'"+line.getId()+"' exceeded limits defined by the '"+getId()+"' control line. Value of "+line.getAmount()+" adjusted to "+getMaximum()+".");
                     line.setAmount(getMaximum());
+                    setFired(true);
                 }
                 else if (line.getAmount().lessThan(getMinimum())) {
                     line.getAssessmentSheet().addAssessmentNote("Minimum value for line:"+line.getId()+" exceeded limits defined by the '"+getId()+"' control line. Value of "+line.getAmount()+" adjusted to "+getMinimum()+".");
                     line.setAmount(getMinimum());
+                    setFired(true);
                 }
             }
         }

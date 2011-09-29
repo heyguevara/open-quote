@@ -51,13 +51,26 @@ public class ReferValueOutOfBounds extends ControlLine {
 
     @Override
     public void execute(AssessmentSheet sheet, CalculationLine line) {
+        if (hasFired()) {
+            return;
+        }
         if (line.getId()!=null && getRelatesTo()!=null && line.getId().equals(getRelatesTo().getId())) {
             if (sheet.getAssessmentStage().equals(getAssessmentStage())) {
-                if (line.getAmount().greaterThan(getMaximum())) {
-                    line.getAssessmentSheet().addReferral("Value of line:"+line.getId()+" exceeded limit of "+getMaximum()+" defined by control line: "+getId());
+                if (ControlLineType.OUTSIDE.equals(getControlLineType())) {
+                    if (line.getAmount().greaterThan(getMaximum())) {
+                        line.getAssessmentSheet().addReferral("Value of line:"+line.getId()+" exceeded limit of "+getMaximum()+" defined by control line: "+getId());
+                        setFired(true);
+                    }
+                    else if (line.getAmount().lessThan(getMinimum())) {
+                        line.getAssessmentSheet().addReferral("Value of line:"+line.getId()+" fell below the minimum of "+getMinimum()+" defined by control line: "+getId());
+                        setFired(true);
+                    }
                 }
-                else if (line.getAmount().lessThan(getMinimum())) {
-                    line.getAssessmentSheet().addReferral("Value of line:"+line.getId()+" fell below the minimum of "+getMinimum()+" defined by control line: "+getId());
+                else {
+                    if (line.getAmount().greaterThan(getMinimum()) && line.getAmount().lessThan(getMaximum())) {
+                        line.getAssessmentSheet().addReferral("Value for line:"+line.getId()+" falls within the refer range defined by the '"+getId()+"' control line.");
+                        setFired(true);
+                    }
                 }
             }
         }

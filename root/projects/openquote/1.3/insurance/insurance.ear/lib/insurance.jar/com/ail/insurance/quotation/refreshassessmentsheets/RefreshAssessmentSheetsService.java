@@ -129,18 +129,9 @@ public class RefreshAssessmentSheetsService extends Service {
         return processedLineCount;
     }
 
-    private void processAssessmentSheets(Policy policy) {
+    private int iterateOverSheets(AssessmentSheetList sheets, Collection<AssessmentLine> processed, int calculationOrder) {
         boolean again=false;
-        int calculationOrder=0;
-        AssessmentSheetList sheets=new AssessmentSheetList(policy);
-        Collection<AssessmentLine> processed=new ArrayList<AssessmentLine>();
 
-        // execute all the control lines appropriate to the before phase
-        sheets.executeControlLinesForAssessmentStage(AssessmentStage.BEFORE_RATING);
-
-        // the following loop performs all the rating calcs, so set the phase accordingly
-        sheets.setAssessmentStage(AssessmentStage.RATING);
-        
         do {
             again=false;
 
@@ -155,8 +146,26 @@ public class RefreshAssessmentSheetsService extends Service {
             }
         } while(again==true);
 
+        return calculationOrder;
+    }
+    
+    private void processAssessmentSheets(Policy policy) {
+        int calculationOrder=0;
+        AssessmentSheetList sheets=new AssessmentSheetList(policy);
+        Collection<AssessmentLine> processed=new ArrayList<AssessmentLine>();
+
         // execute all the control lines appropriate to the before phase
+        sheets.executeControlLinesForAssessmentStage(AssessmentStage.BEFORE_RATING);
+
+        // the following loop performs all the rating calcs, so set the phase accordingly
+        sheets.setAssessmentStage(AssessmentStage.RATING);
+        
+        calculationOrder=iterateOverSheets(sheets, processed, calculationOrder);
+
+        // execute all the control lines appropriate to the after phase
         sheets.executeControlLinesForAssessmentStage(AssessmentStage.AFTER_RATING);
+
+        calculationOrder=iterateOverSheets(sheets, processed, calculationOrder);
     }
 
     /** The 'business logic' of the entry point. */
@@ -175,6 +184,9 @@ public class RefreshAssessmentSheetsService extends Service {
         // remove only lines that this origin added in the past
         policy.removeAssessmentLinesByOrigin(args.getOriginArg());
 
+        // Lines may have been fired in a previous run, reset them so they can fire again.
+        policy.resetAssessmentControlLines();
+        
         // lock the sheets to this origin
         policy.lockAllAssessmentSheets(args.getOriginArg());
 

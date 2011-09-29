@@ -225,8 +225,9 @@ public class AssessmentSheet extends Type {
      * @param line Instance of AssessmentLine to add.
      * @throws IllegalStateException If line.origin is null and this sheet is not locked to an actor.
      * @throws DuplicateAssessmentLineError If a line with the same id as <code>line</code> is already in the sheet
+     * @return The newly added line
      */
-    public void addLine(AssessmentLine line) {
+    public AssessmentLine addLine(AssessmentLine line) {
         if (line.getOrigin()==null) {
             if (lockingActor==null) {
                 throw new IllegalStateException("Atempt to add a line with null origin to an unlocked AssessmentSheet");
@@ -243,6 +244,8 @@ public class AssessmentSheet extends Type {
         }
         
         this.assessmentLine.put(line.getId(), line);
+        
+        return line;
     }
 
     /**
@@ -321,6 +324,18 @@ public class AssessmentSheet extends Type {
         // remove each of the lines
         for(String id: delete) {
             assessmentLine.remove(id);
+        }
+    }
+
+    /**
+     * Clear the "fired" indicator on all of the control lines
+     * found in this assessment sheet;
+     */
+    public void resetAssessmentControlLines() {
+        for(AssessmentLine l: assessmentLine.values()) {
+            if (l instanceof ControlLine) {
+                ((ControlLine) l).setFired(false);
+            }
         }
     }
 
@@ -438,7 +453,7 @@ public class AssessmentSheet extends Type {
 
         // generate IDs until we find one that isn't being used
         do {
-            id=Integer.toHexString(((int)(Math.random()*Integer.MAX_VALUE))).toUpperCase();
+            id="#"+Integer.toHexString(((int)(Math.random()*Integer.MAX_VALUE))).toUpperCase();
         } while (id.length()!=8 && assessmentLine.containsKey(id));
 
         return id;
@@ -464,9 +479,10 @@ public class AssessmentSheet extends Type {
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      */
-    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
-        addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.LOAD, rate, priority));
+    public AssessmentLine addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
+        return addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.LOAD, rate, priority));
     }
 
     /**
@@ -477,9 +493,10 @@ public class AssessmentSheet extends Type {
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      */
-    public void addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
-        addLoading(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate, priority);
+    public AssessmentLine addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
+        return addLoading(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate, priority);
     }
 
     /**
@@ -493,9 +510,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      */
-    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addLoading(id, reason, relatesTo, contributesTo, dependsOn, rate, generateAutoPriority());
+    public AssessmentLine addLoading(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
+        return addLoading(id, reason, relatesTo, contributesTo, dependsOn, rate, generateAutoPriority());
     }
 
     /**
@@ -506,9 +524,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      */
-    public void addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addLoading(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate);
+    public AssessmentLine addLoading(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
+        return addLoading(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate);
     }
 
     /**
@@ -518,9 +537,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      */
-    public void addLoading(String reason, String contributesTo, String dependsOn, Rate rate) {
-        addLoading(reason, (Reference)null, contributesTo, dependsOn, rate);
+    public AssessmentLine addLoading(String reason, String contributesTo, String dependsOn, Rate rate) {
+        return addLoading(reason, (Reference)null, contributesTo, dependsOn, rate);
     }
 
     /**
@@ -531,9 +551,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      */
-    public void addLoading(String id, String reason, String contributesTo, String dependsOn, Rate rate) {
-        addLoading(id, reason, null, contributesTo, dependsOn, rate);
+    public AssessmentLine addLoading(String id, String reason, String contributesTo, String dependsOn, Rate rate) {
+        return addLoading(id, reason, null, contributesTo, dependsOn, rate);
     }
 
     /**
@@ -546,9 +567,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be loaded
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      */
-    public void addLoading(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount, int priority) {
-        addLine(new SumBehaviour(generateLineId(), reason, relatesTo, contributesTo,  BehaviourType.LOAD, currencyAmount, priority));
+    public AssessmentLine addLoading(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount, int priority) {
+        return addLine(new SumBehaviour(generateLineId(), reason, relatesTo, contributesTo,  BehaviourType.LOAD, currencyAmount, priority));
     }
     
     /**
@@ -560,9 +582,10 @@ public class AssessmentSheet extends Type {
      * @param relatesTo Optional reference to the part of the policy that caused this Loading.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be loaded
+     * @return newly added line
      */
-    public void addLoading(String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount) {
-        addLoading(generateLineId(), reason, relatesTo, contributesTo, currencyAmount, generateAutoPriority());
+    public AssessmentLine addLoading(String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount) {
+        return addLoading(generateLineId(), reason, relatesTo, contributesTo, currencyAmount, generateAutoPriority());
     }
     
     /**
@@ -573,9 +596,10 @@ public class AssessmentSheet extends Type {
      * @param reason Free text reason for this Loading being created.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be loaded
+     * @return newly added line
      */
-    public void addLoading(String reason, String contributesTo, CurrencyAmount currencyAmount) {
-        addLoading(reason, (Reference)null, contributesTo, currencyAmount);
+    public AssessmentLine addLoading(String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        return addLoading(reason, (Reference)null, contributesTo, currencyAmount);
     }
 
     /**
@@ -586,9 +610,10 @@ public class AssessmentSheet extends Type {
      * @param reason Free text reason for this Loading being created.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be loaded
+     * @return newly added line
      */
-    public void addLoading(String id, String reason, String contributesTo, CurrencyAmount currencyAmount) {
-        addLoading(id, reason, null, contributesTo, currencyAmount, generateAutoPriority());
+    public AssessmentLine addLoading(String id, String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        return addLoading(id, reason, null, contributesTo, currencyAmount, generateAutoPriority());
     }
 
     /**
@@ -602,9 +627,10 @@ public class AssessmentSheet extends Type {
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      */
-    public void addDiscount(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
-        addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.DISCOUNT, rate, priority));
+    public AssessmentLine addDiscount(String id, String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
+        return addLine(new RateBehaviour(id, reason, relatesTo, contributesTo, dependsOn,  BehaviourType.DISCOUNT, rate, priority));
     }
 
     /**
@@ -615,10 +641,11 @@ public class AssessmentSheet extends Type {
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      * @see #addDiscount
      */
-    public void addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
-        addDiscount(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate, priority);
+    public AssessmentLine addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate, int priority) {
+        return addDiscount(generateLineId(), reason, relatesTo, contributesTo, dependsOn, rate, priority);
     }
 
     /**
@@ -628,10 +655,11 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this on is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      * @see #addDiscount
      */
-    public void addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
-        addDiscount(reason, relatesTo, contributesTo, dependsOn, rate, generateAutoPriority());
+    public AssessmentLine addDiscount(String reason, Reference relatesTo, String contributesTo, String dependsOn, Rate rate) {
+        return addDiscount(reason, relatesTo, contributesTo, dependsOn, rate, generateAutoPriority());
     }
 
     /**
@@ -640,9 +668,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this one is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      */
-    public void addDiscount(String reason, String contributesTo, String dependsOn, Rate rate) {
-        addDiscount(reason, (Reference)null, contributesTo, dependsOn, rate);
+    public AssessmentLine addDiscount(String reason, String contributesTo, String dependsOn, Rate rate) {
+        return addDiscount(reason, (Reference)null, contributesTo, dependsOn, rate);
     }
 
     /**
@@ -652,9 +681,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param dependsOn The Id of the line that this one is derived from.
      * @param rate The rate to be used in the calculation.
+     * @return newly added line
      */
-    public void addDiscount(String id, String reason, String contributesTo, String dependsOn, Rate rate) {
-        addDiscount(id, reason, null, contributesTo, dependsOn, rate, generateAutoPriority());
+    public AssessmentLine  addDiscount(String id, String reason, String contributesTo, String dependsOn, Rate rate) {
+        return addDiscount(id, reason, null, contributesTo, dependsOn, rate, generateAutoPriority());
     }
 
     /**
@@ -667,9 +697,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be discounted
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      */
-    public void addDiscount(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount, int priority) {
-        addLine(new SumBehaviour(generateLineId(), reason, relatesTo, contributesTo,  BehaviourType.DISCOUNT, currencyAmount, priority));
+    public AssessmentLine addDiscount(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount, int priority) {
+        return addLine(new SumBehaviour(generateLineId(), reason, relatesTo, contributesTo,  BehaviourType.DISCOUNT, currencyAmount, priority));
     }
 
     /**
@@ -681,9 +712,10 @@ public class AssessmentSheet extends Type {
      * @param relatesTo Optional reference to the part of the policy that caused this discount.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be discounted
+     * @return newly added line
      */
-    public void addDiscount(String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount) {
-        addDiscount(generateLineId(), reason, relatesTo, contributesTo, currencyAmount, generateAutoPriority());
+    public AssessmentLine addDiscount(String reason, Reference relatesTo, String contributesTo, CurrencyAmount currencyAmount) {
+        return addDiscount(generateLineId(), reason, relatesTo, contributesTo, currencyAmount, generateAutoPriority());
     }
 
     /**
@@ -694,9 +726,10 @@ public class AssessmentSheet extends Type {
      * @param reason Free text reason for this discount being created.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be discounted
+     * @return newly added line
      */
-    public void addDiscount(String reason, String contributesTo, CurrencyAmount currencyAmount) {
-        addDiscount(reason, (Reference)null, contributesTo, currencyAmount);
+    public AssessmentLine addDiscount(String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        return addDiscount(reason, (Reference)null, contributesTo, currencyAmount);
     }
 
     /**
@@ -708,9 +741,10 @@ public class AssessmentSheet extends Type {
      * @param reason Free text reason for this discount being created.
      * @param contributesTo The Id of the line that this one contributes to.
      * @param currencyAmount The amount to be discounted
+     * @return newly added line
      */
-    public void addDiscount(String id, String reason, String contributesTo, CurrencyAmount currencyAmount) {
-        addDiscount(id, reason, null, contributesTo, currencyAmount, generateAutoPriority());
+    public AssessmentLine addDiscount(String id, String reason, String contributesTo, CurrencyAmount currencyAmount) {
+        return addDiscount(id, reason, null, contributesTo, currencyAmount, generateAutoPriority());
     }
 
     /**
@@ -720,28 +754,31 @@ public class AssessmentSheet extends Type {
      * @param id The Id to use for this line
      * @param reason Free text reason for this referral being created.
      * @param relatesTo Optional reference to the part of the policy that caused referral.
+     * @return newly added line
      */
-    public void addReferral(String id, String reason, Reference relatesTo) {
-        addLine(new Marker(id, reason, relatesTo, MarkerType.REFER));
+    public AssessmentLine addReferral(String id, String reason, Reference relatesTo) {
+        return addLine(new Marker(id, reason, relatesTo, MarkerType.REFER));
     }
 
     /**
      * Same as addReferral, but automatically generates the line id.
      * @param reason Free text reason for this referral being created.
      * @param relatesTo Optional reference to the part of the policy that caused referral.
+     * @return newly added line
      * @see #addReferral
      */
-    public void addReferral(String reason, Reference relatesTo) {
-        addReferral(generateLineId(), reason, relatesTo);
+    public AssessmentLine addReferral(String reason, Reference relatesTo) {
+        return addReferral(generateLineId(), reason, relatesTo);
     }
 
     /**
      * Same as addReferral, but automatically generates the line id.
      * @param reason Free text reason for this referral being created.
+     * @return newly added line
      * @see #addReferral
      */
-    public void addReferral(String reason) {
-        addReferral(reason, null);
+    public AssessmentLine addReferral(String reason) {
+        return addReferral(reason, null);
     }
 
     /**
@@ -751,28 +788,31 @@ public class AssessmentSheet extends Type {
      * @param id The Id to use for this line
      * @param reason Free text reason for this decline being created.
      * @param relatesTo Optional reference to the part of the policy that caused decline line.
+     * @return newly added line
      */
-    public void addDecline(String id, String reason, Reference relatesTo) {
-        addLine(new Marker(id, reason, relatesTo, MarkerType.DECLINE));
+    public AssessmentLine addDecline(String id, String reason, Reference relatesTo) {
+        return addLine(new Marker(id, reason, relatesTo, MarkerType.DECLINE));
     }
 
     /**
      * Same as addDecline, but automatically generates a line id
      * @param reason Free text reason for this decline being created.
      * @param relatesTo Optional reference to the part of the policy that caused decline line.
+     * @return newly added line
      * @see #addDecline
      */
-    public void addDecline(String reason, Reference relatesTo) {
-        addDecline(generateLineId(), reason, relatesTo);
+    public AssessmentLine addDecline(String reason, Reference relatesTo) {
+        return addDecline(generateLineId(), reason, relatesTo);
     }
 
     /**
      * Same as addDecline, but automatically generates a line id
      * @param reason Free text reason for this decline being created.
+     * @return newly added line
      * @see #addDecline
      */
-    public void addDecline(String reason) {
-        addDecline(reason, null);
+    public AssessmentLine addDecline(String reason) {
+        return addDecline(reason, null);
     }
 
     /**
@@ -785,9 +825,10 @@ public class AssessmentSheet extends Type {
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
+     * @return newly added line
      */
-    public void addFixedSum(String id, String reason, CurrencyAmount amount) {
-        addLine(new FixedSum(id, reason, amount));
+    public AssessmentLine addFixedSum(String id, String reason, CurrencyAmount amount) {
+        return addLine(new FixedSum(id, reason, amount));
     }
 
     /**
@@ -800,9 +841,10 @@ public class AssessmentSheet extends Type {
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
+     * @return newly added line
      */
-    public void addFixedSum(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount) {
-        addLine(new FixedSum(id, reason, relatesTo, contributesTo, amount));
+    public AssessmentLine addFixedSum(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount) {
+        return addLine(new FixedSum(id, reason, relatesTo, contributesTo, amount));
     }
 
     /**
@@ -815,9 +857,10 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.#
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      */
-    public void addFixedSum(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount, int priority) {
-        addLine(new FixedSum(id, reason, relatesTo, contributesTo, amount, priority));
+    public AssessmentLine addFixedSum(String id, String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount, int priority) {
+        return addLine(new FixedSum(id, reason, relatesTo, contributesTo, amount, priority));
     }
 
     /**
@@ -827,10 +870,11 @@ public class AssessmentSheet extends Type {
      * @param relatesTo Optional reference to the part of the policy that caused this behaviour.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
+     * @return newly added line
      * @see #addFixedSum
      */
-    public void addFixedSum(String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount) {
-        addLine(new FixedSum(generateLineId(), reason, relatesTo, contributesTo, amount));
+    public AssessmentLine addFixedSum(String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount) {
+        return addLine(new FixedSum(generateLineId(), reason, relatesTo, contributesTo, amount));
     }
 
     /**
@@ -840,10 +884,11 @@ public class AssessmentSheet extends Type {
      * @param reason Free text reason for this behaviour being created.
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
+     * @return newly added line
      * @see #addFixedSum
      */
-    public void addFixedSum(String id, String reason, String contributesTo, CurrencyAmount amount) {
-        addLine(new FixedSum(id, reason, null, contributesTo, amount));
+    public AssessmentLine addFixedSum(String id, String reason, String contributesTo, CurrencyAmount amount) {
+        return addLine(new FixedSum(id, reason, null, contributesTo, amount));
     }
 
     /**
@@ -853,20 +898,23 @@ public class AssessmentSheet extends Type {
      * @param contributesTo The Id of the line that this one will contribute to.
      * @param amount The amount to be contributed.
      * @param priority The priority of this line wrt other lines in this sheet (low value=low priority)
+     * @return newly added line
      * @see #addFixedSum
      */
-    public void addFixedSum(String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount, int priority) {
-        addLine(new FixedSum(generateLineId(), reason, relatesTo, contributesTo, amount, priority));
+    public AssessmentLine addFixedSum(String reason, Reference relatesTo, String contributesTo, CurrencyAmount amount, int priority) {
+        return addLine(new FixedSum(generateLineId(), reason, relatesTo, contributesTo, amount, priority));
     }
 
     /**
      * Add an assessment note to this sheet. This helper method simply creates a {@link AssessmentNote AssessmentNote}
      * to the sheet using the reason passed in. The line's ID is automatically generated.
      * @param reason Free text of note.
+     * @return newly added line
+     * @return newly added line
      * @see #addAssessmentNote
      */
-    public void addAssessmentNote(String reason) {
-        addLine(new AssessmentNote(generateLineId(), reason, null));
+    public AssessmentLine addAssessmentNote(String reason) {
+        return addLine(new AssessmentNote(generateLineId(), reason, null));
     }
 
     /**
@@ -874,10 +922,12 @@ public class AssessmentSheet extends Type {
      * to the sheet using the reason and releatesTo values passed in. The line's ID is automatically generated.
      * @param reason Free text of note.
      * @param relatesTo Optional reference to the part of the policy that the note related to (may be null).
+     * @return newly added line
+     * @return newly added line
      * @see #addAssessmentNote
      */
-    public void addAssessmentNote(String reason, Reference relatesTo) {
-        addLine(new AssessmentNote(generateLineId(), reason, relatesTo));
+    public AssessmentLine addAssessmentNote(String reason, Reference relatesTo) {
+        return addLine(new AssessmentNote(generateLineId(), reason, relatesTo));
     }
 
     /**
@@ -886,10 +936,11 @@ public class AssessmentSheet extends Type {
      * @param id The Id to use for this line
      * @param reason Free text of note.
      * @param relatesTo Optional reference to the part of the policy that the note related to (may be null).
+     * @return newly added line
      * @see #addAssessmentNote
      */
-    public void addAssessmentNote(String id, String reason, Reference relatesTo) {
-        addLine(new AssessmentNote(id, reason, relatesTo));
+    public AssessmentLine addAssessmentNote(String id, String reason, Reference relatesTo) {
+        return addLine(new AssessmentNote(id, reason, relatesTo));
     }
     
     /**
@@ -899,10 +950,11 @@ public class AssessmentSheet extends Type {
      * @param id The Id to use for this line
      * @param reason Free text of note.
      * @param dependsOn A comma separated list of the IDs of the lines that this one depends on (will sum).
+     * @return newly added line
      * @see #addAssessmentNote
      */
-    public void addTotalizer(String id, String reason, String dependsOn) {
-        addLine(new Totalizer(id, reason, dependsOn));
+    public AssessmentLine addTotalizer(String id, String reason, String dependsOn) {
+        return addLine(new Totalizer(id, reason, dependsOn));
     }
     
     /**

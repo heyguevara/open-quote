@@ -79,6 +79,10 @@ public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
         return id;
     }
 
+    public String getIdForDisplay() {
+        return id.startsWith("#") ? "" : id;
+    }
+    
     /**
      * @see #getId()
      * @param id

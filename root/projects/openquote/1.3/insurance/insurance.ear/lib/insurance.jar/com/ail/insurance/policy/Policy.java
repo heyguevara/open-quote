@@ -882,6 +882,30 @@ public class Policy extends Type {
     }
 
     /**
+     * Reset the "fired" status on any control lines in the assessment
+     * sheets associated with the policy and it's sections.
+     */
+    public void resetAssessmentControlLines() {
+        Section sect=null;
+
+        // If the policy has an assessment sheet, clean it up
+        if (assessmentSheet!=null) {
+            assessmentSheet.resetAssessmentControlLines();
+        }
+
+        // loop through the sections
+        if (section!=null) {
+            for(Iterator<Section> it=section.iterator() ; it.hasNext() ; ) {
+                sect=it.next();
+
+                if (sect.getAssessmentSheet()!=null) {
+                    sect.getAssessmentSheet().resetAssessmentControlLines();
+                }
+            }
+        }
+    }
+
+    /**
      * Getter returning the value of the inceptionDate property. The date when the policy was incepted (created)
      * @return Value of the inceptionDate property
      */
