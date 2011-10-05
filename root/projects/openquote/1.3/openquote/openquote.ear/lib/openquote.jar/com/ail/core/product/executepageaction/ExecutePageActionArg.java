@@ -21,6 +21,7 @@ import javax.portlet.PortletSession;
 
 import com.ail.core.command.CommandArg;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.Action;
 
 /**
  * @version $Revision: 1.1 $
@@ -79,6 +80,10 @@ public interface ExecutePageActionArg extends CommandArg {
      * @param validationFailed
      */
     void setValidationFailedRet(boolean validationFailed);
+
+	void setActionArg(Action action);
+
+	Action getActionArg();
 }
 
 

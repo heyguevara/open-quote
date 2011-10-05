@@ -173,6 +173,7 @@ public class Action extends PageElement {
         c.setQuotationArgRet(quote);
         c.setPortletSessionArg(portletSession);
         c.setServiceNameArg(commandName);
+        c.setActionArg(this);
         try {
             tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
             tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);

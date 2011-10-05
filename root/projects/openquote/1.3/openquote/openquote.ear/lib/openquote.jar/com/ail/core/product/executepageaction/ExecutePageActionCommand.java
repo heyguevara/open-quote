@@ -22,6 +22,7 @@ import javax.portlet.PortletSession;
 import com.ail.core.command.Command;
 import com.ail.core.command.CommandArg;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.Action;
 
 /**
  * @version $Revision: 1.1 $
@@ -98,5 +99,13 @@ public class ExecutePageActionCommand extends Command implements ExecutePageActi
 
 	public void setValidationFailedRet(boolean validationFailed) {
 		args.setValidationFailedRet(validationFailed);
+	}
+
+	public void setActionArg(Action action) {
+		args.setActionArg(action);
+	}
+
+	public Action getActionArg() {
+		return args.getActionArg();
 	}
 }

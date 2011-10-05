@@ -21,6 +21,7 @@ import javax.portlet.PortletSession;
 
 import com.ail.core.command.CommandArgImp;
 import com.ail.openquote.Quotation;
+import com.ail.openquote.ui.Action;
 
 /**
  * @see ExecutePageSctionArg 
@@ -32,6 +33,7 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
     private String serviceNameArg;
     private PortletSession portletSessionArg;
     private boolean validationFailedRet;
+	private Action actionArg;
     
     /**
      * {@inheritDoc}
@@ -97,6 +99,14 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
 	 */
 	public void setValidationFailedRet(boolean validationFailed) {
 		this.validationFailedRet=validationFailed;
+	}
+
+	public void setActionArg(Action actionArg) {
+		this.actionArg=actionArg;
+	}
+
+	public Action getActionArg() {
+		return actionArg;
 	}
 }
 

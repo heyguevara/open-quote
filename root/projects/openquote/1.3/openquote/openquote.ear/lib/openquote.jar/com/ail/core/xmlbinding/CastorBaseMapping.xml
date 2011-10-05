@@ -693,7 +693,7 @@
         </field>
     </class>
 
-    <class name="com.ail.openquote.ui.PageElement">
+    <class name="com.ail.openquote.ui.PageElement" extends="com.ail.core.Type">
         <map-to xml="pageElement"/>
         <field name="action" type="com.ail.openquote.ui.Action" collection="arraylist"/>
         <field name="helpText" type="com.ail.openquote.ui.util.HelpText"/>
