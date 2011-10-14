@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+	<env:Header />
+	<env:Body>
+		<ns1:register xmlns:ns1="urn:oasis:names:tc:wsrp:v1:types"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<ns1:consumerName>TestConsumerD</ns1:consumerName>
+			<ns1:consumerAgent>TestWeb.1.0</ns1:consumerAgent>
+			<ns1:methodGetSupported>false</ns1:methodGetSupported>
+		</ns1:register>
+	</env:Body>
+</env:Envelope>

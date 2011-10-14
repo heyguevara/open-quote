@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployments>
+    <deployment>
+        <instance>
+            <instance-id>QuotationDevelopmentPortletInstance</instance-id>
+            <portlet-ref>QuotationDevelopmentPortlet</portlet-ref>
+        </instance>
+    </deployment>
+
+    <deployment>
+        <instance>
+            <instance-id>ProductCatalogPortletInstance</instance-id>
+            <portlet-ref>ProductCatalogPortlet</portlet-ref>
+        </instance>
+    </deployment>
+</deployments>

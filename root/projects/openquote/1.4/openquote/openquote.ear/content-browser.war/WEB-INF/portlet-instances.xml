@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployments>
+    <deployment>
+        <instance>
+            <instance-id>ContentBrowserWelcomeInstance</instance-id>
+            <portlet-ref>ContentBrowserPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>homePageUrl</name>
+                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+    <deployment>
+        <instance>
+            <instance-id>OpenQuoteProjectLinksInstance</instance-id>
+            <portlet-ref>ContentBrowserPortlet</portlet-ref>
+            <preferences>
+                <preference>
+                    <name>homePageUrl</name>
+                    <value>http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/OpenQuote%20Project%20Links</value>
+                </preference>
+            </preferences>
+        </instance>
+    </deployment>
+</deployments>
