@@ -1,0 +1,1033 @@
+/* *************************************************** */
+/*      Phalanx theme for JBoss Portal                 */
+/* *************************************************** */
+
+#body {
+   background-color: #E6E8E5;
+   margin: 0px;
+   padding: 0px;
+   color: #000000;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+}
+
+/*****************
+* Portal Header  *
+******************/
+
+/* spacer to keep header at certain width regardless of display size
+done to avoid overlapping of tab navigation in header */
+#spacer {
+/*width: 1024px;*/
+   line-height: 0px;
+   font-size: 0px;
+   height: 0px;
+   min-width: 804px;
+}
+
+/* Wrapper for Header */
+#header-container {
+   background-image: url( images/header_bg.gif );
+   background-repeat: repeat-x;
+   height: 100%; /*	min-width: 1000px;*/
+   width: 100%;
+   border-right-style: solid;
+   border-right-width: 2px;
+   border-right-color: #CFD2CF;
+   border-left-style: solid;
+   border-left-width: 2px;
+   border-left-color: #CFD2CF;
+   border-top-style: solid;
+   border-top-width: 2px;
+   border-top-color: #CFD2CF;
+   margin: 0px -3px 0px 3px;
+
+   z-index: 5;
+}
+
+/* Header background */
+#header {
+   background-image: url( images/header_right.gif );
+   background-repeat: no-repeat;
+   height: 126px;
+   padding: 0px;
+   margin: 0px;
+   background-position: right;
+}
+
+#logoName {
+   background-image: url( images/logo.gif );
+   background-repeat: no-repeat;
+   width: 278px;
+   height: 126px;
+   z-index: 2;
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   border-top-style: solid;
+   border-top-width: 2px;
+   border-top-color: #CFD2CF;
+}
+
+/************************
+* Portal Layout Regions *
+*************************/
+
+/* wrapper for entire portal. starts/ends after/before body tag */
+#portal-container {
+   margin: 4px 2% 0px 2%;
+   background-color: #FEFFFC;
+   background-image: url( images/page_border_bottom.gif );
+   background-position: bottom;
+   background-repeat: repeat-x; /* part of below IE hack to preserve min-width for portlet regions */
+   padding: 0 350px 0 350px;
+}
+
+/* min width hack for IE */
+#expander {
+   margin: 0 -350px 0 -350px;
+   position: relative;
+   min-width: 804px;
+   padding: 0 0 0 0;
+}
+
+/* min width hack for IE */
+#sizer {
+   width: 100%;
+}
+
+/* IE Hack \*/
+* html #portal-container,
+   * html #sizer,
+   * html #expander {
+   height: 0;
+}
+
+/* end IE min-width hack */
+
+/* table that contains all regions. does not include header */
+#content-container {
+   height: 100%;
+   text-align: left; /*   min-width: 800px;*/
+   width: 100%;
+   min-width: 800px;
+   border-right-style: solid;
+   border-right-width: 2px;
+   border-right-color: #CFD2CF;
+   border-left-style: solid;
+   border-left-width: 2px;
+   border-left-color: #CFD2CF;
+   background-color: #FEFFFC;
+   border-bottom-style: solid;
+   border-bottom-width: 2px;
+   border-bottom-color: #CFD2CF;
+
+   background-image: url( images/header_border_bottom.gif );
+   background-position: top;
+   background-repeat: repeat-x;
+}
+
+/* Login JSP Selectors */
+#login-container {
+   position: relative;
+   left: 35%;
+   top: 55px;
+   right: 45%;
+   width: 320px;
+   height: 250px;
+   margin: 0px;
+}
+
+#login-container label, #login-container input {
+   display: block;
+   float: left;
+   width: auto;
+   margin-top: 15px;
+}
+
+#login-container label {
+   text-align: right;
+   padding-right: 20px;
+   width: 95px;
+}
+
+#login-container br {
+   clear: left;
+}
+
+#loginButton {
+
+}
+
+#login-container legend {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 13px;
+   font-weight: bold;
+   color: #768591;
+}
+
+#loginForm {
+   margin: 0px;
+   padding: 0px;
+}
+
+/* end Login Page Selectors */
+
+/* portlet regions within content-container. this includes footer-container. */
+#regionA {
+   /* test to swap columns...
+    float: right; 	*/
+
+   width: 30%;
+   float: left;
+   margin: 0px;
+   padding: 0px;
+   min-width: 250px;
+}
+
+#regionB {
+   /* test to swap columns..
+     margin: 0 30% 0 0; */
+
+   /*two column layout
+margin: 0 0 0 30%;*/
+   padding: 0px; /* test to add 3rd region in layout...*/
+   width: 67%;
+   float: left;
+}
+
+#regionC {
+/* inclusion of 3rd region - comment out for 2 region testing */
+   padding: 0px;
+   margin: 0px;
+   width: 28%;
+   float: left; /*hide 3rd region*/
+   display: none;
+}
+
+#footer-container {
+   position: relative;
+   bottom: -30px;
+   text-align: left;
+}
+
+#navigation-container {
+}
+
+/* used to clear float in regionA,B,C divs so that
+footer spans bottom of page */
+/* used to clear float in regionA,B,C divs so that
+footer spans bottom of page */
+hr.cleaner {
+   clear: both;
+   height: 1px;
+   margin: -1px 0 0 0;
+   padding: 0;
+   border: none;
+   visibility: hidden;
+}
+
+/****************************
+* Tab Navigation for Header *
+*****************************/
+
+UL#tabsHeader {
+   margin: 0;
+   padding-left: 300px;
+   min-width: 550px;
+   z-index: 100; /* added for submenu hover */
+   position: relative; /* added for submenu hover */
+}
+
+UL#tabsHeader li {
+   display: inline;
+   list-style: none;
+   float: left;
+   margin-left: 0px;
+   margin-top: 100px;
+   margin-right: 0px;
+   position: relative;
+   top: 0px;
+   background-image: url( images/tab_right_unselected.gif );
+   background-repeat: no-repeat;
+   background-position: right top;
+   white-space: nowrap;
+}
+
+UL#tabsHeader li:hover {
+   background-image: url( images/tab_right_hover2.gif );
+   background-repeat: no-repeat;
+   background-position: right top;
+   white-space: nowrap;
+}
+
+/* hover selectors for main header tabs */
+UL#tabsHeader li.hoverOn {
+   background-image: url( images/tab_right_hover2.gif );
+   background-repeat: no-repeat;
+   background-position: right top;
+   white-space: nowrap;
+}
+
+UL#tabsHeader li.hoverOff {
+   background-image: url( images/tab_right_unselected.gif );
+   background-repeat: no-repeat;
+   background-position: right top;
+   white-space: nowrap;
+}
+
+UL#tabsHeader a {
+   display: inline;
+   float: left;
+   text-decoration: none;
+   font: 13px / normal Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   color: #425261;
+   line-height: 26px;
+   padding: 5px 15px 1px 15px;
+   background-image: url( images/tab_left_unselected.gif );
+   background-repeat: no-repeat;
+   background-position: top left;
+   width: 90px;
+   white-space: nowrap;
+}
+
+UL#tabsHeader a:hover {
+   text-decoration: none;
+   color: #000;
+   background-image: url( images/tab_left_hover2.gif );
+   background-repeat: no-repeat;
+   background-position: top left;
+   white-space: nowrap;
+   line-height: 26px;
+}
+
+UL#tabsHeader #current {
+   background-color: #fff;
+   background-image: url( images/tab_right.gif );
+   background-repeat: no-repeat;
+   background-position: right bottom;
+   /*   margin-bottom: -3px;
+padding-top: 3px;
+border-bottom: 1px solid #fff;*/
+   line-height: 26px;
+}
+
+UL#tabsHeader #current a, #current a:hover {
+   font: 13px / normal Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-weight: 500;
+   color: #000; /*   line-height: 20px;*/
+   background-image: url( images/tab_left.gif );
+   background-repeat: no-repeat;
+   background-position: top left;
+   /*   margin-top: -3px;
+  padding-bottom: 3px;*/
+   line-height: 26px;
+}
+
+/* Begin Submenu selectors */
+
+/* hide the sub levels and give them a positon absolute so that they take up no room */
+UL#tabsHeader ul {
+   visibility: hidden;
+   position: absolute;
+   height: 0;
+   top: 0px;
+   left: 0;
+   width: 150px;
+   text-align: left;
+   margin: 0px;
+   padding: 0px;
+   margin-top: 22px;
+}
+
+UL#tabsHeader ul a {
+   font: 11px;
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-weight: normal;
+   color: #5078aa;
+
+}
+
+UL#tabsHeader ul a:hover {
+   font: 11px;
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-weight: normal;
+   color: #5078aa;
+}
+
+UL#tabsHeader #current ul a {
+   font: 11px;
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-weight: normal;
+   color: #5078aa;
+}
+
+UL#tabsHeader li:hover ul {
+   visibility: visible;
+}
+
+UL#tabsHeader ul li {
+   background: #EDECEC;
+   color: #5078aa;
+   padding: 3px;
+   width: 120px;
+
+   border: 1px solid #FFFFFF;
+   border-width: 1px 1px 0 0;
+
+   margin-left: 0px;
+   margin-top: 0px;
+   margin-right: 0px;
+}
+
+UL#tabsHeader ul li:hover {
+   background: #E2E2E2;
+}
+
+/* End Submenu selectors */
+
+UL#tabsHeader #current a:hover {
+   text-decoration: none;
+}
+
+/* Tab background color for selected global nav item */
+li.currentTabBackground {
+   background: #fff;
+}
+
+/* backslash hack for IE5-Mac \*/
+UL#tabsHeader a {
+   float: none;
+}
+
+/* End Mac Hack */
+html>body UL#tabsHeader a {
+   width: auto;
+}
+
+/* fixes IE6 win hack */
+
+/***************************
+*  Utility Navigation  *
+*****************************/
+
+#dashboardnav {
+   float: right;
+   font-size: 10px;
+   padding: 6px 12px 0px 0px;
+   color: #FFFFFF;
+   z-index: 20;
+}
+
+#dashboardnav a {
+   color: #FFFFFF;
+}
+
+#dashboardnav .addcontent {
+   background-image: url( images/ico_addcontent.gif );
+   background-repeat: no-repeat;
+   background-position: left;
+   height: 20px;
+   width: 20px;
+   padding-left: 16px;
+}
+
+/****************************
+* Portlet Container Windows *
+*****************************/
+
+.portlet-container {
+/*	margin: 10px;*/
+   padding: 10px;
+}
+
+.portlet-titlebar-title {
+   color: #000000;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   font-weight: bold;
+   white-space: nowrap;
+   line-height: 100%;
+   float: left;
+   text-indent: 5px;
+}
+
+.portlet-titlebar-decoration {
+   height: 11px;
+   width: 11px;
+   float: left;
+   position: relative;
+   top: 4px;
+}
+
+/* wrapper for floating portlet window modes */
+.portlet-mode-container {
+   float: right;
+   padding-left: 4px;
+}
+
+.portlet-titlebar-left {
+   background-image: url( images/portlet-top-left.gif );
+   background-repeat: no-repeat;
+   width: 9px;
+   height: 30px;
+   background-position: right;
+   min-width: 9px;
+}
+
+.portlet-titlebar-center {
+   background-image: url( images/portlet-top-middle.gif );
+   background-repeat: repeat-x;
+   height: 30px;
+}
+
+.portlet-titlebar-right {
+   background-image: url( images/portlet-top-right.gif );
+   background-repeat: no-repeat;
+   width: 10px;
+   height: 30px;
+   min-width: 10px;
+}
+
+.portlet-content-left {
+   background-image: url( images/portlet-content-left.gif );
+   background-repeat: repeat-y;
+   width: 8px;
+   min-width: 8px;
+}
+
+.portlet-content-center {
+   background-color: #fff;
+   background-repeat: repeat;
+   vertical-align: top;
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+}
+
+.portlet-body {
+   background-color: #fff;
+}
+
+.portlet-content-right {
+   background-image: url( images/portlet-right-vertical.gif );
+   height: 100%;
+   background-repeat: repeat-y;
+   background-position: right;
+   width: 4px;
+   min-width: 4px;
+}
+
+.portlet-footer-left {
+   background-image: url( images/portlet-bottom-left.gif );
+   width: 8px;
+   height: 11px;
+   background-repeat: no-repeat;
+   background-position: top right;
+   min-width: 8px;
+}
+
+.portlet-footer-center {
+   background-image: url( images/portlet-bottom-middle.gif );
+   height: 11px;
+   background-repeat: repeat-x;
+}
+
+.portlet-footer-right {
+   background-image: url( images/portlet-bottom-right.gif );
+   width: 12px;
+   height: 11px;
+   background-repeat: no-repeat;
+   min-width: 12px;
+}
+
+/***********************
+* Portlet Window Modes *
+************************/
+.portlet-mode-maximized {
+   background-image: url( images/maximize.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-minimized {
+   background-image: url( images/minimize.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-normal {
+   background-image: url( images/normal.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-help {
+   background-image: url( images/help.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-admin {
+   background-image: url( images/admin.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-edit {
+   background-image: url( images/edit.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-remove {
+   background-image: url( images/remove.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-view {
+   background-image: url( images/view.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+.portlet-mode-reload {
+   background-image: url( images/reload.gif );
+   width: 15px;
+   height: 20px;
+   background-repeat: no-repeat;
+   float: left;
+   display: inline;
+   cursor: pointer;
+}
+
+/**********************
+* Copyright Selectors *
+***********************/
+.portal-copyright {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   color: #5E6D7A;
+}
+
+a.portal-copyright {
+   color: #768591;
+   text-decoration: none;
+}
+
+a.portal-copyright:hover {
+   color: #96A5B1;
+   text-decoration: none;
+}
+
+#ThemeBy:before {
+   content: "Theme by Novell";
+}
+
+/*************
+*  Elements  *
+**************/
+a {
+   color: #4566D4;
+   text-decoration: none;
+}
+
+a:hover {
+   color: #336699;
+   text-decoration: none;
+}
+
+INPUT {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+}
+
+SELECT {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+}
+
+FONT {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   color: #768591;
+}
+
+FIELDSET {
+   background-color: #f7f7f7;
+   border: 1px solid #BABDB6;
+   padding: 6px;
+}
+
+LEGEND {
+   background-color: transparent;
+   padding-left: 6px;
+   padding-right: 6px;
+   padding-bottom: 0px;
+   font-size: 13px;
+}
+
+/********
+* FONTS *
+*********/
+
+/* Font attributes for the normal  fragment font.
+Used for the display of non-accentuated information */
+.portlet-font {
+   color: #000000;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+}
+
+/* Font attributes similar to the portlet.font but the color is lighter */
+.portlet-font-dim {
+   color: #777777;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+}
+
+/********
+* FORMS *
+*********/
+.portlet-form-label {
+   color: #336699;
+   text-decoration: none;
+   font-weight: bold;
+   font-size: 12px;
+}
+
+/* Text of the user-input in an input field. not sure if we need this guy? */
+.portlet-form-input-field {
+   color: #FFFFFF;
+   font-size: 12px;
+   border-color: #000000;
+   border-style: solid;
+   border-width: 1px;
+   background-color: #336699;
+}
+
+/* Text on a form button */
+.portlet-form-button {
+   font-size: 12px;
+   color: #000000;
+}
+
+/* Text that appears beside a context dependent action icon */
+.portlet-icon-label {
+
+}
+
+/* Text that appears beside a "standard" icon (e.g Ok, or Cancel)
+not sure if we need this one?.. */
+.portlet-dlg-icon-label {
+
+}
+
+/* Text for form field labels */
+.portlet-form-field-label {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   color: #000;
+   vertical-align: bottom;
+}
+
+/* Text for a form field */
+.portlet-form-field {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   color: #000; /*margin-top: 10px;*/
+}
+
+/********
+* LINKS *
+*********/
+
+.portal-links:link {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 11px;
+   font-weight: bold;
+   color: #242424;
+   text-decoration: none;
+}
+
+.portal-links:hover {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 11px;
+   font-weight: bold;
+   color: #5699B7;
+   text-decoration: none;
+}
+
+.portal-links:active {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 11px;
+   font-weight: bold;
+   color: #242424;
+   text-decoration: none;
+}
+
+.portal-links:visited {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 11px;
+   font-weight: bold;
+   color: #242424;
+   text-decoration: none;
+}
+
+/***********
+* MESSAGES *
+************/
+
+/* Status of the current operation. */
+.portlet-msg-status {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   font-style: normal;
+   color: #336699;
+}
+
+/* Help messages, general additional information, etc. */
+.portlet-msg-info {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   font-style: italic;
+   color: #000;
+}
+
+/* Error messages. */
+.portlet-msg-error {
+   color: red;
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   font-weight: bold;
+}
+
+/* Warning messages. */
+.portlet-msg-alert {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   font-weight: bold;
+   color: #821717;
+}
+
+/* Verification of the successful completion of a task. */
+.portlet-msg-success {
+   font-family: Verdana, Arial, Helvetica, Sans-Serif, sans-serif;
+   font-size: 12px;
+   font-weight: bold;
+   color: #359630;
+}
+
+/***********
+* SECTIONS *
+************/
+
+/* Table or section header */
+.portlet-section-header {
+   font-weight: bold;
+   color: #000;
+   font-size: 13px;
+   background-color: #CBD4E6;
+}
+
+.portlet-section-body {
+   font-size: 12px;
+}
+
+.portlet-section-alternate {
+   font-size: 12px;
+   background-color: #E6E8E5;
+}
+
+.portlet-section-selected {
+   font-size: 12px;
+   background-color: #CBD4E6;
+}
+
+.portlet-section-subheader {
+   font-weight: bold;
+   font-size: 12px;
+}
+
+.portlet-section-footer {
+   font-size: 11px;
+}
+
+/* Text that belongs to the table but does not fall in one of the other categories
+(e.g. explanatory or help text that is associated with the section. */
+.portlet-section-text {
+   font-size: 12px;
+   font-style: italic;
+}
+
+/*******************
+* Table Selectors  *
+********************/
+/* Table header */
+.portlet-table-header {
+   font-weight: bold;
+   color: #FFF;
+   font-size: 13px;
+   background-color: #336699;
+}
+
+/* Normal text in a table cell */
+.portlet-table-body {
+   color: #000;
+   font-size: 12px;
+}
+
+/* Text in every other row in the table */
+.portlet-table-alternate {
+   color: #000;
+   font-size: 12px;
+   background-color: #E6E8E5;
+}
+
+/* Text in a selected cell range */
+.portlet-table-selected {
+   color: #000;
+   font-size: 12px;
+   background-color: #CBD4E6;
+}
+
+/* Text of a subheading */
+.portlet-table-subheader {
+   font-weight: bold;
+   color: #000;
+   font-size: 12px;
+}
+
+/* Table footer */
+.portlet-table-footer {
+   font-size: 11px;
+}
+
+/* Text that belongs to the table but does not fall in one of the other categories (e.g. explanatory or help text that is associated with the table). */
+.portlet-table-text {
+   font-size: 12px;
+   color: #000;
+   font-style: italic;
+}
+
+/********
+* MENUS *
+*********/
+
+/*General menu settings such as background color, margins, etc. */
+.portlet-menu {
+
+}
+
+/* Normal, unselected menu item. */
+.portlet-menu-item {
+   color: #242424;
+   text-decoration: none;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+}
+
+.portlet-menu-item:hover {
+   color: #5699B7;
+   text-decoration: none;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+}
+
+/* Selected menu item. */
+.portlet-menu-item-selected {
+
+}
+
+/* Selected menu item when the mouse hovers over it. */
+.portlet-menu-item-selected:hover {
+
+}
+
+/* Normal, unselected menu item that has sub-menus. */
+.portlet-menu-cascade-item {
+
+}
+
+/* Selected sub-menu item that has sub-menus */
+.portlet-menu-cascade-item-selected {
+
+}
+
+/* Descriptive text for the menu (e.g. in a help context below the menu) */
+.portlet-menu-description {
+
+}
+
+/* Menu caption */
+.portlet-menu-caption {
+
+}
+
+/* ===== WSRP 2.0 - As of now proposed additions are:	===== */
+
+/* A separator bar similar to a horizontal rule, but with styling matching the page */
+.portlet-horizontal-separator {
+   color: #E6E8E5;
+   height: 1px;
+}
+
+/* Allows portlets to mimic the title bar when nesting something */
+.portlet-nestedTitle-bar {
+}
+
+/* Allows portlets to match the textual character of the title on the title bar. */
+.portlet-nestedTitle {
+}
+
+/* Support portlets having tabs in the same style as the page or other portlets */
+.portlet-tab {
+}
+
+/* Highlight the tab currently being shown */
+.portlet-tab-active {
+}
+
+/* Highlight the selected tab (not yet active) */
+.portlet-tab-selected {
+}
+
+/* A tab which can not be currently activated */
+.portlet-tab-disabled {
+}
+
+/* Top level style for the content of a tab. */
+.portlet-tab-area {
+}

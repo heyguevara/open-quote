@@ -1,0 +1,39 @@
+<ui:decorate template="consumerTemplate.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:jbp="http://www.jboss.org/portal"
+             xmlns:c="http://java.sun.com/jstl/core">
+
+   <ui:param name="title" value=""/>
+   <ui:define name="content">
+
+      <div class="portlet-msg">
+         <div class="portlet-msg-icon"><h:graphicImage url="/img/msgIcon_Warning.gif" alt="/!\"/></div>
+         <div class="portlet-msg-body">
+            <h3>Delete local registration for '#{consumer.id}' consumer?</h3>
+
+            <p class="portlet-msg-alert">
+               You are about to delete the local registration information for the '#{consumer.id}' consumer!
+               This is only needed if this consumer had previously registered with the remote producer and this producer
+               has been modified to not require registration anymore.<br/><br/>
+
+               Only erase local registration information if you experience errors with the producer due to this
+               particular situation. Erasing local registration when not required might lead to inability to work with
+               this producer anymore.
+            </p>
+
+            <p class="portlet-class">Are you sure you want to proceed?</p>
+
+            <h:form>
+               <h:commandButton value="Erase local registration" action="#{consumer.eraseLocalRegistration}"
+                                styleClass="portlet-form-button portlet-section-buttonrow"/>
+               <h:commandButton value="Cancel" action="configureConsumer"
+                                styleClass="portlet-form-button portlet-section-buttonrow"/>
+            </h:form>
+         </div>
+      </div>
+
+   </ui:define>
+
+</ui:decorate>
