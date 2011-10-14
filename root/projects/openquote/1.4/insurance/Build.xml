@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for the insurance project.
+ $Revision: 1.182 $
+ $State: Exp $
+ $Date: 2007/06/10 11:05:59 $
+ $Source: /home/bob/CVSRepository/projects/insurance/Build.xml,v $
+-->
+
+<project default="build" name="insurance">
+    <import file="./BuildSettings.xml"/>
+    
+    <target name="clean" description="delete everything that the build can generate">
+        <subant-macro target="clean"/>
+    </target>
+    
+    <target name="_build">
+        <subant-macro target="_build"/>
+        <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
+    </target>
+    
+    <target name="build" description="compile (generate, copy, etc) all build outputs">
+        <antcall target="_build"/>
+        <kick-jboss-macro/>
+    </target>
+    
+    <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+        <install-jboss-macro version="${jboss.version}"/>
+        <install-base-domain-macro dar="commercial" version="${commercial.version}" build="${commercial.build}"/>
+  
+        <!-- the dar contains some things which will only cause confusion if they're left -->
+        <!-- on the classath - delete them.                                               -->
+        <delete file="${ear.dir}/core.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml"/>
+  
+        <subant-macro target="setup"/>
+        <antcall target="_build"/>
+    </target>
+    
+    <target name="teardown" description="undo whatever setup did">
+        <uninstall-jboss-macro version="${jboss.version}"/>
+        <subant-macro target="teardown"/>
+        <delete dir="${target.dir}" failonerror="false"/>
+    </target>
+    
+    <target name="release" description="build this project's releasable outputs">
+        <!-- Stop the server if it is running -->
+        <ant antfile="BuildCommands.xml" target="jboss: stop server"/>
+        
+        <!-- Do a clean build before we release -->
+        <antcall target="teardown"/>
+        <antcall target="setup"/>
+        
+        <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
+        <release-jboss-domain-macro/>
+    </target>
+</project>
+

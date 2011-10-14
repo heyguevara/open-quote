@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Revision: 1.3 $
+ $State: Exp $
+ $Date: 2006/10/04 22:03:13 $
+ $Source: /home/bob/CVSRepository/projects/insurance/test.jar/com/ail/insurancetest/TestAcceptanceDefaultConfig.xml,v $
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <name>Default Service Invocation Configuration</name>
+  <timeout>600000</timeout>
+  <who>factory</who>
+  <version>$Revision: 1.3 $</version>
+  <types>
+    <!--====================================-->
+    <!--   Define the component's services  -->
+    <!--====================================-->
+    <service name="AcceptanceComponent" builder="ClassBuilder" key="com.ail.core.command.EJBAccessor">
+      <parameter name="JndiName">Acceptance</parameter>
+    </service>
+    
+    <!--=======================================================================-->
+    <!-- Bind the default core services (above) to Commands used by Core.class -->
+    <!--=======================================================================-->
+    <command name="PutOnRiskService" builder="ClassBuilder" key="com.ail.insurance.acceptance.PutOnRiskCommand">
+      <parameter name="Service">AcceptanceComponent</parameter>
+    </command>
+    <command name="ProduceDocumentationService" builder="ClassBuilder" key="com.ail.insurance.acceptance.ProduceDocumentationCommand">
+      <parameter name="Service">AcceptanceComponent</parameter>
+    </command>
+    <command name="CollectPremiumService" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommand">
+      <parameter name="Service">AcceptanceComponent</parameter>
+    </command>
+  </types>
+</configuration>
