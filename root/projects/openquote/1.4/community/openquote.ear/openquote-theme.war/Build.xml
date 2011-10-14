@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project default="build" name="community:openquote.ear/openquote-theme.war">
+  <import file="../../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-war-macro overlay="true"/>
+  </target>
+
+  <target name="_build">
+    <!-- this will set ${deploy.unit} based on the current projects name -->
+    <_set_output_dir_property_macro/>
+
+    <!-- copy text files (properties, xml, etc) with the filter turned on -->
+    <copy todir="${output.dir}" overwrite="true">
+      <filterset filtersfile="${copyfilter.file}"/>
+      <fileset dir="." excludes="WEB-INF/src/**, Build.xml, alfresco.log, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.java, **/*.jar"/>
+    </copy>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+    <kick-jboss-macro />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did" depends="clean">
+  </target>
+</project>
