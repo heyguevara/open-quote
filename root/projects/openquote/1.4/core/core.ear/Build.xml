@@ -111,6 +111,8 @@
         major.version=${major.version}
         minor.version=${minor.version}
         dbname=${dbname}
+        dbusername=${dbusername}
+        dbpassword=${dbpassword}
     </echo>
 
     <subant-macro target="setup" />

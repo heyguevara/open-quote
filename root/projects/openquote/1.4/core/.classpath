@@ -88,7 +88,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/bouncycastle-1.29.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/castor-xml-1.1-ail.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/itext-1.2.mg.jar"/>
-	<classpathentry kind="lib" path="target/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jlfgr-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/commons-fileupload.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-web-client.jar"/>
@@ -99,5 +98,7 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/velocity-1.6.4.jar" sourcepath="/Users/richarda/Downloads/velocity-1.6.4/src/java"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-5.1.17-bin.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/mockito-core-1.8.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
