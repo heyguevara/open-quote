@@ -17,8 +17,14 @@
 	      deployDir=project.getProperty("deploy.dir");
 	      deployUnit=projectName.replaceAll("^.*:","");
 	      project.setProperty("deploy.unit", deployUnit);
-	      if (deployUnit.equals("test.jar")) {
-            project.setProperty("output.dir", project.getProperty("test.dir")+"/test.jar");
+	      if (deployUnit.endsWith("unit-test.jar")) {
+            project.setProperty("output.dir", project.getProperty("test.dir")+"/unit-test.jar");
+	      }
+	      else if (deployUnit.endsWith("integration-test.jar")) {
+	        project.setProperty("output.dir", project.getProperty("test.dir")+"/integration-test.jar");
+	      }
+	      else if (deployUnit.endsWith("test.jar")) {
+	        project.setProperty("output.dir", project.getProperty("test.dir")+"/test.jar");
 	      }
 	      else {
 	        project.setProperty("output.dir", deployDir+"/deploy/"+deployUnit);
@@ -75,7 +81,6 @@
     <sequential>
 
       <_set_output_dir_property_macro/>
-
       <mkdir dir="${output.dir}"/>
 
       <!-- compile the java source -->
