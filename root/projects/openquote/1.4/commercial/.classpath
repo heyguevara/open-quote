@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry excluding="lib/commercial.jar/" kind="src" path="commercial.ear"/>
 	<classpathentry kind="src" path="commercial.ear/lib/commercial.jar"/>
-	<classpathentry kind="src" output="target/test/test.jar" path="test.jar"/>
+	<classpathentry kind="src" output="target/test/test.jar" path="unit-test.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="target/test/lib/commons-logging-1.1-dev.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/saaj-1.1.jar"/>
@@ -29,10 +29,11 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/jlfgr-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
-	<classpathentry kind="lib" path="target/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/core.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/commercial.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-5.1.17-bin.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

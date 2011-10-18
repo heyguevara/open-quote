@@ -28,6 +28,9 @@
         connectionpoolloader.params=jndiname=java:/ConfigureDS;table=config
         major.version=${major.version}
         minor.version=${minor.version}
+        dbname=${dbname}
+        dbusername=${dbusername}
+        dbpassword=${dbpassword}
     </echo>
 
     <subant-macro target="setup" />

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the test jar project
- $Revision: 1.3 $
- $State: Exp $
- $Date: 2007/11/23 20:59:03 $
- $Source: /home/bob/CVSRepository/projects/common/test.jar/Build.xml,v $
 -->
 
-<project default="build" name="commercial:test.jar">
+<project default="build" name="commercial:unit-test.jar">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
@@ -42,8 +38,9 @@
     <get-libs-macro todir="${test.dir}/lib">
       <libs-list>
         <get-lib-macro repo="75.101.150.249/repo" group="commons-logging" artifact="commons-logging" version="1.1-dev" type="jar"/>
-        <get-lib-macro repo="repo1.maven.org/maven2" group="mysql" artifact="mysql-connector-java" version="3.1.11" type="jar" />
-        <get-lib-macro repo="repo1.maven.org/maven2" group="junit" artifact="junit" version="3.8.1" type="jar" />
+        <get-lib-macro repo="repo1.maven.org/maven2" group="mysql" artifact="mysql-connector-java" version="5.1.17" type="jar" />
+        <get-lib-macro repo="repo1.maven.org/maven2" group="junit" artifact="junit" version="4.10" type="jar" />
+        <get-lib-macro repo="repo1.maven.org/maven2" group="org/mockito" artifact="mockito-all" version="1.8.5" type="jar" />
       </libs-list>
     </get-libs-macro>
   </target>
