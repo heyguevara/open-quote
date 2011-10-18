@@ -99,6 +99,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-5.1.17-bin.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
-	<classpathentry kind="lib" path="target/test/lib/mockito-core-1.8.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
