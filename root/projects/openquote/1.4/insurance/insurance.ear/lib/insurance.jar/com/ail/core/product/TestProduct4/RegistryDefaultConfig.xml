@@ -2,11 +2,6 @@
 <!--
  This file defines a test product for use in the core system. This product configuration is
  required in live deployments and is only used for testing purposes.
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
@@ -27,6 +22,7 @@
                 import com.ail.financial.*;
                 
                 policy=new Policy();
+
                 policy.setProductTypeId("com.ail.core.product.TestProduct4");
                 policy.setStatus(PolicyStatus.APPLICATION);
                 policy.setId("0101010");
@@ -40,7 +36,6 @@
                 policyHolder.setOtherTitle("Lord");
                 policyHolder.setFirstName("Jimbo");
                 policyHolder.setSurname("Clucknasty");
-                policyHolder.setLegalName("Sid the Kid");
                 policyHolder.setDateOfBirth(new DateOfBirth(1964,11,8));                
                 address=new Address();
                 address.setLine1("The Top Flat");
@@ -67,8 +62,8 @@
                 a1.addAttribute(new Attribute("year", "", "date,yyyy"));
                 a1.addAttribute(new Attribute("registration", "", "string,10"));
                 a1.addAttribute(new Attribute("datebought", "", "date,dd/MM/yyyy"));
-                a1.addAttribute(new Attribute("cost", "0", "currency"));
-                a1.addAttribute(new Attribute("value", "0", "currency"));
+                a1.addAttribute(new Attribute("cost", "0", "currency", "GBP"));
+                a1.addAttribute(new Attribute("value", "0", "currency", "GBP"));
                 a1.addAttribute(new Attribute("lefthanddrive", "No", "yesorno"));
                 a1.addAttribute(new Attribute("registeredinproposersname", "Yes", "yesorno"));
                 a1.addAttribute(new Attribute("ownedbyproposer", "Yes", "yesorno"));
@@ -104,16 +99,16 @@
                 policy.setAssessmentSheet(new AssessmentSheet());
                 policy.getAssessmentSheet().setLockingActor("test");
 
-                policy.getAssessmentSheetArgRet().addLine(new AssessmentNote("note1", "because i want to", null));
-                policy.getAssessmentSheetArgRet().addLine(new MarkerResolution("res1", "because I've resolved it", null, "note1"));
-                policy.getAssessmentSheetArgRet().addLine(new Marker("mkr1", "declines are good", new Reference(ReferenceType.ASSET, "as1"), MarkerType.DECLINE));
-                policy.getAssessmentSheetArgRet().addLine(new Subjectivity("sub1","subjectivities are good", "Proof of fish eaten", false, new Reference(ReferenceType.ASSET, "as1"), 2));
-                policy.getAssessmentSheetArgRet().addLine(new FixedSum("fix1", "fixed sums are good", new Reference(ReferenceType.ASSET, "as1"), "final premium", new CurrencyAmount("123.00", Currency.GBP)));
-                policy.getAssessmentSheetArgRet().addLine(new Totalizer("tot", "totals are nice", new Reference(ReferenceType.ASSET, "as1"), "final premium", "one,two,tree"));
-                policy.getAssessmentSheetArgRet().addLine(new RateBehaviour("rat", "I rate rates", new Reference(ReferenceType.ASSET, "as2"), "total premium", "one", BehaviourType.LOAD, new Rate("2%")));
-                policy.getAssessmentSheetArgRet().addLine(new SumBehaviour("sum", "Sum do sum dont", new Reference(ReferenceType.ASSET, "as2"), "final premium", BehaviourType.LOAD, new CurrencyAmount("321.00", Currency.GBP)));
+                policy.getAssessmentSheet().addLine(new AssessmentNote("note1", "because i want to", null));
+                policy.getAssessmentSheet().addLine(new MarkerResolution("res1", "because I've resolved it", null, "note1"));
+                policy.getAssessmentSheet().addLine(new Marker("mkr1", "declines are good", new Reference(ReferenceType.ASSET, "as1"), MarkerType.DECLINE));
+                policy.getAssessmentSheet().addLine(new Subjectivity("sub1","subjectivities are good", "Proof of fish eaten", false, new Reference(ReferenceType.ASSET, "as1"), 2));
+                policy.getAssessmentSheet().addLine(new FixedSum("fix1", "fixed sums are good", new Reference(ReferenceType.ASSET, "as1"), "final premium", new CurrencyAmount("123.00", Currency.GBP)));
+                policy.getAssessmentSheet().addLine(new Totalizer("tot", "totals are nice", new Reference(ReferenceType.ASSET, "as1"), "final premium", "one,two,tree"));
+                policy.getAssessmentSheet().addLine(new RateBehaviour("rat", "I rate rates", new Reference(ReferenceType.ASSET, "as2"), "total premium", "one", BehaviourType.LOAD, new Rate("2%")));
+                policy.getAssessmentSheet().addLine(new SumBehaviour("sum", "Sum do sum dont", new Reference(ReferenceType.ASSET, "as2"), "final premium", BehaviourType.LOAD, new CurrencyAmount("321.00", Currency.GBP)));
 
-                policy.getAssessmentSheetArgRet().clearLockingActor();
+                policy.getAssessmentSheet().clearLockingActor();
 
                 type=policy;
             ]]></parameter>

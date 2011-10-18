@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for the insurance project.
- $Revision: 1.182 $
- $State: Exp $
- $Date: 2007/06/10 11:05:59 $
- $Source: /home/bob/CVSRepository/projects/insurance/Build.xml,v $
 -->
 
 <project default="build" name="insurance">

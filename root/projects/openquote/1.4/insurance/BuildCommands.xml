@@ -23,31 +23,30 @@
   </target>
 
   <target name="ail: reset configurations" description="reset all the ail configurations">
-		<ail-reset-configurations-macro>
-			<paths>
-	      <dirset dir="${project.dir}/insurance.ear" includes="*.jar"/>
-	      <dirset dir="${project.dir}/insurance.ear" includes="*.war/WEB-INF/src"/>
-			</paths>
-		  <configs>
-        <arg value="com.ail.core.configure.server.ServerBean"/>
-        <arg value="com.ail.core.validator.CommonsValidatorService"/>
-        <arg value="com.ail.core.product.ProductManagerBean"/>
-        <arg value="com.ail.core.product.listproducts.ListProductsService"/>
-        <arg value="com.ail.core.persistence.PersistenceServerBean"/>
-        <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
-        <arg value="com.ail.insurance.acceptance.AcceptanceBean"/>
-        <arg value="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService"/>
-        <arg value="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService"/>
-        <arg value="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService"/>
-        <arg value="com.ail.insurance.quotation.QuotationBean"/>
-        <arg value="com.ail.insurance.subrogation.SubrogationBean"/>
-			</configs>
+    <ail-reset-configurations-macro>
+      <paths>
+        <dirset dir="${project.dir}/insurance.ear" includes="*.jar" />
+        <dirset dir="${project.dir}/insurance.ear" includes="*.war/WEB-INF/src" />
+      </paths>
+      <configs>
+        <arg value="com.ail.core.configure.server.ServerBean" />
+        <arg value="com.ail.core.validator.CommonsValidatorService" />
+        <arg value="com.ail.core.product.ProductManagerBean" />
+        <arg value="com.ail.core.product.listproducts.ListProductsService" />
+        <arg value="com.ail.core.persistence.PersistenceServerBean" />
+        <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService" />
+        <arg value="com.ail.insurance.acceptance.AcceptanceBean" />
+        <arg value="com.ail.insurance.onrisk.OnRiskBean" />
+        <arg value="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService" />
+        <arg value="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService" />
+        <arg value="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService" />
+        <arg value="com.ail.insurance.quotation.QuotationBean" />
+        <arg value="com.ail.insurance.subrogation.SubrogationBean" />
+      </configs>
     </ail-reset-configurations-macro>
   </target>
 
   <target name="cms: build content" description="upload CMS content">
-		<build-cms-macro repository-config="deploy/jboss/server/default/data/portal/cms/conf/repository.xml"
-                     repository-folder="deploy/jboss/server/default/data/portal/cms/conf"
-                     source-folder="domain/jboss/deploy/jboss-portal.sar/portal-cms.sar/portal/cms/conf/default-content/"/>
+    <build-cms-macro repository-config="deploy/jboss/server/default/data/portal/cms/conf/repository.xml" repository-folder="deploy/jboss/server/default/data/portal/cms/conf" source-folder="domain/jboss/deploy/jboss-portal.sar/portal-cms.sar/portal/cms/conf/default-content/" />
   </target>
 </project>

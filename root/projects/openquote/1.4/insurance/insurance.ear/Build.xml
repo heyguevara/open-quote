@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for the insurance project
- $Revision: 1.3 $
- $State: Exp $
- $Date: 2005/12/19 22:28:31 $
- $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/Build.xml,v $
 -->
 
 <project default="build" name="insurance:insurance.ear">
@@ -21,6 +17,7 @@
     <ant dir="./acceptance-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro overlay="true"/>
   </target>
 
@@ -35,6 +32,8 @@
         major.version=${major.version}
         minor.version=${minor.version}
         dbname=${dbname}
+        dbusername=${dbusername}
+        dbpassword=${dbpassword}
     </echo>
 
     <delete-ear-descriptors-macro overlay="true"/>

@@ -2,13 +2,9 @@
 <!--
  This file defines the default (factory) configuration for the Core. This
  configuration is used by the core's resetConfiguration() method.
- $Revision: 1.9 $
- $State: Exp $
- $Date: 2007/10/07 11:58:19 $
- $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/core/CoreDefaultConfig.xml,v $
 -->
 <configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <name>Default Core Configuration</name>
+    <name>Default Core Configuration for Insurance</name>
     <timeout>60000</timeout>
     <who>factory</who>
     <version>$Revision: 1.9 $</version>
@@ -23,6 +19,7 @@
         <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
         <parameter name="com.ail.insurance.architect.InsuranceArchitectComponent"/>
         <parameter name="com.ail.insurance.quotation.QuotationBean"/>
+        <parameter name="com.ail.insurance.onrisk.OnRiskBean"/>
         <parameter name="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService"/>
         <parameter name="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService"/>
         <parameter name="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService"/>
@@ -174,6 +171,15 @@
         <service name="GenerateDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.insurance.quotation.generatedocument.GenerateDocumentService</parameter>
         </service>
+        <service name="GenerateInvoiceService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.insurance.onrisk.invoice.GenerateInvoiceService</parameter>
+        </service>
+        <service name="GenerateWordingService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.insurance.onrisk.wording.GenerateWordingService</parameter>
+        </service>
+        <service name="GenerateCertificate" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.insurance.onrisk.certificate.GenerateCertificateService</parameter>
+        </service>
         <service name="MergeDocumentDataService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.core.document.generatedocument.JavaMergeDataService</parameter>
         </service>
@@ -303,6 +309,16 @@
         <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommand">
             <parameter name="Service">MergeDocumentDataService</parameter>
         </command>
+        <command name="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.GenerateInvoiceComand">
+            <parameter name="Service">GenerateInvoiceService</parameter>
+        </command>
+        <command name="GenerateWording" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.GenerateWordingCommand">
+            <parameter name="Service">GenerateWordingService</parameter>
+        </command>
+        <command name="GenerateCertificateCommand" builder="ClassBuilder" key="com.ail.insurance.onrisk.certificate.GenerateCertificateCommand">
+            <parameter name="Service">GenerateCertificateService</parameter>
+        </command>
+        
         <!-- Define other types -->
         <type builder="ClassBuilder" key="com.ail.core.Version" name="Version"/>
         <type builder="ClassBuilder" key="com.ail.insurance.claim.Claim" name="Claim"/>

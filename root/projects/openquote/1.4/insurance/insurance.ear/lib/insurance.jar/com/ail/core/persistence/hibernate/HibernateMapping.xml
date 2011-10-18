@@ -19,9 +19,9 @@
         <joined-subclass name='com.ail.core.Attribute' table='core_Attribute'>
             <key column="systemId"/>
             <property name='id' column='id' type='string'/>
-            <property name='value' column='value' type='string'/>
             <property name='format' column='format' type='string'/>
             <property name='unit' column='unit' type='string'/>
+            <property name='value' column='value' type='string'/>
         </joined-subclass>
         
         <joined-subclass name="com.ail.insurance.policy.Policy" table="insurance_Policy">

@@ -92,7 +92,7 @@ public class Totalizer extends CalculationLine {
 
         // loop through all the named dependsOn lines, and add their values to the total
         for(StringTokenizer st=new StringTokenizer(dependsOn, ",") ; st.hasMoreTokens() ; ) {
-            cl=(CalculationLine)sheets.findAssessmentLine(st.nextToken(), sheet);
+            cl=(CalculationLine)sheets.findAssessmentLine(st.nextToken().trim(), sheet);
 
             if (cl==null || cl.getAmount()==null) {
                 return false;
