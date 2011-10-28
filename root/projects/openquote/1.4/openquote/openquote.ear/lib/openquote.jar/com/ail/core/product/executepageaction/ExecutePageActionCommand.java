@@ -17,6 +17,8 @@
 
 package com.ail.core.product.executepageaction;
 
+import java.util.Map;
+
 import javax.portlet.PortletSession;
 
 import com.ail.core.command.Command;
@@ -107,5 +109,13 @@ public class ExecutePageActionCommand extends Command implements ExecutePageActi
 
 	public Action getActionArg() {
 		return args.getActionArg();
+	}
+
+	public void setRequestParameterArg(Map<String, String> parameters) {
+		args.setRequestParameterArg(parameters);
+	}
+
+	public Map<String,String> getRequestParameterArg() {
+		return args.getRequestParameterArg();
 	}
 }

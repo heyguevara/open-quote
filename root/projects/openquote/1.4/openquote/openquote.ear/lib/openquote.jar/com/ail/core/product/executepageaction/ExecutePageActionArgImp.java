@@ -17,6 +17,8 @@
 
 package com.ail.core.product.executepageaction;
 
+import java.util.Map;
+
 import javax.portlet.PortletSession;
 
 import com.ail.core.command.CommandArgImp;
@@ -34,6 +36,7 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
     private PortletSession portletSessionArg;
     private boolean validationFailedRet;
 	private Action actionArg;
+	private Map<String,String> requestParameterArg;
     
     /**
      * {@inheritDoc}
@@ -107,6 +110,14 @@ public class ExecutePageActionArgImp extends CommandArgImp implements ExecutePag
 
 	public Action getActionArg() {
 		return actionArg;
+	}
+
+	public Map<String, String> getRequestParameterArg() {
+		return requestParameterArg;
+	}
+
+	public void setRequestParameterArg(Map<String, String> parameters) {
+		this.requestParameterArg=parameters;
 	}
 }
 

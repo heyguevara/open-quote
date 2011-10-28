@@ -17,6 +17,8 @@
 
 package com.ail.core.product.executepageaction;
 
+import java.util.Map;
+
 import javax.portlet.PortletSession;
 
 import com.ail.core.command.CommandArg;
@@ -81,9 +83,29 @@ public interface ExecutePageActionArg extends CommandArg {
      */
     void setValidationFailedRet(boolean validationFailed);
 
-	void setActionArg(Action action);
+	/**
+	 * The Action element from the PageFlow
+	 * @return Action element
+	 */
+    Action getActionArg();
 
-	Action getActionArg();
+    /**
+     * @see #getActionArg()
+     * @param action
+     */
+    void setActionArg(Action action);
+
+    /**
+     * Get the request parameters.
+     * @return
+     */
+    Map<String, String> getRequestParameterArg();
+
+	/**
+     * @see #getRequestParameterArg()
+     * @param parameters
+     */
+    void setRequestParameterArg(Map<String, String> parameters);
 }
 
 
