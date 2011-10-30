@@ -27,6 +27,8 @@ import java.util.Date;
  * @since 2.3
  */
 public class ExceptionRecord extends Type {
+    static final int MAX_FRAMES_TO_CAPTURE=50;
+    
     /** The date/time at which the exception occurred */
     private Date date = null;
     
@@ -97,6 +99,9 @@ public class ExceptionRecord extends Type {
 
         for(StackTraceElement ste: stackToDump) {
             stack.add(ste.getClassName()+"."+ste.getMethodName()+"("+ste.getFileName()+":"+ste.getLineNumber()+")");
+            if (stack.size() > MAX_FRAMES_TO_CAPTURE) {
+                break;
+            }
         }
     }
 

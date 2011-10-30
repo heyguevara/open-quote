@@ -16,7 +16,8 @@
 	<classpathentry excluding="Build.xml|WEB-INF/alfresco-object.xml|WEB-INF/jboss-app.xml|WEB-INF/jboss-portlet.xml|WEB-INF/portlet.xml|WEB-INF/src/|WEB-INF/web.xml|asset-editor.jar/|jsp/" kind="src" path="alfresco.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/alfresco.war/jsp" path="alfresco.war/jsp"/>
 	<classpathentry excluding="alfresco/repository.properties" kind="src" output="target/jboss/server/default/deploy/alfresco.war/WEB-INF/classes" path="alfresco.war/WEB-INF/src"/>
-	<classpathentry excluding="Build.xml" kind="src" output="target/test/test.jar" path="test.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/proxool-0.7.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/odmg-3.0.jar"/>
