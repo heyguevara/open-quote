@@ -31,7 +31,6 @@ import com.ail.core.document.generatedocument.RenderDocumentCommand;
 import com.ail.core.document.generatedocument.StyleDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.insurance.claim.SectionNotFoundException;
-import static com.ail.insurance.policy.PolicyStatus.ON_RISK;
 
 /**
  * Service to generate an invoice document. This service delegates to the three document
@@ -115,19 +114,19 @@ public class GenerateInvoiceService extends Service {
             throw new PreconditionException("args.getPolicyArg()==null");
         }
 
-		if (!ON_RISK.equals(args.getPolicyArg().getStatus())) {
-            throw new PreconditionException("!ON_RISK.equals(args.getPolicyArg().getStatus())");
-        }
-        
         if (args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0) {
             throw new PreconditionException("args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0");
         }
         
-        if (args.getPolicyArg().getPaymentDetails()==null || args.getPolicyArg().getPaymentDetails().getMoneyProvision()==null) {
-            throw new PreconditionException("args.getPolicyArg().getPaymentDetails()==null || args.getPolicyArg().getPaymentDetails().getMoneyProvision()==null");
+        if (args.getPolicyArg().getTotalPremium()==null) { 
+            throw new PreconditionException("args.getPolicyArg().getTotalPremium()==null");
         }
-
-        DocumentDefinition docDef=(DocumentDefinition)core.newProductType(args.getPolicyArg().getProductTypeId(), "Invoice");
+        
+        if (args.getPolicyArg().getPolicyHolder()==null) {
+            throw new PreconditionException("args.getPolicyArg().getPolicyHolder()==null");
+        }
+        
+        DocumentDefinition docDef=(DocumentDefinition)core.newProductType(args.getPolicyArg().getProductTypeId(), "InvoiceDocument");
         
         // 1st step: data merge (if configured)
         if (docDef.getMergeCommand()!=null && docDef.getMergeCommand().length()!=0) {

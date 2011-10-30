@@ -309,7 +309,7 @@
         <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommand">
             <parameter name="Service">MergeDocumentDataService</parameter>
         </command>
-        <command name="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.GenerateInvoiceComand">
+        <command name="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand">
             <parameter name="Service">GenerateInvoiceService</parameter>
         </command>
         <command name="GenerateWording" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.GenerateWordingCommand">

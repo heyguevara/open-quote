@@ -123,7 +123,7 @@ public class GenerateWordingService extends Service {
             throw new PreconditionException("args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0");
         }
 
-        DocumentDefinition docDef=(DocumentDefinition)core.newProductType(args.getPolicyArg().getProductTypeId(), "Wording");
+        DocumentDefinition docDef=(DocumentDefinition)core.newProductType(args.getPolicyArg().getProductTypeId(), "WordingDocument");
         
         // 1st step: data merge (if configured)
         if (docDef.getMergeCommand()!=null && docDef.getMergeCommand().length()!=0) {
