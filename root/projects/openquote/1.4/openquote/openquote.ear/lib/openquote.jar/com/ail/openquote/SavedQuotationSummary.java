@@ -31,6 +31,7 @@ public class SavedQuotationSummary extends Type {
     private static final long serialVersionUID = 8924615006523668514L;
 
     private String quotationNumber;
+    private String policyNumber;
     private PolicyStatus status;
     private String page; // the name of the page (in the page flow) that the user was on when this quote was saved
     private Date quotationDate;
@@ -131,4 +132,12 @@ public class SavedQuotationSummary extends Type {
     public void setTestCase(boolean testCase) {
         this.testCase = testCase;
     }
+
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
+	}
+
+	public String getPolicyNumber() {
+		return policyNumber;
+	}
 }

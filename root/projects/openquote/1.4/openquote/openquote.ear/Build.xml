@@ -39,6 +39,8 @@
         major.version=${major.version}
         minor.version=${minor.version}
         dbname=${dbname}
+        dbusername=${dbusername}
+        dbpassword=${dbpassword}
     </echo>
 
     <delete-ear-descriptors-macro overlay="true"/>

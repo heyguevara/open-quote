@@ -17,7 +17,7 @@
 	<classpathentry excluding="layouts/|themes/" kind="src" output="target/jboss/server/default/deploy/openquote.ear/openquote-theme.war" path="openquote.ear/openquote-theme.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/lifeplus.war" path="openquote.ear/lifeplus.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/openquote.ear/irishbrokerpi.war" path="openquote.ear/irishbrokerpi.war"/>
-	<classpathentry kind="src" path="test.jar"/>
+	<classpathentry kind="src" path="integration-test.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/proxool-0.7.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/odmg-3.0.jar"/>
@@ -79,7 +79,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/janino-2.5.10.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jlfgr-1.0.jar"/>
-	<classpathentry kind="lib" path="target/test/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/configure.war/WEB-INF/lib/tomahawk-1.1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/configure.war/WEB-INF/lib/myfaces-api-1.1.5.jar"/>
@@ -107,5 +106,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-5.1.17-bin.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

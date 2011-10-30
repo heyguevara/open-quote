@@ -18,8 +18,41 @@
       <servlet-class>com.ail.openquote.ui.DisplayQuotationServlet</servlet-class>
    </servlet>
    
+   <servlet>
+      <servlet-name>DisplayWordingServlet</servlet-name>
+      <description>Servlet which streams wording documents to the client</description>
+      <servlet-class>com.ail.openquote.ui.DisplayWordingServlet</servlet-class>
+   </servlet>
+   
+   <servlet>
+      <servlet-name>DisplayInvoiceServlet</servlet-name>
+      <description>Servlet which streams invoice documents to the client</description>
+      <servlet-class>com.ail.openquote.ui.DisplayInvoiceServlet</servlet-class>
+   </servlet>
+   
+   <servlet>
+      <servlet-name>DisplayCertificateServlet</servlet-name>
+      <description>Servlet which streams certificate documents to the client</description>
+      <servlet-class>com.ail.openquote.ui.DisplayCertificateServlet</servlet-class>
+   </servlet>
+   
    <servlet-mapping>
       <servlet-name>DisplayQuotationServlet</servlet-name>
       <url-pattern>/DisplayQuotationServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>DisplayCertificateServlet</servlet-name>
+      <url-pattern>/DisplayCertificateServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>DisplayInvoiceServlet</servlet-name>
+      <url-pattern>/DisplayInvoiceServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>DisplayWordingServlet</servlet-name>
+      <url-pattern>/DisplayWordingServlet</url-pattern>
    </servlet-mapping>
 </web-app>

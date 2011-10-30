@@ -28,6 +28,7 @@
     <parameter name="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService"/>
     <parameter name="com.ail.insurance.quotation.QuotationBean"/>
     <parameter name="com.ail.insurance.acceptance.AcceptanceBean"/>
+    <parameter name="com.ail.insurance.onrisk.OnRiskBean"/>
   </group>
 
   <!-- Define the functions to be made available to JXPath. The name of each -->
@@ -163,6 +164,10 @@
       <parameter name="JndiName">Quotation</parameter>
     </service>
 
+    <service name="OnRiskEJB" key="com.ail.core.command.EJBAccessor">
+      <parameter name="JndiName">OnRisk</parameter>
+    </service>
+
     <service name='CalculatePremiumService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
       <parameter name='ServiceClass'>com.ail.insurance.quotation.calculatepremium.CalculatePremiumService</parameter>
     </service>
@@ -226,6 +231,18 @@
     
     <service name="FetchQuoteDocumentService" key="com.ail.core.command.ClassAccessor">
       <parameter name="ServiceClass">com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
+    </service>
+    
+    <service name="FetchInvoiceDocumentService" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.insurance.onrisk.invoice.FetchInvoiceService</parameter>
+    </service>
+    
+    <service name="FetchWordingDocumentService" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.insurance.onrisk.wording.FetchWordingService</parameter>
+    </service>
+    
+    <service name="FetchCertificateDocumentService" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.insurance.onrisk.certificate.FetchCertificateService</parameter>
     </service>
     
     <service name="NotifyPartyByEmailService" key="com.ail.core.command.ClassAccessor">
@@ -362,6 +379,18 @@
       <parameter name='Accessor'>GenerateQuotationDocumentService</parameter>
     </command>
     
+    <command name='GenerateWordingDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.wording.GenerateWordingCommand'>
+      <parameter name='Accessor'>OnRiskEJB</parameter>
+    </command>
+    
+    <command name='GenerateCertificateDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.certificate.GenerateCertificateCommand'>
+      <parameter name='Accessor'>OnRiskEJB</parameter>
+    </command>
+    
+    <command name='GenerateInvoiceDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand'>
+      <parameter name='Accessor'>OnRiskEJB</parameter>
+    </command>
+    
     <command name='AddQuoteNumber' builder='ClassBuilder' key='com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand'>
       <parameter name='Accessor'>AddQuoteNumberService</parameter>
     </command>
@@ -404,6 +433,18 @@
 
     <command name="FetchQuoteDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand">
       <parameter name="Service">FetchQuoteDocumentService</parameter>
+    </command>
+    
+    <command name="FetchInvoiceDocument" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.FetchInvoiceCommand">
+      <parameter name="Service">FetchInvoiceDocumentService</parameter>
+    </command>
+    
+    <command name="FetchWordingDocument" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.FetchWordingCommand">
+      <parameter name="Service">FetchWordingDocumentService</parameter>
+    </command>
+    
+    <command name="FetchCertificateDocument" builder="ClassBuilder" key="com.ail.insurance.onrisk.certificate.FetchCertificateCommand">
+      <parameter name="Service">FetchCertificateDocumentService</parameter>
     </command>
     
     <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand">

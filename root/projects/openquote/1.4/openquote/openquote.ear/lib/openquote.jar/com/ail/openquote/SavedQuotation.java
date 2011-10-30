@@ -25,6 +25,9 @@ public class SavedQuotation extends SavedQuotationSummary {
 
     private XMLString quotationXML;
     private byte[] quotationDocument;
+    private byte[] invoiceDocument;
+    private byte[] wordingDocument;
+    private byte[] certificateDocument;
     
     public SavedQuotation() {
     }
@@ -36,6 +39,7 @@ public class SavedQuotation extends SavedQuotationSummary {
     public void setQuotation(Quotation quotation) {
         this.quotationXML=new CoreProxy().toXML(quotation);
         setQuotationNumber(quotation.getQuotationNumber());
+        setPolicyNumber(quotation.getPolicyNumber());
         setQuotationDate(quotation.getQuotationDate());
         setQuotationExpiryDate(quotation.getQuotationExpiryDate());
         setStatus(quotation.getStatus());
@@ -78,5 +82,29 @@ public class SavedQuotation extends SavedQuotationSummary {
 
     public void setQuotationDocument(byte[] quotationDocument) {
         this.quotationDocument = quotationDocument;
+    }
+
+    public byte[] getInvoiceDocument() {
+        return invoiceDocument;
+    }
+
+    public void setInvoiceDocument(byte[] invoiceDocument) {
+        this.invoiceDocument = invoiceDocument;
+    }
+
+    public byte[] getWordingDocument() {
+        return wordingDocument;
+    }
+
+    public void setWordingDocument(byte[] wordingDocument) {
+        this.wordingDocument = wordingDocument;
+    }
+
+    public byte[] getCertificateDocument() {
+        return certificateDocument;
+    }
+
+    public void setCertificateDocument(byte[] certificateDocument) {
+        this.certificateDocument = certificateDocument;
     }
 }

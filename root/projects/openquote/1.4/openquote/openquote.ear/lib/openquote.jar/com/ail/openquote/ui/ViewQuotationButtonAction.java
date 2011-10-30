@@ -16,10 +16,7 @@
  */
 package com.ail.openquote.ui;
 
-import static com.ail.openquote.ui.messages.I18N.i18n;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -31,7 +28,6 @@ import com.ail.core.Type;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
-import com.ail.openquote.SavedQuotationSummary;
 import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 
@@ -51,20 +47,11 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
         setLabel("Document");
     }
     
-    // Not too nice this: we want to use this button from the search results screen and from the quote summary screen,
-    // but they have different 'models'. The search result screen has SavedQuotationSummary and the quote summary
-    // screen has a Quotation. We either have two different implementations of this button (and the mappings/classes/etc)
-    // to match, or we have the nasty 'instanceof' below.
-    private String getQuoteNumberFromModel(Type model) {
-        return (model instanceof SavedQuotationSummary) ? ((SavedQuotationSummary)model).getQuotationNumber() 
-			                                            : ((Quotation)model).getQuotationNumber();
-    }
-    
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
 
-        if ("view".equals(op)) {
+        if ("view-quotation".equals(op)) {
             try {
                 CoreProxy proxy=new CoreProxy();
 
@@ -94,8 +81,6 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-
-        return QuotationContext.getRenderer().renderViewQuotationButtonAction(w, request, response, model, this, getQuoteNumberFromModel(model), i18n(getLabel()));
+    	return executeTemplateCommand("ViewQuotationButtonCommand", request, response, model);
     }
 }

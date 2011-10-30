@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+	<env:Header />
+	<env:Body>
+		<ns1:deregister xmlns:ns1="urn:oasis:names:tc:wsrp:v1:types"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<ns1:registrationHandle></ns1:registrationHandle>
+		</ns1:deregister>
+	</env:Body>
+</env:Envelope>

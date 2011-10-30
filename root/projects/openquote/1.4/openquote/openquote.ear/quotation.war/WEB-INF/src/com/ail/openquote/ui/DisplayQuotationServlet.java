@@ -31,13 +31,13 @@ public class DisplayQuotationServlet extends HttpServlet {
     private static final long serialVersionUID = 6984589565187737714L;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String quoteNumber=request.getParameter("quoteNumber");
+        
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment;filename=\"quotation.pdf\"");
+        response.setHeader("Content-Disposition", "attachment;filename=\"Quotation"+quoteNumber+".pdf\"");
         response.setHeader("Pragma", "private");
         response.setHeader("Cache-Control", "private");
 
-        String quoteNumber=request.getParameter("quoteNumber");
-        
         CoreProxy proxy=new CoreProxy();
         FetchDocumentCommand cmd=(FetchDocumentCommand)proxy.newCommand("FetchQuoteDocument");
         cmd.setQuotationNumberArg(quoteNumber);

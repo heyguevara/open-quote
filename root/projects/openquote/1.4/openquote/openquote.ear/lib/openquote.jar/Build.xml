@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the openquote jar project
- $Revision: 1.2 $
- $State: Exp $
- $Date: 2006/01/22 12:00:15 $
- $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/openquote.jar/Build.xml,v $
 -->
 
 <project default="build" name="openquote:openquote.ear/lib/openquote.jar">
@@ -27,6 +23,7 @@
           <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
           <include name="server/default/lib/saxon*.jar" />
           <include name="server/default/lib/mail.jar" />
+          <include name="server/default/lib/servlet-api.jar" />
           <include name="lib/endorsed/xalan.jar" />
         </fileset>
       </javac-classpath>

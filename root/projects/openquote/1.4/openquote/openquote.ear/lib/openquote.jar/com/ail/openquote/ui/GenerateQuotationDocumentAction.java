@@ -31,6 +31,8 @@ import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.util.QuotationContext;
 
 /**
+ * PageFlow action to generate the quotation document for the current quotation.
+ * The document will be generated and persisted with the quotation.
  */
 public class GenerateQuotationDocumentAction extends Action {
     private static final long serialVersionUID = 7575333161831400599L;

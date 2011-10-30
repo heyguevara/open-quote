@@ -11,6 +11,7 @@
         </id>
         <version name='serialVersion' type='long' column='version'/>
         <property name='quotationNumber' type='string' column='quote_number'/>
+        <property name='policyNumber' type='string' column='policy_number'/>
         <property name='quotationDate' type='date' column='quote_date'/>
         <property name='quotationExpiryDate' type='date' column='expiry_date'/>
         <property name='statusAsString' column='status' type='string'/>
@@ -28,6 +29,9 @@
             <key column='id'/>
             <property name='quotationAsString' column='quotation' type='text'/>
             <property name="quotationDocument" column='quotation_document' type='binary'/>
+            <property name="invoiceDocument" column='invoice_document' type='binary'/>
+            <property name="wordingDocument" column='wording_document' type='binary'/>
+            <property name="certificateDocument" column='certificate_document' type='binary'/>
         </joined-subclass>
     </class>
 
@@ -45,6 +49,10 @@
     
     <query name='get.savedQuotation.by.systemId'>
         from com.ail.openquote.SavedQuotation quotation fetch all properties where quotation.systemId=?
+    </query> 
+    
+    <query name='get.savedPolicy.by.policyNumber'>
+        from com.ail.openquote.SavedQuotation quotation fetch all properties where quotation.policyNumber=?
     </query> 
     
 </hibernate-mapping> 

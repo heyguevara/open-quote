@@ -875,6 +875,18 @@
         <map-to xml="viewQuotationButtonAction"/>
     </class>
     
+    <class name="com.ail.openquote.ui.ViewCertificateButtonAction" extends="com.ail.openquote.ui.CommandButtonAction">
+        <map-to xml="viewCertificateButtonAction"/>
+    </class>
+    
+    <class name="com.ail.openquote.ui.ViewWordingButtonAction" extends="com.ail.openquote.ui.CommandButtonAction">
+        <map-to xml="viewWordingButtonAction"/>
+    </class>
+    
+    <class name="com.ail.openquote.ui.ViewInvoiceButtonAction" extends="com.ail.openquote.ui.CommandButtonAction">
+        <map-to xml="viewInvoiceButtonAction"/>
+    </class>
+    
     <class name="com.ail.openquote.ui.RequoteButtonAction" extends="com.ail.openquote.ui.CommandButtonAction">
         <map-to xml="requoteButtonAction"/>
     </class>

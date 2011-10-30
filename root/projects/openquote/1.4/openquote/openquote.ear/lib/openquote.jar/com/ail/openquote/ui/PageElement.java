@@ -29,12 +29,15 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.BaseException;
 import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.openquote.portlet.QuotationPortlet;
+import com.ail.openquote.ui.render.RenderCommand;
 import com.ail.openquote.ui.util.HelpText;
 import com.ail.openquote.ui.util.ErrorText;
 import com.ail.openquote.ui.util.QuotationCommon;
+import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -473,5 +476,22 @@ public abstract class PageElement extends Type implements Identified, Comparable
         String oldOrder=this.order;
         this.order = order;
         changes.firePropertyChange("order", oldOrder, order);
+    }
+    
+    protected Type executeTemplateCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    	try {
+	    	RenderCommand command=QuotationContext.getCore().newCommand(commandName, 
+	    																QuotationContext.getRenderer().getMimeType(),
+	    																RenderCommand.class);
+	    	command.setRequestArg(request);
+	    	command.setResponseArgRet(response);
+	    	command.setModelArg(model);
+	    	command.setPageElementArg(this);
+			command.invoke();
+	    	response.getWriter().print(command.getRenderedOutputRet());
+	    	return model;
+		} catch (BaseException e) {
+			throw new IllegalStateException(e);
+		}
     }
 }

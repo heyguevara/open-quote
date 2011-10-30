@@ -34,6 +34,8 @@
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
         <filter token="dbname" value="${dbname}"/>
+        <filter token="dbusername" value="${dbusername}"/>
+        <filter token="dbpassword" value="${dbpassword}"/>
       </filterset>
     </copy>
 
@@ -56,13 +58,13 @@
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
           -- Make sure the database and users are there before we try to delete them!
           create database if not exists ${dbname};
-          grant all on ${dbname}.* to 'openquote'@'localhost' identified by 'openquote' with grant option;
-          grant all on ${dbname}.* to 'openquote'@'localhost.localdomain' identified by 'openquote' with grant option;
+          grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '{dbpassword}' with grant option;
+          grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
         
           -- Now do the actual tidy up 
           drop database if exists ${dbname};
-          revoke all privileges, grant option from 'openquote'@'localhost';
-          drop user 'openquote'@'localhost';
+          revoke all privileges, grant option from '${dbusername}'@'localhost';
+          drop user '${dbusername}'@'localhost';
     </sql>
   </target>  
   
@@ -75,8 +77,8 @@
     <!-- create the databases we'll need for unit testing etc. -->
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
       create database if not exists ${dbname};
-      grant all on ${dbname}.* to 'openquote'@'localhost' identified by 'openquote' with grant option;
-      grant all on ${dbname}.* to 'openquote'@'localhost.localdomain' identified by 'openquote' with grant option;
+      grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
+      grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
       
       create table if not exists ${dbname}.attribute (
         id varchar(255) primary key,
@@ -90,6 +92,7 @@
         id bigint(20) auto_increment primary key,
         version bigint(20),
         quote_number varchar(255),
+        policy_number varchar(255),
         quote_date date,
         expiry_date date,
         status varchar(255),
@@ -105,7 +108,10 @@
       create table if not exists ${dbname}.saved_quote (
         id bigint(20) primary key,
         quotation text,
-        quotation_document longblob
+        quotation_document longblob,
+        invoice_document longblob,
+        wording_document longblob,
+        certificate_document longblob
       );
     </sql>
   </target>
