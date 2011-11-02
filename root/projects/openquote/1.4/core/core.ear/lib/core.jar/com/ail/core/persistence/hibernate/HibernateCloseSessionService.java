@@ -68,7 +68,7 @@ public class HibernateCloseSessionService extends Service {
         com.ail.core.Version v = (com.ail.core.Version) getCore().newType("Version");
         v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
         v.setDate("$Date: 2006/08/20 15:03:54 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateCloseSessionService.java,v $");
+        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/GenerateUniqueKeyService.java,v $");
         v.setState("$State: Exp $");
         v.setVersion("$Revision: 1.2 $");
         return v;

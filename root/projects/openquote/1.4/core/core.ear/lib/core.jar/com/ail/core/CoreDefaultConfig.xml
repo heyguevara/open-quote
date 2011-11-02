@@ -22,6 +22,7 @@
     <parameter name="com.ail.core.product.ProductManagerBean"/>
     <parameter name="com.ail.core.persistence.PersistenceServerBean"/>
     <parameter name="com.ail.core.command.CommandServerBean"/>
+    <parameter name="com.ail.core.key.GenerateUniqueNumberService"/>
     <parameter name="com.ail.core.product.listproducts.ListProductsService"/>
     <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
   </group>
@@ -114,7 +115,12 @@
       <parameter name="ServiceClass">com.ail.core.configure.server.CatalogCarService</parameter>
     </service>
 
-    <!-- Product srvices -->
+    <!-- UniqueNumberService: Return a unique number. -->
+    <service name="GenerateUniqueKeyService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.core.key.GenerateUniqueKeyService</parameter>
+    </service>
+
+    <!-- Product services -->
     <service name="ListProductsService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
       <parameter name="ServiceClass">com.ail.core.product.listproducts.ListProductsService</parameter>
     </service>
@@ -172,6 +178,7 @@
       <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
     </service>
     
+    <!-- Document services -->
     <service name="GenerateDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
       <parameter name="ServiceClass">com.ail.core.document.generatedocument.GenerateDocumentService</parameter>
     </service>
@@ -256,6 +263,10 @@
       <parameter name="Service">CatalogCarService</parameter>
     </command>
     
+    <command name="GenerateUniqueKey" builder="ClassBuilder" key="com.ail.core.key.GenerateUniqueKeyCommand">
+      <parameter name="Service">GenerateUniqueKeyService</parameter>
+    </command>
+
     <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommand">
       <parameter name="Service">ListProductsService</parameter>
     </command>
