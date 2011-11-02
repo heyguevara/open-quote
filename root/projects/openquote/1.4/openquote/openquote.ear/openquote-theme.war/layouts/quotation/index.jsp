@@ -25,14 +25,6 @@
 <div id="portal-container">
    <div id="sizer">
       <div id="expander">
-         <div id="logoName"></div>
-         <table border="0" cellpadding="0" cellspacing="0" id="header-container">
-            <tr>
-               <td align="center" valign="top" id="header">
-									&nbsp;
-               </td>
-            </tr>
-         </table>
          <div id="content-container">
             <table width="100%">
               <tr>
