@@ -28,6 +28,15 @@
    </layout>
 
    <layout>
+      <name>QuotationWhiteLabel</name>
+      <uri>/layouts/quotationwhitelabel/index.jsp</uri>
+      <uri state="maximized">/layouts/quotationwhitelabel/maximized.jsp</uri>
+      <regions>
+         <region name="center"/>
+      </regions>
+   </layout>
+
+   <layout>
       <name>OneColumn</name>
       <uri>/layouts/OneColumn/index.jsp</uri>
       <uri state="maximized">/layouts/common/maximized.jsp</uri>

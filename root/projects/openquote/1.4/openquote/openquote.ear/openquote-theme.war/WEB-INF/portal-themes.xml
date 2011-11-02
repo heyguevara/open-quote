@@ -23,6 +23,12 @@
         <link rel="icon" href="/themes/openquotedemo/images/favicon.ico" type="image/gif" />
     </theme>
     <theme>
+        <name>openquotewhitelabel</name>
+        <link rel="stylesheet" id="main_css" href="/themes/openquotewhitelabel/portal_style.css" type="text/css" />
+        <link rel="shortcut icon" href="/themes/openquotewhitelabel/images/favicon.ico" />
+        <link rel="icon" href="/themes/openquotewhitelabel/images/favicon.ico" type="image/gif" />
+    </theme>
+    <theme>
         <name>greentree</name>
         <link rel="stylesheet" id="main_css" href="/themes/greentree/portal_style.css" type="text/css" />
         <link rel="shortcut icon" href="/themes/greentree/images/favicon.ico" />
