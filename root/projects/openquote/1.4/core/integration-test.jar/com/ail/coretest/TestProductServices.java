@@ -313,6 +313,14 @@ public class TestProductServices extends CoreUserTestCase {
         }
     }
     
+    /**
+     * Each product can maintain it's own values for the unique key
+     * generator. When a product does not maintain it's own, the values
+     * are used from the parent product or from the core. This test
+     * checks that products do correctly maintain isolation between 
+     * the values of unique keys.
+     * @throws Exception
+     */
     @Test
     public void testUniqueKeyGeneratorByProduct() throws Exception {
         GenerateUniqueKeyCommand gukc;
@@ -337,11 +345,18 @@ public class TestProductServices extends CoreUserTestCase {
             assertEquals(new Integer(i), gukc.getKeyRet());
         }
         
+        for(int i=10 ; i<200 ; i++) {
+            gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
+            gukc.setKeyIdArg("Key");
+            gukc.setProductTypeIdArg("com.ail.core.product.TestProduct1");
+            gukc.invoke();
+            assertEquals(new Integer(i), gukc.getKeyRet());
+        }
+
         gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
         gukc.setKeyIdArg("Key");
         gukc.setProductTypeIdArg("com.ail.core.product.TestProduct2");
         gukc.invoke();
         assertEquals(new Integer(101), gukc.getKeyRet());
-
     }
 }
