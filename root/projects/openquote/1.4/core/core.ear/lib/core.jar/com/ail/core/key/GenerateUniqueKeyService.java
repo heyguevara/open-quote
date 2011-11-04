@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ail.core.Core;
+import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -29,10 +30,11 @@ import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 
 public class GenerateUniqueKeyService extends Service {
-    private GenerateUniqueKeyArg args = null;
     private static Map<String,UniqueNumberHandler> uniqueNumberHandlers=new HashMap<String,UniqueNumberHandler>();
-
+    private GenerateUniqueKeyArg args = null;
+    
     private Core core;
+    private String configurationNamespace;
 
     public GenerateUniqueKeyService() {
         super();
@@ -43,13 +45,13 @@ public class GenerateUniqueKeyService extends Service {
         super();
         this.core = core;
     }
-    
-    
+        
     /**
      * Getter to fetch the entry point's core. This method is demanded by the EntryPoint class.
      * 
      * @return This entry point's instance of Core.
      */
+    @Override
     public Core getCore() {
         return core;
     }
@@ -59,6 +61,7 @@ public class GenerateUniqueKeyService extends Service {
      * 
      * @return A version object describing the version of this entry point.
      */
+    @Override
     public Version getVersion() {
         com.ail.core.Version v = (com.ail.core.Version) getCore().newType("Version");
         v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
@@ -74,6 +77,7 @@ public class GenerateUniqueKeyService extends Service {
      * 
      * @param args for invoke
      */
+    @Override
     public void setArgs(CommandArg args) {
         this.args = (GenerateUniqueKeyArg) args;
     }
@@ -83,36 +87,66 @@ public class GenerateUniqueKeyService extends Service {
      * 
      * @return An instance of UpdateArgs.
      */
+    @Override
     public CommandArg getArgs() {
         return args;
     }
 
+    /**
+     * Return the product name from the arguments as the configuration namespace. 
+     * The has the effect of selecting the product's configuration.
+     * @return product name
+     */
+    @Override
+    public String getConfigurationNamespace() {
+        return configurationNamespace;
+    }
+
+
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, PostconditionException {
         if (args.getKeyIdArg()==null || args.getKeyIdArg().length()==0) {
             throw new PreconditionException("args.getKeyIdArg()==null || args.getKeyIdArg().length()==0");
         }
         
+        if (args.getProductTypeIdArg()==null || args.getProductTypeIdArg().length()==0) {
+            throw new PreconditionException("args.getProductTypeIdArg()==null || args.getProductTypeIdArg().length()==0");
+        }
+        
         String keyIdArg=args.getKeyIdArg();
+        String productTypeId=args.getProductTypeIdArg();
+
+        // Set the namespace to the product's so we search up the hierarchy from there
+        configurationNamespace=Functions.productNameToConfigurationNamespace(productTypeId);
+
+        // Get the actual namespace which defines the key, this will start searching up
+        // the config hierarchy form the current namespace (set above).
+        configurationNamespace=getCore().getParameter(keyIdArg+"NextNumber").getNamespace();
+        
+        String uniqueNumberHanderId=configurationNamespace+keyIdArg;
         
         synchronized(uniqueNumberHandlers) {
-            if (!uniqueNumberHandlers.containsKey(keyIdArg)) {
-                uniqueNumberHandlers.put(keyIdArg, new UniqueNumberHandler());
+            if (!uniqueNumberHandlers.containsKey(uniqueNumberHanderId)) {
+                uniqueNumberHandlers.put(uniqueNumberHanderId, new UniqueNumberHandler());
             }
         }
             
-        UniqueNumberHandler uniqueNumberHandler=uniqueNumberHandlers.get(keyIdArg);
+        UniqueNumberHandler uniqueNumberHandler=uniqueNumberHandlers.get(uniqueNumberHanderId);
             
         synchronized(uniqueNumberHandler) {
             if (uniqueNumberHandler.isBlockEmpty()) {
+                String nextNumberParamId=keyIdArg+"NextNumber";
+                String blockSizeParamId=keyIdArg+"BlockSize";
+                
                 Configuration config=getConfiguration();
-                int nextNumber=Integer.parseInt(config.findParameter(keyIdArg+"NextNumber").getValue());
-                int blockSize=Integer.parseInt(config.findParameter(keyIdArg+"BlockSize").getValue());
+                int nextNumber=Integer.parseInt(config.findParameter(nextNumberParamId).getValue());
+                int blockSize=Integer.parseInt(config.findParameter(blockSizeParamId).getValue());
     
                 uniqueNumberHandler.setNextNumber(nextNumber);
-                uniqueNumberHandler.setBlockEnd(nextNumber+blockSize);
+                uniqueNumberHandler.setBlockEnd(nextNumber+blockSize+1);
     
-                config.findParameter(keyIdArg+"NextNumber").setValue(Integer.toString(nextNumber+blockSize+1));
+                config.findParameter(nextNumberParamId).setValue(Integer.toString(nextNumber+blockSize+1));
     
                 setConfiguration(config);
             }

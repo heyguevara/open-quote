@@ -22,17 +22,19 @@ import com.ail.core.command.CommandArgImp;
 /**
  * {@inheritDoc}
  */
-public class GenerateUniqueKeyArgImp extends CommandArgImp implements GenerateUniqueKeyArg {
+public class GenerateUniqueKeyArgImp extends CommandArgImp implements
+        GenerateUniqueKeyArg {
     static final long serialVersionUID = 1199346453402049909L;
     private String keyIdArg;
     private Integer keyRet;
-    
+    private String productTypeIdArg;
+
     /** Default constructor */
     public GenerateUniqueKeyArgImp() {
     }
 
     public void setKeyIdArg(String keyIdArg) {
-        this.keyIdArg=keyIdArg;
+        this.keyIdArg = keyIdArg;
     }
 
     public String getKeyIdArg() {
@@ -40,12 +42,18 @@ public class GenerateUniqueKeyArgImp extends CommandArgImp implements GenerateUn
     }
 
     public void setKeyRet(Integer keyRet) {
-        this.keyRet=keyRet;
+        this.keyRet = keyRet;
     }
 
     public Integer getKeyRet() {
         return keyRet;
     }
+
+    public void setProductTypeIdArg(String productTypeId) {
+        this.productTypeIdArg = productTypeId;
+    }
+
+    public String getProductTypeIdArg() {
+        return productTypeIdArg;
+    }
 }
-
-

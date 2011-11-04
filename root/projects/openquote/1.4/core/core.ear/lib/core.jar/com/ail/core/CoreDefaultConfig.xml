@@ -22,7 +22,6 @@
     <parameter name="com.ail.core.product.ProductManagerBean"/>
     <parameter name="com.ail.core.persistence.PersistenceServerBean"/>
     <parameter name="com.ail.core.command.CommandServerBean"/>
-    <parameter name="com.ail.core.key.GenerateUniqueNumberService"/>
     <parameter name="com.ail.core.product.listproducts.ListProductsService"/>
     <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
   </group>
@@ -263,7 +262,7 @@
       <parameter name="Service">CatalogCarService</parameter>
     </command>
     
-    <command name="GenerateUniqueKey" builder="ClassBuilder" key="com.ail.core.key.GenerateUniqueKeyCommand">
+    <command name="com.ail.core.key.GenerateUniqueKeyCommand" builder="ClassBuilder" key="com.ail.core.key.GenerateUniqueKeyCommand">
       <parameter name="Service">GenerateUniqueKeyService</parameter>
     </command>
 

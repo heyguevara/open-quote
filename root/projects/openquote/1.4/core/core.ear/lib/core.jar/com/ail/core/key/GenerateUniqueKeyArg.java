@@ -30,6 +30,10 @@ public interface GenerateUniqueKeyArg extends CommandArg {
     void setKeyRet(Integer keyRet);
     
     Integer getKeyRet();
+    
+    void setProductTypeIdArg(String productTypeId);
+    
+    String getProductTypeIdArg();
 }
 
 

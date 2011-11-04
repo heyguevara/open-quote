@@ -14,6 +14,9 @@
     <parameter name="TestPropertyA">A's Value</parameter>
     <parameter name="TestPropertyB">B's Value</parameter>
     
+    <parameter name="KeyNextNumber">10</parameter>
+    <parameter name="KeyBlockSize">10</parameter>
+
     <types>
         <service name="MergeDocumentDataJavaService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.core.document.generatedocument.JavaMergeDataService</parameter>

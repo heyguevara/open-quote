@@ -51,4 +51,12 @@ public class GenerateUniqueKeyCommand extends Command implements GenerateUniqueK
     public Integer getKeyRet() {
         return args.getKeyRet();
     }
+
+    public void setProductTypeIdArg(String productTypeId) {
+        args.setProductTypeIdArg(productTypeId);
+    }
+
+    public String getProductTypeIdArg() {
+        return args.getProductTypeIdArg();
+    }
 }

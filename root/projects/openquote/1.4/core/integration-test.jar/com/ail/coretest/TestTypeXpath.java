@@ -222,7 +222,7 @@ public class TestTypeXpath extends CoreUserTestCase {
         
         // invoke the newly registered function
         assertEquals(32, v.xpathGet("test:age(attribute[id='dob1'])"));
-        assertEquals(23, v.xpathGet("test:age(test:youngest(attribute))"));
+        assertEquals(24, v.xpathGet("test:age(test:youngest(attribute))"));
         
         // check that the "standard" functions still work
         assertEquals(new Double(3.0), v.xpathGet("count(/attribute)", Double.class));

@@ -6,8 +6,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +43,15 @@ public class GenerateUniqueKeyServiceTest {
 
         when(mockBlockSizeParameter.getValue()).thenReturn("20");
         when(mockNextNumberParameter.getValue()).thenReturn("20");
+        when(mockNextNumberParameter.getNamespace()).thenReturn("dummynamespace");
         
-        when(mockConfiguration.findParameter(eq("TestNextNumber"))).thenReturn(mockNextNumberParameter);
-        when(mockConfiguration.findParameter(eq("TestBlockSize"))).thenReturn(mockBlockSizeParameter);
+        when(mockConfiguration.findParameter(eq("KeyNextNumber"))).thenReturn(mockNextNumberParameter);
+        when(mockConfiguration.findParameter(eq("KeyBlockSize"))).thenReturn(mockBlockSizeParameter);
+ 
+        when(mockArgs.getKeyIdArg()).thenReturn("Key");
+        when(mockArgs.getProductTypeIdArg()).thenReturn("product");
+        
+        when(mockCore.getParameter("KeyNextNumber")).thenReturn(mockNextNumberParameter);
     }
     
     @Test(expected=PreconditionException.class)
@@ -60,19 +66,23 @@ public class GenerateUniqueKeyServiceTest {
         SUT.invoke();
     }
 
+    @Test(expected=PreconditionException.class) 
+    public void testProductTypeIdPrecondition() throws Exception {
+        when(mockArgs.getProductTypeIdArg()).thenReturn(null);
+        SUT.invoke();
+    }
+    
     @Test(expected=PostconditionException.class)
     public void testKeyIdPostcondition() throws Exception {
-        when(mockArgs.getKeyIdArg()).thenReturn("123");
         when(mockArgs.getKeyRet()).thenReturn(null);
         SUT.invoke();
     }
     
     @Test
     public void testUniqueNumber() throws Exception {
-        when(mockArgs.getKeyIdArg()).thenReturn("Test");
         SUT.invoke();
         SUT.invoke();
-        verify(mockArgs, times(1)).setKeyRet(20);
         verify(mockArgs, times(1)).setKeyRet(21);
+        verify(mockArgs, times(1)).setKeyRet(22);
     }
 }

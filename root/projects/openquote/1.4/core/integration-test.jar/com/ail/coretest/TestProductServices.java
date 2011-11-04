@@ -17,7 +17,10 @@
 
 package com.ail.coretest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +38,7 @@ import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.server.ServerBean;
 import com.ail.core.factory.RecursiveTypeError;
 import com.ail.core.factory.UndefinedTypeError;
+import com.ail.core.key.GenerateUniqueKeyCommand;
 import com.ail.core.product.ProductDetails;
 
 public class TestProductServices extends CoreUserTestCase {
@@ -270,7 +274,7 @@ public class TestProductServices extends CoreUserTestCase {
         // on where the test source has been checked-out to. We'll make do with checking just
         // the start and the end.
         assertTrue(getCore().getConfiguration().getSource().startsWith("file:"));
-        assertTrue(getCore().getConfiguration().getSource().endsWith("target/test/test.jar/com/ail/coretest/TestProductServicesDefaultConfig.xml"));
+        assertTrue(getCore().getConfiguration().getSource().endsWith("target/test/integration-test.jar/com/ail/coretest/TestProductServicesDefaultConfig.xml"));
     }
     
     /**
@@ -307,5 +311,37 @@ public class TestProductServices extends CoreUserTestCase {
         catch(RecursiveTypeError e) {
             // ignore this - it's what we want
         }
+    }
+    
+    @Test
+    public void testUniqueKeyGeneratorByProduct() throws Exception {
+        GenerateUniqueKeyCommand gukc;
+        
+        gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
+        gukc.setKeyIdArg("Key");
+        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct3");
+        gukc.invoke();
+        assertEquals(new Integer(1000), gukc.getKeyRet());
+
+        gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
+        gukc.setKeyIdArg("Key");
+        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct2");
+        gukc.invoke();
+        assertEquals(new Integer(100), gukc.getKeyRet());
+
+        for(int i=1001 ; i<1100 ; i++) {
+            gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
+            gukc.setKeyIdArg("Key");
+            gukc.setProductTypeIdArg("com.ail.core.product.TestProduct3");
+            gukc.invoke();
+            assertEquals(new Integer(i), gukc.getKeyRet());
+        }
+        
+        gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
+        gukc.setKeyIdArg("Key");
+        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct2");
+        gukc.invoke();
+        assertEquals(new Integer(101), gukc.getKeyRet());
+
     }
 }

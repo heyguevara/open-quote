@@ -2,11 +2,7 @@
 <!--
  This file defines a test product for use in the core system. This product configuration is
  required in live deployments and is only used for testing purposes.
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
+
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
@@ -19,6 +15,9 @@
     
     <parameter name="TestPropertyD">D's Value</parameter>
     
+    <parameter name="KeyNextNumber">1000</parameter>
+    <parameter name="KeyBlockSize">10</parameter>
+
     <types>
         <type name="TestProduct3" key="com.ail.core.Type" builder="CastorXMLBuilder">
             <parameter name="Extends">TestProduct2</parameter>

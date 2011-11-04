@@ -251,7 +251,6 @@ public class TestCoreValidator extends CoreUserTestCase {
 	 * @return error messages from validation
 	 * @throws Exception
 	 */
-    @Test
 	private String testValidatorServiceGeneric(String key, Object value, String validationXml) throws Exception {
 				
 		ValidatorCommand command = (ValidatorCommand) getCore().newCommand("TestValidatorService");
