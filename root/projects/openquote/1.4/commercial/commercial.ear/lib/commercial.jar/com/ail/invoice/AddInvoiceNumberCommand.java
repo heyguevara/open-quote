@@ -15,26 +15,35 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.party;
+package com.ail.invoice;
 
+import com.ail.core.command.Command;
+import com.ail.core.command.CommandArg;
+import com.ail.financial.Invoice;
 
-/** @stereotype type */
-public class Organisation extends Party {
-    static final long serialVersionUID = -385826646268259L;
-    
-    private String organisationRegistrationNumber;
-    private String taxRegistrationNumber;
-    
-    public void setTaxRegistrationNumber(String taxRegistrationNumber) {
-        this.taxRegistrationNumber = taxRegistrationNumber;
+public class AddInvoiceNumberCommand extends Command implements AddInvoiceNumberArg {
+    private static final long serialVersionUID = -4556506348834606687L;
+
+    private AddInvoiceNumberArg args;
+
+    public AddInvoiceNumberCommand() {
+        super();
+        args = new AddInvoiceNumberArgImp();
     }
-    public String getTaxRegistrationNumber() {
-        return taxRegistrationNumber;
+
+    public void setArgs(CommandArg arg) {
+        this.args = (AddInvoiceNumberArg) arg;
     }
-    public void setOrganisationRegistrationNumber(String organisationRegistrationNumber) {
-        this.organisationRegistrationNumber = organisationRegistrationNumber;
+
+    public CommandArg getArgs() {
+        return (CommandArg) args;
     }
-    public String getOrganisationRegistrationNumber() {
-        return organisationRegistrationNumber;
+
+    public Invoice getInvoiceArgRet() {
+        return args.getInvoiceArgRet();
+    }
+
+    public void setInvoiceArgRet(Invoice invoiceArgRet) {
+        args.setInvoiceArgRet(invoiceArgRet);
     }
 }

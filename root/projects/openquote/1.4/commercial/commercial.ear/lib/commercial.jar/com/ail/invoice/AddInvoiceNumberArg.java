@@ -15,26 +15,16 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.party;
+package com.ail.invoice;
 
+import com.ail.core.command.CommandArg;
+import com.ail.financial.Invoice;
 
-/** @stereotype type */
-public class Organisation extends Party {
-    static final long serialVersionUID = -385826646268259L;
-    
-    private String organisationRegistrationNumber;
-    private String taxRegistrationNumber;
-    
-    public void setTaxRegistrationNumber(String taxRegistrationNumber) {
-        this.taxRegistrationNumber = taxRegistrationNumber;
-    }
-    public String getTaxRegistrationNumber() {
-        return taxRegistrationNumber;
-    }
-    public void setOrganisationRegistrationNumber(String organisationRegistrationNumber) {
-        this.organisationRegistrationNumber = organisationRegistrationNumber;
-    }
-    public String getOrganisationRegistrationNumber() {
-        return organisationRegistrationNumber;
-    }
+/**
+ * Interface defining the arguments and returns associated with the invoice number generation service.
+ */
+public interface AddInvoiceNumberArg extends CommandArg {
+    Invoice getInvoiceArgRet();
+
+    void setInvoiceArgRet(Invoice invoiceArgRet);
 }
