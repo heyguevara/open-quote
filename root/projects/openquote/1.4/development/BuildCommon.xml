@@ -21,8 +21,10 @@
   <property name="grinder.properties" value="${basedir}/grinder.properties" />
   <property name="connectionpoolloader.params" value="jndiname=java:/ConfigureDS;table=config" />
   <property name="build.sysclasspath" value="last"/>
-  <!-- default build.type is developer, cruisecontrol overrides this with a -D on the command line -->
+  <!-- default build.type is developer, bamboo overrides this with a -D on the command line -->
   <property name="build.type" value="developer"/>
+  <!-- password to use when creating DB's etc. Bamboo overrides this on the build server -->
+  <property name="mysql.root.password" value=""/>
 
   <target name="dummy" />
 
@@ -129,8 +131,8 @@
         <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader"/>
         <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver"/>
         <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=root"/>
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=bombay2000"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=${dbusername}"/>
+        <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=${dbpassword}"/>
         <jvmarg value="-Dcom.ail.core.configure.loaderParam.table=config"/>
         <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}"/>
         <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/>
