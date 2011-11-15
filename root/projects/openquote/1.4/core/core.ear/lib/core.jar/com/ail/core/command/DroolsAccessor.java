@@ -27,11 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.drools.RuleBase;
+import org.drools.RuleBaseConfiguration;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.compiler.DrlParser;
 import org.drools.compiler.DroolsParserException;
 import org.drools.compiler.PackageBuilder;
+import org.drools.compiler.PackageBuilderConfiguration;
 import org.drools.event.DebugWorkingMemoryEventListener;
 import org.drools.lang.descr.FunctionDescr;
 import org.drools.lang.descr.GlobalDescr;
@@ -172,12 +174,18 @@ public class DroolsAccessor extends Accessor implements ConfigurationOwner {
         List<PackageDescr> pkgs=new ArrayList<PackageDescr>();
 
         pkgs.add(loadPackage(Functions.loadScriptOrUrlContent(getCore(), getUrl(), getScript())));
-        resolveInheritance(pkgs, getExtend());        
+        resolveInheritance(pkgs, getExtend());
 
-        ruleBase = RuleBaseFactory.newRuleBase();
+        RuleBaseConfiguration rbc=new RuleBaseConfiguration();
+        rbc.setClassLoader(this.getClass().getClassLoader());
+        
+        ruleBase = RuleBaseFactory.newRuleBase(rbc);
 
+        PackageBuilderConfiguration pbc=new PackageBuilderConfiguration();
+        pbc.setClassLoader(this.getClass().getClassLoader());
+        
         for(PackageDescr desc: pkgs) {
-            PackageBuilder builder = new PackageBuilder();
+            PackageBuilder builder = new PackageBuilder(pbc);
             builder.addPackage( desc );
             ruleBase.addPackage(builder.getPackage());
         }

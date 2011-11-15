@@ -48,7 +48,7 @@
         </joined-subclass>
 
 <!-- 
-        <joined-subclass name="com.ail.coretest.addressbook.Address" table="address">
+        <joined-subclass name="com.ail.core.addressbook.Address" table="address">
             <key column="systemId"/>
             <property name="line1" column="line1" type="string"/>
             <property name="line2" column="line2" type="string"/>
@@ -57,12 +57,12 @@
             <property name="postcode" column="postcode" type="string"/>
         </joined-subclass>
         
-        <joined-subclass name="com.ail.coretest.addressbook.AddressBook" table="addressbook">
+        <joined-subclass name="com.ail.core.addressbook.AddressBook" table="addressbook">
             <key column="systemId"/>
             <any name="me" meta-type="string" id-type="long" cascade="all">
-                <meta-value value="PER" class="com.ail.coretest.addressbook.Person"/>
-                <meta-value value="ORG" class="com.ail.coretest.addressbook.Organisation"/>
-                <meta-value value="CMP" class="com.ail.coretest.addressbook.Company"/>
+                <meta-value value="PER" class="com.ail.core.addressbook.Person"/>
+                <meta-value value="ORG" class="com.ail.core.addressbook.Organisation"/>
+                <meta-value value="CMP" class="com.ail.core.addressbook.Company"/>
                 <column name="mePartyType"/>
                 <column name="mePartyId"/>					
             </any>
@@ -70,21 +70,21 @@
             <list name="party" cascade="all">
                 <key column="parentSystemId"/>
                 <index column='rank'/>
-                <one-to-many class="com.ail.coretest.addressbook.Party"/>
+                <one-to-many class="com.ail.core.addressbook.Party"/>
             </list>
         </joined-subclass>
         
-        <joined-subclass name="com.ail.coretest.addressbook.Party" table="party">
+        <joined-subclass name="com.ail.core.addressbook.Party" table="party">
             <key column="systemId"/>
             <many-to-one name="address" column="addressId" cascade="all"/>            
             
-            <joined-subclass name="com.ail.coretest.addressbook.Person" table="person">
+            <joined-subclass name="com.ail.core.addressbook.Person" table="person">
                 <key column="systemId"/>
                 <property name="firstName" column="firstname" type="string"/>
                 <property name="surname" column="surname" type="string"/>                
             </joined-subclass>
             
-            <joined-subclass name="com.ail.coretest.addressbook.Organisation" table="organisation">
+            <joined-subclass name="com.ail.core.addressbook.Organisation" table="organisation">
                 <key column="systemId"/>
                 <property name="name" column="name" type="string"/>
             </joined-subclass>

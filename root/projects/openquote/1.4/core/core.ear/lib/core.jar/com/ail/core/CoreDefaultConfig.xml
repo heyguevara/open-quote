@@ -191,7 +191,7 @@
     </service>
     
     <service name="RenderPdfDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderPdfDocumentService</parameter>
+      <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderFopPdfDocumentService</parameter>
     </service>
       
     <!--=======================================================================-->

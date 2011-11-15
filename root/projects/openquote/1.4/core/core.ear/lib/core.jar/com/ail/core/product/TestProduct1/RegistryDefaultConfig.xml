@@ -27,7 +27,7 @@
         </service>
         
         <service name="RenderPdfDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderPdfDocumentService</parameter>
+            <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderFopPdfDocumentService</parameter>
         </service>
         
         
@@ -42,7 +42,7 @@
         <command name="RenderHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommand">
             <parameter name="Service">RenderPdfDocumentService</parameter>
             <parameter name="RenderOptionsArg">allowCopyContent=FALSE,allowPrint=TRUE</parameter>
-            <parameter name="TranslationUrlArg">classpath://com.ail.coretest/TestGenerateDocumentHelloWorld.xsl</parameter>
+            <parameter name="TranslationUrlArg">classpath://com.ail.core/TestGenerateDocumentHelloWorld.xsl</parameter>
         </command>
 
         <type name="TestProduct1" key="com.ail.core.Type" builder="CastorXMLBuilder">
@@ -127,7 +127,7 @@
             
                     <chapterData id="chapter3" title="Terms and Conditions">
                         <blockData applicability="ALL" position="BODY">
-                            <urlData title="Terms &amp; Conditions" url="classpath://com.ail.coretest/TestGenerateDocumentTC.html"/> 
+                            <urlData title="Terms &amp; Conditions" url="classpath://com.ail.core/TestGenerateDocumentTC.html"/> 
                         </blockData>
                     </chapterData>
                 </documentData> 

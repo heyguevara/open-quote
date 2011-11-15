@@ -47,15 +47,15 @@ import com.ail.core.configure.ConfigurationOwner;
  * As used by this accessor, Janino scripts adopt a simple contract: they must define an invoke method which accepts
  * only one argument of a type which is suitable for the command being serviced.<p/>
  * 
- * In the following example the command called 'TestCommand' had been bound to the Janino based 'TestService'. The convension
- * within the core is to have a the command class (TestCommand) paired with an argument implementation (TestArgImp); therefore, 
+ * In the following example the command called 'MyTestCommand' had been bound to the Janino based 'TestService'. The convension
+ * within the core is to have a the command class (MyTestCommand) paired with an argument implementation (MyTestArgImp); therefore, 
  * the invoke method accepts an argument of that type.
  * <pre>
  * &lt;service name="TestService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" &gt;
  *   &lt;parameter name="Script"&gt;&lt;![CDATA[
- *     import com.ail.coretest.service.TestArgImp;
+ *     import com.ail.core.dummyservice.TestArgImp;
  *
- *     public static void invoke(TestArgImp args) {
+ *     public static void invoke(MyTestArgImp args) {
  *       if (args.getX()&gt;1000) {
  *         args.setR(args.getX()-(2*args.getY()));
  *       }
@@ -63,7 +63,7 @@ import com.ail.core.configure.ConfigurationOwner;
  *   ]]&gt;&lt;/parameter&gt;
  * &lt;/service&gt;
  * 
- * &lt;command name="TestCommand" builder="ClassBuilder" key="com.ail.coretest.service.TestCommand"&gt;
+ * &lt;command name="MyTestCommand" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand"&gt;
  *    &lt;parameter name="Service"&gt;TestService&lt;/parameter&gt;
  * &lt;/command&gt;
  * </pre>
@@ -76,9 +76,9 @@ import com.ail.core.configure.ConfigurationOwner;
  * &lt;service name="TestExtendingService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" &gt;
  *   &lt;parameter name="Extends"&gt;TestService&lt;/parameter&gt;
  *   &lt;parameter name="Script"&gt;&lt;![CDATA[
- *     import com.ail.coretest.service.TestArgImp;
+ *     import com.ail.core.dummyservice.TestArgImp;
  *
- *     public static void invoke(TestArgImp args) {
+ *     public static void invoke(MyTestArgImp args) {
  *       if (args.getX()&lt;1000) {
  *         args.setR(args.getX()-(4*args.getY()));
  *       }
@@ -86,7 +86,7 @@ import com.ail.core.configure.ConfigurationOwner;
  *   ]]&gt;&lt;/parameter&gt;
  * &lt;/service&gt;
  * 
- * &lt;command name="TestExtendingCommand" builder="ClassBuilder" key="com.ail.coretest.service.TestCommand"&gt;
+ * &lt;command name="TestExtendingCommand" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand"&gt;
  *    &lt;parameter name="Service"&gt;TestExtendingService&lt;/parameter&gt;
  * &lt;/command&gt;
  * </pre>

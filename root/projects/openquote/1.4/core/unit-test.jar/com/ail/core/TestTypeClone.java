@@ -178,10 +178,10 @@ public class TestTypeClone {
 
     @Test
     public void testCommandClone() throws Exception {
-        TestCommand c = new TestCommand();
-        TestArgImp a = new TestArgImp();
+        MyTestCommand c = new MyTestCommand();
+        MyTestArgImp a = new MyTestArgImp();
         c.setArgs(a);
-        TestCommand c1 = (TestCommand) c.clone();
+        MyTestCommand c1 = (MyTestCommand) c.clone();
         assertTrue(c.hashCode() != c1.hashCode());
         assertTrue(c.getArgs().hashCode() != c1.getArgs().hashCode());
     }
@@ -339,6 +339,7 @@ class TypeWithHashtable extends Type {
         this.name = name;
     }
 }
+
 /**
  * Sample Type with a Set to help in testing the core's cloning
  */
@@ -372,16 +373,16 @@ class TypeWithSet extends Type {
 /**
  * Sample Command to help in testing the core's cloning
  */
-class TestCommand extends Command implements TestArg {
-    private TestArg args = null;
+class MyTestCommand extends Command implements MyTestArg {
+    private MyTestArg args = null;
 
-    public TestCommand() {
+    public MyTestCommand() {
         super();
-        args = new TestArgImp();
+        args = new MyTestArgImp();
     }
 
     public void setArgs(CommandArg arg) {
-        this.args = (TestArg)arg;
+        this.args = (MyTestArg)arg;
     }
 
     public CommandArg getArgs() {
@@ -506,7 +507,7 @@ class TestCommand extends Command implements TestArg {
 /**
  * Sample Arg interface to help in testing the core's cloning
  */
-interface TestArg extends CommandArg {
+interface MyTestArg extends CommandArg {
     /**
      * Fetch the value of the version argument. 
      * @see #setVersion
@@ -603,7 +604,7 @@ interface TestArg extends CommandArg {
 /**
  * Sample ArgImp interface to help in testing the core's cloning
  */
-class TestArgImp extends CommandArgImp implements TestArg {
+class MyTestArgImp extends CommandArgImp implements MyTestArg {
     static final long serialVersionUID = 1199346453402049909L;
     private int x;
     private int y;
@@ -615,7 +616,7 @@ class TestArgImp extends CommandArgImp implements TestArg {
     private Attribute detailAttribute;
 
     /** Default constructor */
-    public TestArgImp() {
+    public MyTestArgImp() {
     }
 
     /**
@@ -623,7 +624,7 @@ class TestArgImp extends CommandArgImp implements TestArg {
      * @param x Value for X argument.
      * @param y Value for Y argument.
      */
-    public TestArgImp(int x, int y) {
+    public MyTestArgImp(int x, int y) {
         this.x=x;
         this.y=y;
     }

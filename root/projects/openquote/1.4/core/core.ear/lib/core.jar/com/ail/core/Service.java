@@ -36,10 +36,6 @@ import java.security.Principal;
  * Each entry point has associated version and configuration information. The version
  * details are burned into the entry point's source code at build time. The entry point's
  * configuration can be modified at run-time using the setter provided.
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Service.java,v $
  */
 public abstract class Service extends Type implements CoreUser, ConfigurationOwner {
 
