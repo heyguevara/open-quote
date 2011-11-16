@@ -51,7 +51,7 @@ public enum AccessorLoggingIndicator {
     }
     
     public String valuesAsCsv() {
-        return Functions.valuesAsCsv(values());
+        return Functions.arrayAsCsv(values());
     }
 }
 

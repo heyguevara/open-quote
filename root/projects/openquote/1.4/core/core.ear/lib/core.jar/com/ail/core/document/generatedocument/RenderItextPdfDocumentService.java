@@ -26,6 +26,7 @@ import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.Type;
 import com.ail.core.Version;
 import com.ail.core.command.CommandArg;
 import com.itextpdf.text.DocumentException;
@@ -94,26 +95,38 @@ public class RenderItextPdfDocumentService extends Service {
             throw new PreconditionException("args.getSourceDataArg()==null");
         }
         
-        if (args.getTranslationUrlArg()==null || args.getTranslationUrlArg().length()==0) {
-            throw new PreconditionException("args.getTranslationUrlArg()==null || args.getTranslationUrlArg().length()==0");
+        if (args.getTemplateUrlArg()==null || args.getTemplateUrlArg().length()==0) {
+            throw new PreconditionException("args.getTemplateUrlArg()==null || args.getTemplateUrlArg().length()==0");
         }
         
         // The resulting PDF will end up in this array
         ByteArrayOutputStream output=new ByteArrayOutputStream();
         PdfStamper stamper = null;
-        PdfReader pdfTemplate;
+        PdfReader pdfTemplate = null;
+        Type data = null;
         
         try {
-            pdfTemplate = new PdfReader(new URL(args.getTranslationUrlArg()));
+            data=(Type)core.fromXML(args.getSourceDataArg().getType(), args.getSourceDataArg());
+        } catch (Exception e) {
+            throw new PreconditionException("Failed to translate source data into an object.", e);
+        }
+        
+        try {
+            pdfTemplate = new PdfReader(new URL(args.getTemplateUrlArg()));
             stamper = new PdfStamper(pdfTemplate, output);
+    
+            for(String fieldName: stamper.getAcroFields().getFields().keySet()) {
+                try {
+                    String value=data.xpathGet(fieldName).toString();
+                    stamper.getAcroFields().setField(fieldName, value);
+                } catch (Exception e) {
+                    throw new PreconditionException("xpath expression: '"+fieldName+"' could not be evaulated: "+e.toString());
+                }
+            }
+    
             stamper.setFormFlattening(true);
-    
-            stamper.getAcroFields().setField("name", "Ashwin Kumar");
-            stamper.getAcroFields().setField("id", "1\n2\n3\n");
-            stamper.getAcroFields().setField("friendname", "kumar\nsirisha\nsuresh\n");
-            stamper.getAcroFields().setField("relation", "self\nwife\nfriend\n");
-    
             stamper.close();
+            pdfTemplate.close();
         }
         catch (DocumentException e) {
             throw new RenderException("PDF generation failed: " + e);

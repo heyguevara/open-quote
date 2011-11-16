@@ -15,9 +15,11 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.core;
+package com.ail.core.document;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -27,9 +29,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.ail.core.BaseException;
 import com.ail.core.Core;
-import com.ail.core.PreconditionException;
+import com.ail.core.CoreUserTestCase;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.Configuration;
@@ -39,7 +40,6 @@ import com.ail.core.document.generatedocument.GenerateDocumentCommand;
 import com.ail.core.document.generatedocument.StyleDocumentArgImp;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.core.document.model.RenderContext;
-import com.ail.core.CoreUserTestCase;
 
 public class TestGenerateDocument extends CoreUserTestCase {
     static boolean setup=false;
@@ -80,21 +80,15 @@ public class TestGenerateDocument extends CoreUserTestCase {
 		tidyUpTestData();
     }
 
-    
     /**
      * Test that the Doc Gen service fails if no arguments are supplied.
      * @throws Exception
      */
-    @Test
+    @Test(expected=com.ail.core.PreconditionException.class)
     public void testDocGenServiceExists() throws Exception {
-        try {
-            GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateQuoteDocument");
-            com.invoke();
-            fail("command worked even without giving it any args!");
-        }
-        catch(PreconditionException  e) {
-            // this is ok
-        }
+        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateDoc");
+        com.invoke();
+        fail("command worked even without giving it any args!");
      }
 
     /**
@@ -124,7 +118,7 @@ public class TestGenerateDocument extends CoreUserTestCase {
 
         // check that variable expansion is working in the urlData handler
         assertTrue(sw.toString().contains("please contact us on TestProduct default"));
-        System.out.println(sw.toString());
+
         // check the the various flavours of model binding and defaulting have worked
         assertTrue(sw.toString().contains("<itemData id=\"nm1\" title=\"Timeout\" class=\"integer\">600000</itemData>"));
         assertTrue(sw.toString().contains("<itemData id=\"nm1\" title=\"Who\" class=\"string\">factory</itemData>"));
@@ -154,57 +148,57 @@ public class TestGenerateDocument extends CoreUserTestCase {
                     "</styleDocumentArgImp>";
         
         getCore().fromXML(StyleDocumentArgImp.class, new XMLString(tin));
-        
     }
     
     @Test
-    public void testDocGenService() throws Exception {
-        PrintWriter out;
+    public void testFOPDocGenService() throws Exception {
+        // we'll use an instance of Configuration to source some data from.
+        XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
+        Configuration config=getCore().fromXML(Configuration.class, configXml);
 
-        try {
-            // we'll use an instance of Configuration to source some data from.
-            XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
-            Configuration config=getCore().fromXML(Configuration.class, configXml);
-    
-            for(int i=0 ; i<10 ; i++) {
-                Timer.start("gen test "+i);        
-                String doc = generateDocument(config);
-                Timer.stop("gen test "+i);
-            
-                out=new PrintWriter(new File("./target/test/TestGenerateDocument"+i+".pdf"));
-                out.print(doc);
-                out.close();
-            }
-        }
-        catch(Throwable e) {
-            e.printStackTrace();
-            fail("Exception thrown during doc gen.");
-        }
-    }
-
-    private String generateDocument(Configuration config) throws BaseException {
-        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateQuoteDocument");
+        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateDoc");
         com.setModelArg(config);
         com.setProductNameArg("com.ail.core.product.TestProduct1");
-        com.setDocumentDefinitionArg("MyTestDocument");
+        com.setDocumentDefinitionArg("MyTestFOPDocument");
         com.invoke();
-        String doc=new String(com.getRenderedDocumentRet());
-        return doc;
     }
 
+    @Test
     public void testGenerateDocumentFromCore() throws Exception {
         XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
         Configuration model=getCore().fromXML(Configuration.class, configXml);
 
-        byte[] doc=getCore().generateDocument("com.ail.core.product.TestProduct1", "MyTestDocument", model);
+        byte[] doc=getCore().generateDocument("com.ail.core.product.TestProduct1", "MyTestFOPDocument", model);
         
-// uncomment to dump the pdf to a file
-//        PrintWriter out=new PrintWriter(new File("./target/test/testGenerateDocumentFromCore.pdf"));
-//        out.print(new String(doc));
-//        out.close();
+        // uncomment to dump the pdf to a file
+        // PrintWriter out=new PrintWriter(new File("./target/test/testGenerateDocumentFromCore.pdf"));
+        // out.print(new String(doc));
+        // out.close();
 
         assertNotNull(doc);
         assertTrue("Size of generated document doesn't look right (was: "+doc.length+", expected > 4700)", doc.length>4700);
+    }
+    
+    @Test
+    public void testITextDocGenService() throws Exception {
+        // we'll use an instance of Configuration to source some data from.
+        XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
+        Configuration config=getCore().fromXML(Configuration.class, configXml);
+
+        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateDoc");
+        com.setModelArg(config);
+        com.setProductNameArg("com.ail.core.product.TestProduct1");
+        com.setDocumentDefinitionArg("MyTestITextDocument");
+        com.invoke();
+
+        byte[] doc=com.getRenderedDocumentRet();
         
+        // uncomment to dump the pdf to a file
+        PrintWriter out=new PrintWriter(new File("./target/test/output.pdf"));
+        out.print(new String(doc));
+        out.close();
+
+        assertNotNull(doc);
+        assertTrue("Size of generated document doesn't look right (was: "+doc.length+", expected > 4700)", doc.length>4700);
     }
 }

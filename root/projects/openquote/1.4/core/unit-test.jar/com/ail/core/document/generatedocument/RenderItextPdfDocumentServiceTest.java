@@ -3,8 +3,6 @@ package com.ail.core.document.generatedocument;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.PrintWriter;
-
 import org.junit.Before;
 import org.junit.Test;
 

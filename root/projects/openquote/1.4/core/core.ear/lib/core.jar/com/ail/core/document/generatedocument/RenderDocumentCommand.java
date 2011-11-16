@@ -21,14 +21,6 @@ import com.ail.core.XMLString;
 import com.ail.core.command.Command;
 import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
 public class RenderDocumentCommand extends Command implements RenderDocumentArg {
     private RenderDocumentArg args = null;
 
@@ -100,5 +92,19 @@ public class RenderDocumentCommand extends Command implements RenderDocumentArg 
      */
     public void setTranslationUrlArg(String translationUrlArg) {
         args.setTranslationUrlArg(translationUrlArg);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setTemplateUrlArg(String templateUrlArg) {
+        args.setTemplateUrlArg(templateUrlArg);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getTemplateUrlArg() {
+        return args.getTemplateUrlArg();
     }
 }

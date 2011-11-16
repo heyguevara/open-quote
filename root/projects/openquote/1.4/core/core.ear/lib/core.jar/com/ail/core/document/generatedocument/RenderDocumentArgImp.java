@@ -20,19 +20,12 @@ package com.ail.core.document.generatedocument;
 import com.ail.core.XMLString;
 import com.ail.core.command.CommandArgImp;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype argimp
- */
 public class RenderDocumentArgImp extends CommandArgImp implements RenderDocumentArg {
     private byte[] renderedDocumentRet;
     private XMLString sourceDataArg;
     private String renderOptionsArg;
     private String translationUrlArg;
+    private String templateUrlArg;
     
     /**
      * {@inheritDoc}
@@ -98,6 +91,19 @@ public class RenderDocumentArgImp extends CommandArgImp implements RenderDocumen
         this.translationUrlArg = translationUrlArg;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String getTemplateUrlArg() {
+        return templateUrlArg;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setTemplateUrlArg(String templateUrlArg) {
+        this.templateUrlArg = templateUrlArg;
+    }
 }
 
 

@@ -117,6 +117,9 @@ public class GenerateDocumentService extends Service {
             merge.invoke();
             subject=merge.getMergedDataRet();
         }
+        else {
+            subject=core.toXML(args.getModelArg());
+        }
         
         // 2nd step: apply style
         if (docDef.getStyleCommand()!=null) {

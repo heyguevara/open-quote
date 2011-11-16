@@ -30,6 +30,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
 import com.ail.core.command.CommandInvocationError;
@@ -119,6 +121,21 @@ public class Functions {
     }
 
 
+    public static String valuesAsSeparatedString(Collection<Object> objects, String separator) {
+        StringBuffer v=null;
+        
+        for(Object n: objects) {
+            if (v==null) {
+                v=new StringBuffer(n.toString());
+            }
+            else {
+                v.append(separator+n.toString());
+            }
+        }
+
+        return v!=null ? v.toString() : "";
+    }
+    
     /**
      * Turn an array of Objects into a comma separated list where each value in the list
      * is the result of calling toString() on the corresponding Object.<p>
@@ -126,19 +143,39 @@ public class Functions {
      * @param e An array of objects to be CSV'ed
      * @return A String in comma separated value format.
      */
-    public static String valuesAsCsv(Object[] e) {
-        StringBuffer v=null;
-        
-        for(Object n: e) {
-            if (v==null) {
-                v=new StringBuffer(n.toString());
-            }
-            else {
-                v.append(","+n.toString());
-            }
-        }
+    public static String arrayAsCsv(Object[] e) {
+        return collectionAsCsv(Arrays.asList(e));
+    }
 
-        return v!=null ? v.toString() : "";
+    /**
+     * Turn a collection of Objects into a comma separated list where each value in the list
+     * is the result of calling toString() on the corresponding Object.<p>
+     * If the array of objects is empty, an empty string is returned.
+     * @param e An array of objects to be CSV'ed
+     * @return A String in comma separated value format.
+     */
+    public static String collectionAsCsv(Collection<Object> objects) {
+        return valuesAsSeparatedString(objects, ",");
+    }
+
+    /**
+     * Convert a collection of objects into a \n separated string of the .toString
+     * values of the objects in the collection. If the collection of objects is empty
+     * an empty string will be returned.
+     * @param objects Collection of objects to be converted
+     * @return String representation of the objects.
+     */
+    public static String collectionAsLineSeparatedString(Collection<Object> objects) {
+        return valuesAsSeparatedString(objects, "\n");
+    }
+    
+    /**
+     * @see #valuesAsLineSeparatedString(Collection)
+     * @param objects Array of objects to place into the string
+     * @return String representation of the objects;
+     */
+    public static String arraysAsLineSeparatedString(Object[] objects) {
+        return collectionAsLineSeparatedString(Arrays.asList(objects));
     }
 
     public static TypeEnum enumForName(String name, TypeEnum[] enums) {

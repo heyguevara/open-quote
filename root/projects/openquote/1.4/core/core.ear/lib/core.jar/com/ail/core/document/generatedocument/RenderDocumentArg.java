@@ -84,6 +84,20 @@ public interface RenderDocumentArg extends CommandArg {
      * @return translationUrlArg
      */
     String getTranslationUrlArg();
+
+    /**
+     * Set the template (if any) to be used to generate the document. The interpretation of this
+     * argument is dependent on the render service implementation. See the javadocs associated
+     * with each render service for details of this option's usage.
+     * @param templateUrlArg Translation URL
+     */
+    void setTemplateUrlArg(String templateUrlArg);
+    
+    /**
+     * @see #setTemplateUrlArg(String)
+     * @return templateUrlArg
+     */
+    String getTemplateUrlArg();
 }
 
 
