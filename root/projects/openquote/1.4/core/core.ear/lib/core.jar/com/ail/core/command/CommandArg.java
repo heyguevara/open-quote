@@ -21,10 +21,7 @@ import com.ail.core.CoreUser;
 import java.io.Serializable;
 
 /**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/CommandArg.java,v $
+ * Base interface for service arguments.
  */
 public interface CommandArg extends Serializable {
     CoreUser getCallersCore();

@@ -37,13 +37,25 @@ import java.security.Principal;
  * details are burned into the entry point's source code at build time. The entry point's
  * configuration can be modified at run-time using the setter provided.
  */
-public abstract class Service extends Type implements CoreUser, ConfigurationOwner {
-
-	/**
+public abstract class Service<T extends CommandArg> extends Type implements CoreUser, ConfigurationOwner {
+    protected T args;
+    protected Core core;
+    
+    public Service() {
+        core = new Core(this);
+    }
+    
+    public void setCore(Core core) {
+        this.core=core;
+    }
+    
+    /**
      * Set the arguments to be used by this entry point's business logic.
      * @param args Arguments for the entry point to process.
      */
-	public abstract void setArgs(CommandArg args);
+	public void setArgs(T args) {
+	    this.args=args;
+	}
 
 	/**
      * Invoke the entry point's business logic. This is the core of the entry
@@ -55,7 +67,7 @@ public abstract class Service extends Type implements CoreUser, ConfigurationOwn
     public abstract void invoke() throws BaseException;
 
 	/**
-     * A default entry point implemention returning the version effective date.
+     * A default entry point implementation returning the version effective date.
   	 * Entry points with a critical dependency on selecting the
      * version effective date should override this method. The default behaviour is
      * to use the version effective date from the CallersCore supplied in the Args
@@ -78,13 +90,17 @@ public abstract class Service extends Type implements CoreUser, ConfigurationOwn
      * the entry points results.
      * @return The results of executing the entry point.
      */
-    public abstract CommandArg getArgs();
+    public T getArgs() {
+        return args;
+    }
 
 	/**
      * Fetch the entry point's instance of the core.
      * @return The core being used by the entry points.
      */
-	public abstract Core getCore();
+	public Core getCore() {
+	    return core;
+	}
 
 	/**
      * Default entry point implementation of the setConfiguration

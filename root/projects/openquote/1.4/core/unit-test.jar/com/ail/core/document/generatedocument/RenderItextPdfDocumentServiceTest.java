@@ -28,7 +28,8 @@ public class RenderItextPdfDocumentServiceTest {
         
         String samplePDFSource=this.getClass().getResource("SampleTemplate.pdf").toString();
         
-        sut=new RenderItextPdfDocumentService(mockCore);
+        sut=new RenderItextPdfDocumentService();
+        sut.setCore(mockCore);
         sut.setArgs(mockArgs);
         when(mockArgs.getSourceDataArg()).thenReturn(mockXMLString);
         when(mockArgs.getTemplateUrlArg()).thenReturn(samplePDFSource);

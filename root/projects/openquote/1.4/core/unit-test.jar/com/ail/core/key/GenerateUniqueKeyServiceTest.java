@@ -34,8 +34,8 @@ public class GenerateUniqueKeyServiceTest {
         mockNextNumberParameter=mock(Parameter.class);
         mockBlockSizeParameter=mock(Parameter.class);
 
-        GenerateUniqueKeyService GUKS;
-        GUKS=new GenerateUniqueKeyService(mockCore);
+        GenerateUniqueKeyService GUKS=new GenerateUniqueKeyService();
+        GUKS.setCore(mockCore);
         GUKS.setArgs(mockArgs);
         SUT=spy(GUKS);
         doReturn(mockConfiguration).when(SUT).getConfiguration();

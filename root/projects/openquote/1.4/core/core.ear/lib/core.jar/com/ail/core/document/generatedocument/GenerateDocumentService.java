@@ -20,56 +20,26 @@ package com.ail.core.document.generatedocument;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
-import com.ail.core.command.CommandArg;
 import com.ail.core.document.model.DocumentDefinition;
-public class GenerateDocumentService extends Service {
-    private GenerateDocumentArg args = null;
-    private Core core = null;
 
-    /** Default constructor */
-    public GenerateDocumentService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (GenerateDocumentArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of GenerateDocumentArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
+public class GenerateDocumentService extends Service<GenerateDocumentArg> {
 
     /**
      * Return the product name from the arguments as the configuration namespace. 
      * The has the effect of selecting the product's configuration.
      * @return product name
      */
+    @Override
     public String getConfigurationNamespace() {
         return productNameToConfigurationNamespace(args.getProductNameArg());
     }
 
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws BaseException, PreconditionException, PostconditionException {
         XMLString subject=null;
         

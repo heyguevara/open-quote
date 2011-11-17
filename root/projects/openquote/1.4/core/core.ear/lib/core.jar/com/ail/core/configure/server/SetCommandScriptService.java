@@ -17,55 +17,22 @@
 
 package com.ail.core.configure.server;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Type;
 
-public class SetCommandScriptService extends Service {
-    private SetCommandScriptArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public SetCommandScriptService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (SetCommandScriptArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return The arguments object.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class SetCommandScriptService extends Service<SetCommandScriptArg> {
     /**
      * Return the namespace of the configuration we're updating
      * @return The classes namespace
      */
+    @Override
     public String getConfigurationNamespace() {
         return (args.getNamespaceArg()!=null) ? args.getNamespaceArg() : args.getCommandScriptArg().getNamespace();
     }
 
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         if (args.getCommandScriptArg()==null) {
             throw new PreconditionException("commandScriptArg==null");

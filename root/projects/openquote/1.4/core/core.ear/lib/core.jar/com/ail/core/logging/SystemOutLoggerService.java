@@ -20,9 +20,7 @@ package com.ail.core.logging;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 
-import com.ail.core.Core;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 
 /**
  * This logging entry point directs log messages to the System print streams 'out'
@@ -33,41 +31,12 @@ import com.ail.core.command.CommandArg;
  * Messages are written in the following form:<p>
  * &nbsp;<i>owner</i>:<i>date</i>:<i>severity</i>:<i>effective date</i>:<i>message</i>
  */
-public class SystemOutLoggerService extends Service {
-    private LoggerArgImp args=null;
-	private static SimpleDateFormat format=new SimpleDateFormat("dd/MM/yy hh:mm:ss");
+public class SystemOutLoggerService extends Service<LoggerArgImp> {
+	private static final SimpleDateFormat format=new SimpleDateFormat("dd/MM/yy hh:mm:ss");
 
-	/**
-     * This entry point has no Core requirements, so simply return null.
-     * @return null
-     */
-	public Core getCore() {
-        return null;
-    }
-
-	/**
-     * Setter used to the set the arguments that <code>invoke()</code> will
-     * use when it is called.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args){
-        this.args = (LoggerArgImp)args;
-    }
-
-	/**
-     * Getter returning the arguments used by this entry point. This entry point
-     * doesn't modify the arguments.
-     * @return An instance of LoggerArgs.
-	 */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-	/**
-     * The 'business logic' of the entry point.
-     */
+	@Override
 	public void invoke() {
-		// default to writting to error stream.
+		// default to writing to error stream.
 		PrintStream logTo=System.err;
 
 		// direct DEBUG and INFO messages to System.out

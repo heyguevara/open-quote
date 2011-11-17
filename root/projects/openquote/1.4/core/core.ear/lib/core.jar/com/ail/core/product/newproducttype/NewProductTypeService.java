@@ -20,32 +20,17 @@ package com.ail.core.product.newproducttype;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 import static com.ail.core.Functions.productNameToDefaultType;
 
-import com.ail.core.Core;
 import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 
 /**
  * Instantiate a type defined by a product.
  */
-public class NewProductTypeService extends Service {
-    private NewProductTypeArg args = null;
-    private CoreProxy core = null;
-
-    /** Default constructor */
-    public NewProductTypeService() {
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core.getCore();
-    }
-
+public class NewProductTypeService extends Service<NewProductTypeArg> {
+    private CoreProxy core;
+    
     public String getConfigurationNamespace() {
         return core.getConfigurationNamespace();
     }
@@ -55,23 +40,7 @@ public class NewProductTypeService extends Service {
         return core.getVersionEffectiveDate();
     }
     
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (NewProductTypeArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of NewProductTypeArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         
         if (args.getProductNameArg()==null || args.getProductNameArg().length()==0) {

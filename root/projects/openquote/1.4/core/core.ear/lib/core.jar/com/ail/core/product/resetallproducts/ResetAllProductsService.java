@@ -18,11 +18,9 @@
 package com.ail.core.product.resetallproducts;
 
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationResetError;
 import com.ail.core.product.ProductDetails;
@@ -30,43 +28,12 @@ import com.ail.core.product.listproducts.ListProductsCommand;
 import com.ail.core.product.resetproduct.ResetProductCommand;
 
 
-public class ResetAllProductsService extends Service {
-    private ResetAllProductsArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public ResetAllProductsService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (ResetAllProductsArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of ResetAllProductsArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class ResetAllProductsService extends Service<ResetAllProductsArg> {
     /**
      * This service doesn't have its own configuration, but it takes care of resetting 
      * all the products returned by the ListProducts service.
      */
+    @Override
     public void resetConfiguration() {
         try {
             super.resetConfiguration();
@@ -81,7 +48,7 @@ public class ResetAllProductsService extends Service {
         }
     }
 
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         ListProductsCommand listProductsCommand=(ListProductsCommand)core.newCommand("ListProducts");
         ResetProductCommand resetProductCommand=(ResetProductCommand)core.newCommand("ResetProduct");

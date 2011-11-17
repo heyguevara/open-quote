@@ -20,49 +20,17 @@ package com.ail.core.persistence.hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 import com.ail.core.persistence.CreateArg;
 import com.ail.core.persistence.CreateException;
 
 /**
  * Implementation of the create service for Hibernate
  */
-public class HibernateCreateService extends Service {
-    private CreateArg args = null;
- 
-    /** Default constructor */
-    public HibernateCreateService() {
-        super();
-    }
-
-    /**
-     * Getter to fetch the entry point's core. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return null;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (CreateArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CreateArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class HibernateCreateService extends Service<CreateArg> {
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, CreateException {
 
         // check arguments

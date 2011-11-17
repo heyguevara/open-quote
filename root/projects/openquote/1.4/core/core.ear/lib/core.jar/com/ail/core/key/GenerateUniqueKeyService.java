@@ -20,60 +20,15 @@ package com.ail.core.key;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ail.core.Core;
 import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 
-public class GenerateUniqueKeyService extends Service {
+public class GenerateUniqueKeyService extends Service<GenerateUniqueKeyArg> {
     private static Map<String,UniqueNumberHandler> uniqueNumberHandlers=new HashMap<String,UniqueNumberHandler>();
-    private GenerateUniqueKeyArg args = null;
-    
-    private Core core;
     private String configurationNamespace;
-
-    public GenerateUniqueKeyService() {
-        super();
-        core = new Core(this);
-    }
-
-    public GenerateUniqueKeyService(Core core) {
-        super();
-        this.core = core;
-    }
-        
-    /**
-     * Getter to fetch the entry point's core. This method is demanded by the EntryPoint class.
-     * 
-     * @return This entry point's instance of Core.
-     */
-    @Override
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * 
-     * @param args for invoke
-     */
-    @Override
-    public void setArgs(CommandArg args) {
-        this.args = (GenerateUniqueKeyArg) args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * 
-     * @return An instance of UpdateArgs.
-     */
-    @Override
-    public CommandArg getArgs() {
-        return args;
-    }
 
     /**
      * Return the product name from the arguments as the configuration namespace. 

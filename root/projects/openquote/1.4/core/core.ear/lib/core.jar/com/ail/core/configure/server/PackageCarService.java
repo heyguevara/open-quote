@@ -23,50 +23,15 @@ import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.XMLString;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.UnknownNamespaceError;
 
-/**
- */
-public class PackageCarService extends com.ail.core.Service {
-    private PackageCarArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public PackageCarService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (PackageCarArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of PackageCarFileArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+public class PackageCarService extends com.ail.core.Service<PackageCarArg> {
+    
+    @Override
     public void invoke() throws PreconditionException, PostconditionException {
         String namespace=null;
 

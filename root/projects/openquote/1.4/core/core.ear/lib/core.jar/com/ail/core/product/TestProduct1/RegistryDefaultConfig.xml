@@ -135,7 +135,7 @@
             
                     <chapterData id="chapter3" title="Terms and Conditions">
                         <blockData applicability="ALL" position="BODY">
-                            <urlData title="Terms &amp; Conditions" url="classpath://com.ail.core/TestGenerateDocumentTC.html"/> 
+                            <urlData title="Terms &amp; Conditions" url="classpath://com.ail.core.document/TestGenerateDocumentTC.html"/> 
                         </blockData>
                     </chapterData>
                 </documentData> 

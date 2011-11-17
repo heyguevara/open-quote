@@ -40,40 +40,9 @@ import com.ail.core.command.CommandArg;
  * configuration.
  */
 @SuppressWarnings("deprecation")
-public class CommonsValidatorService extends Service {
-    private ValidatorArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public CommonsValidatorService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (ValidatorArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of ValidatorArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class CommonsValidatorService extends Service<ValidatorArg> {
     /** The 'business logic' of the entry point. */
+    @Override
     @SuppressWarnings("unchecked")
     public void invoke() throws PreconditionException, ValidationError {
         // get arguments

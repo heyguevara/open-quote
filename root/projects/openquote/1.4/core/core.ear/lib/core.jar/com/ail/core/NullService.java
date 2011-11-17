@@ -25,7 +25,7 @@ import com.ail.core.configure.Configuration;
  * entry point when either one has to be configured, but no functionality is
  * required, or as a placeholder when the real entry point isn't yet ready.
  */
-public class NullService extends Service {
+public class NullService extends Service<CommandArg> {
     private CommandArg args=null;
 
     public void invoke() {

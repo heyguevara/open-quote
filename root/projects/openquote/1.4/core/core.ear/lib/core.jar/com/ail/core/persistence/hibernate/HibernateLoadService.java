@@ -19,52 +19,18 @@ package com.ail.core.persistence.hibernate;
 
 import org.hibernate.classic.Session;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.command.CommandArg;
 import com.ail.core.persistence.LoadArg;
 
 /**
  * Implementation of the update service for Hibernate
  */
-public class HibernateLoadService extends Service {
-    private LoadArg args = null;
-    private Core core;
-    
-    /** Default constructor */
-    public HibernateLoadService() {
-       super();
-       core=new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's core. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-     /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (LoadArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of LoadArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class HibernateLoadService extends Service<LoadArg> {
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, PostconditionException {
 
         // check arguments

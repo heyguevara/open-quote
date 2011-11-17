@@ -17,57 +17,24 @@
 
 package com.ail.core.configure.server;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
 
-public class SetConfigurationService extends Service {
-    private SetConfigurationArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public SetConfigurationService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (SetConfigurationArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of $Name:  $Args.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class SetConfigurationService extends Service<SetConfigurationArg> {
+    @Override
     public String getConfigurationNamespace() {
         return args.getNamespaceArg();
     }
 
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         if (args.getNamespaceArg()==null || args.getNamespaceArg().length()==0) {
-            throw new PreconditionException("namespace!=null && namespace!=\"\"");
+            throw new PreconditionException("args.getNamespaceArg()==null || args.getNamespaceArg().length()==0");
         }
 
         if (args.getConfigurationArg()==null) {
-            throw new PreconditionException("configuration!=null");
+            throw new PreconditionException("args.getConfigurationArg()==null");
         }
 
         ConfigurationHandler.getInstance().saveConfiguration(this, args.getConfigurationArg(), core);

@@ -17,37 +17,19 @@
 
 package com.ail.core.product.removeproduct;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.Group;
 import com.ail.core.product.UnknownProductException;
 import com.ail.core.product.listproducts.ListProductsService;
 
-
-public class RemoveProductService extends Service {
-    private RemoveProductArg args = null;
-    private Core core = null;
+public class RemoveProductService extends Service<RemoveProductArg> {
     private String namespace;
     
-    /** Default constructor */
-    public RemoveProductService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
     private void setConfigurationNamespace(String namespace) {
         this.namespace=namespace;
     }
@@ -55,27 +37,11 @@ public class RemoveProductService extends Service {
     /**
      * return the namespace which this service is associated with.
      */
+    @Override
     public String getConfigurationNamespace() {
         return (namespace!=null) ? namespace : super.getConfigurationNamespace();
     }
 
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (RemoveProductArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of RegisterProductArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
     public void invoke() throws PreconditionException, PostconditionException, UnknownProductException {
         // Check the essential preconditions
         if (args.getProductDetailsArg().getName()==null || args.getProductDetailsArg().getName().length()==0) {

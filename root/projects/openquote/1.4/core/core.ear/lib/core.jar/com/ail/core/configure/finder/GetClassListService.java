@@ -25,10 +25,8 @@ import java.util.Vector;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 
 /**
  * This service finds the classes that implement or extend a given base class. The <code>SearchClass</code>
@@ -46,40 +44,14 @@ import com.ail.core.command.CommandArg;
  *
  * @todo This service searches the system classpath for classes. This means that it will not find system classes (java.*, etc.) or dynamically created classes.
  */
-public class GetClassListService extends Service {
-    private GetClassListArg args = null;
-    private Core core = null;
+public class GetClassListService extends Service<GetClassListArg> {
     private Vector<String> allFiles = new Vector<String>();
     private String FILESEPARATOR = System.getProperty("file.separator");
 	private String PATHSEPARATOR = System.getProperty("path.separator");
 
     /** Default constructor */
     public GetClassListService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (GetClassListArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of $Name:  $Args.
-     */
-    public CommandArg getArgs() {
-        return args;
+        super();
     }
 
     /**

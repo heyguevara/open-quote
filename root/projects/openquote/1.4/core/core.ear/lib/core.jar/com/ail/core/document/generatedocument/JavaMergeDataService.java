@@ -20,50 +20,16 @@ package com.ail.core.document.generatedocument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
-import com.ail.core.command.CommandArg;
 import com.ail.core.document.model.RenderContext;
 
 /**
  */
-public class JavaMergeDataService extends Service {
-    private MergeDataArg args = null;
-    private Core core = null;
+public class JavaMergeDataService extends Service<MergeDataArg> {
 
-    /** Default constructor */
-    public JavaMergeDataService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (MergeDataArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of GenerateDocumentArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
     public void invoke() throws PreconditionException, PostconditionException {
         if (args.getModelArg()==null) {
             throw new PreconditionException("args.getModelArg()==null");

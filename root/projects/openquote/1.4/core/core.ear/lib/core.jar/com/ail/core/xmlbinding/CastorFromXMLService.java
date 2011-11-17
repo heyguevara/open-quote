@@ -26,10 +26,8 @@ import org.exolab.castor.xml.Unmarshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLClassDescriptorResolver;
 
-import com.ail.core.Core;
 import com.ail.core.Service;
 import com.ail.core.XMLException;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.XMLMapping;
 
 /**
@@ -47,39 +45,12 @@ import com.ail.core.configure.XMLMapping;
  * </ul>
  * These arguments and returns are encapsulated in an instance of FromXMLCommandArg.
  */
-public class CastorFromXMLService extends Service {
-
-	/** The argument object used by this entry point. */
-    private FromXMLArgImp args=null;
-
-	/**
-     * This entry point has no Core requirements, so simply return null.
-     * @return null
-     */
-	public Core getCore() {
-        return null;
-    }
-
-	/**
-     * Setter used to the set the arguments that <code>invoke()</code> will
-     * use when it is called.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args){
-        this.args = (FromXMLArgImp)args;
-    }
-
-	/**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of FromXMLArgImp.
-	 */
-    public CommandArg getArgs() {
-        return args;
-    }
+public class CastorFromXMLService extends Service<FromXMLArg> {
 
 	/**
      * The 'business logic' of the entry point.
      */
+    @Override
 	public void invoke() throws XMLException {
         XMLClassDescriptorResolver resolver=null;
 		StringReader reader=new StringReader(args.getXmlIn().toString());

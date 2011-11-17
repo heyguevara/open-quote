@@ -22,12 +22,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.command.CommandArg;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
@@ -37,43 +35,9 @@ import com.itextpdf.text.pdf.PdfStamper;
  * This class provides an implementation of the render document service which renders to PDF
  * using iText.<p/>
  */
-public class RenderItextPdfDocumentService extends Service {
-    private RenderDocumentArg args = null;
-    private Core core = null;
+public class RenderItextPdfDocumentService extends Service<RenderDocumentArg> {
 
-    public RenderItextPdfDocumentService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    public RenderItextPdfDocumentService(Core core) {
-        this.core=core;
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (RenderDocumentArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of GenerateDocumentArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, PostconditionException, RenderException {
         if (args.getSourceDataArg()==null) {
             throw new PreconditionException("args.getSourceDataArg()==null");

@@ -22,49 +22,17 @@ import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 
 /**
  * Service to catalog the contents of a CAR file. This service is passed a car file and
  * returns a list of the namespaces found in the file.
  */
-public class CatalogCarService extends Service {
-    private CatalogCarArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public CatalogCarService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (CatalogCarArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of DeployParFileArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
+public class CatalogCarService extends Service<CatalogCarArg> {
 
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         if (args.getCarArg()==null) {
             throw new PreconditionException("args.getCarArg()==null");

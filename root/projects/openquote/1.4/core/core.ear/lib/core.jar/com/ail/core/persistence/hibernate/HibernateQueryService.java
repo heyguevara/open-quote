@@ -21,53 +21,17 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.command.CommandArg;
 import com.ail.core.persistence.QueryArg;
 import com.ail.core.persistence.QueryException;
 
 /**
  * Implementation of the query service for Hibernate
-
  */
-public class HibernateQueryService extends Service {
-    private QueryArg args = null;
-    private Core core;
-    
-    /** Default constructor */
-    public HibernateQueryService() {
-       super();
-       core=new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's core. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (QueryArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of QueryArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+public class HibernateQueryService extends Service<QueryArg> {
+    @Override
     @SuppressWarnings("unchecked")
     public void invoke() throws PreconditionException,QueryException {
 

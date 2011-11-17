@@ -36,11 +36,9 @@ import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
@@ -65,45 +63,9 @@ import com.itextpdf.text.pdf.PdfWriter;
  * </code><br/><br/>
  * Options not specified are set to FALSE by default.
  */
-public class RenderFopPdfDocumentService extends Service {
-    private RenderDocumentArg args = null;
-    private Core core = null;
+public class RenderFopPdfDocumentService extends Service<RenderDocumentArg> {
 
-    /** Default constructor */
-    public RenderFopPdfDocumentService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the
-     * EntryPoint class.
-     * 
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * 
-     * @param args
-     *            for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (RenderDocumentArg) args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * 
-     * @return An instance of GenerateDocumentArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     @SuppressWarnings("unchecked")
     public void invoke() throws PreconditionException, PostconditionException, RenderException {
         try {

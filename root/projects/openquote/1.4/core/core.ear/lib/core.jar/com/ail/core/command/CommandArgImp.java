@@ -25,10 +25,6 @@ import com.ail.core.Type;
  * instance of Core. This is useful if the command user (i.e. a service) needs
  * to see the world as the client does - perhaps to use their logging settings,
  * or get their effective date, or security Subject.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/CommandArgImp.java,v $
  */
 public class CommandArgImp extends Type implements CommandArg {
     private CoreUser callersCore = null;

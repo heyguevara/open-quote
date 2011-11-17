@@ -18,62 +18,24 @@
 package com.ail.core.configure.server;
 
 import com.ail.core.CommandScript;
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Type;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetCommandScriptService.java,v $
- */
-public class GetCommandScriptService extends Service {
-    private GetCommandScriptArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public GetCommandScriptService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (GetCommandScriptArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of $Name:  $Args.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
+public class GetCommandScriptService extends Service<GetCommandScriptArg> {
     /**
      * When the core asks us for our namespace, return the one
      * we're getting information from.
      * @return Namespace as defined by the service arguments.
      */
+    @Override
     public String getConfigurationNamespace() {
         return args.getNamespaceArg();
     }
 
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         if (args.getNamespaceArg()==null || args.getNamespaceArg().length()==0) {
             throw new PreconditionException("namespace==null || namespace==''");

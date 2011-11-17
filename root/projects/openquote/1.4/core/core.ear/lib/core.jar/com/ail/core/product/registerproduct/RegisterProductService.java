@@ -17,12 +17,10 @@
 
 package com.ail.core.product.registerproduct;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.Group;
@@ -30,26 +28,9 @@ import com.ail.core.configure.Parameter;
 import com.ail.core.product.DuplicateProductException;
 import com.ail.core.product.listproducts.ListProductsService;
 
-/**
- */
-public class RegisterProductService extends Service {
-    private RegisterProductArg args = null;
-    private Core core = null;
+public class RegisterProductService extends Service<RegisterProductArg> {
     private String namespace;
     
-    /** Default constructor */
-    public RegisterProductService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
     /**
      * This service uses both the ListProductsService.SERVICE_NAMESPACE namespace and the namespace
      * which that namespace defines as the product catalog.
@@ -62,27 +43,12 @@ public class RegisterProductService extends Service {
     /**
      * return the namespace which this service is associated with.
      */
+    @Override
     public String getConfigurationNamespace() {
         return (namespace!=null) ? namespace : super.getConfigurationNamespace();
     }
 
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (RegisterProductArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of RegisterProductArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, PostconditionException, DuplicateProductException {
         // Check the essential preconditions
         if (args.getProductDetailsArg().getName()==null || args.getProductDetailsArg().getName().length()==0) {

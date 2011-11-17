@@ -19,36 +19,17 @@ package com.ail.core.product.listproducts;
 
 import java.util.ArrayList;
 
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.Parameter;
 import com.ail.core.product.ProductDetails;
 
-/**
- */
-public class ListProductsService extends Service {
+public class ListProductsService extends Service<ListProductsArg> {
     public static final String SERVICE_NAMESPACE="com.ail.core.product.listproducts.ListProductsService";
-    private ListProductsArg args = null;
-    private Core core = null;
     private String namespace;
     
-    /** Default constructor */
-    public ListProductsService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
     private void setConfigurationNamespace(String namespace) {
         this.namespace=namespace;
     }
@@ -79,23 +60,6 @@ public class ListProductsService extends Service {
         super.resetConfigurationByNamespace();
     }
 
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (ListProductsArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of ListProductsArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
     public void invoke() throws PostconditionException {
         // select the product catalog namespace as our config
         setConfigurationNamespace(null);

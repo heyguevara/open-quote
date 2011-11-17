@@ -21,50 +21,18 @@ import java.io.ByteArrayInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 
 /**
  */
-public class DeployCarService extends Service {
-    private DeployCarArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public DeployCarService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (DeployCarArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of DeployParFileArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
+public class DeployCarService extends Service<DeployCarArg> {
 
     /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         if (args.getNamespacesArg()==null) {
             throw new PreconditionException("args.getNamespacesArg()==null");
