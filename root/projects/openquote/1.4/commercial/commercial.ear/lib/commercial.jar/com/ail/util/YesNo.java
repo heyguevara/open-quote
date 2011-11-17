@@ -44,7 +44,7 @@ public enum YesNo implements TypeEnum {
     }
     
     public String valuesAsCsv() {
-        return Functions.valuesAsCsv(values());
+        return Functions.arrayAsCsv(values());
     }
     public String longName() {
         return longName;

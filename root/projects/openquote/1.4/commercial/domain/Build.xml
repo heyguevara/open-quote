@@ -3,10 +3,6 @@
  Ant build file to deploy the jboss domain. The commercial projects domain build simply
  unpacks the core projects dar (domain archive) and overlays the specifics of this 
  projects domain.
- $Revision: 1.1 $
- $State: Exp $
- $Date: 2005/08/16 21:08:54 $
- $Source: /home/bob/CVSRepository/projects/common/domain/Build.xml,v $
 -->
 
 <project default="build" name="commercial:domain">
@@ -57,7 +53,7 @@
 
   <target name="teardown-db-if" if="mysql-running">
     <!-- drop all the databases -->
-		<sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000">
+		<sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="">
 	  	    -- Make sure the database and users are there before we try to delete them!
 	        create database if not exists ${dbname};
 	        grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
@@ -77,7 +73,7 @@
 
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
-    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="bombay2000" >
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="" >
       create database if not exists ${dbname} default character set utf8 collate utf8_bin;
       grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
       grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;

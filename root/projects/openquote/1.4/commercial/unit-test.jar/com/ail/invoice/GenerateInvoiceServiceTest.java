@@ -48,7 +48,8 @@ public class GenerateInvoiceServiceTest {
         mockFinancialAmounts.add(mockFinancialAmount);
         mockRenderCommand = mock(RenderDocumentCommand.class);
 
-        sut = new GenerateInvoiceService(mockCore);
+        sut = new GenerateInvoiceService();
+        sut.setCore(mockCore);
         sut.setArgs(mockArgs);
 
         when(mockArgs.getDocumentRet()).thenReturn(document);

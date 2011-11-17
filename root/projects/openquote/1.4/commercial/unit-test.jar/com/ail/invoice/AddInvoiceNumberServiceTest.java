@@ -17,7 +17,7 @@ import com.ail.core.key.GenerateUniqueKeyCommand;
 import com.ail.financial.Invoice;
 
 public class AddInvoiceNumberServiceTest {
-    AddInvoiceNumberService SUT = null;
+    AddInvoiceNumberService sut = null;
     AddInvoiceNumberArg args=null;
     private Invoice mockInvoice;
     private Core mockCore;
@@ -41,38 +41,39 @@ public class AddInvoiceNumberServiceTest {
         when(mockGenerateInvoiceNumberRuleCommand.getInvoiceNumberRet()).thenReturn("123");
         when(mockCore.newCommand(eq(GenerateInvoiceNumberRuleCommand.class))).thenReturn(mockGenerateInvoiceNumberRuleCommand);
 
-        SUT=new AddInvoiceNumberService(mockCore);
-        SUT.setArgs(args);
+        sut=new AddInvoiceNumberService();
+        sut.setCore(mockCore);
+        sut.setArgs(args);
     }
 
     @Test(expected=PreconditionException.class)
     public void testInvoicePrecondition() throws Exception{
         when(args.getInvoiceArgRet()).thenReturn(null);
-        SUT.invoke();
+        sut.invoke();
     }
 
     @Test(expected=PreconditionException.class)
     public void testProductTypeIdPrecondition() throws Exception {
         when(mockInvoice.getProductTypeId()).thenReturn(null);
-        SUT.invoke();
+        sut.invoke();
     }
     
     @Test(expected=PreconditionException.class)
     public void testInvoiceNumberPrecondition() throws Exception {
         when(mockInvoice.getInvoiceNumber()).thenReturn("INV1234");
-        SUT.invoke();
+        sut.invoke();
     }
 
     @Test(expected=PostconditionException.class)
     public void testInvoiceNumberPostcondition() throws Exception {
         when(mockInvoice.getInvoiceNumber()).thenReturn(null);
-        SUT.invoke();
+        sut.invoke();
     }
     
     @Test
     public void testHappyPath() throws BaseException {
         when(mockInvoice.getInvoiceNumber()).thenReturn(null, "123");
-        SUT.invoke();
+        sut.invoke();
         verify(mockInvoice).setInvoiceNumber("123");
         assertEquals("123", args.getInvoiceArgRet().getInvoiceNumber());
     }
