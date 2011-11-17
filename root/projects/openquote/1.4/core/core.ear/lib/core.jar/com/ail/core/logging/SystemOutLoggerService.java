@@ -17,12 +17,12 @@
 
 package com.ail.core.logging;
 
-import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
-import com.ail.core.Version;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+
 import com.ail.core.Core;
+import com.ail.core.Service;
+import com.ail.core.command.CommandArg;
 
 /**
  * This logging entry point directs log messages to the System print streams 'out'
@@ -32,28 +32,10 @@ import com.ail.core.Core;
  * written to 'err'.<p>
  * Messages are written in the following form:<p>
  * &nbsp;<i>owner</i>:<i>date</i>:<i>severity</i>:<i>effective date</i>:<i>message</i>
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/06/17 21:49:36 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/logging/SystemOutLoggerService.java,v $
  */
 public class SystemOutLoggerService extends Service {
     private LoggerArgImp args=null;
 	private static SimpleDateFormat format=new SimpleDateFormat("dd/MM/yy hh:mm:ss");
-
-	/**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-	public Version getVersion() {
-		Version v=new Version();
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2007/06/17 21:49:36 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/logging/SystemOutLoggerService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.4 $");
-        return v;
-    }
 
 	/**
      * This entry point has no Core requirements, so simply return null.

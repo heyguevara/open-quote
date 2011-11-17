@@ -26,18 +26,12 @@ import java.util.zip.ZipOutputStream;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
-import com.ail.core.Version;
 import com.ail.core.XMLString;
 import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.UnknownNamespaceError;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/09/03 18:07:56 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/PackageCarService.java,v $
- * @stereotype service
  */
 public class PackageCarService extends com.ail.core.Service {
     private PackageCarArg args = null;
@@ -54,20 +48,6 @@ public class PackageCarService extends com.ail.core.Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public com.ail.core.Version getVersion() {
-        Version v = (Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2005/09/03 18:07:56 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/PackageCarService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.1 $");
-        return v;
     }
 
     /**

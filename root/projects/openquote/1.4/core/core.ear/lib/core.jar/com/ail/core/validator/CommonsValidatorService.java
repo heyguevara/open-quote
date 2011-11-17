@@ -22,28 +22,22 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.validator.Validator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorException;
 import org.apache.commons.validator.ValidatorResources;
 import org.apache.commons.validator.ValidatorResourcesInitializer;
-import org.apache.commons.validator.Validator;
 import org.apache.commons.validator.ValidatorResults;
 
+import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Core;
-import com.ail.core.Version;
 import com.ail.core.command.CommandArg;
 
 /**
  * Implementation of the Validator service using the <a href="http://jakarta.apache.org/commons/validator">
  * jakarta commons validator</a> project.<p>
  * configuration.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/CommonsValidatorService.java,v $
- * @stereotype service
  */
 @SuppressWarnings("deprecation")
 public class CommonsValidatorService extends Service {
@@ -61,20 +55,6 @@ public class CommonsValidatorService extends Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2005/07/16 10:23:26 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/CommonsValidatorService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.2 $");
-        return v;
     }
 
     /**

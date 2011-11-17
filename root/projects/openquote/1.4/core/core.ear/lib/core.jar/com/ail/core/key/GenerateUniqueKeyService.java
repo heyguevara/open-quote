@@ -25,7 +25,6 @@ import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 
@@ -54,22 +53,6 @@ public class GenerateUniqueKeyService extends Service {
     @Override
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * 
-     * @return A version object describing the version of this entry point.
-     */
-    @Override
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) getCore().newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2006/08/20 15:03:54 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/GenerateUniqueKeyService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.2 $");
-        return v;
     }
 
     /**

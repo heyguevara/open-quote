@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
@@ -30,11 +29,6 @@ import com.ail.core.configure.Parameter;
 import com.ail.core.product.ProductDetails;
 
 /**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/listproducts/ListProductsService.java,v $
- * @stereotype service
  */
 public class ListProductsService extends Service {
     public static final String SERVICE_NAMESPACE="com.ail.core.product.listproducts.ListProductsService";
@@ -83,20 +77,6 @@ public class ListProductsService extends Service {
 
         // Switch the product catalog config.
         super.resetConfigurationByNamespace();
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        Version v = (Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2007/10/05 22:47:50 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/listproducts/ListProductsService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.5 $");
-        return v;
     }
 
     /**

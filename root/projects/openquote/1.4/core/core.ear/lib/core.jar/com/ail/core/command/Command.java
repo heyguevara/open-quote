@@ -17,10 +17,9 @@
 
 package com.ail.core.command;
 
-import com.ail.core.configure.Configuration;
-import com.ail.core.Version;
-import com.ail.core.CoreUser;
 import com.ail.core.BaseException;
+import com.ail.core.CoreUser;
+import com.ail.core.configure.Configuration;
 
 /**
  * @version $Revision: 1.2 $
@@ -119,14 +118,6 @@ abstract public class Command extends AbstractCommand {
     public void setConfiguration(Configuration config) {
 		getAccessor().setConfiguration(config);
     }
-
-    /**
-     * Get the service's version information.
-     * @return The service's version details
-     */
-	public Version getVersion() {
-        return getAccessor().getVersion();
-	}
 
     /**
      * Clone this command.

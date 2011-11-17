@@ -24,27 +24,9 @@ import com.ail.core.configure.Configuration;
  * This entry point does nothing. It is intended to be use in place of a real
  * entry point when either one has to be configured, but no functionality is
  * required, or as a placeholder when the real entry point isn't yet ready.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/NullService.java,v $
  */
 public class NullService extends Service {
     private CommandArg args=null;
-
-	/**
-     * Return the version details of this entry point.
-     * @return Version specification
-     */
-    public Version getVersion() {
-		Version v=new Version();
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2005/07/16 10:23:26 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/NullService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.2 $");
-        return v;
-    }
 
     public void invoke() {
     }

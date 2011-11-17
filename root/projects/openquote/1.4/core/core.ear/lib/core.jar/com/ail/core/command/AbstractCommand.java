@@ -17,10 +17,9 @@
 
 package com.ail.core.command;
 
-import com.ail.core.configure.Configuration;
-import com.ail.core.Version;
-import com.ail.core.Type;
 import com.ail.core.BaseException;
+import com.ail.core.Type;
+import com.ail.core.configure.Configuration;
 
 /**
  * This is the super class of all command objects.
@@ -54,16 +53,6 @@ public abstract class AbstractCommand extends Type {
      * object's getters are used to retrieve the results.
      */
     public abstract void invoke() throws BaseException;
-
-	/**
-     * Fetch the version of the command (entry point) associated with this
-     * command. This is similar to the 'invoke' entry point in that control
-     * is passed to the entry point object. In this case to the getVersion()
-     * method.<p>
-     * Note: This method does not return the version of the command.
-     * @return The version of the entry point.
-     */
-	public abstract Version getVersion();
 
 	/**
      * Fetch the configuration of the entry point associated with this command.

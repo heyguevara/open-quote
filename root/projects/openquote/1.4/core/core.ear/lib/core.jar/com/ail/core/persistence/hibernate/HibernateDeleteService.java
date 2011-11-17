@@ -23,18 +23,12 @@ import org.hibernate.classic.Session;
 import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.command.CommandArg;
 import com.ail.core.persistence.CreateException;
 import com.ail.core.persistence.DeleteArg;
 
 /**
- * Implemention of the delete service for Hibernate
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateDeleteService.java,v $
- * @stereotype service
+ * Implementation of the delete service for Hibernate
  */
 public class HibernateDeleteService extends Service {
     private DeleteArg args = null;
@@ -50,20 +44,6 @@ public class HibernateDeleteService extends Service {
      */
     public Core getCore() {
         return null;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) getCore().newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2006/07/15 15:01:44 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateDeleteService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.1 $");
-        return v;
     }
 
     /**

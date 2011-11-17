@@ -17,10 +17,9 @@
 
 package com.ail.core.command;
 
-import com.ail.core.Version;
-import com.ail.core.configure.Configuration;
-import com.ail.core.Service;
 import com.ail.core.BaseException;
+import com.ail.core.Service;
+import com.ail.core.configure.Configuration;
 
 /**
  * This accessor supports the use of class instances as services.
@@ -41,10 +40,6 @@ public class ClassAccessor extends Accessor {
 
 	public CommandArg getArgs() {
 		return instance.getArgs();
-    }
-
-	public Version getVersion() {
-		return instance.getVersion();
     }
 
 	public Configuration getConfiguration() {

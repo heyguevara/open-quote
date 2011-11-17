@@ -40,12 +40,6 @@ import java.security.Principal;
 public abstract class Service extends Type implements CoreUser, ConfigurationOwner {
 
 	/**
-     * Return the version details of this entry point.
-     * @return version details
-     */
-    public abstract Version getVersion();
-
-	/**
      * Set the arguments to be used by this entry point's business logic.
      * @param args Arguments for the entry point to process.
      */

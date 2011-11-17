@@ -17,28 +17,26 @@
 
 package com.ail.core.command;
 
-import com.ail.core.CoreUser;
-import com.ail.core.CoreUserImpl;
-import com.ail.core.NotImplementedError;
-import com.ail.core.Version;
-import com.ail.core.configure.Configuration;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.rmi.RemoteException;
+import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.ejb.EJBHome;
 import javax.ejb.EJBMetaData;
 import javax.ejb.EJBObject;
-import java.util.Properties;
-import java.util.Hashtable;
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
-import javax.naming.Context;
-
-import java.rmi.RemoteException;
 
 import com.ail.core.BaseException;
 import com.ail.core.BaseServerException;
+import com.ail.core.CoreUser;
+import com.ail.core.CoreUserImpl;
+import com.ail.core.NotImplementedError;
+import com.ail.core.configure.Configuration;
 
 /**
  * Provide access to EJB entry points. The entry point is accessed by its remote
@@ -254,15 +252,6 @@ public class EJBAccessor extends Accessor {
     public CommandArg getArgs() {
 		return args;
     }
-
-    /**
-     * Get the version of the EJB that this Accessor is configured to use.
-     * @return The EJB's version details
-     */
-	public Version getVersion() {
-        // todo: This needs to grub down into the EJB and invoke its getVersion method.
-    	throw new NotImplementedError("EJBCommand.getVersion");
-	}
 
 	public Configuration getConfiguration() {
         try {

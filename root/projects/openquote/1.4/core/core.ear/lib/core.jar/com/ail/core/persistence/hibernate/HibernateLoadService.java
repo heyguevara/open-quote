@@ -24,17 +24,11 @@ import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.Version;
 import com.ail.core.command.CommandArg;
 import com.ail.core.persistence.LoadArg;
 
 /**
- * Implemention of the update service for Hibernate
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateLoadService.java,v $
- * @stereotype service
+ * Implementation of the update service for Hibernate
  */
 public class HibernateLoadService extends Service {
     private LoadArg args = null;
@@ -55,20 +49,6 @@ public class HibernateLoadService extends Service {
     }
 
      /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) getCore().newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2006/07/15 15:01:44 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateLoadService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.4 $");
-        return v;
-    }
-
-    /**
      * Setter used to the set the entry points arguments.
      * @param args for invoke
      */

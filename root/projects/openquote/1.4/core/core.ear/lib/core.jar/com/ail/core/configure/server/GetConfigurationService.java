@@ -17,20 +17,13 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.core.BaseException;
 import com.ail.core.Core;
+import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.command.CommandArg;
 import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.PreconditionException;
-import com.ail.core.BaseException;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetConfigurationService.java,v $
- */
 public class GetConfigurationService extends Service {
     private GetConfigurationArg args=null;
 	private Core core=null;
@@ -49,20 +42,6 @@ public class GetConfigurationService extends Service {
      */
 	public Core getCore() {
         return core;
-    }
-
-	/**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-	public Version getVersion() {
-        Version version=(Version)core.newType("Version");
-        version.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        version.setDate("$Date: 2005/07/31 18:04:03 $");
-        version.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetConfigurationService.java,v $");
-        version.setState("$State: Exp $");
-        version.setVersion("$Revision: 1.3 $");
-        return version;
     }
 
 	/**

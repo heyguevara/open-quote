@@ -27,7 +27,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.ail.core.CoreProxy;
-import com.ail.core.Version;
 import com.ail.core.configure.Configuration;
 
 /**
@@ -94,10 +93,6 @@ public class JMSAccessor extends Accessor {
     public CommandArg getArgs() {
         return args;
     }
-
-	public Version getVersion() {
-        throw new CommandInvocationError("Get version cannot be invoked on a JMSAccessor service");
-	}
 
 	public Configuration getConfiguration() {
         throw new CommandInvocationError("Get configuration cannot be invoked on a JMSAccessor service");

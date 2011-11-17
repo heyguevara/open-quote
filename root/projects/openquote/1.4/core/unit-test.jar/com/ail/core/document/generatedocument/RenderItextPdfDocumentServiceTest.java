@@ -31,7 +31,7 @@ public class RenderItextPdfDocumentServiceTest {
         sut=new RenderItextPdfDocumentService(mockCore);
         sut.setArgs(mockArgs);
         when(mockArgs.getSourceDataArg()).thenReturn(mockXMLString);
-        when(mockArgs.getTranslationUrlArg()).thenReturn(samplePDFSource);
+        when(mockArgs.getTemplateUrlArg()).thenReturn(samplePDFSource);
         when(mockArgs.getRenderedDocumentRet()).thenReturn(mockRenderedDocument);
     }
     
@@ -43,7 +43,7 @@ public class RenderItextPdfDocumentServiceTest {
     
     @Test(expected=PreconditionException.class)
     public void testTranslationURLPrecondition() throws PreconditionException, PostconditionException, RenderException  {
-        when(mockArgs.getTranslationUrlArg()).thenReturn(null);
+        when(mockArgs.getTemplateUrlArg()).thenReturn(null);
         sut.invoke();
     }
 

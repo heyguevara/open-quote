@@ -17,19 +17,18 @@
 
 package com.ail.core.configure.finder;
 
-import com.ail.core.Service;
-import com.ail.core.Core;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
-import com.ail.core.PreconditionException;
-
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Vector;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.Enumeration;
-import java.io.IOException;
-import java.io.File;
+
+import com.ail.core.Core;
+import com.ail.core.PreconditionException;
+import com.ail.core.Service;
+import com.ail.core.command.CommandArg;
 
 /**
  * This service finds the classes that implement or extend a given base class. The <code>SearchClass</code>
@@ -46,11 +45,6 @@ import java.io.File;
  * @post args.getFoundImplementorsRet() returns a Collection of String instances representing the names of the classes found.
  *
  * @todo This service searches the system classpath for classes. This means that it will not find system classes (java.*, etc.) or dynamically created classes.
- *
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/12/18 17:01:18 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/finder/GetClassListService.java,v $
  */
 public class GetClassListService extends Service {
     private GetClassListArg args = null;
@@ -70,20 +64,6 @@ public class GetClassListService extends Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2005/12/18 17:01:18 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/finder/GetClassListService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.3 $");
-        return v;
     }
 
     /**

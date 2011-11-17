@@ -33,7 +33,6 @@ import com.ail.core.BaseError;
 import com.ail.core.BaseException;
 import com.ail.core.Core;
 import com.ail.core.CoreUser;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.BootstrapConfigurationError;
@@ -149,10 +148,6 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
         }
         
         super.logExit();
-    }
-
-    public Version getVersion() {
-        throw new CommandInvocationError("Get version cannot be invoked on a Webservice service");
     }
 
     public Configuration getConfiguration() {

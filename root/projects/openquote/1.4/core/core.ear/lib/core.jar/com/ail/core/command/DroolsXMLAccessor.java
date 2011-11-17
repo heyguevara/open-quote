@@ -43,7 +43,6 @@ import org.xml.sax.SAXException;
 
 import com.ail.core.Core;
 import com.ail.core.Functions;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationOwner;
@@ -219,10 +218,6 @@ public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
         }
 
         super.logExit();
-    }
-
-    public Version getVersion() {
-        throw new CommandInvocationError("Get version cannot be invoked on a DroolsAccessor service");
     }
 
     public Configuration getConfiguration() {

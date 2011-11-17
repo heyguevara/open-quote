@@ -28,7 +28,6 @@ import org.exolab.castor.xml.XMLClassDescriptorResolver;
 
 import com.ail.core.Core;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.XMLException;
 import com.ail.core.command.CommandArg;
 import com.ail.core.configure.XMLMapping;
@@ -47,10 +46,6 @@ import com.ail.core.configure.XMLMapping;
  * <li>ObjectOut - The object resulting from the unmarshal.</li>
  * </ul>
  * These arguments and returns are encapsulated in an instance of FromXMLCommandArg.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/04/15 22:18:34 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/CastorFromXMLService.java,v $
  */
 public class CastorFromXMLService extends Service {
 
@@ -63,20 +58,6 @@ public class CastorFromXMLService extends Service {
      */
 	public Core getCore() {
         return null;
-    }
-
-	/**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-	public Version getVersion() {
-		Version v=new Version();
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2007/04/15 22:18:34 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/CastorFromXMLService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.3 $");
-        return v;
     }
 
 	/**

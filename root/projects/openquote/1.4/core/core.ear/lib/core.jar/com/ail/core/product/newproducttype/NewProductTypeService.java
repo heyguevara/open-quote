@@ -24,17 +24,11 @@ import com.ail.core.Core;
 import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.command.CommandArg;
 
 /**
  * Instantiate a type defined by a product.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/newproducttype/NewProductTypeService.java,v $
- * @stereotype service
  */
 public class NewProductTypeService extends Service {
     private NewProductTypeArg args = null;
@@ -50,20 +44,6 @@ public class NewProductTypeService extends Service {
      */
     public Core getCore() {
         return core.getCore();
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2007/10/05 22:47:50 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/newproducttype/NewProductTypeService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.4 $");
-        return v;
     }
 
     public String getConfigurationNamespace() {

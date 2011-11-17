@@ -17,20 +17,13 @@
 
 package com.ail.core.configure.server;
 
-import com.ail.core.Service;
 import com.ail.core.Core;
-import com.ail.core.Version;
 import com.ail.core.PreconditionException;
+import com.ail.core.Service;
+import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Type;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/SetCommandScriptService.java,v $
- */
 public class SetCommandScriptService extends Service {
     private SetCommandScriptArg args = null;
     private Core core = null;
@@ -46,20 +39,6 @@ public class SetCommandScriptService extends Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2005/07/16 10:23:27 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/SetCommandScriptService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.2 $");
-        return v;
     }
 
     /**

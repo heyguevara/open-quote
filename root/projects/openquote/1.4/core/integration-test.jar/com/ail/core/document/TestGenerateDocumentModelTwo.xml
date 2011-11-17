@@ -60,7 +60,7 @@ so it uses the Configuration type - which is at least reasonably complex.
                 <modelData id='nm1' title='Configuration Name' class='string' binding="/name"/>
             </blockData>
             <blockData applicability="ALL" placement="BODY">
-                <urlData title="Terms &amp; Conditions" url="classpath://com.ail.core/TestGenerateDocumentTC.html"/> 
+                <urlData title="Terms &amp; Conditions" url="classpath://com.ail.core.document/TestGenerateDocumentTC.html"/> 
             </blockData>
         </chapterData>
     </documentData> 

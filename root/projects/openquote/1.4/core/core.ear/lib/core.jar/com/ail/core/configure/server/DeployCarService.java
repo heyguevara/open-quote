@@ -24,18 +24,12 @@ import java.util.zip.ZipInputStream;
 import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.XMLString;
 import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 
 /**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/08/20 15:03:54 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/DeployCarService.java,v $
- * @stereotype service
  */
 public class DeployCarService extends Service {
     private DeployCarArg args = null;
@@ -52,20 +46,6 @@ public class DeployCarService extends Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        Version v = (Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2006/08/20 15:03:54 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/DeployCarService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.3 $");
-        return v;
     }
 
     /**

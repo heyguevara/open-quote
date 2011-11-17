@@ -24,17 +24,9 @@ import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.XMLString;
 import com.ail.core.command.CommandArg;
 import com.ail.core.document.model.DocumentDefinition;
-/**
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2007/06/06 20:54:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/document/generatedocument/GenerateDocumentService.java,v $
- * @stereotype service
- */
 public class GenerateDocumentService extends Service {
     private GenerateDocumentArg args = null;
     private Core core = null;
@@ -50,20 +42,6 @@ public class GenerateDocumentService extends Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2007/06/06 20:54:26 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/document/generatedocument/GenerateDocumentService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.6 $");
-        return v;
     }
 
     /**

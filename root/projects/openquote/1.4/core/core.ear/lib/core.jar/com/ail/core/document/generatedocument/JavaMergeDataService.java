@@ -20,22 +20,15 @@ package com.ail.core.document.generatedocument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Core;
-import com.ail.core.Version;
 import com.ail.core.XMLString;
 import com.ail.core.command.CommandArg;
 import com.ail.core.document.model.RenderContext;
 
 /**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype service
  */
 public class JavaMergeDataService extends Service {
     private MergeDataArg args = null;
@@ -52,21 +45,6 @@ public class JavaMergeDataService extends Service {
      */
     public Core getCore() {
         return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setAuthor("$Author$");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date$");
-        v.setSource("$Source$");
-        v.setState("$State$");
-        v.setVersion("$Revision$");
-        return v;
     }
 
     /**
