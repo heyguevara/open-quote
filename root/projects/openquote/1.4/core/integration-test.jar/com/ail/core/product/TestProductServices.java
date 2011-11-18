@@ -15,7 +15,7 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.core;
+package com.ail.core.product;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -275,7 +275,7 @@ public class TestProductServices extends CoreUserTestCase {
         // on where the test source has been checked-out to. We'll make do with checking just
         // the start and the end.
         assertTrue(getCore().getConfiguration().getSource().startsWith("file:"));
-        assertTrue(getCore().getConfiguration().getSource().endsWith("target/test/integration-test.jar/com/ail/core/TestProductServicesDefaultConfig.xml"));
+        assertTrue(getCore().getConfiguration().getSource().endsWith("target/test/integration-test.jar/com/ail/core/product/TestProductServicesDefaultConfig.xml"));
     }
     
     /**
