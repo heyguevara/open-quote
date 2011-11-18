@@ -24,73 +24,20 @@ import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype service
- */
-public class AcceptQuotationService extends com.ail.core.Service {
+public class AcceptQuotationService extends com.ail.core.Service<AcceptQuotationArg> {
     private static final long serialVersionUID = 5492150960329684094L;
-    private AcceptQuotationArg args = null;
-    private com.ail.core.Core core = null;
-
-    /** Default constructor */
-    public AcceptQuotationService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public com.ail.core.Core getCore() {
-        return core;
-    }
 
     /**
      * Return the product type id of the policy we're assessing the risk for as the
      * configuration namespace. The has the effect of selecting the product's configuration.
      * @return product type id
      */
+    @Override
     public String getConfigurationNamespace() {
         return Functions.productNameToConfigurationNamespace(args.getPolicyArgRet().getProductTypeId());
     }
     
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public com.ail.core.Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setAuthor("$Author$");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date$");
-        v.setSource("$Source$");
-        v.setState("$State$");
-        v.setVersion("$Revision$");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(com.ail.core.command.CommandArg args) {
-        this.args = (AcceptQuotationArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of AcceptQuotationArgs.
-     */
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, BaseException {
         // check preconditions
 		if (args.getPolicyArgRet()==null){

@@ -36,7 +36,7 @@ public interface FetchDocumentArg extends CommandArg {
     String getQuotationNumberArg();
     
     /**
-     * @see #getPolicyArg()
+     * @see #getInvoiceArg()
      * @param policyArg
      */
     void setQuotationNumberArg(String quotationNumberArg);

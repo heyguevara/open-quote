@@ -18,7 +18,10 @@
 package com.ail.insurancetest;
 
 import static com.ail.financial.Currency.GBP;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.security.Principal;
 import java.sql.Connection;
@@ -53,9 +56,7 @@ import com.ail.insurance.policy.ReferValueOutOfBounds;
 import com.ail.insurance.policy.Reference;
 import com.ail.insurance.policy.ReferenceType;
 import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService;
 import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand;
-import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService;
 import com.ail.insurance.quotation.assessrisk.AssessRiskCommand;
 import com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand;
 import com.ail.insurance.quotation.calculatepremium.CalculatePremiumService;
@@ -107,8 +108,6 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
                 new CalculatePremiumService().resetConfiguration();
                 new ListProductsService().resetConfiguration();
                 new ResetAllProductsService().resetConfiguration();
-                new AddQuoteNumberService().resetConfiguration();
-                new AddPolicyNumberService().resetConfiguration();
 
                 setup = true;
             }

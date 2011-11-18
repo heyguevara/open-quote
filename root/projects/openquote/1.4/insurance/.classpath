@@ -50,9 +50,7 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/avalon-framework-4.2.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/fop-0.93.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/bouncycastle-1.29.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/castor-xml-1.1-ail.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/itext-1.2.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/janino-2.5.10.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/jlfgr-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/drools-compiler-4.0.3.jar"/>
@@ -70,5 +68,8 @@
 	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/mysql-connector-java-5.1.17.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/bcprov-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/bctsp-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/itextpdf-5.1.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

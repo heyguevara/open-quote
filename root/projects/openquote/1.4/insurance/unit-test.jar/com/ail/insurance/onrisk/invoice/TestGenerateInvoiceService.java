@@ -18,10 +18,12 @@ import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.document.generatedocument.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
+import com.ail.financial.CurrencyAmount;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentSchedule;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
+import com.ail.party.Party;
 
 public class TestGenerateInvoiceService {
     GenerateInvoiceService service;
@@ -34,7 +36,8 @@ public class TestGenerateInvoiceService {
     @Before
     public void setUp() {
         mockCore = mock(Core.class);
-        service = new GenerateInvoiceService(mockCore);
+        service = new GenerateInvoiceService();
+        service.setCore(mockCore);
         args = new GenerateInvoiceArgImp();
         mockPolicy = mock(Policy.class);
         mockPaymentSchedule = mock(PaymentSchedule.class);
@@ -100,14 +103,18 @@ public class TestGenerateInvoiceService {
 
     @Test
     public void testHappyPath() throws Exception {
+        CurrencyAmount mockTotalPrmium=mock(CurrencyAmount.class);
+        Party mockPolicyHolder=mock(Party.class);
         when(mockPolicy.getStatus()).thenReturn(PolicyStatus.ON_RISK);
         when(mockPolicy.getProductTypeId()).thenReturn("ProductTypeID");
         when(mockPolicy.getPaymentDetails()).thenReturn(mockPaymentSchedule);
+        when(mockPolicy.getTotalPremium()).thenReturn(mockTotalPrmium);
+        when(mockPolicy.getPolicyHolder()).thenReturn(mockPolicyHolder);
         when(mockPaymentSchedule.getMoneyProvision()).thenReturn(mockMoneyProvision);
         args.setPolicyArg(mockPolicy);
 
         DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("Invoice"))).thenReturn(mockDocumentDefinition);
+        when(mockCore.newProductType(anyString(), eq("InvoiceDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
         when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
@@ -120,14 +127,19 @@ public class TestGenerateInvoiceService {
 
     @Test
     public void testPostcondition() throws Exception {
+        CurrencyAmount mockTotalPrmium=mock(CurrencyAmount.class);
+        Party mockPolicyHolder=mock(Party.class);
+
         when(mockPolicy.getStatus()).thenReturn(PolicyStatus.ON_RISK);
         when(mockPolicy.getProductTypeId()).thenReturn("ProductTypeID");
         when(mockPolicy.getPaymentDetails()).thenReturn(mockPaymentSchedule);
+        when(mockPolicy.getTotalPremium()).thenReturn(mockTotalPrmium);
+        when(mockPolicy.getPolicyHolder()).thenReturn(mockPolicyHolder);
         when(mockPaymentSchedule.getMoneyProvision()).thenReturn(mockMoneyProvision);
         args.setPolicyArg(mockPolicy);
 
         DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("Invoice"))).thenReturn(mockDocumentDefinition);
+        when(mockCore.newProductType(anyString(), eq("InvoiceDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
         when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);

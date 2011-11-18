@@ -27,10 +27,11 @@ public class TestGenerateWordingService {
     @Before
     public void setUp() {
         mockCore = mock(Core.class);
-        service = new GenerateWordingService(mockCore);
+        service = new GenerateWordingService();
         args = new GenerateWordingArgImp();
         mockPolicy = mock(Policy.class);
         service.setArgs(args);
+        service.setCore(mockCore);
     }
 
     @Test
@@ -81,14 +82,14 @@ public class TestGenerateWordingService {
         args.setPolicyArg(mockPolicy);
 
         DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("Wording"))).thenReturn(mockDocumentDefinition);
+        when(mockCore.newProductType(anyString(), eq("WordingDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
         when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
         when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(new byte[1]);
 
         service.invoke();
-
+        
         assertTrue(mockRenderDocumentCommand.getRenderedDocumentRet().length == 1);
     }
 
@@ -99,7 +100,7 @@ public class TestGenerateWordingService {
         args.setPolicyArg(mockPolicy);
 
         DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("Wording"))).thenReturn(mockDocumentDefinition);
+        when(mockCore.newProductType(anyString(), eq("WordingDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
         when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);

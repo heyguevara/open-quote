@@ -31,7 +31,7 @@ public interface FetchInvoiceArg extends CommandArg {
     String getPolicyNumberArg();
     
     /**
-     * @see #getPolicyArg()
+     * @see #getInvoiceArg()
      * @param policyArg
      */
     void setPolicyNumberArg(String policyNumberArg);

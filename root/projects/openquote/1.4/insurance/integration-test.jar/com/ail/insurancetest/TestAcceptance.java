@@ -18,7 +18,10 @@
 package com.ail.insurancetest;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,11 +29,11 @@ import org.junit.Test;
 
 import com.ail.core.BaseException;
 import com.ail.core.Core;
+import com.ail.core.CoreUserTestCase;
 import com.ail.core.PreconditionException;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.product.listproducts.ListProductsService;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.financial.Currency;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
@@ -42,7 +45,6 @@ import com.ail.insurance.acceptance.PutOnRiskCommand;
 import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService;
 
 /**
  * @version $Revision: 1.6 $
@@ -70,7 +72,6 @@ public class TestAcceptance extends CoreUserTestCase {
         
         resetConfiguration();
         new AcceptanceBean().resetConfiguration();
-        new AddPolicyNumberService().resetConfiguration();        
         new ListProductsService().resetConfiguration();
         
         ConfigurationHandler.reset();

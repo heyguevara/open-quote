@@ -17,8 +17,8 @@
 
 package com.ail.insurance.acceptance;
 
-import static com.ail.financial.FinancialFrequency.ONE_TIME;
 import static com.ail.financial.FinancialFrequency.MONTHLY;
+import static com.ail.financial.FinancialFrequency.ONE_TIME;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -48,61 +48,11 @@ import com.ail.insurance.policy.PolicyStatus;
  *     <li>A one time payment of X, followed by 9 payments of Y per month. All payments by direct debit.</li></ol>
  *  </ul>
  * Note: These rules are a default set only and are expected to be overriden in live implementations.
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/04/24 21:07:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/AssessPaymentOptionsService.java,v $
- * @stereotype service
  */
-public class AssessPaymentOptionsService extends com.ail.core.Service {
+public class AssessPaymentOptionsService extends com.ail.core.Service<AssessPaymentOptionsArg> {
     private static final long serialVersionUID = 1871676649916485145L;
-    private AssessPaymentOptionsArg args = null;
-    private com.ail.core.Core core = null;
 
-    /** Default constructor */
-    public AssessPaymentOptionsService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public com.ail.core.Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public com.ail.core.Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2006/04/24 21:07:59 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/AssessPaymentOptionsService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.1 $");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(com.ail.core.command.CommandArg args) {
-        this.args = (AssessPaymentOptionsArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CollectPremiumArgs.
-     */
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, PostconditionException {
 		Policy policy = args.getPolicyArg();
         

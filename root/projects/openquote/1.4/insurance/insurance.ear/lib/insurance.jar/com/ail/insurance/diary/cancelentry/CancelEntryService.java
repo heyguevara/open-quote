@@ -17,66 +17,12 @@
 
 package com.ail.insurance.diary.cancelentry;
 
-import com.ail.core.Core;
 import com.ail.core.Service;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 23:19:08 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/diary/cancelentry/CancelEntryService.java,v $
- */
-public class CancelEntryService extends Service {
+public class CancelEntryService extends Service<CancelEntryArg> {
     private static final long serialVersionUID = 7015447812235381361L;
-    private CancelEntryArg args = null;
-    private Core core = null;
 
-    /** Default constructor */
-    public CancelEntryService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2006/01/15 23:19:08 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/diary/cancelentry/CancelEntryService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.2 $");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param Arguments for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (CancelEntryArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of $Name:  $Args.
-     */
-    public CommandArg getArgs() {
-        return (com.ail.core.command.CommandArg) args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() {
         // Your business logic here!
     }

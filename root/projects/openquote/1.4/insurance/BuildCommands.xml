@@ -37,8 +37,6 @@
         <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService" />
         <arg value="com.ail.insurance.acceptance.AcceptanceBean" />
         <arg value="com.ail.insurance.onrisk.OnRiskBean" />
-        <arg value="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService" />
-        <arg value="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService" />
         <arg value="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService" />
         <arg value="com.ail.insurance.quotation.QuotationBean" />
         <arg value="com.ail.insurance.subrogation.SubrogationBean" />

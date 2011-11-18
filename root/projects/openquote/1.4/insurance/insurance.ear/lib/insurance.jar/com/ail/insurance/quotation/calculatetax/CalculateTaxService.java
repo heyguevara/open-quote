@@ -18,80 +18,26 @@
 package com.ail.insurance.quotation.calculatetax;
 
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 11:05:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/calculatetax/CalculateTaxService.java,v $
- * @stereotype service
- */
-public class CalculateTaxService extends Service {
+public class CalculateTaxService extends Service<CalculateTaxArg> {
     private static final long serialVersionUID = -4915889686192216902L;
-    private CalculateTaxArg args = null;
-    private Core core = null;
 
-    /** Default constructor */
-    public CalculateTaxService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2007/06/10 11:05:59 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/calculatetax/CalculateTaxService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.4 $");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (CalculateTaxArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CalculateTaxArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-    
     /**
      * Return the product type id of the policy we're assessing the risk for as the
      * configuration namespace. The has the effect of selecting the product's configuration.
      * @return product type id
      */
+    @Override
     public String getConfigurationNamespace() {
         return Functions.productNameToConfigurationNamespace(args.getPolicyArgRet().getProductTypeId());
     }
         
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException, BaseException {
         if (args.getPolicyArgRet()==null) {
             throw new PreconditionException("args.getPolicyArgRet()==null");

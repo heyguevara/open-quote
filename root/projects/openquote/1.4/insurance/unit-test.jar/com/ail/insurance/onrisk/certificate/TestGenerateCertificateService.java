@@ -27,7 +27,8 @@ public class TestGenerateCertificateService {
     @Before
     public void setUp() {
         mockCore = mock(Core.class);
-        service = new GenerateCertificateService(mockCore);
+        service = new GenerateCertificateService();
+        service.setCore(mockCore);
         args = new GenerateCertificateArgImp();
         mockPolicy = mock(Policy.class);
         service.setArgs(args);
@@ -81,7 +82,7 @@ public class TestGenerateCertificateService {
         args.setPolicyArg(mockPolicy);
 
         DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("Certificate"))).thenReturn(mockDocumentDefinition);
+        when(mockCore.newProductType(anyString(), eq("CertificateDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
         when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
@@ -99,7 +100,7 @@ public class TestGenerateCertificateService {
         args.setPolicyArg(mockPolicy);
 
         DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("Certificate"))).thenReturn(mockDocumentDefinition);
+        when(mockCore.newProductType(anyString(), eq("CertificateDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
         when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);

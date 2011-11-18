@@ -14,7 +14,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package com.ail.coretest;
+package com.ail.core;
 
 import java.io.InputStream;
 import java.security.Principal;

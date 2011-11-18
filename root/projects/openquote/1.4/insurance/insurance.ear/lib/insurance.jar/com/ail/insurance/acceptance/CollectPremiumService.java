@@ -23,62 +23,10 @@ import com.ail.financial.PaymentSchedule;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/04/24 21:07:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/CollectPremiumService.java,v $
- * @stereotype service
- */
-public class CollectPremiumService extends com.ail.core.Service {
+public class CollectPremiumService extends com.ail.core.Service<CollectPremiumArg> {
     private static final long serialVersionUID = 1871676649916485145L;
-    private CollectPremiumArg args = null;
-    private com.ail.core.Core core = null;
 
-    /** Default constructor */
-    public CollectPremiumService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public com.ail.core.Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public com.ail.core.Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2006/04/24 21:07:59 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/CollectPremiumService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.3 $");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(com.ail.core.command.CommandArg args) {
-        this.args = (CollectPremiumArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CollectPremiumArgs.
-     */
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
 		Policy policy = args.getPolicyArg();
 		// check arguments
@@ -90,6 +38,7 @@ public class CollectPremiumService extends com.ail.core.Service {
 		if(status==null){
 			throw new PreconditionException("status==null");
 		}
+
 		if(!status.equals(PolicyStatus.ON_RISK)){
 			throw new PreconditionException("!status.equals(PolicyStatus.OnRisk)");
 		}

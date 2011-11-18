@@ -18,63 +18,25 @@
 package com.ail.insurance.quotation.assessrisk;
 
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.CoreProxy;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.Section;
 
-/**
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 11:05:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/assessrisk/AssessRiskService.java,v $
- * @stereotype service
- */
-public class AssessRiskService extends Service {
+public class AssessRiskService extends Service<AssessRiskArg> {
     private static final long serialVersionUID = 7260448770297048139L;
-    private AssessRiskArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public AssessRiskService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2007/06/10 11:05:59 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/assessrisk/AssessRiskService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.7 $");
-        return v;
-    }
 
     /**
      * Return the date for which rules etc should be used.
      * todo This should come from someplace in the policy.
      * @return Date to define rules to be used etc.
      */
+    @Override
     public VersionEffectiveDate getVersionEffectiveDate() {
         return core.getVersionEffectiveDate();
     }
@@ -84,26 +46,11 @@ public class AssessRiskService extends Service {
      * configuration namespace. The has the effect of selecting the product's configuration.
      * @return product type id
      */
+    @Override
     public String getConfigurationNamespace() {
         return core.getConfigurationNamespace();
     }
     
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (AssessRiskArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of $Name:  $Args.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-
     /**
      * Assess risks logic is pretty simple, all of the actual risk assessment logic is
      * handled by business rules. The steps are as follows:
@@ -130,6 +77,7 @@ public class AssessRiskService extends Service {
      *  <li>Pull the assessmentSheet out of the rule and add it to the policy.</li>
      * </ol>
      */
+    @Override
     public void invoke() throws BaseException {
         Policy policy=args.getPolicyArgRet();
         AssessmentSheet as;

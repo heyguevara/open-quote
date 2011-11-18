@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- This file defines the default (factory) configuration for the Core. This
- configuration is used by the core's resetConfiguration() method.
--->
-<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!-- This file defines the default (factory) configuration for the Core. This configuration is used by the core's resetConfiguration() 
+    method. -->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Default Core Configuration for Insurance</name>
     <timeout>60000</timeout>
     <who>factory</who>
     <version>$Revision: 1.9 $</version>
-    
+
     <!-- Reset the following namespaces when a "reset all" request is made. -->
-    <!-- Note: com.ail.core.Core is implicitly included.                    -->
+    <!-- Note: com.ail.core.Core is implicitly included. -->
     <group name="NamespacesToResetOnResetAll">
-        <parameter name="com.ail.core.CoreProxy"/>
-        <parameter name="com.ail.core.configure.server.ServerBean"/>
-        <parameter name="com.ail.core.product.ProductManagerBean"/>
-        <parameter name="com.ail.core.product.listproducts.ListProductsService"/>
-        <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
-        <parameter name="com.ail.insurance.architect.InsuranceArchitectComponent"/>
-        <parameter name="com.ail.insurance.quotation.QuotationBean"/>
-        <parameter name="com.ail.insurance.onrisk.OnRiskBean"/>
-        <parameter name="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService"/>
-        <parameter name="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService"/>
-        <parameter name="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService"/>
-        <parameter name="com.ail.insurance.subrogation.makearecovery.MakeARecoveryService"/>
-        <parameter name="com.ail.insurance.subrogation.SubrogationBean"/>
-        <parameter name="com.ail.insurance.acceptance.AcceptanceBean"/>
+        <parameter name="com.ail.core.CoreProxy" />
+        <parameter name="com.ail.core.configure.server.ServerBean" />
+        <parameter name="com.ail.core.product.ProductManagerBean" />
+        <parameter name="com.ail.core.product.listproducts.ListProductsService" />
+        <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService" />
+        <parameter name="com.ail.insurance.architect.InsuranceArchitectComponent" />
+        <parameter name="com.ail.insurance.quotation.QuotationBean" />
+        <parameter name="com.ail.insurance.onrisk.OnRiskBean" />
+        <parameter name="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService" />
+        <parameter name="com.ail.insurance.subrogation.makearecovery.MakeARecoveryService" />
+        <parameter name="com.ail.insurance.subrogation.SubrogationBean" />
+        <parameter name="com.ail.insurance.acceptance.AcceptanceBean" />
     </group>
-    
+
     <builders>
-        <builder name="ClassBuilder" factory="com.ail.core.factory.ClassFactory"/>
-        <builder name="BeanShellBuilder" factory="com.ail.core.factory.BeanShellFactory"/>
-        <builder name="CastorXMLBuilder" factory="com.ail.core.factory.CastorXMLFactory"/>
+        <builder name="ClassBuilder" factory="com.ail.core.factory.ClassFactory" />
+        <builder name="BeanShellBuilder" factory="com.ail.core.factory.BeanShellFactory" />
+        <builder name="CastorXMLBuilder" factory="com.ail.core.factory.CastorXMLFactory" />
     </builders>
-    
+
     <types>
-        <!--====================================-->
-        <!--   Define the default core services -->
-        <!--====================================-->
+        <!--==================================== -->
+        <!-- Define the default core services -->
+        <!--==================================== -->
         <!-- NullService: This service does nothing, it can be used to stub commands -->
         <service name="NullService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.core.NullService</parameter>
@@ -104,6 +101,10 @@
         <!-- CatalogCarService: Parse a Configuration ARchive and return a list of the configurations found in it. -->
         <service name="CatalogCarService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.core.configure.server.CatalogCarService</parameter>
+        </service>
+        <!-- UniqueNumberService: Return a unique number. -->
+        <service name="GenerateUniqueKeyService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.key.GenerateUniqueKeyService</parameter>
         </service>
         <!-- ListProductsService: Returns a list of all the products know to the system -->
         <service name="ListProductsService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
@@ -183,9 +184,9 @@
         <service name="MergeDocumentDataService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
             <parameter name="ServiceClass">com.ail.core.document.generatedocument.JavaMergeDataService</parameter>
         </service>
-        <!--=======================================================================-->
+        <!--======================================================================= -->
         <!-- Bind the default core services (above) to Commands used by Core.class -->
-        <!--=======================================================================-->
+        <!--======================================================================= -->
         <command name="ToXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.ToXMLCommand">
             <parameter name="Service">ToXMLService</parameter>
         </command>
@@ -213,7 +214,8 @@
         <command name="GetClassList" builder="ClassBuilder" key="com.ail.core.configure.finder.GetClassListCommand">
             <parameter name="Service">GetClassListService</parameter>
         </command>
-        <command name="GetProductDefinitionList" builder="ClassBuilder" key="com.ail.core.product.getproductdefinitionlist.GetProductDefinitionListCommand">
+        <command name="GetProductDefinitionList" builder="ClassBuilder"
+            key="com.ail.core.product.getproductdefinitionlist.GetProductDefinitionListCommand">
             <parameter name="Service">GetProductDefinitionListService</parameter>
         </command>
         <command name="GetProductDefinition" builder="ClassBuilder" key="com.ail.core.product.getproductdefinition.GetProductDefinitionCommand">
@@ -246,6 +248,9 @@
         <command name="CatalogCar" builder="ClassBuilder" key="com.ail.core.configure.server.CatalogCarCommand">
             <parameter name="Service">CatalogCarService</parameter>
         </command>
+        <command name="com.ail.core.key.GenerateUniqueKeyCommand" builder="ClassBuilder" key="com.ail.core.key.GenerateUniqueKeyCommand">
+            <parameter name="Service">GenerateUniqueKeyService</parameter>
+        </command>
         <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommand">
             <parameter name="Service">ListProductsService</parameter>
         </command>
@@ -264,7 +269,8 @@
         <command name="CalculatePremium" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand">
             <parameter name="Accessor">CalculatePremiumService</parameter>
         </command>
-        <command name="RefreshAssessmentSheets" builder="ClassBuilder" key="com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand">
+        <command name="RefreshAssessmentSheets" builder="ClassBuilder"
+            key="com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand">
             <parameter name="Service">RefreshAssessmentSheetsService</parameter>
         </command>
         <command name="AddQuoteNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand">
@@ -309,7 +315,8 @@
         <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommand">
             <parameter name="Service">MergeDocumentDataService</parameter>
         </command>
-        <command name="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand">
+        <command name="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand" builder="ClassBuilder"
+            key="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand">
             <parameter name="Service">GenerateInvoiceService</parameter>
         </command>
         <command name="GenerateWording" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.GenerateWordingCommand">
@@ -317,13 +324,29 @@
         </command>
         <command name="GenerateCertificateCommand" builder="ClassBuilder" key="com.ail.insurance.onrisk.certificate.GenerateCertificateCommand">
             <parameter name="Service">GenerateCertificateService</parameter>
-        </command>
-        
+        </command>        
+
         <!-- Define other types -->
-        <type builder="ClassBuilder" key="com.ail.core.Version" name="Version"/>
-        <type builder="ClassBuilder" key="com.ail.insurance.claim.Claim" name="Claim"/>
-        <type builder="ClassBuilder" key="com.ail.insurance.claim.ClaimSection" name="ClaimSection"/>
-        <type builder="ClassBuilder" key="com.ail.insurance.policy.Policy" name="Policy"/>
-        <type builder="ClassBuilder" key="com.ail.insurance.policy.AssessmentSheet" name="AssessmentSheet"/>
+        <type builder="ClassBuilder" key="com.ail.core.Version" name="Version" />
+        <type builder="ClassBuilder" key="com.ail.insurance.claim.Claim" name="Claim" />
+        <type builder="ClassBuilder" key="com.ail.insurance.claim.ClaimSection" name="ClaimSection" />
+        <type builder="ClassBuilder" key="com.ail.insurance.policy.Policy" name="Policy" />
+        <type builder="ClassBuilder" key="com.ail.insurance.policy.AssessmentSheet" name="AssessmentSheet" />
     </types>
+
+    <!-- Next (unique) Number to use in unique number generation for the various  -->
+    <!-- types of number. The GenerateUniqueNumber service updates this parameter -->
+    <!-- as numbers are used. These values can be overridden by product.          -->
+    <parameter name="InvoiceNumberNextNumber">1000</parameter>
+    <parameter name="PolicyNumberNextNumber">1000</parameter>
+    <parameter name="QuoteNumberNextNumber">1000</parameter>
+
+    <!-- To avoid hitting the database every time a unique number is asked for, -->
+    <!-- the GenerateUniqueNumber service takes a chunk of numbers at a time,   -->
+    <!-- keeps track of the ones it uses, then comes back for more when it runs -->
+    <!-- out. *BlockSize controls the number that are allocated on each call.   -->
+    <!-- These values can be overridden by product.                             -->
+    <parameter name="InvoiceNumberBlockSize">100</parameter>
+    <parameter name="PolicyNumberBlockSize">100</parameter>
+    <parameter name="QuoteNumberBlockSize">100</parameter>
 </configuration>

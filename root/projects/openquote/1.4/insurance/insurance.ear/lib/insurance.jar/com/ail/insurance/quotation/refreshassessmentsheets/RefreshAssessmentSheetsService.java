@@ -22,67 +22,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 import com.ail.insurance.policy.AssessmentLine;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.AssessmentSheetList;
-import com.ail.insurance.policy.CalculationLine;
 import com.ail.insurance.policy.AssessmentStage;
+import com.ail.insurance.policy.CalculationLine;
 import com.ail.insurance.policy.Policy;
 
-/**
- */
-public class RefreshAssessmentSheetsService extends Service {
+public class RefreshAssessmentSheetsService extends Service<RefreshAssessmentSheetsArg> {
     private static final long serialVersionUID = 3642886757932052003L;
-    private RefreshAssessmentSheetsArg args = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public RefreshAssessmentSheetsService() {
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date: 2007/02/12 23:10:04 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/refreshassessmentsheets/RefreshAssessmentSheetsService.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.3 $");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (RefreshAssessmentSheetsArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of RefreshAssessmentSheetsArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
 
     /**
      * Process the contents of an AssessmentSheet. Run through the contents of the sheet checking each line
@@ -168,7 +118,7 @@ public class RefreshAssessmentSheetsService extends Service {
         calculationOrder=iterateOverSheets(sheets, processed, calculationOrder);
     }
 
-    /** The 'business logic' of the entry point. */
+    @Override
     public void invoke() throws PreconditionException {
         // check preconditions
         if (args.getPolicyArgRet()==null) {
