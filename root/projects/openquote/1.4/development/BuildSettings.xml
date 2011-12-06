@@ -11,7 +11,7 @@
     <!-- Figure out where everything is - everything's relative to project.dir -->
     <dirname property="project.dir" file="${ant.file.BuildSettings}" />
     <property name="target.dir" value="${project.dir}/target" />
-    <property name="development.dir" value="${project.dir}/../development" />
+    <property name="development.dir" value="${project.dir}" />
     <property name="test.dir" value="${target.dir}/test" />
 
     <!-- Pull in the Common stuff - all projects us these. -->
