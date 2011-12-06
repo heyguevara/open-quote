@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This ant include file defines settings that are specific to this project, --> 
+<!-- and imports settings that are common to all projects.                     -->
+
+<project name="BuildSettings" default="dummy">
+    <!-- Release version numbers (BTW the build number comes from bamboo.) -->
+    <property name="major.version" value="3" />
+    <property name="minor.version" value="0" />
+
+    <!-- Figure out where everything is - everything's relative to project.dir -->
+    <dirname property="project.dir" file="${ant.file.BuildSettings}" />
+    <property name="target.dir" value="${project.dir}/target" />
+    <property name="development.dir" value="${project.dir}/../development" />
+    <property name="test.dir" value="${target.dir}/test" />
+
+    <!-- Pull in the Common stuff - all projects us these. -->
+    <import file="${development.dir}/macros/BuildCommon.xml" />
+    <import file="${development.dir}/macros/BuildJ2EEMacros.xml" />
+</project>
