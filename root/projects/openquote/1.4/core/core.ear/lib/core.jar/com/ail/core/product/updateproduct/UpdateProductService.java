@@ -17,6 +17,7 @@
 
 package com.ail.core.product.updateproduct;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -28,7 +29,8 @@ import com.ail.core.configure.Parameter;
 import com.ail.core.product.UnknownProductException;
 import com.ail.core.product.listproducts.ListProductsService;
 
-public class UpdateProductService extends Service<UpdateProductArg> {
+@ServiceImplementation
+public class UpdateProductService extends Service<UpdateProductArgument> {
     private String namespace;
     
     private void setConfigurationNamespace(String namespace) {

@@ -1,10 +1,10 @@
 <package name="com.ail.core" xmlns="http://drools.org/drools-4.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://drools.org/drools-4.0 drools-4.0.xsd">
 
-  <import name="com.ail.core.dummyservice.TestArgImp" />
+  <import name="com.ail.core.dummyservice.DummyArgument" />
 
   <rule name="Add numbers when X less than 100">
     <lhs>
-      <pattern identifier="args" object-type="TestArgImp">
+      <pattern identifier="args" object-type="DummyArgument">
         <field-constraint field-name="x">
           <literal-restriction evaluator="&lt;" value="100" />
         </field-constraint>
@@ -18,7 +18,7 @@
 
   <rule name="Add numbers when X more than 100">
     <lhs>
-      <pattern identifier="args" object-type="TestArgImp">
+      <pattern identifier="args" object-type="DummyArgument">
         <field-constraint field-name="x">
           <literal-restriction evaluator="&gt;=" value="100" />
         </field-constraint>

@@ -17,54 +17,14 @@
 
 package com.ail.core.configure.server;
 
-import java.util.Collection;
-
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
 /**
- * Fetch a list of all the configuration namespaces known to the system. A collection of Strings is returned, one String for each namespace.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/07/19 21:18:15 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetNamespacesCommand.java,v $
+ * Arg interface for the GetConfiguration entry point. The entry point takes one
+ * argument: a namespace's name, and returns one result: the Configuration object
+ * for the namespace. 
  */
-public class GetNamespacesCommand extends Command implements GetNamespacesArg {
-    private GetNamespacesArg args=null;
-
-    /**
-     * Default constructor.
-     */
-    public GetNamespacesCommand() {
-        super();
-		args=new GetNamespacesArgImp();
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public void setArgs(CommandArg arg) {
-		this.args=(GetNamespacesArg)arg;
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public CommandArg getArgs() {
-		return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setNamespaces(Collection<String> namespaces) {
-        args.setNamespaces(namespaces);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Collection<String> getNamespaces() {
-        return args.getNamespaces();
-    }
+@CommandDefinition(defaultServiceClass=GetNamespacesService.class)
+public interface GetNamespacesCommand extends Command, GetNamespacesArgument {
 }

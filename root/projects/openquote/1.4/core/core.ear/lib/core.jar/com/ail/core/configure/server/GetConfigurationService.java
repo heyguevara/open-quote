@@ -17,11 +17,13 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.configure.ConfigurationHandler;
 
-public class GetConfigurationService extends Service<GetConfigurationArg> {
+@ServiceImplementation
+public class GetConfigurationService extends Service<GetConfigurationArgument> {
     /**
      * Override and return the namespace we've been asked to fetch.
      * @return The namespace we've been invoked to fetch.

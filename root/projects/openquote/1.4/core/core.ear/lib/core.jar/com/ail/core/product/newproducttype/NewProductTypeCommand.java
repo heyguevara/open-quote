@@ -17,78 +17,11 @@
 
 package com.ail.core.product.newproducttype;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.Type;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/10/02 12:15:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/newproducttype/NewProductTypeCommand.java,v $
- * @stereotype command
- */
-public class NewProductTypeCommand extends Command implements NewProductTypeArg {
-    private NewProductTypeArg args = null;
-
-    public NewProductTypeCommand() {
-        super();
-        args = new NewProductTypeArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (NewProductTypeArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getProductNameArg() {
-        return args.getProductNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productNameArg @{inheritDoc}
-     */
-    public void setProductNameArg(String productNameArg) {
-        args.setProductNameArg(productNameArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getTypeNameArg() {
-        return args.getTypeNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param typeNameArg @{inheritDoc}
-     */
-    public void setTypeNameArg(String typeNameArg) {
-        args.setTypeNameArg(typeNameArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Type getTypeRet() {
-        return args.getTypeRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param typeRet @{inheritDoc}
-     */
-    public void setTypeRet(Type typeRet) {
-        args.setTypeRet(typeRet);
-    }
+@CommandDefinition(defaultServiceClass=NewProductTypeService.class)
+public interface NewProductTypeCommand extends Command, NewProductTypeArgument {
 }
+
+

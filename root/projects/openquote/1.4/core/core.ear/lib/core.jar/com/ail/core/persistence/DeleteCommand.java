@@ -17,46 +17,15 @@
 
 package com.ail.core.persistence;
 
-import com.ail.core.Type;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
+import com.ail.core.persistence.hibernate.HibernateDeleteService;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/DeleteCommand.java,v $
- * @stereotype command
+ * Arguments required by delete service
  */
-public class DeleteCommand extends Command implements DeleteArg {
-    private DeleteArg args = null;
-
-    public DeleteCommand() {
-        super();
-        args = new DeleteArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (DeleteArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Type getObjectArg() {
-        return args.getObjectArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param objectArg @{inheritDoc}
-     */
-    public void setObjectArg(Type objectArg) {
-        args.setObjectArg(objectArg);
-    }
+@CommandDefinition(defaultServiceClass=HibernateDeleteService.class)
+public interface DeleteCommand extends Command, DeleteArgument {
 }
+
+

@@ -17,16 +17,14 @@
 
 package com.ail.core;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * This type represents the version details of an artifact in a live system. The version might relate to a component or entry point,
  * or to some live data like a type definition. The version information is flexible in format (hence the use of Strings). Different
  * types of artifact are likely to return different version attributes in different formats.
- * 
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/02/04 16:47:12 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Version.java,v $
  */
+@TypeDefinition
 public class Version extends Type {
     public static final Version LATEST = null;
 

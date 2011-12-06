@@ -17,63 +17,11 @@
 
 package com.ail.core.product.updateproduct;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.product.ProductDetails;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
-public class UpdateProductCommand extends Command implements UpdateProductArg {
-    private UpdateProductArg args = null;
-
-    public UpdateProductCommand() {
-        super();
-        args = new UpdateProductArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (UpdateProductArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public ProductDetails getProductDetailsArg() {
-        return args.getProductDetailsArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productsRet @{inheritDoc}
-     */
-    public void setProductDetailsArg(ProductDetails productDetailsArg) {
-        args.setProductDetailsArg(productDetailsArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param getProductNameArg @{inheritDoc}
-     */
-    public String getProductNameArg() {
-        return args.getProductNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productNameArg @{inheritDoc}
-     */
-    public void setProductNameArg(String productNameArg) {
-        args.setProductNameArg(productNameArg);
-    }
+@CommandDefinition(defaultServiceClass=UpdateProductService.class)
+public interface UpdateProductCommand extends Command, UpdateProductArgument {
 }
+
+

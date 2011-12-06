@@ -17,12 +17,12 @@
 
 package com.ail.core.configuration;
 
+import static org.junit.Assert.*;
+
 import javax.naming.Context;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.AbstractConfigurationLoader;
@@ -33,25 +33,10 @@ import com.ail.core.configure.UnknownNamespaceError;
 /**
  * JUnit TestCase for the EJBConfigurationLoader.
  */
-public class TestEJBConfigurationLoader extends TestCase {
+public class TestEJBConfigurationLoader {
 	private AbstractConfigurationLoader loader=null;
 	private String TestNamespace="TESTNAMESPACE";
 
-    /** Constructs a test case with the given name. */
-    public TestEJBConfigurationLoader(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-		return new TestSuite(TestEJBConfigurationLoader.class);
-    }
-
-	public static void main (String[] args) {
-		TestRunner.run(suite());
-	}
-
-	/** utility method to delete the config table from the database.
-     */
 	protected void dropConfigTable() {
 		try {
             loader.deleteConfigurationRepository();
@@ -82,7 +67,8 @@ public class TestEJBConfigurationLoader extends TestCase {
     /** Sets up the fixture (run before every test).
      * Get a loader, and delete the testnamespace from the config table.
      */
-    protected void setUp() {
+	@Before
+	public void setUp() {
         System.setProperty("com.ail.core.configure.loader", "com.ail.core.configure.EJBConfigurationLoader");
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.jnp.interfaces.NamingContextFactory");
         System.setProperty(Context.PROVIDER_URL,"jnp://localhost:1099");
@@ -106,6 +92,7 @@ public class TestEJBConfigurationLoader extends TestCase {
      * if it finds that is does not exist. This test ensures that this is
      * the case.
      */
+    @Test
 	public void testLoadWithMissingTable() throws Exception {
 		try {
 			dropConfigTable();
@@ -127,6 +114,7 @@ public class TestEJBConfigurationLoader extends TestCase {
      * <li>Fail if any exception/error other than UnknownNamespaceError is thrown.</li>
      * </ul>
      */
+    @Test
     public void testLoadUndefinedConfiguration() throws Exception {
 		try {
 			loader.loadConfiguration(TestNamespace, new VersionEffectiveDate());
@@ -140,6 +128,7 @@ public class TestEJBConfigurationLoader extends TestCase {
     /**
      * Test that a sample configuration can be saved.
      */
+    @Test
     public void testSaveConfiguration() throws Exception {
         Configuration config=new Configuration();
         config.setTimeout(1);
@@ -152,6 +141,7 @@ public class TestEJBConfigurationLoader extends TestCase {
 	/**
      * Test that a sample configuration can be saved, and reloaded.
 	 */
+    @Test
     public void testSaveAndLoadConfiguration() throws Exception {
 
         Configuration config;
@@ -187,6 +177,7 @@ public class TestEJBConfigurationLoader extends TestCase {
      * <li>Fail if any exceptions are thrown.</li>
      * </ul>
      */
+    @Test
 	public void testSaveLoadSaveLoadLoadOldConfiguration() throws Exception {
 		Configuration  config=null;
 
@@ -199,7 +190,7 @@ public class TestEJBConfigurationLoader extends TestCase {
 		Thread.sleep(10);
 
         config=null;
-		ConfigurationHandler.reset();
+		ConfigurationHandler.resetCache();
 
         VersionEffectiveDate d=new VersionEffectiveDate();
 

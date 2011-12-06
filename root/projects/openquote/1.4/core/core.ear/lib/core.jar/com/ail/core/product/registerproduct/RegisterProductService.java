@@ -17,6 +17,7 @@
 
 package com.ail.core.product.registerproduct;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -28,7 +29,8 @@ import com.ail.core.configure.Parameter;
 import com.ail.core.product.DuplicateProductException;
 import com.ail.core.product.listproducts.ListProductsService;
 
-public class RegisterProductService extends Service<RegisterProductArg> {
+@ServiceImplementation
+public class RegisterProductService extends Service<RegisterProductArgument> {
     private String namespace;
     
     /**

@@ -17,10 +17,12 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
 import com.ail.core.configure.ConfigurationHandler;
 
-public class GetNamespacesService extends Service<GetNamespacesArg> {
+@ServiceImplementation
+public class GetNamespacesService extends Service<GetNamespacesArgument> {
 	/**
      * Fetch the namespace collection from the Configuration handler.
      */

@@ -20,15 +20,17 @@ package com.ail.core.persistence.hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.persistence.CreateArg;
+import com.ail.core.persistence.CreateArgument;
 import com.ail.core.persistence.CreateException;
 
 /**
  * Implementation of the create service for Hibernate
  */
-public class HibernateCreateService extends Service<CreateArg> {
+@ServiceImplementation
+public class HibernateCreateService extends Service<CreateArgument> {
     /** The 'business logic' of the entry point. */
     @Override
     public void invoke() throws PreconditionException, CreateException {

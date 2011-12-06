@@ -30,18 +30,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.ail.core.Core;
-import com.ail.core.CoreUserTestCase;
+import com.ail.core.CoreUserBaseCase;
+import com.ail.core.TypeXPathFunctionRegister;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.Configuration;
-import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.configure.server.ServerBean;
 import com.ail.core.document.generatedocument.GenerateDocumentCommand;
-import com.ail.core.document.generatedocument.StyleDocumentArgImp;
+import com.ail.core.document.generatedocument.StyleDocumentArgumentImpl;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.core.document.model.RenderContext;
 
-public class TestGenerateDocument extends CoreUserTestCase {
+public class TestGenerateDocument extends CoreUserBaseCase {
     static boolean setup=false;
     
     /**
@@ -54,12 +53,8 @@ public class TestGenerateDocument extends CoreUserTestCase {
         setupSystemProperties();
         setCore(new Core(this));
         if (!setup) {
-            System.out.println("setup");
-            ConfigurationHandler.reset();
-            getCore().resetConfiguration();
-            new ServerBean().resetNamedConfiguration("all");
-            resetConfiguration();
-            ConfigurationHandler.reset();
+            resetConfigurations();
+            TypeXPathFunctionRegister.getInstance().reloadFunctionLibrary();
             setup=true;
         }
     }
@@ -86,7 +81,7 @@ public class TestGenerateDocument extends CoreUserTestCase {
      */
     @Test(expected=com.ail.core.PreconditionException.class)
     public void testDocGenServiceExists() throws Exception {
-        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateDoc");
+        GenerateDocumentCommand com=getCore().newCommand(GenerateDocumentCommand.class);
         com.invoke();
         fail("command worked even without giving it any args!");
      }
@@ -141,13 +136,13 @@ public class TestGenerateDocument extends CoreUserTestCase {
     @Test
     public void testTypeConversion() throws Exception {
         String tin= "<?xml version='1.0' encoding='UTF-8'?>\n"+
-                    "<styleDocumentArgImp xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:type='java:com.ail.core.document.generatedocument.StyleDocumentArgImp'>"+
+                    "<styleDocumentArgumentImpl xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:type='java:com.ail.core.document.generatedocument.StyleDocumentArgumentImpl'>"+
                       "<styledDocumentRet>"+
                         "<something with='an attribute'>but not much more.</something>"+
                       "</styledDocumentRet>"+
-                    "</styleDocumentArgImp>";
+                    "</styleDocumentArgumentImpl>";
         
-        getCore().fromXML(StyleDocumentArgImp.class, new XMLString(tin));
+        getCore().fromXML(StyleDocumentArgumentImpl.class, new XMLString(tin));
     }
     
     @Test
@@ -156,7 +151,7 @@ public class TestGenerateDocument extends CoreUserTestCase {
         XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
         Configuration config=getCore().fromXML(Configuration.class, configXml);
 
-        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateDoc");
+        GenerateDocumentCommand com=getCore().newCommand(GenerateDocumentCommand.class);
         com.setModelArg(config);
         com.setProductNameArg("com.ail.core.product.TestProduct1");
         com.setDocumentDefinitionArg("MyTestFOPDocument");
@@ -182,10 +177,10 @@ public class TestGenerateDocument extends CoreUserTestCase {
     @Test
     public void testITextDocGenService() throws Exception {
         // we'll use an instance of Configuration to source some data from.
-        XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
+        XMLString configXml = new XMLString(getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
         Configuration config=getCore().fromXML(Configuration.class, configXml);
 
-        GenerateDocumentCommand com=(GenerateDocumentCommand)getCore().newCommand("GenerateDoc");
+        GenerateDocumentCommand com=getCore().newCommand(GenerateDocumentCommand.class);
         com.setModelArg(config);
         com.setProductNameArg("com.ail.core.product.TestProduct1");
         com.setDocumentDefinitionArg("MyTestITextDocument");

@@ -20,15 +20,18 @@ package com.ail.core.product.newproducttype;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 import static com.ail.core.Functions.productNameToDefaultType;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.Type;
 import com.ail.core.VersionEffectiveDate;
 
 /**
  * Instantiate a type defined by a product.
  */
-public class NewProductTypeService extends Service<NewProductTypeArg> {
+@ServiceImplementation
+public class NewProductTypeService extends Service<NewProductTypeArgument> {
     private CoreProxy core;
     
     public String getConfigurationNamespace() {
@@ -60,7 +63,7 @@ public class NewProductTypeService extends Service<NewProductTypeArg> {
             typename=productNameToDefaultType(args.getProductNameArg());
         }
 
-        args.setTypeRet(core.newType(typename));
+        args.setTypeRet(core.newType(typename, Type.class));
     }
 }
 

@@ -17,6 +17,9 @@ package com.ail.core.document.model;
 
 import static com.ail.core.document.model.Placement.HEADER;
 
+import com.ail.annotation.TypeDefinition;
+
+@TypeDefinition
 public class HeaderData extends BlockData {
     private String leftLogo=null;
     private String rightLogo=null;

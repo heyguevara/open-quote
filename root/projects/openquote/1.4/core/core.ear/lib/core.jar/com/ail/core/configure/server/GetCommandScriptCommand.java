@@ -17,83 +17,11 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.CommandScript;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetCommandScriptCommand.java,v $
- */
-public class GetCommandScriptCommand extends Command implements GetCommandScriptArg {
-    private GetCommandScriptArg args = null;
-
-    public GetCommandScriptCommand() {
-        super();
-        args = new GetCommandScriptArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (GetCommandScriptArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setNamespaceArg
-     * @return value of namespacearg
-     */
-    public String getNamespaceArg() {
-        return args.getNamespaceArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getNamespaceArg
-     * @param namespacearg New value for namespacearg argument.
-     */
-    public void setNamespaceArg(String namespacearg) {
-        args.setNamespaceArg(namespacearg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setCommandNameArg
-     * @return value of commandnamearg
-     */
-    public String getCommandNameArg() {
-        return args.getCommandNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getCommandNameArg
-     * @param commandnamearg New value for commandnamearg argument.
-     */
-    public void setCommandNameArg(String commandnamearg) {
-        args.setCommandNameArg(commandnamearg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setCommandScriptRet
-     * @return value of commandscriptret
-     */
-    public CommandScript getCommandScriptRet() {
-        return args.getCommandScriptRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getCommandScriptRet
-     * @param commandscriptret New value for commandscriptret argument.
-     */
-    public void setCommandScriptRet(CommandScript commandscriptret) {
-        args.setCommandScriptRet(commandscriptret);
-    }
+@CommandDefinition(defaultServiceClass=GetCommandScriptService.class)
+public interface GetCommandScriptCommand extends Command, GetCommandScriptArgument {
 }
+
+

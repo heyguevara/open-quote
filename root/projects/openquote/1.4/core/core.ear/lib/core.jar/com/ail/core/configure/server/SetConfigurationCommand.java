@@ -17,65 +17,11 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.configure.Configuration;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/SetConfigurationCommand.java,v $
- */
-public class SetConfigurationCommand extends Command implements SetConfigurationArg {
-    private SetConfigurationArg args = null;
-
-    public SetConfigurationCommand() {
-        super();
-        args = new SetConfigurationArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (SetConfigurationArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setNamespaceArg
-     * @return value of namespacearg
-     */
-    public String getNamespaceArg() {
-        return args.getNamespaceArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getNamespaceArg
-     * @param namespacearg New value for namespacearg argument.
-     */
-    public void setNamespaceArg(String namespacearg) {
-        args.setNamespaceArg(namespacearg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setConfigurationArg
-     * @return value of configurationarg
-     */
-    public Configuration getConfigurationArg() {
-        return args.getConfigurationArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getConfigurationArg
-     * @param configurationarg New value for configurationarg argument.
-     */
-    public void setConfigurationArg(Configuration configurationarg) {
-        args.setConfigurationArg(configurationarg);
-    }
+@CommandDefinition(defaultServiceClass=SetConfigurationService.class)
+public interface SetConfigurationCommand extends Command, SetConfigurationArgument {
 }
+
+

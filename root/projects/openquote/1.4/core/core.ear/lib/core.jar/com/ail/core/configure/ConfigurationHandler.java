@@ -76,7 +76,7 @@ public class ConfigurationHandler {
      * Aside from a performance hit, as configuration records are loaded 'on demand'
      * over time, resetting the cache will have no harmful side effects.
 	 */
-	public static void reset() {
+	public static void resetCache() {
 		if (namespaces!=null) {
 			synchronized(namespaces) {
 			 	namespaces=new Hashtable<String,ArrayList<Configuration>>();
@@ -96,7 +96,7 @@ public class ConfigurationHandler {
      */
     public static void reset(String namespace) {
         if (instance==null) {
-			ConfigurationHandler.reset();
+			ConfigurationHandler.resetCache();
         }
 
         if (namespaces!=null) {

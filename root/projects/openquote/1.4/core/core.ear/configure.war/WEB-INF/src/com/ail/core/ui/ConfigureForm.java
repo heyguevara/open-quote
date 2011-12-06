@@ -34,10 +34,6 @@ import com.ail.core.configure.server.GetNamespacesHistoryCommand;
 
 /**
  * Form (model) for the configure editor.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2005/09/27 05:30:51 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure.war/WEB-INF/src/com/ail/core/ui/ConfigureForm.java,v $
  */
 public class ConfigureForm {
     private CoreProxy core=new CoreProxy();
@@ -90,8 +86,8 @@ public class ConfigureForm {
         Collection<ConfigurationSummary> list=new ArrayList<ConfigurationSummary>();
         
         // get a list of all the configuration namespaces
-        GetNamespacesHistoryCommand gnhc=(GetNamespacesHistoryCommand)core.newCommand("GetNamespacesHistory");
-        GetNamespacesCommand gnc=(GetNamespacesCommand)core.newCommand("GetNamespaces");
+        GetNamespacesHistoryCommand gnhc=core.newCommand(GetNamespacesHistoryCommand.class);
+        GetNamespacesCommand gnc=core.newCommand(GetNamespacesCommand.class);
         gnc.invoke();
         
         // for each namespace, find the latest config and add it to the list

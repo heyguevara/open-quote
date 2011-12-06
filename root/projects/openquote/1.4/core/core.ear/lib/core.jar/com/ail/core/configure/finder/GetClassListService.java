@@ -25,6 +25,7 @@ import java.util.Vector;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 
@@ -44,7 +45,8 @@ import com.ail.core.Service;
  *
  * @todo This service searches the system classpath for classes. This means that it will not find system classes (java.*, etc.) or dynamically created classes.
  */
-public class GetClassListService extends Service<GetClassListArg> {
+@ServiceImplementation
+public class GetClassListService extends Service<GetClassListArgument> {
     private Vector<String> allFiles = new Vector<String>();
     private String FILESEPARATOR = System.getProperty("file.separator");
 	private String PATHSEPARATOR = System.getProperty("path.separator");

@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 2002. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2005. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,68 +17,15 @@
 
 package com.ail.core.configure.server;
 
-import java.util.Collection;
-
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.configure.ConfigurationSummary;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetNamespacesHistoryCommand.java,v $
+ * Arg interface for the GetNamesapcesHisotyr entry point. The entry point takes one
+ * argument: a namespace's name, and returns one result: a collection of 
+ * {@link com.ail.core.configure.ConfigurationSummary ConfigurationSummary}
+ * objects representing the namespace's history.
  */
-public class GetNamespacesHistoryCommand extends Command implements GetNamespacesHistoryArg {
-    private GetNamespacesHistoryArg args=null;
-
-    /**
-     * Default constructor.
-     */
-    public GetNamespacesHistoryCommand() {
-        super();
-		args=new GetNamespacesHistoryArgImp();
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public void setArgs(CommandArg arg) {
-		this.args=(GetNamespacesHistoryArg)arg;
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public CommandArg getArgs() {
-		return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setNamespacesRet(Collection<ConfigurationSummary> namespaces) {
-        args.setNamespacesRet(namespaces);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Collection<ConfigurationSummary> getNamespacesRet() {
-        return args.getNamespacesRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getNamespaceArg() {
-        return args.getNamespaceArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setNamespaceArg(String namespaceArg) {
-        args.setNamespaceArg(namespaceArg);
-    }
-}
+@CommandDefinition(defaultServiceClass=GetNamespacesHistoryService.class)
+public interface GetNamespacesHistoryCommand extends Command, GetNamespacesHistoryArgument {
+ }

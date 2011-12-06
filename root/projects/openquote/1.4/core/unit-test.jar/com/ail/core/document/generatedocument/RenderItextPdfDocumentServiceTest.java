@@ -15,14 +15,14 @@ import com.ail.core.XMLString;
 public class RenderItextPdfDocumentServiceTest {
     private Core mockCore;
     private RenderItextPdfDocumentService sut;
-    private RenderDocumentArg mockArgs;
+    private RenderDocumentArgument mockArgs;
     private XMLString mockXMLString;
     private byte[] mockRenderedDocument;
 
     @Before
     public void setupMocks() {
         mockCore=mock(Core.class);
-        mockArgs=mock(RenderDocumentArg.class);
+        mockArgs=mock(RenderDocumentArgument.class);
         mockXMLString=mock(XMLString.class);
         mockRenderedDocument=new byte[10];
         

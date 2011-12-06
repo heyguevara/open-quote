@@ -23,18 +23,21 @@ import com.ail.core.Core;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.CoreUserTestCase;
+import com.ail.core.CoreUserBaseCase;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.TimeZone;
 
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This test is used to ensure that the VersionEffectiveDate mechanism works across timezones. The
- * test is <b>not run like a normal junit test</b>. Instead it is run from an ant script (TimezoneTest.xml).
- * This is necessary in order to ensure that the test switches between timezones cleanly.<p>
- * In summary, this is what the test does:<ol>
+ * This test ensures that the VersionEffectiveDate mechanism works across timezones. This
+ * test is not like a normal junit test. The {@link #runTests()} test execs two 
+ * processes one in a JVM running with a GMT locale which sets a configure property then
+ * a second JVM is run with EST as the timezone which reads the property's value.<ol>
  * <li>In the GMT timezone:<ol>
  *  <li>Reset a test class's configuration.</li>
  *  <li>Update the configure by setting the parameter "TestParameter" to the value "2"</li>
@@ -44,7 +47,7 @@ import org.junit.Test;
  * <li>Fail if the test parameter's value is anything other than 2</li>
  * </ol></li>
  */
-public class TimezoneTest extends CoreUserTestCase {
+public class TimezoneTest extends CoreUserBaseCase {
 
     /**
      * Sets up the fixture (run before every test).
@@ -52,10 +55,9 @@ public class TimezoneTest extends CoreUserTestCase {
      */
     @Before
     public void setUp() {
-        System.out.println("In oneTimeSetup with user.timezone="+TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT));
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
 
-        if (TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT).equals("GMT")) {
+        if (System.getProperty("RunTest")==null) {
             setVersionEffectiveDate(new VersionEffectiveDate());
             tidyUpTestData();
             setCore(new Core(this));
@@ -70,26 +72,35 @@ public class TimezoneTest extends CoreUserTestCase {
         }
 
         setVersionEffectiveDate(new VersionEffectiveDate());
-        ConfigurationHandler.reset();
-        System.out.println("VersionEffectiveDate:"+getVersionEffectiveDate().getTime());
+        ConfigurationHandler.resetCache();
     }
 
-    /**
-     * If the timezone in EST:
-     * <ol>
-     * <li>Get the value of TestParameter</li>
-     * <li>Fail if the value is not 2</li>
-     * <li>Fail if any exceptions are thrown</li>
-     * </ol>
-     * @throws Exception
-     */
     @Test
-    public void testQueryConfig() throws Exception {
-        if (TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT).equals("EST")) {
-            String param=getCore().getParameterValue("TestParameter");
-            assertNotNull(param);
-            assertEquals("2", param);
+    public void runTests() throws IOException, InterruptedException {
+        if (System.getProperty("RunTest")==null) {
+            execTestsForTimezone("GMT");
+            execTestsForTimezone("EST");
         }
+    }
+    
+    private void execTestsForTimezone(String timezone) throws IOException, InterruptedException {
+        String classpath=System.getProperty("java.class.path");
+        String s;
+        
+        Process p=Runtime.getRuntime().exec("java -classpath "+classpath+" -DRunTest=yes -Duser.timezone="+timezone+" org.junit.runner.JUnitCore com.ail.core.TimezoneTest");
+        
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s);
+        }
+        
+        while ((s = stdError.readLine()) != null) {
+            System.out.println(s);
+        }
+        
+        assertEquals(0, p.waitFor());
     }
 
     /**
@@ -103,10 +114,35 @@ public class TimezoneTest extends CoreUserTestCase {
      */
     @Test
     public void testUpdateConfig() throws Exception {
-        if (TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT).equals("GMT")) {
-            Configuration config=getConfiguration();
-            config.findParameter("TestParameter").setValue("2");
-            getCore().setConfiguration(config);
+        if (System.getProperty("RunTest")!=null) {
+            if (TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT).equals("GMT")) {
+                Configuration config=getConfiguration();
+                config.findParameter("TestParameter").setValue("2");
+                getCore().setConfiguration(config);
+                System.out.println("Configuration written in GMT");
+            }
         }
     }
+
+    /**
+     * If the timezone in EST:
+     * <ol>
+     * <li>Get the value of TestParameter</li>
+     * <li>Fail if the value is not 2</li>
+     * <li>Fail if any exceptions are thrown</li>
+     * </ol>
+     * @throws Exception
+     */
+    @Test
+    public void testQueryConfig() throws Exception {
+        if (System.getProperty("RunTest")!=null) {
+            if (TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT).equals("EST")) {
+                String param=getCore().getParameterValue("TestParameter");
+                assertNotNull(param);
+                assertEquals("2", param);
+                System.out.println("Configuration read in EST");
+            }
+        }
+    }
+
 }

@@ -17,61 +17,9 @@
 
 package com.ail.core.configure.server;
 
-import java.util.Collection;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/12/18 17:01:18 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/CatalogCarCommand.java,v $
- * @stereotype command
- */
-public class CatalogCarCommand extends Command implements CatalogCarArg {
-    
-    private CatalogCarArg args = null;
 
-    public CatalogCarCommand() {
-        super();
-        args = new CatalogCarArgImp();
-    }
-
-    public void setArgs(com.ail.core.command.CommandArg arg) {
-        this.args = (CatalogCarArg)arg;
-    }
-
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Collection<String> getNamespacesRet() {
-        return args.getNamespacesRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param namespacesRet @{inheritDoc}
-     */
-    public void setNamespacesRet(Collection<String> namespacesRet) {
-        args.setNamespacesRet(namespacesRet);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public byte[] getCarArg() {
-        return args.getCarArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param carArg @{inheritDoc}
-     */
-    public void setCarArg(byte[] carArg) {
-        args.setCarArg(carArg);
-    }
+@CommandDefinition(defaultServiceClass=CatalogCarService.class)
+public interface CatalogCarCommand extends Command, CatalogCarArgument {
 }

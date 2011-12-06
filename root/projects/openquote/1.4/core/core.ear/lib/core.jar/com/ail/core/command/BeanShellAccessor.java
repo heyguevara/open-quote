@@ -70,27 +70,27 @@ import com.ail.core.configure.ConfigurationOwner;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/BeanShellAccessor.java,v $
  */
 public class BeanShellAccessor extends Accessor implements ConfigurationOwner {
-    CommandArg args=null;
+    Argument args=null;
     Core core=null;
     String wholeScript=null;
     String script=null;
     String url=null;
     String extend=null;
     
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 
     /**
-     * This method builds the complete script for this servce. If the service <b>doesn't</b>
+     * This method builds the complete script for this service. If the service <b>doesn't</b>
      * extend another (using the Extend parameter), then this method will simply return
      * this service's own script. If it does extend another it will fetch the script from that
      * service and prepend it to its own script. If necessary the method will climb up any
-     * number of services that each exted another in order to build the complete script.
+     * number of services that each extend another in order to build the complete script.
      * @param script The script we're building
      * @param extend The name of the service to extend (from the Extend parameter) - this may be null
      * @return The complete script
@@ -127,7 +127,7 @@ public class BeanShellAccessor extends Accessor implements ConfigurationOwner {
             inter.set("args", args);
             inter.set("core", core);
             inter.eval(wholeScript.toString());
-            args=(CommandArg)inter.get("args");
+            args=(Argument)inter.get("args");
         }
         catch(EvalError e) {
             throw new BeanShellServiceException(e);

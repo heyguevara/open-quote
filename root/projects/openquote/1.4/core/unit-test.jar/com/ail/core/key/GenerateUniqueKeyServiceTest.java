@@ -20,7 +20,7 @@ import com.ail.core.configure.Parameter;
 
 public class GenerateUniqueKeyServiceTest {
     private Core mockCore;
-    private GenerateUniqueKeyArg mockArgs;
+    private GenerateUniqueKeyArgument mockArgs;
     private Configuration mockConfiguration;
     private GenerateUniqueKeyService SUT;
     private Parameter mockNextNumberParameter;
@@ -29,7 +29,7 @@ public class GenerateUniqueKeyServiceTest {
     @Before
     public void setupMocks() {
         mockCore=mock(Core.class);
-        mockArgs=mock(GenerateUniqueKeyArg.class);
+        mockArgs=mock(GenerateUniqueKeyArgument.class);
         mockConfiguration=mock(Configuration.class);
         mockNextNumberParameter=mock(Parameter.class);
         mockBlockSizeParameter=mock(Parameter.class);

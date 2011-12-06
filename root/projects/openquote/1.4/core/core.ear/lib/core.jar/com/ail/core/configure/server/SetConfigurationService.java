@@ -17,11 +17,13 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.configure.ConfigurationHandler;
 
-public class SetConfigurationService extends Service<SetConfigurationArg> {
+@ServiceImplementation
+public class SetConfigurationService extends Service<SetConfigurationArgument> {
     @Override
     public String getConfigurationNamespace() {
         return args.getNamespaceArg();

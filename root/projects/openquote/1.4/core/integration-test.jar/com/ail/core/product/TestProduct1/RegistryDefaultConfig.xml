@@ -34,21 +34,21 @@
             <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderItextPdfDocumentService</parameter>
         </service>
         
-        <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommand">
+        <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommandImpl">
             <parameter name="Service">MergeDocumentDataJavaService</parameter>
         </command>
         
-        <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommand">
+        <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommandImpl">
             <parameter name="Service">StyleDocumentXsltService</parameter>
         </command>        
         
-        <command name="RenderFOPHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommand">
+        <command name="RenderFOPHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommandImpl">
             <parameter name="Service">RenderFOPPdfDocumentService</parameter>
             <parameter name="RenderOptionsArg">allowCopyContent=FALSE,allowPrint=TRUE</parameter>
             <parameter name="TranslationUrlArg">classpath://com.ail.core.document/TestGenerateDocumentHelloWorld.xsl</parameter>
         </command>
 
-        <command name="RenderITextHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommand">
+        <command name="RenderITextHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommandImpl">
             <parameter name="Service">RenderITextPdfDocumentService</parameter>
             <parameter name="TemplateUrlArg">classpath://com.ail.core.document/TestGenerateDocumentIText.pdf</parameter>
         </command>

@@ -28,15 +28,15 @@ import org.junit.Test;
 
 import com.ail.core.Core;
 import com.ail.core.CoreProxy;
-import com.ail.core.CoreUserTestCase;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.Timer;
 import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.server.ServerBean;
-import com.ail.core.dummyservice.TestArgImp;
-import com.ail.core.dummyservice.TestCommand;
-import com.ail.core.dummyservice.TestService;
+import com.ail.core.dummyservice.DummyArgument;
+import com.ail.core.dummyservice.DummyCommand;
+import com.ail.core.dummyservice.DummyService;
 import com.ail.core.logging.LoggerCommand;
 import com.ail.core.logging.Severity;
 import com.ail.core.product.listproducts.ListProductsCommand;
@@ -45,7 +45,7 @@ import com.ail.core.product.listproducts.ListProductsCommand;
  * Test that basic service invocation works as specified. Note: These tests
  * assume that the JDBCConfigurationLoader is being used.
  */
-public class TestServiceInvocation extends CoreUserTestCase {
+public class TestServiceInvocation extends CoreUserBaseCase {
     private static boolean oneTimeSetupDone=false;
     
 
@@ -66,16 +66,16 @@ public class TestServiceInvocation extends CoreUserTestCase {
     
             tidyUpTestData();
     
-            ConfigurationHandler.reset();
+            ConfigurationHandler.resetCache();
     
             new ServerBean().resetNamedConfiguration("all");
-            new TestService().resetConfiguration();
+            new DummyService().resetConfiguration();
             resetConfiguration();
     
             oneTimeSetupDone=true;
         }
 
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
 
     }
 
@@ -89,7 +89,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
     }
 
     /**
-     * Test that services writen in BeanShell work correctly. BeanShell services
+     * Test that services written in BeanShell work correctly. BeanShell services
      * allow a service's logic to be defined as a script in the services
      * configuration. This is similar to using rules in a lot of ways as the
      * logic can be changed without the need to recompile anything. This test
@@ -108,9 +108,9 @@ public class TestServiceInvocation extends CoreUserTestCase {
     public void testBeanShellService() throws Exception {
         Timer.start("testBeanShellService");
         
-        TestCommand command;
+        DummyCommand command;
         
-        command = (TestCommand) getCore().newCommand("TestBeanShellService");
+        command = getCore().newCommand("TestBeanShellService", DummyCommand.class);
         command.setX(21);
         command.setY(3);
         command.invoke();
@@ -118,7 +118,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
         Timer.split("testBeanShellService");
 
-        command = (TestCommand) getCore().newCommand("TestBeanShellService");
+        command = getCore().newCommand("TestBeanShellService", DummyCommand.class);
         command.setX(101);
         command.setY(10);
         command.invoke();
@@ -127,7 +127,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
         Timer.split("testBeanShellService");
         
         for(int i=0 ; i<50 ; i++) {
-            command = (TestCommand) getCore().newCommand("TestBeanShellService");
+            command = getCore().newCommand("TestBeanShellService", DummyCommand.class);
             command.setX(101);
             command.setY(10);
             command.invoke();
@@ -139,7 +139,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
     
     @Test
     public void testXSLT() throws Exception {
-        ListProductsCommand command = (ListProductsCommand) getCore().newCommand("TestXSLTService");
+        ListProductsCommand command = getCore().newCommand("TestXSLTService", ListProductsCommand.class);
         command.invoke();
         assertEquals(2, command.getProductsRet().size());
     }
@@ -149,7 +149,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
         {
             Timer.start("testXSLTPerformance first");
     
-            ListProductsCommand command = (ListProductsCommand) getCore().newCommand("TestXSLTService");
+            ListProductsCommand command = getCore().newCommand("TestXSLTService", ListProductsCommand.class);
             command.invoke();
             assertEquals(2, command.getProductsRet().size());
             
@@ -159,7 +159,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
         {
             Timer.start("testXSLTPerformance second");
     
-            ListProductsCommand command = (ListProductsCommand) getCore().newCommand("TestXSLTService");
+            ListProductsCommand command = getCore().newCommand("TestXSLTService", ListProductsCommand.class);
             command.invoke();
             assertEquals(2, command.getProductsRet().size());
             
@@ -171,7 +171,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
             for(int i=0 ; i<10 ; i++)
             {
-                ListProductsCommand command = (ListProductsCommand) getCore().newCommand("TestXSLTService");
+                ListProductsCommand command = getCore().newCommand("TestXSLTService", ListProductsCommand.class);
                 command.invoke();
                 assertEquals(2, command.getProductsRet().size());
             }
@@ -188,7 +188,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testDroolsDecisionTable() throws Exception {
-        TestCommand command=(TestCommand)getCore().newCommand("TestDroolsDecisionTable");
+        DummyCommand command=getCore().newCommand("TestDroolsDecisionTable", DummyCommand.class);
         command.setVersionArgRet(new Version());
         
         long start1=System.currentTimeMillis();
@@ -223,7 +223,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testDroolsDecisionTableInheritance() throws Exception {
-        TestCommand command=(TestCommand)getCore().newCommand("TestDroolsDecisionTableInheritance");
+        DummyCommand command=getCore().newCommand("TestDroolsDecisionTableInheritance", DummyCommand.class);
         command.setVersionArgRet(new Version());
         
         Timer.start("Initial decision table");
@@ -259,7 +259,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testDroolsInheritance() throws Exception {
-        TestCommand command=(TestCommand)getCore().newCommand("TestDroolsInheritance");
+        DummyCommand command=getCore().newCommand("TestDroolsInheritance", DummyCommand.class);
         
         command.setX(21);
         command.setY(34);
@@ -279,7 +279,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
     @Test
     public void testDroolsService() throws Exception {
-        TestCommand command = (TestCommand) getCore().newCommand("TestDroolsService");
+        DummyCommand command = getCore().newCommand("TestDroolsService", DummyCommand.class);
         command.setX(21);
         command.setY(34);
         command.invoke();
@@ -293,7 +293,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
     @Test
     public void testDroolsServiceUrlScript() throws Exception {
-        TestCommand command = (TestCommand) getCore().newCommand("TestDroolsUrlLoader");
+        DummyCommand command = getCore().newCommand("TestDroolsUrlLoader", DummyCommand.class);
         command.setX(21);
         command.setY(34);
         command.invoke();
@@ -307,7 +307,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
     @Test
     public void testDroolsXMLService() throws Exception {
-        TestCommand command = (TestCommand) getCore().newCommand("TestDroolsXMLService");
+        DummyCommand command = getCore().newCommand("TestDroolsXMLService", DummyCommand.class);
         command.setX(21);
         command.setY(34);
         command.invoke();
@@ -322,7 +322,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
     /**
      * Test the "normal" multi line service invocation.
      * <ol>
-     * <li>Get the TestService (which adds two ints together)
+     * <li>Get the DummyService (which adds two ints together)
      * <li>
      * <li>Set the first int to 1 using the setter.</li>
      * <li>Set the second int to 1 using the setter.</li>
@@ -333,7 +333,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testMultiLineInvoke() throws Exception {
-        TestCommand command = (TestCommand) getCore().newCommand("TestService");
+        DummyCommand command = getCore().newCommand("TestService", DummyCommand.class);
         command.setX(1);
         command.setY(1);
         command.invoke();
@@ -343,27 +343,35 @@ public class TestServiceInvocation extends CoreUserTestCase {
     /**
      * Test the single line service invocation facility.
      * <ol>
-     * <li>Invoke the TestService passing it arguments of 1 and 1.</li>
+     * <li>Invoke the DummyService passing it arguments of 1 and 1.</li>
      * <li>Fail if the result isn't 2.</li>
      * <li>Fail if any exceptions are thrown.</li>
      * <ol>
      */
     @Test
     public void testSingleLineInvoke() throws Exception {
-        TestArgImp r = (TestArgImp) getCore().invokeService("TestService", new TestArgImp(1, 1));
+        DummyArgument tai=getCore().newType(DummyArgument.class);
+        tai.setX(1);
+        tai.setY(1);
+
+        DummyArgument r = (DummyArgument) getCore().invokeService(DummyCommand.class, tai);
         assertEquals(2, r.getR());
     }
 
     @Test
     public void testServiceLogging() throws Exception {
-        getCore().invokeService("TestServiceNoLogging", new TestArgImp(1, 1));
-        getCore().invokeService("TestServiceCallLogging", new TestArgImp(1, 1));
-        getCore().invokeService("TestServiceFullLogging", new TestArgImp(1, 1));
+        DummyArgument tai=getCore().newType(DummyArgument.class);
+        tai.setX(1);
+        tai.setY(1);
+        
+        getCore().invokeService("TestServiceNoLogging", DummyCommand.class, tai);
+        getCore().invokeService("TestServiceCallLogging", DummyCommand.class, tai);
+        getCore().invokeService("TestServiceFullLogging", DummyCommand.class, tai);
     }
 
     @Test
     public void testJMSService() throws Exception {
-        LoggerCommand command = (LoggerCommand) getCore().newCommand("TestJMSCommand");
+        LoggerCommand command = getCore().newCommand("TestJMSCommand", LoggerCommand.class);
         command.setMessage("A test message");
         command.setSeverity(Severity.INFO);
         command.setCallersCore(new CoreProxy());
@@ -375,7 +383,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
     public void testDroolsAccessorCache() throws Exception {
         long startAt, endAt;
 
-        TestCommand command = (TestCommand) getCore().newCommand("TestDroolsService2");
+        DummyCommand command = getCore().newCommand("TestDroolsService2", DummyCommand.class);
         command.setX(21);
         command.setY(34);
 
@@ -409,7 +417,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testBeanShellInheritance() throws Exception {
-        TestCommand command=(TestCommand)getCore().newCommand("TestBeanShellInheritance");
+        DummyCommand command=getCore().newCommand("TestBeanShellInheritance",DummyCommand.class);
         
         // Test the first rule in the base class (x<100 so r=x+y)
         command.setX(9);
@@ -425,7 +433,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testBeanshellUrlLoader() throws Exception {
-        TestCommand command=(TestCommand)getCore().newCommand("TestBeanShellUrlLoader");
+        DummyCommand command=getCore().newCommand("TestBeanShellUrlLoader",DummyCommand.class);
         
         // Test the first rule in the base class (x<100 so r=x+y)
         command.setX(9);
@@ -441,7 +449,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
         try {
             for (i = 0; i <= 100000; i++) {
-                TestCommand command = (TestCommand) getCore().newCommand("TestDroolsService");
+                DummyCommand command = getCore().newCommand("TestDroolsService", DummyCommand.class);
                 command.setX(21);
                 command.setY(34);
                 command.invoke();
@@ -462,9 +470,9 @@ public class TestServiceInvocation extends CoreUserTestCase {
     public void testSimpleJaninoService() throws Exception {
         Timer.start("testSimpleJaninoService");
         
-        TestCommand command;
+        DummyCommand command;
         
-        command = (TestCommand) getCore().newCommand("TestJaninoService");
+        command = getCore().newCommand("TestJaninoService", DummyCommand.class);
         command.setX(21);
         command.setY(3);
         command.invoke();
@@ -472,7 +480,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
         Timer.split("testSimpleJaninoService");
 
-        command = (TestCommand) getCore().newCommand("TestJaninoService");
+        command = getCore().newCommand("TestJaninoService", DummyCommand.class);
         command.setX(21);
         command.setY(3);
         command.invoke();
@@ -481,7 +489,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
         Timer.split("testSimpleJaninoService");
 
         for(int i=0 ; i<50 ; i++) {
-            command = (TestCommand) getCore().newCommand("TestJaninoService");
+            command = getCore().newCommand("TestJaninoService", DummyCommand.class);
             command.setX(101);
             command.setY(10);
             command.invoke();
@@ -490,7 +498,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
 
         Timer.stop("testSimpleJaninoService");
 
-        command = (TestCommand) getCore().newCommand("TestJaninoUrlService");
+        command = getCore().newCommand("TestJaninoUrlService", DummyCommand.class);
         command.setX(21);
         command.setY(3);
         command.invoke();
@@ -505,7 +513,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
      */
     @Test
     public void testJaninoInheritance() throws Exception {
-        TestCommand command=(TestCommand)getCore().newCommand("TestJaninoInheritanceService");
+        DummyCommand command=getCore().newCommand("TestJaninoInheritanceService", DummyCommand.class);
         
         // Test the logic in the TestJaninoInheritanceService itself (x>1000 so r=x-(2*y))
         command.setX(1001);
@@ -528,7 +536,7 @@ public class TestServiceInvocation extends CoreUserTestCase {
     
     @Test
     public void testVelocity() throws Exception {
-        TestCommand command = (TestCommand) getCore().newCommand("TestVelocityService");
+        DummyCommand command = getCore().newCommand("TestVelocityService", DummyCommand.class);
         command.setX(21);
         command.setY(34);
 

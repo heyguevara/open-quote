@@ -17,7 +17,10 @@
 
 package com.ail.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,14 +30,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.ail.core.Attribute;
-import com.ail.core.History;
-import com.ail.core.Type;
-import com.ail.core.Version;
-import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.command.CommandArgImp;
-import com.ail.core.logging.LoggerArgImp;
+import com.ail.core.logging.LoggerArgument;
+import com.ail.core.logging.LoggerArgumentImpl;
+import com.ail.core.logging.LoggerCommand;
+import com.ail.core.logging.LoggerCommandImpl;
 import com.ail.core.logging.Severity;
 
 /**
@@ -178,10 +177,10 @@ public class TestTypeClone {
 
     @Test
     public void testCommandClone() throws Exception {
-        MyTestCommand c = new MyTestCommand();
-        MyTestArgImp a = new MyTestArgImp();
+        LoggerCommand c = new LoggerCommandImpl();
+        LoggerArgument a = new LoggerArgumentImpl();
         c.setArgs(a);
-        MyTestCommand c1 = (MyTestCommand) c.clone();
+        LoggerCommand c1 = (LoggerCommand) ((LoggerCommandImpl)c).clone();
         assertTrue(c.hashCode() != c1.hashCode());
         assertTrue(c.getArgs().hashCode() != c1.getArgs().hashCode());
     }
@@ -246,11 +245,11 @@ public class TestTypeClone {
      */
     @Test
     public void testEnumCloning() throws Exception {
-        LoggerArgImp limp=new LoggerArgImp();
+        LoggerArgumentImpl limp=new LoggerArgumentImpl();
         
         limp.setSeverity(Severity.DEBUG);
         
-        LoggerArgImp clon=(LoggerArgImp)limp.clone();
+        LoggerArgumentImpl clon=(LoggerArgumentImpl)limp.clone();
         
         assertEquals(clon.getSeverity(), limp.getSeverity());
     }
@@ -369,379 +368,3 @@ class TypeWithSet extends Type {
         this.mySet=mySet;
     }
 }
-
-/**
- * Sample Command to help in testing the core's cloning
- */
-class MyTestCommand extends Command implements MyTestArg {
-    private MyTestArg args = null;
-
-    public MyTestCommand() {
-        super();
-        args = new MyTestArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (MyTestArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setX
-     * @return value of x
-     */
-    public int getX() {
-        return args.getX();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getX
-     * @param x New value for x argument.
-     */
-    public void setX(int x) {
-        args.setX(x);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setY
-     * @return value of y
-     */
-    public int getY() {
-        return args.getY();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getY
-     * @param y New value for y argument.
-     */
-    public void setY(int y) {
-        args.setY(y);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setR
-     * @return value of r
-     */
-    public int getR() {
-        return args.getR();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getR
-     * @param r New value for r argument.
-     */
-    public void setR(int r) {
-        args.setR(r);
-    }
-
-    public void setStringRet(String string) {
-        args.setStringRet(string);
-    }
-
-    public String getStringRet() {
-        return args.getStringRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPreConditionFlag
-     * @return value of preconditionflag
-     */
-    public boolean getPreConditionFlag() {
-        return args.getPreConditionFlag();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPreConditionFlag
-     * @param preconditionflag New value for preconditionflag argument.
-     */
-    public void setPreConditionFlag(boolean preconditionflag) {
-        args.setPreConditionFlag(preconditionflag);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPostConditionFlag
-     * @return value of postconditionflag
-     */
-    public boolean getPostConditionFlag() {
-        return args.getPostConditionFlag();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPostConditionFlag
-     * @param postconditionflag New value for postconditionflag argument.
-     */
-    public void setPostConditionFlag(boolean postconditionflag) {
-        args.setPostConditionFlag(postconditionflag);
-    }
-
-    public Attribute getDetailAttribute() {
-        return args.getDetailAttribute();
-    }
-
-    public void setDetailAttribute(Attribute attribute) {
-        args.setDetailAttribute(attribute);
-    }
-
-    public Version getVersionArgRet() {
-        return args.getVersionArgRet();
-    }
-
-    public void setVersionArgRet(Version versionArgRet) {
-        args.setVersionArgRet(versionArgRet);
-    }
-}
-
-/**
- * Sample Arg interface to help in testing the core's cloning
- */
-interface MyTestArg extends CommandArg {
-    /**
-     * Fetch the value of the version argument. 
-     * @see #setVersion
-     * @return value of version
-     */
-    Version getVersionArgRet();
-    
-    /**
-     * Set the value of the version argument.
-     * @see #getVersion
-     * @param versionArgRet New value for version argument.
-     */
-    void setVersionArgRet(Version versionArgRet);
-    
-    /**
-     * Fetch the value of the x argument. First value for adder
-     * @see #setX
-     * @return value of x
-     */
-    int getX();
-
-    /**
-     * Set the value of the x argument. First value for adder
-     * @see #getX
-     * @param x New value for x argument.
-     */
-    void setX(int x);
-
-    /**
-     * Fetch the value of the y argument. Second value for adder
-     * @see #setY
-     * @return value of y
-     */
-    int getY();
-
-    /**
-     * Set the value of the y argument. Second value for adder
-     * @see #getY
-     * @param y New value for y argument.
-     */
-    void setY(int y);
-
-    /**
-     * Fetch the value of the r argument. Result from addition
-     * @see #setR
-     * @return value of r
-     */
-    int getR();
-
-    /**
-     * Set the value of the r argument. Result from addition
-     * @see #getR
-     * @param r New value for r argument.
-     */
-    void setR(int r);
-
-    void setStringRet(String string);
-    
-    String getStringRet();
-    
-    /**
-     * Fetch the value of the postconditionflag argument. Flag set by the pre-condition service to show that it has been run.
-     * @see #setPostConditionFlag
-     * @return value of postconditionflag
-     */
-    boolean getPostConditionFlag();
-
-    /**
-     * Set the value of the postconditionflag argument. Flag set by the pre-condition service to show that it has been run.
-     * @see #getPostConditionFlag
-     * @param postconditionflag New value for postconditionflag argument.
-     */
-    void setPostConditionFlag(boolean postconditionflag);
-
-    /**
-     * Fetch the value of the preconditionflag argument. Flag set by the pre condition service to show that it has been run.
-     * @see #setPreConditionFlag
-     * @return value of preconditionflag
-     */
-    boolean getPreConditionFlag();
-
-    /**
-     * Set the value of the preconditionflag argument. Flag set by the pre condition service to show that it has been run.
-     * @see #getPreConditionFlag
-     * @param preconditionflag New value for preconditionflag argument.
-     */
-    void setPreConditionFlag(boolean preconditionflag);
-
-    void setDetailAttribute(Attribute attribute);
-    
-    Attribute getDetailAttribute();
-}
-
-/**
- * Sample ArgImp interface to help in testing the core's cloning
- */
-class MyTestArgImp extends CommandArgImp implements MyTestArg {
-    static final long serialVersionUID = 1199346453402049909L;
-    private int x;
-    private int y;
-    private int r;
-    private String string;
-    private Version versionArgRet;
-    private boolean preconditionflag;
-    private boolean postconditionflag;
-    private Attribute detailAttribute;
-
-    /** Default constructor */
-    public MyTestArgImp() {
-    }
-
-    /**
-     * Argument priming constructor.
-     * @param x Value for X argument.
-     * @param y Value for Y argument.
-     */
-    public MyTestArgImp(int x, int y) {
-        this.x=x;
-        this.y=y;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setX
-     * @return value of x
-     */
-    public int getX() {
-        return this.x;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getX
-     * @param x New value for x argument.
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setY
-     * @return value of y
-     */
-    public int getY() {
-        return this.y;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getY
-     * @param y New value for y argument.
-     */
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setR
-     * @return value of r
-     */
-    public int getR() {
-        return this.r;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getR
-     * @param r New value for r argument.
-     */
-    public void setR(int r) {
-        this.r = r;
-    }
-
-    public void setStringRet(String string) {
-        this.string=string;
-    }
-
-    public String getStringRet() {
-        return this.string;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPreConditionFlag
-     * @return value of preconditionflag
-     */
-    public boolean getPreConditionFlag() {
-        return this.preconditionflag;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPreConditionFlag
-     * @param preconditionflag New value for preconditionflag argument.
-     */
-    public void setPreConditionFlag(boolean preconditionflag) {
-        this.preconditionflag = preconditionflag;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPostConditionFlag
-     * @return value of postconditionflag
-     */
-    public boolean getPostConditionFlag() {
-        return this.postconditionflag;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPostConditionFlag
-     * @param postconditionflag New value for postconditionflag argument.
-     */
-    public void setPostConditionFlag(boolean postconditionflag) {
-        this.postconditionflag = postconditionflag;
-    }
-
-    public Attribute getDetailAttribute() {
-        return detailAttribute;
-    }
-
-    public void setDetailAttribute(Attribute detailAttribute) {
-        this.detailAttribute = detailAttribute;
-    }
-
-    public Version getVersionArgRet() {
-        return versionArgRet;
-    }
-
-    public void setVersionArgRet(Version versionArgRet) {
-        this.versionArgRet=versionArgRet;
-    }
-}
-
-

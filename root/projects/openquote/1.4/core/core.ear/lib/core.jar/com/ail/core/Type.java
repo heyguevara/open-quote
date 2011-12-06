@@ -32,7 +32,7 @@ import java.util.Set;
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.JXPathException;
 
-import com.ail.core.command.CommandArg;
+import com.ail.core.command.Argument;
 
 /**
  * <i>Type</i> is the base of all 'type model' classes that are part of the domain
@@ -362,7 +362,7 @@ public class Type implements Serializable, Cloneable {
                         method.invoke(cloneObject, clonedSet);
                     }
                     // If the field is a Type, clone it.
-                    else if (Type.class.isAssignableFrom(fieldType) || CommandArg.class.isAssignableFrom(fieldType)) {
+                    else if (Type.class.isAssignableFrom(fieldType) || Argument.class.isAssignableFrom(fieldType)) {
                         method=null;
 
                         method=this.getClass().getMethod("get"+methodBaseName);

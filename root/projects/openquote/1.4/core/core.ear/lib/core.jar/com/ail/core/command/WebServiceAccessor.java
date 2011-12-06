@@ -57,7 +57,7 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
     private String localPart=null;
     private String operationName="invokeServiceXML";
     private String endpointClass=null;
-    private CommandArg args=null;
+    private Argument args=null;
     private Core core=null;
 
     public WebServiceAccessor() {
@@ -65,14 +65,14 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
     }
 
     /**
-     * Update this Command object's arguments with those taken from the command
+     * Update this CommandImpl object's arguments with those taken from the command
      * arg passed in. This is in effect a bulk setter. This interface will be
      * implemented by beans that have many more getters/setters to support
      * their properties. The implementations of this method take 'that', and
      * pull all the relevant properties into this.
      * @param that Source for arguments
      */
-    public void setArgs(CommandArg that) {
+    public void setArgs(Argument that) {
         this.args=that;
     }
 
@@ -80,7 +80,7 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
      * Get the argument set associated with this command.
      * @return This objects arguments.
      */
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 

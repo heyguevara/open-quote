@@ -16,12 +16,15 @@
  */
 package com.ail.core.document.model;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * A chapter represents a part of a document which defines the characteristics of one or more
- * contiguious pages. A chapter define may information for the header, footer (in the form of blocks),
+ * contiguous pages. A chapter define may information for the header, footer (in the form of blocks),
  * watermark, etc. Bear in mind that a chapter only defines the information to be included in each 
  * of these parts, it does not define the formating/style to be used when they are rendered.
  */
+@TypeDefinition
 public class ChapterData extends ItemContainer {
     
     @Override

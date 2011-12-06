@@ -21,11 +21,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * Record the details of an individual exception/error. This class provides a means to record exceptions and
  * errors rather than simply dumping them to a log file. 
  * @since 2.3
  */
+@TypeDefinition
 public class ExceptionRecord extends Type {
     static final int MAX_FRAMES_TO_CAPTURE=50;
     

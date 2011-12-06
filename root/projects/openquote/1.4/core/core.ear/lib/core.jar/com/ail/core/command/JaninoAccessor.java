@@ -46,11 +46,11 @@ import com.ail.core.configure.ConfigurationOwner;
  * As used by this accessor, Janino scripts adopt a simple contract: they must define an invoke method which accepts
  * only one argument of a type which is suitable for the command being serviced.<p/>
  * 
- * In the following example the command called 'MyTestCommand' had been bound to the Janino based 'TestService'. The convension
+ * In the following example the command called 'MyTestCommand' had been bound to the Janino based 'DummyService'. The convension
  * within the core is to have a the command class (MyTestCommand) paired with an argument implementation (MyTestArgImp); therefore, 
  * the invoke method accepts an argument of that type.
  * <pre>
- * &lt;service name="TestService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" &gt;
+ * &lt;service name="DummyService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" &gt;
  *   &lt;parameter name="Script"&gt;&lt;![CDATA[
  *     import com.ail.core.dummyservice.TestArgImp;
  *
@@ -62,8 +62,8 @@ import com.ail.core.configure.ConfigurationOwner;
  *   ]]&gt;&lt;/parameter&gt;
  * &lt;/service&gt;
  * 
- * &lt;command name="MyTestCommand" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand"&gt;
- *    &lt;parameter name="Service"&gt;TestService&lt;/parameter&gt;
+ * &lt;command name="MyTestCommand" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommand"&gt;
+ *    &lt;parameter name="Service"&gt;DummyService&lt;/parameter&gt;
  * &lt;/command&gt;
  * </pre>
  * The JaninoAccessor supports the concept of inheritance (or extension) between services based on it. The concept of one service 'Extend'ing
@@ -73,7 +73,7 @@ import com.ail.core.configure.ConfigurationOwner;
  * Building on the sample code above, an 'extending' service could be added as follows:
  * <pre>
  * &lt;service name="TestExtendingService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" &gt;
- *   &lt;parameter name="Extends"&gt;TestService&lt;/parameter&gt;
+ *   &lt;parameter name="Extends"&gt;DummyService&lt;/parameter&gt;
  *   &lt;parameter name="Script"&gt;&lt;![CDATA[
  *     import com.ail.core.dummyservice.TestArgImp;
  *
@@ -85,12 +85,12 @@ import com.ail.core.configure.ConfigurationOwner;
  *   ]]&gt;&lt;/parameter&gt;
  * &lt;/service&gt;
  * 
- * &lt;command name="TestExtendingCommand" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand"&gt;
+ * &lt;command name="TestExtendingCommand" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommand"&gt;
  *    &lt;parameter name="Service"&gt;TestExtendingService&lt;/parameter&gt;
  * &lt;/command&gt;
  * </pre>
  * The 'Extends' parameter in 'TestExtendingService' tells the accessor to execute the named service before this one - a
- * chain with two links. So in this case invoking the 'TestExtendingCommand' will lead to a 'TestService' being invoked first, 
+ * chain with two links. So in this case invoking the 'TestExtendingCommand' will lead to a 'DummyService' being invoked first, 
  * and then 'TestExtendingService' being invoked.<p/>
  * Note that the invoke() methods in all the services in a chain must accept an argument of the same type.  
  * @version $Revision$
@@ -100,7 +100,7 @@ import com.ail.core.configure.ConfigurationOwner;
  * @source $Source$
  */
 public class JaninoAccessor extends Accessor implements ConfigurationOwner {
-    private CommandArg args=null;
+    private Argument args=null;
     private Core core=null;
     private String script=null;
     private String url=null;
@@ -108,11 +108,11 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
     private transient List<Class<?>> clazz=null;
     private String name=null;
     
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 

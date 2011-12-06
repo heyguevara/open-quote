@@ -17,6 +17,7 @@
 
 package com.ail.core.configure;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -28,6 +29,7 @@ import com.ail.core.Type;
  * @date $Date: 2005/07/16 10:23:27 $
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/XMLMapping.java,v $
  */
+@TypeDefinition
 public class XMLMapping extends Type {
     static final long serialVersionUID = 5193477041052835669L;
     private String definition = null;

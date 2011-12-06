@@ -17,6 +17,7 @@
 
 package com.ail.core.validator;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -26,6 +27,7 @@ import com.ail.core.Type;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/ValidatorFailureDetail.java,v $
  * @stereotype type
  */
+@TypeDefinition
 public class ValidatorFailureDetail extends Type {
     /** Name of field where validation failed */
     private String fieldName;

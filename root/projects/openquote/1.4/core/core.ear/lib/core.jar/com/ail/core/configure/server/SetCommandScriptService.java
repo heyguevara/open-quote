@@ -17,12 +17,14 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Type;
 
-public class SetCommandScriptService extends Service<SetCommandScriptArg> {
+@ServiceImplementation
+public class SetCommandScriptService extends Service<SetCommandScriptArgument> {
     /**
      * Return the namespace of the configuration we're updating
      * @return The classes namespace

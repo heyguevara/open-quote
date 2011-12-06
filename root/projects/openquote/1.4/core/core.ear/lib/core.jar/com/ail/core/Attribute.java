@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * An attribute is defined as "One of numerous aspects, as of a subject". Generally, another
  * type will own a (composite) collection of Attributes which help describe it. For example,
@@ -89,6 +91,7 @@ import java.util.regex.Pattern;
  * <li>the JVM's default locale (as defined by {@link java.util.Locale#getDefault() Locale.getDefault()}</li>
  * </ul>
  */
+@TypeDefinition
 public class Attribute extends Type implements Identified {
     private static final Pattern formatOptionsPattern=Pattern.compile("(size=([0-9]*))|"+
                                                                       "(min=[0-9.]*)|"+
@@ -695,7 +698,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isNumberType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -710,7 +713,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isChoiceType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -737,7 +740,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isChoiceMasterType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -750,7 +753,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isChoiceSlaveType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -763,7 +766,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isCurrencyType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -776,7 +779,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isYesornoType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -789,7 +792,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isNoteType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -802,7 +805,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isStringType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -815,7 +818,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isDateType() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         
@@ -830,7 +833,7 @@ public class Attribute extends Type implements Identified {
      */
     public boolean isRequired() {
         if (getLocalFormat()==null) {
-            new CoreProxy().logError("Attribute: "+id+" has no defined format");
+            new CoreProxy().logInfo("Attribute: "+id+" has no defined format");
             return false;
         }
         

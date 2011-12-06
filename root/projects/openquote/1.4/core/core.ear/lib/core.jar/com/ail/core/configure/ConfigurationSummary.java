@@ -18,6 +18,7 @@ package com.ail.core.configure;
 
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -28,6 +29,7 @@ import com.ail.core.Type;
  * @date $Date: 2005/07/23 14:48:37 $
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationSummary.java,v $
  */
+@TypeDefinition
 public class ConfigurationSummary extends Type {
     private String namespace;
     private String manager;

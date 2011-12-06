@@ -47,15 +47,15 @@ import com.ail.core.configure.ConfigurationOwner;
 public class XSLTAccessor extends Accessor implements ConfigurationOwner {
     private transient Transformer transformer=null;
     private Core core=null;
-    private CommandArg args=null;
+    private Argument args=null;
     private String script=null;
     private String url=null;
 
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 

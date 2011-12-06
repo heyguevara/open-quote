@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 
@@ -29,7 +30,8 @@ import com.ail.core.Service;
  * Service to catalog the contents of a CAR file. This service is passed a car file and
  * returns a list of the namespaces found in the file.
  */
-public class CatalogCarService extends Service<CatalogCarArg> {
+@ServiceImplementation
+public class CatalogCarService extends Service<CatalogCarArgument> {
 
     /** The 'business logic' of the entry point. */
     @Override

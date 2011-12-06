@@ -48,7 +48,7 @@ import com.ail.core.configure.Configuration;
 public class JMSAccessor extends Accessor {
     private String factory=null;
     private String queue=null;
-    private CommandArg args=null;
+    private Argument args=null;
     private transient QueueConnectionFactory connectionFactoryInstance=null;
     private transient Queue queueInstance=null;
 
@@ -86,11 +86,11 @@ public class JMSAccessor extends Accessor {
         }
     }
 
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 

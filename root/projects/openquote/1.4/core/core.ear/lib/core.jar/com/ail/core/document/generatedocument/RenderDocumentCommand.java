@@ -17,94 +17,9 @@
 
 package com.ail.core.document.generatedocument;
 
-import com.ail.core.XMLString;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-public class RenderDocumentCommand extends Command implements RenderDocumentArg {
-    private RenderDocumentArg args = null;
-
-    public RenderDocumentCommand() {
-        super();
-        args = new RenderDocumentArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (RenderDocumentArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public XMLString getSourceDataArg() {
-        return args.getSourceDataArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setSourceDataArg(XMLString sourceDataArg) {
-        args.setSourceDataArg(sourceDataArg);
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getRenderOptionsArg() {
-        return args.getRenderOptionsArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setRenderOptionsArg(String renderOptionsArg) {
-        args.setRenderOptionsArg(renderOptionsArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public byte[] getRenderedDocumentRet() {
-        return args.getRenderedDocumentRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setRenderedDocumentRet(byte[] renderedDocumentRet) {
-        args.setRenderedDocumentRet(renderedDocumentRet);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String getTranslationUrlArg() {
-        return args.getTranslationUrlArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setTranslationUrlArg(String translationUrlArg) {
-        args.setTranslationUrlArg(translationUrlArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setTemplateUrlArg(String templateUrlArg) {
-        args.setTemplateUrlArg(templateUrlArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getTemplateUrlArg() {
-        return args.getTemplateUrlArg();
-    }
+@CommandDefinition
+public interface RenderDocumentCommand extends Command, RenderDocumentArgument {
 }

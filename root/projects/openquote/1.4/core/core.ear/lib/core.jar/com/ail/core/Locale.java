@@ -17,12 +17,15 @@
 
 package com.ail.core;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * Core specific wrapper for the java.util.Locale class. This class simply wraps a Java Locale object and
  * adds a number of helper methods to make it more suitable for use within the core. Not all of Java's 
  * Locale methods are exposed here, but access is provided to the wrapped instance via {@link #getInstance()}.
  * @see java.util.Locale
  */
+@TypeDefinition
 public class Locale extends Type {
     private static ThreadLocal<java.util.Locale> threadLocale = new ThreadLocal<java.util.Locale>() {
         java.util.Locale threadLocale;

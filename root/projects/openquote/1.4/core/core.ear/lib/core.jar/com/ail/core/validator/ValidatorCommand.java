@@ -17,93 +17,11 @@
 
 package com.ail.core.validator;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/ValidatorCommand.java,v $
- * @stereotype command
- */
-public class ValidatorCommand extends Command implements ValidatorArg {
-    private ValidatorArg args = null;
-
-    public ValidatorCommand() {
-        super();
-        args = new ValidatorArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (ValidatorArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Object getValueArg() {
-        return args.getValueArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param valueArg @{inheritDoc}
-     */
-    public void setValueArg(Object valueArg) {
-        args.setValueArg(valueArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getKeyArg() {
-        return args.getKeyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param keyArg @{inheritDoc}
-     */
-    public void setKeyArg(String keyArg) {
-        args.setKeyArg(keyArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public ValidatorResult getValidatorResultRet() {
-        return args.getValidatorResultRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param validatorResultRet @{inheritDoc}
-     */
-    public void setValidatorResultRet(ValidatorResult validatorResultRet) {
-        args.setValidatorResultRet(validatorResultRet);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getValidationSpecArg() {
-        return args.getValidationSpecArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param validationSpecArg @{inheritDoc}
-     */
-    public void setValidationSpecArg(String validationSpecArg) {
-        args.setValidationSpecArg(validationSpecArg);
-    }
+@CommandDefinition(defaultServiceClass=CommonsValidatorService.class)
+public interface ValidatorCommand extends Command, ValidatorArgument {
 }
+
+

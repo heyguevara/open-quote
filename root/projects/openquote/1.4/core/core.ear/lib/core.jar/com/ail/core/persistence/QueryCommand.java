@@ -17,65 +17,15 @@
 
 package com.ail.core.persistence;
 
-import java.util.List;
-
-import com.ail.core.Type;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
+import com.ail.core.persistence.hibernate.HibernateQueryService;
 
 /**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/QueryCommand.java,v $
- * @stereotype command
+ * Arguments required by query service
  */
-public class QueryCommand extends Command implements QueryArg {
-    private QueryArg args = null;
-
-    public QueryCommand() {
-        super();
-        args = new QueryArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (QueryArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    public void setQueryArgumentsArg(Object... queryArgumentsArg) {
-        args.setQueryArgumentsArg(queryArgumentsArg);
-    }
-
-    public Object[] getQueryArgumentsArg() {
-        return args.getQueryArgumentsArg();
-    }
-
-    public void setQueryNameArg(String queryName) {
-        args.setQueryNameArg(queryName);
-    }
-
-    public String getQueryNameArg() {
-        return args.getQueryNameArg();
-    }
-
-    public List<?> getResultsListRet() {
-        return args.getResultsListRet();
-    }
-
-    public void setResultsListRet(List<Object> resultsListRet) {
-        args.setResultsListRet(resultsListRet);
-    }
-
-    public Type getUniqueResultRet() {
-        return args.getUniqueResultRet();
-    }
-
-    public void setUniqueResultRet(Type type) {
-        args.setUniqueResultRet(type);
-    }
-
+@CommandDefinition(defaultServiceClass=HibernateQueryService.class)
+public interface QueryCommand extends Command, QueryArgument {
 }
+
+

@@ -19,6 +19,7 @@ package com.ail.core.language;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Identified;
 import com.ail.core.Type;
 
@@ -26,6 +27,7 @@ import com.ail.core.Type;
  * A Translation associates a given collection of text 
  *
  */
+@TypeDefinition
 public class Translation extends Type implements Identified {
     private String extendsLanguage = null;
     private String language = null;

@@ -12,10 +12,10 @@
     <manager>com.ail.core.product.listproducts.ListProductsService</manager>
     
     <group name="products">
-        <!-- Define products here, as follows...
+<!-- List one product per parameter as below. 
         <parameter name="com.ail.core.product.TestProduct1"/>
         <parameter name="com.ail.core.product.TestProduct2"/>
         <parameter name="com.ail.core.product.TestProduct3"/>
-        -->
+-->
     </group>
 </configuration>

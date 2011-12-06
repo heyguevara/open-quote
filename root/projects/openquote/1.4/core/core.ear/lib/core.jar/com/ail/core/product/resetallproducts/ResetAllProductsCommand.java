@@ -17,29 +17,11 @@
 
 package com.ail.core.product.resetallproducts;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/10/02 12:15:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/resetallproducts/ResetAllProductsCommand.java,v $
- * @stereotype command
- */
-public class ResetAllProductsCommand extends Command implements ResetAllProductsArg {
-    private ResetAllProductsArg args = null;
-
-    public ResetAllProductsCommand() {
-        super();
-        args = new ResetAllProductsArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (ResetAllProductsArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
+@CommandDefinition(defaultServiceClass=ResetAllProductsService.class)
+public interface ResetAllProductsCommand extends Command, ResetAllProductsArgument {
 }
+
+

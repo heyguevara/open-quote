@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
-import com.ail.core.command.AbstractCommand;
+import com.ail.core.command.Command;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.ConfigurationResetError;
@@ -135,24 +135,17 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     }
 
     /**
-     * Create a instance of the named command object.
-	 * The named command is looked up in the current configuration, and
-     * created from the specification held.
-     * @param commandName The name of the command to create.
-     * @return The command object ready for use.
-     */
-    public AbstractCommand newCommand(String commandName) {
-		return core.newCommand(commandName);
-    }
-
-    /**
      * Create a new instance of the command specified. The details of the type
-     * to be created are loaded from the callers configuration.
+     * to be created are loaded from the callers configuration. This method is
+     * distinct from {@link #newCommand(Class, String)}. This method simple looks
+     * for a configured command with the name <i>commandName</i>, whereas method 
+     * looks for a command named after the fully qualified name of the Class, and
+     * modified by the value of String (e.g. <i>"com.ail.core.LoggerCommand/stdout"</i>)
      * @param commandName The name of the command to create an instance of
      * @param clazz The expected type of the resulting command 
      * @return An instance of the command.
      */
-    public <T extends AbstractCommand> T newCommand(String commandName, Class<T> clazz) {
+    public <T extends Command> T newCommand(String commandName, Class<T> clazz) {
         return core.newCommand(commandName, clazz);
     }
 
@@ -164,7 +157,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param clazz The expected type of the resulting command 
      * @return An instance of the command.
      */
-    public <T extends AbstractCommand> T newCommand(String commandName, String modifier, Class<T> clazz) {
+    public <T extends Command> T newCommand(String commandName, String modifier, Class<T> clazz) {
         return core.newCommand(commandName, modifier, clazz);
     }
 
@@ -174,19 +167,24 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param clazz The class of the type to be created.
      * @return An instance of the command.
      */
-    public <T extends AbstractCommand> T newCommand(Class<T> clazz) {
+    public <T extends Command> T newCommand(Class<T> clazz) {
         return core.newCommand(clazz);
     }
 
     /**
      * Create a new instance of the command specified. The details of the type
      * to be created are loaded from the callers configuration based on the 
-     * clazz's name and the additional modifier.
+     * clazz's name and the additional modifier. This method is distinct from 
+     * {@link #newCommand(String, Class)}. This method looks in configuration
+     * for a command named after the fully qualified name of the Class, and
+     * modified by the value of String (e.g. <i>"com.ail.core.LoggerCommand/stdout"</i>);
+     * whereas, that method simple looks for a configured command with the 
+     * name <i>commandName</i>
      * @param clazz The class of the type to be created.
      * @param modifier select the specific configuration required. 
      * @return An instance of the command.
      */
-    public <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier) {
+    public <T extends Command> T newCommand(Class<T> clazz, String modifier) {
         return core.newCommand(clazz, modifier);
     }
 
@@ -197,7 +195,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param typeName The name of the type to create.
      * @return The type object ready for use.
      */
-    public Type newType(String typeName) {
+    public Object newType(String typeName) {
 		return core.newType(typeName);
     }
 
@@ -210,7 +208,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param clazz The expected type of the resulting command 
      * @return An instance of a type.
      */
-    public <T extends Type> T newType(String typeName, Class<T> clazz) {
+    public <T extends Object> T newType(String typeName, Class<T> clazz) {
         return core.newType(typeName, clazz);
     }
 
@@ -224,7 +222,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param clazz The expected type of the resulting command 
      * @return An instance of a type.
      */
-    public <T extends Type> T newType(String typeName, String modifier, Class<T> clazz) {
+    public <T extends Object> T newType(String typeName, String modifier, Class<T> clazz) {
         return core.newType(typeName, modifier, clazz);
     }
 
@@ -235,7 +233,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param clazz The class to return an instance for.
      * @return An instance of a type.
      */
-    public <T extends Type> T newType(Class<T> clazz) {
+    public <T extends Object> T newType(Class<T> clazz) {
         return core.newType(clazz);
     }
 
@@ -246,7 +244,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * @param clazz The class to return an instance for.
      * @return An instance of a type.
      */
-    public <T extends Type> T newType(Class<T> clazz, String modifier) {
+    public <T extends Object> T newType(Class<T> clazz, String modifier) {
         return core.newType(clazz, modifier);
     }
 
@@ -526,7 +524,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
 
     /**
      * Query persistent storage for the collection of objects returned by a 
-     * query. The query iteself is referenced by name only. This name is
+     * query. The query itself is referenced by name only. This name is
      * interpreted by the underlying persistence engine and resolved to an
      * actual query. 
      * @since 2.0
@@ -614,7 +612,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The parameter's name may be dot seperated indicating
+     * The parameter's name may be dot separated indicating
      * that the parameter is nested within one of more groups.
      * @param name The name of the parameter to be returned.
      * @return The parameter, or null if one is not defined for this namespace and version effective date.

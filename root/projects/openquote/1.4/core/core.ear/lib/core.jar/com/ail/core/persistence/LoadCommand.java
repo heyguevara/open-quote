@@ -17,79 +17,15 @@
 
 package com.ail.core.persistence;
 
-import com.ail.core.Type;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
+import com.ail.core.persistence.hibernate.HibernateLoadService;
 
 /**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/LoadCommand.java,v $
- * @stereotype command
+ * Arguments required by load service
  */
-public class LoadCommand extends Command implements LoadArg {
-    private LoadArg args = null;
-
-    public LoadCommand() {
-        super();
-        args = new LoadArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (LoadArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Type getObjectRet() {
-        return args.getObjectRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param objectArg @{inheritDoc}
-     */
-    public void setObjectRet(Type objectRet) {
-        args.setObjectRet(objectRet);
-    }
-
-
-	/**
-	 * {@inheritDoc}
-	 * @return @{inheritDoc}
-	 */
-    public Class<?> getTypeArg() {
-		return args.getTypeArg();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @param objectArg @{inheritDoc}
-	 */
-    public void setTypeArg(Class<?> typeArg) {
-		args.setTypeArg(typeArg);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @param idArg @{inheritDoc}
-	 */
-	public void setSystemIdArg(long idArg) {
-		args.setSystemIdArg(idArg);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @return @{inheritDoc}
-	 */
-	public long getSystemIdArg() {
-		return args.getSystemIdArg();
-	}
+@CommandDefinition(defaultServiceClass=HibernateLoadService.class)
+public interface LoadCommand extends Command, LoadArgument {
 }
+
+

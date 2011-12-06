@@ -24,8 +24,8 @@
     <property name="dbpassword" value="bombay" />
 
     <!-- Pull in the Common stuff - all projects us these. -->
-    <import file="${development.dir}/BuildCommon.xml" />
-    <import file="${development.dir}/BuildJ2EEMacros.xml" />
-    <import file="${development.dir}/BuildJBossMacros.xml" />
-    <import file="${development.dir}/BuildRepositoryMacros.xml" />
+    <import file="${development.dir}/macros/BuildCommon.xml" />
+    <import file="${development.dir}/macros/BuildJavaMacros.xml" />
+    <import file="${development.dir}/macros/BuildJBossMacros.xml" />
+    <import file="${development.dir}/macros/BuildRepositoryMacros.xml" />
 </project>

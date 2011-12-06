@@ -15,8 +15,10 @@
  */
 package com.ail.core.addressbook;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
+@TypeDefinition
 public class Address extends Type {
     String line1;
     String line2;

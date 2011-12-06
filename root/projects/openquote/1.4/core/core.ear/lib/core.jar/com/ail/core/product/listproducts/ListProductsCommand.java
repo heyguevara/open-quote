@@ -17,48 +17,11 @@
 
 package com.ail.core.product.listproducts;
 
-import java.util.Collection;
-
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.product.ProductDetails;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/listproducts/ListProductsCommand.java,v $
- * @stereotype command
- */
-public class ListProductsCommand extends Command implements ListProductsArg {
-    private ListProductsArg args = null;
-
-    public ListProductsCommand() {
-        super();
-        args = new ListProductsArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (ListProductsArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Collection<ProductDetails> getProductsRet() {
-        return args.getProductsRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productsRet @{inheritDoc}
-     */
-    public void setProductsRet(Collection<ProductDetails> productsRet) {
-        args.setProductsRet(productsRet);
-    }
+@CommandDefinition(defaultServiceClass=ListProductsService.class)
+public interface ListProductsCommand extends Command, ListProductsArgument {
 }
+
+

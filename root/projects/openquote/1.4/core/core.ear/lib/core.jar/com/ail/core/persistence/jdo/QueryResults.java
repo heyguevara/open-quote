@@ -17,6 +17,7 @@
 
 package com.ail.core.persistence.jdo;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import java.util.Vector;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import java.util.Collection;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/jdo/QueryResults.java,v $
  * @stereotype type
  */
+@TypeDefinition
 public class QueryResults extends Type {
     /**
      * @link aggregationByValue

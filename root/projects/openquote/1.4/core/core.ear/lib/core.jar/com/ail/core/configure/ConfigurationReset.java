@@ -15,7 +15,22 @@
  */
 package com.ail.core.configure;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
+
 import com.ail.core.CoreProxy;
+import com.ail.core.XMLString;
 
 /**
  * <b>Name</b><br/>
@@ -50,24 +65,101 @@ import com.ail.core.CoreProxy;
  */
 public class ConfigurationReset {
 
-    private static void reset(String args[]) {
+    private void reset(String args[]) throws Exception {
+        String annotationTypeConfig=null;
+        String searchPath=null;
+        Collection<String> configsToReset=new ArrayList<String>();
+        
+        for(int i=0 ; i<args.length ; i++) {
+            if ("-o".equals(args[i])) {
+                annotationTypeConfig=args[++i];
+            }
+            else if ("-s".equals(args[i])) {
+                searchPath=args[++i];
+            }
+            else {
+                configsToReset.add(args[i]);
+            }
+        }
+
+        mergeAnnotationGeneratedConfigs(searchPath, annotationTypeConfig);
+        
         CoreProxy cp = new CoreProxy();
         cp.resetCoreConfiguration();
     
         cp = new CoreProxy();
         cp.resetConfiguration();
     
-        for(int i=0 ; i<args.length ; i++) {
-            cp.resetConfiguration(args[i]);
+        for(String config: configsToReset) {
+            cp.resetConfiguration(config);
         }
     }
     
-    public static void main(String args[]) {
-        try {
-            reset(args);
+    private Collection<File> findAnnotationConfigs(String searchPath) {
+        Collection<File> configList=new ArrayList<File>();
+        
+        if (searchPath==null) {
+            return configList;
         }
-        catch(Throwable t) {
-            t.printStackTrace();
+        
+        Queue<File> folderList=new LinkedList<File>();
+        
+        for(String rootFolderName: searchPath.split(":")) {
+            File rootFolder=new File(rootFolderName);
+            if (!rootFolder.isDirectory()) {
+                System.err.println("config.search.path element '"+rootFolderName+"' is not a folder.");
+                System.exit(-1);
+            }
+            
+            folderList.add(rootFolder);
         }
+
+        while(!folderList.isEmpty()) {
+            File element=folderList.remove();
+            
+            if (element.isDirectory()) {
+                folderList.addAll(Arrays.asList(element.listFiles()));
+            }
+            else {
+                if (element.getName().matches("AnnotatedTypes.xml")) {
+                    configList.add(element);
+                }
+            }
+        }
+
+        return configList;
+    }
+    
+    /**
+     * Tree walk the specified folder list looking the configuration files
+     * fragments which the annotations processor generates. The processor
+     * itself is defined in the development project, {@link com.ail.annotation.Processor}.
+     * @throws IOException 
+     * @throws FileNotFoundException 
+     * @throws TransformerException 
+     * @throws SAXException 
+     */
+    private void mergeAnnotationGeneratedConfigs(String searchPath, String annotationTypeOutputFile) throws Exception {
+        PrintWriter pw=new PrintWriter(annotationTypeOutputFile);
+
+        pw.printf("<!-- This is a generated file. The types defined here are automatically create -->\n");
+        pw.printf("<!-- by the build system in response to annotations in source code. Edits to   -->\n");
+        pw.printf("<!-- this file will be lost.                                                   -->\n");
+        pw.printf("<configuration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='http://www.appliedindustriallogic.com/schemas/Configuration.xsd'>\n");
+        pw.printf("  <types>");
+
+        for(File file: findAnnotationConfigs(searchPath)) {
+            XMLString xmlConfig=new XMLString(file);
+            pw.print(xmlConfig.eval("configuration/types/*"));
+        }
+
+        pw.printf("  </types>");
+        pw.printf("</configuration>");
+
+        pw.close();
+    }
+
+    public static void main(String args[]) throws Exception {
+        new ConfigurationReset().reset(args);
     }
 }

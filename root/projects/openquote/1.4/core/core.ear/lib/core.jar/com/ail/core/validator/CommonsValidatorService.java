@@ -29,18 +29,18 @@ import org.apache.commons.validator.ValidatorResources;
 import org.apache.commons.validator.ValidatorResourcesInitializer;
 import org.apache.commons.validator.ValidatorResults;
 
-import com.ail.core.Core;
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.CommandArg;
 
 /**
  * Implementation of the Validator service using the <a href="http://jakarta.apache.org/commons/validator">
  * jakarta commons validator</a> project.<p>
  * configuration.
  */
+@ServiceImplementation
 @SuppressWarnings("deprecation")
-public class CommonsValidatorService extends Service<ValidatorArg> {
+public class CommonsValidatorService extends Service<ValidatorArgument> {
     /** The 'business logic' of the entry point. */
     @Override
     @SuppressWarnings("unchecked")

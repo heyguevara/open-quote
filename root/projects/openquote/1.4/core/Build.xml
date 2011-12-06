@@ -4,47 +4,65 @@
 -->
 
 <project default="build" name="core">
-  <import file="./BuildSettings.xml"/>
+  <import file="./BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <subant-macro target="clean"/>
+    <subant-macro target="clean" />
   </target>
-  
+
   <target name="_build">
-    <subant-macro target="_build"/>
-    <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
+    <subant-macro target="_build" />
+    <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
   </target>
-  
+
   <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <subant-macro target="_build"/>
-    <ant antfile="BuildCommands.xml" target="ail: reset configurations"/>
-    <kick-jboss-macro/>
+    <subant-macro target="_build" />
+    <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+    <kick-jboss-macro />
   </target>
-  
+
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <install-jboss-macro version="${jboss.version}"/>
-    <subant-macro target="setup" includes="domain/Build.xml"/>
-    <subant-macro target="setup" excludes="domain/Build.xml"/>
-    <antcall target="_build"/>
+    <install-jboss-macro version="${jboss.version}" />
+    <subant-macro target="setup" includes="domain/Build.xml" />
+    <subant-macro target="setup" excludes="domain/Build.xml" />
+    <antcall target="_build" />
   </target>
 
   <target name="teardown" description="undo whatever setup did">
-    <uninstall-jboss-macro version="${jboss.version}"/>
-    <subant-macro target="teardown"/>
-    <delete dir="${target.dir}" failonerror="false"/>
+    <uninstall-jboss-macro version="${jboss.version}" />
+    <subant-macro target="teardown" />
+    <delete dir="${target.dir}" failonerror="false" />
   </target>
 
   <target name="release" description="build this project's releasable outputs">
-    <echo message="buildnumber: ${build.number}"/>
-		<!-- Stop the server if it is running -->
-    <ant antfile="BuildCommands.xml" target="jboss: stop server"/>
-    
-    <!-- Do a clean build before we release -->
-    <antcall target="teardown"/>
-    <antcall target="setup"/>
+    <echo message="buildnumber: ${build.number}" />
+    <!-- Stop the server if it is running -->
+    <ant antfile="BuildCommands.xml" target="jboss: stop server" />
+
+    <!-- Do a clean build and test before we release -->
+    <antcall target="teardown" />
+    <antcall target="setup" />
+    <antcall target="test" />
 
     <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
-    <release-jboss-domain-macro/>
+    <release-jboss-domain-macro />
+  </target>
+
+  <target name="test" description="run unit tests and integration tests">
+    <run-tests-macro>
+      <junit-classpath>
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
+        <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar"/>
+        <fileset dir="${jboss.dir}">
+          <include name="client/jbossall-client.jar" />
+          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+          <include name="server/default/lib/saxon*.jar" />
+          <include name="lib/endorsed/xalan.jar" />
+        </fileset>
+      </junit-classpath>
+    </run-tests-macro>
   </target>
 </project>
 

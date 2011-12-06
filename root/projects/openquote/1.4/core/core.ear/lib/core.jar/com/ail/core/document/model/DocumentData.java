@@ -19,8 +19,11 @@ package com.ail.core.document.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  */
+@TypeDefinition
 public class DocumentData extends ItemData {
     private List<ChapterData> chapterData=new ArrayList<ChapterData>();
     private String watermark;

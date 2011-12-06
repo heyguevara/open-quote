@@ -21,16 +21,18 @@ import org.hibernate.HibernateException;
 import org.hibernate.StaleObjectStateException;
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.persistence.CloseSessionArg;
+import com.ail.core.persistence.CloseSessionArgument;
 import com.ail.core.persistence.UpdateException;
 
 /**
  * Implementation of the open session service for Hibernate
  * 
  */
-public class HibernateCloseSessionService extends Service<CloseSessionArg> {
+@ServiceImplementation
+public class HibernateCloseSessionService extends Service<CloseSessionArgument> {
 
     /** The 'business logic' of the entry point. */
     @Override

@@ -19,6 +19,7 @@ package com.ail.core.document.model;
 
 import java.io.PrintWriter;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -26,6 +27,7 @@ import com.ail.core.Type;
  * {@link com.ail.core.document.model.ItemData#render(RenderContext) ItemData} method. The context
  * define everything the render method needs in order to perform it's function. 
  */
+@TypeDefinition
 public class RenderContext extends Type {
     private Type model;
     private PrintWriter output;

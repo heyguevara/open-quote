@@ -17,6 +17,7 @@
 
 package com.ail.core.persistence.jdo;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -26,6 +27,7 @@ import com.ail.core.Type;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/jdo/Query.java,v $
  * @stereotype type
  */
+@TypeDefinition
 public class Query extends Type {
     /** The text of the query - OQL, SQL, etc */
     private String query;

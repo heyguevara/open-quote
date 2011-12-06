@@ -19,6 +19,7 @@ package com.ail.core.document.generatedocument;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
@@ -26,7 +27,8 @@ import com.ail.core.Service;
 import com.ail.core.XMLString;
 import com.ail.core.document.model.DocumentDefinition;
 
-public class GenerateDocumentService extends Service<GenerateDocumentArg> {
+@ServiceImplementation
+public class GenerateDocumentService extends Service<GenerateDocumentArgument> {
 
     /**
      * Return the product name from the arguments as the configuration namespace. 
@@ -59,7 +61,7 @@ public class GenerateDocumentService extends Service<GenerateDocumentArg> {
         
         // 1st step: data merge (if configured)
         if (docDef.getMergeCommand()!=null) {
-            MergeDataCommand merge=(MergeDataCommand)core.newCommand(docDef.getMergeCommand());
+            MergeDataCommand merge=core.newCommand(docDef.getMergeCommand(), MergeDataCommand.class);
             merge.setDocumentDataArg(docDef.getDocumentData());
             merge.setModelArg(args.getModelArg());
             merge.invoke();
@@ -71,14 +73,14 @@ public class GenerateDocumentService extends Service<GenerateDocumentArg> {
         
         // 2nd step: apply style
         if (docDef.getStyleCommand()!=null) {
-            StyleDocumentCommand style=(StyleDocumentCommand)core.newCommand(docDef.getStyleCommand());
+            StyleDocumentCommand style=core.newCommand(docDef.getStyleCommand(), StyleDocumentCommand.class);
             style.setMergedDataArg(subject);
             style.invoke();
             subject=style.getStyledDocumentRet();
         }
         
         // 3rd step: render
-        RenderDocumentCommand render=(RenderDocumentCommand)core.newCommand(docDef.getRenderCommand());
+        RenderDocumentCommand render=core.newCommand(docDef.getRenderCommand(), RenderDocumentCommand.class);
         render.setSourceDataArg(subject);
         render.invoke();
         

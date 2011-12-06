@@ -16,26 +16,26 @@
       <!--   Define the component's services  -->
       <!--====================================-->
       <service name="Service" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-          <parameter name="ServiceClass">com.ail.core.dummyservice.TestService</parameter>
+          <parameter name="ServiceClass">com.ail.core.dummyservice.DummyService</parameter>
       </service>
 
       <service name="ServiceWithNoLogging" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-        <parameter name="ServiceClass">com.ail.core.dummyservice.TestService</parameter>
+        <parameter name="ServiceClass">com.ail.core.dummyservice.DummyService</parameter>
         <parameter name="LoggingIndicatorAsString">NONE</parameter>
       </service>
       
       <service name="ServiceWithCallLogging" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-          <parameter name="ServiceClass">com.ail.core.dummyservice.TestService</parameter>
+          <parameter name="ServiceClass">com.ail.core.dummyservice.DummyService</parameter>
           <parameter name="LoggingIndicatorAsString">CALL</parameter>
       </service>
       
       <service name="ServiceWithFullLogging" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-          <parameter name="ServiceClass">com.ail.core.dummyservice.TestService</parameter>
+          <parameter name="ServiceClass">com.ail.core.dummyservice.DummyService</parameter>
           <parameter name="LoggingIndicatorAsString">FULL</parameter>
       </service>
       
       <service name="ServiceWithStatsLogging" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-          <parameter name="ServiceClass">com.ail.core.dummyservice.TestService</parameter>
+          <parameter name="ServiceClass">com.ail.core.dummyservice.DummyService</parameter>
           <parameter name="LoggingIndicatorAsString">STATS</parameter>
       </service>
       
@@ -78,10 +78,10 @@ if (args.getX()>1000) {
       <service name="JaninoService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" >
           <parameter name="Script" xml:space='preserve'><![CDATA[
 import com.ail.core.Version;
-import com.ail.core.dummyservice.TestArgImp;
+import com.ail.core.dummyservice.DummyArgumentImpl;
 
 public class JaninoService {
-	public static void invoke(TestArgImp args) {
+	public static void invoke(DummyArgumentImpl args) {
 	    /* make sure we can refer to our classes */
 	    Version version=new Version();
 	    
@@ -100,10 +100,10 @@ public class JaninoService {
       <service name="JaninoInheritanceService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" >
           <parameter name="Extend">JaninoService</parameter>
           <parameter name="Script"><![CDATA[
-import com.ail.core.dummyservice.TestArgImp;
+import com.ail.core.dummyservice.DummyArgumentImpl;
 
 public class JaninoInheritanceService {
-	public static void invoke(TestArgImp args) {
+	public static void invoke(DummyArgumentImpl args) {
 	    if (args.getX()>1000) {
 	      args.setR(args.getX()-(2*args.getY()));
 	    }
@@ -171,95 +171,95 @@ public class JaninoInheritanceService {
       <!--=======================================================================-->
       <!-- Bind the default core services (above) to Commands used by Core.class -->
       <!--=======================================================================-->
-      <command name="TestService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand" >
+      <command name="TestService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl" >
           <parameter name="Service">Service</parameter>
       </command>
       
-      <command name="TestServiceNoLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestServiceNoLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">ServiceWithNoLogging</parameter>
       </command>
       
-      <command name="TestServiceCallLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestServiceCallLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">ServiceWithCallLogging</parameter>
       </command>
       
-      <command name="TestServiceFullLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestServiceFullLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">ServiceWithFullLogging</parameter>
       </command>
       
-      <command name="TestServiceStatsLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestServiceStatsLogging" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">ServiceWithStatsLogging</parameter>
       </command>
       
-      <command name="TestBeanShellService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestBeanShellService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">BeanShellService</parameter>
       </command>
       
-      <command name="TestJaninoService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestJaninoService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">JaninoService</parameter>
       </command>
       
-      <command name="TestJaninoInheritanceService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestJaninoInheritanceService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">JaninoInheritanceService</parameter>
       </command>
       
-      <command name="TestJaninoUrlService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestJaninoUrlService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">TestServiceInvocationJaninoClass</parameter>
       </command>
       
-      <command name="TestDroolsService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsService</parameter>
       </command>
       
-      <command name="TestDroolsXMLService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsXMLService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsXMLService</parameter>
       </command>
       
-      <command name="TestJMSCommand" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
+      <command name="TestJMSCommand" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
           <parameter name="Service">TestJMSService</parameter>
       </command>
       
-      <command name="TestDroolsService2" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsService2" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsService2</parameter>
       </command>
       
-      <command name="TestWebService1" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommand">
+      <command name="TestWebService1" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommandImpl">
           <parameter name="Service">WebService1</parameter>
       </command>
       
-      <command name="TestWebService2" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommand">
+      <command name="TestWebService2" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommandImpl">
           <parameter name="Service">WebService2</parameter>
       </command>
       
-      <command name="TestBeanShellInheritance" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestBeanShellInheritance" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">BeanShellInheritanceService</parameter>
       </command>          
 
-      <command name="TestDroolsInheritance" builder="CachingClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsInheritance" builder="CachingClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsInheritanceService</parameter>
       </command>          
       
-      <command name="TestDroolsDecisionTable" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsDecisionTable" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsDecisionTableService</parameter>
       </command>
 
-      <command name="TestDroolsDecisionTableInheritance" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsDecisionTableInheritance" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsDecisionTableInheritanceService</parameter>
       </command>
       
-      <command name="TestBeanShellUrlLoader" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestBeanShellUrlLoader" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">BeanShellService3</parameter>
       </command>
 
-      <command name="TestDroolsUrlLoader" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestDroolsUrlLoader" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">DroolsService3</parameter>
       </command>
 
-      <command name="TestXSLTService" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommand">
+      <command name="TestXSLTService" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommandImpl">
           <parameter name="Service">XSLTService</parameter>
       </command>
       
-      <command name="TestVelocityService" builder="ClassBuilder" key="com.ail.core.dummyservice.TestCommand">
+      <command name="TestVelocityService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">VelocityService</parameter>
       </command>
       

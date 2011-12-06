@@ -24,16 +24,11 @@ import javax.ejb.SessionContext;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 
 /**
  * EJB Wrapper for the persistence server.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2006/09/20 20:15:43 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServerBean.java,v $
  */
 public class PersistenceServerBean extends EJBComponent implements SessionBean {
     private VersionEffectiveDate versionEffectiveDate = null;
@@ -121,29 +116,13 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
         }
     }
 
-    public Version getVersion() {
-        try {
-            Version v = (com.ail.core.Version) core.newType("Version");
-            v.setCopyright("Copyright Applied Industrial Logic Limited 2006. All rights reserved.");
-            v.setDate("$Date: 2006/09/20 20:15:43 $");
-            v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServerBean.java,v $");
-            v.setState("$State: Exp $");
-            v.setVersion("$Revision: 1.7 $");
-            return v;
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
-
     /**
      * Service wrapper method for the CreateCommand service.
      * @param arg Argument to pass to the service
      * @return Return value from the service
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
-    public CreateArg createCommand(CreateArg arg) throws BaseServerException {
+    public CreateCommand createCommand(CreateCommand arg) throws BaseServerException {
         return invokeCommand(core, "Create", arg);
     }
 
@@ -153,7 +132,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
-	public UpdateArg updateCommand(UpdateArg arg) throws BaseServerException {
+	public UpdateCommand updateCommand(UpdateCommand arg) throws BaseServerException {
 		return invokeCommand(core, "Update", arg);
 	}
 
@@ -163,7 +142,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
-	public LoadArg loadCommand(LoadArg arg) throws BaseServerException {
+	public LoadCommand loadCommand(LoadCommand arg) throws BaseServerException {
 		return invokeCommand(core, "Load", arg);
 	}
 
@@ -173,7 +152,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
-	public QueryArg queryCommand(QueryArg arg) throws BaseServerException {
+	public QueryCommand queryCommand(QueryCommand arg) throws BaseServerException {
 		return invokeCommand(core, "Query", arg);
 	}
 
@@ -183,7 +162,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
-    public DeleteArg deleteCommand(DeleteArg arg) throws BaseServerException {
+    public DeleteCommand deleteCommand(DeleteCommand arg) throws BaseServerException {
         return invokeCommand(core, "Delete", arg);
     }
 }

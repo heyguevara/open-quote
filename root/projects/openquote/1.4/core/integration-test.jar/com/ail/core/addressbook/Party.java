@@ -15,6 +15,9 @@
  */
 package com.ail.core.addressbook;
 
+import com.ail.annotation.TypeDefinition;
+
+@TypeDefinition
 public class Party extends com.ail.core.Type {
     private Address address;
 

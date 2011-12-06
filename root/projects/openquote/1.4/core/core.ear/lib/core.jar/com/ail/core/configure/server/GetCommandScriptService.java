@@ -17,13 +17,15 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.CommandScript;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Type;
 
-public class GetCommandScriptService extends Service<GetCommandScriptArg> {
+@ServiceImplementation
+public class GetCommandScriptService extends Service<GetCommandScriptArgument> {
     /**
      * When the core asks us for our namespace, return the one
      * we're getting information from.

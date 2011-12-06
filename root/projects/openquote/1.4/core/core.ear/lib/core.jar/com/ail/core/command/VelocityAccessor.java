@@ -55,18 +55,18 @@ import com.ail.core.factory.AbstractFactory;
  */
 public class VelocityAccessor extends Accessor implements ConfigurationOwner {
     private Core core=null;
-    private CommandArg args=null;
+    private Argument args=null;
     private String script=null;
     private String url=null;
     private transient VelocityEngine velocityEngine=null;
     private transient Throwable velocityInitialiseError=null;
     private boolean velocityEngineInitialised=false;
 
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 
@@ -89,7 +89,7 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
             if (m.getName().startsWith("set") && m.getName().endsWith("Ret")) {
                 if (m.getParameterTypes().length==1 && m.getParameterTypes()[0].equals(String.class)) {
                     if (setter!=null) {
-                        throw new VelocityServiceException("Command argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: more than on method matches the return convention (e.g. '"+setter.getName()+"' and '"+m.getName()+"')");
+                        throw new VelocityServiceException("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: more than on method matches the return convention (e.g. '"+setter.getName()+"' and '"+m.getName()+"')");
                     }
                     else {
                         setter=m;
@@ -106,7 +106,7 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
             }
         }
         else {
-            throw new VelocityServiceException("Command argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: no method matche the return convention (i.e. void set*Ret(String))");
+            throw new VelocityServiceException("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: no method matche the return convention (i.e. void set*Ret(String))");
         }
     }
     

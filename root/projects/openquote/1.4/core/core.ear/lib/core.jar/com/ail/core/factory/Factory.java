@@ -17,8 +17,7 @@
 
 package com.ail.core.factory;
 
-import com.ail.core.Type;
-import com.ail.core.command.AbstractCommand;
+import com.ail.core.command.Command;
 
 /**
  * This interface describes the contract between the Core class and the Factory
@@ -28,14 +27,6 @@ import com.ail.core.command.AbstractCommand;
  */
 public interface Factory {
 
-	/**
-     * Create a new instance of the named command. The details of the type
-     * to be created are loaded from the callers configuration.
-     * @param commandName The name to be used to locate the commands details.
-	 * @return An instance of the command.
-     */
-	AbstractCommand newCommand(String commandName);
-
     /**
      * Create a new instance of the command specified. The details of the type
      * to be created are loaded from the callers configuration.
@@ -43,7 +34,7 @@ public interface Factory {
      * @param clazz The expected type of the resulting command 
      * @return An instance of the command.
      */
-    <T extends AbstractCommand> T newCommand(String commandName, Class<T> clazz);
+    <T extends Command> T newCommand(String commandName, Class<T> clazz);
     
     /**
      * Create a new instance of the command specified with a modifier. The details of the type
@@ -53,7 +44,7 @@ public interface Factory {
      * @param clazz The expected type of the resulting command 
      * @return An instance of the command.
      */
-    <T extends AbstractCommand> T newCommand(String commandName, String modifier, Class<T> clazz);
+    <T extends Command> T newCommand(String commandName, String modifier, Class<T> clazz);
     
     /**
      * Create a new instance of the command specified. The details of the type
@@ -61,7 +52,7 @@ public interface Factory {
      * @param clazz The class of the type to be created.
      * @return An instance of the command.
      */
-	<T extends AbstractCommand> T newCommand(Class<T> clazz);
+	<T extends Command> T newCommand(Class<T> clazz);
 	
     /**
      * Create a new instance of the command specified. The details of the type
@@ -71,7 +62,7 @@ public interface Factory {
      * @param modifier select the specific configuration required. 
      * @return An instance of the command.
      */
-    <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier);
+    <T extends Command> T newCommand(Class<T> clazz, String modifier);
 
     /**
      * Create a new instance of the named type. The typeName argument
@@ -80,7 +71,7 @@ public interface Factory {
      * @param typeName The name use to load the type's details.
      * @return An instance of a type.
      */
-	Type newType(String typeName);
+	Object newType(String typeName);
 
     /**
      * Create a new instance of the named type with a modifier. The typeName argument
@@ -92,7 +83,7 @@ public interface Factory {
      * @param clazz The expected type of the resulting command 
      * @return An instance of a type.
      */
-    <T extends Type> T newType(String typeName, String modifier, Class<T> clazz);
+    <T extends Object> T newType(String typeName, String modifier, Class<T> clazz);
 
     /**
      * Create a new instance of the named type. The typeName argument
@@ -103,7 +94,7 @@ public interface Factory {
      * @param clazz The expected type of the resulting command 
      * @return An instance of a type.
      */
-    <T extends Type> T newType(String typeName, Class<T> clazz);
+    <T extends Object> T newType(String typeName, Class<T> clazz);
 
     /**
      * Create a new instance of the specified type. The clazz argument
@@ -112,7 +103,7 @@ public interface Factory {
      * @param clazz The class to return an instance for.
      * @return An instance of a type.
      */
-    <T extends Type> T newType(Class<T> clazz);
+    <T extends Object> T newType(Class<T> clazz);
     
     /**
      * Create a new instance of the specified type with modifier. The clazz and modifier 
@@ -122,5 +113,5 @@ public interface Factory {
      * @param modifier A modifier to be applied
      * @return An instance of a type.
      */
-    <T extends Type> T newType(Class<T> clazz, String modifier);
+    <T extends Object> T newType(Class<T> clazz, String modifier);
 }

@@ -17,94 +17,11 @@
 
 package com.ail.core.document.generatedocument;
 
-import com.ail.core.Type;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/09/15 21:06:57 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/document/generatedocument/GenerateDocumentCommand.java,v $
- * @stereotype command
- */
-public class GenerateDocumentCommand extends Command implements GenerateDocumentArg {
-    private GenerateDocumentArg args = null;
-
-    public GenerateDocumentCommand() {
-        super();
-        args = new GenerateDocumentArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (GenerateDocumentArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Type getModelArg() {
-        return args.getModelArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param modelArg @{inheritDoc}
-     */
-    public void setModelArg(Type modelArg) {
-        args.setModelArg(modelArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getDocumentDefinitionArg() {
-        return args.getDocumentDefinitionArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param documentDefinitionArg @{inheritDoc}
-     */
-    public void setDocumentDefinitionArg(String documentDefinitionArg) {
-        args.setDocumentDefinitionArg(documentDefinitionArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public byte[] getRenderedDocumentRet() {
-        return args.getRenderedDocumentRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param renderedDocumentRet @{inheritDoc}
-     */
-    public void setRenderedDocumentRet(byte[] renderedDocumentRet) {
-        args.setRenderedDocumentRet(renderedDocumentRet);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getProductNameArg() {
-        return args.getProductNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productNameArg @{inheritDoc}
-     */
-    public void setProductNameArg(String productNameArg) {
-        args.setProductNameArg(productNameArg);
-    }
+@CommandDefinition(defaultServiceClass=GenerateDocumentService.class)
+public interface GenerateDocumentCommand extends Command, GenerateDocumentArgument {
 }
+
+

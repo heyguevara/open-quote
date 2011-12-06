@@ -2,12 +2,11 @@
 <!--
  This file defines the default (factory) configuration for the Core. This
  configuration is used by the core's resetConfiguration() method.
- $Revision: 1.19 $
- $State: Exp $
- $Date: 2007/10/05 22:47:50 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CoreDefaultConfig.xml,v $
 -->
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xmlns:xi="http://www.w3.org/2001/XInclude" 
+               xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+
   <name>Default Core Configuration</name>
   <timeout>6000</timeout>
   <who>factory</who>
@@ -17,13 +16,13 @@
   <!-- Note: com.ail.core.Core is implicitly included.                    -->
   <group name="NamespacesToResetOnResetAll">
     <parameter name="com.ail.core.CoreProxy"/>
-    <parameter name="com.ail.core.configure.server.ServerBean"/>
-    <parameter name="com.ail.core.validator.CommonsValidatorService"/>
-    <parameter name="com.ail.core.product.ProductManagerBean"/>
-    <parameter name="com.ail.core.persistence.PersistenceServerBean"/>
     <parameter name="com.ail.core.command.CommandServerBean"/>
+    <parameter name="com.ail.core.configure.server.ServerBean"/>
+    <parameter name="com.ail.core.persistence.PersistenceServerBean"/>
+    <parameter name="com.ail.core.product.ProductManagerBean"/>
     <parameter name="com.ail.core.product.listproducts.ListProductsService"/>
     <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
+    <parameter name="com.ail.core.validator.CommonsValidatorService"/>
   </group>
   
   <!-- Define the functions to be made available to JXPath. The name of each -->
@@ -197,140 +196,139 @@
     <!--=======================================================================-->
     <!-- Bind the default core services (above) to Commands used by Core.class -->
     <!--=======================================================================-->
-
-    <command name="ToXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.ToXMLCommand">
+    <command name="ToXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.ToXMLCommandImpl">
       <parameter name="Service">ToXMLService</parameter>
     </command>
 
-    <command name="FromXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.FromXMLCommand">
+    <command name="FromXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.FromXMLCommandImpl">
       <parameter name="Service">FromXMLService</parameter>
     </command>
 
-    <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
+    <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
       <parameter name="Service">LoggingService</parameter>
     </command>
 
-    <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
+    <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
       <parameter name="Service">LoggingService</parameter>
     </command>
 
-    <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
+    <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
       <parameter name="Service">LoggingService</parameter>
     </command>
 
-    <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
+    <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
       <parameter name="Service">LoggingService</parameter>
     </command>
 
-    <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
+    <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
       <parameter name="Service">LoggingService</parameter>
     </command>
 
-    <command name="Validator" builder="ClassBuilder" key="com.ail.core.validator.ValidatorCommand">
+    <command name="Validator" builder="ClassBuilder" key="com.ail.core.validator.ValidatorCommandImpl">
       <parameter name="Service">ValidatorService</parameter>
     </command>
 
-    <command name="GetClassList" builder="ClassBuilder" key="com.ail.core.configure.finder.GetClassListCommand">
+    <command name="GetClassList" builder="ClassBuilder" key="com.ail.core.configure.finder.GetClassListCommandImpl">
       <parameter name="Service">GetClassListService</parameter>
     </command>
 
-    <command name="GetNamespaces" builder="ClassBuilder" key="com.ail.core.configure.server.GetNamespacesCommand">
+    <command name="GetNamespaces" builder="ClassBuilder" key="com.ail.core.configure.server.GetNamespacesCommandImpl">
       <parameter name="Service">GetNamespacesService</parameter>
     </command>
 
-    <command name="GetConfiguration" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommand">
+    <command name="GetConfiguration" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommandImpl">
       <parameter name="Service">GetConfigurationService</parameter>
     </command>
       
-    <command name="SetConfiguration" builder="ClassBuilder" key="com.ail.core.configure.server.SetConfigurationCommand">
+    <command name="SetConfiguration" builder="ClassBuilder" key="com.ail.core.configure.server.SetConfigurationCommandImpl">
       <parameter name="Service">SetConfigurationService</parameter>
     </command>
       
-    <command name="GetNamespacesHistory" builder="ClassBuilder" key="com.ail.core.configure.server.GetNamespacesHistoryCommand">
+    <command name="GetNamespacesHistory" builder="ClassBuilder" key="com.ail.core.configure.server.GetNamespacesHistoryCommandImpl">
       <parameter name="Service">GetNamespacesHistoryService</parameter>
     </command>
 
-    <command name="PackageCar" builder="ClassBuilder" key="com.ail.core.configure.server.PackageCarCommand">
+    <command name="PackageCar" builder="ClassBuilder" key="com.ail.core.configure.server.PackageCarCommandImpl">
       <parameter name="Service">PackageCarService</parameter>
     </command>
 
-    <command name="DeployCar" builder="ClassBuilder" key="com.ail.core.configure.server.DeployCarCommand">
+    <command name="DeployCar" builder="ClassBuilder" key="com.ail.core.configure.server.DeployCarCommandImpl">
       <parameter name="Service">DeployCarService</parameter>
     </command>
 
-    <command name="CatalogCar" builder="ClassBuilder" key="com.ail.core.configure.server.CatalogCarCommand">
+    <command name="CatalogCar" builder="ClassBuilder" key="com.ail.core.configure.server.CatalogCarCommandImpl">
       <parameter name="Service">CatalogCarService</parameter>
     </command>
     
-    <command name="com.ail.core.key.GenerateUniqueKeyCommand" builder="ClassBuilder" key="com.ail.core.key.GenerateUniqueKeyCommand">
+    <command name="com.ail.core.key.GenerateUniqueKeyCommand" builder="ClassBuilder" key="com.ail.core.key.GenerateUniqueKeyCommandImpl">
       <parameter name="Service">GenerateUniqueKeyService</parameter>
     </command>
 
-    <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommand">
+    <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommandImpl">
       <parameter name="Service">ListProductsService</parameter>
     </command>
 
-    <command name="NewProductType" builder="ClassBuilder" key="com.ail.core.product.newproducttype.NewProductTypeCommand">
+    <command name="NewProductType" builder="ClassBuilder" key="com.ail.core.product.newproducttype.NewProductTypeCommandImpl">
       <parameter name="Service">NewProductTypeService</parameter>
     </command>
 
-    <command name="ResetProduct" builder="ClassBuilder" key="com.ail.core.product.resetproduct.ResetProductCommand">
+    <command name="ResetProduct" builder="ClassBuilder" key="com.ail.core.product.resetproduct.ResetProductCommandImpl">
       <parameter name="Service">ResetProductService</parameter>
     </command>
 
-    <command name="ResetAllProducts" builder="ClassBuilder" key="com.ail.core.product.resetallproducts.ResetAllProductsCommand">
+    <command name="ResetAllProducts" builder="ClassBuilder" key="com.ail.core.product.resetallproducts.ResetAllProductsCommandImpl">
       <parameter name="Service">ResetAllProductsService</parameter>
     </command>
 
-    <command name="RegisterProduct" builder="ClassBuilder" key="com.ail.core.product.registerproduct.RegisterProductCommand">
+    <command name="RegisterProduct" builder="ClassBuilder" key="com.ail.core.product.registerproduct.RegisterProductCommandImpl">
       <parameter name="Service">RegisterProductService</parameter>
     </command>
 
-    <command name="RemoveProduct" builder="ClassBuilder" key="com.ail.core.product.removeproduct.RemoveProductCommand">
+    <command name="RemoveProduct" builder="ClassBuilder" key="com.ail.core.product.removeproduct.RemoveProductCommandImpl">
       <parameter name="Service">RemoveProductService</parameter>
     </command>
 
-    <command name="UpdateProduct" builder="ClassBuilder" key="com.ail.core.product.updateproduct.UpdateProductCommand">
+    <command name="UpdateProduct" builder="ClassBuilder" key="com.ail.core.product.updateproduct.UpdateProductCommandImpl">
       <parameter name="Service">UpdateProductService</parameter>
     </command>
 
-    <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommand">
+    <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
       <parameter name="Service">HibernateOpenSessionService</parameter>
     </command>
     
-    <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommand">
+    <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
       <parameter name="Service">HibernateCloseSessionService</parameter>
     </command>
     
-    <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommand">
+    <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
       <parameter name="Service">HibernateUpdateService</parameter>
     </command>
 
-    <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommand">
+    <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
       <parameter name="Service">HibernateQueryService</parameter>
     </command>
 
-    <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommand">
+    <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
       <parameter name="Service">HibernateLoadService</parameter>
     </command>
     
-    <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommand">
+    <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
       <parameter name="Service">HibernateCreateService</parameter>
     </command>
 
-    <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommand">
+    <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
       <parameter name="Service">HibernateDeleteService</parameter>
     </command>
     
-    <command name="GenerateDocument" builder="ClassBuilder" key="com.ail.core.document.generatedocument.GenerateDocumentCommand">
+    <command name="GenerateDocument" builder="ClassBuilder" key="com.ail.core.document.generatedocument.GenerateDocumentCommandImpl">
       <parameter name="Service">GenerateDocumentService</parameter>
     </command>
           
-    <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommand">
+    <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommandImpl">
       <parameter name="Service">MergeDocumentDataService</parameter>
     </command>
     
-    <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommand">
+    <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommandImpl">
       <parameter name="Service">StyleDocumentService</parameter>
     </command>
           

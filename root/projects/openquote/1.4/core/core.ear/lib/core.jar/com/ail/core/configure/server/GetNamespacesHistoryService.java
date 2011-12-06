@@ -17,12 +17,14 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.configure.ConfigurationHandler;
 
-public class GetNamespacesHistoryService extends Service<GetNamespacesHistoryArg> {
+@ServiceImplementation
+public class GetNamespacesHistoryService extends Service<GetNamespacesHistoryArgument> {
 	/**
      * Fetch the namespace collection from the Configuration handler.
      */

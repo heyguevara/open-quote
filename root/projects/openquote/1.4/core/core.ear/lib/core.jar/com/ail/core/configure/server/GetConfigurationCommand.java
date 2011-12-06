@@ -17,66 +17,14 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.configure.Configuration;
 
 /**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/GetConfigurationCommand.java,v $
+ * Arg interface for the GetConfiguration entry point. The entry point takes one
+ * argument: a namespace's name, and returns one result: the Configuration object
+ * for the namespace. 
  */
-public class GetConfigurationCommand extends Command implements GetConfigurationArg {
-    private GetConfigurationArg args=null;
-
-    /**
-     * Default constructor.
-     */
-    public GetConfigurationCommand() {
-        super();
-		args=new GetConfigurationArgImp();
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public void setArgs(CommandArg arg) {
-		this.args=(GetConfigurationArg)arg;
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public CommandArg getArgs() {
-		return args;
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public void setConfigurationRet(Configuration configurationRet) {
-        args.setConfigurationRet(configurationRet);
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public Configuration getConfigurationRet() {
-        return args.getConfigurationRet();
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public void setNamespaceArg(String namespace) {
-        args.setNamespaceArg(namespace);
-    }
-
-    /**
-     * {inheritDoc}
-     */
-    public String getNamespaceArg() {
-        return args.getNamespaceArg();
-    }
+@CommandDefinition(defaultServiceClass=GetConfigurationService.class)
+public interface GetConfigurationCommand extends Command, GetConfigurationArgument {
 }

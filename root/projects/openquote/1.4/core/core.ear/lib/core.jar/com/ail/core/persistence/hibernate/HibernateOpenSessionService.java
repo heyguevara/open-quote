@@ -19,15 +19,17 @@ package com.ail.core.persistence.hibernate;
 
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.persistence.OpenSessionArg;
+import com.ail.core.persistence.OpenSessionArgument;
 import com.ail.core.persistence.UpdateException;
 
 /**
  * Implementation of the open session service for Hibernate
  */
-public class HibernateOpenSessionService extends Service<OpenSessionArg> {
+@ServiceImplementation
+public class HibernateOpenSessionService extends Service<OpenSessionArgument> {
     @Override
     public void invoke() throws PreconditionException, UpdateException {
         Session session=HibernateFunctions.getSessionFactory().getCurrentSession();

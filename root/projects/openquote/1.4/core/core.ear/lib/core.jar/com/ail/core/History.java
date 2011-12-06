@@ -22,6 +22,8 @@ import java.util.Vector;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * The history object is a collection of Version objects which document the
  * change history of an entity. A history object represents a snapshot of
@@ -32,6 +34,7 @@ import java.util.Collection;
  * @date $Date: 2005/12/18 17:01:18 $
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/History.java,v $
  */
+@TypeDefinition
 public class History extends Type {
 	private Vector<Version> version=null;
 

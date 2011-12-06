@@ -17,6 +17,7 @@
 
 package com.ail.core.validator;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import java.util.Vector;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import java.util.Collection;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/ValidatorResult.java,v $
  * @stereotype type
  */
+@TypeDefinition
 public class ValidatorResult extends Type {
     /**
      * @link aggregationByValue

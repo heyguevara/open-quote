@@ -17,61 +17,11 @@
 
 package com.ail.core.configure.server;
 
-import java.util.Collection;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/09/03 18:07:56 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/server/DeployCarCommand.java,v $
- * @stereotype command
- */
-public class DeployCarCommand extends Command implements DeployCarArg {
-    
-    private DeployCarArg args = null;
 
-    public DeployCarCommand() {
-        super();
-        args = new DeployCarArgImp();
-    }
-
-    public void setArgs(com.ail.core.command.CommandArg arg) {
-        this.args = (DeployCarArg)arg;
-    }
-
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Collection<String> getNamespacesArg() {
-        return args.getNamespacesArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param namespacesArg @{inheritDoc}
-     */
-    public void setNamespacesArg(Collection<String> namespacesArg) {
-        args.setNamespacesArg(namespacesArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public byte[] getCarArg() {
-        return args.getCarArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param carArg @{inheritDoc}
-     */
-    public void setCarArg(byte[] carArg) {
-        args.setCarArg(carArg);
-    }
+@CommandDefinition(defaultServiceClass=DeployCarService.class)
+public interface DeployCarCommand extends Command, DeployCarArgument {
 }
+
+

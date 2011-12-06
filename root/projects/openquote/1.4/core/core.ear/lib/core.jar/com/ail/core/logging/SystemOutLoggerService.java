@@ -16,7 +16,7 @@
  */
 
 package com.ail.core.logging;
-
+import com.ail.annotation.ServiceImplementation;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 
@@ -31,7 +31,8 @@ import com.ail.core.Service;
  * Messages are written in the following form:<p>
  * &nbsp;<i>owner</i>:<i>date</i>:<i>severity</i>:<i>effective date</i>:<i>message</i>
  */
-public class SystemOutLoggerService extends Service<LoggerArgImp> {
+@ServiceImplementation
+public class SystemOutLoggerService extends Service<LoggerArgument> {
 	private static final SimpleDateFormat format=new SimpleDateFormat("dd/MM/yy hh:mm:ss");
 
 	@Override

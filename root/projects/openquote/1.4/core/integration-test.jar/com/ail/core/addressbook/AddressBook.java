@@ -18,8 +18,10 @@ package com.ail.core.addressbook;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
+@TypeDefinition
 public class AddressBook extends Type  {
     private List<Party> party=new ArrayList<Party>();
     private Party me;

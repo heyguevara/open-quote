@@ -20,16 +20,15 @@ package com.ail.core.product;
 import javax.ejb.EJBLocalObject;
 
 import com.ail.core.BaseException;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsArg;
-import com.ail.core.product.newproducttype.NewProductTypeArg;
-import com.ail.core.product.registerproduct.RegisterProductArg;
-import com.ail.core.product.removeproduct.RemoveProductArg;
-import com.ail.core.product.resetallproducts.ResetAllProductsArg;
-import com.ail.core.product.resetproduct.ResetProductArg;
-import com.ail.core.product.updateproduct.UpdateProductArg;
+import com.ail.core.product.listproducts.ListProductsCommand;
+import com.ail.core.product.newproducttype.NewProductTypeCommand;
+import com.ail.core.product.registerproduct.RegisterProductCommand;
+import com.ail.core.product.removeproduct.RemoveProductCommand;
+import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
+import com.ail.core.product.resetproduct.ResetProductCommand;
+import com.ail.core.product.updateproduct.UpdateProductCommand;
 
 /**
  * @version $Revision: 1.4 $
@@ -50,19 +49,17 @@ public interface ProductManagerLocal extends EJBLocalObject {
 
     void resetConfiguration();
 
-    Version getVersion();
+    ListProductsCommand getListProducts(ListProductsCommand arg) throws BaseException;
 
-    ListProductsArg getListProducts(ListProductsArg arg) throws BaseException;
+    RegisterProductCommand registerProduct(RegisterProductCommand arg) throws BaseException;
 
-    RegisterProductArg registerProduct(RegisterProductArg arg) throws BaseException;
+    RemoveProductCommand removeProduct(RemoveProductCommand arg) throws BaseException;
 
-    RemoveProductArg removeProduct(RemoveProductArg arg) throws BaseException;
+    ResetProductCommand getProductDefinition(ResetProductCommand arg) throws BaseException;
 
-    ResetProductArg getProductDefinition(ResetProductArg arg) throws BaseException;
+    ResetAllProductsCommand resetAllProducts(ResetAllProductsCommand arg) throws BaseException;
 
-    ResetAllProductsArg resetAllProducts(ResetAllProductsArg arg) throws BaseException;
+    UpdateProductCommand updateProduct(UpdateProductCommand arg) throws BaseException;
 
-    UpdateProductArg updateProduct(UpdateProductArg arg) throws BaseException;
-
-    NewProductTypeArg newProductType(NewProductTypeArg arg) throws BaseException;
+    NewProductTypeCommand newProductType(NewProductTypeCommand arg) throws BaseException;
 }

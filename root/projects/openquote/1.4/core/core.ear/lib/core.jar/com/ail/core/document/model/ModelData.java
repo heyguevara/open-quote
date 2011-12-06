@@ -16,12 +16,14 @@
  */
 package com.ail.core.document.model;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Functions;
 import com.ail.core.TypeXPathException;
 
 /**
  * Node of the document structure object graph. 
  */
+@TypeDefinition
 public class ModelData extends ItemData {
     private String binding;
     

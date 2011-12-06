@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -35,7 +36,8 @@ import com.itextpdf.text.pdf.PdfStamper;
  * This class provides an implementation of the render document service which renders to PDF
  * using iText.<p/>
  */
-public class RenderItextPdfDocumentService extends Service<RenderDocumentArg> {
+@ServiceImplementation
+public class RenderItextPdfDocumentService extends Service<RenderDocumentArgument> {
 
     @Override
     public void invoke() throws PreconditionException, PostconditionException, RenderException {

@@ -19,21 +19,12 @@ package com.ail.core.factory;
 
 import com.ail.core.Core;
 import com.ail.core.Type;
-import com.ail.core.command.AbstractCommand;
+import com.ail.core.command.Command;
 import com.ail.core.configure.Builder;
 import com.ail.core.configure.ConfigurationError;
 import com.ail.core.configure.ConfigurationOwner;
 
 public class FactoryHandler {
-    /**
-     * @link
-     * @shapeType PatternLink
-     * @pattern Singleton
-     * @supplierRole Singleton factory
-     */
-
-    /*# private FactoryHandler _factoryHandler; */
-
     private static FactoryHandler instance = null;
 
     protected FactoryHandler() {
@@ -144,7 +135,7 @@ public class FactoryHandler {
         return instance;
     }
 
-    public Type newType(String name, ConfigurationOwner owner, Core core) {
+    public Object newType(String name, ConfigurationOwner owner, Core core) {
         com.ail.core.configure.Type type=null;
 
 		// fetch the type's details from configuration
@@ -163,26 +154,28 @@ public class FactoryHandler {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Type> T newType(Class<T> clazz, ConfigurationOwner owner, Core core) {
+    public <T extends Object> T newType(Class<T> clazz, ConfigurationOwner owner, Core core) {
         return (T)newType(clazz.getName(), owner, core);
     }
     
     @SuppressWarnings("unchecked")
-    public <T extends Type> T newType(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
+    public <T extends Object> T newType(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
         return (T)newType(clazz.getName()+"/"+modifier, owner, core);
     }
 
-    public AbstractCommand newCommand(String name, ConfigurationOwner owner, Core core) {
-        return (AbstractCommand)newType(name, owner, core);
+    public Command newCommand(String name, ConfigurationOwner owner, Core core) {
+        Command command=(Command)newType(name, owner, core);
+        command.getArgs().setCallersCore(core.getCoreUser());
+        return command;
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends AbstractCommand> T newCommand(Class<T> clazz, ConfigurationOwner owner, Core core) {
+    public <T extends Command> T newCommand(Class<T> clazz, ConfigurationOwner owner, Core core) {
         return (T)newCommand(clazz.getName(), owner, core);
     }
     
     @SuppressWarnings("unchecked")
-    public <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
+    public <T extends Command> T newCommand(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
         return (T)newCommand(clazz.getName()+"/"+modifier, owner, core);
     }
 }

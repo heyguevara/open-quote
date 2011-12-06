@@ -26,7 +26,7 @@ import com.ail.core.configure.Configuration;
  */
 public class ClassAccessor extends Accessor {
 	private String serviceClass=null;
-	@SuppressWarnings("rawtypes")
+    @SuppressWarnings("rawtypes")
     transient Service instance=null; // transient tells the cloner to keep its hands off.
 
     public void invoke() throws BaseException {
@@ -36,11 +36,11 @@ public class ClassAccessor extends Accessor {
     }
 
     @SuppressWarnings("unchecked")
-    public void setArgs(CommandArg that) {
+    public void setArgs(Argument that) {
 		instance.setArgs(that);
     }
 
-	public CommandArg getArgs() {
+	public Argument getArgs() {
 		return instance.getArgs();
     }
 
@@ -52,18 +52,17 @@ public class ClassAccessor extends Accessor {
 		instance.setConfiguration(config);
     }
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
     public void setServiceClass(String serviceClass) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.serviceClass=serviceClass;
-		this.instance=(Service)Class.forName(serviceClass).newInstance();
+		this.instance=(Service<? extends Argument>)Class.forName(serviceClass).newInstance();
     }
 
 	public String getServiceClass() {
         return serviceClass;
     }
 
-    @SuppressWarnings("rawtypes")
-    public void setInstance(Service instance) {
+    public void setInstance(Service<? extends Argument> instance) {
         this.instance=instance;
     }
 

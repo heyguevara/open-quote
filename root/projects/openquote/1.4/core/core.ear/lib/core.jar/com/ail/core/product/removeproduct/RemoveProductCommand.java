@@ -17,47 +17,11 @@
 
 package com.ail.core.product.removeproduct;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.product.ProductDetails;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
-public class RemoveProductCommand extends Command implements RemoveProductArg {
-    private RemoveProductArg args = null;
-
-    public RemoveProductCommand() {
-        super();
-        args = new RemoveProductArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (RemoveProductArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public ProductDetails getProductDetailsArg() {
-        return args.getProductDetailsArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productsRet @{inheritDoc}
-     */
-    public void setProductDetailsArg(ProductDetails productDetailsArg) {
-        args.setProductDetailsArg(productDetailsArg);
-    }
+@CommandDefinition(defaultServiceClass=RemoveProductService.class)
+public interface RemoveProductCommand extends Command, RemoveProductArgument {
 }
+
+

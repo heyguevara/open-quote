@@ -17,6 +17,8 @@
 
 package com.ail.core;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * This class represents a scripted command object. Scripted commands typically
  * represent 'soft logic'  (logic which may be altered in a live environment).
@@ -28,6 +30,7 @@ package com.ail.core;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CommandScript.java,v $
  * @stereotype type
  */
+@TypeDefinition
 public class CommandScript extends Type {
     private String script;
     private String namespace;
@@ -54,7 +57,7 @@ public class CommandScript extends Type {
      * @param script Text of script.
      * @param type Script's type (e.g. "BeanShell", "Drools", ...)
      * @param namespace Configuration namespace where the command belongs
-     * @param commandName Command name associated with the script
+     * @param commandName CommandImpl name associated with the script
      */
     public CommandScript(String script, String type, String namespace, String commandName) {
         this.script = script;

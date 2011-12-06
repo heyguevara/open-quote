@@ -17,45 +17,11 @@
 
 package com.ail.core.product.resetproduct;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/10/02 12:15:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/resetproduct/ResetProductCommand.java,v $
- * @stereotype command
- */
-public class ResetProductCommand extends Command implements ResetProductArg {
-    private ResetProductArg args = null;
-
-    public ResetProductCommand() {
-        super();
-        args = new ResetProductArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (ResetProductArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getProductNameArg() {
-        return args.getProductNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productNameArg @{inheritDoc}
-     */
-    public void setProductNameArg(String productNameArg) {
-        args.setProductNameArg(productNameArg);
-    }
+@CommandDefinition(defaultServiceClass=ResetProductService.class)
+public interface ResetProductCommand extends Command, ResetProductArgument {
 }
+
+

@@ -43,10 +43,6 @@ import com.ail.core.configure.server.SetConfigurationCommand;
 
 /**
  * Manager (controller) for the configure editor.
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2007/01/24 07:23:05 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure.war/WEB-INF/src/com/ail/core/ui/ConfigureManager.java,v $
  */
 public class ConfigureManager {
     private CoreProxy core;
@@ -120,7 +116,7 @@ public class ConfigureManager {
     public String uploadCarFileAction() {
         if (getForm().getUploadedCarFileAvailable()) {
             try {
-                CatalogCarCommand ccc=(CatalogCarCommand)core.newCommand("CatalogCar");
+                CatalogCarCommand ccc=core.newCommand(CatalogCarCommand.class);
                 ccc.setCarArg(getForm().getUploadedCarFile().getBytes());
                 ccc.invoke();
             }
@@ -174,7 +170,7 @@ public class ConfigureManager {
     }
     
     private void loadHistory() throws Exception {
-        GetNamespacesHistoryCommand gnhc=(GetNamespacesHistoryCommand)core.newCommand("GetNamespacesHistory");
+        GetNamespacesHistoryCommand gnhc=core.newCommand(GetNamespacesHistoryCommand.class);
         gnhc.setNamespaceArg(getForm().getSelected().getNamespace());
         gnhc.invoke();
         getForm().setHistory(gnhc.getNamespacesRet());
@@ -221,7 +217,7 @@ public class ConfigureManager {
         
         try {
             Configuration config=core.fromXML(Configuration.class, new XMLString(getForm().getConfigurationXML()));
-            SetConfigurationCommand scc=(SetConfigurationCommand)core.newCommand("SetConfiguration");
+            SetConfigurationCommand scc=core.newCommand(SetConfigurationCommand.class);
             scc.setNamespaceArg(selected.getNamespace());
             scc.setConfigurationArg(config);
             scc.invoke();
@@ -258,7 +254,7 @@ public class ConfigureManager {
         getForm().setCarFileName(null);
         
         try {
-            PackageCarCommand pcc=(PackageCarCommand)core.newCommand("PackageCar");
+            PackageCarCommand pcc=core.newCommand(PackageCarCommand.class);
             pcc.setNamespacesArg(new ArrayList<String>());
             
             for(ConfigurationSummary summary: rows ) {
@@ -337,7 +333,7 @@ public class ConfigureManager {
 
     private void loadSelectedConfiguration() throws Exception {
         // Get the configuration
-        GetConfigurationCommand gcc=(GetConfigurationCommand)core.newCommand("GetConfiguration");
+        GetConfigurationCommand gcc=core.newCommand(GetConfigurationCommand.class);
         gcc.setNamespaceArg(getForm().getSelected().getNamespace());
         gcc.invoke();
         

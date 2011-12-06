@@ -17,46 +17,15 @@
 
 package com.ail.core.persistence;
 
-import com.ail.core.Type;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
+import com.ail.core.persistence.hibernate.HibernateCreateService;
 
 /**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/CreateCommand.java,v $
- * @stereotype command
+ * Arguments required by create service
  */
-public class CreateCommand extends Command implements CreateArg {
-    private CreateArg args = null;
-
-    public CreateCommand() {
-        super();
-        args = new CreateArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CreateArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Type getObjectArg() {
-        return args.getObjectArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param objectArg @{inheritDoc}
-     */
-    public void setObjectArg(Type objectArg) {
-        args.setObjectArg(objectArg);
-    }
+@CommandDefinition(defaultServiceClass=HibernateCreateService.class)
+public interface CreateCommand extends Command, CreateArgument {
 }
+
+

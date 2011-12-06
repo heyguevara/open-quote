@@ -17,46 +17,14 @@
 
 package com.ail.core.key;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-public class GenerateUniqueKeyCommand extends Command implements GenerateUniqueKeyArg {
-    private GenerateUniqueKeyArg args = null;
-
-    public GenerateUniqueKeyCommand() {
-        super();
-        args = new GenerateUniqueKeyArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (GenerateUniqueKeyArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    public void setKeyIdArg(String keyIdArg) {
-        args.setKeyIdArg(keyIdArg);
-    }
-
-    public String getKeyIdArg() {
-        return args.getKeyIdArg();
-    }
-
-    public void setKeyRet(Integer keyRet) {
-        args.setKeyRet(keyRet);
-    }
-
-    public Integer getKeyRet() {
-        return args.getKeyRet();
-    }
-
-    public void setProductTypeIdArg(String productTypeId) {
-        args.setProductTypeIdArg(productTypeId);
-    }
-
-    public String getProductTypeIdArg() {
-        return args.getProductTypeIdArg();
-    }
+/**
+ * Arguments required by the generate unique key service. 
+ */
+@CommandDefinition(defaultServiceClass=GenerateUniqueKeyService.class)
+public interface GenerateUniqueKeyCommand extends Command, GenerateUniqueKeyArgument {
 }
+
+

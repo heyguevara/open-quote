@@ -29,6 +29,7 @@ import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLClassDescriptorResolver;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLException;
@@ -46,9 +47,10 @@ import com.ail.core.configure.XMLMapping;
  * <ul>
  * <li>XmlOut - The result of the marshalling process.</li>
  * </ul>
- * These arguments and returns are encapsulated in an instance of ToXMLArg.
+ * These arguments and returns are encapsulated in an instance of ToXMLCommand.
  */
-public class CastorToXMLService extends Service<ToXMLArgImp> {
+@ServiceImplementation
+public class CastorToXMLService extends Service<ToXMLArgument> {
 
     /**
      * Insert an xsi:type attribute in the root element of a string of XML.

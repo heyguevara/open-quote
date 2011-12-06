@@ -19,16 +19,18 @@ package com.ail.core.persistence.hibernate;
 
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.persistence.LoadArg;
+import com.ail.core.persistence.LoadArgument;
 
 /**
  * Implementation of the update service for Hibernate
  */
-public class HibernateLoadService extends Service<LoadArg> {
+@ServiceImplementation
+public class HibernateLoadService extends Service<LoadArgument> {
     /** The 'business logic' of the entry point. */
     @Override
     public void invoke() throws PreconditionException, PostconditionException {

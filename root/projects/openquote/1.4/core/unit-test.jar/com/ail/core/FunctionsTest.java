@@ -33,4 +33,16 @@ public class FunctionsTest {
         assertNotNull(value);
         assertEquals("", value);
     }
+
+    @Test
+    public void testStringExpand() throws Exception {
+        Version v=new Version();
+        
+        v.setAuthor("H.G. Wells");
+        v.setComment("Nice House, good tea");
+        v.setCopyright("(c) me");
+
+        String st=Functions.expand("Author: ${/author}, '${/comment}'. ${/copyright}", v);
+        assertEquals("Author: H.G. Wells, 'Nice House, good tea'. (c) me", st);
+    }
 }

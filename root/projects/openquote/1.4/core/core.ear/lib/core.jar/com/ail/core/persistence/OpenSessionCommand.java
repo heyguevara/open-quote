@@ -17,29 +17,15 @@
 
 package com.ail.core.persistence;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
+import com.ail.core.persistence.hibernate.HibernateOpenSessionService;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/OpenSessionCommand.java,v $
- * @stereotype command
+ * Arguments required by open session service
  */
-public class OpenSessionCommand extends Command implements OpenSessionArg {
-    private OpenSessionArg args = null;
-
-    public OpenSessionCommand() {
-        super();
-        args = new OpenSessionArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (OpenSessionArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
+@CommandDefinition(defaultServiceClass=HibernateOpenSessionService.class)
+public interface OpenSessionCommand extends Command, OpenSessionArgument {
 }
+
+

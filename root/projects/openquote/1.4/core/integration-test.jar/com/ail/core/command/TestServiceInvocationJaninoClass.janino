@@ -1,8 +1,8 @@
 import com.ail.core.Version;
-import com.ail.core.dummyservice.TestArgImp;
+import com.ail.core.dummyservice.DummyArgumentImpl;
 
 public class TestServiceInvocationJaninoClass {
-    public static void invoke(TestArgImp args) {
+    public static void invoke(DummyArgumentImpl args) {
         /* make sure we can refer to our classes */
         Version version=new Version();
     

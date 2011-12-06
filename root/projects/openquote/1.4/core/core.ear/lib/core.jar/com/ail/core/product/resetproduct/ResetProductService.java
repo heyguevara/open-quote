@@ -19,12 +19,14 @@ package com.ail.core.product.resetproduct;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationResetError;
 
-public class ResetProductService extends Service<ResetProductArg> {
+@ServiceImplementation
+public class ResetProductService extends Service<ResetProductArgument> {
     private String namespace=null;
 
     @Override

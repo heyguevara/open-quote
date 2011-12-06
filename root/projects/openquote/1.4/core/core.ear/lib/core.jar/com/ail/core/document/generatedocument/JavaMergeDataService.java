@@ -20,15 +20,15 @@ package com.ail.core.document.generatedocument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
 import com.ail.core.document.model.RenderContext;
 
-/**
- */
-public class JavaMergeDataService extends Service<MergeDataArg> {
+@ServiceImplementation
+public class JavaMergeDataService extends Service<MergeDataArgument> {
 
     public void invoke() throws PreconditionException, PostconditionException {
         if (args.getModelArg()==null) {

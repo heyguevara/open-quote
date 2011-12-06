@@ -17,29 +17,15 @@
 
 package com.ail.core.persistence;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
+import com.ail.core.persistence.hibernate.HibernateCloseSessionService;
 
 /**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/CloseSessionCommand.java,v $
- * @stereotype command
+ * Arguments required by close session service
  */
-public class CloseSessionCommand extends Command implements CloseSessionArg {
-    private CloseSessionArg args = null;
-
-    public CloseSessionCommand() {
-        super();
-        args = new CloseSessionArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CloseSessionArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
+@CommandDefinition(defaultServiceClass=HibernateCloseSessionService.class)
+public interface CloseSessionCommand extends Command, CloseSessionArgument {
 }
+
+

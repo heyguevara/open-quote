@@ -36,6 +36,7 @@ import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -55,7 +56,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  * <li>allowPrint</li>
  * <li>userPassword</li>
  * <li>ownerPassword</li></ul>
- * Specifying any of the above in {@link RenderDocumentArg#getRenderOptionsArg()} will result in the 
+ * Specifying any of the above in {@link RenderDocumentCommand#getRenderOptionsArg()} will result in the 
  * option being enabled. For example, the following will enable allowCopyContent and allowPrint options
  * (setting them to "TRUE" in the Apache FOP):<br/><br/>
  * <code>
@@ -63,7 +64,8 @@ import com.itextpdf.text.pdf.PdfWriter;
  * </code><br/><br/>
  * Options not specified are set to FALSE by default.
  */
-public class RenderFopPdfDocumentService extends Service<RenderDocumentArg> {
+@ServiceImplementation
+public class RenderFopPdfDocumentService extends Service<RenderDocumentArgument> {
 
     @Override
     @SuppressWarnings("unchecked")

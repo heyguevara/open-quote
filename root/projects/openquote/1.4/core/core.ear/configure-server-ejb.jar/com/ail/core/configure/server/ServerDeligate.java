@@ -24,8 +24,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
-import com.ail.core.Version;
-import com.ail.core.configure.finder.GetClassListArg;
+import com.ail.core.configure.finder.GetClassListCommand;
 
 /**
  * This class acts as a business delegate to the ConfigureServer EJB.
@@ -73,10 +72,6 @@ public class ServerDeligate {
         return server;
     }
 
-    public Version getVersion() throws Exception {
-        return configureServer().getVersion();
-    }
-
     public void resetCoreConfiguration() throws Exception {
         configureServer().resetCoreConfiguration();
     }
@@ -101,39 +96,39 @@ public class ServerDeligate {
         return configureServer().invokeServiceXML(xml);
     }
 
-    public GetNamespacesArg getNamespaces(GetNamespacesArg arg) throws Exception {
+    public GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws Exception {
         return configureServer().getNamespaces(arg);
     }
 
-    public GetConfigurationArg getConfiguration(GetConfigurationArg arg) throws Exception {
+    public GetConfigurationCommand getConfiguration(GetConfigurationCommand arg) throws Exception {
         return configureServer().getConfiguration(arg);
     }
 
-    public SetConfigurationArg setConfiguration(SetConfigurationArg arg) throws Exception {
+    public SetConfigurationCommand setConfiguration(SetConfigurationCommand arg) throws Exception {
         return configureServer().setConfiguration(arg);
     }
 
-    public GetCommandScriptArg getCommandScript(GetCommandScriptArg arg) throws Exception {
+    public GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg) throws Exception {
         return configureServer().getCommandScript(arg);
     }
 
-    public SetCommandScriptArg setCommandScript(SetCommandScriptArg arg) throws Exception {
+    public SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg) throws Exception {
         return configureServer().setCommandScript(arg);
     }
 
-    public GetClassListArg getClassList(GetClassListArg arg) throws Exception  {
+    public GetClassListCommand getClassList(GetClassListCommand arg) throws Exception  {
         return configureServer().getClassList(arg);
     }
 
-    public DeployCarArg deployCar(DeployCarArg arg) throws Exception  {
+    public DeployCarCommand deployCar(DeployCarCommand arg) throws Exception  {
         return configureServer().deployCar(arg);
     }
 
-    public PackageCarArg packageCar(PackageCarArg arg) throws Exception  {
+    public PackageCarCommand packageCar(PackageCarCommand arg) throws Exception  {
         return configureServer().packageCar(arg);
     }
 
-    public CatalogCarArg catalogCar(CatalogCarArg arg) throws Exception  {
+    public CatalogCarCommand catalogCar(CatalogCarCommand arg) throws Exception  {
         return configureServer().catalogCar(arg);
     }
 

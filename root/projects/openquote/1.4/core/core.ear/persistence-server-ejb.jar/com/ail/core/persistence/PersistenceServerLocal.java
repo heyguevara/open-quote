@@ -20,7 +20,6 @@ package com.ail.core.persistence;
 import javax.ejb.EJBException;
 import javax.ejb.EJBLocalObject;
 
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 
@@ -40,15 +39,13 @@ public interface PersistenceServerLocal extends EJBLocalObject {
 
     void resetConfiguration() throws EJBException;
 
-    Version getVersion() throws EJBException;
+    CreateCommand createCommand(CreateCommand arg) throws EJBException;
 
-    CreateArg createCommand(CreateArg arg) throws EJBException;
+    UpdateCommand updateCommand(UpdateCommand arg) throws EJBException;
 
-    UpdateArg updateCommand(UpdateArg arg) throws EJBException;
+    LoadCommand loadCommand(LoadCommand arg) throws EJBException;
 
-    LoadArg loadCommand(LoadArg arg) throws EJBException;
+    QueryCommand queryCommand(QueryCommand arg) throws EJBException;
 
-    QueryArg queryCommand(QueryArg arg) throws EJBException;
-
-    DeleteArg deleteCommand(DeleteArg arg) throws EJBException;
+    DeleteCommand deleteCommand(DeleteCommand arg) throws EJBException;
 }

@@ -17,24 +17,19 @@
 
 package com.ail.core;
 
-import javax.ejb.EJBContext;
-import javax.ejb.EJBException;
-import javax.ejb.SessionContext;
-
-import com.ail.core.command.AbstractCommand;
-import com.ail.core.command.CommandArg;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import java.security.Principal;
 
+import javax.ejb.EJBContext;
+import javax.ejb.EJBException;
+import javax.ejb.SessionContext;
+
+import com.ail.core.command.Command;
+
 /**
  * This class is use as a superclass by all EJB components. 
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2007/02/16 21:33:42 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/EJBComponent.java,v $
  */
 public abstract class EJBComponent extends Component {
 
@@ -46,7 +41,7 @@ public abstract class EJBComponent extends Component {
      * Take an argument defined as XML, unmarshal it into a service arg object, and invoke
      * the appropriate service to deal with it. Marshal the object returned back into XML
      * and return it as a String.<p>
-     * This method depends on a number of convensions in order to work. It assumes the
+     * This method depends on a number of conversions in order to work. It assumes the
      * the following relationship between type of the argument received (indicated by the
      * xsi:type of the argument's root element) and the method to be invoked:
      * <ol>
@@ -154,18 +149,17 @@ public abstract class EJBComponent extends Component {
         }
     }
 
-    protected <T extends CommandArg> T invokeCommand(Core core, String name, T arg) {
-        AbstractCommand command = core.newCommand(name);
-        return invokeCommand(command, arg);
+    protected <T extends Command> T invokeCommand(Core core, String name, T sourceCommand) {
+        Command command = core.newCommand(name, Command.class);
+        return invokeCommand(command, sourceCommand);
     }
 
-    @SuppressWarnings("unchecked")
-    protected <T extends CommandArg> T invokeCommand(AbstractCommand command, T arg) {
+    private <T extends Command> T invokeCommand(Command localCommand, T sourceCommand) {
         try {
-            command.setArgs(arg);
-            command.invoke();
-            
-            return (T)command.getArgs();
+            localCommand.setArgs(sourceCommand.getArgs());
+            localCommand.invoke();
+            sourceCommand.setArgs(localCommand.getArgs());
+            return sourceCommand;
         }
         catch (com.ail.core.BaseException e) {
             throw new com.ail.core.BaseServerException(e);

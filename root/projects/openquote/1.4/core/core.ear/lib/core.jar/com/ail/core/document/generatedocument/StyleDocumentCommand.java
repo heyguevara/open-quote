@@ -17,47 +17,11 @@
 
 package com.ail.core.document.generatedocument;
 
-import com.ail.core.XMLString;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
-public class StyleDocumentCommand extends Command implements StyleDocumentArg {
-    private StyleDocumentArg args = null;
-
-    public StyleDocumentCommand() {
-        super();
-        args = new StyleDocumentArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (StyleDocumentArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    public XMLString getMergedDataArg() {
-        return args.getMergedDataArg();
-    }
-
-    public XMLString getStyledDocumentRet() {
-        return args.getStyledDocumentRet();
-    }
-
-    public void setMergedDataArg(XMLString mergedDataArg) {
-        args.setMergedDataArg(mergedDataArg);
-    }
-
-    public void setStyledDocumentRet(XMLString styledDocumentRet) {
-        args.setStyledDocumentRet(styledDocumentRet);
-    }
+@CommandDefinition
+public interface StyleDocumentCommand extends Command, StyleDocumentArgument {
 }
+
+

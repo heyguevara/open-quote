@@ -27,7 +27,7 @@
         <!--  Bind the commands to services     -->
         <!--====================================-->
 
-        <command name="GenerateDoc" builder="ClassBuilder" key="com.ail.core.document.generatedocument.GenerateDocumentCommand">
+        <command name="GenerateDoc" builder="ClassBuilder" key="com.ail.core.document.generatedocument.GenerateDocumentCommandImpl">
             <parameter name="Service">GenDocService</parameter>
         </command>
 

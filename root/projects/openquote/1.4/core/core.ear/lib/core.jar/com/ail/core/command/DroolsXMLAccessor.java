@@ -58,7 +58,7 @@ import com.ail.core.factory.AbstractFactory;
  */
 public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
     private Core core=null;
-    private CommandArg args=null;
+    private Argument args=null;
     private String script=null;
     private String extend=null;
     private String url=null;
@@ -75,11 +75,11 @@ public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
         this.core=null;
     }
     
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 

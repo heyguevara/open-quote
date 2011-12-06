@@ -88,7 +88,7 @@ public class ConfigureUploadPortlet extends GenericPortlet {
                 
                 form.setUploadedFile(readFileFromRequest(request));
                 
-                CatalogCarCommand ccc=(CatalogCarCommand)core.newCommand("CatalogCar");
+                CatalogCarCommand ccc=core.newCommand(CatalogCarCommand.class);
                 ccc.setCarArg(form.getUploadedFile());
                 ccc.invoke();
                 
@@ -113,7 +113,7 @@ public class ConfigureUploadPortlet extends GenericPortlet {
                     }
                 }
 
-                DeployCarCommand dcc=(DeployCarCommand)core.newCommand("DeployCar");
+                DeployCarCommand dcc=core.newCommand(DeployCarCommand.class);
                 dcc.setCarArg(form.getUploadedFile());
                 dcc.setNamespacesArg(toDeploy);
                 dcc.invoke();

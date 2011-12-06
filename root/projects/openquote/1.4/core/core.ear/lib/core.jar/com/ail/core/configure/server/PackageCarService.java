@@ -23,13 +23,15 @@ import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.UnknownNamespaceError;
 
-public class PackageCarService extends com.ail.core.Service<PackageCarArg> {
+@ServiceImplementation
+public class PackageCarService extends com.ail.core.Service<PackageCarArgument> {
     
     @Override
     public void invoke() throws PreconditionException, PostconditionException {

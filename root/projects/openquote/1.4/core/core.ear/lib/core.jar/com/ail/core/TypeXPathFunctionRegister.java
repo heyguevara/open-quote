@@ -59,6 +59,16 @@ public final class TypeXPathFunctionRegister {
     }
     
     /**
+     * Force the function library to be reloaded. It is only necessary to call this method if
+     * the list of libraries has been changed in core config. This is unlikely to happen outside
+     * of testing.
+     */
+    public void reloadFunctionLibrary() {
+        functionLibrary=null;
+        getFunctionLibrary();
+    }
+    
+    /**
      * Return the currently defined function library. 
      * @return FunctionLibrary.
      */

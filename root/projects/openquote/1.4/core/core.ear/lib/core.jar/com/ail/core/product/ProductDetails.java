@@ -16,6 +16,7 @@
  */
 package com.ail.core.product;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -25,6 +26,7 @@ import com.ail.core.Type;
  * @date $Date: 2007/10/05 22:47:50 $
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/ProductDetails.java,v $
  */
+@TypeDefinition
 public class ProductDetails extends Type {
     private String name;
     private String description;

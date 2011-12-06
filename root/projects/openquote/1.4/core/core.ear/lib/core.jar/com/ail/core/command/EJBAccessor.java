@@ -49,7 +49,7 @@ import com.ail.core.configure.Configuration;
 public class EJBAccessor extends Accessor {
     private static Hashtable<EJBAccessorSettings,CacheElement> cache=new Hashtable<EJBAccessorSettings,CacheElement>();
     private EJBAccessorSettings settings=new EJBAccessorSettings();
-    private CommandArg args=null;
+    private Argument args=null;
 
     /**
      * Get a class representing the remote interface of the EJB.
@@ -231,7 +231,7 @@ public class EJBAccessor extends Accessor {
         CoreUser cu=getArgs().getCallersCore();
         getArgs().setCallersCore(new CoreUserImpl(cu));
         Object[] argValues={getArgs()};
-		setArgs((CommandArg)invokeRemoteMethod(getRemoteMethod(), argValues));
+		setArgs((Argument)invokeRemoteMethod(getRemoteMethod(), argValues));
         
         super.logExit();
     }
@@ -240,7 +240,7 @@ public class EJBAccessor extends Accessor {
      * Set the arguments to be passed to the EJB service
      * @param args
      */
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
 		this.args=args;
     }
 
@@ -249,7 +249,7 @@ public class EJBAccessor extends Accessor {
      * service.
      * @return Arguments
      */
-    public CommandArg getArgs() {
+    public Argument getArgs() {
 		return args;
     }
 

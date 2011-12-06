@@ -19,6 +19,7 @@ package com.ail.core.product.listproducts;
 
 import java.util.ArrayList;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.Service;
 import com.ail.core.VersionEffectiveDate;
@@ -26,7 +27,8 @@ import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.Parameter;
 import com.ail.core.product.ProductDetails;
 
-public class ListProductsService extends Service<ListProductsArg> {
+@ServiceImplementation
+public class ListProductsService extends Service<ListProductsArgument> {
     public static final String SERVICE_NAMESPACE="com.ail.core.product.listproducts.ListProductsService";
     private String namespace;
     

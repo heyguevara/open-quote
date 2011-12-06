@@ -17,91 +17,9 @@
 
 package com.ail.core.document.generatedocument;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.document.model.DocumentData;
-import com.ail.core.Type;
-import com.ail.core.XMLString;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
-public class MergeDataCommand extends Command implements MergeDataArg {
-    private MergeDataArg args = null;
-
-    public MergeDataCommand() {
-        super();
-        args = new MergeDataArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (MergeDataArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Type getModelArg() {
-        return args.getModelArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param modelArg @{inheritDoc}
-     */
-    public void setModelArg(Type modelArg) {
-        args.setModelArg(modelArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public DocumentData getDocumentDataArg() {
-        return args.getDocumentDataArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public XMLString getMergedDataRet() {
-        return args.getMergedDataRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setDocumentDataArg(DocumentData documentDataArg) {
-        args.setDocumentDataArg(documentDataArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setMergedDataRet(XMLString mergedDataRet) {
-        args.setMergedDataRet(mergedDataRet);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getProductNameArg() {
-        return args.getProductNameArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setProductNameArg(String productNameArg) {
-        args.setProductNameArg(productNameArg);
-    }
+@CommandDefinition(defaultServiceClass=JavaMergeDataService.class)
+public interface MergeDataCommand extends Command, MergeDataArgument {
 }

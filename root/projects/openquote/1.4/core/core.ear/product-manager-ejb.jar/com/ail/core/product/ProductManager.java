@@ -21,16 +21,15 @@ import java.rmi.RemoteException;
 
 import javax.ejb.EJBObject;
 
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsArg;
-import com.ail.core.product.newproducttype.NewProductTypeArg;
-import com.ail.core.product.registerproduct.RegisterProductArg;
-import com.ail.core.product.removeproduct.RemoveProductArg;
-import com.ail.core.product.resetallproducts.ResetAllProductsArg;
-import com.ail.core.product.resetproduct.ResetProductArg;
-import com.ail.core.product.updateproduct.UpdateProductArg;
+import com.ail.core.product.listproducts.ListProductsCommand;
+import com.ail.core.product.newproducttype.NewProductTypeCommand;
+import com.ail.core.product.registerproduct.RegisterProductCommand;
+import com.ail.core.product.removeproduct.RemoveProductCommand;
+import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
+import com.ail.core.product.resetproduct.ResetProductCommand;
+import com.ail.core.product.updateproduct.UpdateProductCommand;
 
 /**
  * @version $Revision: 1.5 $
@@ -55,21 +54,19 @@ public interface ProductManager extends EJBObject {
 
     void resetConfiguration() throws RemoteException;
 
-    Version getVersion() throws RemoteException;
+    ListProductsCommand getListProducts(ListProductsCommand arg) throws RemoteException;
 
-    ListProductsArg getListProducts(ListProductsArg arg) throws RemoteException;
+    RegisterProductCommand registerProduct(RegisterProductCommand arg) throws RemoteException;
 
-    RegisterProductArg registerProduct(RegisterProductArg arg) throws RemoteException;
+    RemoveProductCommand removeProduct(RemoveProductCommand arg) throws RemoteException;
 
-    RemoveProductArg removeProduct(RemoveProductArg arg) throws RemoteException;
+    ResetProductCommand getProductDefinition(ResetProductCommand arg) throws RemoteException;
 
-    ResetProductArg getProductDefinition(ResetProductArg arg) throws RemoteException;
+    ResetAllProductsCommand resetAllProducts(ResetAllProductsCommand arg) throws RemoteException;
 
-    ResetAllProductsArg resetAllProducts(ResetAllProductsArg arg) throws RemoteException;
+    UpdateProductCommand updateProduct(UpdateProductCommand arg) throws RemoteException;
 
-    UpdateProductArg updateProduct(UpdateProductArg arg) throws RemoteException;
-
-    NewProductTypeArg newProductType(NewProductTypeArg arg) throws RemoteException;
+    NewProductTypeCommand newProductType(NewProductTypeCommand arg) throws RemoteException;
 }
 
 

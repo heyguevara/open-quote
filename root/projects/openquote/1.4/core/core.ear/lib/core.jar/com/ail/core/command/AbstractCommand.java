@@ -30,20 +30,20 @@ import com.ail.core.configure.Configuration;
  */
 public abstract class AbstractCommand extends Type {
 	/**
- 	 * Update this Command object's arguments with those taken from the command
+ 	 * Update this CommandImpl object's arguments with those taken from the command
      * arg passed in. This is in effect a bulk setter. This interface will be
      * implemented by beans that have many more getters/setters to support
      * their properties. The implementations of this method take 'that', and
      * pull all the relevant properties into this.
      * @param that Source for arguments
      */
-    public abstract void setArgs(CommandArg that);
+    public abstract void setArgs(Argument that);
 
 	/**
      * Get the argument set associated with this command.
      * @return This objects arguments.
      */
-	public abstract CommandArg getArgs();
+	public abstract Argument getArgs();
 
 	/**
      * Invoke the command associated with this command object.

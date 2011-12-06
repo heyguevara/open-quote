@@ -17,47 +17,11 @@
 
 package com.ail.core.product.registerproduct;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.core.product.ProductDetails;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
-public class RegisterProductCommand extends Command implements RegisterProductArg {
-    private RegisterProductArg args = null;
-
-    public RegisterProductCommand() {
-        super();
-        args = new RegisterProductArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (RegisterProductArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public ProductDetails getProductDetailsArg() {
-        return args.getProductDetailsArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param productsRet @{inheritDoc}
-     */
-    public void setProductDetailsArg(ProductDetails productDetailsArg) {
-        args.setProductDetailsArg(productDetailsArg);
-    }
+@CommandDefinition(defaultServiceClass=RegisterProductService.class)
+public interface RegisterProductCommand extends Command, RegisterProductArgument {
 }
+
+

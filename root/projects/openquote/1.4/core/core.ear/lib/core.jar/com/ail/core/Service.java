@@ -17,28 +17,21 @@
 
 package com.ail.core;
 
-import com.ail.core.command.CommandArg;
-import com.ail.core.configure.Configuration;
-import com.ail.core.configure.ConfigurationOwner;
-import com.ail.core.configure.ConfigurationResetError;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.security.Principal;
 
+import com.ail.core.command.Argument;
+import com.ail.core.configure.Configuration;
+import com.ail.core.configure.ConfigurationOwner;
+import com.ail.core.configure.ConfigurationResetError;
+
 /**
  * The Service abstract class is implemented by all classes that may be exposed as
  * component entry points. <p>
- * In addition to the methods described here, an entry point implementation is also
- * expected to offer getter and setter methods which are used to pass arguments
- * to the entry point (setters called before invoke), and fetch the entry point's
- * results (getters, called after invoke).<p>
- * Each entry point has associated version and configuration information. The version
- * details are burned into the entry point's source code at build time. The entry point's
- * configuration can be modified at run-time using the setter provided.
  */
-public abstract class Service<T extends CommandArg> extends Type implements CoreUser, ConfigurationOwner {
-    protected T args;
+public abstract class Service<A extends Argument> extends Type implements CoreUser, ConfigurationOwner {
+    protected A args;
     protected Core core;
     
     public Service() {
@@ -53,9 +46,20 @@ public abstract class Service<T extends CommandArg> extends Type implements Core
      * Set the arguments to be used by this entry point's business logic.
      * @param args Arguments for the entry point to process.
      */
-	public void setArgs(T args) {
+	public void setArgs(A args) {
 	    this.args=args;
 	}
+
+    /**
+     * Get the arguments used by this entry point. "Arguments" in this context
+     * are both the objects passed into the entry point, and the objects
+     * returned by it. The entry point user will call getArgs() to retrieve
+     * the entry points results.
+     * @return The results of executing the entry point.
+     */
+    public A getArgs() {
+        return args;
+    }
 
 	/**
      * Invoke the entry point's business logic. This is the core of the entry
@@ -81,17 +85,6 @@ public abstract class Service<T extends CommandArg> extends Type implements Core
         catch(NullPointerException e) {
             return new VersionEffectiveDate();
         }
-    }
-
-	/**
-     * Get the arguments used by this entry point. "Arguments" in this context
-     * are both the objects passed into the entry point, and the objects
-     * returned by it. The entry point user will call getArgs() to retrieve
-     * the entry points results.
-     * @return The results of executing the entry point.
-     */
-    public T getArgs() {
-        return args;
     }
 
 	/**
@@ -147,7 +140,9 @@ public abstract class Service<T extends CommandArg> extends Type implements Core
             URL inputUrl=this.getClass().getResource(name+"DefaultConfig.xml");
 
             if (inputUrl==null) {
-                inputUrl=new URL("product://localhost:8080"+name.replace('.','/')+".xml");
+                // 'name' should not start with a ., is add a / after the port number
+                // TODO remove the hard coded host and port numbers
+                inputUrl=new URL("product://localhost:8080/"+name.replace('.','/')+".xml");
             }
             
             InputStream inStream=inputUrl.openStream();

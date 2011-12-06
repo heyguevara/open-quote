@@ -17,6 +17,7 @@
 
 package com.ail.core.product.removeproduct;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -27,7 +28,8 @@ import com.ail.core.configure.Group;
 import com.ail.core.product.UnknownProductException;
 import com.ail.core.product.listproducts.ListProductsService;
 
-public class RemoveProductService extends Service<RemoveProductArg> {
+@ServiceImplementation
+public class RemoveProductService extends Service<RemoveProductArgument> {
     private String namespace;
     
     private void setConfigurationNamespace(String namespace) {

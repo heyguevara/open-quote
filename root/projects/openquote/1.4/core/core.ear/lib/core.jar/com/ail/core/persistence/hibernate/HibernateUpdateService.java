@@ -21,16 +21,18 @@ import org.hibernate.HibernateException;
 import org.hibernate.StaleObjectStateException;
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.persistence.UpdateArg;
+import com.ail.core.persistence.UpdateArgument;
 import com.ail.core.persistence.UpdateException;
 
 /**
  * Implementation of the update service for Hibernate
  */
-public class HibernateUpdateService extends Service<UpdateArg> {
+@ServiceImplementation
+public class HibernateUpdateService extends Service<UpdateArgument> {
 
     public void invoke() throws PreconditionException, UpdateException {
 

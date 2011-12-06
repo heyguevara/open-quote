@@ -21,16 +21,18 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.persistence.QueryArg;
+import com.ail.core.persistence.QueryArgument;
 import com.ail.core.persistence.QueryException;
 
 /**
  * Implementation of the query service for Hibernate
  */
-public class HibernateQueryService extends Service<QueryArg> {
+@ServiceImplementation
+public class HibernateQueryService extends Service<QueryArgument> {
     @Override
     @SuppressWarnings("unchecked")
     public void invoke() throws PreconditionException,QueryException {

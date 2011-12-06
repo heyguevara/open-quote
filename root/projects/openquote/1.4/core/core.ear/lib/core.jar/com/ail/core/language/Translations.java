@@ -19,6 +19,7 @@ package com.ail.core.language;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -26,6 +27,7 @@ import com.ail.core.Type;
  * Helper methods are also supplied to assist in the act of translation (@link {@link #translate(String)} and {@link #translate(String, String)})
  * Translatons define a default language
  */
+@TypeDefinition
 public class Translations extends Type {
     private String defaultLanguage=null;
     

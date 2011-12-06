@@ -21,15 +21,15 @@ import java.io.ByteArrayInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 
-/**
- */
-public class DeployCarService extends Service<DeployCarArg> {
+@ServiceImplementation
+public class DeployCarService extends Service<DeployCarArgument> {
 
     /** The 'business logic' of the entry point. */
     @Override

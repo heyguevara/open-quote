@@ -24,32 +24,16 @@ import javax.ejb.SessionContext;
 
 import org.w3c.dom.Element;
 
-import com.ail.core.BaseError;
-import com.ail.core.BaseException;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.CoreUser;
 import com.ail.core.EJBComponent;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.AbstractCommand;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
-import com.ail.core.configure.finder.GetClassListArg;
+import com.ail.core.configure.finder.GetClassListCommand;
 
-/**
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/server/ServerBean.java,v $
- * @ejbHome <{ServerHome}>
- * @ejbRemote <{Server}>
- * @undefined
- * @displayName
- * @ejbLocal <{ServerLocal}>
- * @ejbLocalHome <{ServerLocalHome}>
- */
 public class ServerBean extends EJBComponent implements SessionBean, CoreUser, ConfigurationOwner {
 	private Core core=null;
     private SessionContext ctx=null;
@@ -87,16 +71,6 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
         return new VersionEffectiveDate();
     }
 
-    public Version getVersion() throws EJBException  {
-        Version v=(Version)core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2007/10/05 22:47:50 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/server/ServerBean.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.8 $");
-        return v;
-    }
-
     public Core getCore() throws EJBException  {
         return core;
     }
@@ -106,7 +80,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      */
     public void resetCoreConfiguration() throws EJBException  {
         core.resetConfiguration();
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
     }
 
     /**
@@ -144,7 +118,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
 
             // reset the Core config first
             core.resetConfiguration();
-            ConfigurationHandler.reset();
+            ConfigurationHandler.resetCache();
 
             // loop through the AllNamespaceReset group, and reset all the configs named
             for(Parameter p: core.getGroup("NamespacesToResetOnResetAll").getParameter()) {
@@ -160,7 +134,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * Reset the server side cache used to hold configuration information.
      */
     public void clearConfigurationCache() throws EJBException  {
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
     }
 
     /**
@@ -191,49 +165,16 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
         return xml;
     }
 
-    public GetNamespacesArg getNamespaces(GetNamespacesArg arg) throws EJBException  {
-        try {
-            AbstractCommand command=core.newCommand("GetNamespaces");
-            command.setArgs(arg);
-            command.invoke();
-            return (GetNamespacesArg)command.getArgs();
-        }
-        catch(BaseException e) {
-            throw new EJBException(e);
-        }
-        catch(BaseError e) {
-            throw new EJBException(e.toString());
-        }
+    public GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws EJBException  {
+        return invokeCommand(core, "GetNamespaces", arg);
     }
 
-    public GetConfigurationArg getConfiguration(GetConfigurationArg arg) throws EJBException  {
-        try {
-            AbstractCommand command=core.newCommand("GetConfiguration");
-            command.setArgs(arg);
-            command.invoke();
-            return (GetConfigurationArg)command.getArgs();
-        }
-        catch(BaseException e) {
-            throw new EJBException(e);
-        }
-        catch(BaseError e) {
-            throw new EJBException(e.toString());
-        }
+    public GetConfigurationCommand getConfiguration(GetConfigurationCommand arg) throws EJBException  {
+        return invokeCommand(core, "GetConfiguration", arg);
     }
 
-    public SetConfigurationArg setConfiguration(SetConfigurationArg arg) throws EJBException  {
-        try {
-            AbstractCommand command=core.newCommand("SetConfiguration");
-            command.setArgs(arg);
-            command.invoke();
-            return (SetConfigurationArg)command.getArgs();
-        }
-        catch(BaseException e) {
-            throw new EJBException(e);
-        }
-        catch(BaseError e) {
-            throw new EJBException(e.toString());
-        }
+    public SetConfigurationCommand setConfiguration(SetConfigurationCommand arg) throws EJBException  {
+        return invokeCommand(core, "SetConfiguration", arg);
     }
 
     /**
@@ -242,19 +183,8 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GetCommandScriptArg getCommandScript(GetCommandScriptArg arg) throws EJBException  {
-            try {
-                com.ail.core.command.AbstractCommand command = core.newCommand("GetCommandScript");
-                command.setArgs(arg);
-                command.invoke();
-                return (com.ail.core.configure.server.GetCommandScriptArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
+    public GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg) throws EJBException  {
+        return invokeCommand(core, "GetCommandScript", arg);
     }
 
     /**
@@ -263,19 +193,8 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public SetCommandScriptArg setCommandScript(com.ail.core.configure.server.SetCommandScriptArg arg) throws EJBException  {
-            try {
-                com.ail.core.command.AbstractCommand command = core.newCommand("SetCommandScript");
-                command.setArgs(arg);
-                command.invoke();
-                return (com.ail.core.configure.server.SetCommandScriptArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
+    public SetCommandScriptCommand setCommandScript(com.ail.core.configure.server.SetCommandScriptCommand arg) throws EJBException  {
+        return invokeCommand(core, "SetCommandScript", arg);
     }
 
 
@@ -285,19 +204,8 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GetClassListArg getClassList(GetClassListArg arg) throws EJBException  {
-            try {
-                AbstractCommand command = core.newCommand("GetClassList");
-                command.setArgs(arg);
-                command.invoke();
-                return (GetClassListArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
+    public GetClassListCommand getClassList(GetClassListCommand arg) throws EJBException  {
+        return invokeCommand(core, "GetClassList", arg);
     }
     
     /**
@@ -306,19 +214,8 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public DeployCarArg deployCar(DeployCarArg arg) throws EJBException  {
-            try {
-                AbstractCommand command = core.newCommand("DeployCar");
-                command.setArgs(arg);
-                command.invoke();
-                return (DeployCarArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
+    public DeployCarCommand deployCar(DeployCarCommand arg) throws EJBException  {
+        return invokeCommand(core, "DeployCar", arg);
     }
 
     /**
@@ -327,19 +224,8 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public PackageCarArg packageCar(PackageCarArg arg) throws EJBException  {
-            try {
-                AbstractCommand command = core.newCommand("PackageCar");
-                command.setArgs(arg);
-                command.invoke();
-                return (PackageCarArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
+    public PackageCarCommand packageCar(PackageCarCommand arg) throws EJBException  {
+        return invokeCommand(core, "PackageCar", arg);
     }
 
     /**
@@ -348,19 +234,8 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public CatalogCarArg catalogCar(CatalogCarArg arg) throws EJBException  {
-            try {
-                AbstractCommand command = core.newCommand("CatalogCar");
-                command.setArgs(arg);
-                command.invoke();
-                return (CatalogCarArg) command.getArgs();
-            }
-            catch (com.ail.core.BaseException e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
-            catch (com.ail.core.BaseError e) {
-                throw new com.ail.core.BaseServerException(e);
-            }
+    public CatalogCarCommand catalogCar(CatalogCarCommand arg) throws EJBException  {
+        return invokeCommand(core, "CatalogCar", arg);
     }
 
     /**

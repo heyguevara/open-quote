@@ -20,15 +20,17 @@ package com.ail.core.persistence.hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.persistence.CreateException;
-import com.ail.core.persistence.DeleteArg;
+import com.ail.core.persistence.DeleteArgument;
 
 /**
  * Implementation of the delete service for Hibernate
  */
-public class HibernateDeleteService extends Service<DeleteArg> {
+@ServiceImplementation
+public class HibernateDeleteService extends Service<DeleteArgument> {
     /** The 'business logic' of the entry point. */
     @Override
     public void invoke() throws PreconditionException, CreateException {

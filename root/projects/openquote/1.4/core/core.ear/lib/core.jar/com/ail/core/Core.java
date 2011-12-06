@@ -17,6 +17,7 @@
 
 package com.ail.core;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.security.Principal;
@@ -25,8 +26,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import com.ail.core.command.AbstractCommand;
-import com.ail.core.command.CommandArg;
+import com.ail.core.command.Command;
+import com.ail.core.command.Argument;
 import com.ail.core.command.CommandInvocationError;
 import com.ail.core.configure.Builder;
 import com.ail.core.configure.Builders;
@@ -39,7 +40,7 @@ import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.Types;
 import com.ail.core.configure.XMLMapping;
-import com.ail.core.configure.finder.GetClassListArg;
+import com.ail.core.configure.finder.GetClassListCommand;
 import com.ail.core.document.Document;
 import com.ail.core.document.generatedocument.GenerateDocumentCommand;
 import com.ail.core.factory.Factory;
@@ -48,9 +49,11 @@ import com.ail.core.logging.BootLogger;
 import com.ail.core.logging.LoggerCommand;
 import com.ail.core.logging.Logging;
 import com.ail.core.logging.Severity;
+import com.ail.core.persistence.CloseSessionCommand;
 import com.ail.core.persistence.CreateCommand;
 import com.ail.core.persistence.DeleteCommand;
 import com.ail.core.persistence.LoadCommand;
+import com.ail.core.persistence.OpenSessionCommand;
 import com.ail.core.persistence.Persistence;
 import com.ail.core.persistence.QueryCommand;
 import com.ail.core.persistence.UpdateCommand;
@@ -175,7 +178,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     private void saveBootstrapConfiguration() {
         Configuration config=new Configuration();
         config.setName("Bootstrap Core configuration");
-        config.setVersion("$Revision: 1.16 $");
+        config.setVersion("1.0");
         config.setWho("boostrap");
         config.setNamespace("com.ail.core.Core");
         
@@ -191,7 +194,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         config.setTypes(ts);
         com.ail.core.configure.Type t=new com.ail.core.configure.Type();
         ts.addType(t);
-        t.setName("FromXMLService");
+        t.setName("com.ail.core.xmlbinding.CastorFromXMLService");
         t.setBuilder("ClassBuilder");
         t.setKey("com.ail.core.command.ClassAccessor");
         Parameter p=new Parameter();
@@ -202,11 +205,11 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         t=new com.ail.core.configure.Type();
         ts.addType(t);
         p=new Parameter();
-        t.setName("FromXML");
+        t.setName("com.ail.core.xmlbinding.FromXMLCommand");
         t.setBuilder("ClassBuilder");
-        t.setKey("com.ail.core.xmlbinding.FromXMLCommand");
+        t.setKey("com.ail.core.xmlbinding.FromXMLCommandImpl");
         p.setName("Accessor");
-        p.setValue("FromXMLService");
+        p.setValue("com.ail.core.xmlbinding.CastorFromXMLService");
         t.addParameter(p);
         
         setConfiguration(config);
@@ -226,16 +229,15 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 		try {
 			// In order to 'fromXML' the contents of CoreDefaultConfig.xml, we'll
             // need to be able to access the fromXML service, hence we need some
-            // minimal configuration.
+            // minimal "bootstrap" configuration.
 			saveBootstrapConfiguration();
+			clearConfigurationCache();
 			Thread.sleep(1);
 
-			// load the CoreDefaultConfig resource into an XMLString
-			InputStream in=this.getClass().getResourceAsStream("CoreDefaultConfig.xml");
-			XMLString factoryConfigXML=new XMLString(in);
-
-			// marshal the config XML into an instance of Configuration
-            Configuration factoryConfig=fromXML(Configuration.class, factoryConfigXML);
+			Configuration factoryConfig;
+			
+			factoryConfig=loadCoreDefaultConfig();
+			factoryConfig=loadAndMergeCoreDefaultConfigTypes(factoryConfig);
 
 			// reset the configuration
 			setConfiguration(factoryConfig);
@@ -247,6 +249,34 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 		    // restore the saved core user
             setCoreUser(savedCoreUser);
         }
+    }
+
+    private Configuration loadAndMergeCoreDefaultConfigTypes(Configuration factoryConfig) throws IOException, XMLException {
+        // load the CoreDefaultConfig resource into an XMLString
+        InputStream in = this.getClass().getResourceAsStream("AnnotatedTypeConfig.xml");
+        XMLString factoryConfigXML = new XMLString(in);
+
+        // marshal the config XML into an instance of Configuration
+        Configuration serviceConfig = fromXML(Configuration.class, factoryConfigXML);
+        
+        for(int i=0 ; i<serviceConfig.getTypes().getTypeCount() ; i++) {
+            com.ail.core.configure.Type type=serviceConfig.getTypes().getType(i);
+            factoryConfig.getTypes().addType(type);
+        }
+
+        return factoryConfig;
+    }
+
+    /**
+     * Load config from CoreDefaultConfig.xml and return
+     */
+    private Configuration loadCoreDefaultConfig() throws IOException, XMLException {
+        // load the CoreDefaultConfig resource into an XMLString
+        InputStream in=this.getClass().getResourceAsStream("CoreDefaultConfig.xml");
+        XMLString factoryConfigXML=new XMLString(in);
+
+        // marshal the config XML into an instance of Configuration
+        return fromXML(Configuration.class, factoryConfigXML);
     }
 
     /**
@@ -347,37 +377,64 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @param arguments The arguments to pass to the service.
      * @return The arguments as returned from the service.
      * @throws BaseException Any exception thrown by the service.
+     * @deprecated Use {@link #invokeService(Class, Argument)} instead
      */
-    public CommandArg invokeService(String commandName, CommandArg arguments) throws BaseException {
-        AbstractCommand command=newCommand(commandName);
+    public Argument invokeService(String commandName, Argument arguments) throws BaseException {
+        Command command=newCommand(commandName, Command.class);
         arguments.setCallersCore(new CoreUserImpl(getCoreUser()));
         command.setArgs(arguments);
         command.invoke();
         return command.getArgs();
     }
 
-	/**
-     * Create a instance of the named command object.
-	 * The named command is looked up in the current configuration, and
-     * created from the specification held.
-     * @param commandName The name of the command to create.
-     * @return The command object ready for use.
+    /**
+     * Create an instance of the specified command, and invoke it with the
+     * argument provided. The results returned by the command are returned.
+     * @param commandClass The command class to invoke.
+     * @param arguments The arguments to pass to the service.
+     * @return The arguments as returned from the service.
+     * @throws BaseException Any exception thrown by the service.
      */
-    public AbstractCommand newCommand(String commandName) {
-        AbstractCommand command=FactoryHandler.getInstance().newCommand(commandName, getConfigurationOwner(), this);
-        command.getArgs().setCallersCore(getCoreUser());
-        return command;
+    @SuppressWarnings("unchecked")
+    public <T extends Argument> T invokeService(Class<? extends Command> commandClass, T arguments) throws BaseException {
+        Command command=newCommand(commandClass);
+        arguments.setCallersCore(new CoreUserImpl(getCoreUser()));
+        command.setArgs(arguments);
+        command.invoke();
+        return (T)command.getArgs();
+    }
+
+    /**
+     * Create an instance of the specified command, and invoke it with the
+     * argument provided. The results returned by the command are returned.
+     * @param commandName The name of the command to invoke.
+     * @param commandClass The class of the command to invoke.
+     * @param arguments The arguments to pass to the service.
+     * @return The arguments as returned from the service.
+     * @throws BaseException Any exception thrown by the service.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Argument> T invokeService(String commandName, Class<? extends Command> commandClass, T arguments) throws BaseException {
+        Command command=newCommand(commandName, commandClass);
+        arguments.setCallersCore(new CoreUserImpl(getCoreUser()));
+        command.setArgs(arguments);
+        command.invoke();
+        return (T)command.getArgs();
     }
 
     /**
      * Create a new instance of the command specified. The details of the type
-     * to be created are loaded from the callers configuration.
+     * to be created are loaded from the callers configuration. This method is
+     * distinct from {@link #newCommand(Class, String)}. This method simple looks
+     * for a configured command with the name <i>commandName</i>, whereas method 
+     * looks for a command named after the fully qualified name of the Class, and
+     * modified by the value of String (e.g. <i>"com.ail.core.LoggerCommand/stdout"</i>)
      * @param commandName The name of the command to create an instance of
      * @param clazz The expected type of the resulting command 
      * @return An instance of the command.
      */
     @SuppressWarnings("unchecked")
-    public <T extends AbstractCommand> T newCommand(String commandName, Class<T> clazz) {
+    public <T extends Command> T newCommand(String commandName, Class<T> clazz) {
         return (T)FactoryHandler.getInstance().newCommand(commandName, getConfigurationOwner(), this);
     }
 
@@ -390,7 +447,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @return An instance of the command.
      */
     @SuppressWarnings("unchecked")
-    public <T extends AbstractCommand> T newCommand(String commandName, String modifier, Class<T> clazz) {
+    public <T extends Command> T newCommand(String commandName, String modifier, Class<T> clazz) {
         return (T)FactoryHandler.getInstance().newCommand(commandName+MODIFIER_SEPARATOR+modifier, getConfigurationOwner(), this);
     }
 
@@ -400,19 +457,24 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @param clazz The class of the type to be created.
      * @return An instance of the command.
      */
-    public <T extends AbstractCommand> T newCommand(Class<T> clazz) {
+    public <T extends Command> T newCommand(Class<T> clazz) {
         return FactoryHandler.getInstance().newCommand(clazz, getConfigurationOwner(), this);
     }
 
     /**
      * Create a new instance of the command specified. The details of the type
      * to be created are loaded from the callers configuration based on the 
-     * clazz's name and the additional modifier.
+     * class' name and the additional modifier. This method is distinct from 
+     * {@link #newCommand(String, Class)}. This method looks in configuration
+     * for a command named after the fully qualified name of the Class, and
+     * modified by the value of String (e.g. <i>"com.ail.core.LoggerCommand/stdout"</i>);
+     * whereas, that method simple looks for a configured command with the 
+     * name <i>commandName</i>
      * @param clazz The class of the type to be created.
      * @param modifier select the specific configuration required. 
      * @return An instance of the command.
      */
-    public <T extends AbstractCommand> T newCommand(Class<T> clazz, String modifier) {
+    public <T extends Command> T newCommand(Class<T> clazz, String modifier) {
         return FactoryHandler.getInstance().newCommand(clazz, modifier, getConfigurationOwner(), this);
     }
 
@@ -423,7 +485,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @param typeName The name of the type to create.
      * @return The type object ready for use.
      */
-    public Type newType(String typeName) {
+    public Object newType(String typeName) {
 		return FactoryHandler.getInstance().newType(typeName, getConfigurationOwner(), this);
     }
 
@@ -437,7 +499,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @return An instance of a type.
      */
     @SuppressWarnings("unchecked")
-    public <T extends Type> T newType(String typeName, Class<T> clazz) {
+    public <T extends Object> T newType(String typeName, Class<T> clazz) {
         return (T)FactoryHandler.getInstance().newType(typeName, getConfigurationOwner(), this);
     }
 
@@ -452,7 +514,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @return An instance of a type.
      */
     @SuppressWarnings("unchecked")
-    public <T extends Type> T newType(String typeName, String modifier, Class<T> clazz) {
+    public <T extends Object> T newType(String typeName, String modifier, Class<T> clazz) {
         return (T)FactoryHandler.getInstance().newType(typeName+MODIFIER_SEPARATOR+modifier, getConfigurationOwner(), this);
     }
 
@@ -463,7 +525,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @param clazz The class to return an instance for.
      * @return An instance of a type.
      */
-	public <T extends Type> T newType(Class<T> clazz) {
+	public <T extends Object> T newType(Class<T> clazz) {
 	    return FactoryHandler.getInstance().newType(clazz, getConfigurationOwner(), this);
     }
 
@@ -474,7 +536,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @param clazz The class to return an instance for.
      * @return An instance of a type.
      */
-    public <T extends Type> T newType(Class<T> clazz, String modifier) {
+    public <T extends Object> T newType(Class<T> clazz, String modifier) {
         return FactoryHandler.getInstance().newType(clazz, modifier, getConfigurationOwner(), this);
     }
 
@@ -487,7 +549,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logDebug(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=(LoggerCommand)newCommand("DebugLogger");
+            LoggerCommand cmd=newCommand("DebugLogger", LoggerCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -516,7 +578,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logInfo(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=(LoggerCommand)newCommand("InfoLogger");
+            LoggerCommand cmd=newCommand("InfoLogger", LoggerCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -546,7 +608,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logWarning(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=(LoggerCommand)newCommand("WarningLogger");
+            LoggerCommand cmd=newCommand("WarningLogger", LoggerCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -576,7 +638,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logError(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=(LoggerCommand)newCommand("ErrorLogger");
+            LoggerCommand cmd=newCommand("ErrorLogger", LoggerCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -606,7 +668,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logFatal(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=(LoggerCommand)newCommand("FatalLogger");
+            LoggerCommand cmd=newCommand("FatalLogger", LoggerCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -633,7 +695,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     @SuppressWarnings("unchecked")
     public <T extends Type> T update(T object) {
         try {
-            UpdateCommand command=(UpdateCommand)newCommand("Update");
+            UpdateCommand command=newCommand("Update", UpdateCommand.class);
             command.setObjectArg(object);
             command.invoke();
             return (T)command.getObjectArg();
@@ -648,7 +710,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public List<?> query(String queryName, Object... queryArgs) {
         try {
-            QueryCommand command=(QueryCommand)newCommand("Query");
+            QueryCommand command=newCommand("Query", QueryCommand.class);
             command.setQueryNameArg(queryName);
             command.setQueryArgumentsArg(queryArgs);
             command.invoke();
@@ -665,7 +727,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     @SuppressWarnings("unchecked")
     public <T extends Type> T load(Class<T> type, long systemId) {
         try {
-            LoadCommand command=(LoadCommand)newCommand("Load");
+            LoadCommand command=newCommand("Load", LoadCommand.class);
             command.setTypeArg(type);
             command.setSystemIdArg(systemId);
             command.invoke();
@@ -681,7 +743,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void delete(Type type) {
         try {
-            DeleteCommand command=(DeleteCommand)newCommand("Delete");
+            DeleteCommand command=newCommand("Delete", DeleteCommand.class);
             command.setObjectArg(type);
             command.invoke();
         }
@@ -695,7 +757,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public Type queryUnique(String queryName, Object... queryArgs) {
         try {
-            QueryCommand command=(QueryCommand)newCommand("Query");
+            QueryCommand command=newCommand("Query", QueryCommand.class);
             command.setQueryNameArg(queryName);
             command.setQueryArgumentsArg(queryArgs);
             command.invoke();
@@ -712,7 +774,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     @SuppressWarnings("unchecked")
     public <T extends Type> T create(T object) {
         try {
-            CreateCommand command=(CreateCommand)newCommand("Create");
+            CreateCommand command=newCommand("Create", CreateCommand.class);
             command.setObjectArg(object);
             command.invoke();
             return (T)command.getObjectArg();
@@ -727,7 +789,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void openPersistenceSession() {
         try {
-            newCommand("OpenPersistenceSession").invoke();
+            newCommand(OpenSessionCommand.class).invoke();
         }
         catch(BaseException e) {
             throw new CommandInvocationError(e.toString(), e);
@@ -739,7 +801,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void closePersistenceSession() {
         try {
-            newCommand("ClosePersistenceSession").invoke();
+            newCommand(CloseSessionCommand.class).invoke();
         }
         catch(BaseException e) {
             throw new CommandInvocationError(e.toString(), e);
@@ -757,24 +819,22 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     @SuppressWarnings("unchecked")
     public <T extends Object> T fromXML(Class<T> clazz, XMLString xml) throws XMLException {
-        FromXMLCommand cmd=(FromXMLCommand)newCommand("FromXML");
-        XMLMapping mapping=ConfigurationHandler.getInstance().getXMLMapping(getConfigurationOwner(), getCoreUser(), this);
+        FromXMLCommand cmd = newCommand(FromXMLCommand.class);
+        XMLMapping mapping = ConfigurationHandler.getInstance().getXMLMapping(getConfigurationOwner(), getCoreUser(), this);
 
         cmd.setCallersCore(new CoreUserImpl(getCoreUser()));
         cmd.setClassIn(clazz);
         cmd.setXmlMappingInOut(mapping);
         cmd.setXmlIn(xml);
 
-		try {
-			cmd.invoke();
-		}
-		catch(XMLException e) {
+        try {
+            cmd.invoke();
+        } catch (XMLException e) {
             throw e;
-        }
-        catch(BaseException e) {
+        } catch (BaseException e) {
             throw new CommandInvocationError(e);
         }
-		return (T)cmd.getObjectOut();
+        return (T) cmd.getObjectOut();
     }
 
 	/**
@@ -783,8 +843,8 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @return An XMLString representing <code>obj</code>
      */
     public XMLString toXML(Object obj) {
-        ToXMLCommand cmd=(ToXMLCommand)newCommand("ToXML");
-        XMLMapping mapping=ConfigurationHandler.getInstance().getXMLMapping(getConfigurationOwner(), getCoreUser(), this);
+        ToXMLCommand cmd = newCommand(ToXMLCommand.class);
+        XMLMapping mapping = ConfigurationHandler.getInstance().getXMLMapping(getConfigurationOwner(), getCoreUser(), this);
 
         cmd.setCallersCore(new CoreUserImpl(getCoreUser()));
         cmd.setObjectIn(obj);
@@ -809,7 +869,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 	public ValidatorResult validate(String key, Object value) throws BaseException {
         
         // create command
-        ValidatorCommand command = (ValidatorCommand) this.newCommand("Validator");
+        ValidatorCommand command = this.newCommand(ValidatorCommand.class);
         
         // add arguments
         command.setKeyArg(key);
@@ -821,12 +881,10 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         command.invoke();
         
         // get result
-        ValidatorResult result = command.getValidatorResultRet();
-        
-        return result;
+        return command.getValidatorResultRet();
 	}
 
-    public GetClassListArg getClassList(GetClassListArg arg) {
+    public GetClassListCommand getClassList(GetClassListCommand arg) {
         throw new NotImplementedError("Core.getClassList");
     }
 
@@ -855,7 +913,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public Collection<ProductDetails> listProducts() {
         try {
-            ListProductsCommand cmd=(ListProductsCommand)this.newCommand("ListProducts");
+            ListProductsCommand cmd=this.newCommand(ListProductsCommand.class);
             cmd.invoke();
             return cmd.getProductsRet();
         }
@@ -880,7 +938,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public Type newProductType(String productName, String typeName) {
         try {
-            NewProductTypeCommand cmd=(NewProductTypeCommand)this.newCommand("NewProductType");
+            NewProductTypeCommand cmd=this.newCommand(NewProductTypeCommand.class);
             cmd.setProductNameArg(productName);
             cmd.setTypeNameArg(typeName);
             cmd.invoke();
@@ -900,7 +958,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public Type newProductType(String productName) {
         try {
-            NewProductTypeCommand cmd=(NewProductTypeCommand)this.newCommand("NewProductType");
+            NewProductTypeCommand cmd=this.newCommand(NewProductTypeCommand.class);
             cmd.setProductNameArg(productName);
             cmd.invoke();
             return cmd.getTypeRet();
@@ -919,7 +977,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void resetAllProducts() {
         try {
-            ResetAllProductsCommand cmd=(ResetAllProductsCommand)this.newCommand("ResetAllProducts");
+            ResetAllProductsCommand cmd=this.newCommand(ResetAllProductsCommand.class);
             cmd.invoke();
         }
         catch(BaseException e) {
@@ -935,7 +993,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void resetProduct(String productName) {
         try {
-            ResetProductCommand cmd=(ResetProductCommand)this.newCommand("ResetProduct");
+            ResetProductCommand cmd=this.newCommand(ResetProductCommand.class);
             cmd.setProductNameArg(productName);
             cmd.invoke();
         }
@@ -952,7 +1010,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void registerProduct(ProductDetails productDetails) throws DuplicateProductException {
         try {
-            RegisterProductCommand cmd=(RegisterProductCommand)this.newCommand("RegisterProduct");
+            RegisterProductCommand cmd=this.newCommand(RegisterProductCommand.class);
             cmd.setProductDetailsArg(productDetails);
             cmd.invoke();
         }
@@ -972,7 +1030,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void removeProduct(ProductDetails productDetails) throws UnknownProductException {
         try {
-            RemoveProductCommand cmd=(RemoveProductCommand)this.newCommand("RemoveProduct");
+            RemoveProductCommand cmd=this.newCommand(RemoveProductCommand.class);
             cmd.setProductDetailsArg(productDetails);
             cmd.invoke();
         }
@@ -993,7 +1051,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void updateProduct(String productName, ProductDetails productDetails) throws UnknownProductException {
         try {
-            UpdateProductCommand cmd=(UpdateProductCommand)this.newCommand("UpdateProduct");
+            UpdateProductCommand cmd=this.newCommand(UpdateProductCommand.class);
             cmd.setProductNameArg(productName);
             cmd.setProductDetailsArg(productDetails);
             cmd.invoke();
@@ -1025,7 +1083,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public byte[] generateDocument(String productName, String documentDefinitionName, Type model) {
         try {
-            GenerateDocumentCommand cmd=(GenerateDocumentCommand)this.newCommand("GenerateDocument");
+            GenerateDocumentCommand cmd=this.newCommand(GenerateDocumentCommand.class);
             cmd.setProductNameArg(productName);
             cmd.setDocumentDefinitionArg(documentDefinitionName);
             cmd.setModelArg(model);
@@ -1121,7 +1179,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * Reset the server side cache used to hold configuration information.
      */
     public void clearConfigurationCache() {
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
     }
 
     /**

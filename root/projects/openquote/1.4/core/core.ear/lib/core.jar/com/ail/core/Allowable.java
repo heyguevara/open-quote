@@ -17,6 +17,7 @@
 
 package com.ail.core;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import java.util.Collection;
 import java.util.Vector;
@@ -28,6 +29,7 @@ import java.util.Vector;
  * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Allowable.java,v $
  * @stereotype type
  */
+@TypeDefinition
 public class Allowable extends Type {
 
 	/**

@@ -19,12 +19,14 @@ package com.ail.core.document.model;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.CoreProxy;
 import com.ail.core.Functions;
 
 /**
  * Node of the document structure object graph. 
  */
+@TypeDefinition
 public class UrlData extends ItemData {
     private String url;
     

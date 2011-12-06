@@ -107,17 +107,17 @@
         <field name="stack" type="string" collection="collection"/>
 	</class>
 
-    <class name="com.ail.core.command.CommandArgImp" extends="com.ail.core.Type">
+    <class name="com.ail.core.command.ArgumentImpl" extends="com.ail.core.Type">
         <field name="callersCore" type="com.ail.core.CoreUserImpl"/>
     </class>
 
-    <class name="com.ail.core.logging.LoggerArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
+    <class name="com.ail.core.logging.LoggerArgumentImpl" extends="com.ail.core.command.ArgumentImpl" auto-complete="true"/>
 
-    <class name="com.ail.core.product.listproducts.ListProductsArgImp" extends="com.ail.core.command.CommandArgImp">
+    <class name="com.ail.core.product.listproducts.ListProductsArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
         <field name="productsRet" type="string" collection="collection"/>
     </class>
 
-    <class name="com.ail.core.document.generatedocument.StyleDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
+    <class name="com.ail.core.document.generatedocument.StyleDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
         <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
             <bind-xml type="any" node="element"/> 
         </field>

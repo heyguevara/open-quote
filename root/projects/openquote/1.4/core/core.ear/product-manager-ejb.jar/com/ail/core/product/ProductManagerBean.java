@@ -24,28 +24,16 @@ import javax.ejb.SessionContext;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.CommandArg;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsArg;
-import com.ail.core.product.newproducttype.NewProductTypeArg;
-import com.ail.core.product.registerproduct.RegisterProductArg;
-import com.ail.core.product.removeproduct.RemoveProductArg;
-import com.ail.core.product.resetallproducts.ResetAllProductsArg;
-import com.ail.core.product.resetproduct.ResetProductArg;
-import com.ail.core.product.updateproduct.UpdateProductArg;
+import com.ail.core.product.listproducts.ListProductsCommand;
+import com.ail.core.product.newproducttype.NewProductTypeCommand;
+import com.ail.core.product.registerproduct.RegisterProductCommand;
+import com.ail.core.product.removeproduct.RemoveProductCommand;
+import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
+import com.ail.core.product.resetproduct.ResetProductCommand;
+import com.ail.core.product.updateproduct.UpdateProductCommand;
 
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManagerBean.java,v $
- * @undefined
- * @displayName
- * @ejbHome <{ProductManagerHome}>
- * @ejbRemote <{ProductManager}>
- */
 public class ProductManagerBean extends EJBComponent implements SessionBean {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;
@@ -78,28 +66,13 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
         core = new com.ail.core.Core(this);
     }
 
-    private CommandArg invokeCommand(String name, CommandArg arg) {
-        try {
-            com.ail.core.command.AbstractCommand command = core.newCommand(name);
-            command.setArgs(arg);
-            command.invoke();
-            return command.getArgs();
-        }
-        catch (com.ail.core.BaseException e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
     /**
      * Expose services of this EJB via XML. This method unmarshals the XML argument string into
      * an object, finds a method on the EJB to accept that object type as an argument
      * and invokes it. The result returned from the method is marshalled back into XM and returned.<p>
      * The methods are invoked on the context's local interface if possible (if one
      * exists). If no local interface is found then the remote interface is used instead.
-     * Invoking methods via the local/remote interface means that the deployment settings
+     * Invoking methods via the local/remote interface means that the deployment setting
      * for security and transacts will be honoured.
      * @param xml XML argument to be passed to the service.
      * @return XML returned from the service.
@@ -147,29 +120,14 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
         }
     }
 
-    public Version getVersion() {
-        try {
-            Version v = (com.ail.core.Version) core.newType("Version");
-            v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-            v.setDate("$Date: 2007/10/05 22:47:50 $");
-            v.setSource("$Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManagerBean.java,v $");
-            v.setState("$State: Exp $");
-            v.setVersion("$Revision: 1.5 $");
-            return v;
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
     /**
      * Service wrapper method for the ListProducts service.
      * @param arg Argument to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ListProductsArg getListProducts(ListProductsArg arg) throws BaseServerException {
-        return (com.ail.core.product.listproducts.ListProductsArg) invokeCommand("ListProducts", arg);
+    public ListProductsCommand getListProducts(ListProductsCommand arg) throws BaseServerException {
+        return invokeCommand(core, "ListProducts", arg);
     }
 
     /**
@@ -178,8 +136,8 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public RegisterProductArg registerProduct(RegisterProductArg arg) throws BaseServerException {
-        return (RegisterProductArg) invokeCommand("RegisterProduct", arg);
+    public RegisterProductCommand registerProduct(RegisterProductCommand arg) throws BaseServerException {
+        return invokeCommand(core, "RegisterProduct", arg);
     }
 
     /**
@@ -188,8 +146,8 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public RemoveProductArg removeProduct(RemoveProductArg arg) throws BaseServerException {
-        return (RemoveProductArg) invokeCommand("RemoveProduct", arg);
+    public RemoveProductCommand removeProduct(RemoveProductCommand arg) throws BaseServerException {
+        return invokeCommand(core, "RemoveProduct", arg);
     }
 
     /**
@@ -198,18 +156,18 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ResetProductArg getProductDefinition(ResetProductArg arg) throws BaseServerException {
-        return (ResetProductArg) invokeCommand("ResetProduct", arg);
+    public ResetProductCommand getProductDefinition(ResetProductCommand arg) throws BaseServerException {
+        return invokeCommand(core, "ResetProduct", arg);
     }
 
     /**
-     * Service wrapper method for the ResetAllProductsArg service.
+     * Service wrapper method for the ResetAllProductsCommand service.
      * @param arg Argument to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ResetAllProductsArg resetAllProducts(ResetAllProductsArg arg) throws BaseServerException {
-        return (ResetAllProductsArg) invokeCommand("ResetAllProducts", arg);
+    public ResetAllProductsCommand resetAllProducts(ResetAllProductsCommand arg) throws BaseServerException {
+        return invokeCommand(core, "ResetAllProducts", arg);
     }
 
     /**
@@ -218,8 +176,8 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public UpdateProductArg updateProduct(UpdateProductArg arg) throws BaseServerException {
-        return (UpdateProductArg) invokeCommand("UpdateProduct", arg);
+    public UpdateProductCommand updateProduct(UpdateProductCommand arg) throws BaseServerException {
+        return invokeCommand(core, "UpdateProduct", arg);
     }
 
     /**
@@ -228,8 +186,8 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public NewProductTypeArg newProductType(NewProductTypeArg arg) throws BaseServerException {
-        return (NewProductTypeArg) invokeCommand("NewProductType", arg);
+    public NewProductTypeCommand newProductType(NewProductTypeCommand arg) throws BaseServerException {
+        return invokeCommand(core, "NewProductType", arg);
     }
 }
 

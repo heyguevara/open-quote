@@ -17,6 +17,7 @@
 
 package com.ail.core.product.resetallproducts;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -27,8 +28,8 @@ import com.ail.core.product.ProductDetails;
 import com.ail.core.product.listproducts.ListProductsCommand;
 import com.ail.core.product.resetproduct.ResetProductCommand;
 
-
-public class ResetAllProductsService extends Service<ResetAllProductsArg> {
+@ServiceImplementation
+public class ResetAllProductsService extends Service<ResetAllProductsArgument> {
     /**
      * This service doesn't have its own configuration, but it takes care of resetting 
      * all the products returned by the ListProducts service.
@@ -37,7 +38,7 @@ public class ResetAllProductsService extends Service<ResetAllProductsArg> {
     public void resetConfiguration() {
         try {
             super.resetConfiguration();
-            ConfigurationHandler.reset();
+            ConfigurationHandler.resetCache();
             invoke();
         }
         catch(PreconditionException e) {
@@ -50,8 +51,8 @@ public class ResetAllProductsService extends Service<ResetAllProductsArg> {
 
     @Override
     public void invoke() throws PreconditionException {
-        ListProductsCommand listProductsCommand=(ListProductsCommand)core.newCommand("ListProducts");
-        ResetProductCommand resetProductCommand=(ResetProductCommand)core.newCommand("ResetProduct");
+        ListProductsCommand listProductsCommand=core.newCommand(ListProductsCommand.class);
+        ResetProductCommand resetProductCommand=core.newCommand(ResetProductCommand.class);
 
         try {
             listProductsCommand.invoke();

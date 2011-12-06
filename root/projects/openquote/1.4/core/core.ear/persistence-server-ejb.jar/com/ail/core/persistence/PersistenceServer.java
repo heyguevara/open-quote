@@ -21,7 +21,6 @@ import java.rmi.RemoteException;
 
 import javax.ejb.EJBObject;
 
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 
@@ -48,17 +47,15 @@ public interface PersistenceServer extends EJBObject {
 
     void resetConfiguration() throws RemoteException;
 
-    Version getVersion() throws RemoteException;
+    CreateCommand createCommand(CreateCommand arg) throws RemoteException;
 
-    CreateArg createCommand(CreateArg arg) throws RemoteException;
+	UpdateCommand updateCommand(UpdateCommand arg) throws RemoteException;
 
-	UpdateArg updateCommand(UpdateArg arg) throws RemoteException;
+	LoadCommand loadCommand(LoadCommand arg) throws RemoteException;
 
-	LoadArg loadCommand(LoadArg arg) throws RemoteException;
+	QueryCommand queryCommand(QueryCommand arg) throws RemoteException;
 
-	QueryArg queryCommand(QueryArg arg) throws RemoteException;
-
-	DeleteArg deleteCommand(DeleteArg arg) throws RemoteException;
+	DeleteCommand deleteCommand(DeleteCommand arg) throws RemoteException;
 }
 
 

@@ -18,6 +18,7 @@ package com.ail.core.document.model;
 
 import java.util.Iterator;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import static com.ail.core.document.model.Placement.BODY;
 import static com.ail.core.document.model.Placement.HEADER;
@@ -25,6 +26,7 @@ import static com.ail.core.document.model.Placement.FOOTER;
 
 /**
  */
+@TypeDefinition
 public class RepeatingData extends ItemContainer {
     private String binding;
     

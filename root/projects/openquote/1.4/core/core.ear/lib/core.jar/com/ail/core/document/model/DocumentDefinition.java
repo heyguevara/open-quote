@@ -16,6 +16,7 @@
  */
 package com.ail.core.document.model;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -30,6 +31,7 @@ import com.ail.core.Type;
  * might be an instance of the Policy.class, among other things the mapping defines where the 
  * premium can be found in that model.
  */
+@TypeDefinition
 public class DocumentDefinition extends Type {
     private String mergeCommand;
     private String styleCommand;

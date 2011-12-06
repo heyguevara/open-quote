@@ -26,6 +26,7 @@ import org.exolab.castor.xml.Unmarshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLClassDescriptorResolver;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.core.configure.XMLMapping;
@@ -45,7 +46,8 @@ import com.ail.core.configure.XMLMapping;
  * </ul>
  * These arguments and returns are encapsulated in an instance of FromXMLCommandArg.
  */
-public class CastorFromXMLService extends Service<FromXMLArg> {
+@ServiceImplementation
+public class CastorFromXMLService extends Service<FromXMLArgument> {
 
 	/**
      * The 'business logic' of the entry point.

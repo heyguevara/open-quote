@@ -17,51 +17,16 @@
 
 package com.ail.core;
 
-import com.ail.core.command.CommandArg;
-import com.ail.core.configure.Configuration;
+import com.ail.annotation.ServiceImplementation;
+import com.ail.core.command.Argument;
 
 /**
  * This entry point does nothing. It is intended to be use in place of a real
  * entry point when either one has to be configured, but no functionality is
- * required, or as a placeholder when the real entry point isn't yet ready.
+ * required, or as a place holder when the real entry point isn't yet ready.
  */
-public class NullService extends Service<CommandArg> {
-    private CommandArg args=null;
-
+@ServiceImplementation
+public class NullService extends Service<Argument> {
     public void invoke() {
-    }
-
-	/**
-     * This entry point has no Core requirements, so simply return null.
-     * @return null
-     */
-	public Core getCore() {
-        return null;
-    }
-
-    public void setArgs(CommandArg args) {
-        this.args=args;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    public void setConfiguration(Configuration configuration) {
-    }
-
-    public VersionEffectiveDate getVersionEffectiveDate() {
-        return null;
-    }
-
-    public Configuration getConfiguration() {
-        return null;
-    }
-
-    public String getConfigurationNamespace() {
-        return null;
-    }
-
-    public void resetConfiguration() {
     }
 }

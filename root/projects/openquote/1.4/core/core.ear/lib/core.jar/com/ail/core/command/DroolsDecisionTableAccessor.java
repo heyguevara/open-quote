@@ -54,18 +54,18 @@ import com.ail.core.factory.AbstractFactory;
  */
 public class DroolsDecisionTableAccessor extends Accessor implements ConfigurationOwner {
     private Core core=null;
-    private CommandArg args=null;
+    private Argument args=null;
     private String url=null;
     private String extend=null;
     private transient RuleBase ruleBase=null;
     private transient Throwable compilationError=null;
     private boolean ruleBaseLoaded=false;
 
-    public void setArgs(CommandArg args) {
+    public void setArgs(Argument args) {
         this.args=args;
     }
 
-    public CommandArg getArgs() {
+    public Argument getArgs() {
         return args;
     }
 
