@@ -16,5 +16,5 @@
 
     <!-- Pull in the Common stuff - all projects us these. -->
     <import file="${development.dir}/macros/BuildCommon.xml" />
-    <import file="${development.dir}/macros/BuildJ2EEMacros.xml" />
+    <import file="${development.dir}/macros/BuildJavaMacros.xml" />
 </project>
