@@ -48,7 +48,7 @@
   </target>
 
   <target name="teardown" description="clear out the jars downloaded by 'setup'">
-    <antcall target="clean" />
+    <delete dir="${target.dir}" />
     <delete dir="${cache.dir}" />
     <delete dir="build/lib" />
   </target>
