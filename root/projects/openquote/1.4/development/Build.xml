@@ -54,8 +54,8 @@
   </target>
 
   <target name="release" description="build and promote releasable artifacts">
-    <ant target="teardown" />
-    <ant target="setup" />
+    <antcall target="teardown" />
+    <antcall target="setup" />
     <release-jar-macro jar.name="annotation" />
   </target>
 </project>
