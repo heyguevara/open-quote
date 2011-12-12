@@ -237,7 +237,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 			Configuration factoryConfig;
 			
 			factoryConfig=loadCoreDefaultConfig();
-			factoryConfig=loadAndMergeCoreDefaultConfigTypes(factoryConfig);
+			factoryConfig=loadAndMergeAnnotatedConfig(factoryConfig);
 
 			// reset the configuration
 			setConfiguration(factoryConfig);
@@ -251,18 +251,24 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         }
     }
 
-    private Configuration loadAndMergeCoreDefaultConfigTypes(Configuration factoryConfig) throws IOException, XMLException {
+    Configuration loadAndMergeAnnotatedConfig(Configuration factoryConfig) throws IOException, XMLException {
         // load the CoreDefaultConfig resource into an XMLString
-        InputStream in = this.getClass().getResourceAsStream("AnnotatedTypeConfig.xml");
-        XMLString factoryConfigXML = new XMLString(in);
-
-        // marshal the config XML into an instance of Configuration
-        Configuration serviceConfig = fromXML(Configuration.class, factoryConfigXML);
+        InputStream in=null;
+        XMLString factoryConfigXML=null;;
         
-        for(int i=0 ; i<serviceConfig.getTypes().getTypeCount() ; i++) {
-            com.ail.core.configure.Type type=serviceConfig.getTypes().getType(i);
-            factoryConfig.getTypes().addType(type);
+        try {
+            in = this.getClass().getResourceAsStream("AnnotatedTypeConfig.xml");
+            factoryConfigXML = new XMLString(in);
         }
+        finally {
+            in.close();
+        }
+
+        // marshal the config XML into an instance of Configuration.
+        Configuration annotatedConfig = fromXML(Configuration.class, factoryConfigXML);
+        
+        // merge the value from the annotated config into the factory's config.
+        factoryConfig.mergeWithDataFrom(annotatedConfig, this);
 
         return factoryConfig;
     }

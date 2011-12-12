@@ -142,19 +142,42 @@ public class ConfigurationReset {
     private void mergeAnnotationGeneratedConfigs(String searchPath, String annotationTypeOutputFile) throws Exception {
         PrintWriter pw=new PrintWriter(annotationTypeOutputFile);
 
+        Collection<File> configs=findAnnotationConfigs(searchPath);
+
         pw.printf("<!-- This is a generated file. The types defined here are automatically create -->\n");
         pw.printf("<!-- by the build system in response to annotations in source code. Edits to   -->\n");
         pw.printf("<!-- this file will be lost.                                                   -->\n");
         pw.printf("<configuration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='http://www.appliedindustriallogic.com/schemas/Configuration.xsd'>\n");
-        pw.printf("  <types>");
 
-        for(File file: findAnnotationConfigs(searchPath)) {
+        pw.printf("  <builders>\n");
+        for(File file: configs) {
+            XMLString xmlConfig=new XMLString(file);
+            pw.print(xmlConfig.eval("configuration/builders/*"));
+        }
+        pw.printf("  </builders>\n");
+        
+        pw.printf("  <group name='JXPathExtensions'>\n");
+        for(File file: configs) {
+            XMLString xmlConfig=new XMLString(file);
+            pw.print(xmlConfig.eval("configuration/group[@name='JXPathExtensions']/*"));
+        }
+        pw.printf("  </group>\n");
+        
+        pw.printf("  <group name='NamespacesToResetOnResetAll'>\n");
+        for(File file: configs) {
+            XMLString xmlConfig=new XMLString(file);
+            pw.print(xmlConfig.eval("configuration/group[@name='NamespacesToResetOnResetAll']/*"));
+        }
+        pw.printf("  </group>\n");
+        
+        pw.printf("  <types>\n");
+        for(File file: configs) {
             XMLString xmlConfig=new XMLString(file);
             pw.print(xmlConfig.eval("configuration/types/*"));
         }
-
-        pw.printf("  </types>");
-        pw.printf("</configuration>");
+        pw.printf("  </types>\n");
+        
+        pw.printf("</configuration>\n");
 
         pw.close();
     }

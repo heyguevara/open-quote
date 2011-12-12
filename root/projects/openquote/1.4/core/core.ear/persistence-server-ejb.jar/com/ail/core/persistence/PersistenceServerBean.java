@@ -26,10 +26,12 @@ import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
+import com.ail.annotation.Configurable;
 
 /**
  * EJB Wrapper for the persistence server.
  */
+@Configurable
 public class PersistenceServerBean extends EJBComponent implements SessionBean {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;

@@ -18,6 +18,7 @@
 package com.ail.core;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,15 +36,13 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.ail.core.command.CommandInvocationError;
+import com.ail.annotation.XPathFunctionDefinition;
 
 /**
- * Utility function class.
- * @version $Revision: 1.16 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/Functions.java,v $
+ * Utility function class. A collection of useful static methods that are 
+ * available for use from java and from XPath queries.
  **/
-
+@XPathFunctionDefinition(namespace="function")
 public class Functions {
 
 	/**

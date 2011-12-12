@@ -32,12 +32,14 @@ import org.apache.commons.validator.ValidatorResults;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.annotation.Configurable;
 
 /**
  * Implementation of the Validator service using the <a href="http://jakarta.apache.org/commons/validator">
  * jakarta commons validator</a> project.<p>
  * configuration.
  */
+@Configurable
 @ServiceImplementation
 @SuppressWarnings("deprecation")
 public class CommonsValidatorService extends Service<ValidatorArgument> {

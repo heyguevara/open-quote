@@ -194,17 +194,17 @@ public class TestUrlHandlers {
         URL url=null;
 
          // get content without specifying a local
-        com.ail.core.Locale.setThreadLocale(Locale.ENGLISH);
+        com.ail.core.ThreadLocale.setThreadLocale(Locale.ENGLISH);
         url=new URL("product://localhost:8080/Demo/Demo/Welcome");
         assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
 
         // get content with a locale for which content is defined
-        com.ail.core.Locale.setThreadLocale(Locale.GERMAN);
+        com.ail.core.ThreadLocale.setThreadLocale(Locale.GERMAN);
         url=new URL("product://localhost:8080/Demo/Demo/Welcome");
         assertEquals("Hallo Welt!", Functions.loadUrlContentAsString(url));
 
         // get content with a locale for which content is not defined
-        com.ail.core.Locale.setThreadLocale(Locale.FRENCH);
+        com.ail.core.ThreadLocale.setThreadLocale(Locale.FRENCH);
         url=new URL("product://localhost:8080/Demo/Demo/Welcome");
         assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
     }

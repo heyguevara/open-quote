@@ -67,23 +67,23 @@ public class Translations extends Type {
 
     /**
      * Return the translation matching the specified key. The thread's current locale is
-     * used (i.e. the locale returned by {@link com.ail.core.Locale#getThreadLocale()}.
+     * used (i.e. the locale returned by {@link com.ail.core.ThreadLocale#getThreadLocale()}.
      * @param key Key to find a match for
-     * @return Locale specific string, or the value of key if a match cannot be found. 
+     * @return ThreadLocale specific string, or the value of key if a match cannot be found. 
      */
     public String translate(String key) {
-        return translate(com.ail.core.Locale.getThreadLocale().toString(), key, key);
+        return translate(com.ail.core.ThreadLocale.getThreadLocale().toString(), key, key);
     }
     
     /**
      * Return the translation matching the specified key. The thread's current locale is
-     * used (i.e. the locale returned by {@link com.ail.core.Locale#getThreadLocale()}.
+     * used (i.e. the locale returned by {@link com.ail.core.ThreadLocale#getThreadLocale()}.
      * @param key Key to find a match for
      * @param alternative the value to be returned in key is not found
-     * @return Locale specific string, or the value of <i>alternative</i> if a match cannot be found. 
+     * @return ThreadLocale specific string, or the value of <i>alternative</i> if a match cannot be found. 
      */
     public String translate(String key, String alternative) {
-        return translate(com.ail.core.Locale.getThreadLocale().toString(), key, alternative);
+        return translate(com.ail.core.ThreadLocale.getThreadLocale().toString(), key, alternative);
     } 
     
     /**
@@ -91,7 +91,7 @@ public class Translations extends Type {
      * @param language Language in locale format, e.g. en, en_US, de, etc.
      * @param key key identifying the string to be returned.
      * @param alternative the value to be returned in key is not found
-     * @return Locale specific string, or the value of <i>alternative</i> if a match cannot be found. 
+     * @return ThreadLocale specific string, or the value of <i>alternative</i> if a match cannot be found. 
      */
     public String translate(String language, String key, String alternative) {
         boolean languageFound=false;

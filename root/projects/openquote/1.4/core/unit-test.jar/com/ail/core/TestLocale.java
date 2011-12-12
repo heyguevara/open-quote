@@ -29,7 +29,7 @@ public class TestLocale {
     @Test
     public void testLocaleConstruction() throws Exception {
         try {
-            new Locale().getInstance();
+            new ThreadLocale().getInstance();
             fail("You should not be able to get an instance from a badly initialised locale");
         }
         catch(IllegalStateException e) {
@@ -41,7 +41,7 @@ public class TestLocale {
 
     
         try {
-            new Locale(null, null, null).getInstance();
+            new ThreadLocale(null, null, null).getInstance();
             fail("You should not be able to get an instance from a badly initialised locale");
         }
         catch(IllegalStateException e) {
@@ -52,7 +52,7 @@ public class TestLocale {
         }
 
         try {
-            new Locale(null, null, "p").getInstance();
+            new ThreadLocale(null, null, "p").getInstance();
             fail("You should not be able to get an instance from a badly initialised locale");
         }
         catch(IllegalStateException e) {
@@ -63,7 +63,7 @@ public class TestLocale {
         }
 
         try {
-            new Locale(null, java.util.Locale.CANADA.getCountry(), "p").getInstance();
+            new ThreadLocale(null, java.util.Locale.CANADA.getCountry(), "p").getInstance();
             fail("You should not be able to get an instance from a badly initialised locale");
         }
         catch(IllegalStateException e) {
@@ -73,8 +73,8 @@ public class TestLocale {
             fail("Wrong exception thrown when getting an instance from a badly initialised locale");
         }
 
-        new Locale(CANADA.getLanguage(), null, null).getInstance();
-        new Locale(CANADA.getLanguage(), CANADA.getCountry(), null).getInstance();
-        new Locale(CANADA.getLanguage(), CANADA.getCountry(), "p").getInstance();
+        new ThreadLocale(CANADA.getLanguage(), null, null).getInstance();
+        new ThreadLocale(CANADA.getLanguage(), CANADA.getCountry(), null).getInstance();
+        new ThreadLocale(CANADA.getLanguage(), CANADA.getCountry(), "p").getInstance();
     }
 }

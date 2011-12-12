@@ -33,7 +33,9 @@ import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.finder.GetClassListCommand;
+import com.ail.annotation.Configurable;
 
+@Configurable
 public class ServerBean extends EJBComponent implements SessionBean, CoreUser, ConfigurationOwner {
 	private Core core=null;
     private SessionContext ctx=null;

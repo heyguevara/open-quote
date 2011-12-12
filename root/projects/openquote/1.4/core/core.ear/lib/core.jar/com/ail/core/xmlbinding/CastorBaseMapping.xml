@@ -45,7 +45,7 @@
         </field>
     </class>
 
-    <class name="com.ail.core.Locale" extends="com.ail.core.Type">
+    <class name="com.ail.core.ThreadLocale" extends="com.ail.core.Type">
         <map-to xml="locale"/>
         <field name="language" type="string">
             <bind-xml node="attribute"/>

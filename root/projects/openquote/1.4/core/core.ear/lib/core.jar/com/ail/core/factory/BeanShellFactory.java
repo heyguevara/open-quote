@@ -24,16 +24,17 @@ import com.ail.core.Core;
 import com.ail.core.Functions;
 import com.ail.core.TypeXPathException;
 import com.ail.core.configure.Type;
+import com.ail.annotation.Builder;
 
 /**
- * Factory to creat class instances from BeanShell scripts embedded in configuration.
+ * Factory to create class instances from BeanShell scripts embedded in configuration.
  * The simple contract is that a type configured to use this factory must define either 
  * a "Script" or a "Url" parameter. The factory takes this parameter's value and either
  * uses it to download a script from in the case of Url, of uses it as the script itself
  * in the case of "Script".<p>
- * The object referred to by "type" will be retured by the factory.
+ * The object referred to by "type" will be returned by the factory.
  * The type may optionally define a parameter called "extends" which names another type
- * whose proprtyies should be merged into this type's properties. See {@link com.ail.core.Type#mergeDonorIntoSubject(Type, Type, Core)}
+ * whose properties should be merged into this type's properties. See {@link com.ail.core.Type#mergeDonorIntoSubject(Type, Type, Core)}
  * for a description of the rules applied during the merge. If "extends" is defined, then
  * the object created by this script will be merged with the object created by <code>core.newType([<i>extends</i>])</code>.<p>
  * In the following sample of configuration a base type called "OtherVersion" defines a
@@ -41,7 +42,7 @@ import com.ail.core.configure.Type;
  * extends parameter) and then modifies the type altering the Source property.
  * <pre>
  * &lt;type name="OtherVersion" builder="CastorBuilder" key="com.ail.core.Version"&gt;
- *   &lt;patameter name="script"&gt;&lt;![CDATA[
+ *   &lt;parameter name="script"&gt;&lt;![CDATA[
  *     &lt;?xml version="1.0" encoding="UTF-8"?&gt;
  *     &lt;version serialVersion='0' lock='false' xsi:type='java:com.ail.core.Version' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'&gt;" +
  *       &lt;source&gt;Peach and mint&lt;/source&gt;
@@ -57,17 +58,14 @@ import com.ail.core.configure.Type;
  *
  * &lt;type name="NewVersion" builder="BeanShellBuilder" key="com.ail.core.Version"&gt;
  *   &lt;parameter name="extends"&gt;OtherVersion&lt;/parameter&gt;
- *   &lt;patameter name="script"&gt;&lt;![CDATA[
+ *   &lt;parameter name="script"&gt;&lt;![CDATA[
  *      type=new com.ail.core.Version();
  *      type.setSource("peach and lemon");
  *   ]]&gt;&lt;/parameter&gt;
  * &lt;/type&gt;
  * </pre>
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/BeanShellFactory.java,v $
  */
+@Builder(name="BeanShellBuilder")
 public class BeanShellFactory extends AbstractFactory {
     Interpreter interpreter=new Interpreter();
 

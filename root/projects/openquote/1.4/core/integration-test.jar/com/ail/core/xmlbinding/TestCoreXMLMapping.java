@@ -192,7 +192,7 @@ public class TestCoreXMLMapping implements CoreUser, ConfigurationOwner {
 						" <comment>The floor is far to dark</comment>"+cr+
 						"</noisrev>"+cr;
 
-    	Version version=(Version)core.newType("Version");
+    	Version version=core.newType(Version.class);
         version.setAuthor("Jimbo Clucknasty");
         version.setComment("The floor is far to dark");
         version.setDate("Some time today");
@@ -219,7 +219,7 @@ public class TestCoreXMLMapping implements CoreUser, ConfigurationOwner {
      */
     @Test
     public void testSimpleToXMLPerformance() throws Exception {
-        Version version=(Version)core.newType("Version");
+        Version version=core.newType(Version.class);
         version.setAuthor("Jimbo Clucknasty");
         version.setComment("The floor is far to dark");
         version.setDate("Some time today");
@@ -276,7 +276,7 @@ public class TestCoreXMLMapping implements CoreUser, ConfigurationOwner {
 	 * <li>Add Version to History</li>
 	 * <li>Pass the History object into core.toXML()</li>
 	 * <li>Fail if any of Version's populated fields fail to appear in the result</li>
-	 * <li>Fail if any exception occure</li>
+	 * <li>Fail if any exception occur</li>
 	 * <ol>
 	 * @throws Exception
 	 */
@@ -289,9 +289,9 @@ public class TestCoreXMLMapping implements CoreUser, ConfigurationOwner {
 						" </MyVersion>"+cr+
 						"</history>"+cr;
 
-		History history=(History)core.newType("History");
+		History history=core.newType(History.class);
 		
-		Version version=(Version)core.newType("Version");
+		Version version=core.newType(Version.class);
 		version.setAuthor("Jimbo Clucknasty");
 		version.setComment("The floor is far to dark");
 		version.setDate("Some time today");

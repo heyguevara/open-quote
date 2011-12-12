@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.language.Translations;
@@ -64,11 +64,11 @@ public class TestTranslationsXMLBinding extends CoreUserBaseCase {
         Translations instanceObj = getCore().fromXML(Translations.class, instanceXml);
         assertNotNull(instanceObj);
 
-        java.util.Locale saved=Locale.getThreadLocale();
-        Locale.setThreadLocale(US);
+        java.util.Locale saved=ThreadLocale.getThreadLocale();
+        ThreadLocale.setThreadLocale(US);
 
         assertEquals("Second <b>String</b> number two", instanceObj.translate("key2", "two"));
 
-        Locale.setThreadLocale(saved);
+        ThreadLocale.setThreadLocale(saved);
     }
 }

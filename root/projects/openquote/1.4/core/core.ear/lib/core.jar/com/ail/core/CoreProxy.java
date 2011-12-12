@@ -31,6 +31,7 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.ConfigurationResetError;
 import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
+import com.ail.annotation.Configurable;
 
 /**
  * This class acts as a proxy for those who need to access some of the Core's
@@ -39,6 +40,7 @@ import com.ail.core.configure.Parameter;
  * The versionEffectiveDate of the proxy is taken to be the date at which it was
  * instantiated.
  */
+@Configurable
 public class CoreProxy implements CoreUser, ConfigurationOwner {
     public static final String DefaultNamespace="com.ail.core.CoreProxy";
     private Core core=null;

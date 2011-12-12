@@ -22,13 +22,8 @@ import com.ail.core.factory.AbstractFactory;
 /**
  * A "Builder" represents an instance of a class builder - i.e. a class factory. There may
  * be an arbitrary number of builders in any live system each capable of building class based
- * on different inputs. e.g. and BeanShellBuilder while builds class based on a bean shell script, 
- * or a CastorXMLBuilder whild builds classes based on the XML representation of a class instance.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Builder.java,v $
- * @stereotype type
+ * on different inputs. e.g. and BeanShellBuilder builds class based on a bean shell script, 
+ * or a CastorXMLBuilder builds classes based on the XML representation of a class instance.
  */
 public class Builder extends Group {
     static final long serialVersionUID = -2392094239125625998L;

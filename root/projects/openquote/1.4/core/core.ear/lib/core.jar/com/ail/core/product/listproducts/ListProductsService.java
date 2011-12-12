@@ -26,8 +26,10 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.Parameter;
 import com.ail.core.product.ProductDetails;
+import com.ail.annotation.Configurable;
 
 @ServiceImplementation
+@Configurable
 public class ListProductsService extends Service<ListProductsArgument> {
     public static final String SERVICE_NAMESPACE="com.ail.core.product.listproducts.ListProductsService";
     private String namespace;

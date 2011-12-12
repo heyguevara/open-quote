@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.core.XMLString;
 
 /**
@@ -38,12 +38,12 @@ public class TestAttributeXMLTranslations {
 
     @Before
     public void setUp() throws Exception {
-        Locale.setThreadLocale(UK);
+        ThreadLocale.setThreadLocale(UK);
     }
     
     @After
     public void teadDown() throws Exception {
-        Locale.setThreadLocale(UK);
+        ThreadLocale.setThreadLocale(UK);
     }
     
     

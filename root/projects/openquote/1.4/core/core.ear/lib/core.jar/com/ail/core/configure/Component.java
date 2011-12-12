@@ -16,20 +16,21 @@
  */
 package com.ail.core.configure;
 
+import com.ail.core.Identified;
 import com.ail.core.Type;
 
 /**
  * This is the base of the composite pattern implementation which defines
  * configuration data.
  */
-public class Component extends Type {
+public class Component extends Type implements Identified {
     static final long serialVersionUID = -1770023766173749861L;
     private String name=null;
 
     /** Configuration namespace in which this component was defined */
     private String namespace=null;
 
-	/**
+    /**
      * Getter for the component's name.
 	 * The name generally equates to the key by which the component is found.
      * For example a component referred to as "insurance.types.policy" would
@@ -73,5 +74,25 @@ public class Component extends Type {
      */
     public void setNamespace(String namespace) {
         this.namespace = namespace;
+    }
+
+    @Override
+    public String getId() {
+        return getName();
+    }
+
+    @Override
+    public void setId(String Id) {
+        throw new IllegalStateException("Builders.setId() cannot be invoked, the Id always resolves to the builder's group name.");
+    }
+
+    @Override
+    public boolean compareById(Object that) {
+        try {
+            return ((Identified)that).getId().equals(this.getId());
+        }
+        catch(Exception e) {
+            return false;
+        }
     }
 }

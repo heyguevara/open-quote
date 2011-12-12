@@ -20,13 +20,13 @@ package com.ail.core;
 import com.ail.annotation.TypeDefinition;
 
 /**
- * Core specific wrapper for the java.util.Locale class. This class simply wraps a Java Locale object and
+ * Core specific wrapper for the java.util.Locale class. This class simply wraps a Java ThreadLocale object and
  * adds a number of helper methods to make it more suitable for use within the core. Not all of Java's 
- * Locale methods are exposed here, but access is provided to the wrapped instance via {@link #getInstance()}.
+ * ThreadLocale methods are exposed here, but access is provided to the wrapped instance via {@link #getInstance()}.
  * @see java.util.Locale
  */
 @TypeDefinition
-public class Locale extends Type {
+public class ThreadLocale extends Type {
     private static ThreadLocal<java.util.Locale> threadLocale = new ThreadLocal<java.util.Locale>() {
         java.util.Locale threadLocale;
         
@@ -47,7 +47,7 @@ public class Locale extends Type {
     /**
      * Default constructor
      */
-    public Locale() {
+    public ThreadLocale() {
         super();
     }
 
@@ -55,7 +55,7 @@ public class Locale extends Type {
      * @see java.util.Locale#Locale(String)
      * @param language
      */
-    public Locale(String language) {
+    public ThreadLocale(String language) {
         super();
         this.language = language;
     }
@@ -65,7 +65,7 @@ public class Locale extends Type {
      * @param language
      * @param country
      */
-    public Locale(String language, String country) {
+    public ThreadLocale(String language, String country) {
         super();
         this.language = language;
         this.country = country;
@@ -77,14 +77,14 @@ public class Locale extends Type {
      * @param country
      * @param variant
      */
-    public Locale(String language, String country, String variant) {
+    public ThreadLocale(String language, String country, String variant) {
         super();
         this.language = language;
         this.country = country;
         this.variant = variant;
     }
     
-    public Locale(java.util.Locale locale) {
+    public ThreadLocale(java.util.Locale locale) {
         super();
         this.language=locale.getLanguage();
         this.country=locale.getCountry();
@@ -100,8 +100,8 @@ public class Locale extends Type {
     }
 
     /**
-     * Set the language associated with this Locale. This has the effect of invalidating any
-     * existing references to {@link Locale#getInstance()}.
+     * Set the language associated with this ThreadLocale. This has the effect of invalidating any
+     * existing references to {@link ThreadLocale#getInstance()}.
      * @param language the language to set
      */
     public void setLanguage(String language) {
@@ -118,8 +118,8 @@ public class Locale extends Type {
     }
 
     /**
-     * Set the country associated with this Locale. This has the effect of invalidating any
-     * existing references to {@link Locale#getInstance()}.
+     * Set the country associated with this ThreadLocale. This has the effect of invalidating any
+     * existing references to {@link ThreadLocale#getInstance()}.
      * @param country the country to set
      */
     public void setCountry(String country) {
@@ -136,8 +136,8 @@ public class Locale extends Type {
     }
 
     /**
-     * Set the variant associated with this Locale. This has the effect of invalidating any
-     * existing references to {@link Locale#getInstance()}.
+     * Set the variant associated with this ThreadLocale. This has the effect of invalidating any
+     * existing references to {@link ThreadLocale#getInstance()}.
      * @param variant the variant to set
      */
     public void setVariant(String variant) {
@@ -146,7 +146,7 @@ public class Locale extends Type {
     }
 
     /**
-     * Get the wrapped instance of java.util.Locale representing this Locale.
+     * Get the wrapped instance of java.util.Locale representing this ThreadLocale.
      * @return wrapped instance
      */
     public java.util.Locale getInstance() {
@@ -168,26 +168,26 @@ public class Locale extends Type {
     }
 
     /**
-     * Get an instance of Locale representing the default locale for this JVM.
+     * Get an instance of ThreadLocale representing the default locale for this JVM.
      * @see java.util.Locale#getDefault()
      * @return JVM's default locale
      */
-    public static Locale getDefault() {
-        return new Locale(java.util.Locale.getDefault());
+    public static ThreadLocale getDefault() {
+        return new ThreadLocale(java.util.Locale.getDefault());
     }
 
     /**
-     * Get an instance of Locale representing the default locale for this JVM.
+     * Get an instance of ThreadLocale representing the default locale for this JVM.
      * @see java.util.Locale#getDefault()
      * @return JVM's default locale
      */
-    public static void setDefault(Locale locale) {
-        java.util.Locale.setDefault(locale.getInstance());
+    public static void setDefault(ThreadLocale threadLocale) {
+        java.util.Locale.setDefault(threadLocale.getInstance());
     }
 
     /**
      * Set the locale to be used while processing this thread.
-     * @param threadLocaleArg Locale to be used
+     * @param threadLocaleArg ThreadLocale to be used
      */
     public static void setThreadLocale(java.util.Locale threadLocaleArg) {
         threadLocale.set(threadLocaleArg);
@@ -195,7 +195,7 @@ public class Locale extends Type {
 
     /**
      * Get the locale being used while processing this thread.
-     * @return Locale currently being used
+     * @return ThreadLocale currently being used
      */
     public static java.util.Locale getThreadLocale() {
         return threadLocale.get();

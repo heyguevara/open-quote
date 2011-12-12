@@ -23,12 +23,12 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
 import com.ail.core.Functions;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 
 /**
  * The handler deals with URLs of the form: "product://". All this class does is to transparently transform a "product://" URL into 
  * a reference to a resource in the product repository. The reference is always language sensitive in that the 
- * language associated with the current thread's {@link com.ail.core.Locale} is always passed as a parameter in the URL. The repository
+ * language associated with the current thread's {@link com.ail.core.ThreadLocale} is always passed as a parameter in the URL. The repository
  * therefore has the option of returning language specific variants if it supports them.
  * <p/>
  * This handler is specifically implemented to work with alfresco. It also assumes that access to Product resources
@@ -73,7 +73,7 @@ public class Handler extends URLStreamHandler {
         
         // Respect the language associated with the current thread if the URL doesn't already include one.
         if (!u.getPath().contains("&language=")) {
-            language="&language="+Locale.getThreadLocale().getLanguage();
+            language="&language="+ThreadLocale.getThreadLocale().getLanguage();
         }
 
         URL actualURL = new URL("http", u.getHost(), u.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+u.getPath()+"&ticket="+getTicket(u)+language);

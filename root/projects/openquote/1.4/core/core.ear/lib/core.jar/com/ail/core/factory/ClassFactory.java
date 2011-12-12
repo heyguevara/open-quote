@@ -17,6 +17,7 @@
 
 package com.ail.core.factory;
 
+import com.ail.annotation.Builder;
 
 /**
  * This factory instantiates the class specified as it's key, and initialises the properties of the instance
@@ -42,11 +43,8 @@ package com.ail.core.factory;
  * builder is then used to define the type <code>MyVersion</code>. When an instance of <code>MyVersion</code>
  * is requested, the class <code>com.ail.core.Version</code> will be instantiated, and the setters setDate, setAuthor,
  * and setComment are each invoked in turn and passed the value for corresponding <code>parameter</code>.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/10/24 19:49:59 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/ClassFactory.java,v $
  */
+@Builder(name="ClassBuilder")
 public class ClassFactory extends AbstractFactory {
     public Object instantiateType(com.ail.core.configure.Type typeSpec) {
 		String className=typeSpec.getKey();

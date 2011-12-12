@@ -34,11 +34,6 @@ import java.util.List;
  * ...
  * &lt;/Configuration&gt;</code>
  * Note: A group may contain subgroups.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Group.java,v $
- * @stereotype type
  **/
 public class Group extends Component {
     static final long serialVersionUID = -8823749275986134685L;
@@ -295,7 +290,7 @@ public class Group extends Component {
 
     /**
      * Find a nested parameter in this configuration. This method will
-     * search throught the group structure to find the named parameter.
+     * search through the group structure to find the named parameter.
      * @param paramNameArg Nested name (e.g. outter.inner.parameter).
      * @return The located parameter, or null if it cannot be found.
      */

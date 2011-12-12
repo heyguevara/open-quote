@@ -38,6 +38,7 @@ import org.xml.sax.SAXException;
 import com.ail.core.Core;
 import com.ail.core.Functions;
 import com.ail.core.configure.Type;
+import com.ail.annotation.Builder;
 
 /**
  * Factory to create class instances from XML using the core's FromXML service.
@@ -105,6 +106,7 @@ import com.ail.core.configure.Type;
  * you can see that the same merging rules have been applied to them. 
  * @see com.ail.core.xmlbinding.CastorFromXMLService
  */
+@Builder(name="CastorXMLBuilder")
 public class CastorXMLFactory extends AbstractFactory {
     private XMLClassDescriptorResolver xmlClassResolver;
     

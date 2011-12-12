@@ -17,6 +17,7 @@
 
 package com.ail.core;
 
+import static java.util.Locale.UK;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
@@ -24,7 +25,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import com.ail.core.ThreadLocale;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,6 +47,7 @@ import com.ail.core.CoreUserBaseCase;
  */
 public class TestTypeXpath extends CoreUserBaseCase {
     boolean initialised = false;
+    private java.util.Locale savedLocale;
 
     @Before
     public void setUp() {
@@ -57,6 +61,17 @@ public class TestTypeXpath extends CoreUserBaseCase {
             ConfigurationHandler.resetCache();
             initialised = true;
         }
+    }
+    
+    @Before
+    public void setupLocale() {
+        savedLocale = ThreadLocale.getThreadLocale();
+        ThreadLocale.setThreadLocale(UK);
+    }
+    
+    @After
+    public void resetLocale() {
+        ThreadLocale.setThreadLocale(savedLocale);
     }
 
     /**
@@ -83,12 +98,10 @@ public class TestTypeXpath extends CoreUserBaseCase {
 
         assertEquals("J.R.Hartley", version.xpathGet("author"));
         assertEquals("2", (String) version.xpathGet("version"));
-        assertEquals(new Integer(2),
-                (Integer) version.xpathGet("version", Integer.class));
+        assertEquals(new Integer(2), (Integer) version.xpathGet("version", Integer.class));
 
         version.xpathSet("version", "45");
-        assertEquals(new Integer(45),
-                (Integer) version.xpathGet("version", Integer.class));
+        assertEquals(new Integer(45), (Integer) version.xpathGet("version", Integer.class));
 
         try {
             assertNull(version.xpathGet("this/path/does/not/exist"));
@@ -125,11 +138,9 @@ public class TestTypeXpath extends CoreUserBaseCase {
             history.addVersion(v);
         }
 
-        assertEquals(new Integer(21),
-                history.xpathGet("serialVersion", Integer.class));
+        assertEquals(new Integer(21), history.xpathGet("serialVersion", Integer.class));
         assertEquals("author0", history.xpathGet("version[1]/author"));
-        assertEquals("author0",
-                history.xpathGet("version[1]/author", String.class));
+        assertEquals("author0", history.xpathGet("version[1]/author", String.class));
     }
 
     /**
@@ -147,17 +158,13 @@ public class TestTypeXpath extends CoreUserBaseCase {
         v.setVersion("version");
 
         v.addAttribute(new Attribute("attrib1", "hello", "string"));
-        v.addAttribute(new Attribute("attrib2", "30/11/1978",
-                "date,pattern=dd/MM/yyyy"));
-        v.addAttribute(new Attribute("gender1", "Male",
-                "choice,options=-1#?|1#Male|2#Female"));
-        v.addAttribute(new Attribute("gender2", "?",
-                "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("attrib2", "30/11/1978", "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("gender1", "Male", "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("gender2", "?", "choice,options=-1#?|1#Male|2#Female"));
         v.addAttribute(new Attribute("amount1", "£12", "currency", "GBP"));
         v.addAttribute(new Attribute("amount2", "12", "currency", "EUR"));
         v.addAttribute(new Attribute("amount3", "12%", "number,percent"));
-        v.addAttribute(new Attribute("amount5", "£12.234",
-                "number,pattern=£#.##"));
+        v.addAttribute(new Attribute("amount5", "£12.234", "number,pattern=£#.##"));
         v.addAttribute(new Attribute("answer", "Yes", "yesorno"));
 
         try {
@@ -172,45 +179,29 @@ public class TestTypeXpath extends CoreUserBaseCase {
 
         assertEquals("hello", v.xpathGet("attribute[id='attrib1']/value"));
         assertEquals("30/11/1978", v.xpathGet("attribute[id='attrib2']/value"));
-        assertEquals(c.getTime().toString(),
-                v.xpathGet("attribute[id='attrib2']/object", Date.class)
-                        .toString());
-        assertEquals(new Double(1.0),
-                (Double) v.xpathGet("attribute[id='gender1']/object"));
+        assertEquals(c.getTime().toString(), v.xpathGet("attribute[id='attrib2']/object", Date.class).toString());
+        assertEquals(new Double(1.0), (Double) v.xpathGet("attribute[id='gender1']/object"));
         assertEquals("12", v.xpathGet("attribute[id='amount1']/value"));
-        assertEquals("£12.00",
-                v.xpathGet("attribute[id='amount1']/formattedValue"));
-        assertEquals("12",
-                v.xpathGet("attribute[id='amount1']/object", String.class));
-        assertEquals("12",
-                v.xpathGet("attribute[id='amount2']/object", String.class));
+        assertEquals("£12.00", v.xpathGet("attribute[id='amount1']/formattedValue"));
+        assertEquals("12", v.xpathGet("attribute[id='amount1']/object", String.class));
+        assertEquals("12", v.xpathGet("attribute[id='amount2']/object", String.class));
         assertEquals("12", v.xpathGet("attribute[id='amount2']/value"));
-        assertEquals("Male",
-                v.xpathGet("attribute[id='gender1']/formattedValue"));
+        assertEquals("Male", v.xpathGet("attribute[id='gender1']/formattedValue"));
 
         assertEquals(0.12, v.xpathGet("attribute[id='amount3']/object"));
         assertEquals("12", (String) v.xpathGet("attribute[id='amount3']/value"));
-        assertEquals("12%",
-                (String) v.xpathGet("attribute[id='amount3']/formattedValue"));
+        assertEquals("12%", (String) v.xpathGet("attribute[id='amount3']/formattedValue"));
 
-        assertEquals(new Double(12.234),
-                (Double) v.xpathGet("attribute[id='amount5']/object"));
+        assertEquals(new Double(12.234), (Double) v.xpathGet("attribute[id='amount5']/object"));
         assertEquals("12.234", v.xpathGet("attribute[id='amount5']/value"));
-        assertEquals("£12.23",
-                (String) v.xpathGet("attribute[id='amount5']/formattedValue"));
-        assertEquals("Û12.00",
-                (String) v.xpathGet("attribute[id='amount2']/formattedValue"));
-        assertEquals("Male",
-                (String) v.xpathGet("attribute[id='gender1']/value"));
-        assertEquals(new Double(1.0),
-                (Double) v.xpathGet("attribute[id='gender1']/object"));
-        assertEquals("Male",
-                (String) v.xpathGet("attribute[id='gender1']/formattedValue"));
+        assertEquals("£12.23", (String) v.xpathGet("attribute[id='amount5']/formattedValue"));
+        assertEquals("Û12.00", (String) v.xpathGet("attribute[id='amount2']/formattedValue"));
+        assertEquals("Male", (String) v.xpathGet("attribute[id='gender1']/value"));
+        assertEquals(new Double(1.0), (Double) v.xpathGet("attribute[id='gender1']/object"));
+        assertEquals("Male", (String) v.xpathGet("attribute[id='gender1']/formattedValue"));
         assertEquals("?", (String) v.xpathGet("attribute[id='gender2']/value"));
-        assertEquals(new Double(-1.0),
-                (Double) v.xpathGet("attribute[id='gender2']/object"));
-        assertEquals("?",
-                (String) v.xpathGet("attribute[id='gender2']/formattedValue"));
+        assertEquals(new Double(-1.0), (Double) v.xpathGet("attribute[id='gender2']/object"));
+        assertEquals("?", (String) v.xpathGet("attribute[id='gender2']/formattedValue"));
     }
 
     @Test
@@ -221,45 +212,34 @@ public class TestTypeXpath extends CoreUserBaseCase {
         Version v = new Version();
 
         v.addAttribute(new Attribute("attrib1", "hello", "string"));
-        v.addAttribute(new Attribute("attrib2", "30/11/1978",
-                "date,pattern=dd/MM/yyyy"));
-        v.addAttribute(new Attribute("gender1", "Male",
-                "choice,options=-1#?|1#Male|2#Female"));
-        v.addAttribute(new Attribute("gender2", "?",
-                "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("attrib2", "30/11/1978", "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("gender1", "Male", "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("gender2", "?", "choice,options=-1#?|1#Male|2#Female"));
 
         // 'standard' xpath function
-        assertEquals(new Double(4.0),
-                v.xpathGet("count(/attribute)", Double.class));
+        assertEquals(new Double(4.0), v.xpathGet("count(/attribute)", Double.class));
 
         // One of ours from com.ail.core.Function
-        assertEquals(
-                "30 November, 1978",
-                v.xpathGet("test:format(attribute[id='attrib2']/object, 'dd MMMM, yyyy')"));
+        assertEquals("30 November, 1978", v.xpathGet("test:format(attribute[id='attrib2']/object, 'dd MMMM, yyyy')"));
     }
 
     @Test
     public void testXpathFunctionRegistration() {
         Version v = new Version();
 
-        v.addAttribute(new Attribute("dob1", "30/11/1978",
-                "date,pattern=dd/MM/yyyy"));
-        v.addAttribute(new Attribute("dob2", "30/11/1986",
-                "date,pattern=dd/MM/yyyy"));
-        v.addAttribute(new Attribute("dob3", "30/11/1964",
-                "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("dob1", "30/11/1978", "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("dob2", "30/11/1986", "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("dob3", "30/11/1964", "date,pattern=dd/MM/yyyy"));
 
         // register some new functions
-        TypeXPathFunctionRegister.getInstance().registerFunctionLibrary("test",
-                LocalFunctions.class);
+        TypeXPathFunctionRegister.getInstance().registerFunctionLibrary("test", LocalFunctions.class);
 
         // invoke the newly registered function
         assertEquals(33, v.xpathGet("test:age(attribute[id='dob1'])"));
         assertEquals(25, v.xpathGet("test:age(test:youngest(attribute))"));
 
         // check that the "standard" functions still work
-        assertEquals(new Double(3.0),
-                v.xpathGet("count(/attribute)", Double.class));
+        assertEquals(new Double(3.0), v.xpathGet("count(/attribute)", Double.class));
     }
 
     @Test
@@ -267,12 +247,9 @@ public class TestTypeXpath extends CoreUserBaseCase {
         Version v = new Version();
 
         v.addAttribute(new Attribute("attrib1", "hello", "string"));
-        v.addAttribute(new Attribute("attrib2", "30/11/1978",
-                "date,pattern=dd/MM/yyyy"));
-        v.addAttribute(new Attribute("gender1", "Male",
-                "choice,options=-1#?|1#Male|2#Female"));
-        v.addAttribute(new Attribute("gender2", "?",
-                "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("attrib2", "30/11/1978", "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("gender1", "Male", "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("gender2", "?", "choice,options=-1#?|1#Male|2#Female"));
 
         Object o = v.xpathGet("attribute");
 
@@ -301,30 +278,27 @@ public class TestTypeXpath extends CoreUserBaseCase {
         Version v = new Version();
 
         v.addAttribute(new Attribute("attrib1", "hello", "string"));
-        v.addAttribute(new Attribute("attrib2", "30/11/1978",
-                "date,pattern=dd/MM/yyyy"));
-        v.addAttribute(new Attribute("gender1", "Male",
-                "choice,options=-1#?|1#Male|2#Female"));
-        v.addAttribute(new Attribute("gender2", "?",
-                "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("attrib2", "30/11/1978", "date,pattern=dd/MM/yyyy"));
+        v.addAttribute(new Attribute("gender1", "Male", "choice,options=-1#?|1#Male|2#Female"));
+        v.addAttribute(new Attribute("gender2", "?", "choice,options=-1#?|1#Male|2#Female"));
         v.addAttribute(new Attribute("amount1", "£12", "currency", "GBP"));
         v.addAttribute(new Attribute("amount2", "12", "currency", "EUR"));
         v.addAttribute(new Attribute("amount3", "12%", "number,percent"));
-        v.addAttribute(new Attribute("amount5", "£12.234",
-                "number,pattern=£#.##"));
+        v.addAttribute(new Attribute("amount5", "£12.234", "number,pattern=£#.##"));
         v.addAttribute(new Attribute("answer", "Yes", "yesorno"));
 
         int count = 0;
-        for (Iterator i = v.xpathIterate("/attribute"); i.hasNext(); count++)
+        for (Iterator i = v.xpathIterate("/attribute"); i.hasNext(); count++) {
             i.next();
+        }
         assertEquals("Wrong number of Attribute returned", count, 9);
 
         count = 0;
-        for (Iterator<Attribute> i = v.xpathIterate("/attribute",
-                Attribute.class); i.hasNext(); count++)
+        for (Iterator<Attribute> i = v.xpathIterate("/attribute",  Attribute.class); i.hasNext(); count++) {
             i.next();
+        }
+        
         assertEquals("Wrong number of Attribute returned", count, 9);
-
     }
 
     /**

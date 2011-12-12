@@ -16,12 +16,15 @@
  */
 package com.ail.core;
 
+import static java.util.Locale.UK;
 import static org.junit.Assert.*;
 
 import com.ail.core.XMLString;
 
 import java.io.File;
+import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,7 +69,19 @@ public class TestXMLString {
     private XMLString xsl1;
     private XMLString xml1;
     private XMLString xml2;
+    private Locale savedLocale;
 
+    @Before
+    public void setUpLocale() throws Exception {
+        savedLocale=ThreadLocale.getThreadLocale();
+        ThreadLocale.setThreadLocale(UK);
+    }
+    
+    @After
+    public void teadDownLocale() throws Exception {
+        ThreadLocale.setThreadLocale(savedLocale);
+    }
+    
     @Before
     public void setUp() {
         xsl1 = new XMLString("<?xml version=\"1.0\"?>"

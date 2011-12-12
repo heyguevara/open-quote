@@ -17,17 +17,15 @@
 
 package com.ail.core.factory;
 
+import com.ail.annotation.Builder;
 
 /**
  * This factory performs the same function as the ClassFactory, but unlike that factory it allows its
- * prototypes to be cached. This can increase performace dramatically for certain types - especially
+ * prototypes to be cached. This can increase performance dramatically for certain types - especially
  * those that are based on other types (e.g. BeanShell of Drools types which extend (or inherit from)
  * other types.)
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/10/24 19:49:59 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/CachingClassFactory.java,v $
  */
+@Builder(name="CachingClassBuilder")
 public class CachingClassFactory extends ClassFactory {
     /* 
      * It'll be quicker to create a new type than use the cache, so turn 

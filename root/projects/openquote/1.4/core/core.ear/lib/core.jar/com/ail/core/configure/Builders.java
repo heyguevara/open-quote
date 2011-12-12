@@ -18,13 +18,6 @@
 package com.ail.core.configure;
 
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Builders.java,v $
- * @stereotype type
- */
 public class Builders extends Group {
     static final long serialVersionUID = 2460072872773609457L;
     /**

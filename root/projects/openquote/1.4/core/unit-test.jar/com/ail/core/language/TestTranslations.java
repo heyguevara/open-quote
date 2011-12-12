@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 
 public class TestTranslations {
 
@@ -44,8 +44,8 @@ public class TestTranslations {
         translation.getKey().put("key3", "Second String number three");
         translations.getTranslation().add(translation);
 
-        java.util.Locale saved=Locale.getThreadLocale();
-        Locale.setThreadLocale(US);
+        java.util.Locale saved=ThreadLocale.getThreadLocale();
+        ThreadLocale.setThreadLocale(US);
 
         assertEquals("Second String number one", translations.translate("key1", "two"));
         assertEquals("String number four", translations.translate("key4", "two"));
@@ -53,6 +53,6 @@ public class TestTranslations {
         assertEquals("three", translations.translate("key5", "three"));
         assertEquals("two", translations.translate("key5", "two"));
         
-        Locale.setThreadLocale(saved);
+        ThreadLocale.setThreadLocale(saved);
     }
 }

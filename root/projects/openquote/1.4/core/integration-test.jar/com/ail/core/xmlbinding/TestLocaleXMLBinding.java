@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
 
@@ -60,11 +60,11 @@ public class TestLocaleXMLBinding extends CoreUserBaseCase {
 
     @Test
     public void testLocaleToXML() throws Exception {
-        Locale locale;
+        ThreadLocale threadLocale;
         
-        locale=new Locale(CANADA.getLanguage(), CANADA.getCountry(), "p");
+        threadLocale=new ThreadLocale(CANADA.getLanguage(), CANADA.getCountry(), "p");
         
-        String xml=getCore().toXML(locale).toString();
+        String xml=getCore().toXML(threadLocale).toString();
         
         assertTrue(xml.indexOf("language=\"en\"")>0);
         assertTrue(xml.indexOf("country=\"CA\"")>0);
@@ -73,14 +73,14 @@ public class TestLocaleXMLBinding extends CoreUserBaseCase {
 
     @Test
     public void testLocaleFromXML() throws Exception {
-        Locale locale;
+        ThreadLocale threadLocale;
         
-        String xml="<locale language='de' country='DE' variant='p' xsi:type='java:com.ail.core.Locale' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>";
+        String xml="<locale language='de' country='DE' variant='p' xsi:type='java:com.ail.core.ThreadLocale' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>";
 
-        locale=getCore().fromXML(Locale.class, new XMLString(xml));
+        threadLocale=getCore().fromXML(ThreadLocale.class, new XMLString(xml));
         
-        assertEquals("DE", locale.getCountry());
-        assertEquals("de", locale.getLanguage());
-        assertEquals("p", locale.getVariant());
+        assertEquals("DE", threadLocale.getCountry());
+        assertEquals("de", threadLocale.getLanguage());
+        assertEquals("p", threadLocale.getVariant());
     }
 }

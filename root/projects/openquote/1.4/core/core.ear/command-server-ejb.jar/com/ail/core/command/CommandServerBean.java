@@ -27,10 +27,12 @@ import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
+import com.ail.annotation.Configurable;
 
 /**
  * Message Driven Bean which listens on a queue for commands to execute.
  */
+@Configurable
 public class CommandServerBean extends EJBComponent implements MessageDrivenBean, MessageListener {
     private MessageDrivenContext ctx = null;
     private Core core=null;

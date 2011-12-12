@@ -33,7 +33,9 @@ import com.ail.core.product.removeproduct.RemoveProductCommand;
 import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
 import com.ail.core.product.resetproduct.ResetProductCommand;
 import com.ail.core.product.updateproduct.UpdateProductCommand;
+import com.ail.annotation.Configurable;
 
+@Configurable
 public class ProductManagerBean extends EJBComponent implements SessionBean {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;

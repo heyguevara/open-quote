@@ -23,26 +23,30 @@ import static java.util.Locale.UK;
 import static java.util.Locale.US;
 import static org.junit.Assert.*;
 
+import java.util.Locale;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.ail.core.Attribute;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 
 /**
  * Tests to exercise the facilities offered by he Core's Attribute class.
  */
 public class TestAttribute {
-
+    private Locale savedLocale;
+    
     @Before
     public void setUp() throws Exception {
-        Locale.setThreadLocale(UK);
+        savedLocale=ThreadLocale.getThreadLocale();
+        ThreadLocale.setThreadLocale(UK);
     }
     
     @After
     public void teadDown() throws Exception {
-        Locale.setThreadLocale(UK);
+        ThreadLocale.setThreadLocale(savedLocale);
     }
     
     @Test
@@ -159,10 +163,10 @@ public class TestAttribute {
         // This test class may get run by developers anywhere in the world, 
         // so put the JVM into a known locale for testing - and be sure to 
         // switch back to the real one before returning.
-        Locale runningLocale=Locale.getDefault();
+        ThreadLocale runningLocale=ThreadLocale.getDefault();
 
         try {
-            Locale.setDefault(new Locale(UK));
+            ThreadLocale.setDefault(new ThreadLocale(UK));
             Attribute gbp = new Attribute("q1", "1002.23", "currency", "GBP");
             
             // test that formatting works in the default locale
@@ -171,23 +175,23 @@ public class TestAttribute {
             Attribute usd = new Attribute("q1", "1002.23", "currency", "USD");
     
             // USD formatted for Canada
-            Locale.setThreadLocale(CANADA);
+            ThreadLocale.setThreadLocale(CANADA);
             assertEquals("US$1,002.23", usd.getFormattedValue());
             
             // USD formatted for USA
-            Locale.setThreadLocale(US);
+            ThreadLocale.setThreadLocale(US);
             assertEquals("$1,002.23", usd.getFormattedValue());
             
             // USD formatted for Germany
-            Locale.setThreadLocale(GERMANY);
+            ThreadLocale.setThreadLocale(GERMANY);
             assertEquals("1.002,23 USD", usd.getFormattedValue());
             
-            Locale.setThreadLocale(US);
+            ThreadLocale.setThreadLocale(US);
             usd.setFormat("currency;pattern=\u00A4 #,##0");
             assertEquals("$ 1,002", usd.getFormattedValue());
         }
         finally {
-            Locale.setDefault(runningLocale);
+            ThreadLocale.setDefault(runningLocale);
         }
     }
 
@@ -201,20 +205,20 @@ public class TestAttribute {
         // This test class may get run by developers anywhere in the world, 
         // so put the JVM into a known locale for testing - and be sure to 
         // switch back to the real one before returning.
-        Locale runningLocale=Locale.getDefault();
+        ThreadLocale runningLocale=ThreadLocale.getDefault();
 
         try {
-            Locale.setThreadLocale(UK);
+            ThreadLocale.setThreadLocale(UK);
             Attribute number = new Attribute("q1", "1002.23", "number");
     
-            Locale.setThreadLocale(GERMANY);
+            ThreadLocale.setThreadLocale(GERMANY);
             assertEquals("1.002,23", number.getFormattedValue());
 
-            Locale.setThreadLocale(US);
+            ThreadLocale.setThreadLocale(US);
             assertEquals("1,002.23", number.getFormattedValue());
         }
         finally {
-            Locale.setDefault(runningLocale);
+            ThreadLocale.setDefault(runningLocale);
         }
     }
 
@@ -230,18 +234,18 @@ public class TestAttribute {
         // This test class may get run by developers anywhere in the world, 
         // so put the JVM into a known locale for testing - and be sure to 
         // switch back to the real one before returning.
-        Locale runningLocale=Locale.getDefault();
+        ThreadLocale runningLocale=ThreadLocale.getDefault();
 
         try {
-            Locale.setDefault(new Locale(UK));
+            ThreadLocale.setDefault(new ThreadLocale(UK));
             Attribute number = new Attribute("q1", "1002.23", "number");
             
-            Locale.setThreadLocale(UK);
+            ThreadLocale.setThreadLocale(UK);
             number.setValue("2,004.32");
             assertEquals("2004.32", number.getValue());
             assertEquals(2004.32, number.getObject());  
             
-            Locale.setThreadLocale(GERMANY);
+            ThreadLocale.setThreadLocale(GERMANY);
             number.setValue("1.002,64");
             assertEquals("1002.64", number.getValue());
             assertEquals(1002.64, number.getObject());  
@@ -249,15 +253,15 @@ public class TestAttribute {
             assertEquals("9021.131", number.getValue());
             assertEquals(9021.131, number.getObject());  
 
-             Locale.setThreadLocale(UK);
+             ThreadLocale.setThreadLocale(UK);
             number.setValue("10,921.441");
 
-            Locale.setThreadLocale(GERMANY);
+            ThreadLocale.setThreadLocale(GERMANY);
             assertEquals("10921.441", number.getValue());
             assertEquals("10.921,441", number.getFormattedValue());
         }
         finally {
-            Locale.setDefault(runningLocale);
+            ThreadLocale.setDefault(runningLocale);
         }
     }
 
@@ -267,11 +271,11 @@ public class TestAttribute {
         // This test class may get run by developers anywhere in the world, 
         // so put the JVM into a known locale for testing - and be sure to 
         // switch back to the real one before returning.
-        Locale runningLocale=Locale.getDefault();
+        ThreadLocale runningLocale=ThreadLocale.getDefault();
 
         try {
-            Locale.setDefault(new Locale(UK));
-            Locale.setThreadLocale(UK);
+            ThreadLocale.setDefault(new ThreadLocale(UK));
+            ThreadLocale.setThreadLocale(UK);
 
             Attribute money = new Attribute("q1", "1002.23", "currency", "GBP");
             money.setValue("1004.80");
@@ -281,7 +285,7 @@ public class TestAttribute {
             money.setValue("£921.30");
             assertEquals("921.3", money.getValue());
 
-            Locale.setThreadLocale(GERMANY);
+            ThreadLocale.setThreadLocale(GERMANY);
             money.setValue("1004,80");
             assertEquals("1004.8", money.getValue());
             money.setValue("2.001,90");
@@ -290,7 +294,7 @@ public class TestAttribute {
             assertEquals("921.3", money.getValue());
         }
         finally {
-            Locale.setDefault(runningLocale);
+            ThreadLocale.setDefault(runningLocale);
         }
     }
 
@@ -300,11 +304,11 @@ public class TestAttribute {
         // This test class may get run by developers anywhere in the world, 
         // so put the JVM into a known locale for testing - and be sure to 
         // switch back to the real one before returning.
-        Locale runningLocale=Locale.getDefault();
+        ThreadLocale runningLocale=ThreadLocale.getDefault();
 
         try {
-            Locale.setDefault(new Locale(UK));
-            Locale.setThreadLocale(UK);
+            ThreadLocale.setDefault(new ThreadLocale(UK));
+            ThreadLocale.setThreadLocale(UK);
 
             Attribute percent;
             
@@ -329,7 +333,7 @@ public class TestAttribute {
             assertEquals("90%", percent.getFormattedValue());
         }
         finally {
-            Locale.setDefault(runningLocale);
+            ThreadLocale.setDefault(runningLocale);
         }
     }
     
@@ -338,11 +342,11 @@ public class TestAttribute {
         // This test class may get run by developers anywhere in the world, 
         // so put the JVM into a known locale for testing - and be sure to 
         // switch back to the real one before returning.
-        Locale runningLocale=Locale.getDefault();
+        ThreadLocale runningLocale=ThreadLocale.getDefault();
 
         try {
-            Locale.setDefault(new Locale(GERMANY));
-            Locale.setThreadLocale(GERMANY);
+            ThreadLocale.setDefault(new ThreadLocale(GERMANY));
+            ThreadLocale.setThreadLocale(GERMANY);
 
             Attribute percent;
             
@@ -351,7 +355,7 @@ public class TestAttribute {
             assertEquals("1.000", percent.getFormattedValue());
         }
         finally {
-            Locale.setDefault(runningLocale);
+            ThreadLocale.setDefault(runningLocale);
         }
     }
     

@@ -104,7 +104,7 @@ public class TestCoreValidator extends CoreUserBaseCase {
     public void testCommonsValidatorFail() throws Exception {
 		// set up key & value
 		String key = "TestForm";
-		Object value = getCore().newType("Version");
+		Object value = getCore().newType(Version.class);
 
 		String commonsValidatorXml = getCore().getParameterValue("ValidationSpec","");
 
@@ -160,7 +160,7 @@ public class TestCoreValidator extends CoreUserBaseCase {
     public void testCommonsValidatorSuccess() throws Exception {
 		// set up key & value
 		String key = "TestForm";
-		Version value = (Version)getCore().newType("Version");
+		Version value = getCore().newType(Version.class);
 
 		value.setAuthor("Me");
 		value.setComment("Text Comment");
@@ -288,7 +288,7 @@ public class TestCoreValidator extends CoreUserBaseCase {
 		// set up key & value & validation
 		String key = "TestForm";
 		
-		Version value = (Version)getCore().newType("Version");
+		Version value = getCore().newType(Version.class);
 		value.setAuthor("Me");
 		value.setComment("Text Comment");
 		value.setCopyright("(c)2003");
@@ -323,7 +323,7 @@ public class TestCoreValidator extends CoreUserBaseCase {
 		// set up key & value & validation
 		String key = "TestForm";
 
-		Version value = (Version)getCore().newType("Version");
+		Version value = getCore().newType(Version.class);
 		value.setComment("Text Comment");
 		value.setCopyright("(c)2003");
 		value.setState("Done");

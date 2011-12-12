@@ -27,7 +27,9 @@ import com.ail.core.configure.ConfigurationResetError;
 import com.ail.core.product.ProductDetails;
 import com.ail.core.product.listproducts.ListProductsCommand;
 import com.ail.core.product.resetproduct.ResetProductCommand;
+import com.ail.annotation.Configurable;
 
+@Configurable
 @ServiceImplementation
 public class ResetAllProductsService extends Service<ResetAllProductsArgument> {
     /**

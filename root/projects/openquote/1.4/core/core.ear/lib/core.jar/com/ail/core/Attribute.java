@@ -84,11 +84,11 @@ import com.ail.annotation.TypeDefinition;
  * 
  * <p>Values can only ever be set using {@link #setValue() setValue(String)}.</p>
  * 
- * <p>Locale sensitive attribute types (currency and number) are formatted and validated with respect to
+ * <p>ThreadLocale sensitive attribute types (currency and number) are formatted and validated with respect to
  * the following (in descending order of priority):</p><ul>
  * <li>any pattern defined as part of the attribute (e.g. "number;pattern=#.##");</li>
- * <li>the pattern appropriate to the locale defined by {@link com.ail.core.Locale#getThreadLocale() Locale.getThreadLocale()}</li>
- * <li>the JVM's default locale (as defined by {@link java.util.Locale#getDefault() Locale.getDefault()}</li>
+ * <li>the pattern appropriate to the locale defined by {@link com.ail.core.ThreadLocale#getThreadLocale() ThreadLocale.getThreadLocale()}</li>
+ * <li>the JVM's default locale (as defined by {@link java.util.Locale#getDefault() ThreadLocale.getDefault()}</li>
  * </ul>
  */
 @TypeDefinition
@@ -225,7 +225,7 @@ public class Attribute extends Type implements Identified {
      * @see Attribute#setValue(String)
      */
     private String interpretNumberValue(String val) {
-        Locale locale=com.ail.core.Locale.getThreadLocale();
+        Locale locale=com.ail.core.ThreadLocale.getThreadLocale();
         String pattern=getFormatOption("pattern");
 
         // If we have a pattern to work from, try that first...
@@ -266,7 +266,7 @@ public class Attribute extends Type implements Identified {
     }
 
     private String interpretCurrencyValue(String val) {
-        Locale locale = com.ail.core.Locale.getThreadLocale();
+        Locale locale = com.ail.core.ThreadLocale.getThreadLocale();
         String pattern = getFormatOption("pattern");
         
         if (unit==null) {
@@ -343,7 +343,7 @@ public class Attribute extends Type implements Identified {
             return value;
         }
         else {
-            Format format=formatter(com.ail.core.Locale.getThreadLocale());
+            Format format=formatter(com.ail.core.ThreadLocale.getThreadLocale());
             
             if (format instanceof MessageFormat) {
                 return format.format(new Object[]{getObject()});
@@ -434,7 +434,7 @@ public class Attribute extends Type implements Identified {
      * <li>if the value is null, null is returned.</li>
      * <li>If format is string or note, a String is returned.</li>
      * <li>
-     * @param locale Locale to prepare the object for.
+     * @param locale ThreadLocale to prepare the object for.
      * @return
      */
     public Object getObject() {
@@ -474,11 +474,11 @@ public class Attribute extends Type implements Identified {
                 // If the char at that position is not a number...
                 if (dsStringPos > 0 && !Character.isDigit(tval.charAt(dsStringPos))) {
                     // ... replace if with the right symbol for the currency we're parsing into
-                    char dsChar=new DecimalFormatSymbols(com.ail.core.Locale.getThreadLocale()).getDecimalSeparator();
+                    char dsChar=new DecimalFormatSymbols(com.ail.core.ThreadLocale.getThreadLocale()).getDecimalSeparator();
                     tval.setCharAt(dsStringPos, dsChar);
                 }
 
-                ret=NumberFormat.getInstance(com.ail.core.Locale.getThreadLocale()).parseObject(tval.toString());
+                ret=NumberFormat.getInstance(com.ail.core.ThreadLocale.getThreadLocale()).parseObject(tval.toString());
             }
             else if (isNumberType()) {
                 if (getFormatOption("percent")!=null) {
@@ -490,7 +490,7 @@ public class Attribute extends Type implements Identified {
                 }
             }
             else {
-                ret=formatter(com.ail.core.Locale.getThreadLocale()).parseObject(value);
+                ret=formatter(com.ail.core.ThreadLocale.getThreadLocale()).parseObject(value);
             }
         }
         catch(NullPointerException e) {
