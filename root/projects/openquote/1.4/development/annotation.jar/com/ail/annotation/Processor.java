@@ -42,15 +42,17 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.StandardLocation;
 
 @SupportedSourceVersion(RELEASE_6)
-@SupportedAnnotationTypes({ "com.ail.annotation.ArgumentDefinition", "com.ail.annotation.CommandDefinition", "com.ail.annotation.ServiceImplementation", "com.ail.annotation.TypeDefinition" })
+@SupportedAnnotationTypes({ "com.ail.annotation.ArgumentDefinition", 
+							"com.ail.annotation.CommandDefinition", 
+							"com.ail.annotation.ServiceImplementation", 
+							"com.ail.annotation.TypeDefinition",
+							"com.ail.annotation.Configurable",
+							"com.ail.annotation.Builder",
+							"com.ail.annotation.XPathFunctionDefinition"})
 public class Processor extends AbstractProcessor {
 
 	private Filer filer;
 	private Messager messager;
-	private Map<String, Element> arguments = new HashMap<String, Element>();
-	private Map<String, Element> commands = new HashMap<String, Element>();
-	private Map<String, Element> services = new HashMap<String, Element>();
-	private Map<String, Element> types = new HashMap<String, Element>();
 
 	@Override
 	public void init(ProcessingEnvironment env) {
@@ -69,86 +71,123 @@ public class Processor extends AbstractProcessor {
 		return true;
 	}
 
+	private static String COMMANDS="CommandDefinition";
+	private static String ARGUMENTS="ArgumentDefinition";
+	private static String SERVICES="ServiceImplementation";
+	private static String TYPES="TypeDefinition";
+	private static String BUILDERS="Builder";
+	private static String XPATHS="XPathFunctionDefinition";
+	private static String CONFIGS="Configurable";
+	
+	Map<String,Map<String,Element>> annots=new HashMap<String,Map<String,Element>>();
+
 	private void localProcess(Set<? extends TypeElement> elements, RoundEnvironment env) throws IOException {
+		
+		annots.put(COMMANDS, new HashMap<String,Element>());
+		annots.put(ARGUMENTS, new HashMap<String,Element>());
+		annots.put(SERVICES, new HashMap<String,Element>());
+		annots.put(TYPES, new HashMap<String,Element>());
+		annots.put(BUILDERS, new HashMap<String,Element>());
+		annots.put(XPATHS, new HashMap<String,Element>());
+		annots.put(CONFIGS, new HashMap<String,Element>());
+		
 		for (TypeElement te : elements) {
 			for (Element e : env.getElementsAnnotatedWith(te)) {
-				if ("CommandDefinition".equals(te.getSimpleName().toString())) {
-					commands.put(e.toString(), e);
-				} else if ("ArgumentDefinition".equals(te.getSimpleName().toString())) {
-					arguments.put(e.toString(), e);
-				} else if ("ServiceImplementation".equals(te.getSimpleName().toString())) {
-					services.put(e.toString(), e);
-				} else if ("TypeDefinition".equals(te.getSimpleName().toString())) {
-					types.put(e.toString(), e);
-				}
+				annots.get(te.getSimpleName().toString()).put(e.toString(), e);
 			}
 		}
 
-		if (arguments.size() != 0) {
+		if (annots.get(ARGUMENTS).size() != 0) {
 			generateArgumentImpls();
 		}
 
-		if (commands.size() != 0) {
+		if (annots.get(COMMANDS).size() != 0) {
 			generateCommandImpls();
 		}
 
-		if (arguments.size()!=0 || commands.size()!=0 || types.size()!=0) {
+		if (annots.get(ARGUMENTS).size()!=0 
+		||  annots.get(COMMANDS).size()!=0 
+		||  annots.get(TYPES).size()!=0 
+		||  annots.get(BUILDERS).size()!=0
+		||  annots.get(XPATHS).size()!=0
+		||  annots.get(CONFIGS).size()!=0) {
 			generateCoreDefaultConfigTypes();
 		}
 
-		arguments.clear();
-		commands.clear();
-		services.clear();
-		types.clear();
+		annots.get(ARGUMENTS).clear();
+		annots.get(COMMANDS).clear();
+		annots.get(TYPES).clear();
+		annots.get(XPATHS).clear();
+		annots.get(CONFIGS).clear();
+		annots.get(BUILDERS).clear();
+		annots.get(SERVICES).clear();
 	}
 
 	private void generateCoreDefaultConfigTypes() throws IOException {
 		OutputStream os = filer.createResource(StandardLocation.CLASS_OUTPUT, "com.ail.core", "AnnotatedTypes.xml", (Element[]) null).openOutputStream();
 		PrintWriter pw = new PrintWriter(os);
 
-		pw.printf("<!-- This is a generated file. The types defined here are automatically create -->\n");
+		pw.printf("<!-- This is a generated file. The TYPES defined here are automatically create -->\n");
 		pw.printf("<!-- by the annotation processor. Edits to this file will be lost.             -->\n");
 		pw.printf("<configuration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='http://www.appliedindustriallogic.com/schemas/Configuration.xsd'>\n");
-		pw.printf("  <types>");
-		for (TypeElement te : ElementFilter.typesIn(services.values())) {
+		pw.printf("\n");
+		pw.printf("  <group name='NamespacesToResetOnResetAll'>\n");
+		for(TypeElement te: ElementFilter.typesIn(annots.get(CONFIGS).values())) {
+			pw.printf("     <parameter name='%s'/>\n", te);
+		}
+		pw.printf("  </group>\n");
+		pw.printf("\n");
+		pw.printf("  <group name='JXPathExtensions'>\n");
+		for(TypeElement te: ElementFilter.typesIn(annots.get(XPATHS).values())) {
+			pw.printf("     <parameter name='%s'>%s</parameter>\n", te.getAnnotation(XPathFunctionDefinition.class).namespace(), te);
+		}
+		pw.printf("  </group>\n");
+		pw.printf("\n");
+		pw.printf("  <builders>\n");
+		for(TypeElement te: ElementFilter.typesIn(annots.get(BUILDERS).values())) {
+			pw.printf("     <builder name='%s' factory='%s'/>\n", te.getAnnotation(Builder.class).name(), te);
+		}
+		pw.printf("  </builders>\n");
+		pw.printf("\n");
+		pw.printf("  <types>\n");
+		for (TypeElement te : ElementFilter.typesIn(annots.get(SERVICES).values())) {
 			pw.printf("<service name='%s' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>\n", te);
 			pw.printf("  <parameter name='ServiceClass'>%s</parameter>\n", te);
 			pw.printf("</service>\n");
 		}
-
-		for (TypeElement te : ElementFilter.typesIn(commands.values())) {
-			CommandDefinition anno = te.getAnnotation(CommandDefinition.class);
+		pw.printf("\n");
+		for (TypeElement te : ElementFilter.typesIn(annots.get(COMMANDS).values())) {
+			CommandDefinition cd = te.getAnnotation(CommandDefinition.class);
 			TypeMirror value=null;
 			try {
-				anno.defaultServiceClass();
+				cd.defaultServiceClass();
 			} 
 			catch(MirroredTypeException e) {
 				value=e.getTypeMirror();
 			}
 
-			if (anno != null && value!=null) {
+			if (cd != null && value!=null) {
 				pw.printf("<command name='%s' builder='ClassBuilder' key='%sImpl'>\n", te, te);
 				pw.printf("  <parameter name='Service'>%s</parameter>\n", value);
 				pw.printf("</command>\n");
 			}
 		}
-
-		for (TypeElement te : ElementFilter.typesIn(arguments.values())) {
+		pw.printf("\n");
+		for (TypeElement te : ElementFilter.typesIn(annots.get(ARGUMENTS).values())) {
 			pw.printf("<type name='%s' builder='ClassBuilder' key='%sImpl'/>\n", te, te);
 		}
-		
-		for (TypeElement te : ElementFilter.typesIn(types.values())) {
+		pw.printf("\n");
+		for (TypeElement te : ElementFilter.typesIn(annots.get(TYPES).values())) {
 			pw.printf("<type name='%s' builder='ClassBuilder' key='%s'/>\n", te, te);
-		}
-		
-		pw.printf("  </types>");
-		pw.printf("</configuration>");
+		}		
+		pw.printf("  </types>\n");
+		pw.printf("</configuration>\n");
 
 		pw.close();
 	}
 
 	private void generateArgumentImpls() throws IOException {
-		for (TypeElement te : ElementFilter.typesIn(arguments.values())) {
+		for (TypeElement te : ElementFilter.typesIn(annots.get(ARGUMENTS).values())) {
 			if (!te.getQualifiedName().toString().endsWith("Argument")) {
 				error("Argument class name '" + te.getQualifiedName() + "' does not end in \"Argument\"");
 			}
@@ -157,7 +196,7 @@ public class Processor extends AbstractProcessor {
 	}
 
 	private void generateCommandImpls() throws IOException {
-		for (TypeElement te : ElementFilter.typesIn(commands.values())) {
+		for (TypeElement te : ElementFilter.typesIn(annots.get(COMMANDS).values())) {
 			if (!te.getQualifiedName().toString().endsWith("Command")) {
 				error("Command class name '" + te.getQualifiedName() + "' does not end in \"Command\"");
 			}
@@ -167,9 +206,6 @@ public class Processor extends AbstractProcessor {
 
 	/**
 	 * Generate the ArgImp class for the command.
-	 * 
-	 * @param te
-	 * @throws IOException
 	 */
 	private void generateArgumentImpl(TypeElement te) throws IOException {
 		// com.ail.core.thing.ThingCommand -> com.ail.core.thing.ThingArgImp
@@ -224,10 +260,7 @@ public class Processor extends AbstractProcessor {
 	}
 
 	/**
-	 * Generate CommandImp for command
-	 * 
-	 * @param te
-	 * @throws IOException
+	 * Generate a CommandImp class for a CommandDefinition
 	 */
 	private void generateCommandImpl(TypeElement te) throws IOException {
 		// com.ail.core.thing.ThingCommand -> com.ail.core.thing.ThingCommandImp
@@ -286,7 +319,7 @@ public class Processor extends AbstractProcessor {
 		pw.printf("  }\n");
 		pw.printf("\n");
 
-		Element interfaceElement = arguments.get(qualifiedArgument);
+		Element interfaceElement = annots.get(ARGUMENTS).get(qualifiedArgument);
 
 		for (ExecutableElement ee : ElementFilter.methodsIn(interfaceElement.getEnclosedElements())) {
 			String methodName = ee.getSimpleName().toString();
