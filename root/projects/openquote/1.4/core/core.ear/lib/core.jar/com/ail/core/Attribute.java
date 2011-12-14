@@ -343,7 +343,7 @@ public class Attribute extends Type implements Identified {
             return value;
         }
         else {
-            Format format=formatter(com.ail.core.ThreadLocale.getThreadLocale());
+            Format format=formatter(ThreadLocale.getThreadLocale());
             
             if (format instanceof MessageFormat) {
                 return format.format(new Object[]{getObject()});
@@ -534,6 +534,7 @@ public class Attribute extends Type implements Identified {
                     }
                     else {
                         format=NumberFormat.getCurrencyInstance(locale);
+System.out.println("HHHHHHHHHHH format: "+format+", for lacale: "+locale.getCountry()+" "+locale.getLanguage());
                     }
                     format.setCurrency(Currency.getInstance(unit));
                     
