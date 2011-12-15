@@ -176,7 +176,8 @@ public class TestAttribute {
     
             // USD formatted for Canada
             ThreadLocale.setThreadLocale(CANADA);
-            assertEquals("US$1,002.23", usd.getFormattedValue());
+            String v=usd.getFormattedValue();
+            assertTrue(v.equals("US$1,002.23") || v.equals("USD1,002.23"));
             
             // USD formatted for USA
             ThreadLocale.setThreadLocale(US);
