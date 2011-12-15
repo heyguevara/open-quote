@@ -17,40 +17,14 @@
 
 package com.ail.commercialtest;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 import com.ail.financial.DirectDebit;
 
-/**
- */
-public class TestDirectDebit extends TestCase {
-    /**
-     * Constructs a test case with the given name.
-     * @param name The tests name
-     */
-    public TestDirectDebit(String name) {
-        super(name);
-    }
-
-    /**
-     * Create an instance of this test case as a TestSuite.
-     * @return Test an instance of this test case.
-     */
-    public static Test suite() {
-        return new junit.framework.TestSuite(TestDirectDebit.class);
-    }
-
-    /**
-     * Run this testcase from the command line.
-     * @param args No command line args are required.
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-
-    /**
-     */
+public class TestDirectDebit {
+    @Test
     public void testAccountNumberMasking() {
         DirectDebit sut=new DirectDebit();
         

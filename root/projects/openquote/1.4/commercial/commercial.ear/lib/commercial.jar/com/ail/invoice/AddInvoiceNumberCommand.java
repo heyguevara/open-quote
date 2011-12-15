@@ -17,33 +17,9 @@
 
 package com.ail.invoice;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.financial.Invoice;
 
-public class AddInvoiceNumberCommand extends Command implements AddInvoiceNumberArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-
-    private AddInvoiceNumberArg args;
-
-    public AddInvoiceNumberCommand() {
-        super();
-        args = new AddInvoiceNumberArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (AddInvoiceNumberArg) arg;
-    }
-
-    public CommandArg getArgs() {
-        return (CommandArg) args;
-    }
-
-    public Invoice getInvoiceArgRet() {
-        return args.getInvoiceArgRet();
-    }
-
-    public void setInvoiceArgRet(Invoice invoiceArgRet) {
-        args.setInvoiceArgRet(invoiceArgRet);
-    }
+@CommandDefinition(defaultServiceClass=AddInvoiceNumberService.class)
+public interface AddInvoiceNumberCommand extends Command, AddInvoiceNumberArgument {
 }

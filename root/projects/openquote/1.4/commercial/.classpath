@@ -35,5 +35,11 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-5.1.17-bin.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="/development/build/lib/annotation-3.0.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

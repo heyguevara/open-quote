@@ -23,7 +23,8 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 
-import com.ail.core.Locale;
+import com.ail.annotation.TypeDefinition;
+import com.ail.core.ThreadLocale;
 import com.ail.core.Type;
 import com.ail.util.Rate;
 
@@ -31,6 +32,7 @@ import com.ail.util.Rate;
  * Instances of this class represent amounts of money.
  * @since Commercial 2.4 this class is immutable.
  */
+@TypeDefinition
 public class CurrencyAmount extends Type {
     static final long serialVersionUID = -7610940646036255844L;
     private static String format="#0.00";
@@ -116,7 +118,7 @@ public class CurrencyAmount extends Type {
      * @param amount
      */
     private void setAmountAsString(String amount) throws NumberFormatException {
-        DecimalFormatSymbols dfs=new DecimalFormatSymbols(Locale.getThreadLocale());
+        DecimalFormatSymbols dfs=new DecimalFormatSymbols(ThreadLocale.getThreadLocale());
         char decimalSeparator = dfs.getDecimalSeparator();
         char groupSeparator = dfs.getGroupingSeparator();
 
@@ -294,7 +296,7 @@ public class CurrencyAmount extends Type {
      * @return Formatted string
      */
     public String toFormattedString() {
-        NumberFormat fmt=NumberFormat.getCurrencyInstance(Locale.getThreadLocale());
+        NumberFormat fmt=NumberFormat.getCurrencyInstance(ThreadLocale.getThreadLocale());
         fmt.setCurrency(java.util.Currency.getInstance(getCurrencyAsString()));
         fmt.setMaximumFractionDigits(currency.getFractionDigits());
         return fmt.format(amount);

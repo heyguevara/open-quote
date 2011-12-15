@@ -17,6 +17,7 @@
 
 package com.ail.invoice;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
@@ -31,7 +32,8 @@ import com.ail.core.key.GenerateUniqueKeyCommand;
  * generation phases depends on the {@link DocumentDefinition} type defined in the product associated
  * with the policy for which a document is being generated. By convention, this type is named "InvoiceDocument".
  */
-public class AddInvoiceNumberService extends Service<AddInvoiceNumberArg> {
+@ServiceImplementation
+public class AddInvoiceNumberService extends Service<AddInvoiceNumberArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
     private String configurationNamespace="com.ail.invoice.AddInvoiceNumberService";
 

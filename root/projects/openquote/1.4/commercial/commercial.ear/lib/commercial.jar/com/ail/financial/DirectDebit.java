@@ -17,9 +17,12 @@
 
 package com.ail.financial;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * Represents the details of a direct debit.
  */
+@TypeDefinition
 public class DirectDebit extends PaymentMethod {
     private static final long serialVersionUID = 1L;
 

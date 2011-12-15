@@ -17,73 +17,9 @@
 
 package com.ail.invoice;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.financial.Invoice;
 
-public class GenerateInvoiceNumberRuleCommand extends Command implements GenerateInvoiceNumberRuleArg {
-    private static final long serialVersionUID = 5485595422924140879L;
-
-    private GenerateInvoiceNumberRuleArg args = null;
-
-    public GenerateInvoiceNumberRuleCommand() {
-        super();
-        args = new GenerateInvoiceNumberRuleArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (GenerateInvoiceNumberRuleArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Invoice getInvoiceArg() {
-        return args.getInvoiceArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param invoiceArg @{inheritDoc}
-     */
-    public void setInvoiceArg(Invoice invoiceArg) {
-        args.setInvoiceArg(invoiceArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public int getUniqueNumberArg() {
-        return args.getUniqueNumberArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param uniqueNumberArg @{inheritDoc}
-     */
-    public void setUniqueNumberArg(int uniqueNumberArg) {
-        args.setUniqueNumberArg(uniqueNumberArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getInvoiceNumberRet() {
-        return args.getInvoiceNumberRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param invoiceNumberRet @{inheritDoc}
-     */
-    public void setInvoiceNumberRet(String invoiceNumberRet) {
-        args.setInvoiceNumberRet(invoiceNumberRet);
-    }
+@CommandDefinition
+public interface GenerateInvoiceNumberRuleCommand extends Command, GenerateInvoiceNumberRuleArgument {
 }

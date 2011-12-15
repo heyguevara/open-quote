@@ -18,7 +18,7 @@ import com.ail.financial.Invoice;
 
 public class AddInvoiceNumberServiceTest {
     AddInvoiceNumberService sut = null;
-    AddInvoiceNumberArg args=null;
+    AddInvoiceNumberArgument args=null;
     private Invoice mockInvoice;
     private Core mockCore;
     
@@ -28,7 +28,7 @@ public class AddInvoiceNumberServiceTest {
         when(mockInvoice.getInvoiceNumber()).thenReturn(null);
         when(mockInvoice.getProductTypeId()).thenReturn("productTypeId");
 
-        args=mock(AddInvoiceNumberArg.class);
+        args=mock(AddInvoiceNumberArgument.class);
         when(args.getInvoiceArgRet()).thenReturn(mockInvoice);
 
         mockCore=mock(Core.class);

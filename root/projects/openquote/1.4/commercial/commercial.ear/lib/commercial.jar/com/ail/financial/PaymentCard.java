@@ -21,9 +21,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * Represents the details of a payment card. Payment card encompasses both credit and debit cards.
  */
+@TypeDefinition
 public class PaymentCard extends PaymentMethod {
     private static final long serialVersionUID = 1L;
     private DateFormat dateFormatter=new SimpleDateFormat("MM/yy");

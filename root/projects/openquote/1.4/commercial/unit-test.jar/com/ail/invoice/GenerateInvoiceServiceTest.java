@@ -22,7 +22,7 @@ import com.ail.party.Party;
 public class GenerateInvoiceServiceTest {
     private GenerateInvoiceService sut;
     private Core mockCore;
-    private GenerateInvoiceArg mockArgs;
+    private GenerateInvoiceArgument mockArgs;
     private Invoice mockInvoice;
     private Party mockFrom;
     private Party mockAddressee;
@@ -36,7 +36,7 @@ public class GenerateInvoiceServiceTest {
     @Before
     public void setupMocks() {
         mockCore = mock(Core.class);
-        mockArgs = mock(GenerateInvoiceArg.class);
+        mockArgs = mock(GenerateInvoiceArgument.class);
         mockInvoice = mock(Invoice.class);
         mockFrom = mock(Party.class);
         mockAddressee = mock(Party.class);
@@ -63,7 +63,7 @@ public class GenerateInvoiceServiceTest {
         when(mockInvoice.getNarative()).thenReturn("Narative");
         when(mockCore.newProductType("productTypeId", "InvoiceDocument")).thenReturn(mockDocumentDef);
         when(mockDocumentDef.getRenderCommand()).thenReturn("RenderCommand");
-        when(mockCore.newCommand("RenderCommand")).thenReturn(mockRenderCommand);
+        when(mockCore.newCommand("RenderCommand", RenderDocumentCommand.class)).thenReturn(mockRenderCommand);
         when(mockRenderCommand.getRenderedDocumentRet()).thenReturn(document);
     }
 

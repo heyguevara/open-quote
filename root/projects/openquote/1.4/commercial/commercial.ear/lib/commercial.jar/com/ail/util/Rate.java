@@ -17,6 +17,7 @@
 
 package com.ail.util;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 import java.math.BigDecimal;
@@ -24,12 +25,8 @@ import java.math.BigDecimal;
 /**
  * This class represents fractions or rates - with some special handling for common
  * fractions like percentages and permils.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2007/03/20 22:46:08 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/util/Rate.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class Rate extends Type {
     static final long serialVersionUID = 7667424357379598058L;
     private BigDecimal nominator=null;

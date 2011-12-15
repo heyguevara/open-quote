@@ -17,40 +17,18 @@
 
 package com.ail.commercialtest;
 
+import static org.junit.Assert.*;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import com.ail.financial.PaymentCard;
 
 /**
  */
-public class TestPaymentCard extends TestCase {
-    /**
-     * Constructs a test case with the given name.
-     * @param name The tests name
-     */
-    public TestPaymentCard(String name) {
-        super(name);
-    }
-
-    /**
-     * Create an instance of this test case as a TestSuite.
-     * @return Test an instance of this test case.
-     */
-    public static Test suite() {
-        return new junit.framework.TestSuite(TestPaymentCard.class);
-    }
-
-    /**
-     * Run this testcase from the command line.
-     * @param args No command line args are required.
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
+public class TestPaymentCard {
 
     /**
      * The PaymentCard class provides methods to format the start and end dates
@@ -61,6 +39,7 @@ public class TestPaymentCard extends TestCase {
      * <li>Test that getFormattedEndDate returns '12/12/</li>
      * </ol>
      */
+    @Test
     public void testStartAndExpiryDateFormatting() throws Exception {
         PaymentCard sut=new PaymentCard();
 
@@ -81,6 +60,7 @@ public class TestPaymentCard extends TestCase {
      * <li>Test that getMaskedCardNumber returns '**** **** **** 4567'</li>
      * </ol>
      */
+    @Test
     public void testCardNumberMasking() {
         PaymentCard sut=new PaymentCard();
         
@@ -90,21 +70,15 @@ public class TestPaymentCard extends TestCase {
         
     }
 
-    public void testNullDates() {
+    @Test
+    public void testNullStartDate() {
         PaymentCard sut=new PaymentCard();
-        
-        try {
-            sut.getFormattedExpiryDate();
-        }
-        catch(NullPointerException e) {
-            fail("NPE should not be thrown");
-        }
+        sut.getFormattedStartDate();
+    }
 
-        try {
-            sut.getFormattedStartDate();
-        }
-        catch(NullPointerException e) {
-            fail("NPE should not be thrown");
-        }
+    @Test
+    public void testNullEndDate() {
+        PaymentCard sut=new PaymentCard();
+        sut.getFormattedExpiryDate();
     }
 }

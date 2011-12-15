@@ -17,16 +17,13 @@
 
 package com.ail.party;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
  * Class to encapsulate the details of a postal address.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/05/23 21:24:56 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/party/Address.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class Address extends Type {
     static final long serialVersionUID = 6426298969158775043L;
     private String line1;

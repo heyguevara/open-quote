@@ -17,44 +17,9 @@
 
 package com.ail.invoice;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.financial.Invoice;
 
-public class GenerateInvoiceCommand extends Command implements GenerateInvoiceArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-    private GenerateInvoiceArg args;
-    
-    public GenerateInvoiceCommand() {
-        super();
-		args=new GenerateInvoiceArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args=(GenerateInvoiceArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (CommandArg)args;
-    }
-
-    /** @inheritDoc */
-    public byte[] getDocumentRet() {
-        return args.getDocumentRet();
-    }
-    
-    /** @inheritDoc */
-    public void setDocumentRet(byte[] documentRet) {
-        args.setDocumentRet(documentRet);
-    }
-
-    /** @inheritDoc */
-    public Invoice getInvoiceArg() {
-        return args.getInvoiceArg();
-    }
-
-    /** @inheritDoc */
-    public void setInvoiceArg(Invoice invoiceArg) {
-        args.setInvoiceArg(invoiceArg);
-    }
+@CommandDefinition(defaultServiceClass=GenerateInvoiceService.class)
+public interface GenerateInvoiceCommand extends Command, GenerateInvoiceArgument {
 }

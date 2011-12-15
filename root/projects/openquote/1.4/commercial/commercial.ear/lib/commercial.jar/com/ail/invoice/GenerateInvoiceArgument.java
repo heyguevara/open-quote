@@ -17,13 +17,15 @@
 
 package com.ail.invoice;
 
-import com.ail.core.command.CommandArg;
+import com.ail.annotation.ArgumentDefinition;
+import com.ail.core.command.Argument;
 import com.ail.financial.Invoice;
 
 /**
  * Interface defining the arguments and returns associated with the invoice document generation service.
  */
-public interface GenerateInvoiceArg extends CommandArg {
+@ArgumentDefinition
+public interface GenerateInvoiceArgument extends Argument {
     /**
      * The invoice to generate a document for.
      * @return

@@ -19,9 +19,11 @@ package com.ail.financial;
 
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.party.Party;
 
+@TypeDefinition
 public class Invoice extends Type {
     private static final long serialVersionUID = 6168511434898673717L;
     private Party addressee;

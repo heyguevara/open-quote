@@ -17,6 +17,7 @@
 
 package com.ail.financial;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 import java.math.BigDecimal;
@@ -28,12 +29,8 @@ import java.util.Date;
  * For example it may represent:-<ol>
  * <li>a single payment of &pound;30 by direct debit from account number xxxxxxx, sort code yyyyyy; or</li>
  * <li>10 payments of &pound;30 each paid monthly by Master Card with card number xxxxx, card holder yyy.</li></ol>
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2006/11/04 11:20:23 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/financial/MoneyProvision.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class MoneyProvision extends Type {
     private static final long serialVersionUID = 1L;
 

@@ -17,9 +17,10 @@
 
 package com.ail.party;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
-/** @stereotype type */
+@TypeDefinition
 public class Party extends Type {
     static final long serialVersionUID = -593625795936961828L;
     private String legalName;

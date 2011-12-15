@@ -17,12 +17,12 @@
 
 package com.ail.invoice;
 
-import com.ail.core.command.CommandArg;
+import com.ail.annotation.ArgumentDefinition;
+import com.ail.core.command.Argument;
 import com.ail.financial.Invoice;
 
-/**
- */
-public interface GenerateInvoiceNumberRuleArg extends CommandArg {
+@ArgumentDefinition
+public interface GenerateInvoiceNumberRuleArgument extends Argument {
     /**
      * Getter for the invoiceArg property. The invoice to generate a number for
      * @return Value of invoiceArg, or null if it is unset

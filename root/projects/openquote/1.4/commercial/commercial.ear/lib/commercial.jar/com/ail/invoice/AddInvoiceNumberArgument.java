@@ -17,13 +17,15 @@
 
 package com.ail.invoice;
 
-import com.ail.core.command.CommandArg;
+import com.ail.annotation.ArgumentDefinition;
+import com.ail.core.command.Argument;
 import com.ail.financial.Invoice;
 
 /**
  * Interface defining the arguments and returns associated with the invoice number generation service.
  */
-public interface AddInvoiceNumberArg extends CommandArg {
+@ArgumentDefinition
+public interface AddInvoiceNumberArgument extends Argument {
     Invoice getInvoiceArgRet();
 
     void setInvoiceArgRet(Invoice invoiceArgRet);

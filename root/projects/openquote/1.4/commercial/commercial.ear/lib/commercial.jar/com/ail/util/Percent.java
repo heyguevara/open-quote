@@ -17,6 +17,7 @@
 
 package com.ail.util;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -24,12 +25,8 @@ import com.ail.core.Type;
  * todo A rate should be between 0 and 100 not 0 and 1
  * todo The rate should be represented as a BigDecimal - not a double.
  * @deprecated Use com.ail.util.Rate instead.
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/16 21:08:54 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/util/Percent.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class Percent extends Type {
     static final long serialVersionUID = -2314786106419874334L;
     private double rate;

@@ -20,6 +20,7 @@ package com.ail.financial;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -29,6 +30,7 @@ import com.ail.core.Type;
  * <li>A payment of &pound;30 to be made by Master Card, followed by 10 monthly payments of &pound;43 to be made by direct debit.</li>
  * </ol>
  */
+@TypeDefinition
 public class PaymentSchedule extends Type {
     private static final long serialVersionUID = 1L;
 

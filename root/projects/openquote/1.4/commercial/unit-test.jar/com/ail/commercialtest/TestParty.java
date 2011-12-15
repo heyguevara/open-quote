@@ -17,56 +17,28 @@
 
 package com.ail.commercialtest;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 import com.ail.party.Address;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/05/21 17:37:56 $
- * @source $Source: /home/bob/CVSRepository/projects/common/test.jar/com/ail/commercialtest/TestParty.java,v $
- */
-public class TestParty extends TestCase {
-    /**
-     * Constructs a test case with the given name.
-     * @param name The tests name
-     */
-    public TestParty(String name) {
-        super(name);
-    }
-
-    /**
-     * Create an instance of this test case as a TestSuite.
-     * @return Test an instance of this test case.
-     */
-    public static Test suite() {
-        return new junit.framework.TestSuite(TestParty.class);
-    }
-
-    /**
-     * Run this testcase from the command line.
-     * @param args No command line args are required.
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-
+public class TestParty {
     /**
      * Test valid arguments for the Rate constructor
      * @throws Exception
      */
+    @Test
     public void testGoodFormats() throws Exception {
         Address addr=new Address();
         
-        addr.setLine1("Little Owls");
-        addr.setLine2("Huntington Road");
-        addr.setTown("Crowborough");
-        addr.setCounty("East Sussex");
-        addr.setPostcode("TN6 2LJ");
+        addr.setLine1("The House");
+        addr.setLine2("The Road");
+        addr.setTown("Town");
+        addr.setCounty("County");
+        addr.setPostcode("ABC 1DE");
         
-        assertEquals("Little Owls, Huntington Road, Crowborough, East Sussex. TN6 2LJ", addr.toString());
+        assertEquals("The House, The Road, Town, County. ABC 1DE", addr.toString());
     }
 
 }

@@ -17,15 +17,11 @@
 
 package com.ail.party;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.util.DateOfBirth;
 import static com.ail.party.Title.OTHER;
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 10:31:30 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/party/Person.java,v $
- * @stereotype type
- */
+
+@TypeDefinition
 public class Person extends Party {
     static final long serialVersionUID = 2593580726988142332L;
 

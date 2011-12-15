@@ -23,8 +23,11 @@
   </target>
 
   <target name="ail: reset configurations" description="reset all the ail configurations">
-    <ail-reset-configurations-macro>
+    <ail-reset-configurations-macro annotated-types-config="${ear.dir}/lib/core.jar/com/ail/core/AnnotatedTypeConfig.xml">
       <paths>
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
+        <dirset dir="${ear.dir}" includes="lib/commercial.jar" />
+        <dirset dir="${ear.dir}" includes="lib/core.jar" />
         <dirset dir="${project.dir}/commercial.ear" includes="*.jar"/>
         <dirset dir="${project.dir}/commercial.ear" includes="*.war/WEB-INF/src"/>
       </paths>

@@ -19,54 +19,27 @@ package com.ail.commercialtest;
 
 import static com.ail.financial.Currency.GBP;
 import static com.ail.financial.Currency.USD;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.financial.Currency;
 import com.ail.financial.CurrencyAmount;
 import com.ail.util.Rate;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/16 21:08:54 $
- * @source $Source: /home/bob/CVSRepository/projects/common/test.jar/com/ail/commercialtest/TestCurrencyAmount.java,v $
- */
-public class TestCurrencyAmount extends TestCase {
-    /**
-     * Constructs a test case with the given name.
-     * @param name The tests name
-     */
-    public TestCurrencyAmount(String name) {
-        super(name);
-    }
+public class TestCurrencyAmount {
 
-    /**
-     * Create an instance of this test case as a TestSuite.
-     * @return Test an instance of this test case.
-     */
-    public static Test suite() {
-        return new junit.framework.TestSuite(TestCurrencyAmount.class);
-    }
-
-    /**
-     * Run this testcase from the command line.
-     * @param args No command line args are required.
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-
+    @Test
     public void testGoodValues() {
         new CurrencyAmount("110.21", USD);
         new CurrencyAmount(110.21, USD);
         new CurrencyAmount(new BigDecimal("110.21"), USD);
     }
 
+    @Test
     public void testCurrencyScale() {
         CurrencyAmount ca;
 
@@ -77,6 +50,7 @@ public class TestCurrencyAmount extends TestCase {
         assertEquals("0.24", ca.getAmountAsString());
     }
 
+    @Test
     public void testCurrencyApplyRate() {
         CurrencyAmount ca;
         Rate rate;
@@ -92,6 +66,7 @@ public class TestCurrencyAmount extends TestCase {
      * (when its add/subtract method is called) automatically assume
      * the currency of the CurrencyAmount passed in.
      */
+    @Test
     public void testAutoCreate() {
         CurrencyAmount test;
 
@@ -120,6 +95,7 @@ public class TestCurrencyAmount extends TestCase {
      * <li>Repeat the previous test using the overloaded amount, currency method.</li>
      * </ol>
      */
+    @Test
     public void testGreaterThan() {
         CurrencyAmount test1, test2;
 
@@ -171,6 +147,7 @@ public class TestCurrencyAmount extends TestCase {
      * <li>Repeat the previous test using the overloaded amount, currency method.</li>
      * </ol>
      */
+    @Test
     public void testLessThan() {
         CurrencyAmount test1, test2;
 
@@ -210,33 +187,36 @@ public class TestCurrencyAmount extends TestCase {
 
     /**
      * Currency provides a method to format it's value into a String in a format
-     * appropriate to the current Locale (as defined by the {@link com.ail.core.Locale}).
+     * appropriate to the current ThreadLocale (as defined by the {@link com.ail.core.ThreadLocale}).
      */
+    @Test
     public void testFormatting() {
         CurrencyAmount test;
 
-        Locale.setThreadLocale(java.util.Locale.UK);
+        ThreadLocale.setThreadLocale(java.util.Locale.UK);
         test=new CurrencyAmount(100000, GBP);
         assertEquals("£100,000.00", test.toFormattedString());
 
-        Locale.setThreadLocale(java.util.Locale.US);
+        ThreadLocale.setThreadLocale(java.util.Locale.US);
         assertEquals("GBP100,000.00", test.toFormattedString());
 
-        Locale.setThreadLocale(java.util.Locale.GERMANY);
+        ThreadLocale.setThreadLocale(java.util.Locale.GERMANY);
         assertEquals("100.000,00 GBP", test.toFormattedString());
     }
     
+    @Test
     public void testFractionalDigits() {
         CurrencyAmount test;
 
-        Locale.setThreadLocale(java.util.Locale.UK);
+        ThreadLocale.setThreadLocale(java.util.Locale.UK);
         test=new CurrencyAmount(100000, Currency.JPY);
         assertEquals("JPY100,000", test.toFormattedString());
 
         test=new CurrencyAmount(100000, Currency.USD);
         assertEquals("USD100,000.00", test.toFormattedString());
-}
+    }
     
+    @Test
     public void testChaining() {
         CurrencyAmount test;
         
@@ -253,15 +233,16 @@ public class TestCurrencyAmount extends TestCase {
         assertEquals(new CurrencyAmount(40, GBP), test);
     }
     
+    @Test
     public void testCurrencyAmountForBrazil() {
         java.util.Locale saved=java.util.Locale.getDefault();
         try {
-            Locale.setThreadLocale(new java.util.Locale("pt", "BR"));
+            ThreadLocale.setThreadLocale(new java.util.Locale("pt", "BR"));
             assertEquals(new BigDecimal("113.40"), new CurrencyAmount("113,40", "GBP").getAmount());
             assertEquals(new BigDecimal("-113.40"), new CurrencyAmount("-113,40", "GBP").getAmount());
             assertEquals(new BigDecimal("1113.40"), new CurrencyAmount("1.113,40", "GBP").getAmount());
 
-            Locale.setThreadLocale(new java.util.Locale("en", "GB"));
+            ThreadLocale.setThreadLocale(new java.util.Locale("en", "GB"));
             assertEquals(new BigDecimal("113.40"), new CurrencyAmount("113.40", "GBP").getAmount());
             assertEquals(new BigDecimal("-113.40"), new CurrencyAmount("-113.40", "GBP").getAmount());
             assertEquals(new BigDecimal("1113.40"), new CurrencyAmount("1,113.40", "GBP").getAmount());

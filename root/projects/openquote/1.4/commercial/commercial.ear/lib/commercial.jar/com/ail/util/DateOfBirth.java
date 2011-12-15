@@ -17,6 +17,7 @@
 
 package com.ail.util;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import java.util.Date;
 import java.util.Calendar;
@@ -25,13 +26,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/16 21:08:54 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/util/DateOfBirth.java,v $
- * @stereotype type
- */
+@TypeDefinition
 public class DateOfBirth extends Type {
     static final long serialVersionUID = 4525629482776785515L;
     private Date date;
@@ -101,7 +96,7 @@ public class DateOfBirth extends Type {
 
 	/**
 	 * Fetch the date in the locale defined format.
-	 * @param locale Locale to format date for.
+	 * @param locale ThreadLocale to format date for.
 	 * @return A string in the locale defined format.
 	 */
 	public String getDateAsString(Locale locale) {

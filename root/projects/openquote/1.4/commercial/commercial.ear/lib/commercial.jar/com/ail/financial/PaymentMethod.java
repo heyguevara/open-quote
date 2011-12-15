@@ -17,13 +17,9 @@
 
 package com.ail.financial;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2006/04/21 19:57:33 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/financial/PaymentMethod.java,v $
- * @stereotype type
- */
+import com.ail.annotation.TypeDefinition;
+
+@TypeDefinition
 public abstract class PaymentMethod extends com.ail.core.Type {
     private static final long serialVersionUID = 1L;
 }
