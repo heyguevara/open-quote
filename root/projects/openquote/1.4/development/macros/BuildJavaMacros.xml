@@ -395,7 +395,7 @@
 
   <!-- Run the unit tests associated with a project. Reports are written to -->
   <!-- ${test.dir}/reports.                                                 -->
-  <macrodef name="run-unit-macro">
+  <macrodef name="run-unit-tests-macro">
     <element name="junit-classpath" optional="no" />
     <sequential>
 
@@ -404,6 +404,7 @@
       <junit showoutput="yes" printsummary="yes" fork="yes" errorproperty="errored" failureproperty="failed">
         <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" />
         <!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
+
         <classpath>
           <dirset dir="${test.dir}" includes="unit-test.jar" />
           <junit-classpath />
@@ -425,7 +426,7 @@
 
   <!-- Run the unit tests associated with a project. Reports are written to -->
   <!-- ${test.dir}/reports.                                                 -->
-  <macrodef name="run-tests-macro">
+  <macrodef name="run-integration-tests-macro">
     <element name="junit-classpath" optional="no" />
     <sequential>
 
@@ -441,7 +442,10 @@
 
           <junit showoutput="yes" printsummary="yes" fork="yes" errorproperty="errored" failureproperty="failed">
             <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" />
-            <!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
+            <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
+            <!--jvmarg value="-Duser.language=en" /-->
+            <!--jvmarg value="-Duser.country=US" /-->
+
             <classpath>
               <dirset dir="${test.dir}" includes="integration-test.jar" />
               <dirset dir="${test.dir}" includes="unit-test.jar" />
@@ -449,6 +453,7 @@
             </classpath>
 
             <formatter type="xml" />
+
             <batchtest fork="yes" todir="${test.dir}/reports" filtertrace="no">
               <fileset dir="${test.dir}/unit-test.jar" includes="**/*Test*.class" />
             </batchtest>
@@ -457,6 +462,7 @@
               <fileset dir="${test.dir}/integration-test.jar" includes="**/*Test*.class" excludes="**/*$*" />
             </batchtest>
           </junit>
+
           <stop-jboss-macro />
 
           <fail if="errored" message="unit test errors were detected." />
@@ -464,6 +470,24 @@
 
         </sequential>
       </parallel>
+    </sequential>
+  </macrodef>
+
+  <!-- Run all tests, unit tests and integration tests -->
+  <macrodef name="run-all-tests-macro">
+    <element name="test-classpath" optional="no" />
+    <sequential>
+      <run-unit-tests-macro>
+        <junit-classpath>
+          <test-classpath/>
+        </junit-classpath>
+      </run-unit-tests-macro>
+
+      <run-integration-tests-macro>
+        <junit-classpath>
+          <test-classpath/>
+        </junit-classpath>
+      </run-integration-tests-macro>
     </sequential>
   </macrodef>
 </project>
