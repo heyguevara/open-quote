@@ -99,8 +99,8 @@ public class TestAttribute {
     public void testAttributeFormatting() {
         Attribute attr;
 
-        attr = new Attribute("amount5", "£12.234", "number;pattern=£#.00");
-        assertEquals("£12.23", attr.getFormattedValue());
+        attr = new Attribute("amount5", "\u00A3"+"12.234", "number;pattern=\u00A3#.00");
+        assertEquals("\u00A3"+"12.23", attr.getFormattedValue());
         assertEquals(12.234, attr.getObject());
     }
 
@@ -148,7 +148,7 @@ public class TestAttribute {
         assertEquals(java.lang.String.class, attr.getValue().getClass());
         assertEquals(java.lang.Double.class, attr.getObject().getClass());
 
-        assertEquals("£1,002.23", attr.getFormattedValue());
+        assertEquals("\u00A3"+"1,002.23", attr.getFormattedValue());
         assertEquals("1002.23", attr.getValue());
         assertEquals(1002.23, attr.getObject());
     }
@@ -170,7 +170,7 @@ public class TestAttribute {
             Attribute gbp = new Attribute("q1", "1002.23", "currency", "GBP");
             
             // test that formatting works in the default locale
-            assertEquals("£1,002.23", gbp.getFormattedValue());
+            assertEquals("\u00A3"+"1,002.23", gbp.getFormattedValue());
     
             Attribute usd = new Attribute("q1", "1002.23", "currency", "USD");
     
@@ -282,7 +282,7 @@ public class TestAttribute {
             assertEquals("1004.8", money.getValue());
             money.setValue("2,001.90");
             assertEquals("2001.9", money.getValue());
-            money.setValue("£921.30");
+            money.setValue("\u00A3"+"921.30");
             assertEquals("921.3", money.getValue());
 
             ThreadLocale.setThreadLocale(GERMANY);

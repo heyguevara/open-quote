@@ -73,7 +73,7 @@ import com.ail.annotation.TypeDefinition;
  * <tr><td>b.getFormattedValue()</td><td>returns "&pound;21" as a String</td></tr>
  * <tr><td>c.getValue()</td><td>returns "21" as a String</td></tr>
  * <tr><td>c.getObject()</td><td>returns "21" as a String</td></tr>
- * <tr><td>c.getFormattedValue()</td><td>returns "€21" as a String</td></tr>
+ * <tr><td>c.getFormattedValue()</td><td>returns "&pound;21" as a String</td></tr>
  * <tr><td>d.getValue()</td><td>returns "YES" as a String</td></tr>
  * <tr><td>d.getObject()</td><td>returns Double(1.0)</td></tr>
  * <tr><td>d.getFormattedValue()</td><td>returns "YES" as a String</td></tr>
@@ -534,7 +534,6 @@ public class Attribute extends Type implements Identified {
                     }
                     else {
                         format=NumberFormat.getCurrencyInstance(locale);
-System.out.println("HHHHHHHHHHH format: "+format+", for lacale: "+locale.getCountry()+" "+locale.getLanguage());
                     }
                     format.setCurrency(Currency.getInstance(unit));
                     

@@ -215,7 +215,7 @@ public class TestXMLString {
         assertEquals("&apos;&quot;&amp;&amp;&quot;&apos;", new XMLString("'\"&&amp;&quot;&apos;").toStringWithEntityReferences(true));
 
         // test character references
-        assertEquals("&#xffa;&#163;&#0221;", new XMLString("&#xffa;£&#0221;").toStringWithEntityReferences(false));
+        assertEquals("&#xffa;&#163;&#0221;", new XMLString("&#xffa;\u00A3&#0221;").toStringWithEntityReferences(false));
     }
 
     /**
@@ -238,7 +238,7 @@ public class TestXMLString {
         assertEquals("A<B>C\"\"D", new XMLString("A&lt;B&gt;C&quot;&quot;D").toStringWithoutEntityReferences());
 
         // test character references
-        assertEquals("A£B", new XMLString("A&#163;B").toStringWithoutEntityReferences());
+        assertEquals("A"+"\u00A3"+"B", new XMLString("A&#163;B").toStringWithoutEntityReferences());
     }
 
     /**

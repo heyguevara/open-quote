@@ -49,8 +49,8 @@
   </target>
 
   <target name="test" description="run unit tests and integration tests">
-    <run-tests-macro>
-      <junit-classpath>
+    <run-all-tests-macro>
+      <test-classpath>
         <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar"/>
@@ -61,8 +61,8 @@
           <include name="server/default/lib/saxon*.jar" />
           <include name="lib/endorsed/xalan.jar" />
         </fileset>
-      </junit-classpath>
-    </run-tests-macro>
+      </test-classpath>
+    </run-all-tests-macro>
   </target>
 </project>
 
