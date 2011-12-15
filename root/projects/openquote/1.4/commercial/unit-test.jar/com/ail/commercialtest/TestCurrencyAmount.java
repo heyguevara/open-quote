@@ -195,7 +195,7 @@ public class TestCurrencyAmount {
 
         ThreadLocale.setThreadLocale(java.util.Locale.UK);
         test=new CurrencyAmount(100000, GBP);
-        assertEquals("£100,000.00", test.toFormattedString());
+        assertEquals("\u00A3"+"100,000.00", test.toFormattedString());
 
         ThreadLocale.setThreadLocale(java.util.Locale.US);
         assertEquals("GBP100,000.00", test.toFormattedString());
