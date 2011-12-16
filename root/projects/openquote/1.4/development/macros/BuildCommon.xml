@@ -108,14 +108,12 @@
 
   <!-- Macro to set (i.e. upload to the database) factory configurations. Before the     -->
   <!-- core configuration is reset, the specified list of paths are searched for type    -->
-  <!-- configs that the build has genered in response to annotations. These configs are  -->
+  <!-- configs that the build has generated in response to annotations. These configs are-->
   <!-- then merged into on configuration file an placed in the file defined by the       -->
   <!-- annotated-types-config parameter.                                                 -->
-  <!-- @param configs List of configurations to be rest                                  -->
   <!-- @param paths Path object listing the places to search for annotated type configs. -->
   <!-- @param annotated-types-config File to write the merged annotated type configs to. -->
   <macrodef name="ail-reset-configurations-macro">
-    <element name="configs" optional="no" />
     <element name="paths" optional="no" />
     <attribute name="annotated-types-config" />
     <sequential>
@@ -155,7 +153,6 @@
         <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl" />
         <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" />
         <arg line="-s ${config.search.path} -o @{annotated-types-config}" />
-        <configs />
       </java>
     </sequential>
   </macrodef>
