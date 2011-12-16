@@ -24,10 +24,11 @@
     <!-- Bind the default core services (above) to Commands used by Core.class -->
     <!--=======================================================================-->
     
-    <!-- Map all of the logger commands to the stdio logger -->
     <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
+
+    <!-- Map all of the logger commands to the stdio logger -->
     <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>

@@ -68,7 +68,6 @@ public class ConfigurationReset {
     private void reset(String args[]) throws Exception {
         String annotationTypeConfig=null;
         String searchPath=null;
-        Collection<String> configsToReset=new ArrayList<String>();
         
         for(int i=0 ; i<args.length ; i++) {
             if ("-o".equals(args[i])) {
@@ -76,9 +75,6 @@ public class ConfigurationReset {
             }
             else if ("-s".equals(args[i])) {
                 searchPath=args[++i];
-            }
-            else {
-                configsToReset.add(args[i]);
             }
         }
 
@@ -90,8 +86,11 @@ public class ConfigurationReset {
         cp = new CoreProxy();
         cp.resetConfiguration();
     
-        for(String config: configsToReset) {
-            cp.resetConfiguration(config);
+        ConfigurationHandler.resetCache();
+
+        // loop through the AllNamespaceReset group, and reset all the configs named
+        for(Parameter p: cp.getGroup("NamespacesToResetOnResetAll").getParameter()) {
+            cp.resetConfiguration(p.getName());
         }
     }
     

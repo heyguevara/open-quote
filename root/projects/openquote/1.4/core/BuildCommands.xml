@@ -30,16 +30,6 @@
         <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
       </paths>
-      <configs>
-        <arg value="com.ail.core.CoreProxy"/>
-        <arg value="com.ail.core.command.CommandServerBean" />
-        <arg value="com.ail.core.configure.server.ServerBean" />
-        <arg value="com.ail.core.persistence.PersistenceServerBean" />
-        <arg value="com.ail.core.product.ProductManagerBean" />
-        <arg value="com.ail.core.product.listproducts.ListProductsService" />
-        <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService" />
-        <arg value="com.ail.core.validator.CommonsValidatorService" />
-      </configs>
     </ail-reset-configurations-macro>
   </target>
 </project>

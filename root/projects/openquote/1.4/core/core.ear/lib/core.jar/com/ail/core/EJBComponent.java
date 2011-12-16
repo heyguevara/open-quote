@@ -149,6 +149,11 @@ public abstract class EJBComponent extends Component {
         }
     }
 
+    protected <T extends Command> T invokeCommand(Core core, T sourceCommand) {
+        Command command = core.newCommand(sourceCommand.getClass());
+        return invokeCommand(command, sourceCommand);
+    }
+
     protected <T extends Command> T invokeCommand(Core core, String name, T sourceCommand) {
         Command command = core.newCommand(name, Command.class);
         return invokeCommand(command, sourceCommand);
