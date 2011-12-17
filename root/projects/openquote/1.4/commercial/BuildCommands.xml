@@ -31,15 +31,6 @@
         <dirset dir="${project.dir}/commercial.ear" includes="*.jar"/>
         <dirset dir="${project.dir}/commercial.ear" includes="*.war/WEB-INF/src"/>
       </paths>
-      <configs>
-        <arg value="com.ail.core.configure.server.ServerBean"/>
-        <arg value="com.ail.core.validator.CommonsValidatorService"/>
-        <arg value="com.ail.core.persistence.PersistenceServerBean"/>
-        <arg value="com.ail.core.product.ProductManagerBean"/>
-        <arg value="com.ail.core.command.CommandServerBean"/>
-        <arg value="com.ail.core.product.listproducts.ListProductsService"/>
-        <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
-      </configs>
     </ail-reset-configurations-macro>
   </target>
 </project>
