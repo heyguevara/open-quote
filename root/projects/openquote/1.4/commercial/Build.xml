@@ -27,6 +27,7 @@
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <install-jboss-macro version="${jboss.version}" />
     <install-base-domain-macro dar="core" version="${core.version}" build="${core.build}" />
+    <delete dir="${deploy.dir}/data/alf_data" />
     <subant-macro target="setup" />
     <antcall target="_build" />
   </target>
