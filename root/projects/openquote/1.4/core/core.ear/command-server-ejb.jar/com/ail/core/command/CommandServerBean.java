@@ -64,14 +64,14 @@ public class CommandServerBean extends EJBComponent implements MessageDrivenBean
             
             Argument argument=(Argument)getCore().fromXML(argumentXml.getType(), argumentXml);
 
-            // We take the basenanme of the class as the command name: i.e. if the command class is
-            // "com.ail.core.logging.LoggerArgImp" the command name will be "LoggerArgImp".
-            String commandName=argumentXml.getClass().getName();
+            // We take the base name of the class as the command name: i.e. if the command class is
+            // "com.ail.core.logging.LoggerArgumentImpl" the command name will be "LoggerArgumentImpl".
+            String commandName=argument.getClass().getName();
             commandName=commandName.substring(commandName.lastIndexOf('.')+1);
             
             com.ail.core.command.Command command = core.newCommand(commandName, Command.class);
-            command.setCallersCore(this);
             command.setArgs(argument);
+            command.setCallersCore(this);
             command.invoke();
         }
         catch(Throwable t) {

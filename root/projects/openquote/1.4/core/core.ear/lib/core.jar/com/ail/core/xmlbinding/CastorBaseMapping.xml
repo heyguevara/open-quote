@@ -109,10 +109,12 @@
 	</class>
 
     <class name="com.ail.core.command.ArgumentImpl" extends="com.ail.core.Type">
-        <field name="callersCore" type="com.ail.core.CoreUserImpl"/>
     </class>
 
-    <class name="com.ail.core.logging.LoggerArgumentImpl" extends="com.ail.core.command.ArgumentImpl" auto-complete="true"/>
+    <class name="com.ail.core.logging.LoggerArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="date" type="date"/>
+        <field name="message" type="string"/>
+    </class>
 
     <class name="com.ail.core.product.listproducts.ListProductsArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
         <field name="productsRet" type="string" collection="collection"/>

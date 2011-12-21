@@ -40,10 +40,6 @@ import com.ail.core.configure.Configuration;
  *     &lt;parameter name="Queue"&gt;queue/AilCommandQueue&lt;/parameter&gt;
  *   &lt;/service&gt;
  * </pre>
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/02/16 21:33:41 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/JMSAccessor.java,v $
  */
 public class JMSAccessor extends Accessor {
     private String factory=null;
@@ -66,6 +62,7 @@ public class JMSAccessor extends Accessor {
             msg=session.createTextMessage(new CoreProxy().toXML(args).toString());
             msg.setStringProperty("ArgType", args.getClass().getName());
             msg.setLongProperty("VersionEffectiveDate", args.getCallersCore().getVersionEffectiveDate().getTime());
+            msg.setStringProperty("ConfigurationNamespace", args.getCallersCore().getConfigurationNamespace());
             
             sender = session.createSender(getQueueInstance());
             sender.send(msg);

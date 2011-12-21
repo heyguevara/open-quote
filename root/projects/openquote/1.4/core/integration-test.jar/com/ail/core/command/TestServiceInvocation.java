@@ -21,6 +21,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
 
 import org.junit.Before;
@@ -369,14 +375,42 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         getCore().invokeService("TestServiceFullLogging", DummyCommand.class, tai);
     }
 
+    /**
+     * Test that the JMS based command queue is working.
+     * <ul>
+     * <li>Create a command which appends a message to the system log (JBoss server log)</li>
+     * <li>Send the command to the command queue</li>
+     * <li>Wait for 10 seconds</li>
+     * <li>Check that the command has executed by reading the server log</li>
+     * <li>Fail if the test message is not found in the log</li>
+     * <li>Fail if any exceptions are thrown</li>
+     * </ul>
+     * @throws Exception
+     */
     @Test
     public void testJMSService() throws Exception {
+        String testMessage="A test message from the TestJMSCommand";
+        
         LoggerCommand command = getCore().newCommand("TestJMSCommand", LoggerCommand.class);
-        command.setMessage("A test message");
+        command.setMessage(testMessage);
         command.setSeverity(Severity.INFO);
         command.setCallersCore(new CoreProxy());
         command.setDate(new Date());
         command.invoke();
+        
+        // wait 10 seconds, then check the log for the message that the command server should
+        // have output as a response to being sent a TestJMSCommand
+        Thread.sleep(1000*10);
+        
+        File logFile=new File("./target/jboss/server/default/log/server.log");
+        BufferedReader logReader=new BufferedReader(new InputStreamReader(new FileInputStream(logFile)));
+        boolean foundLogEntry=false;
+        for(String line=logReader.readLine() ; line!=null ; line=logReader.readLine()) {
+            foundLogEntry |= line.contains(testMessage);
+        }
+        logReader.close();
+        
+        assertTrue("JMS Service does not seems to have executed", foundLogEntry);
     }
     
     @Test
