@@ -56,7 +56,7 @@ public class TestPolicyPersistence extends CoreUserTestCase {
 
         tidyUpTestData();
 
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
         setVersionEffectiveDate(new VersionEffectiveDate());
         setCore(new Core(this));
         getCore().resetConfiguration();
@@ -65,7 +65,7 @@ public class TestPolicyPersistence extends CoreUserTestCase {
         new ListProductsService().resetConfiguration();
         new ResetAllProductsService().resetConfiguration();
 
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
         setVersionEffectiveDate(new VersionEffectiveDate());
     }
 

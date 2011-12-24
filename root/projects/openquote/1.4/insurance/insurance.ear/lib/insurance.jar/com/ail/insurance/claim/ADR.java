@@ -19,11 +19,10 @@ package com.ail.insurance.claim;
 
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
-/**
- * @stereotype type 
- */
+@TypeDefinition
 public class ADR extends Type {
     private static final long serialVersionUID = 3564921446261586471L;
 

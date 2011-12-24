@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  This is the 'Base' product used in testing the insurance product
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
@@ -61,42 +56,42 @@ args.setQuoteNumberRet("QF"+args.getUniqueNumberArg());
         </service>
 
         <!-- Risk assessment rules (command & service) for all products unless they override -->
-        <command name="AssessPolicyRisk" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessPolicyRiskCommand">
+        <command name="AssessPolicyRisk" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessPolicyRiskCommandImpl">
             <parameter name="Service">PolicyRule</parameter>
         </command>
 
         <!-- Tax calc rules (command & service) for this product. By default, no taxes are applied -->
-        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxCommand">
-            <parameter name="Service">NullService</parameter>
+        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
         </command>
         
         <!-- Commission calc rules (command & service) for this product. By default, no commissions are applied -->
-        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculatePolicyCommissionCommand">
-            <parameter name="Service">NullService</parameter>
+        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculatePolicyCommissionCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
         </command>
 
         <!-- Brokerage calc rules (command & service) for this product. By default, no brokerage is applied -->
-        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculatePolicyBrokerageCommand">
-            <parameter name="Service">NullService</parameter>
+        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculatePolicyBrokerageCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
         </command>
         
         <!-- Management charge rules (command & service) for this product. By default, no charges are applied -->
-        <command name="CalculatePolicyMgmtChg" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculatePolicyMgmtChgCommand">
-            <parameter name="Service">NullService</parameter>
+        <command name="CalculatePolicyMgmtChg" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculatePolicyMgmtChgCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
         </command>
 
         <!-- Generate policy number default command & service. -->
-        <command name="GeneratePolicyNumberRule" builder="ClassBuilder" key="com.ail.insurance.quotation.addpolicynumber.GeneratePolicyNumberRuleCommand">
+        <command name="GeneratePolicyNumberRule" builder="ClassBuilder" key="com.ail.insurance.quotation.addpolicynumber.GeneratePolicyNumberRuleCommandImpl">
             <parameter name="Service">GeneratePolicyNumber</parameter>
         </command>
         <!-- Generate quote number default command & service. -->
-        <command name="GenerateQuoteNumberRule" builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.GenerateQuoteNumberRuleCommand">
+        <command name="GenerateQuoteNumberRule" builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.GenerateQuoteNumberRuleCommandImpl">
             <parameter name="Service">GenerateQuoteNumber</parameter>
         </command>
 
         <!-- Enforce compliance rules (command & service). By default, no rules are applied -->
-        <command name="EnforcePolicyCompliance" builder="ClassBuilder" key="com.ail.insurance.quotation.enforcecompliance.EnforcePolicyComplianceCommand">
-            <parameter name="Service">NullService</parameter>
+        <command name="EnforcePolicyCompliance" builder="ClassBuilder" key="com.ail.insurance.quotation.enforcecompliance.EnforcePolicyComplianceCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
         </command>        
     </types>
 </configuration>

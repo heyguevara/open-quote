@@ -37,10 +37,6 @@ import com.ail.insurance.subrogation.makearecovery.MakeARecoveryCommand;
 /**
  * This proxy is provided to simplify JSP access to the subrogation component's
  * MakeARecovery service.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 13:10:16 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/subrogation-ejb.jar/com/ail/insurance/subrogation/SubrogationBeanProxy.java,v $
  */
 public class SubrogationBeanProxy implements CoreUser {
     private static final long serialVersionUID = -1502116276816641324L;
@@ -143,7 +139,7 @@ public class SubrogationBeanProxy implements CoreUser {
     public void initClaim() {
         if (claim == null) {
             setUp();
-            command = (MakeARecoveryCommand)core.newCommand("MakeARecovery");
+            command = core.newCommand(MakeARecoveryCommand.class);
             claim = (Claim)core.newType("Claim");
             claim.setSubrogationPotential(true);
             claim.setClaimStatus(ClaimStatus.OPEN);

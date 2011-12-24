@@ -17,6 +17,8 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * An assessment line indicating that a 'Marker' has been resolved. Also know as an override. These are attached to 
  * markers (referrals and declines) raised by the system to indicate that they should be ignored when the assessment
@@ -28,6 +30,7 @@ package com.ail.insurance.policy;
  * applies that additional loading would be indicated by the {@link #getBehaviourId() behaviourID}.
  * @see Marker
  */
+@TypeDefinition
 public class MarkerResolution extends AssessmentLine {
     private static final long serialVersionUID = -5354541886808104720L;
 

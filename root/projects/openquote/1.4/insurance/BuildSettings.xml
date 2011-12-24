@@ -12,7 +12,7 @@
 
 	<!-- Version of the Commercial project to use for this project -->
 	<property name="commercial.version" value="3.0" />
-	<property name="commercial.build" value="9" />
+	<property name="commercial.build" value="15" />
 
 	<!-- Version of JBoss to use for this project -->
 	<property name="jboss.version" value="4.2.2GA-P2" />
@@ -31,8 +31,8 @@
 	<property name="dbpassword" value="bombay" />
 
 	<!-- Pull in the Common stuff - all projects us these. -->
-	<import file="${development.dir}/BuildCommon.xml" />
-	<import file="${development.dir}/BuildJ2EEMacros.xml" />
-	<import file="${development.dir}/BuildJBossMacros.xml" />
-	<import file="${development.dir}/BuildRepositoryMacros.xml" />
+	<import file="${development.dir}/macros/BuildCommon.xml" />
+	<import file="${development.dir}/macros/BuildJavaMacros.xml" />
+	<import file="${development.dir}/macros/BuildJBossMacros.xml" />
+	<import file="${development.dir}/macros/BuildRepositoryMacros.xml" />
 </project>

@@ -18,6 +18,7 @@ package com.ail.insurance.policy;
 
 import java.util.StringTokenizer;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.financial.CurrencyAmount;
 
 /**
@@ -26,6 +27,7 @@ import com.ail.financial.CurrencyAmount;
  * calculate when all of the lines which it depends on themselves have values. If one or more of
  * them does not exist, it will not perform its calculation.
  */
+@TypeDefinition
 public class Totalizer extends CalculationLine {
     private static final long serialVersionUID = 1048697316607294623L;
     private String dependsOn=null;

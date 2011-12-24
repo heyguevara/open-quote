@@ -17,29 +17,9 @@
 
 package com.ail.insurance.mailmerge.generatedocument;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/mailmerge/generatedocument/GenerateDocumentCommand.java,v $
- */
-public class GenerateDocumentCommand extends Command implements GenerateDocumentArg {
-    private static final long serialVersionUID = -7399391641627128289L;
-    private GenerateDocumentArg args = null;
-
-    public GenerateDocumentCommand() {
-        super();
-        args = new GenerateDocumentArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (GenerateDocumentArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (com.ail.core.command.CommandArg) args;
-    }
+@CommandDefinition(defaultServiceClass=GenerateDocumentService.class)
+public interface GenerateDocumentCommand extends Command, GenerateDocumentArgument {
 }

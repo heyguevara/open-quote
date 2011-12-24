@@ -22,17 +22,16 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * Subjectivity Assessment line. A subjectivity represents a condition that a policy holder must
  * meet before cover will be offered. A typical example in property insurance would be "Subject 
  * to a satisfactory surveyors report".
  * @deprecated Subjectivities are now modeled as instances of {@link Clause} and are not held in the assessment sheet.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/11/04 11:33:14 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Subjectivity.java,v $
- * @stereotype type
+
  */
+@TypeDefinition
 public class Subjectivity extends Marker {
     private static final long serialVersionUID = 6414533098371760797L;
 

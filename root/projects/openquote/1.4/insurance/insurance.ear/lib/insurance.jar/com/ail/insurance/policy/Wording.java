@@ -17,16 +17,13 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
  * Represents an individual wording either by id or by text.
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Wording.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class Wording extends Type {
     private static final long serialVersionUID = 2533714090687003463L;
 

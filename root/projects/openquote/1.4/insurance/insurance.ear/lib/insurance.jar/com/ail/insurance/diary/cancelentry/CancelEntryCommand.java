@@ -17,29 +17,9 @@
 
 package com.ail.insurance.diary.cancelentry;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/diary/cancelentry/CancelEntryCommand.java,v $
- */
-public class CancelEntryCommand extends Command implements CancelEntryArg {
-    private static final long serialVersionUID = -5489816808892198373L;
-    private CancelEntryArg args = null;
-
-    public CancelEntryCommand() {
-        super();
-        args = new CancelEntryArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CancelEntryArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (com.ail.core.command.CommandArg) args;
-    }
+@CommandDefinition(defaultServiceClass=CancelEntryService.class)
+public interface CancelEntryCommand extends Command, CancelEntryArgument {
 }

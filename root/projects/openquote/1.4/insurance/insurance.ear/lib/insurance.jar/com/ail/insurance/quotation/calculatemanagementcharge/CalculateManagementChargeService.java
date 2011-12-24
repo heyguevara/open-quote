@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.calculatemanagementcharge;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
@@ -24,7 +25,8 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 
-public class CalculateManagementChargeService extends Service<CalculateManagementChargeArg> {
+@ServiceImplementation
+public class CalculateManagementChargeService extends Service<CalculateManagementChargeArgument> {
     private static final long serialVersionUID = 7164742353521557305L;
 
     /**
@@ -61,7 +63,7 @@ public class CalculateManagementChargeService extends Service<CalculateManagemen
         // Lock the assessment sheet
         assessmentSheet.setLockingActor("CalculateManagementCharge");
 
-        CalculatePolicyMgmtChgCommand command=(CalculatePolicyMgmtChgCommand)core.newCommand("CalculatePolicyMgmtChg");
+        CalculatePolicyMgmtChgCommand command=core.newCommand("CalculatePolicyMgmtChg", CalculatePolicyMgmtChgCommand.class);
         command.setPolicyArg(policy);
         command.setAssessmentSheetArgRet(assessmentSheet);
         command.invoke();

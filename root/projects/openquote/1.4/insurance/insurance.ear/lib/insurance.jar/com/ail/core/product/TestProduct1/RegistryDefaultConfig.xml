@@ -2,11 +2,6 @@
 <!--
  This file defines a test product for use in the core system. This product configuration is
  required in live deployments and is only used for testing purposes.
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
@@ -106,27 +101,27 @@
         </service>
 
         <!-- Risk assessment rules (command & service) for this product -->
-        <command name="AssessSectionRisk/TestSectionID" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessSectionRiskCommand">
+        <command name="AssessSectionRisk/TestSectionID" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessSectionRiskCommandImpl">
             <parameter name="Service">AssessRiskRules</parameter>
         </command>
 
         <!-- Tax calc rules (command & service) for this product -->
-        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxCommand">
+        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxCommandImpl">
             <parameter name="Service">TaxCalcRules</parameter>
         </command>
 
         <!-- Commission calc rules (command & service) for this product -->
-        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculatePolicyCommissionCommand">
+        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculatePolicyCommissionCommandImpl">
             <parameter name="Service">CommissionCalcRules</parameter>
         </command>
 
         <!-- Brokerage calc rules (command & service) for this product -->
-        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculatePolicyBrokerageCommand">
+        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculatePolicyBrokerageCommandImpl">
             <parameter name="Service">BrokerageCalcRules</parameter>
         </command>
 
         <!-- Management cgarge rules (command & service) for this product -->
-        <command name="CalculatePolicyMgmtChg" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculatePolicyMgmtChgCommand">
+        <command name="CalculatePolicyMgmtChg" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculatePolicyMgmtChgCommandImpl">
             <parameter name="Service">MgmtChgRules</parameter>
         </command>
 

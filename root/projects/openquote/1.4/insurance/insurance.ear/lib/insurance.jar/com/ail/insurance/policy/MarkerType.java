@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * Types of marker that may be applied.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2006/01/17 06:36:30 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/MarkerType.java,v $
- * @stereotype enumeration 
  */
 public enum MarkerType implements TypeEnum {
     REFER("Refer"),

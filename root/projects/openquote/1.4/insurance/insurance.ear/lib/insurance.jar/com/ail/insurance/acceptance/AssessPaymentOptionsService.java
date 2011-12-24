@@ -23,6 +23,7 @@ import static com.ail.financial.FinancialFrequency.ONE_TIME;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.financial.Currency;
@@ -49,7 +50,8 @@ import com.ail.insurance.policy.PolicyStatus;
  *  </ul>
  * Note: These rules are a default set only and are expected to be overriden in live implementations.
  */
-public class AssessPaymentOptionsService extends com.ail.core.Service<AssessPaymentOptionsArg> {
+@ServiceImplementation
+public class AssessPaymentOptionsService extends com.ail.core.Service<AssessPaymentOptionsArgument> {
     private static final long serialVersionUID = 1871676649916485145L;
 
     @Override

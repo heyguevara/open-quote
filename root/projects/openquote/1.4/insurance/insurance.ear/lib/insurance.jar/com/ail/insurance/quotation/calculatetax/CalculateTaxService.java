@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.calculatetax;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
@@ -24,7 +25,8 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 
-public class CalculateTaxService extends Service<CalculateTaxArg> {
+@ServiceImplementation
+public class CalculateTaxService extends Service<CalculateTaxArgument> {
     private static final long serialVersionUID = -4915889686192216902L;
 
     /**
@@ -61,7 +63,7 @@ public class CalculateTaxService extends Service<CalculateTaxArg> {
         // Lock the assessment sheet
         assessmentSheet.setLockingActor("CalculateTax");
 
-        CalculatePolicyTaxCommand command=(CalculatePolicyTaxCommand)core.newCommand("CalculatePolicyTax");
+        CalculatePolicyTaxCommand command=core.newCommand("CalculatePolicyTax", CalculatePolicyTaxCommand.class);
         command.setPolicyArg(policy);
         command.setAssessmentSheetArgRet(assessmentSheet);
         command.invoke();

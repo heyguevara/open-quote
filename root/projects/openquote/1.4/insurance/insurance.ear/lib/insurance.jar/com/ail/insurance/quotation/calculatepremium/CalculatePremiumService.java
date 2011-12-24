@@ -33,8 +33,12 @@ import com.ail.insurance.quotation.calculatecommission.CalculateCommissionComman
 import com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeCommand;
 import com.ail.insurance.quotation.calculatetax.CalculateTaxCommand;
 import com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand;
+import com.ail.annotation.Configurable;
+import com.ail.annotation.ServiceImplementation;
 
-public class CalculatePremiumService extends Service<CalculatePremiumArg> {
+@Configurable
+@ServiceImplementation
+public class CalculatePremiumService extends Service<CalculatePremiumArgument> {
     private static final long serialVersionUID = 7959054658477631252L;
 
     @Override
@@ -52,7 +56,7 @@ public class CalculatePremiumService extends Service<CalculatePremiumArg> {
         // Create a proxy to work on behalf of the caller.
         core=new CoreProxy(getConfigurationNamespace(), args.getCallersCore()).getCore();
         
-        AssessRiskCommand arc=(AssessRiskCommand)core.newCommand("AssessRisk");
+        AssessRiskCommand arc=core.newCommand(AssessRiskCommand.class);
         arc.setPolicyArgRet(policy);
         arc.invoke();
         policy=arc.getPolicyArgRet();
@@ -62,32 +66,32 @@ public class CalculatePremiumService extends Service<CalculatePremiumArg> {
         }
 
         // calculate the assessment sheet so that the other calc services get to see premiums etc.
-        RefreshAssessmentSheetsCommand rasc=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand rasc=core.newCommand(RefreshAssessmentSheetsCommand.class);
         rasc.setPolicyArgRet(policy);
         rasc.setOriginArg("CalculatePremium");
         rasc.invoke();
         policy=rasc.getPolicyArgRet();
 
         // calc tax
-        CalculateTaxCommand calcTax=(CalculateTaxCommand)core.newCommand("CalculateTax");
+        CalculateTaxCommand calcTax=core.newCommand(CalculateTaxCommand.class);
         calcTax.setPolicyArgRet(policy);
         calcTax.invoke();
         policy=calcTax.getPolicyArgRet();
 
         // calc commission
-        CalculateCommissionCommand calcCommission=(CalculateCommissionCommand)core.newCommand("CalculateCommission");
+        CalculateCommissionCommand calcCommission=core.newCommand(CalculateCommissionCommand.class);
         calcCommission.setPolicyArgRet(policy);
         calcCommission.invoke();
         policy=calcCommission.getPolicyArgRet();
 
         // calc brokerage
-        CalculateBrokerageCommand calcBrokerage=(CalculateBrokerageCommand)core.newCommand("CalculateBrokerage");
+        CalculateBrokerageCommand calcBrokerage=core.newCommand(CalculateBrokerageCommand.class);
         calcBrokerage.setPolicyArgRet(policy);
         calcBrokerage.invoke();
         policy=calcBrokerage.getPolicyArgRet();
 
         // calc management charge
-        CalculateManagementChargeCommand calcMgmtChg=(CalculateManagementChargeCommand)core.newCommand("CalculateManagementCharge");
+        CalculateManagementChargeCommand calcMgmtChg=core.newCommand(CalculateManagementChargeCommand.class);
         calcMgmtChg.setPolicyArgRet(policy);
         calcMgmtChg.invoke();
         policy=calcMgmtChg.getPolicyArgRet();

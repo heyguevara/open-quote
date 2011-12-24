@@ -17,6 +17,7 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.financial.CurrencyAmount;
 
 /**
@@ -27,6 +28,7 @@ import com.ail.financial.CurrencyAmount;
  * type}=={@link BehaviourType#DISCOUNT}) the amount will be subtracted from the indicated line.
  * @see FixedSum
  */
+@TypeDefinition
 public class SumBehaviour extends Behaviour {
     private static final long serialVersionUID = 264541471718824407L;
 

@@ -17,9 +17,11 @@
 
 package com.ail.insurance.mailmerge.generatedocument;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
 
-public class GenerateDocumentService extends Service<GenerateDocumentArg> {
+@ServiceImplementation
+public class GenerateDocumentService extends Service<GenerateDocumentArgument> {
     private static final long serialVersionUID = 2444677883907291085L;
 
     @Override

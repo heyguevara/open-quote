@@ -17,47 +17,9 @@
 
 package com.ail.insurance.quotation.calculatetax;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/calculatetax/CalculateTaxCommand.java,v $
- * @stereotype command
- */
-public class CalculateTaxCommand extends Command implements CalculateTaxArg {
-    private static final long serialVersionUID = -1777899460061431740L;
-    private CalculateTaxArg args = null;
-
-    public CalculateTaxCommand() {
-        super();
-        args = new CalculateTaxArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CalculateTaxArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArgRet @{inheritDoc}
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=CalculateTaxService.class)
+public interface CalculateTaxCommand extends Command, CalculateTaxArgument {
 }

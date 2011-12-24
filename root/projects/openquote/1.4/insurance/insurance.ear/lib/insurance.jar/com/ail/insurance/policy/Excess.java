@@ -20,6 +20,7 @@ package com.ail.insurance.policy;
 import java.util.Collection;
 import java.util.Vector;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 
@@ -27,33 +28,12 @@ import com.ail.financial.CurrencyAmount;
  * An Excess represents the amount for which the policy holder is liable before a claim can be made. An excess
  * may be either a "deductible excess" or a standard excess. See the {@link #isDeductible() isDeductible()} method 
  * for details.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2006/03/07 20:58:10 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Excess.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class Excess extends Type {
     static final long serialVersionUID = -7196587543319758798L;
 
-    /**
-     * @link aggregation
-     * @clientCardinality 0..*
-     * @supplierCardinality 0..*
-     * @directed
-     * @label ref by id
-     */
-    /* private Asset lnkAsset; */
     private String id;
-
-    /**
-     * @link aggregationByValue
-     * @clientCardinality 0..*
-     * @supplierCardinality 0..*
-     */
-
-    /*# String lnkString; */
-
     private Vector<String> assetId = new Vector<String>();
     private CurrencyAmount amount;
     private String title;

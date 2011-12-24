@@ -17,44 +17,9 @@
 
 package com.ail.insurance.onrisk.wording;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-public class GenerateWordingCommand extends Command implements GenerateWordingArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-    private GenerateWordingArg args;
-    
-    public GenerateWordingCommand() {
-        super();
-		args=new GenerateWordingArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args=(GenerateWordingArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (CommandArg)args;
-    }
-
-    /** @inheritDoc */
-    public byte[] getDocumentRet() {
-        return args.getDocumentRet();
-    }
-    
-    /** @inheritDoc */
-    public void setDocumentRet(byte[] documentRet) {
-        args.setDocumentRet(documentRet);
-    }
-    
-    /** @inheritDoc */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-    
-    /** @inheritDoc */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
+@CommandDefinition(defaultServiceClass=GenerateWordingService.class)
+public interface GenerateWordingCommand extends Command, GenerateWordingArgument {
 }

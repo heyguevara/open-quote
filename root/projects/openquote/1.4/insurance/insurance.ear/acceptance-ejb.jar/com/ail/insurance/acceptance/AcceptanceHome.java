@@ -19,16 +19,6 @@ package com.ail.insurance.acceptance;
 
 import java.rmi.RemoteException;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/acceptance-ejb.jar/com/ail/insurance/acceptance/AcceptanceHome.java,v $
- */
 public interface AcceptanceHome extends javax.ejb.EJBHome {
-    /** @link dependency */
-
-    /*# AcceptanceBean lnkAcceptanceBean; */
-
     Acceptance create() throws javax.ejb.CreateException, RemoteException;
 }

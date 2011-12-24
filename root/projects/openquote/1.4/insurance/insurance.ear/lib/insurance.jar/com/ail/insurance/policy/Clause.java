@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -31,6 +32,7 @@ import com.ail.core.Type;
  * indicate a change to cover which is applied within the lifetime of the element it is attached to (i.e. a Mid Term Adjustment Endorsement); for example, a change of 
  * address endorsement. 
  */
+@TypeDefinition
 public class Clause extends Type {
     private static final long serialVersionUID = 6414533098371760797L;
 

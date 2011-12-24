@@ -16,6 +16,7 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
+import com.ail.core.command.Command;
 import com.ail.core.document.generatedocument.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.financial.CurrencyAmount;
@@ -27,10 +28,15 @@ import com.ail.party.Party;
 
 public class TestGenerateInvoiceService {
     GenerateInvoiceService service;
-    GenerateInvoiceArg args;
+
+    GenerateInvoiceArgument args;
+
     Core mockCore;
+
     Policy mockPolicy;
+
     PaymentSchedule mockPaymentSchedule;
+
     List<MoneyProvision> mockMoneyProvision;
 
     @Before
@@ -38,7 +44,7 @@ public class TestGenerateInvoiceService {
         mockCore = mock(Core.class);
         service = new GenerateInvoiceService();
         service.setCore(mockCore);
-        args = new GenerateInvoiceArgImp();
+        args = new GenerateInvoiceArgumentImpl();
         mockPolicy = mock(Policy.class);
         mockPaymentSchedule = mock(PaymentSchedule.class);
         mockMoneyProvision = new ArrayList<MoneyProvision>();
@@ -103,8 +109,8 @@ public class TestGenerateInvoiceService {
 
     @Test
     public void testHappyPath() throws Exception {
-        CurrencyAmount mockTotalPrmium=mock(CurrencyAmount.class);
-        Party mockPolicyHolder=mock(Party.class);
+        CurrencyAmount mockTotalPrmium = mock(CurrencyAmount.class);
+        Party mockPolicyHolder = mock(Party.class);
         when(mockPolicy.getStatus()).thenReturn(PolicyStatus.ON_RISK);
         when(mockPolicy.getProductTypeId()).thenReturn("ProductTypeID");
         when(mockPolicy.getPaymentDetails()).thenReturn(mockPaymentSchedule);
@@ -117,7 +123,7 @@ public class TestGenerateInvoiceService {
         when(mockCore.newProductType(anyString(), eq("InvoiceDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
-        when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
+        when(mockCore.newCommand(anyString(), eq(RenderDocumentCommand.class))).thenReturn(mockRenderDocumentCommand);
         when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(new byte[1]);
 
         service.invoke();
@@ -127,8 +133,8 @@ public class TestGenerateInvoiceService {
 
     @Test
     public void testPostcondition() throws Exception {
-        CurrencyAmount mockTotalPrmium=mock(CurrencyAmount.class);
-        Party mockPolicyHolder=mock(Party.class);
+        CurrencyAmount mockTotalPrmium = mock(CurrencyAmount.class);
+        Party mockPolicyHolder = mock(Party.class);
 
         when(mockPolicy.getStatus()).thenReturn(PolicyStatus.ON_RISK);
         when(mockPolicy.getProductTypeId()).thenReturn("ProductTypeID");
@@ -142,7 +148,7 @@ public class TestGenerateInvoiceService {
         when(mockCore.newProductType(anyString(), eq("InvoiceDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
-        when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
+        when(mockCore.newCommand(anyString(), eq(RenderDocumentCommand.class))).thenReturn(mockRenderDocumentCommand);
         when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(null);
 
         try {

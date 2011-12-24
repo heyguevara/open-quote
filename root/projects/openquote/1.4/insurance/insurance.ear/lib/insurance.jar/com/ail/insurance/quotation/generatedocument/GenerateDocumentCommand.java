@@ -17,51 +17,9 @@
 
 package com.ail.insurance.quotation.generatedocument;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- */
-public class GenerateDocumentCommand extends Command implements GenerateDocumentArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-    private GenerateDocumentArg args;
-    
-    public GenerateDocumentCommand() {
-        super();
-		args=new GenerateDocumentArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args=(GenerateDocumentArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (CommandArg)args;
-    }
-
-    /** @inheritDoc */
-    public byte[] getDocumentRet() {
-        return args.getDocumentRet();
-    }
-    
-    /** @inheritDoc */
-    public void setDocumentRet(byte[] documentRet) {
-        args.setDocumentRet(documentRet);
-    }
-    
-    /** @inheritDoc */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-    
-    /** @inheritDoc */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
+@CommandDefinition(defaultServiceClass=GenerateDocumentService.class)
+public interface GenerateDocumentCommand extends Command, GenerateDocumentArgument {
 }

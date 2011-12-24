@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.calculatebrokerage;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
@@ -24,7 +25,8 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 
-public class CalculateBrokerageService extends Service<CalculateBrokerageArg> {
+@ServiceImplementation
+public class CalculateBrokerageService extends Service<CalculateBrokerageArgument> {
     private static final long serialVersionUID = 3821572976058925514L;
 
     /**
@@ -61,7 +63,7 @@ public class CalculateBrokerageService extends Service<CalculateBrokerageArg> {
         // Lock the assessment sheet
         assessmentSheet.setLockingActor("CalculateBrokerage");
 
-        CalculatePolicyBrokerageCommand command=(CalculatePolicyBrokerageCommand)core.newCommand("CalculatePolicyBrokerage");
+        CalculatePolicyBrokerageCommand command=core.newCommand("CalculatePolicyBrokerage", CalculatePolicyBrokerageCommand.class);
         command.setPolicyArg(policy);
         command.setAssessmentSheetArgRet(assessmentSheet);
         command.invoke();

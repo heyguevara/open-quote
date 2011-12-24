@@ -17,61 +17,9 @@
 
 package com.ail.insurance.acceptance;
 
-import com.ail.financial.CurrencyAmount;
-import com.ail.insurance.policy.Policy;
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/CollectPremiumCommand.java,v $
- * @stereotype command
- */
-public class CollectPremiumCommand extends com.ail.core.command.Command implements CollectPremiumArg {
-    private static final long serialVersionUID = 2354122733326164200L;
-    private CollectPremiumArg args = null;
+import com.ail.annotation.CommandDefinition;
+import com.ail.core.command.Command;
 
-    public CollectPremiumCommand() {
-        super();
-        args = new CollectPremiumArgImp();
-    }
-
-    public void setArgs(com.ail.core.command.CommandArg arg) {
-        this.args = (CollectPremiumArg)arg;
-    }
-
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArg @{inheritDoc}
-     */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
-
-	/**
-	 * {@inheritDoc}
-	 * @return @{inheritDoc}
-	 */
-	public CurrencyAmount getPrePaymentArg() {
-		return args.getPrePaymentArg();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @param prePaymentArg @{inheritDoc}
-	 */
-	public void setPrePaymentArg(CurrencyAmount prePaymentArg) {
-		args.setPrePaymentArg(prePaymentArg);
-	}
+@CommandDefinition(defaultServiceClass=CollectPremiumService.class)
+public interface CollectPremiumCommand extends Command, CollectPremiumArgument {
 }

@@ -17,11 +17,14 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * Any number of assessment notes may be added to an assessment sheet. Notes have no effect on 
  * the assessment or calculation process, they simply provide a place for rules (or other actors)
  * to include some textual information into the assessment sheet.
  */
+@TypeDefinition
 public class AssessmentNote extends AssessmentLine {
     private static final long serialVersionUID = -4519518497757725779L;
 

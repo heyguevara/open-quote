@@ -8,27 +8,14 @@
     <who>factory</who>
     <version>$Revision: 1.4 $</version>
     <types>
-        <!-- Generate Invoice binding -->
-        <service name="GenerateInvoiceService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.onrisk.invoice.GenerateInvoiceService</parameter>
-        </service>
-        <!-- Generate Wording binding -->
-        <service name="GenerateWordingService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.onrisk.wording.GenerateWordingService</parameter>
-        </service>
-        <!-- Generate Certificate  binding -->
-        <service name="GenerateCertificateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor" >
-            <parameter name="ServiceClass">com.ail.insurance.onrisk.certificate.GenerateCertificateService</parameter>
-        </service>
-        
-        <command name="GenerateInvoice" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand" >
-            <parameter name="Service">GenerateInvoiceService</parameter>
+        <command name="GenerateInvoice" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.GenerateInvoiceCommandImpl">
+            <parameter name="Service">com.ail.insurance.onrisk.invoice.GenerateInvoiceService</parameter>
         </command>
-        <command name="GenerateWording" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.GenerateWordingCommand" >
-            <parameter name="Service">GenerateWordingService</parameter>
+        <command name="GenerateWording" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.GenerateWordingCommandImpl">
+            <parameter name="Service">com.ail.insurance.onrisk.wording.GenerateWordingSrevice</parameter>
         </command>
-        <command name="GenerateCertificate" builder="ClassBuilder" key="com.ail.insurance.onrisk.certificate.GenerateCertificateCommand">
-            <parameter name="Service">GenerateCertificateService</parameter>
+        <command name="GenerateCertificate" builder="ClassBuilder" key="com.ail.insurance.onrisk.certificate.GenerateCertificateCommandImpl">
+            <parameter name="Service">com.ail.insurance.onrisk.certificate.GenerateCertificateService</parameter>
         </command>
     </types>
 </configuration>

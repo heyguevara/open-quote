@@ -20,10 +20,6 @@ import com.ail.core.BaseError;
 
 /**
  * This error is thrown when an assessment sheet detects two assessment lines with the same id
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/DuplicateAssessmentLineError.java,v $
  */
 public class DuplicateAssessmentLineError extends BaseError {
     private static final long serialVersionUID = 5971903046851604256L;

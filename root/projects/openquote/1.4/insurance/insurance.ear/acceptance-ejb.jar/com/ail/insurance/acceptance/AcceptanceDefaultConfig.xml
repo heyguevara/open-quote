@@ -1,47 +1,22 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- $Revision: 1.4 $
- $State: Exp $
- $Date: 2007/03/03 09:31:07 $
- $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/acceptance-ejb.jar/com/ail/insurance/acceptance/AcceptanceDefaultConfig.xml,v $
--->
-<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Acceptance EJB configuration</name>
     <timeout>5000</timeout>
     <who>factory</who>
     <version>$Revision: 1.4 $</version>
     <types>
-        <!--====================================-->
-        <!--   Define the component's services  -->
-        <!--====================================-->
-        <service name="PutOnRiskServiceImp" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.acceptance.PutOnRiskService</parameter>
-        </service>
-        <service name="CollectPremiumServiceImp" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.acceptance.CollectPremiumService</parameter>
-        </service>
-        <service name="ProduceDocumentationServiceImp" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.acceptance.ProduceDocumentationService</parameter>
-        </service>
-        <service name="AcceptQuotationServiceImp" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.acceptance.acceptquotation.AcceptQuotationService</parameter>
-        </service>
-        
-        <!--=======================================================================-->
-        <!-- Bind the default core services (above) to Commands used by Core.class -->
-        <!--=======================================================================-->
-        <command name="PutOnRiskService" builder="ClassBuilder" key="com.ail.insurance.acceptance.PutOnRiskCommand">
-            <parameter name="Service">PutOnRiskServiceImp</parameter>
+        <command name="ProduceDocumentation" builder="ClassBuilder" key="com.ail.insurance.acceptance.ProduceDocumentationCommandImpl">
+            <parameter name="Service">com.ail.insurance.acceptance.ProduceDocumentationService</parameter>
         </command>
-        <command name="CollectPremiumService" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommand">
-            <parameter name="Service">CollectPremiumServiceImp</parameter>
+        <command name="PutOnRisk" builder="ClassBuilder" key="com.ail.insurance.acceptance.PutOnRiskCommandImpl">
+            <parameter name="Service">com.ail.insurance.acceptance.PutOnRiskService</parameter>
         </command>
-        <command name="ProduceDocumentationService" builder="ClassBuilder" key="com.ail.insurance.acceptance.ProduceDocumentationCommand">
-            <parameter name="Service">ProduceDocumentationServiceImp</parameter>
+        <command name="CollectPremium" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommandImpl">
+            <parameter name="Service">com.ail.insurance.acceptance.CollectPremiumService</parameter>
         </command>
-        <command name="AcceptQuotationService" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand">
-            <parameter name="Service">AcceptQuotationServiceImp</parameter>
+        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommandImpl">
+            <parameter name="Service">com.ail.insurance.acceptance.acceptquotation.AcceptQuotationService</parameter>
         </command>
     </types>
 </configuration>

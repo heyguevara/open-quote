@@ -17,47 +17,9 @@
 
 package com.ail.insurance.quotation.addquotenumber;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/addquotenumber/AddQuoteNumberCommand.java,v $
- * @stereotype command
- */
-public class AddQuoteNumberCommand extends Command implements AddQuoteNumberArg {
-    private static final long serialVersionUID = -7959013380819203127L;
-    private AddQuoteNumberArg args = null;
-
-    public AddQuoteNumberCommand() {
-        super();
-        args = new AddQuoteNumberArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (AddQuoteNumberArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArgRet @{inheritDoc}
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=AddQuoteNumberService.class)
+public interface AddQuoteNumberCommand extends Command, AddQuoteNumberArgument {
 }

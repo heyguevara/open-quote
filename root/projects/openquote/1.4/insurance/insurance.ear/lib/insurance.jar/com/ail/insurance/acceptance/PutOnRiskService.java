@@ -17,13 +17,15 @@
 
 package com.ail.insurance.acceptance;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand;
 
-public class PutOnRiskService extends com.ail.core.Service<PutOnRiskArg> {
+@ServiceImplementation
+public class PutOnRiskService extends com.ail.core.Service<PutOnRiskArgument> {
     private static final long serialVersionUID = 5492150960329684094L;
 
     /**
@@ -55,7 +57,7 @@ public class PutOnRiskService extends com.ail.core.Service<PutOnRiskArg> {
 		policy.setPolicyNumber(null);
 
 		// run command to add new number
-		AddPolicyNumberCommand command = (AddPolicyNumberCommand) getCore().newCommand("AddPolicyNumber");
+		AddPolicyNumberCommand command = getCore().newCommand(AddPolicyNumberCommand.class);
 		command.setPolicyArgRet(policy);
 		command.invoke();
 		policy = command.getPolicyArgRet();

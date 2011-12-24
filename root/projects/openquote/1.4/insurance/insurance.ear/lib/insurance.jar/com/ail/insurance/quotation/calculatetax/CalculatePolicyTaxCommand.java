@@ -17,63 +17,9 @@
 
 package com.ail.insurance.quotation.calculatetax;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.AssessmentSheet;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/calculatetax/CalculatePolicyTaxCommand.java,v $
- * @stereotype command
- */
-public class CalculatePolicyTaxCommand extends Command implements CalculatePolicyTaxArg {
-    private static final long serialVersionUID = -6268325254571789430L;
-    private CalculatePolicyTaxArg args = null;
-
-    public CalculatePolicyTaxCommand() {
-        super();
-        args = new CalculatePolicyTaxArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CalculatePolicyTaxArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public com.ail.insurance.policy.Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArg @{inheritDoc}
-     */
-    public void setPolicyArg(com.ail.insurance.policy.Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public AssessmentSheet getAssessmentSheetArgRet() {
-        return args.getAssessmentSheetArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param assessmentSheetArgRet @{inheritDoc}
-     */
-    public void setAssessmentSheetArgRet(AssessmentSheet assessmentSheetArgRet) {
-        args.setAssessmentSheetArgRet(assessmentSheetArgRet);
-    }
+@CommandDefinition
+public interface CalculatePolicyTaxCommand extends Command, CalculatePolicyTaxArgument {
 }

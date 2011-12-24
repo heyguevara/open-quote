@@ -24,15 +24,17 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Allowable;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
 import com.ail.party.Party;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 
 /**
  */
+@TypeDefinition
 public class Policy extends Type {
     static final long serialVersionUID = 3175904078936470552L;
 
@@ -49,7 +51,7 @@ public class Policy extends Type {
     private String productTypeId = null;
     private String productName = null;
     private String policyNumber = null;
-    private Locale locale = null;
+    private ThreadLocale locale = null;
 
     /** The date when the policy was incepted (created) */
     private Date inceptionDate;
@@ -1145,7 +1147,7 @@ public class Policy extends Type {
      * was being administered in an office in Canada, a US$ amount should be shown as US$, and not '$'.
      * @return Locale being used for processing
      */
-    public Locale getLocale() {
+    public ThreadLocale getLocale() {
         return locale;
     }
     
@@ -1153,7 +1155,7 @@ public class Policy extends Type {
      * @see #getLocale()
      * @param locale
      */
-    public void setLocale(Locale locale) {
+    public void setLocale(ThreadLocale locale) {
         this.locale=locale;
     }
 }

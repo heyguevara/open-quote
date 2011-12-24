@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.assessrisk;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.Functions;
@@ -28,7 +29,8 @@ import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.Section;
 
-public class AssessRiskService extends Service<AssessRiskArg> {
+@ServiceImplementation
+public class AssessRiskService extends Service<AssessRiskArgument> {
     private static final long serialVersionUID = 7260448770297048139L;
 
     /**
@@ -123,7 +125,7 @@ public class AssessRiskService extends Service<AssessRiskArg> {
             String ruleName="AssessSectionRisk/"+section.getSectionTypeId();
 
             // Load the rule, and populate it with arguments
-            AssessSectionRiskCommand rule=(AssessSectionRiskCommand)core.newCommand(ruleName);
+            AssessSectionRiskCommand rule=core.newCommand(ruleName, AssessSectionRiskCommand.class);
             rule.setCoreArg(core);
             rule.setPolicyArg(policy);
             rule.setSectionArg(section);
@@ -150,7 +152,7 @@ public class AssessRiskService extends Service<AssessRiskArg> {
         }
 
         // Load the rule (name=<ProductType>), and populate it with args
-        AssessPolicyRiskCommand rule=(AssessPolicyRiskCommand)core.newCommand("AssessPolicyRisk");
+        AssessPolicyRiskCommand rule=core.newCommand("AssessPolicyRisk", AssessPolicyRiskCommand.class);
         rule.setCoreArg(core);
         rule.setPolicyArg(policy);
         rule.setAssessmentSheetArgRet(as);

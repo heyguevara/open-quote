@@ -26,7 +26,8 @@
   
         <!-- the dar contains some things which will only cause confusion if they're left -->
         <!-- on the classath - delete them.                                               -->
-        <delete file="${ear.dir}/core.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml"/>
+        <delete file="${ear.dir}/lib/core.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml" />
+        <delete dir="${deploy.dir}/data/alf_data" />
   
         <subant-macro target="setup"/>
         <antcall target="_build"/>

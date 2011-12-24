@@ -63,7 +63,7 @@ public class TestQuotationEjbXml {
     @Test
     public void testSimplAssessRisk() throws Exception {
         String arg=
-            "<assessRiskArg xsi:type=\"java:com.ail.insurance.quotation.assessrisk.AssessRiskArgImp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
+            "<assessRisk xsi:type=\"java:com.ail.insurance.quotation.assessrisk.AssessRiskArgumentImpl\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
                 "<policyArgRet xsi:type=\"java:com.ail.insurance.policy.Policy\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
                     "<status>APPLICATION</status>"+
                     "<productTypeId>com.ail.core.product.TestProduct1</productTypeId>"+
@@ -73,7 +73,7 @@ public class TestQuotationEjbXml {
                     "<configurationNamespace>TESTNAMESPACE</configurationNamespace>"+
                     "<versionEffectiveDate time='%EFFECTIVEDATE%'/>"+
                 "</callersCore>"+
-            "</assessRiskArg>";
+            "</assessRisk>";
 
         arg=arg.replaceAll("%EFFECTIVEDATE%", Long.toString(System.currentTimeMillis()));
         
@@ -85,9 +85,9 @@ public class TestQuotationEjbXml {
         System.out.println(xml);
 
         // check a few key fields in the result
-        assertEquals("1", xml.evalCommand("count(/assessRiskArgImp/policyArgRet/assessmentSheet)"));
-        assertEquals("LOAD", xml.eval("/assessRiskArgImp/policyArgRet/section[1]/assessmentSheet/assessmentList[1]/value/type/text()"));
-        assertEquals("50%", xml.eval("/assessRiskArgImp/policyArgRet/section[1]/assessmentSheet/assessmentList[1]/value/rate/rate/text()"));
+        assertEquals("1", xml.evalCommand("count(/assessRiskArgumentImpl/policyArgRet/assessmentSheet)"));
+        assertEquals("LOAD", xml.eval("/assessRiskArgumentImpl/policyArgRet/section[1]/assessmentSheet/assessmentList[1]/value/type/text()"));
+        assertEquals("50%", xml.eval("/assessRiskArgumentImpl/policyArgRet/section[1]/assessmentSheet/assessmentList[1]/value/rate/rate/text()"));
     }
 
 }

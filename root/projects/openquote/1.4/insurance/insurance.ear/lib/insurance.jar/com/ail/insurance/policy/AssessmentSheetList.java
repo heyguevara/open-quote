@@ -23,7 +23,6 @@ import java.util.Hashtable;
 /**
  * This helper class simplifies the process of mapping assessment line ids to the
  * lines themselves.<p>
- * Each
  */
 public class AssessmentSheetList {
     private Hashtable<String,AssessmentSheet> sheets=null;

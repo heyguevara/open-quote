@@ -17,6 +17,7 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.financial.CurrencyAmount;
 
 /**
@@ -25,6 +26,7 @@ import com.ail.financial.CurrencyAmount;
  * simply be added to the value of the indicated line.
  * @see SumBehaviour
  */
+@TypeDefinition
 public class FixedSum extends CalculationLine {
     private static final long serialVersionUID = 399954132621176151L;
 

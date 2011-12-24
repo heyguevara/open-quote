@@ -20,35 +20,20 @@ package com.ail.insurance.claim;
 import java.util.Collection;
 import java.util.Vector;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 
-/**
- * @stereotype type
- */
+@TypeDefinition
 public class ClaimSection extends Type {
     private static final long serialVersionUID = -209668224910237416L;
 
     private String ID;
-
-    /**
-     * @link aggregationByValue
-     * @supplierCardinality 0..*
-     * @clientCardinality 1 
-     */
-
     private Vector<Recovery> recoveries=null;
     private String policySectionID;
     private CurrencyAmount estimatedReserve;
     private CurrencyAmount totalRecovered;
     private CurrencyAmount outstandingClaim;
-
-    /**
-     * @link aggregationByValue
-     * @clientCardinality 1
-     * @supplierCardinality 1..* 
-     */
-    /*private Recovery lnkRecovery;*/
 
     /**
      * Default constructor

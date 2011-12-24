@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
+import com.ail.core.command.Command;
 import com.ail.core.document.generatedocument.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.insurance.policy.Policy;
@@ -20,7 +21,7 @@ import com.ail.insurance.policy.PolicyStatus;
 
 public class TestGenerateWordingService {
     GenerateWordingService service;
-    GenerateWordingArg args;
+    GenerateWordingArgument args;
     Core mockCore;
     Policy mockPolicy;
 
@@ -28,7 +29,7 @@ public class TestGenerateWordingService {
     public void setUp() {
         mockCore = mock(Core.class);
         service = new GenerateWordingService();
-        args = new GenerateWordingArgImp();
+        args = new GenerateWordingArgumentImpl();
         mockPolicy = mock(Policy.class);
         service.setArgs(args);
         service.setCore(mockCore);
@@ -85,7 +86,7 @@ public class TestGenerateWordingService {
         when(mockCore.newProductType(anyString(), eq("WordingDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
-        when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
+        when(mockCore.newCommand(anyString(), eq(RenderDocumentCommand.class))).thenReturn(mockRenderDocumentCommand);
         when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(new byte[1]);
 
         service.invoke();
@@ -103,7 +104,7 @@ public class TestGenerateWordingService {
         when(mockCore.newProductType(anyString(), eq("WordingDocument"))).thenReturn(mockDocumentDefinition);
 
         RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
-        when(mockCore.newCommand(anyString())).thenReturn(mockRenderDocumentCommand);
+        when(mockCore.newCommand(anyString(), eq(RenderDocumentCommand.class))).thenReturn(mockRenderDocumentCommand);
         when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(null);
 
         try {

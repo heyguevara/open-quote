@@ -17,9 +17,11 @@
 
 package com.ail.insurance.diary.makeentry;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
 
-public class MakeEntryService extends Service<MakeEntryArg> {
+@ServiceImplementation
+public class MakeEntryService extends Service<MakeEntryArgument> {
     private static final long serialVersionUID = -5414824114546710596L;
 
     @Override

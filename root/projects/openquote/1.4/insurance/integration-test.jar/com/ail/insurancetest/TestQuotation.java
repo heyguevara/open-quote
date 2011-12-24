@@ -125,7 +125,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         oneTimeSetUp();
         core = new Core(this);
         this.resetConfiguration();
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
         versionEffectiveDate = new VersionEffectiveDate();
     }
 
@@ -204,7 +204,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
     public void testSimpleAssessRisk() throws Exception {
         // try invoking the entry point with no args...
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(policy);
         command.invoke();
         Policy pout = command.getPolicyArgRet();
@@ -229,7 +229,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         // try invoking the entry point with no args...
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
         policy.setStatus(PolicyStatus.QUOTATION);
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(policy);
         try {
             command.invoke();
@@ -262,7 +262,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
     public void testOldLineRemoval() throws Exception {
         // try invoking the entry point with no args...
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(policy);
         command.invoke();
         policy = command.getPolicyArgRet();
@@ -310,7 +310,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
     public void testSimpleAssessRiskCalculatePremium() throws Exception {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct1");
 
-        AssessRiskCommand cmd1 = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand cmd1 = core.newCommand(AssessRiskCommand.class);
         cmd1.setPolicyArgRet(policy);
         cmd1.invoke();
         policy = cmd1.getPolicyArgRet();
@@ -320,7 +320,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         
         System.out.println(core.toXML(policy));
 
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -345,7 +345,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
     public void testSimpleAssessRiskCalculatePremiumNoTaxNoCommission() throws Exception {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct2");
 
-        AssessRiskCommand cmd1 = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand cmd1 = core.newCommand(AssessRiskCommand.class);
         cmd1.setPolicyArgRet(policy);
         cmd1.invoke();
         policy = cmd1.getPolicyArgRet();
@@ -353,7 +353,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
         assertEquals(1, policy.getAssessmentSheet().getLineCount());
 
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -386,7 +386,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         policy.setAssessmentSheet(sheet);
         policy.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
 
-        cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -410,7 +410,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         policy.setAssessmentSheet(sheet);
         policy.getSectionById("sec1").setAssessmentSheet(new AssessmentSheet());
 
-        cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -446,7 +446,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct5");
 
         // run it through calc premium
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -485,7 +485,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct6");
 
         // run it through calc premium
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -525,7 +525,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct7");
 
         // run it through calc premium
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -564,7 +564,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct5");
 
         // run it through calc premium
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -620,7 +620,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct8");
 
         // run it through calc premium
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -655,7 +655,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct9");
 
         // run it through calc premium
-        CalculatePremiumCommand cmd2 = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+        CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
@@ -682,7 +682,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
 
         policy.setStatus(PolicyStatus.QUOTATION);
 
-        AddPolicyNumberCommand command = (AddPolicyNumberCommand) core.newCommand("AddPolicyNumber");
+        AddPolicyNumberCommand command = core.newCommand(AddPolicyNumberCommand.class);
         command.setPolicyArgRet(policy);
         command.invoke();
 
@@ -709,7 +709,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
 
         quote.setStatus(PolicyStatus.APPLICATION);
 
-        AddQuoteNumberCommand command = (AddQuoteNumberCommand) core.newCommand("AddQuoteNumber");
+        AddQuoteNumberCommand command = core.newCommand(AddQuoteNumberCommand.class);
         command.setPolicyArgRet(quote);
         command.invoke();
 
@@ -731,7 +731,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
 
         quote.setStatus(PolicyStatus.APPLICATION);
         quote.setAssessmentSheet(new AssessmentSheet());
-        EnforceComplianceCommand command = (EnforceComplianceCommand) core.newCommand("EnforceCompliance");
+        EnforceComplianceCommand command = core.newCommand(EnforceComplianceCommand.class);
         command.setPolicyArgRet(quote);
         command.invoke();
     }
@@ -747,7 +747,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(120, GBP)));
         quote.getAssessmentSheet().clearLockingActor();
         
-        AssessPaymentOptionsCommand command = (AssessPaymentOptionsCommand) core.newCommand("AssessPaymentOptions");
+        AssessPaymentOptionsCommand command = core.newCommand(AssessPaymentOptionsCommand.class);
         command.setPolicyArg(quote);
         command.invoke();
         
@@ -759,7 +759,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addLine(new FixedSum("total premium", "", null, null, new CurrencyAmount(621.10, GBP)));
         quote.getAssessmentSheet().clearLockingActor();
         
-        command = (AssessPaymentOptionsCommand) core.newCommand("AssessPaymentOptions");
+        command = core.newCommand(AssessPaymentOptionsCommand.class);
         command.setPolicyArg(quote);
         command.invoke();
         
@@ -796,7 +796,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addLine(new FixedSum("contributor", "", null, "total premium", new CurrencyAmount(120, GBP)));
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -837,7 +837,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addFixedSum("contributor", "", "total premium", new CurrencyAmount(120, GBP));
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -881,7 +881,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addTotalizer("total premium", "", "value1, value2, value3");
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -925,7 +925,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addTotalizer("total premium", "", "value1, value2, value3");
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -967,7 +967,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(400, GBP));
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -1006,8 +1006,8 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addFixedSum("total premium", "", new CurrencyAmount(600, GBP));
         quote.getAssessmentSheet().addLoading("rate1", "loading 1", "total premium", "total premium", new Rate("50%"));
         quote.getAssessmentSheet().clearLockingActor();
-        
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+
+        RefreshAssessmentSheetsCommand command = core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -1048,7 +1048,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addLoading("rate2", "loading 2", "total premium", "total premium", new Rate("10%"));
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -1088,7 +1088,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addLoading("loading", "loading 1", "total premium", new CurrencyAmount(300, GBP));
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -1130,7 +1130,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addLoading("tax line", "tax line", "total premium", "total premium", new Rate("15%"));
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();
@@ -1156,7 +1156,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote.getAssessmentSheet().addTotalizer("total", "total", "line1,line2,line3");
         quote.getAssessmentSheet().clearLockingActor();
         
-        RefreshAssessmentSheetsCommand command=(RefreshAssessmentSheetsCommand)core.newCommand("RefreshAssessmentSheets");
+        RefreshAssessmentSheetsCommand command=core.newCommand(RefreshAssessmentSheetsCommand.class);
         command.setPolicyArgRet(quote);
         command.setOriginArg("test-new");
         command.invoke();

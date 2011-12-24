@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.addquotenumber;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
@@ -28,7 +29,8 @@ import com.ail.insurance.policy.PolicyStatus;
 /**
  * This service generates quotation numbers and adds them to policy objects.
  */
-public class AddQuoteNumberService extends Service<AddQuoteNumberArg> {
+@ServiceImplementation
+public class AddQuoteNumberService extends Service<AddQuoteNumberArgument> {
     private static final long serialVersionUID = 6143065395162584693L;
     private String configurationNamespace="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService";
     
@@ -70,10 +72,11 @@ public class AddQuoteNumberService extends Service<AddQuoteNumberArg> {
 
         GenerateUniqueKeyCommand gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
         gukc.setKeyIdArg("QuoteNumber");
+        gukc.setProductTypeIdArg(policy.getProductTypeId());
         gukc.invoke();
         
         // Invoke the product specific quote number gen command 
-        GenerateQuoteNumberRuleCommand command=(GenerateQuoteNumberRuleCommand)core.newCommand("GenerateQuoteNumberRule");
+        GenerateQuoteNumberRuleCommand command=core.newCommand("GenerateQuoteNumberRule", GenerateQuoteNumberRuleCommand.class);
         command.setPolicyArg(policy);
         command.setUniqueNumberArg(gukc.getKeyRet());
         command.invoke();

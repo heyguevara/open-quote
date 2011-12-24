@@ -19,13 +19,6 @@ package com.ail.insurance.claim;
 import com.ail.core.Functions;
 import com.ail.core.TypeEnum;
 
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2006/01/17 06:36:30 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/claim/RecoveryStatus.java,v $
- * @stereotype enumeration
- */
 public enum RecoveryStatus implements TypeEnum {
     OPEN("Open"),
     CLOSED("Closed");

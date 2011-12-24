@@ -17,47 +17,9 @@
 
 package com.ail.insurance.quotation.calculatemanagementcharge;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/calculatemanagementcharge/CalculateManagementChargeCommand.java,v $
- * @stereotype command
- */
-public class CalculateManagementChargeCommand extends Command implements CalculateManagementChargeArg {
-    private static final long serialVersionUID = -7718749717350688704L;
-    private CalculateManagementChargeArg args = null;
-
-    public CalculateManagementChargeCommand() {
-        super();
-        args = new CalculateManagementChargeArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CalculateManagementChargeArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArgRet @{inheritDoc}
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=CalculateManagementChargeService.class)
+public interface CalculateManagementChargeCommand extends Command, CalculateManagementChargeArgument {
 }

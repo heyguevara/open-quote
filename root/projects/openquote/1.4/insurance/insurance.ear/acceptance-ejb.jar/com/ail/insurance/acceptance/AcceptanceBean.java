@@ -19,22 +19,13 @@ package com.ail.insurance.acceptance;
 
 import javax.ejb.SessionContext;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationArg;
+import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationArgument;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/03/03 09:31:07 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/acceptance-ejb.jar/com/ail/insurance/acceptance/AcceptanceBean.java,v $
- * @undefined
- * @displayName
- * @ejbHome <{AcceptanceHome}>
- * @ejbRemote <{Acceptance}>
- */
+@Configurable
 public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.ejb.SessionBean {
     private static final long serialVersionUID = -1235854950858098351L;
 
@@ -69,21 +60,6 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
         core = new com.ail.core.Core(this);
     }
 
-    private com.ail.core.command.CommandArg invokeCommand(String name, com.ail.core.command.CommandArg arg) {
-        try {
-            com.ail.core.command.AbstractCommand command = core.newCommand(name);
-            command.setArgs(arg);
-            command.invoke();
-            return command.getArgs();
-        }
-        catch (com.ail.core.BaseException e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
     /**
      * Expose services of this EJB via XML. This method unmarshals the XML argument string into
      * an object, finds a method on the EJB to accept that object type as an argument
@@ -99,11 +75,13 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
         return super.invokeServiceXML(xml, ctx);
     }
 
+    @Override
     public com.ail.core.Core getCore() {
         return core;
     }
 
 
+    @Override
     public void setConfiguration(com.ail.core.configure.Configuration config) {
         try {
             super.setConfiguration(config);
@@ -113,6 +91,7 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
         }
     }
 
+    @Override
     public com.ail.core.configure.Configuration getConfiguration() {
         try {
             return super.getConfiguration();
@@ -122,32 +101,20 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
         }
     }
 
+    @Override
     public String getConfigurationNamespace() {
         return super.getConfigurationNamespace();
     }
 
+    @Override
 	public VersionEffectiveDate getVersionEffectiveDate() {
 		return versionEffectiveDate;
 	}
 
-    public void resetConfiguration() {
+	@Override
+	public void resetConfiguration() {
         try {
             super.resetConfiguration();
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
-    public com.ail.core.Version getVersion() {
-        try {
-            Version v = (com.ail.core.Version) core.newType("Version");
-            v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-            v.setDate("$Date: 2007/03/03 09:31:07 $");
-            v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/acceptance-ejb.jar/com/ail/insurance/acceptance/AcceptanceBean.java,v $");
-            v.setState("$State: Exp $");
-            v.setVersion("$Revision: 1.3 $");
-            return v;
         }
         catch (com.ail.core.BaseError e) {
             throw new com.ail.core.BaseServerException(e);
@@ -160,8 +127,8 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ProduceDocumentationArg produceDocumentation(ProduceDocumentationArg arg) {
-        return (ProduceDocumentationArg)invokeCommand("ProduceDocumentationService", arg);
+    public ProduceDocumentationArgument produceDocumentation(ProduceDocumentationArgument argument) {
+        return invokeCommand(getCore(), "ProduceDocumentation", argument);
     }
 
     /**
@@ -170,8 +137,8 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public PutOnRiskArg putOnRisk(PutOnRiskArg arg) {
-        return (PutOnRiskArg)invokeCommand("PutOnRiskService", arg);
+    public PutOnRiskArgument putOnRisk(PutOnRiskArgument argument) {
+        return invokeCommand(getCore(), "PutOnRisk", argument);
     }
 
     /**
@@ -180,8 +147,8 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public CollectPremiumArg collectPremium(CollectPremiumArg arg) {
-        return (CollectPremiumArg)invokeCommand("CollectPremiumService", arg);
+    public CollectPremiumArgument collectPremium(CollectPremiumArgument argument) {
+        return invokeCommand(getCore(), "CollectPremium", argument);
     }
 
     /**
@@ -190,8 +157,8 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.e
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public AcceptQuotationArg acceptQuotation(AcceptQuotationArg arg) {
-        return (AcceptQuotationArg)invokeCommand("AcceptQuotationService", arg);
+    public AcceptQuotationArgument acceptQuotation(AcceptQuotationArgument argument) {
+        return invokeCommand(getCore(), "AcceptQuotation", argument);
     }
 }
 

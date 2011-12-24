@@ -17,9 +17,11 @@
 
 package com.ail.insurance.diary.cancelentry;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
 
-public class CancelEntryService extends Service<CancelEntryArg> {
+@ServiceImplementation
+public class CancelEntryService extends Service<CancelEntryArgument> {
     private static final long serialVersionUID = 7015447812235381361L;
 
     @Override

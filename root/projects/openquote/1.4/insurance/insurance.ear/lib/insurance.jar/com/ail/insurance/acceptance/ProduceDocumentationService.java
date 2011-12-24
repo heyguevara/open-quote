@@ -17,11 +17,13 @@
 
 package com.ail.insurance.acceptance;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
-public class ProduceDocumentationService extends com.ail.core.Service<ProduceDocumentationArg> {
+@ServiceImplementation
+public class ProduceDocumentationService extends com.ail.core.Service<ProduceDocumentationArgument> {
     private static final long serialVersionUID = 8323843668107021681L;
 
     @Override

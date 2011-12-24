@@ -17,6 +17,7 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.financial.CurrencyAmount;
 
 /**
@@ -27,6 +28,7 @@ import com.ail.financial.CurrencyAmount;
  * By default, this line executes during the AFTER_RATING stage (see {@link AssessmentStage}.)
  * @since Insurance 2.4, OpenQuote 1.3
  */
+@TypeDefinition
 public class ReferValueOutOfBounds extends ControlLine {
     private static final long serialVersionUID = -4519518497757725779L;
     private CurrencyAmount minimum;

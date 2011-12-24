@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.addpolicynumber;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
@@ -26,7 +27,8 @@ import com.ail.core.key.GenerateUniqueKeyCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
-public class AddPolicyNumberService extends Service<AddPolicyNumberArg> {
+@ServiceImplementation
+public class AddPolicyNumberService extends Service<AddPolicyNumberArgument> {
     private static final long serialVersionUID = 4156690077014872967L;
     private String configurationNamespace="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService";
     
@@ -93,9 +95,10 @@ public class AddPolicyNumberService extends Service<AddPolicyNumberArg> {
 
         GenerateUniqueKeyCommand gukc=getCore().newCommand(GenerateUniqueKeyCommand.class);
         gukc.setKeyIdArg("PolicyNumber");
+        gukc.setProductTypeIdArg(policy.getProductTypeId());
         gukc.invoke();
         
-        GeneratePolicyNumberRuleCommand command=(GeneratePolicyNumberRuleCommand)core.newCommand("GeneratePolicyNumberRule");
+        GeneratePolicyNumberRuleCommand command=core.newCommand("GeneratePolicyNumberRule", GeneratePolicyNumberRuleCommand.class);
         command.setPolicyArg(policy);
         command.setUniqueNumberArg(gukc.getKeyRet());
         command.invoke();

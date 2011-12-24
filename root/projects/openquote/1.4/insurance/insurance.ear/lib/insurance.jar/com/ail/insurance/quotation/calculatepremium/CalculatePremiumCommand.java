@@ -17,49 +17,9 @@
 
 package com.ail.insurance.quotation.calculatepremium;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/calculatepremium/CalculatePremiumCommand.java,v $
- * @stereotype command
- */
-public class CalculatePremiumCommand extends Command implements CalculatePremiumArg {
-    private static final long serialVersionUID = 4226334038158368144L;
-    private CalculatePremiumArg args = null;
-
-    public CalculatePremiumCommand() {
-        super();
-        args = new CalculatePremiumArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (CalculatePremiumArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (com.ail.core.command.CommandArg) args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPolicyArgRet
-     * @return value of policy
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPolicyArgRet
-     * @param policy New value for policy argument.
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=CalculatePremiumService.class)
+public interface CalculatePremiumCommand extends Command, CalculatePremiumArgument {
 }

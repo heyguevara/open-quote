@@ -17,59 +17,9 @@
 
 package com.ail.insurance.quotation.fetchdocument;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- */
-public class FetchDocumentCommand extends Command implements FetchDocumentArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-    private FetchDocumentArg args;
-    
-    public FetchDocumentCommand() {
-        super();
-		args=new FetchDocumentArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args=(FetchDocumentArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (CommandArg)args;
-    }
-
-    /** @inheritDoc */
-    public byte[] getDocumentRet() {
-        return args.getDocumentRet();
-    }
-    
-    /** @inheritDoc */
-    public void setDocumentRet(byte[] documentRet) {
-        args.setDocumentRet(documentRet);
-    }
-    
-    /** @inheritDoc */
-    public String getQuotationNumberArg() {
-        return args.getQuotationNumberArg();
-    }
-    
-    /** @inheritDoc */
-    public void setQuotationNumberArg(String quotationNumberArg) {
-        args.setQuotationNumberArg(quotationNumberArg);
-    }
-
-    public Policy getQuotationRet() {
-        return args.getQuotationRet();
-    }
-
-    public void setQuotationRet(Policy policyRet) {
-        args.setQuotationRet(policyRet);
-    }
+@CommandDefinition
+public interface FetchDocumentCommand extends Command, FetchDocumentArgument {
 }

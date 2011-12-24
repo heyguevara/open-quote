@@ -17,85 +17,9 @@
 
 package com.ail.insurance.quotation.assessrisk;
 
-import com.ail.core.Core;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.AssessmentSheet;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/12/13 21:15:41 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/assessrisk/AssessPolicyRiskCommand.java,v $
- * @stereotype command
- */
-public class AssessPolicyRiskCommand extends Command implements AssessPolicyRiskArg {
-    private static final long serialVersionUID = 5098495279256557602L;
-    private AssessPolicyRiskArg args = null;
-
-    public AssessPolicyRiskCommand() {
-        super();
-        args = new AssessPolicyRiskArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (AssessPolicyRiskArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (com.ail.core.command.CommandArg) args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPolicy
-     * @return value of policy
-     */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPolicy
-     * @param policy New value for policy argument.
-     */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setAssessmentSheet
-     * @return value of assessmentsheet
-     */
-    public AssessmentSheet getAssessmentSheetArgRet() {
-        return args.getAssessmentSheetArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getAssessmentSheet
-     * @param assessmentsheet New value for assessmentsheet argument.
-     */
-    public void setAssessmentSheetArgRet(AssessmentSheet assessmentSheetArgRet) {
-        args.setAssessmentSheetArgRet(assessmentSheetArgRet);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Core getCoreArg() {
-        return args.getCoreArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param coreArg @{inheritDoc}
-     */
-    public void setCoreArg(Core coreArg) {
-        args.setCoreArg(coreArg);
-    }
+@CommandDefinition
+public interface AssessPolicyRiskCommand extends Command, AssessPolicyRiskArgument {
 }

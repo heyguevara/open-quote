@@ -19,16 +19,11 @@ package com.ail.insurance.claim;
 
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 23:19:08 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/claim/Recovery.java,v $
- * @stereotype type 
- */
+@TypeDefinition
 public class Recovery extends Type {
     private static final long serialVersionUID = -5789050829918007998L;
 

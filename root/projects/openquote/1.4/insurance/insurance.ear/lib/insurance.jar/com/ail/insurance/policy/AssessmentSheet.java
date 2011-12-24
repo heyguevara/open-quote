@@ -23,6 +23,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 import com.ail.util.Rate;
@@ -30,6 +31,7 @@ import com.ail.util.Rate;
 /**
  * Groups together a collection of assessment lines and provides utility methods for manipulating them.
  */
+@TypeDefinition
 public class AssessmentSheet extends Type {
     private static final long serialVersionUID = 4050081334317365104L;
 

@@ -21,26 +21,13 @@ import javax.ejb.CreateException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
-import com.ail.core.BaseError;
-import com.ail.core.BaseException;
-import com.ail.core.BaseServerException;
+import com.ail.annotation.Configurable;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.command.AbstractCommand;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryArg;
+import com.ail.insurance.subrogation.makearecovery.MakeARecoveryArgument;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/subrogation-ejb.jar/com/ail/insurance/subrogation/SubrogationBean.java,v $
- * @undefined
- * @displayName
- * @ejbHome <{com.ail.insurance.subrogation.SubrogationHome}>
- * @ejbRemote <{com.ail.insurance.subrogation.Subrogation}>
- */
+@Configurable
 public class SubrogationBean extends EJBComponent implements SessionBean {
     private static final long serialVersionUID = 6506879017396687519L;
     private VersionEffectiveDate versionEffectiveDate=null;
@@ -78,19 +65,8 @@ public class SubrogationBean extends EJBComponent implements SessionBean {
 		return versionEffectiveDate;
     }
 
-    public MakeARecoveryArg makeARecovery(MakeARecoveryArg arg) {
-        try {
-            AbstractCommand command=core.newCommand("MakeARecovery");
-            command.setArgs(arg);
-            command.invoke();
-            return (MakeARecoveryArg)command.getArgs();
-        }
-        catch(BaseException e) {
-            throw new BaseServerException(e);
-        }
-        catch(BaseError e) {
-            throw new BaseServerException(e);
-        }
+    public MakeARecoveryArgument makeARecovery(MakeARecoveryArgument arg) {
+        return invokeCommand(core, "MakeARecovery", arg);
     }
 
     /**
@@ -99,16 +75,6 @@ public class SubrogationBean extends EJBComponent implements SessionBean {
      */
     public Core getCore() {
         return core;
-    }
-
-    public Version getVersion() {
-        Version v=(Version)core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date: 2005/08/19 20:20:59 $");
-        v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/subrogation-ejb.jar/com/ail/insurance/subrogation/SubrogationBean.java,v $");
-        v.setState("$State: Exp $");
-        v.setVersion("$Revision: 1.1 $");
-        return v;
     }
 
     /**

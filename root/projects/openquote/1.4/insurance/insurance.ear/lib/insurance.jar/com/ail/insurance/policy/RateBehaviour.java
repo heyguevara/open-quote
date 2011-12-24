@@ -17,6 +17,7 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.financial.CurrencyAmount;
 import com.ail.util.Rate;
 
@@ -31,8 +32,8 @@ import com.ail.util.Rate;
  * permil (e.g. <code>new Rate("5Permil")</code>), and fraction (e.g. <code>new Rate("16/18")</code>). 
  * 
  * @see BehaviourType BehaviourType
- * 
  */
+@TypeDefinition
 public class RateBehaviour extends Behaviour {
     private static final long serialVersionUID = -1646835026437040884L;
     private String dependsOn=null;

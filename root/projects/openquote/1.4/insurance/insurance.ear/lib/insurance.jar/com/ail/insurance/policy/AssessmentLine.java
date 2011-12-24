@@ -17,6 +17,7 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -26,6 +27,7 @@ import com.ail.core.Type;
  * how the premium is arrived at. This may well include factors like tax and brokerage, and also will may
  * list the reasons why rating isn't possible in the form or referral or decline indications.
  */
+@TypeDefinition
 public class AssessmentLine extends Type implements Comparable<AssessmentLine> {
     private static final long serialVersionUID = 1357488757251866318L;
     private String id=null;

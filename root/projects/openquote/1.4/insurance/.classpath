@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
+	<classpathentry kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
 	<classpathentry excluding="acceptance-ejb.jar/|configure-server-ejb.jar/|core.jar/|insurance.jar/|quotation-ejb.jar/|rmt-ejb.jar/|subrogation-ejb.jar/|lib/insurance.jar/|policy-ejb.jar/|onrisk-ejb.jar/" kind="src" path="insurance.ear"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/lib/insurance.jar" path="insurance.ear/lib/insurance.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/acceptance-ejb.jar" path="insurance.ear/acceptance-ejb.jar"/>
@@ -7,8 +9,6 @@
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/onrisk-ejb.jar" path="insurance.ear/onrisk-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/quotation-ejb.jar" path="insurance.ear/quotation-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/subrogation-ejb.jar" path="insurance.ear/subrogation-ejb.jar"/>
-	<classpathentry kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
-	<classpathentry kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/proxool-0.7.2.jar"/>
@@ -71,5 +71,11 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/bcprov-jdk15-1.46.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/bctsp-jdk15-1.46.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/itextpdf-5.1.2.jar"/>
+	<classpathentry kind="lib" path="/development/build/lib/annotation-3.0.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

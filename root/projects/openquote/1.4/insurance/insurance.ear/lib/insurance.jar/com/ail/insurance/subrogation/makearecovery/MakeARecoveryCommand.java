@@ -17,83 +17,9 @@
 
 package com.ail.insurance.subrogation.makearecovery;
 
-import java.util.Hashtable;
-
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.financial.CurrencyAmount;
-import com.ail.insurance.claim.Claim;
-import com.ail.insurance.claim.PaymentType;
-import com.ail.insurance.claim.RecoveryType;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/12/19 22:28:31 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/subrogation/makearecovery/MakeARecoveryCommand.java,v $
- */
-public class MakeARecoveryCommand extends Command implements MakeARecoveryArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-    private MakeARecoveryArg args=null;
-
-    public MakeARecoveryCommand() {
-        super();
-		args=new MakeARecoveryArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-		this.args=(MakeARecoveryArg)arg;
-    }
-
-    public CommandArg getArgs() {
-		return (CommandArg)args;
-    }
-
-    public Claim getClaim() {
-		return args.getClaim();
-    }
-
-    public void setClaim(Claim claim) {
-		args.setClaim(claim);
-    }
-
-    public RecoveryType getRecoveryType() {
-		return args.getRecoveryType();
-    }
-
-    public void setRecoveryType(RecoveryType recoveryType) {
-		args.setRecoveryType(recoveryType);
-    }
-
-    public PaymentType getPaymentType() {
-		return args.getPaymentType();
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-		args.setPaymentType(paymentType);
-    }
-
-    public Hashtable<String,CurrencyAmount> getRecoveryMade() {
-		return args.getRecoveryMade();
-    }
-
-    public void setRecoveryMade(Hashtable<String,CurrencyAmount> recoveryMade) {
-		args.setRecoveryMade(recoveryMade);
-    }
-
-    public String getSource() {
-		return args.getSource();
-    }
-
-    public void setSource(String source) {
-		args.setSource(source);
-    }
-
-    public String getReason() {
-		return args.getReason();
-    }
-
-    public void setReason(String reason) {
-		args.setReason(reason);
-    }
+@CommandDefinition(defaultServiceClass=MakeARecoveryService.class)
+public interface MakeARecoveryCommand extends Command, MakeARecoveryArgument {
 }

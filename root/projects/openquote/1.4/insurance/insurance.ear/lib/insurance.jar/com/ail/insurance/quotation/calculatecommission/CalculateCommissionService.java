@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.calculatecommission;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
@@ -24,7 +25,8 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 
-public class CalculateCommissionService extends Service<CalculateCommissionArg> {
+@ServiceImplementation
+public class CalculateCommissionService extends Service<CalculateCommissionArgument> {
     private static final long serialVersionUID = 2220485360451305684L;
 
     /**
@@ -61,7 +63,7 @@ public class CalculateCommissionService extends Service<CalculateCommissionArg> 
         // Lock the assessment sheet
         assessmentSheet.setLockingActor("CalculateCommission");
 
-        CalculatePolicyCommissionCommand command=(CalculatePolicyCommissionCommand)core.newCommand("CalculatePolicyCommission");
+        CalculatePolicyCommissionCommand command=core.newCommand("CalculatePolicyCommission", CalculatePolicyCommissionCommand.class);
         command.setPolicyArg(policy);
         command.setAssessmentSheetArgRet(assessmentSheet);
         command.invoke();

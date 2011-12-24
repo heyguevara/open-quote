@@ -17,49 +17,9 @@
 
 package com.ail.insurance.quotation.assessrisk;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/assessrisk/AssessRiskCommand.java,v $
- * @stereotype command
- */
-public class AssessRiskCommand extends Command implements AssessRiskArg {
-    private static final long serialVersionUID = 8261686160652960735L;
-    private AssessRiskArg args = null;
-
-    public AssessRiskCommand() {
-        super();
-        args = new AssessRiskArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (AssessRiskArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #setPolicyArgRet
-     * @return value of policy
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see #getPolicyArgRet
-     * @param policyArgRet New value for policy argument.
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=AssessRiskService.class)
+public interface AssessRiskCommand extends Command, AssessRiskArgument {
 }

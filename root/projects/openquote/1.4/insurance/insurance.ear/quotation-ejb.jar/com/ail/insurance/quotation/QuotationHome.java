@@ -23,9 +23,5 @@ import javax.ejb.CreateException;
 import javax.ejb.EJBHome;
 
 public interface QuotationHome extends EJBHome {
-    /** @link dependency */
-
-    /*# QuotationBean lnkQuotationBean; */
-
     Quotation create() throws CreateException, RemoteException;
 }

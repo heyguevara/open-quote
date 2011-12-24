@@ -17,13 +17,10 @@
 
 package com.ail.insurance.acceptance;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/PolicyDocumentation.java,v $
- * @stereotype type
- */
-public class PolicyDocumentation extends com.ail.core.Type {
+import com.ail.annotation.TypeDefinition;
+import com.ail.core.Type;
+
+@TypeDefinition
+public class PolicyDocumentation extends Type {
     private static final long serialVersionUID = 5137311567894340905L;
 }

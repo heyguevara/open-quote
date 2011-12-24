@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * Used by "Reference" to indicate they type of target.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2006/01/17 06:36:30 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/ReferenceType.java,v $
- * @stereotype enumeration 
  */
 public enum ReferenceType implements TypeEnum {
     ASSET("Asset"),

@@ -17,64 +17,9 @@
 
 package com.ail.insurance.quotation.enforcecompliance;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.AssessmentSheet;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 23:19:08 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/enforcecompliance/EnforcePolicyComplianceCommand.java,v $
- * @stereotype command
- */
-public class EnforcePolicyComplianceCommand extends Command implements EnforcePolicyComplianceArg {
-    private static final long serialVersionUID = -6407852660574061926L;
-    private EnforcePolicyComplianceArgImp args = null;
-
-    public EnforcePolicyComplianceCommand() {
-        super();
-        args = new EnforcePolicyComplianceArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (EnforcePolicyComplianceArgImp)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArg @{inheritDoc}
-     */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public AssessmentSheet getAssessmentSheetArgRet() {
-        return args.getAssessmentSheetArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param assessmentSheetArgRet @{inheritDoc}
-     */
-    public void setAssessmentSheetArgRet(AssessmentSheet assessmentSheetArgRet) {
-        args.setAssessmentSheetArgRet(assessmentSheetArgRet);
-    }
+@CommandDefinition
+public interface EnforcePolicyComplianceCommand extends Command, EnforcePolicyComplianceArgument {
 }

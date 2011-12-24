@@ -22,22 +22,18 @@ import java.rmi.RemoteException;
 import javax.ejb.EJBObject;
 
 import com.ail.core.BaseServerException;
-import com.ail.insurance.quotation.generatedocument.GenerateDocumentArg;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberArg;
-import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberArg;
-import com.ail.insurance.quotation.assessrisk.AssessRiskArg;
-import com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageArg;
-import com.ail.insurance.quotation.calculatecommission.CalculateCommissionArg;
-import com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeArg;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumArg;
-import com.ail.insurance.quotation.calculatetax.CalculateTaxArg;
-import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceArg;
+import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberArgument;
+import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberArgument;
+import com.ail.insurance.quotation.assessrisk.AssessRiskArgument;
+import com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageArgument;
+import com.ail.insurance.quotation.calculatecommission.CalculateCommissionArgument;
+import com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeArgument;
+import com.ail.insurance.quotation.calculatepremium.CalculatePremiumArgument;
+import com.ail.insurance.quotation.calculatetax.CalculateTaxArgument;
+import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceArgument;
+import com.ail.insurance.quotation.generatedocument.GenerateDocumentArgument;
 
 public interface Quotation extends EJBObject {
-    /** @link dependency */
-
-    /*# QuotationBean lnkQuotationBean; */
-
     String invokeServiceXML(String xml) throws RemoteException;
 
     /**
@@ -46,7 +42,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    AssessRiskArg assessRisk(AssessRiskArg arg) throws RemoteException;
+    AssessRiskArgument assessRisk(AssessRiskArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the CalculatePremium service.
@@ -54,7 +50,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    CalculatePremiumArg calculatePremium(CalculatePremiumArg arg) throws RemoteException;
+    CalculatePremiumArgument calculatePremium(CalculatePremiumArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the CalculateTax service.
@@ -62,7 +58,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    CalculateTaxArg calculateTax(CalculateTaxArg arg) throws RemoteException;
+    CalculateTaxArgument calculateTax(CalculateTaxArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the CalculateCommission service.
@@ -70,7 +66,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    CalculateCommissionArg calculateCommission(CalculateCommissionArg arg) throws RemoteException;
+    CalculateCommissionArgument calculateCommission(CalculateCommissionArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the CalculateBrokerage service.
@@ -78,7 +74,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    CalculateBrokerageArg calculateBrokerage(CalculateBrokerageArg arg) throws RemoteException;
+    CalculateBrokerageArgument calculateBrokerage(CalculateBrokerageArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the CalculateManagementCharge service.
@@ -86,7 +82,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    CalculateManagementChargeArg calculateManagementCharge(CalculateManagementChargeArg arg) throws RemoteException;
+    CalculateManagementChargeArgument calculateManagementCharge(CalculateManagementChargeArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the AddQuoteNumber service.
@@ -94,7 +90,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    AddQuoteNumberArg addQuoteNumber(AddQuoteNumberArg arg) throws RemoteException;
+    AddQuoteNumberArgument addQuoteNumber(AddQuoteNumberArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the AddPolicyNumber service.
@@ -102,7 +98,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    AddPolicyNumberArg addPolicyNumber(AddPolicyNumberArg arg) throws RemoteException;
+    AddPolicyNumberArgument addPolicyNumber(AddPolicyNumberArgument arg) throws RemoteException;
     
     /**
      * Service wrapper business method for the EnforceCompliance service.
@@ -110,7 +106,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    EnforceComplianceArg enforceCompliance(EnforceComplianceArg arg) throws RemoteException;
+    EnforceComplianceArgument enforceCompliance(EnforceComplianceArgument arg) throws RemoteException;
 
     /**
      * Service wrapper business method for the GenerateDocument service.
@@ -118,7 +114,7 @@ public interface Quotation extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateDocumentArg generateDocument(GenerateDocumentArg arg) throws RemoteException;
+    GenerateDocumentArgument generateDocument(GenerateDocumentArgument arg) throws RemoteException;
 }
 
 

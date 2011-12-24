@@ -22,32 +22,23 @@ import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberArg;
-import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberArg;
-import com.ail.insurance.quotation.assessrisk.AssessRiskArg;
-import com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageArg;
-import com.ail.insurance.quotation.calculatecommission.CalculateCommissionArg;
-import com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeArg;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumArg;
-import com.ail.insurance.quotation.calculatetax.CalculateTaxArg;
-import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceArg;
-import com.ail.insurance.quotation.generatedocument.GenerateDocumentArg;
+import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberArgument;
+import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberArgument;
+import com.ail.insurance.quotation.assessrisk.AssessRiskArgument;
+import com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageArgument;
+import com.ail.insurance.quotation.calculatecommission.CalculateCommissionArgument;
+import com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeArgument;
+import com.ail.insurance.quotation.calculatepremium.CalculatePremiumArgument;
+import com.ail.insurance.quotation.calculatetax.CalculateTaxArgument;
+import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceArgument;
+import com.ail.insurance.quotation.generatedocument.GenerateDocumentArgument;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/09/20 20:40:57 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/quotation-ejb.jar/com/ail/insurance/quotation/QuotationBean.java,v $
- * @undefined
- * @displayName
- * @ejbHome <{QuotationHome}>
- * @ejbRemote <{Quotation}>
- */
+@Configurable
 public class QuotationBean extends EJBComponent implements SessionBean {
     private static final long serialVersionUID = 6789993103676049055L;
     private VersionEffectiveDate versionEffectiveDate = null;
@@ -101,26 +92,6 @@ public class QuotationBean extends EJBComponent implements SessionBean {
     }
 
     /**
-     * Return this component's version information
-     * @return version details
-     * @throws EJBException
-     */
-    public Version getVersion() {
-        try {
-            Version v = (com.ail.core.Version) core.newType("Version");
-            v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-            v.setDate("$Date: 2006/09/20 20:40:57 $");
-            v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/quotation-ejb.jar/com/ail/insurance/quotation/QuotationBean.java,v $");
-            v.setState("$State: Exp $");
-            v.setVersion("$Revision: 1.3 $");
-            return v;
-        }
-        catch (Exception e) {
-            throw new javax.ejb.EJBException(e);
-        }
-    }
-
-    /**
      * Expose services via XML. This method unmarshals the XML argument string into
      * an object, finds a method on the EJB to accept that object type as an argument
      * and invokes it. The result returned from the method is marshalled back into XM
@@ -142,17 +113,17 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public AssessRiskArg assessRisk(AssessRiskArg arg) {
+    public AssessRiskArgument assessRisk(AssessRiskArgument arg) {
         return invokeCommand(core, "AssessRisk", arg);
     }
 
     /**
      * Service wrapper business method for the CalculatePremium service.
-     * @param arg The argument to pass to the service.
+     * @param arg The Argument to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public CalculatePremiumArg calculatePremium(CalculatePremiumArg arg) {
+    public CalculatePremiumArgument calculatePremium(CalculatePremiumArgument arg) {
         return invokeCommand(core, "CalculatePremium", arg);
     }
 
@@ -162,7 +133,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public CalculateTaxArg calculateTax(CalculateTaxArg arg) {
+    public CalculateTaxArgument calculateTax(CalculateTaxArgument arg) {
         return invokeCommand(core, "CalculateTax", arg);
     }
 
@@ -172,7 +143,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public CalculateCommissionArg calculateCommission(CalculateCommissionArg arg) {
+    public CalculateCommissionArgument calculateCommission(CalculateCommissionArgument arg) {
         return invokeCommand(core, "CalculateCommission", arg);
     }
 
@@ -182,7 +153,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public CalculateBrokerageArg calculateBrokerage(CalculateBrokerageArg arg) {
+    public CalculateBrokerageArgument calculateBrokerage(CalculateBrokerageArgument arg) {
         return invokeCommand(core, "CalculateBrokerage", arg);
     }
 
@@ -192,8 +163,8 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public CalculateManagementChargeArg calculateManagementCharge(CalculateManagementChargeArg arg) {
-        return invokeCommand(core, "CalculateManagementCharge", arg);
+    public CalculateManagementChargeArgument calculateManagementCharge(CalculateManagementChargeArgument arg) {
+        return invokeCommand(core, "CalculateManagement", arg);
     }
 
     /**
@@ -202,7 +173,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public AddQuoteNumberArg addQuoteNumber(AddQuoteNumberArg arg) {
+    public AddQuoteNumberArgument addQuoteNumber(AddQuoteNumberArgument arg) {
         return invokeCommand(core, "AddQuoteNumber", arg);
     }
 
@@ -212,7 +183,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public AddPolicyNumberArg addPolicyNumber(AddPolicyNumberArg arg) {
+    public AddPolicyNumberArgument addPolicyNumber(AddPolicyNumberArgument arg) {
         return invokeCommand(core, "AddPolicyNumber", arg);
     }
 
@@ -222,7 +193,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public EnforceComplianceArg enforceCompliance(EnforceComplianceArg arg) {
+    public EnforceComplianceArgument enforceCompliance(EnforceComplianceArgument arg) {
         return invokeCommand(core, "EnforceCompliance", arg);
     }
 
@@ -232,7 +203,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public GenerateDocumentArg generateDocument(GenerateDocumentArg arg) {
+    public GenerateDocumentArgument generateDocument(GenerateDocumentArgument arg) {
         return invokeCommand(core, "GenerateDocument", arg);
     }
 

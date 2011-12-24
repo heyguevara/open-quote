@@ -17,16 +17,13 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
  * Points to another part/element of a policy.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 19:49:05 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Reference.java,v $
- * @stereotype type 
  */
+@TypeDefinition
 public class Reference extends Type {
     private static final long serialVersionUID = 7406616018516416788L;
 

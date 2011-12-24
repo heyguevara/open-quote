@@ -20,12 +20,14 @@ package com.ail.insurance.policy;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.util.YesNo;
 
 /**
  * A section with the policy.
  */
+@TypeDefinition
 public class Section extends Type {
     static final long serialVersionUID = -1451057528960584717L;
 

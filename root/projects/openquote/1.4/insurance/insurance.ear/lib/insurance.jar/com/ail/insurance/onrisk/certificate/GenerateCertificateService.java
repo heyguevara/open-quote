@@ -19,6 +19,7 @@ package com.ail.insurance.onrisk.certificate;
 
 import static com.ail.insurance.policy.PolicyStatus.ON_RISK;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
@@ -36,7 +37,8 @@ import com.ail.core.document.model.DocumentDefinition;
  * generation phases depends on the {@link DocumentDefinition} type defined in the product associated
  * with the policy for which a document is being generated. By convention, this type is named "InvoiceDocument".
  */
-public class GenerateCertificateService extends Service<GenerateCertificateArg> {
+@ServiceImplementation
+public class GenerateCertificateService extends Service<GenerateCertificateArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
 
     /**
@@ -69,7 +71,7 @@ public class GenerateCertificateService extends Service<GenerateCertificateArg> 
         
         // 1st step: data merge (if configured)
         if (docDef.getMergeCommand()!=null && docDef.getMergeCommand().length()!=0) {
-            MergeDataCommand merge=(MergeDataCommand)core.newCommand(docDef.getMergeCommand());
+            MergeDataCommand merge=core.newCommand(docDef.getMergeCommand(), MergeDataCommand.class);
             merge.setDocumentDataArg(docDef.getDocumentData());
             merge.setModelArg(args.getPolicyArg());
             merge.invoke();
@@ -78,14 +80,14 @@ public class GenerateCertificateService extends Service<GenerateCertificateArg> 
 
         // 2nd step: apply style (if configured)
         if (docDef.getStyleCommand()!=null && docDef.getStyleCommand().length()!=0) {
-            StyleDocumentCommand style=(StyleDocumentCommand)core.newCommand(docDef.getStyleCommand());
+            StyleDocumentCommand style=core.newCommand(docDef.getStyleCommand(), StyleDocumentCommand.class);
             style.setMergedDataArg(subject);
             style.invoke();
             subject=style.getStyledDocumentRet();
         }
         
         // 3rd step: render
-        RenderDocumentCommand render=(RenderDocumentCommand)core.newCommand(docDef.getRenderCommand());
+        RenderDocumentCommand render=core.newCommand(docDef.getRenderCommand(), RenderDocumentCommand.class);
         render.setSourceDataArg(subject);
         render.invoke();
         

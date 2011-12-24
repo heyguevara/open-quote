@@ -17,45 +17,9 @@
 
 package com.ail.insurance.acceptance.acceptquotation;
 
-import com.ail.insurance.policy.Policy;
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype command
- */
-public class AcceptQuotationCommand extends com.ail.core.command.Command implements AcceptQuotationArg {
-    private static final long serialVersionUID = 6340786576503209518L;
-    private AcceptQuotationArg args = null;
+import com.ail.annotation.CommandDefinition;
+import com.ail.core.command.Command;
 
-    public AcceptQuotationCommand() {
-        super();
-        args = new AcceptQuotationArgImp();
-    }
-
-    public void setArgs(com.ail.core.command.CommandArg arg) {
-        this.args = (AcceptQuotationArg)arg;
-    }
-
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArgRet @{inheritDoc}
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=AcceptQuotationService.class)
+public interface AcceptQuotationCommand extends Command, AcceptQuotationArgument {
 }

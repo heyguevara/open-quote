@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.insurance.policy.AssessmentLine;
@@ -31,7 +32,8 @@ import com.ail.insurance.policy.AssessmentStage;
 import com.ail.insurance.policy.CalculationLine;
 import com.ail.insurance.policy.Policy;
 
-public class RefreshAssessmentSheetsService extends Service<RefreshAssessmentSheetsArg> {
+@ServiceImplementation
+public class RefreshAssessmentSheetsService extends Service<RefreshAssessmentSheetsArgument> {
     private static final long serialVersionUID = 3642886757932052003L;
 
     /**

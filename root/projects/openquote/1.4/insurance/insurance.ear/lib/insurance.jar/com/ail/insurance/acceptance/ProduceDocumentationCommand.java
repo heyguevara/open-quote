@@ -17,60 +17,9 @@
 
 package com.ail.insurance.acceptance;
 
-import com.ail.insurance.policy.Policy;
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/acceptance/ProduceDocumentationCommand.java,v $
- * @stereotype command
- */
-public class ProduceDocumentationCommand extends com.ail.core.command.Command implements ProduceDocumentationArg {
-    private static final long serialVersionUID = 5418558175806043425L;
-    private ProduceDocumentationArg args = null;
+import com.ail.annotation.CommandDefinition;
+import com.ail.core.command.Command;
 
-    public ProduceDocumentationCommand() {
-        super();
-        args = new ProduceDocumentationArgImp();
-    }
-
-    public void setArgs(com.ail.core.command.CommandArg arg) {
-        this.args = (ProduceDocumentationArg)arg;
-    }
-
-    public com.ail.core.command.CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArg @{inheritDoc}
-     */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public PolicyDocumentation getDocumentationRet() {
-        return args.getDocumentationRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param documentationRet @{inheritDoc}
-     */
-    public void setDocumentationRet(PolicyDocumentation documentationRet) {
-        args.setDocumentationRet(documentationRet);
-    }
+@CommandDefinition(defaultServiceClass=ProduceDocumentationService.class)
+public interface ProduceDocumentationCommand extends Command, ProduceDocumentationArgument {
 }

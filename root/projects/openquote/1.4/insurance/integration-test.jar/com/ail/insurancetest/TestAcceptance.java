@@ -63,7 +63,7 @@ public class TestAcceptance extends CoreUserTestCase {
     public void setUp() {
 	    super.setupSystemProperties();
         
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
         setVersionEffectiveDate(new VersionEffectiveDate());
         tidyUpTestData();
         setCore(new Core(this));
@@ -74,7 +74,7 @@ public class TestAcceptance extends CoreUserTestCase {
         new AcceptanceBean().resetConfiguration();
         new ListProductsService().resetConfiguration();
         
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
         setVersionEffectiveDate(new VersionEffectiveDate());
 	}
 
@@ -101,7 +101,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setStatus(PolicyStatus.QUOTATION);
 
 		// run command
-		PutOnRiskCommand command = (PutOnRiskCommand) getCore().newCommand("PutOnRiskService");
+		PutOnRiskCommand command = getCore().newCommand(PutOnRiskCommand.class);
 		command.setPolicyArgRet(policy);
 
 		try {
@@ -133,7 +133,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setStatus(PolicyStatus.REFERRED);
 
 		// run command
-		PutOnRiskCommand command = (PutOnRiskCommand) getCore().newCommand("PutOnRiskService");
+		PutOnRiskCommand command = getCore().newCommand(PutOnRiskCommand.class);
         command.setPolicyArgRet(policy);
 
         try {
@@ -159,7 +159,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setPaymentDetails(payment);
 
 		// run command
-		CollectPremiumCommand command = (CollectPremiumCommand) getCore().newCommand("CollectPremiumService");
+		CollectPremiumCommand command = getCore().newCommand(CollectPremiumCommand.class);
 		command.setPolicyArg(policy);
 		try {
 			command.invoke();
@@ -188,7 +188,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		CurrencyAmount amount = new CurrencyAmount(100, Currency.GBP);
 
 		// run command
-		CollectPremiumCommand command = (CollectPremiumCommand) getCore().newCommand("CollectPremiumService");
+		CollectPremiumCommand command = getCore().newCommand(CollectPremiumCommand.class);
 		command.setPolicyArg(policy);
         command.setPrePaymentArg(amount);
 		try {
@@ -215,7 +215,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setStatus(PolicyStatus.ON_RISK);
 
 		// run command
-		CollectPremiumCommand command = (CollectPremiumCommand) getCore().newCommand("CollectPremiumService");
+		CollectPremiumCommand command = getCore().newCommand(CollectPremiumCommand.class);
 		command.setPolicyArg(policy);
 		try {
 			command.invoke();
@@ -239,7 +239,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setStatus(PolicyStatus.ON_RISK);
 
 		// run command
-		ProduceDocumentationCommand command = (ProduceDocumentationCommand) getCore().newCommand("ProduceDocumentationService");
+		ProduceDocumentationCommand command = getCore().newCommand(ProduceDocumentationCommand.class);
 		command.setPolicyArg(policy);
 		command.invoke();
 
@@ -263,7 +263,7 @@ public class TestAcceptance extends CoreUserTestCase {
 		policy.setStatus(PolicyStatus.REFERRED);
 
 		// run command
-		ProduceDocumentationCommand command = (ProduceDocumentationCommand) getCore().newCommand("ProduceDocumentationService");
+		ProduceDocumentationCommand command = getCore().newCommand(ProduceDocumentationCommand.class);
 		command.setPolicyArg(policy);
 		try {
 		    command.invoke();
@@ -274,16 +274,16 @@ public class TestAcceptance extends CoreUserTestCase {
 	}
 
     @Test
-	public void testAcceptQuotationSuccess() throws Exception {
+    public void testAcceptQuotationSuccess() throws Exception {
         // create policy
         Policy policy = new Policy();
         policy.setStatus(PolicyStatus.QUOTATION);
         policy.setPaymentDetails(new PaymentSchedule());
 
-        AcceptQuotationCommand cmd=(AcceptQuotationCommand)getCore().newCommand("AcceptQuotation");
+        AcceptQuotationCommand cmd = getCore().newCommand(AcceptQuotationCommand.class);
         cmd.setPolicyArgRet(policy);
         cmd.invoke();
-        
+
         assertTrue(PolicyStatus.SUBMITTED.equals(policy.getStatus()));
     }
 }

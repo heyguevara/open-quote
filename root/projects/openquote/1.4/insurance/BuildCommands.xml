@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Ant build file for starting utilities & servers etc..
- $Revision: 1.7 $
- $State: Exp $
- $Date: 2007/10/07 11:58:19 $
- $Source: /home/bob/CVSRepository/projects/insurance/BuildCommands.xml,v $
 -->
 
 <project default="" name="insurance:commands">
@@ -23,24 +19,16 @@
   </target>
 
   <target name="ail: reset configurations" description="reset all the ail configurations">
-    <ail-reset-configurations-macro>
+    <ail-reset-configurations-macro  annotated-types-config="${ear.dir}/lib/core.jar/com/ail/core/AnnotatedTypeConfig.xml">
       <paths>
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
+        <dirset dir="${ear.dir}" includes="lib/insurance.jar" />
+        <dirset dir="${ear.dir}" includes="lib/commercial.jar" />
+        <dirset dir="${ear.dir}" includes="lib/core.jar" />
+        <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${project.dir}/insurance.ear" includes="*.jar" />
         <dirset dir="${project.dir}/insurance.ear" includes="*.war/WEB-INF/src" />
       </paths>
-      <configs>
-        <arg value="com.ail.core.configure.server.ServerBean" />
-        <arg value="com.ail.core.validator.CommonsValidatorService" />
-        <arg value="com.ail.core.product.ProductManagerBean" />
-        <arg value="com.ail.core.product.listproducts.ListProductsService" />
-        <arg value="com.ail.core.persistence.PersistenceServerBean" />
-        <arg value="com.ail.core.product.resetallproducts.ResetAllProductsService" />
-        <arg value="com.ail.insurance.acceptance.AcceptanceBean" />
-        <arg value="com.ail.insurance.onrisk.OnRiskBean" />
-        <arg value="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService" />
-        <arg value="com.ail.insurance.quotation.QuotationBean" />
-        <arg value="com.ail.insurance.subrogation.SubrogationBean" />
-      </configs>
     </ail-reset-configurations-macro>
   </target>
 

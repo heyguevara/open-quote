@@ -17,10 +17,10 @@
 
 package com.ail.insurance.diary;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
-/**
- * @stereotype type 
- */
+
+@TypeDefinition
 public class DiaryEntry extends Type {
     private static final long serialVersionUID = -2256784504240860956L;
 }

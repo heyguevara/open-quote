@@ -16,56 +16,9 @@
  */
 package com.ail.insurance.quotation.notifyproposer;
 
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
+import com.ail.annotation.CommandDefinition;
 import com.ail.insurance.quotation.notifyparty.NotifyPartyCommand;
 
-public class NotifyProposerCommand extends NotifyPartyCommand {
-    private static final long serialVersionUID = 1744383290180191469L;
-    private NotifyProposerArg args = null;
-
-    public NotifyProposerCommand() {
-        super();
-        args = new NotifyProposerArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (NotifyProposerArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public String getQuotationNumberArg() {
-        return args.getQuotationNumberArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param quotationNumberArg @{inheritDoc}
-     */
-    public void setQuotationNumberArg(String quotationNumberArg) {
-        args.setQuotationNumberArg(quotationNumberArg);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArg() {
-        return args.getPolicyArg();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param quotationArg @{inheritDoc}
-     */
-    public void setPolicyArg(Policy policyArg) {
-        args.setPolicyArg(policyArg);
-    }
+@CommandDefinition
+public interface NotifyProposerCommand extends NotifyPartyCommand, NotifyProposerArgument {
 }

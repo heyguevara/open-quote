@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.MoneyProvision;
 import com.ail.party.Organisation;
@@ -28,12 +29,8 @@ import com.ail.party.Party;
 
 /**
  * A contract collects a group of policy objects together into a larger unit.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/01/15 23:19:08 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Contract.java,v $
- * @stereotype type
  */
+@TypeDefinition
 public class Contract extends Type {
     private static final long serialVersionUID = -2392239121746383188L;
 

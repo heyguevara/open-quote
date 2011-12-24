@@ -17,6 +17,8 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
+
 /**
  * A marker assessment line indicates referral and decline conditions. When risk assessment rules detect a condition
  * that calls for a referral or decline, a line of this type is added to the assessment sheet. The presents of these
@@ -25,6 +27,7 @@ package com.ail.insurance.policy;
  * CalculatePremium} will not move a policy to QUOTATION status if any of these markers are present.
  * @see MarkerResolution
  */
+@TypeDefinition
 public class Marker extends AssessmentLine {
     private static final long serialVersionUID = -5791683969972762091L;
 

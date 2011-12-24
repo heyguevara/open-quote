@@ -21,10 +21,6 @@ import com.ail.core.BaseException;
 
 /**
  * A specified Claim section could not be found within the claim.
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/claim/SectionNotFoundException.java,v $
  */
 public class SectionNotFoundException extends BaseException {
     private static final long serialVersionUID = 3230828245279489009L;

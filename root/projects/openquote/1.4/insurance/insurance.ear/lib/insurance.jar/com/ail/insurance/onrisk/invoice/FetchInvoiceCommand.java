@@ -17,52 +17,9 @@
 
 package com.ail.insurance.onrisk.invoice;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-public class FetchInvoiceCommand extends Command implements FetchInvoiceArg {
-    private static final long serialVersionUID = -4556506348834606687L;
-    private FetchInvoiceArg args;
-    
-    public FetchInvoiceCommand() {
-        super();
-		args=new FetchInvoiceArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args=(FetchInvoiceArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return (CommandArg)args;
-    }
-
-    /** @inheritDoc */
-    public byte[] getDocumentRet() {
-        return args.getDocumentRet();
-    }
-    
-    /** @inheritDoc */
-    public void setDocumentRet(byte[] documentRet) {
-        args.setDocumentRet(documentRet);
-    }
-    
-    /** @inheritDoc */
-    public String getPolicyNumberArg() {
-        return args.getPolicyNumberArg();
-    }
-    
-    /** @inheritDoc */
-    public void setPolicyNumberArg(String policyNumberArg) {
-        args.setPolicyNumberArg(policyNumberArg);
-    }
-
-    public Policy getPolicyRet() {
-        return args.getPolicyRet();
-    }
-
-    public void setPolicyRet(Policy policyRet) {
-        args.setPolicyRet(policyRet);
-    }
+@CommandDefinition
+public interface FetchInvoiceCommand extends Command, FetchInvoiceArgument {
 }

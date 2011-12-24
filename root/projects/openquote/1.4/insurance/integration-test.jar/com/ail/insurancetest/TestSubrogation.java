@@ -114,7 +114,7 @@ public class TestSubrogation implements CoreUser, ConfigurationOwner {
         oneTimeSetUp();
         core=new Core(this);
         this.resetConfiguration();
-        ConfigurationHandler.reset();
+        ConfigurationHandler.resetCache();
 		versionEffectiveDate=new VersionEffectiveDate();
     }
 
@@ -213,7 +213,7 @@ public class TestSubrogation implements CoreUser, ConfigurationOwner {
     public void testInvokeMakeARecoveryBadArgs() {
         // try invoking the entry point with no args...
 		try {
-			MakeARecoveryCommand command=(MakeARecoveryCommand)core.newCommand("MakeARecovery");
+			MakeARecoveryCommand command=core.newCommand(MakeARecoveryCommand.class);
             command.invoke();
             fail("No exception thrown when null args were passed");
         }
@@ -226,7 +226,7 @@ public class TestSubrogation implements CoreUser, ConfigurationOwner {
 
         // try invoking with only the claim arg...
         try {
-            MakeARecoveryCommand command=(MakeARecoveryCommand)core.newCommand("MakeARecovery");
+            MakeARecoveryCommand command=core.newCommand(MakeARecoveryCommand.class);
             command.setClaim((Claim)core.newType("Claim"));
             command.invoke();
             fail("No exception thrown when null args were passed");
@@ -246,7 +246,7 @@ public class TestSubrogation implements CoreUser, ConfigurationOwner {
     public void testGoodInvocation() {
         try {
             // create the command objects.
-            MakeARecoveryCommand command=(MakeARecoveryCommand)core.newCommand("MakeARecovery");
+            MakeARecoveryCommand command=core.newCommand(MakeARecoveryCommand.class);
 
             // populate the command with valid arguments.
             // First we have to create a claim, as it would appear when ready to

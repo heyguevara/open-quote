@@ -20,19 +20,9 @@ package com.ail.insurance.acceptance;
 import java.rmi.RemoteException;
 
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationArg;
+import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationArgument;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/03/03 09:31:07 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/acceptance-ejb.jar/com/ail/insurance/acceptance/Acceptance.java,v $
- */
 public interface Acceptance extends javax.ejb.EJBObject {
-    /** @link dependency */
-
-    /*# AcceptanceBean lnkAcceptanceBean; */
-
     String invokeServiceXML(String xml) throws RemoteException;
 
     VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
@@ -45,15 +35,13 @@ public interface Acceptance extends javax.ejb.EJBObject {
 
     void resetConfiguration() throws RemoteException;
 
-    com.ail.core.Version getVersion() throws RemoteException;
+    ProduceDocumentationArgument produceDocumentation(ProduceDocumentationArgument argument) throws RemoteException;
 
-    ProduceDocumentationArg produceDocumentation(ProduceDocumentationArg arg) throws RemoteException;
+    PutOnRiskArgument putOnRisk(PutOnRiskArgument argument) throws RemoteException;
 
-    PutOnRiskArg putOnRisk(PutOnRiskArg arg) throws RemoteException;
+    CollectPremiumArgument collectPremium(CollectPremiumArgument argument) throws RemoteException;
 
-    CollectPremiumArg collectPremium(CollectPremiumArg arg) throws RemoteException;
-
-    AcceptQuotationArg acceptQuotation(AcceptQuotationArg arg) throws RemoteException;
+    AcceptQuotationArgument acceptQuotation(AcceptQuotationArgument argument) throws RemoteException;
 }
 
 

@@ -22,36 +22,36 @@ import java.rmi.RemoteException;
 import javax.ejb.EJBObject;
 
 import com.ail.core.BaseServerException;
-import com.ail.insurance.onrisk.certificate.GenerateCertificateArg;
-import com.ail.insurance.onrisk.invoice.GenerateInvoiceArg;
-import com.ail.insurance.onrisk.wording.GenerateWordingArg;
+import com.ail.insurance.onrisk.certificate.GenerateCertificateArgument;
+import com.ail.insurance.onrisk.invoice.GenerateInvoiceArgument;
+import com.ail.insurance.onrisk.wording.GenerateWordingArgument;
 
 public interface OnRisk extends EJBObject {
     String invokeServiceXML(String xml) throws RemoteException;
 
     /**
-     * Service wrapper business method for the GenerateCertificateArg service.
-     * @param arg The argument to pass to the service.
+     * Service wrapper business method for the GenerateCertificateCommand service.
+     * @param arg The command to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateCertificateArg generateCertificate(GenerateCertificateArg arg) throws RemoteException;
+    GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument) throws RemoteException;
 
     /**
-     * Service wrapper business method for the GenerateInvoiceArg service.
-     * @param arg The argument to pass to the service.
+     * Service wrapper business method for the GenerateInvoiceCommand service.
+     * @param arg The Argument to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateInvoiceArg generateInvoice(GenerateInvoiceArg arg) throws RemoteException;
+    GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument) throws RemoteException;
 
     /**
-     * Service wrapper business method for the GenerateWordingArg service.
-     * @param arg The argument to pass to the service.
+     * Service wrapper business method for the GenerateWordingCommand service.
+     * @param arg The command to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateWordingArg generateWording(GenerateWordingArg arg) throws RemoteException;
+    GenerateWordingArgument generateWording(GenerateWordingArgument argument) throws RemoteException;
 }
 
 

@@ -17,19 +17,16 @@
 
 package com.ail.insurance.policy;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 
 /**
  * Coverages define or constrain the types of cover offered by a Section. Typically, a section will contain a collection
  * of coverages. Coverages may exist within a section but not be in effect ('enabled' indicator). They may also be
- * optional - selected at the policy holders descretion ('optional' flag).
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2006/03/07 20:58:10 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/Coverage.java,v $
- * @stereotype type
+ * optional - selected at the policy holders discretion ('optional' flag).
  */
+@TypeDefinition
 public class Coverage extends Type {
     static final long serialVersionUID = 7326823306523810654L;
     private String id;

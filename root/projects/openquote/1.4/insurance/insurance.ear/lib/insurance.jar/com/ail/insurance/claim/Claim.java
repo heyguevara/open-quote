@@ -20,22 +20,16 @@ package com.ail.insurance.claim;
 import java.util.Collection;
 import java.util.Vector;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 
-/** @stereotype type */
+@TypeDefinition
 public class Claim extends Type {
     private static final long serialVersionUID = -3990863191815395871L;
 
     private String ID;
     private ClaimStatus claimStatus;
-
-    /**
-     *@link aggregationByValue
-     *   @associates <{ClaimSection}>
-     * @supplierCardinality 0..*
-     * @clientCardinality 1
-     */
     private Vector<ClaimSection> claimSections;
     private RecoveryStatus recoveryStatus;
     private boolean subrogationPotential;
@@ -49,20 +43,6 @@ public class Claim extends Type {
     private CurrencyAmount deductableReserve;
     private CurrencyAmount contributionReserve;
     private boolean paid;
-
-    /**
-     * @link aggregationByValue
-     * @supplierCardinality 0..1
-     * @clientCardinality 1
-     */
-    /* private Litigation lnkLitigation; */
-
-    /**
-     * @link aggregationByValue
-     * @supplierCardinality 0..1
-     * @clientCardinality 1
-     */
-    /* private ADR lnkADR; */
     private boolean litigationFlag;
     private boolean adrFlag;
     private String policyID;

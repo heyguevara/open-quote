@@ -21,13 +21,16 @@
     <!--=======================================================================-->
     <!-- Bind the default core services (above) to Commands used by Core.class -->
     <!--=======================================================================-->
-    <command name="PutOnRiskService" builder="ClassBuilder" key="com.ail.insurance.acceptance.PutOnRiskCommand">
+    <command name="PutOnRiskService" builder="ClassBuilder" key="com.ail.insurance.acceptance.PutOnRiskCommandImpl">
       <parameter name="Service">AcceptanceComponent</parameter>
     </command>
-    <command name="ProduceDocumentationService" builder="ClassBuilder" key="com.ail.insurance.acceptance.ProduceDocumentationCommand">
+    <command name="ProduceDocumentationService" builder="ClassBuilder" key="com.ail.insurance.acceptance.ProduceDocumentationCommandImpl">
       <parameter name="Service">AcceptanceComponent</parameter>
     </command>
-    <command name="CollectPremiumService" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommand">
+    <command name="CollectPremiumService" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommandImpl">
+      <parameter name="Service">AcceptanceComponent</parameter>
+    </command>
+    <command name="AddPolicyNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommandImpl">
       <parameter name="Service">AcceptanceComponent</parameter>
     </command>
   </types>

@@ -21,15 +21,11 @@ import java.rmi.RemoteException;
 
 import javax.ejb.EJBObject;
 
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryArg;
+import com.ail.insurance.subrogation.makearecovery.MakeARecoveryArgument;
 
 public interface Subrogation extends EJBObject {
-    /** @link dependency */
-    /*# SubrogationBean lnkRainbowBean; */
-
     VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
 
     void setConfiguration(Configuration config) throws RemoteException;
@@ -40,7 +36,5 @@ public interface Subrogation extends EJBObject {
 
     void resetConfiguration() throws RemoteException;
 
-    MakeARecoveryArg makeARecovery(MakeARecoveryArg arg) throws RemoteException;
-
-	Version getVersion() throws RemoteException;
+    MakeARecoveryArgument makeARecovery(MakeARecoveryArgument command) throws RemoteException;
 }

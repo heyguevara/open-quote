@@ -20,6 +20,8 @@ package com.ail.insurance.subrogation.makearecovery;
 import java.util.Date;
 import java.util.Enumeration;
 
+import com.ail.annotation.Configurable;
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.financial.CurrencyAmount;
@@ -28,7 +30,9 @@ import com.ail.insurance.claim.ClaimStatus;
 import com.ail.insurance.claim.Recovery;
 import com.ail.insurance.claim.SectionNotFoundException;
 
-public class MakeARecoveryService extends Service<MakeARecoveryArg> {
+@Configurable
+@ServiceImplementation
+public class MakeARecoveryService extends Service<MakeARecoveryArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
 
 	/**

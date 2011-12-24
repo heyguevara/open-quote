@@ -22,15 +22,16 @@ import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.onrisk.certificate.GenerateCertificateArg;
-import com.ail.insurance.onrisk.invoice.GenerateInvoiceArg;
-import com.ail.insurance.onrisk.wording.GenerateWordingArg;
+import com.ail.insurance.onrisk.certificate.GenerateCertificateArgument;
+import com.ail.insurance.onrisk.invoice.GenerateInvoiceArgument;
+import com.ail.insurance.onrisk.wording.GenerateWordingArgument;
 
+@Configurable
 public class OnRiskBean extends EJBComponent implements SessionBean {
     private static final long serialVersionUID = 6789993103676049055L;
     private VersionEffectiveDate versionEffectiveDate = null;
@@ -84,26 +85,6 @@ public class OnRiskBean extends EJBComponent implements SessionBean {
     }
 
     /**
-     * Return this component's version information
-     * @return version details
-     * @throws EJBException
-     */
-    public Version getVersion() {
-        try {
-            Version v = (com.ail.core.Version) core.newType("Version");
-            v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-            v.setDate("$Date: 2006/09/20 20:40:57 $");
-            v.setSource("$Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/quotation-ejb.jar/com/ail/insurance/quotation/QuotationBean.java,v $");
-            v.setState("$State: Exp $");
-            v.setVersion("$Revision: 1.3 $");
-            return v;
-        }
-        catch (Exception e) {
-            throw new javax.ejb.EJBException(e);
-        }
-    }
-
-    /**
      * Expose services via XML. This method unmarshals the XML argument string into
      * an object, finds a method on the EJB to accept that object type as an argument
      * and invokes it. The result returned from the method is marshalled back into XM
@@ -120,33 +101,33 @@ public class OnRiskBean extends EJBComponent implements SessionBean {
     }
 
     /**
-     * Service wrapper business method for the GenerateCertificateArg service.
+     * Service wrapper business method for the GenerateCertificateArgument service.
      * @param arg The argument to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateCertificateArg generateCertificate(GenerateCertificateArg arg) {
-        return invokeCommand(core, "GenerateCertificate", arg);
+    public GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument) {
+        return invokeCommand(core, "GenerateCertificate", argument);
     }
     
     /**
-     * Service wrapper business method for the GenerateInvoiceArg service.
-     * @param arg The argument to pass to the service.
+     * Service wrapper business method for the GenerateInvoiceCommand service.
+     * @param arg The command to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateInvoiceArg generateInvoice(GenerateInvoiceArg arg) {
-        return invokeCommand(core, "GenerateInvoice", arg);
+    public GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument) {
+        return invokeCommand(core, "GenerateInvoice", argument);
     }
     
     /**
-     * Service wrapper business method for the GenerateWordingArg service.
-     * @param arg The argument to pass to the service.
+     * Service wrapper business method for the GenerateWordingCommand service.
+     * @param arg The command to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateWordingArg generateWording(GenerateWordingArg arg) {
-        return invokeCommand(core, "GenerateWording", arg);
+    public GenerateWordingArgument generateWording(GenerateWordingArgument argument) {
+        return invokeCommand(core, "GenerateWording", argument);
     }
 
 	/**

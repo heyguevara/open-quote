@@ -17,47 +17,9 @@
 
 package com.ail.insurance.quotation.enforcecompliance;
 
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.insurance.policy.Policy;
 
-/**
- * @version $Revision: 1.1 $
- * @state $State: Exp $
- * @date $Date: 2005/08/19 20:20:58 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/quotation/enforcecompliance/EnforceComplianceCommand.java,v $
- * @stereotype command
- */
-public class EnforceComplianceCommand extends Command implements EnforceComplianceArg {
-    private static final long serialVersionUID = -7512768213009847054L;
-    private EnforceComplianceArg args = null;
-
-    public EnforceComplianceCommand() {
-        super();
-        args = new EnforceComplianceArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (EnforceComplianceArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return @{inheritDoc}
-     */
-    public Policy getPolicyArgRet() {
-        return args.getPolicyArgRet();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param policyArgRet @{inheritDoc}
-     */
-    public void setPolicyArgRet(Policy policyArgRet) {
-        args.setPolicyArgRet(policyArgRet);
-    }
+@CommandDefinition(defaultServiceClass=EnforceComplianceService.class)
+public interface EnforceComplianceCommand extends Command, EnforceComplianceArgument {
 }

@@ -49,6 +49,8 @@
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
         <filter token="dbname" value="${dbname}"/>
+        <filter token="dbusername" value="${dbusername}"/>
+        <filter token="dbpassword" value="${dbpassword}"/>
       </filterset>
     </copy>
 

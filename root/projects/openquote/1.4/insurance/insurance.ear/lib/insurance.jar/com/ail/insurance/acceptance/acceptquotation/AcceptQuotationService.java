@@ -20,11 +20,14 @@ package com.ail.insurance.acceptance.acceptquotation;
 import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
 import static com.ail.insurance.policy.PolicyStatus.SUBMITTED;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
+import com.ail.core.Service;
 
-public class AcceptQuotationService extends com.ail.core.Service<AcceptQuotationArg> {
+@ServiceImplementation
+public class AcceptQuotationService extends Service<AcceptQuotationArgument> {
     private static final long serialVersionUID = 5492150960329684094L;
 
     /**

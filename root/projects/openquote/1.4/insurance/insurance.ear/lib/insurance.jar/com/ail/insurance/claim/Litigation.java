@@ -19,9 +19,9 @@ package com.ail.insurance.claim;
 
 import java.util.Date;
 
-/**
- * @stereotype type 
- */
+import com.ail.annotation.TypeDefinition;
+
+@TypeDefinition
 public class Litigation {
     private Date trialDate;
     private Date preTrialDate;

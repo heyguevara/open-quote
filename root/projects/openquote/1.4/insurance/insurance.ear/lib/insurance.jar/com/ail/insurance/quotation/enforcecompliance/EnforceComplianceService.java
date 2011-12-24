@@ -17,6 +17,7 @@
 
 package com.ail.insurance.quotation.enforcecompliance;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
@@ -24,7 +25,8 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Policy;
 
-public class EnforceComplianceService extends Service<EnforceComplianceArg> {
+@ServiceImplementation
+public class EnforceComplianceService extends Service<EnforceComplianceArgument> {
     private static final long serialVersionUID = 5920061258083162375L;
 
     /**
@@ -61,7 +63,7 @@ public class EnforceComplianceService extends Service<EnforceComplianceArg> {
         // Lock the assessment sheet
         assessmentSheet.setLockingActor("EnforceCompliance");
 
-        EnforcePolicyComplianceCommand command=(EnforcePolicyComplianceCommand)core.newCommand("EnforcePolicyCompliance");
+        EnforcePolicyComplianceCommand command=core.newCommand("EnforcePolicyCompliance", EnforcePolicyComplianceCommand.class);
         command.setPolicyArg(policy);
         command.setAssessmentSheetArgRet(assessmentSheet);
         command.invoke();

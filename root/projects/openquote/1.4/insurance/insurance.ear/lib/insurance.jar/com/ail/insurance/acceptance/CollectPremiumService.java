@@ -17,13 +17,15 @@
 
 package com.ail.insurance.acceptance;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
-public class CollectPremiumService extends com.ail.core.Service<CollectPremiumArg> {
+@ServiceImplementation
+public class CollectPremiumService extends com.ail.core.Service<CollectPremiumArgument> {
     private static final long serialVersionUID = 1871676649916485145L;
 
     @Override
