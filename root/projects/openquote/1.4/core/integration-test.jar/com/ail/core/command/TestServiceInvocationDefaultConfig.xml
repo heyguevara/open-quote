@@ -166,6 +166,10 @@ public class JaninoInheritanceService {
       <service name="VelocityService" builder="ClassBuilder" key="com.ail.core.command.VelocityAccessor">
           <parameter name="Url">classpath://com.ail.core.command/TestServiceInvocationVelocity.vm</parameter>
       </service>
+      
+      <service name="EJBService" builder="ClassBuilder" key="com.ail.core.command.EJBAccessor">
+        <parameter name='JndiName'>ProductManager</parameter>
+      </service>
 
 
       <!--=======================================================================-->
@@ -261,6 +265,10 @@ public class JaninoInheritanceService {
       
       <command name="TestVelocityService" builder="ClassBuilder" key="com.ail.core.dummyservice.DummyCommandImpl">
           <parameter name="Service">VelocityService</parameter>
+      </command>
+      
+      <command name="TestEJBService" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommandImpl">
+          <parameter name="Service">EJBService</parameter>
       </command>
       
   </types>

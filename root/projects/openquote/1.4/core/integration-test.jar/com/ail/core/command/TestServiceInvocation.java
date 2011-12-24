@@ -18,14 +18,13 @@
 package com.ail.core.command;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
 
@@ -583,5 +582,13 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         assertTrue("Result does not contain expected string: 'The value of X is: 21'", command.getStringRet().contains("The value of X is: 21"));
         assertTrue("Result does not contain expected string: 'The value of Y is: 34'", command.getStringRet().contains("The value of Y is: 34"));
         assertTrue("Result does not contain expected string: 'Total is: 55'", command.getStringRet().contains("Total is: 55"));
+    }
+    
+    @Test
+    public void testEJBService() throws Exception {
+        ListProductsCommand lpc=getCore().newCommand("TestEJBService", ListProductsCommand.class);
+        lpc.invoke();
+        assertNotNull(lpc.getProductsRet());
+        assertEquals(3, lpc.getProductsRet().size());
     }
 }

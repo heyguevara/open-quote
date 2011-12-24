@@ -39,13 +39,13 @@ public interface PersistenceServerLocal extends EJBLocalObject {
 
     void resetConfiguration() throws EJBException;
 
-    CreateCommand createCommand(CreateCommand arg) throws EJBException;
+    CreateArgument createCommand(CreateArgument arg) throws EJBException;
 
-    UpdateCommand updateCommand(UpdateCommand arg) throws EJBException;
+    UpdateArgument updateCommand(UpdateArgument arg) throws EJBException;
 
-    LoadCommand loadCommand(LoadCommand arg) throws EJBException;
+    LoadArgument loadCommand(LoadArgument arg) throws EJBException;
 
-    QueryCommand queryCommand(QueryCommand arg) throws EJBException;
+    QueryArgument queryCommand(QueryArgument arg) throws EJBException;
 
-    DeleteCommand deleteCommand(DeleteCommand arg) throws EJBException;
+    DeleteArgument deleteCommand(DeleteArgument arg) throws EJBException;
 }

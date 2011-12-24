@@ -21,16 +21,6 @@ import javax.ejb.EJBHome;
 import javax.ejb.CreateException;
 import java.rmi.RemoteException;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:31 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManagerHome.java,v $
- */
 public interface ProductManagerHome extends EJBHome {
-    /** @link dependency */
-
-    /*# ProductManagerBean lnkProductManagerBean; */
-
     ProductManager create() throws CreateException, RemoteException;
 }

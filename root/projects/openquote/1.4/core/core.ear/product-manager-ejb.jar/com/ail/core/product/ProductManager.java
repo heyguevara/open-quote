@@ -23,25 +23,15 @@ import javax.ejb.EJBObject;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsCommand;
-import com.ail.core.product.newproducttype.NewProductTypeCommand;
-import com.ail.core.product.registerproduct.RegisterProductCommand;
-import com.ail.core.product.removeproduct.RemoveProductCommand;
-import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
-import com.ail.core.product.resetproduct.ResetProductCommand;
-import com.ail.core.product.updateproduct.UpdateProductCommand;
+import com.ail.core.product.listproducts.ListProductsArgument;
+import com.ail.core.product.newproducttype.NewProductTypeArgument;
+import com.ail.core.product.registerproduct.RegisterProductArgument;
+import com.ail.core.product.removeproduct.RemoveProductArgument;
+import com.ail.core.product.resetallproducts.ResetAllProductsArgument;
+import com.ail.core.product.resetproduct.ResetProductArgument;
+import com.ail.core.product.updateproduct.UpdateProductArgument;
 
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/12/22 10:40:49 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManager.java,v $
- */
 public interface ProductManager extends EJBObject {
-    /** @link dependency */
-
-    /*# ProductManagerBean lnkProductManagerBean; */
-
     String invokeServiceXML(String xml) throws RemoteException;
 
     VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
@@ -54,19 +44,19 @@ public interface ProductManager extends EJBObject {
 
     void resetConfiguration() throws RemoteException;
 
-    ListProductsCommand getListProducts(ListProductsCommand arg) throws RemoteException;
+    ListProductsArgument getListProducts(ListProductsArgument arg) throws RemoteException;
 
-    RegisterProductCommand registerProduct(RegisterProductCommand arg) throws RemoteException;
+    RegisterProductArgument registerProduct(RegisterProductArgument arg) throws RemoteException;
 
-    RemoveProductCommand removeProduct(RemoveProductCommand arg) throws RemoteException;
+    RemoveProductArgument removeProduct(RemoveProductArgument arg) throws RemoteException;
 
-    ResetProductCommand getProductDefinition(ResetProductCommand arg) throws RemoteException;
+    ResetProductArgument getProductDefinition(ResetProductArgument arg) throws RemoteException;
 
-    ResetAllProductsCommand resetAllProducts(ResetAllProductsCommand arg) throws RemoteException;
+    ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg) throws RemoteException;
 
-    UpdateProductCommand updateProduct(UpdateProductCommand arg) throws RemoteException;
+    UpdateProductArgument updateProduct(UpdateProductArgument arg) throws RemoteException;
 
-    NewProductTypeCommand newProductType(NewProductTypeCommand arg) throws RemoteException;
+    NewProductTypeArgument newProductType(NewProductTypeArgument arg) throws RemoteException;
 }
 
 

@@ -5,17 +5,13 @@
 <!--                                                                       -->
 <!--  Development datasource config for Core Configure system              -->
 <!--                                                                       -->
-<!-- $Revision: 1.2 $                                                     -->
-<!-- $State: Exp $                                                         -->
-<!-- $Date: 2005/07/16 10:23:28 $                                          -->
-<!-- $Source: /home/bob/CVSRepository/projects/core/domain/jboss/deploy/ail-configure-ds.xml,v $          -->
 <!-- ===================================================================== -->
 
 
 <datasources>
   <local-tx-datasource>
     <jndi-name>ConfigureDS</jndi-name>
-    <connection-url>jdbc:mysql://localhost:3306/core_@major.version@_@minor.version@</connection-url>
+    <connection-url>jdbc:mysql://localhost:3306/@dbname@</connection-url>
     <driver-class>org.gjt.mm.mysql.Driver</driver-class>
     <user-name>@dbusername@</user-name>
     <password>@dbpassword@</password>

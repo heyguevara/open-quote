@@ -124,7 +124,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
-    public CreateCommand createCommand(CreateCommand arg) throws BaseServerException {
+    public CreateArgument createCommand(CreateArgument arg) throws BaseServerException {
         return invokeCommand(core, "Create", arg);
     }
 
@@ -134,7 +134,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
-	public UpdateCommand updateCommand(UpdateCommand arg) throws BaseServerException {
+	public UpdateArgument updateCommand(UpdateArgument arg) throws BaseServerException {
 		return invokeCommand(core, "Update", arg);
 	}
 
@@ -144,7 +144,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
-	public LoadCommand loadCommand(LoadCommand arg) throws BaseServerException {
+	public LoadArgument loadCommand(LoadArgument arg) throws BaseServerException {
 		return invokeCommand(core, "Load", arg);
 	}
 
@@ -154,7 +154,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
-	public QueryCommand queryCommand(QueryCommand arg) throws BaseServerException {
+	public QueryArgument queryCommand(QueryArgument arg) throws BaseServerException {
 		return invokeCommand(core, "Query", arg);
 	}
 
@@ -164,7 +164,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
-    public DeleteCommand deleteCommand(DeleteCommand arg) throws BaseServerException {
+    public DeleteArgument deleteCommand(DeleteArgument arg) throws BaseServerException {
         return invokeCommand(core, "Delete", arg);
     }
 }

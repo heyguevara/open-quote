@@ -21,16 +21,6 @@ import javax.ejb.EJBHome;
 import javax.ejb.CreateException;
 import java.rmi.RemoteException;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:29 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServerHome.java,v $
- */
 public interface PersistenceServerHome extends EJBHome {
-    /** @link dependency */
-
-    /*# PersistenceServerBean lnkPersistenceServerBean; */
-
     PersistenceServer create() throws CreateException, RemoteException;
 }

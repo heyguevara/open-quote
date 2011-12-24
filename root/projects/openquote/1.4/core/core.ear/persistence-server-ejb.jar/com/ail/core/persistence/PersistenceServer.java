@@ -24,12 +24,6 @@ import javax.ejb.EJBObject;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/08/20 15:03:54 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServer.java,v $
- */
 public interface PersistenceServer extends EJBObject {
     /** @link dependency */
 
@@ -47,15 +41,15 @@ public interface PersistenceServer extends EJBObject {
 
     void resetConfiguration() throws RemoteException;
 
-    CreateCommand createCommand(CreateCommand arg) throws RemoteException;
+    CreateArgument createCommand(CreateArgument arg) throws RemoteException;
 
-	UpdateCommand updateCommand(UpdateCommand arg) throws RemoteException;
+	UpdateArgument updateCommand(UpdateArgument arg) throws RemoteException;
 
-	LoadCommand loadCommand(LoadCommand arg) throws RemoteException;
+	LoadArgument loadCommand(LoadArgument arg) throws RemoteException;
 
-	QueryCommand queryCommand(QueryCommand arg) throws RemoteException;
+	QueryArgument queryCommand(QueryArgument arg) throws RemoteException;
 
-	DeleteCommand deleteCommand(DeleteCommand arg) throws RemoteException;
+	DeleteArgument deleteCommand(DeleteArgument arg) throws RemoteException;
 }
 
 

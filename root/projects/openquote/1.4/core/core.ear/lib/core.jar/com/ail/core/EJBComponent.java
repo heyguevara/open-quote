@@ -26,6 +26,7 @@ import javax.ejb.EJBContext;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 
+import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 
 /**
@@ -70,17 +71,12 @@ public abstract class EJBComponent extends Component {
                 ejb=ctx.getEJBObject();
             }
 
-            // Figure out the method name: typeName of 'com.ail.arg.SomeServiceArgImp' gives 'someService'
-            String typeName=argType.getName();
-            int lastDot=typeName.lastIndexOf('.');
-            String methodName=Character.toLowerCase(typeName.charAt(lastDot+1))+
-                              typeName.substring(lastDot+2, typeName.length()-6);
-
             // Find the method on obj that returns the arg type we're using
             Method[] methods=ejb.getClass().getMethods();
             Method method=null;
             for(int i=methods.length-1 ; i>=0 ; i--) {
-                if (methods[i].getName().equals(methodName) && methods[i].getReturnType().isAssignableFrom(argType)) {
+                Class<?> returnType=methods[i].getReturnType();
+                if (Argument.class.isAssignableFrom(returnType) && returnType.isAssignableFrom(argType)) {
                     method=methods[i];
                     break;
                 }
@@ -149,22 +145,17 @@ public abstract class EJBComponent extends Component {
         }
     }
 
-    protected <T extends Command> T invokeCommand(Core core, T sourceCommand) {
-        Command command = core.newCommand(sourceCommand.getClass());
-        return invokeCommand(command, sourceCommand);
-    }
-
-    protected <T extends Command> T invokeCommand(Core core, String name, T sourceCommand) {
+    protected <T extends Argument> T invokeCommand(Core core, String name, T sourceArgument) {
         Command command = core.newCommand(name, Command.class);
-        return invokeCommand(command, sourceCommand);
+        return invokeCommand(command, sourceArgument);
     }
 
-    private <T extends Command> T invokeCommand(Command localCommand, T sourceCommand) {
+    @SuppressWarnings("unchecked")
+    private <T extends Argument> T invokeCommand(Command localCommand, T sourceArgument) {
         try {
-            localCommand.setArgs(sourceCommand.getArgs());
+            localCommand.setArgs(sourceArgument);
             localCommand.invoke();
-            sourceCommand.setArgs(localCommand.getArgs());
-            return sourceCommand;
+            return (T)localCommand.getArgs();
         }
         catch (com.ail.core.BaseException e) {
             throw new com.ail.core.BaseServerException(e);

@@ -22,8 +22,5 @@ import javax.ejb.EJBException;
 import javax.ejb.CreateException;
 
 public interface PersistenceServerLocalHome extends EJBLocalHome {
-    /** @link dependency */
-    /*# ServerBean lnkServerBean; */
-
     PersistenceServerLocal create() throws CreateException, EJBException ;
 }

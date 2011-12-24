@@ -134,7 +134,7 @@ public class EJBAccessor extends Accessor {
             Method methods[]=remoteInterfaceClass.getDeclaredMethods();
             for(idx=0 ; idx<methods.length ; idx++) {
                 if (methodName==null) {
-                    if (methods[idx].getReturnType().isInstance(args[0])) {
+                    if (methods[idx].getReturnType().isAssignableFrom(args[0].getClass())) {
                         break;
                     }
                 }
@@ -338,7 +338,7 @@ public class EJBAccessor extends Accessor {
 /**
  * Private class to encapsulate the accessor's settings. We use these settings
  * as a key in a hashtable based cache, that's why they are split out here into
- * a seperate class.
+ * a separate class.
  */
 class EJBAccessorSettings {
     private String factory=null;
@@ -355,7 +355,7 @@ class EJBAccessorSettings {
     /**
      * Set (update) the hash value that hashCode() will return. Each setter calls this
      * method, and it updates the hashValue. This value is simply the sum of the
-     * characted values of each property (factory, server, etc), added together.
+     * character values of each property (factory, server, etc), added together.
      * @param indx Unique value for each property
      * @param s The string the setter was called with
      */

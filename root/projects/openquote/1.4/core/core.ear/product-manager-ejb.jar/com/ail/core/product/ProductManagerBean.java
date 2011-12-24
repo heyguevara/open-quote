@@ -21,19 +21,19 @@ import javax.ejb.CreateException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsCommand;
-import com.ail.core.product.newproducttype.NewProductTypeCommand;
-import com.ail.core.product.registerproduct.RegisterProductCommand;
-import com.ail.core.product.removeproduct.RemoveProductCommand;
-import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
-import com.ail.core.product.resetproduct.ResetProductCommand;
-import com.ail.core.product.updateproduct.UpdateProductCommand;
-import com.ail.annotation.Configurable;
+import com.ail.core.product.listproducts.ListProductsArgument;
+import com.ail.core.product.newproducttype.NewProductTypeArgument;
+import com.ail.core.product.registerproduct.RegisterProductArgument;
+import com.ail.core.product.removeproduct.RemoveProductArgument;
+import com.ail.core.product.resetallproducts.ResetAllProductsArgument;
+import com.ail.core.product.resetproduct.ResetProductArgument;
+import com.ail.core.product.updateproduct.UpdateProductArgument;
 
 @Configurable
 public class ProductManagerBean extends EJBComponent implements SessionBean {
@@ -128,37 +128,37 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ListProductsCommand getListProducts(ListProductsCommand arg) throws BaseServerException {
+    public ListProductsArgument getListProducts(ListProductsArgument arg) throws BaseServerException {
         return invokeCommand(core, "ListProducts", arg);
     }
 
     /**
      * Service wrapper method for the RegisterProduct service.
-     * @param arg Argument to pass to the service
+     * @param arg Command to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public RegisterProductCommand registerProduct(RegisterProductCommand arg) throws BaseServerException {
+    public RegisterProductArgument registerProduct(RegisterProductArgument arg) throws BaseServerException {
         return invokeCommand(core, "RegisterProduct", arg);
     }
 
     /**
      * Service wrapper method for the RemoveProduct service.
-     * @param arg Argument to pass to the service
+     * @param arg Command to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public RemoveProductCommand removeProduct(RemoveProductCommand arg) throws BaseServerException {
+    public RemoveProductArgument removeProduct(RemoveProductArgument arg) throws BaseServerException {
         return invokeCommand(core, "RemoveProduct", arg);
     }
 
     /**
      * Service wrapper method for the ResetProduct service.
-     * @param arg Argument to pass to the service
+     * @param arg Command to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ResetProductCommand getProductDefinition(ResetProductCommand arg) throws BaseServerException {
+    public ResetProductArgument getProductDefinition(ResetProductArgument arg) throws BaseServerException {
         return invokeCommand(core, "ResetProduct", arg);
     }
 
@@ -168,7 +168,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public ResetAllProductsCommand resetAllProducts(ResetAllProductsCommand arg) throws BaseServerException {
+    public ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg) throws BaseServerException {
         return invokeCommand(core, "ResetAllProducts", arg);
     }
 
@@ -178,7 +178,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public UpdateProductCommand updateProduct(UpdateProductCommand arg) throws BaseServerException {
+    public UpdateProductArgument updateProduct(UpdateProductArgument arg) throws BaseServerException {
         return invokeCommand(core, "UpdateProduct", arg);
     }
 
@@ -188,7 +188,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public NewProductTypeCommand newProductType(NewProductTypeCommand arg) throws BaseServerException {
+    public NewProductTypeArgument newProductType(NewProductTypeArgument arg) throws BaseServerException {
         return invokeCommand(core, "NewProductType", arg);
     }
 }

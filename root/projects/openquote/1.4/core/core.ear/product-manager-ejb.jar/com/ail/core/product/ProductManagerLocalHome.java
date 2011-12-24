@@ -20,12 +20,6 @@ package com.ail.core.product;
 import javax.ejb.CreateException;
 import javax.ejb.EJBLocalHome;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:31 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/com/ail/core/product/ProductManagerLocalHome.java,v $
- */
 public interface ProductManagerLocalHome extends EJBLocalHome {
     ProductManagerLocal create() throws CreateException;
 }
