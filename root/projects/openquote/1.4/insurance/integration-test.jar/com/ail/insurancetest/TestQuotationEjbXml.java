@@ -17,7 +17,8 @@
 
 package com.ail.insurancetest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.rmi.RemoteException;
 
@@ -28,17 +29,16 @@ import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
-import com.ail.core.product.listproducts.ListProductsService;
-import com.ail.core.product.resetallproducts.ResetAllProductsService;
 import com.ail.insurance.quotation.Quotation;
-import com.ail.insurance.quotation.QuotationBean;
 import com.ail.insurance.quotation.QuotationHome;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumService;
 
-public class TestQuotationEjbXml {
+public class TestQuotationEjbXml extends CoreUserBaseCase {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Sets up the fixture (run before every test).
@@ -46,13 +46,11 @@ public class TestQuotationEjbXml {
      */
     @Before
     public void setUp() {
-        new QuotationBean().resetConfiguration();
-        new ListProductsService().resetConfiguration();
-        new ResetAllProductsService().resetConfiguration();
-        new CalculatePremiumService().resetConfiguration();
+        resetConfigurations();
     }
 
     private Quotation getBean() throws NamingException, RemoteException, CreateException {
+        setupSystemProperties();
         Context context=new InitialContext();
         QuotationHome home=(QuotationHome)context.lookup("Quotation");
         Quotation bean=(Quotation)PortableRemoteObject.narrow(home.create(), Quotation.class);

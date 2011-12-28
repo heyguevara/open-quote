@@ -2,10 +2,6 @@
 <!--
  This file defines the default (factory) configuration use by ListProducts service.
  The configuration defines the products that are know to the system.
- $Revision: 1.4 $
- $State: Exp $
- $Date: 2007/03/09 21:46:53 $
- $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/core/product/ProductCatalogDefaultConfig.xml,v $
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">

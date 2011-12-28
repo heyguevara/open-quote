@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.ail.core.Core;
-import com.ail.core.CoreUserTestCase;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.product.listproducts.ListProductsService;
@@ -44,7 +44,7 @@ import com.ail.party.Title;
 import com.ail.util.DateOfBirth;
 
 @SuppressWarnings("deprecation")
-public class TestPolicyPersistence extends CoreUserTestCase {
+public class TestPolicyPersistence extends CoreUserBaseCase {
     private static final long serialVersionUID = -1883228598369537657L;
 
     /**

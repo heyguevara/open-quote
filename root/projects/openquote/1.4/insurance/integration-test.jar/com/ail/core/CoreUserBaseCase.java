@@ -30,8 +30,10 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.AbstractConfigurationLoader;
 import com.ail.core.configure.Configuration;
+import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.ConfigurationResetError;
+import com.ail.core.configure.server.ServerBean;
 
 /**
  * This class should be extended by any test that needs to act like a core user. I
@@ -39,14 +41,14 @@ import com.ail.core.configure.ConfigurationResetError;
  * cleaner. It also handles common tasks like cleaning up test data from the database
  * when tests close.
  */
-public class CoreUserTestCase implements CoreUser, ConfigurationOwner {
+public class CoreUserBaseCase implements CoreUser, ConfigurationOwner {
     private static final long serialVersionUID = -5384098123545310572L;
     private AbstractConfigurationLoader loader=null;
     private Core core=null;
     CoreUserImpl coreUser=null;
     private String NAMESPACE="TestNamespace";
 
-    public CoreUserTestCase() {
+    public CoreUserBaseCase() {
         coreUser=new CoreUserImpl(CoreUserImpl.SelectConsistentConfigurations, NAMESPACE, null);
     }
 
@@ -122,6 +124,18 @@ public class CoreUserTestCase implements CoreUser, ConfigurationOwner {
         return NAMESPACE;
     }
 
+    /**
+     * Reset all of the system and local class' configurations to the
+     * factory defaults and clear the configuration handler's cache so
+     * that we can be sure only the latest configurations are in a 
+     * known state.
+     */
+    protected void resetConfigurations() {
+        new ServerBean().resetNamedConfiguration("all");
+        resetConfiguration();
+        ConfigurationHandler.resetCache();
+    }
+    
     /**
      * Method demanded by the ConfigurationOwner interface.
      */

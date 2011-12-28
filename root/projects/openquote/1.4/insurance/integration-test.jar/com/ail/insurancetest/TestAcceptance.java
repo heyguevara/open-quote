@@ -29,15 +29,12 @@ import org.junit.Test;
 
 import com.ail.core.BaseException;
 import com.ail.core.Core;
-import com.ail.core.CoreUserTestCase;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.PreconditionException;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.product.listproducts.ListProductsService;
 import com.ail.financial.Currency;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
-import com.ail.insurance.acceptance.AcceptanceBean;
 import com.ail.insurance.acceptance.CollectPremiumCommand;
 import com.ail.insurance.acceptance.PolicyDocumentation;
 import com.ail.insurance.acceptance.ProduceDocumentationCommand;
@@ -46,13 +43,7 @@ import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
-/**
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 11:05:59 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/test.jar/com/ail/insurancetest/TestAcceptance.java,v $
- */
-public class TestAcceptance extends CoreUserTestCase {
+public class TestAcceptance extends CoreUserBaseCase {
     private static final long serialVersionUID = -1883228598369537657L;
 
 	/**
@@ -61,20 +52,9 @@ public class TestAcceptance extends CoreUserTestCase {
 	 */
     @Before
     public void setUp() {
-	    super.setupSystemProperties();
-        
-        ConfigurationHandler.resetCache();
-        setVersionEffectiveDate(new VersionEffectiveDate());
-        tidyUpTestData();
         setCore(new Core(this));
-        getCore().resetConfiguration();
-        setVersionEffectiveDate(new VersionEffectiveDate());
-        
-        resetConfiguration();
-        new AcceptanceBean().resetConfiguration();
-        new ListProductsService().resetConfiguration();
-        
-        ConfigurationHandler.resetCache();
+	    setupSystemProperties();
+        resetConfigurations();
         setVersionEffectiveDate(new VersionEffectiveDate());
 	}
 
