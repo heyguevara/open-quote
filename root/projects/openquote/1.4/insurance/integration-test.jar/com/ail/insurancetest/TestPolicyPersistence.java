@@ -17,16 +17,19 @@
 
 package com.ail.insurancetest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Locale;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import com.ail.core.Core;
+
 import com.ail.core.CoreUserBaseCase;
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.product.listproducts.ListProductsService;
-import com.ail.core.product.resetallproducts.ResetAllProductsService;
+import com.ail.core.ThreadLocale;
 import com.ail.insurance.policy.AssessmentNote;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.BehaviourType;
@@ -46,27 +49,24 @@ import com.ail.util.DateOfBirth;
 @SuppressWarnings("deprecation")
 public class TestPolicyPersistence extends CoreUserBaseCase {
     private static final long serialVersionUID = -1883228598369537657L;
-
+    private boolean setupDone=false;
+    private Locale savedLocale;
+    
     /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
     @Before
     public void setUp() {
-        super.setupSystemProperties();
-
-        tidyUpTestData();
-
-        ConfigurationHandler.resetCache();
-        setVersionEffectiveDate(new VersionEffectiveDate());
-        setCore(new Core(this));
-        getCore().resetConfiguration();
-        setVersionEffectiveDate(new VersionEffectiveDate());
-
-        new ListProductsService().resetConfiguration();
-        new ResetAllProductsService().resetConfiguration();
-
-        ConfigurationHandler.resetCache();
-        setVersionEffectiveDate(new VersionEffectiveDate());
+        setupSystemProperties();
+        
+        savedLocale=ThreadLocale.getThreadLocale();
+        ThreadLocale.setThreadLocale(Locale.UK);
+        
+        if (!setupDone) {
+            tidyUpTestData();
+            resetConfigurations();
+            setupDone=true;
+        }
     }
 
     /**
@@ -75,6 +75,7 @@ public class TestPolicyPersistence extends CoreUserBaseCase {
     @After
     public void tearDown() {
         tidyUpTestData();
+        ThreadLocale.setThreadLocale(savedLocale);
     }
 
     /**
