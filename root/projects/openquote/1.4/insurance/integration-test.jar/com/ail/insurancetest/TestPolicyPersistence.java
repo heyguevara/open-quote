@@ -28,6 +28,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.ThreadLocale;
 import com.ail.insurance.policy.AssessmentNote;
@@ -61,6 +62,7 @@ public class TestPolicyPersistence extends CoreUserBaseCase {
         
         savedLocale=ThreadLocale.getThreadLocale();
         ThreadLocale.setThreadLocale(Locale.UK);
+        setCore(new Core(this));
         
         if (!setupDone) {
             tidyUpTestData();
