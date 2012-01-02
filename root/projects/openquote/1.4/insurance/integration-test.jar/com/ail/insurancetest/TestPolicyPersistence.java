@@ -29,8 +29,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.ail.core.Core;
+import com.ail.core.CoreProxy;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.ThreadLocale;
+import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.policy.AssessmentNote;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.BehaviourType;
@@ -48,27 +50,19 @@ import com.ail.party.Title;
 import com.ail.util.DateOfBirth;
 
 @SuppressWarnings("deprecation")
-public class TestPolicyPersistence extends CoreUserBaseCase {
-    private static final long serialVersionUID = -1883228598369537657L;
-    private boolean setupDone=false;
+public class TestPolicyPersistence  {
     private Locale savedLocale;
+    private CoreProxy core;
     
     /**
-     * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
+     * Sets up the fixture (run before every test). 
+     * Get an instance of Core, and delete the testnamespace from the config table.
      */
     @Before
     public void setUp() {
-        setupSystemProperties();
-        
+        core=new CoreProxy();
         savedLocale=ThreadLocale.getThreadLocale();
         ThreadLocale.setThreadLocale(Locale.UK);
-        setCore(new Core(this));
-        
-        if (!setupDone) {
-            tidyUpTestData();
-            resetConfigurations();
-            setupDone=true;
-        }
     }
 
     /**
@@ -76,7 +70,6 @@ public class TestPolicyPersistence extends CoreUserBaseCase {
      */
     @After
     public void tearDown() {
-        tidyUpTestData();
         ThreadLocale.setThreadLocale(savedLocale);
     }
 
@@ -107,17 +100,17 @@ public class TestPolicyPersistence extends CoreUserBaseCase {
         long policySystemId;
 
         {
-            Policy policy = (Policy) getCore().newProductType("com.ail.core.product.TestProduct4");
+            Policy policy = (Policy) core.newProductType("com.ail.core.product.TestProduct4");
 
             long start = System.currentTimeMillis();
 
-            getCore().openPersistenceSession();
+            core.openPersistenceSession();
 
-            policy = (Policy) getCore().create(policy);
+            policy = (Policy) core.create(policy);
 
             policySystemId = policy.getSystemId();
 
-            getCore().closePersistenceSession();
+            core.closePersistenceSession();
 
             long end = System.currentTimeMillis();
             System.out.printf("save took: %dms\n", end - start);
@@ -127,9 +120,9 @@ public class TestPolicyPersistence extends CoreUserBaseCase {
         {
             long start = System.currentTimeMillis();
 
-            getCore().openPersistenceSession();
+            core.openPersistenceSession();
 
-            Policy policy = (Policy) getCore().load(Policy.class, policySystemId);
+            Policy policy = (Policy) core.load(Policy.class, policySystemId);
 
             assertNotNull(policy);
             assertEquals("0101010", policy.getId());
@@ -234,7 +227,7 @@ public class TestPolicyPersistence extends CoreUserBaseCase {
             assertTrue(BehaviourType.LOAD.equals(sum.getType()));
             assertEquals("£321.00", sum.getAmount().toString());
 
-            getCore().closePersistenceSession();
+            core.closePersistenceSession();
 
             long end = System.currentTimeMillis();
             System.out.printf("load took: %dms\n", end - start);
