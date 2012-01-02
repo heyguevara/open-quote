@@ -161,7 +161,7 @@ public class TestPolicyPersistence  {
             assertTrue(policy.getCoverageById("c1").isEnabled());
             assertTrue(!policy.getCoverageById("c1").isOptional());
             assertEquals("\u00A3"+"1,000.00", policy.getCoverageById("c1").getLimit().toString());
-            assertEquals("\u00A3"+"£500.00", policy.getCoverageById("c1").getDeductible().toString());
+            assertEquals("\u00A3"+"500.00", policy.getCoverageById("c1").getDeductible().toString());
 
             AssessmentSheet sheet = policy.getAssessmentSheet();
 
