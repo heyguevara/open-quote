@@ -160,8 +160,8 @@ public class TestPolicyPersistence  {
             assertEquals("East river tea bag cover", policy.getCoverageById("c1").getDescription());
             assertTrue(policy.getCoverageById("c1").isEnabled());
             assertTrue(!policy.getCoverageById("c1").isOptional());
-            assertEquals("£1,000.00", policy.getCoverageById("c1").getLimit().toString());
-            assertEquals("£500.00", policy.getCoverageById("c1").getDeductible().toString());
+            assertEquals("\u00A3"+"1,000.00", policy.getCoverageById("c1").getLimit().toString());
+            assertEquals("\u00A3"+"£500.00", policy.getCoverageById("c1").getDeductible().toString());
 
             AssessmentSheet sheet = policy.getAssessmentSheet();
 
@@ -198,7 +198,7 @@ public class TestPolicyPersistence  {
             assertEquals("ASSET", fix1.getRelatesTo().getTypeAsString());
             assertEquals("as1", fix1.getRelatesTo().getId());
             assertEquals("final premium", fix1.getContributesTo());
-            assertEquals("£123.00", fix1.getAmount().toString());
+            assertEquals("\u00A3"+"123.00", fix1.getAmount().toString());
 
             Totalizer tot = (Totalizer) sheet.findLineById("tot");
             assertEquals("tot", tot.getId());
@@ -225,7 +225,7 @@ public class TestPolicyPersistence  {
             assertEquals("as2", sum.getRelatesTo().getId());
             assertEquals("final premium", sum.getContributesTo().toString());
             assertTrue(BehaviourType.LOAD.equals(sum.getType()));
-            assertEquals("£321.00", sum.getAmount().toString());
+            assertEquals("\u00A3"+"321.00", sum.getAmount().toString());
 
             core.closePersistenceSession();
 
