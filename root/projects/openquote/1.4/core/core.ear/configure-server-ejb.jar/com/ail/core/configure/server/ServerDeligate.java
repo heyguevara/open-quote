@@ -28,10 +28,6 @@ import com.ail.core.configure.finder.GetClassListCommand;
 
 /**
  * This class acts as a business delegate to the ConfigureServer EJB.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/server/ServerDeligate.java,v $
  */
 public class ServerDeligate {
     private Principal user=null;
