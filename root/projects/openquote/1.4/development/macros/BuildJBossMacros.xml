@@ -167,32 +167,6 @@
     </sequential>
   </macrodef>
 
-  <macrodef name="configuration-macro">
-    <attribute name="username" />
-    <attribute name="password" />
-    <attribute name="operation" />
-    <attribute name="factory" default="${java.naming.factory.initial}" />
-    <attribute name="provider" default="${java.naming.provider.url}" />
-    <sequential>
-
-      <java fork="yes" classname="com.ail.core.configure.ConfigurationAntTasks">
-        <classpath>
-          <dirset dir="${ear.lib}" includes="core.jar" />
-          <fileset dir="${ear.lib}" includes="*.jar" />
-          <dirset dir="${ear.dir}" includes="*.jar" />
-          <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
-          <fileset dir="${jboss.dir}" includes="lib/endorsed/xercesImpl.jar" />
-          <fileset dir="${jboss.dir}" includes="client/jbossall-client.jar" />
-        </classpath>
-        <arg value="username=@{username}" />
-        <arg value="password=@{password}" />
-        <arg value="operation=@{operation}" />
-        <arg value="provider=@{provider}" />
-        <arg value="factory=@{factory}" />
-      </java>
-    </sequential>
-  </macrodef>
-
   <!-- Macro to "compile" content in alfresco's bootstrap content folder.                          -->
   <!-- When Alfresco is first started (i.e. starts and finds it's repository empty), it creates a  -->
   <!-- "bootstarp" repostory from the exported content archives it finds under WEB-INF. This macro -->

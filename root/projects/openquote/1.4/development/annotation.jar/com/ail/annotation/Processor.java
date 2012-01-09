@@ -178,7 +178,16 @@ public class Processor extends AbstractProcessor {
 		}
 		pw.printf("\n");
 		for (TypeElement te : ElementFilter.typesIn(annots.get(TYPES).values())) {
-			pw.printf("<type name='%s' builder='ClassBuilder' key='%s'/>\n", te, te);
+		    // default the name to the fully qualified class name
+		    String name = te.toString();
+
+		    // if the annotation defined a name (e.g. @TypeDefinition(name="MyName")), use that name.
+		    TypeDefinition td=te.getAnnotation(TypeDefinition.class);
+		    if (!TypeDefinition.DEFAULT_NAME.equals(td.name())) {
+		        name=td.name();
+		    }
+		    
+			pw.printf("<type name='%s' builder='ClassBuilder' key='%s'/>\n", name, te);
 		}		
 		pw.printf("  </types>\n");
 		pw.printf("</configuration>\n");
