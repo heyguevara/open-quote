@@ -455,7 +455,7 @@
             <formatter type="xml" />
 
             <batchtest fork="yes" todir="${test.dir}/reports" filtertrace="no">
-              <fileset dir="${test.dir}/integration-test.jar" includes="**/*Test.class" excludes="**/*$*" />
+              <fileset dir="${test.dir}/integration-test.jar" includes="**/*Test*.class" excludes="**/*$*" />
             </batchtest>
           </junit>
 
