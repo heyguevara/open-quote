@@ -494,7 +494,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
      * Update the persistent copy of an object from its in memory copy.
      * @since 2.0
      * @param object The object to be written to persistent storage.
-     * @return The object as persisited.
+     * @return The object as persisted.
      */
     public <T extends Type> T update(T type) {
         return core.update(type);

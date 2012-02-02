@@ -104,7 +104,7 @@ public class ContentBrowserPortlet extends GenericPortlet {
         resp.setContentType("text/html");
         resp.setTitle(path2Title(path));
 
-        String rawContent = fetchContent(path);
+        String rawContent = fetchContent(req, path);
         StringBuffer processedContent = new StringBuffer();
         
         Matcher m = RELATIVE_URI_PATTERN.matcher(rawContent);
@@ -124,6 +124,20 @@ public class ContentBrowserPortlet extends GenericPortlet {
         m.appendTail(processedContent);
         
         resp.getWriter().write(processedContent.toString());
+    }
+
+    /**
+     * Fetch content being sensitive to the request's locale.
+     */
+    private String fetchContent(RenderRequest req, String path) throws MalformedURLException, IOException {
+        String language=req.getLocale().getLanguage();
+        
+        try {
+            return fetchContent(path+"_"+language);
+        }
+        catch(Exception e) {
+            return fetchContent(path);
+        }
     }
 
     // Workaround for a bug in Alfresco 2.9.0 (C_dev 816) schema 124. In this version it appears that

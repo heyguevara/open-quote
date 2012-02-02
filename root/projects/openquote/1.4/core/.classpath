@@ -80,7 +80,7 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/myfaces-api-1.1.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/lib/tomahawk-1.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar" sourcepath="/openquote/openquote.ear/lib/openquote.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-repository.jar"/>

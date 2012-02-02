@@ -1,79 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- $Revision: 1.7 $
- $State: Exp $
- $Date: 2006/08/20 15:03:54 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/persistence-server-ejb.jar/com/ail/core/persistence/PersistenceServerDefaultConfig.xml,v $
--->
-<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Default Service Invocation Configuration</name>
-    <timeout>600000</timeout>
+    <timeout>-1</timeout>
     <who>factory</who>
-    <version>$Revision: 1.7 $</version>
+    <version>1.7</version>
 
     <types>
-        <!--====================================-->
-        <!--   Define the component's services  -->
-        <!--====================================-->
-
-        <service name="HibernateUpdateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
-        </service>
-        
-        <service name="HibernateQueryService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
-        </service>
-        
-        <service name="HibernateLoadService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
-        </service>
-        
-        <service name="HibernateCreateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
-        </service>
-        
-        <service name="HibernateDeleteService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
-        </service>
-        
-        <service name="HibernateOpenSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
-        </service>
-        
-        <service name="HibernateCloseSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
-        </service>
-                
 		<!--=======================================================================-->
-		<!-- Bind the default core services (above) to Commands used by Core.class -->
+		<!-- Bind the persistence server's commands directly to an implementation; -->
+        <!-- hibernate by default. This ensures that the persistence server won't  -->
+        <!-- invoke the core's bindings - which may point at some wrapper (like    -->
+        <!-- the persistence server itself!).                                      -->
 		<!--=======================================================================-->
-        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommand">
-            <parameter name="Service">HibernateUpdateService</parameter>
+        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
         </command>
         
-        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommand">
-            <parameter name="Service">HibernateQueryService</parameter>
+        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
         </command>
         
-        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommand">
-            <parameter name="Service">HibernateLoadService</parameter>
+        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
         </command>
         
-        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommand">
-            <parameter name="Service">HibernateCreateService</parameter>
+        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
         </command>
         
-        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommand">
-            <parameter name="Service">HibernateDeleteService</parameter>
+        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
         </command>
 
-        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommand">
-            <parameter name="Service">HibernateOpenSessionService</parameter>
+        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
         </command>
         
-        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommand">
-            <parameter name="Service">HibernateCloseSessionService</parameter>
+        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
         </command>
     </types>
 </configuration>

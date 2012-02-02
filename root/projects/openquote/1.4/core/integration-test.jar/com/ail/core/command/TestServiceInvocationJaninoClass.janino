@@ -1,9 +1,9 @@
 import com.ail.core.Version;
-import com.ail.core.dummyservice.DummyArgumentImpl;
+import com.ail.core.dummyservice.DummyArgument;
 
 public class TestServiceInvocationJaninoClass {
-    public static void invoke(DummyArgumentImpl args) {
-        /* make sure we can refer to our classes */
+    public static void invoke(DummyArgument args) {
+         /* make sure we can refer to our classes */
         Version version=new Version();
     
         /* a simple bit of logic */
@@ -13,5 +13,5 @@ public class TestServiceInvocationJaninoClass {
         else {
           args.setR((2*args.getX())+args.getY());
         }
-    }
+   }
 }

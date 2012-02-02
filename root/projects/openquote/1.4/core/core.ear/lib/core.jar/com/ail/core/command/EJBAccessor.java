@@ -41,10 +41,6 @@ import com.ail.core.configure.Configuration;
 /**
  * Provide access to EJB entry points. The entry point is accessed by its remote
  * interface.
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 09:13:42 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/EJBAccessor.java,v $
  */
 public class EJBAccessor extends Accessor {
     private static Hashtable<EJBAccessorSettings,CacheElement> cache=new Hashtable<EJBAccessorSettings,CacheElement>();

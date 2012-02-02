@@ -567,6 +567,24 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         assertEquals(24, command.getR());
     }
     
+    @Test(expected=JaninoServiceException.class)
+    public void testJaninoInvokeBadArguments() throws Exception {
+        DummyCommand command=getCore().newCommand("TestJaninoUrlServiceBadArgument", DummyCommand.class);
+        command.invoke();
+    }
+    
+    @Test(expected=JaninoServiceException.class)
+    public void testJaninoInvokeNoArguments() throws Exception {
+        DummyCommand command=getCore().newCommand("TestJaninoUrlServiceNoArgument", DummyCommand.class);
+        command.invoke();
+    }
+    
+    @Test(expected=JaninoServiceException.class)
+    public void testJaninoInvokeNoMethod() throws Exception {
+        DummyCommand command=getCore().newCommand("TestJaninoUrlServiceNoMethod", DummyCommand.class);
+        command.invoke();
+    }
+    
     @Test
     public void testVelocity() throws Exception {
         DummyCommand command = getCore().newCommand("TestVelocityService", DummyCommand.class);

@@ -25,7 +25,7 @@ import com.ail.core.command.Argument;
  * entry point when either one has to be configured, but no functionality is
  * required, or as a place holder when the real entry point isn't yet ready.
  */
-@ServiceImplementation
+@ServiceImplementation(serviceName="NullService")
 public class NullService extends Service<Argument> {
     public void invoke() {
     }

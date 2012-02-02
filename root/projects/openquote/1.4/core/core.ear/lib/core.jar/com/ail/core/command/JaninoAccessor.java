@@ -93,11 +93,6 @@ import com.ail.core.configure.ConfigurationOwner;
  * chain with two links. So in this case invoking the 'TestExtendingCommand' will lead to a 'DummyService' being invoked first, 
  * and then 'TestExtendingService' being invoked.<p/>
  * Note that the invoke() methods in all the services in a chain must accept an argument of the same type.  
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
  */
 public class JaninoAccessor extends Accessor implements ConfigurationOwner {
     private Argument args=null;
@@ -200,16 +195,31 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
         }
         
         try {
+            // search through all the classes that we know about and locate a method
+            // named 'invoke' which accepts exactly one argument which is assignable
+            // from the argument we're processing... and invoke it.
+            boolean methodInvoked=false;
             for(Class<?> c: clazz) {
-                Method m=c.getMethod("invoke", args.getClass());
-                m.invoke(null, args);
+                for(Method m: c.getMethods()) {
+                    if ("invoke".equals(m.getName())) {
+                        if (m.getParameterTypes().length==1) {
+                            for(Class<?> p: m.getParameterTypes()) {
+                                if (p.isAssignableFrom(args.getClass())) {
+                                    m.invoke(null, args);
+                                    methodInvoked=true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (!methodInvoked) {
+                throw new JaninoServiceException("invoke("+args.getClass()+") method not found on service: "+name);
             }
         }
         catch (SecurityException e) {
             throw new JaninoServiceException("Security exception accessing 'void invoke(...)' method in janino service: "+name+".", e);
-        }
-        catch (NoSuchMethodException e) {
-            throw new JaninoServiceException("The janino class must define an 'void invoke(...)' method in service: "+name, e);
         }
         catch (RuntimeException e) {
             throw new JaninoServiceException("Error executing janino method for service: "+name+". Error:"+e.getCause(), e);

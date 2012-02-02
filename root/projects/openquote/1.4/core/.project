@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>hibernate</name>
+			<type>2</type>
+			<location>/Users/richarda/Devel/1.4/hibernate-3.2.1/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>
