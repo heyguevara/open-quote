@@ -28,11 +28,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.ail.core.Core;
 import com.ail.core.CoreProxy;
-import com.ail.core.CoreUserBaseCase;
 import com.ail.core.ThreadLocale;
-import com.ail.core.VersionEffectiveDate;
+import com.ail.core.product.listproducts.ListProductsService;
+import com.ail.core.product.resetallproducts.ResetAllProductsService;
 import com.ail.insurance.policy.AssessmentNote;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.BehaviourType;
@@ -45,6 +44,7 @@ import com.ail.insurance.policy.RateBehaviour;
 import com.ail.insurance.policy.Subjectivity;
 import com.ail.insurance.policy.SumBehaviour;
 import com.ail.insurance.policy.Totalizer;
+import com.ail.insurance.quotation.calculatepremium.CalculatePremiumService;
 import com.ail.party.Person;
 import com.ail.party.Title;
 import com.ail.util.DateOfBirth;
@@ -60,6 +60,10 @@ public class TestPolicyPersistence  {
      */
     @Before
     public void setUp() {
+        new CalculatePremiumService().resetConfiguration();
+        new ListProductsService().resetConfiguration();
+        new ResetAllProductsService().resetConfiguration();
+
         core=new CoreProxy();
         savedLocale=ThreadLocale.getThreadLocale();
         ThreadLocale.setThreadLocale(Locale.UK);

@@ -127,6 +127,10 @@
         </field>
     </class>
     
+    <class name="com.ail.insurance.quotation.assessrisk.AssessRiskArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="policyArgRet" type="com.ail.insurance.policy.Policy"/>
+    </class>
+    
     <class name="com.ail.core.configure.XMLMapping" extends="com.ail.core.Type">
         <map-to xml="XMLMapping"/>
         <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
@@ -219,7 +223,58 @@
         <field name="type" type="string"/>
     </class>
 
-    <!-- Classes related to document generataion -->
+
+    <!-- Mappings for financial model types -->
+    <class name="com.ail.financial.CurrencyAmount" extends="com.ail.core.Type" auto-complete="false">
+        <field name="amount" type="string" get-method="getAmountAsString" set-method="%1">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="currency" type="string" get-method="getCurrencyAsString" set-method="%2">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.util.Rate" extends="com.ail.core.Type" auto-complete="false">
+        <field name="rate" type="string"/>
+    </class>
+
+    <class name="com.ail.financial.PaymentMethod" extends="com.ail.core.Type" auto-complete="false">
+    </class> 
+    
+    <class name="com.ail.financial.MoneyProvision" extends="com.ail.core.Type" auto-complete="false">
+        <map-to xml="moneyProvision"/>
+        <field name="description" type="string"/>
+        <field name="frequency" type="string" get-method="getFrequencyAsString" set-method="setFrequencyAsString"/>
+        <field name="number" type="int"/>
+        <field name="paymentsStartDate" type="date"/>
+        <field name="paymentsEndDate" type="date"/>
+        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
+        <field name="paymentMethod" type="com.ail.financial.PaymentMethod"/>
+    </class> 
+
+    <class name="com.ail.financial.DirectDebit" extends="com.ail.financial.PaymentMethod" auto-complete="false">
+        <map-to xml="directDebit"/>
+        <field name="accountNumber" type="string"/>
+        <field name="sortCode" type="string"/>
+    </class> 
+    
+    <class name="com.ail.financial.PaymentCard" extends="com.ail.financial.PaymentMethod" auto-complete="false">
+        <map-to xml="paymentCard"/>
+        <field name="cardHoldersName" type="string"/>
+        <field name="cardNumber" type="string"/>
+        <field name="issueNumber" type="string"/>
+        <field name="issuer" type="string" get-method="getIssuerAsString" set-method="setIssuerAsString"/>
+        <field name="startDate" type="date"/>
+        <field name="expiryDate" type="date"/>
+    </class> 
+
+    <class name="com.ail.financial.PaymentSchedule" extends="com.ail.core.Type" auto-complete="false">
+        <map-to xml="paymentSchedule"/>
+        <field name="description" type="string"/>
+        <field name="moneyProvision" type="com.ail.financial.MoneyProvision" collection="arraylist"/>
+    </class> 
+    
+    <!-- document model mappings start here -->
     <class name="com.ail.core.document.model.ItemData" extends="com.ail.core.Type">
         <map-to xml="itemData"/>
         <field name="id" type="string">
@@ -307,86 +362,6 @@
         <field name="renderCommand" type="string"/>
         <field name="documentData" type="com.ail.core.document.model.DocumentData"/>
     </class>
-
-    <!-- Mappings for financial model types -->
-    <class name="com.ail.financial.CurrencyAmount" extends="com.ail.core.Type" auto-complete="false">
-        <field name="amount" type="string" get-method="getAmountAsString" set-method="%1">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="currency" type="string" get-method="getCurrencyAsString" set-method="%2">
-            <bind-xml node="attribute"/>
-        </field>
-    </class>
-
-    <class name="com.ail.util.Rate" extends="com.ail.core.Type" auto-complete="false">
-        <field name="rate" type="string"/>
-    </class>
-
-    <class name="com.ail.financial.PaymentMethod" extends="com.ail.core.Type" auto-complete="false">
-    </class> 
-    
-    <class name="com.ail.financial.MoneyProvision" extends="com.ail.core.Type" auto-complete="false">
-        <map-to xml="moneyProvision"/>
-        <field name="description" type="string"/>
-        <field name="frequency" type="string" get-method="getFrequencyAsString" set-method="setFrequencyAsString"/>
-        <field name="number" type="int"/>
-        <field name="paymentsStartDate" type="date"/>
-        <field name="paymentsEndDate" type="date"/>
-        <field name="amount" type="com.ail.financial.CurrencyAmount"/>
-        <field name="paymentMethod" type="com.ail.financial.PaymentMethod"/>
-    </class> 
-
-    <class name="com.ail.financial.DirectDebit" extends="com.ail.financial.PaymentMethod" auto-complete="false">
-        <map-to xml="directDebit"/>
-        <field name="accountNumber" type="string"/>
-        <field name="sortCode" type="string"/>
-    </class> 
-    
-    <class name="com.ail.financial.PaymentCard" extends="com.ail.financial.PaymentMethod" auto-complete="false">
-        <map-to xml="paymentCard"/>
-        <field name="cardHoldersName" type="string"/>
-        <field name="cardNumber" type="string"/>
-        <field name="issueNumber" type="string"/>
-        <field name="issuer" type="string" get-method="getIssuerAsString" set-method="setIssuerAsString"/>
-        <field name="expiryDate" type="date"/>
-    </class> 
-
-    <class name="com.ail.financial.PaymentSchedule" extends="com.ail.core.Type" auto-complete="false">
-        <map-to xml="paymentSchedule"/>
-        <field name="description" type="string"/>
-        <field name="moneyProvision" type="com.ail.financial.MoneyProvision" collection="arraylist"/>
-    </class>
-    
-    <class name="com.ail.util.DateOfBirth" extends="com.ail.core.Type" auto-complete="false">
-        <field name="dateOfBirth" type="string" get-method="getDateAsString" set-method="setDateAsString"/>
-    </class>
-
-    <class name="com.ail.party.Address" extends="com.ail.core.Type" auto-complete="false">
-        <field name="line1" type="string"/>
-        <field name="line2" type="string"/>
-        <field name="line3" type="string"/>
-        <field name="line4" type="string"/>
-        <field name="line5" type="string"/>
-        <field name="town" type="string"/>
-        <field name="county" type="string"/>
-        <field name="country" type="string"/>
-        <field name="postcode" type="string"/>
-    </class>
-
-    <class name="com.ail.party.Party" extends="com.ail.core.Type" auto-complete="false">
-        <field name="address" type="com.ail.party.Address"/>
-        <field name="legalName" type="string"/>
-    </class>
-
-    <class name="com.ail.party.Person" extends="com.ail.party.Party" auto-complete="false">
-        <field name="dateOfBirth" type="com.ail.util.DateOfBirth"/>
-        <field name="firstName" type="string"/>
-        <field name="surname" type="string"/>
-        <field name="title" type="string" get-method="getTitleAsString" set-method="setTitleAsString"/>
-        <field name="otherTitle" type="string"/>
-    </class>
-
-    <class name="com.ail.party.Organisation" extends="com.ail.party.Party" auto-complete="false"/>
 
     <!-- Mappings for quote model related types -->
     <class name="com.ail.insurance.policy.Reference" extends="com.ail.core.Type" auto-complete="false">
@@ -540,7 +515,9 @@
         <field name="deductible" type="boolean">
             <bind-xml node="attribute"/>
         </field>
-        <field name="title" type="string"/>
+        <field name="title" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
         <field name="assetId" type="string" collection="vector"/>
         <field name="amount" type="com.ail.financial.CurrencyAmount"/>
     </class>
@@ -562,6 +539,9 @@
         <bind-xml node="attribute"/>
       </field>
       <field name="manuscript" type="boolean">
+        <bind-xml node="attribute"/>
+      </field>
+      <field name="reference" type="string">
         <bind-xml node="attribute"/>
       </field>
       <field name="relatesTo" type="com.ail.insurance.policy.Reference" collection="arraylist"/>
@@ -605,7 +585,35 @@
         <field name="locale" type="com.ail.core.ThreadLocale"/>
     </class>
 
-    <class name="com.ail.insurance.quotation.assessrisk.AssessRiskArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
-        <field name="policyArgRet" type="com.ail.insurance.policy.Policy"/>
+    <class name="com.ail.util.DateOfBirth" extends="com.ail.core.Type" auto-complete="false">
+        <field name="dateOfBirth" type="string" get-method="getDateAsString" set-method="setDateAsString"/>
+    </class>
+
+    <class name="com.ail.party.Address" extends="com.ail.core.Type" auto-complete="false">
+        <field name="line1" type="string"/>
+        <field name="line2" type="string"/>
+        <field name="line3" type="string"/>
+        <field name="line4" type="string"/>
+        <field name="line5" type="string"/>
+        <field name="town" type="string"/>
+        <field name="county" type="string"/>
+        <field name="country" type="string"/>
+        <field name="postcode" type="string"/>
+    </class>
+
+    <class name="com.ail.party.Party" extends="com.ail.core.Type" auto-complete="false">
+        <field name="address" type="com.ail.party.Address"/>
+        <field name="legalName" type="string"/>
+    </class>
+
+    <class name="com.ail.party.Person" extends="com.ail.party.Party" auto-complete="false">
+        <field name="dateOfBirth" type="com.ail.util.DateOfBirth"/>
+        <field name="firstName" type="string"/>
+        <field name="surname" type="string"/>
+        <field name="title" type="string" get-method="getTitleAsString" set-method="setTitleAsString"/>
+        <field name="otherTitle" type="string"/>
+    </class>
+
+    <class name="com.ail.party.Organisation" extends="com.ail.party.Party" auto-complete="false">
     </class>
 </mapping>

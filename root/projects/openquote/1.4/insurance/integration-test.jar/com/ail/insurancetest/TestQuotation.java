@@ -140,7 +140,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
     /**
      * Method demanded by the CoreUser interface.
      * 
-     * @return A date to use to selecte the corrent version of config info.
+     * @return A date to use to select the current version of config info.
      */
     public VersionEffectiveDate getVersionEffectiveDate() {
         return versionEffectiveDate;
