@@ -123,7 +123,7 @@ public class CurrencyAmount extends Type {
         char groupSeparator = dfs.getGroupingSeparator();
 
         int decimalPlace = amount.indexOf(decimalSeparator);
-        int scale = amount.length() - (decimalPlace + 1);
+        int scale = (decimalPlace>=0) ? amount.length() - (decimalPlace + 1) : 0;
         
         StringBuffer integerVal=new StringBuffer();
         for(int i=0 ; i<amount.length() ; i++) {

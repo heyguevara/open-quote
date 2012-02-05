@@ -251,4 +251,12 @@ public class TestCurrencyAmount {
             java.util.Locale.setDefault(saved);
         }
     }
+    
+    @Test
+    public void testStringConversions() {
+        BigDecimal amount=new BigDecimal("2000");
+        assertEquals(2000, amount.intValue());
+        CurrencyAmount ca=new CurrencyAmount("2000", "GBP");
+        assertEquals(2000, ca.getAmount().intValue());
+    }
 }
