@@ -18,11 +18,13 @@ package com.ail.openquote;
 
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
  * Records the detail of a page visit during the processing of quotation.
  */
+@TypeDefinition
 public class PageVisit extends Type {
 	private static final long serialVersionUID = -7207431665904766363L;
 	private String pageName;	// Name of the page that was visited

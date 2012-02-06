@@ -16,6 +16,7 @@
  */
 package com.ail.openquote;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.party.Organisation;
 import com.ail.party.Person;
@@ -26,6 +27,7 @@ import com.ail.party.Title;
  * for use in commercial lines.
  * @see PersonalProposer
  */
+@TypeDefinition
 public class CommercialProposer extends Organisation implements Proposer {
 	private static final long serialVersionUID = 1L;
 

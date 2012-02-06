@@ -58,7 +58,7 @@ public class ViewInvoiceButtonAction extends CommandButtonAction {
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 
                 // This will force the invoice do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchInvoiceCommand cmd=(FetchInvoiceCommand)proxy.newCommand("FetchInvoiceDocument");
+                FetchInvoiceCommand cmd=proxy.newCommand(FetchInvoiceCommand.class);
                 cmd.setPolicyNumberArg(policyNumber);
                 cmd.invoke();
                 

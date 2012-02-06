@@ -20,60 +20,36 @@ package com.ail.openquote.motorplus;
 import java.io.File;
 import java.io.PrintWriter;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.Core;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.generatedocument.GenerateDocumentCommand;
 import com.ail.openquote.Quotation;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- */
-public class TestMotorPlusDocumentRender extends CoreUserTestCase {
+public class TestMotorPlusDocumentRender extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
-
-    /**
-     * Constructs a test case with the given name.
-     */
-    public TestMotorPlusDocumentRender(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestMotorPlusDocumentRender.class);
-    }
 
     /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() {
+    @Before
+    public void setUp() {
         super.setupSystemProperties();
         super.setCore(new Core(this));
     }
-
-    /**
-     * Tears down the fixture (run after each test finishes)
-     */
-    protected void tearDown() {
-    }
     
-    /**
-     */
+    @Test
     public void testGenDocLocal() throws Exception {
         XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusDocumentRenderOne.xml"));
 
         Quotation quote=getCore().fromXML(Quotation.class, quoteXml);
         quote.setStatus(PolicyStatus.QUOTATION);
                         
-        GenerateDocumentCommand cmd=(GenerateDocumentCommand)getCore().newCommand("GenerateQuoteDocument");
+        GenerateDocumentCommand cmd=getCore().newCommand(GenerateDocumentCommand.class);
         cmd.setPolicyArg(quote);
         cmd.invoke();
 

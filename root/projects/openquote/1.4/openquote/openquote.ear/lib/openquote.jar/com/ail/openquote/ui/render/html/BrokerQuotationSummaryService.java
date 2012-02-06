@@ -31,14 +31,12 @@ import java.util.List;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
@@ -48,12 +46,13 @@ import com.ail.insurance.policy.Marker;
 import com.ail.insurance.policy.RateBehaviour;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.render.RenderArg;
+import com.ail.openquote.ui.render.RenderArgument;
 
 /**
  * Default Java implementation of the broker quotation summary widget for HTML.
  */
-public class BrokerQuotationSummaryService extends Service {
+@ServiceImplementation
+public class BrokerQuotationSummaryService extends Service<RenderArgument> {
     private static final long serialVersionUID = -4915889686192216902L;
     private static final List<BehaviourType> PREMIUM_DETAIL_LINE_TYPES=new ArrayList<BehaviourType>(
     		Arrays.asList(
@@ -63,51 +62,7 @@ public class BrokerQuotationSummaryService extends Service {
     				BehaviourType.BROKERAGE
     		)
     );
-    private RenderArg args = null;
-    private Core core = null;
 
-    /** Default constructor */
-    public BrokerQuotationSummaryService() {
-        core = new com.ail.core.Core(this);
-    }
-
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2010. All rights reserved.");
-        v.setDate("$Date$");
-        v.setVersion("$Revision$");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (RenderArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CalculateTaxArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-    
     /** The 'business logic' of the entry point. */
     public void invoke() throws PreconditionException, BaseException {
     	if (args.getModelArg()==null || !(args.getModelArg() instanceof Quotation)) {

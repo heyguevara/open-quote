@@ -17,101 +17,12 @@
 
 package com.ail.openquote.ui.render;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import com.ail.core.Type;
+import com.ail.annotation.CommandDefinition;
 import com.ail.core.command.Command;
-import com.ail.core.command.CommandArg;
-import com.ail.openquote.ui.PageElement;
 
 /**
  * Generic command for all render services.
  */
-public class RenderCommand extends Command implements RenderArg {
-    private static final long serialVersionUID = 6020205183308695083L;
-    private RenderArg args = null;
-
-    public RenderCommand() {
-        super();
-        args = new RenderArgImp();
-    }
-
-    public void setArgs(CommandArg arg) {
-        this.args = (RenderArg)arg;
-    }
-
-    public CommandArg getArgs() {
-        return args;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getRenderedOutputRet() {
-		return args.getRenderedOutputRet();
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void setRenderedOutputRet(String renderedOutputRet) {
-		args.setRenderedOutputRet(renderedOutputRet);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public RenderRequest getRequestArg() {
-		return args.getRequestArg();
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void setRequestArg(RenderRequest requestArg) {
-		args.setRequestArg(requestArg);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public RenderResponse getResponseArgRet() {
-		return args.getResponseArgRet();
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void setResponseArgRet(RenderResponse responseArgRet) {
-		args.setResponseArgRet(responseArgRet);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public Type getModelArg() {
-		return args.getModelArg();
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void setModelArg(Type modelArg) {
-		args.setModelArg(modelArg);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public PageElement getPageElementArg() {
-		return args.getPageElementArg();
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void setPageElementArg(PageElement pageElementArg) {
-		args.setPageElementArg(pageElementArg);
-	}
+@CommandDefinition
+public interface RenderCommand extends Command, RenderArgument {
 }

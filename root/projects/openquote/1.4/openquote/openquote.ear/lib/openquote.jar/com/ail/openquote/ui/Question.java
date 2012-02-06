@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -56,7 +58,7 @@ public class Question extends AttributeField {
     		return model;
     	}
 
-    	String title = getExpandedTitle(model);
+    	String title = i18n(getExpandedTitle(model));
     	
     	String styleClass = getStyleClass();
     	

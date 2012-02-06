@@ -18,69 +18,16 @@
 package com.ail.insurance.onrisk.certificate;
 
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 import com.ail.openquote.SavedQuotation;
+
 /**
  * This service fetches the certificate document associated with a quotation. If the document hasn't been generated
  * in the past, the service will generate it and persist it with the quotation for reuse later.
  */
-public class FetchCertificateService extends Service {
+public class FetchCertificateService extends Service<FetchCertificateArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
-    private FetchCertificateArg args=null;
-	private Core core=null;
-
-	/**
-     * Default constructor
-     */
-	public FetchCertificateService() {
-		core=new Core(this);
-    }
-
-	/**
-     * Getter to fetch the entry point's code. This method is demanded by
-     * the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-	public Core getCore() {
-        return core;
-    }
-
-	/**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-	public Version getVersion() {
-		Version v=(Version)core.newType("Version");
-        v.setAuthor("$Author$");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2002. All rights reserved.");
-        v.setDate("$Date$");
-        v.setSource("$Source$");
-        v.setState("$State$");
-        v.setVersion("$Revision$");
-        return v;
-    }
-
-	/**
-     * Setter used to the set the entry points arguments. This method will be
-     * called before <code>invoke()</code> is called.
-     * @param Arguments for invoke
-     */
-    public void setArgs(CommandArg args){
-        this.args = (FetchCertificateArg)args;
-    }
-
-	/**
-     * Getter returning the arguments used by this entry point. This entry point
-     * doesn't modify the arguments.
-     * @return An instance of LoggerArgs.
-	 */
-    public CommandArg getArgs() {
-        return (CommandArg)args;
-    }
 
     /**
      * The 'business logic' of the entry point.
@@ -100,7 +47,7 @@ public class FetchCertificateService extends Service {
         
         // We only generate quote docs on demand, so if there isn't one - generate it.
         if (savedQuotation.getCertificateDocument()==null) {
-        	GenerateCertificateCommand cmd=(GenerateCertificateCommand)getCore().newCommand("GenerateCertificateDocument");
+        	GenerateCertificateCommand cmd=getCore().newCommand(GenerateCertificateCommand.class);
             cmd.setPolicyArg(savedQuotation.getQuotation());
             cmd.invoke();
             savedQuotation.setCertificateDocument(cmd.getDocumentRet());

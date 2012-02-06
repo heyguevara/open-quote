@@ -58,7 +58,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
                 String quoteNumber=Functions.getOperationParameters(request).getProperty("id");
 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchDocumentCommand cmd=(FetchDocumentCommand)proxy.newCommand("FetchQuoteDocument");
+                FetchDocumentCommand cmd=proxy.newCommand(FetchDocumentCommand.class);
                 cmd.setQuotationNumberArg(quoteNumber);
                 cmd.invoke();
                 

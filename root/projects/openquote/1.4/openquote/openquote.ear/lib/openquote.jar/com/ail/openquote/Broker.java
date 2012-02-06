@@ -16,6 +16,7 @@
  */
 package com.ail.openquote;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.party.Organisation;
 
 /**
@@ -23,6 +24,7 @@ import com.ail.party.Organisation;
  * all the contact information (etc) which is needed to identify the organisation, and
  * defines values for various fields on the UI.
  */
+@TypeDefinition
 public class Broker extends Organisation {
 	private static final long serialVersionUID = -4521508279619758949L;
 	/** Email address to which clients (proposers) can send emails */

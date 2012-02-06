@@ -63,7 +63,7 @@ public class GenerateInvoiceDocumentAction extends Action {
                 Quotation quote=(Quotation)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchInvoiceCommand cmd=(FetchInvoiceCommand)proxy.newCommand("FetchInvoiceDocument");
+                FetchInvoiceCommand cmd=proxy.newCommand(FetchInvoiceCommand.class);
                 cmd.setPolicyNumberArg(quote.getPolicyNumber());
                 cmd.invoke();
                 

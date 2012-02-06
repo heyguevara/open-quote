@@ -1,5 +1,7 @@
 package com.ail.openquote.quotationportlet;
 
+import static org.junit.Assert.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,11 +9,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import java.net.HttpURLConnection;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.XMLString;
 
@@ -22,7 +24,7 @@ import com.ail.core.XMLString;
  * along with requesting a specific product.
  */
 
-public class TestQuotationPortlet extends TestCase {
+public class TestQuotationPortlet {
 
 	private static String htmlContentType = "text/html";
 	private static String xmlContentType = "text/xml";
@@ -34,34 +36,23 @@ public class TestQuotationPortlet extends TestCase {
 
 	private String registrationHandle = "";
 
-	public TestQuotationPortlet(String name) {
-		super(name);
-	}
-
-    public static Test suite() {
-        return new TestSuite(TestQuotationPortlet.class);
-    }
-
-	protected void setUp() throws Exception {
-		
+	@Before
+	public void setUp() throws Exception {
 		// register consumer
 		registrationHandle = registerConsumer(urlReg);
-		
-		super.setUp();
 	}
 
-	protected void tearDown() throws Exception {
-
+	@After
+	public void tearDown() throws Exception {
 		// deregister consumer
 		deregisterConsumer(registrationHandle, urlReg);
-
-		super.tearDown();
 	}
 
 	/**
 	 * Test the XML mime type form request
 	 * @throws Exception 
 	 */
+	@Test
 	public void testXMLRequest() throws Exception{
 		
 		// get xml form
@@ -78,6 +69,7 @@ public class TestQuotationPortlet extends TestCase {
 	 * Test the HTML mime type form request
 	 * @throws Exception
 	 */
+    @Test
 	public void testHTMLRequest() throws Exception{
 
 		// get html form
@@ -96,6 +88,7 @@ public class TestQuotationPortlet extends TestCase {
 	 * @return consumer handle
 	 * @throws IOException 
 	 */
+    @Test
 	private String registerConsumer(String urlReg) throws IOException{
 
 		// load consumer registration xml
@@ -117,6 +110,7 @@ public class TestQuotationPortlet extends TestCase {
 	 * @param urlReg WSRP producer registry URL
 	 * @throws IOException 
 	 */
+    @Test
 	private void deregisterConsumer(String handle, String urlReg) throws IOException{
 
 		// load consumer deregistration xml
@@ -140,6 +134,7 @@ public class TestQuotationPortlet extends TestCase {
 	 * @return WSRP reponse
 	 * @throws IOException 
 	 */
+    @Test
 	private String requestWSRPForm(String handle, String urlReg, String contentType, String productToRequest) throws IOException{
 
 		// load consumer registration xml

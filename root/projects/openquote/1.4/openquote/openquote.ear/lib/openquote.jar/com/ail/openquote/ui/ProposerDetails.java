@@ -57,7 +57,7 @@ import com.ail.party.Title;
  */
 public class ProposerDetails extends PageElement {
 	private static final long serialVersionUID = -4810599045554021748L;
-    private static final Pattern namePattern=Pattern.compile("^[\\p{L}\\p{N}-,. ()]*$");
+    private static final Pattern namePattern=Pattern.compile("^[\\p{L}\\p{N}-,. &()]*$");
     private static final Pattern postcodePattern=Pattern.compile("^[a-zA-Z0-9 -]*$");
     private static final Pattern emailPattern=Pattern.compile("^[0-9a-zA-Z.-]*@[0-9a-zA-Z.-]*[.][0-9a-zA-Z.-]*$");
     private static final Pattern mobilePattern=Pattern.compile("(^[+()0-9 -]*$)");

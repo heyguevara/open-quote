@@ -24,6 +24,7 @@ import java.util.Date;
 import com.ail.insurance.policy.Policy;
 import com.ail.financial.PaymentSchedule;
 import com.ail.party.Party;
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.ExceptionRecord;
 
 /**
@@ -32,6 +33,7 @@ import com.ail.core.ExceptionRecord;
  * states and hence never becomes a policy. For that reason, this sub-type of Policy was created. It
  * also includes some additional properties which are specific to the openquote system.
  */
+@TypeDefinition
 public class Quotation extends Policy {
 	private static final long serialVersionUID = -414267648671599243L;
 	private Party proposer;

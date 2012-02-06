@@ -16,6 +16,7 @@
  */
 package com.ail.openquote;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.party.Person;
 
@@ -24,6 +25,7 @@ import com.ail.party.Person;
  * personal lines products.
  * @see CommercialProposer
  */
+@TypeDefinition
 public class PersonalProposer extends Person implements Proposer {
 	private static final long serialVersionUID = -4521508279619758949L;
 	private String emailAddress;

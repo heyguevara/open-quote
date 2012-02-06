@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static com.ail.openquote.ui.messages.I18N.i18n;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -30,6 +31,7 @@ import com.ail.core.Type;
  * unmanageably large. The Choice type also supports sub-choices, for example
  * vehicle Make and Model choices.
  */
+@TypeDefinition
 public class Choice extends Type {
 	private static final long serialVersionUID = -7252168449721481890L;
 	private List<Choice> choice = null;

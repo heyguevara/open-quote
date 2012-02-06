@@ -17,13 +17,15 @@
 
 package com.ail.openquote.motorplus;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.CoreProxy;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.TypeXPathFunctionRegister;
 import com.ail.core.XMLString;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.Asset;
@@ -33,48 +35,28 @@ import com.ail.openquote.Fact;
 import com.ail.openquote.Functions;
 import com.ail.openquote.Quotation;
 
-/**
- * @version $Revision: 1.12 $
- * @state $State: Exp $
- * @date $Date: 2007/10/08 20:12:21 $
- * @source $Source: /home/bob/CVSRepository/projects/multiquote/test.jar/com/ail/multiquote/motorplus/TestMotorPlusQuotation.java,v $
- */
-public class TestMotorPlusQuotation extends CoreUserTestCase {
+public class TestMotorPlusQuotation extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
 
     private CoreProxy core = null;
 
     /**
-     * Constructs a test case with the given name.
-     */
-    public TestMotorPlusQuotation(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestMotorPlusQuotation.class);
-    }
-
-    /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() { 
+    @Before
+    public void setUp() { 
         setupSystemProperties();
         core = new CoreProxy();
     }
 
     /**
-     * Tears down the fixture (run after each test finishes)
-     */
-    protected void tearDown() {
-    }
-
     /**
      * DON'T PUT ANY TESTS BEFORE THIS ONE!! Perform two risk assessments and compare their performance. As this is the first test
      * in this TestCase, the system will have to load the decision table and compile the rules. The results of this should be cached
      * for reuse on the next call. This test checks that the performance difference between the first and second invocations is
      * significant enough to suggest that caching is working.
      */
+    @Test
     public void testPerformanceTest() throws Exception {
         XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteOne.xml"));
         Quotation quoteIn = (Quotation) core.fromXML(Quotation.class, quoteXml);
@@ -82,7 +64,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         start1 = System.currentTimeMillis();
         {
-            AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+            AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
             command.setPolicyArgRet(quoteIn);
             command.invoke();
         }
@@ -90,7 +72,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         start2 = System.currentTimeMillis();
         {
-            AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+            AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
             command.setPolicyArgRet(quoteIn);
             command.invoke();
             command.getPolicyArgRet();
@@ -108,6 +90,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testVariousExpressions() throws Exception {
         {
             XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteOne.xml"));
@@ -158,14 +141,14 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
         }
     }
     
-    /**
-     */
+
+    @Test
     public void testBasicAssessRisk() throws Exception {
         XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteOne.xml"));
         Quotation quoteIn = (Quotation) core.fromXML(Quotation.class, quoteXml);
         Quotation quoteOut;
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -181,6 +164,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
         assertEquals(5, sheet.getLineCount());
     }
 
+    @Test
     public void testAssessRiskFemaleDriver() throws Exception {
         XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteOne.xml"));
         Quotation quoteIn = (Quotation) core.fromXML(Quotation.class, quoteXml);
@@ -190,7 +174,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         Quotation quoteOut;
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -201,6 +185,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
         assertNotNull(sheet.xpathGet("line[reason='Main driver is female and over 25 years of age.']"));
     }
 
+    @Test
     public void testAssessRiskDeclineYoung() throws Exception {
         XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteOne.xml"));
         Quotation quoteIn = (Quotation) core.fromXML(Quotation.class, quoteXml);
@@ -208,7 +193,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         quoteIn.xpathSet("asset[id='driver1']/attribute[id='dob']/value", "01/08/1994");
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -226,7 +211,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         quoteIn.xpathSet("asset[id='driver1']/attribute[id='dob']/value", "01/08/1925");
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -242,7 +227,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
         Quotation quoteIn = (Quotation) core.fromXML(Quotation.class, quoteXml);
         Quotation quoteOut;
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -269,7 +254,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         quoteIn.xpathSet("asset[id='vehicle1']/attribute[id='year']/value", "1990");
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -290,7 +275,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
 
         Quotation quoteOut;
 
-        AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+        AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
         command.setPolicyArgRet(quoteIn);
         command.invoke();
         quoteOut = (Quotation) command.getPolicyArgRet();
@@ -315,7 +300,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
                 
          quoteIn.addAsset(c2);
         
-         AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+         AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
          command.setPolicyArgRet(quoteIn);
          command.invoke();
          quoteOut = (Quotation) command.getPolicyArgRet();
@@ -340,7 +325,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
          quoteIn.xpathSet("asset[id='accidentHistory1']/attribute[id='date']/value", "01/01/2005");
          quoteIn.xpathSet("asset[id='accidentHistory1']/attribute[id='atFault']/value", "No");
         
-         AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+         AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
          command.setPolicyArgRet(quoteIn);
          command.invoke();
          quoteOut = (Quotation) command.getPolicyArgRet();
@@ -396,7 +381,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
          accident.xpathSet("attribute[id='value']/value", "0");
          quoteIn.addAsset(accident);
         
-         AssessRiskCommand command = (AssessRiskCommand) core.newCommand("AssessRisk");
+         AssessRiskCommand command = core.newCommand(AssessRiskCommand.class);
          command.setPolicyArgRet(quoteIn);
          command.invoke();
          Quotation quoteOut = (Quotation) command.getPolicyArgRet();
@@ -414,13 +399,13 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
         
          quoteIn.xpathSet("/asset[id='driver1']/attribute[id='occupation']/value", "Doctor");
         
-         CalculatePremiumCommand ccp = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+         CalculatePremiumCommand ccp = core.newCommand(CalculatePremiumCommand.class);
          ccp.setPolicyArgRet(quoteIn);
          ccp.invoke();
          quoteOut = (Quotation) ccp.getPolicyArgRet();
         
          AssessmentSheet sheet = quoteOut.getAssessmentSheet();
-         assertEquals(323.54, ((CurrencyAmount)sheet.xpathGet("line[id='total premium']/amount")).getAmount().doubleValue());
+         assertTrue(323.54==((CurrencyAmount)sheet.xpathGet("line[id='total premium']/amount")).getAmount().doubleValue());
     }
 
     /**
@@ -436,18 +421,18 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
          Quotation quoteIn = (Quotation) core.fromXML(Quotation.class, quoteXml);
          Quotation quoteOut;
         
-         AssessRiskCommand arc = (AssessRiskCommand) core.newCommand("AssessRisk");
+         AssessRiskCommand arc = core.newCommand(AssessRiskCommand.class);
          arc.setPolicyArgRet(quoteIn);
          arc.invoke();
         
-         CalculatePremiumCommand ccp = (CalculatePremiumCommand) core.newCommand("CalculatePremium");
+         CalculatePremiumCommand ccp = core.newCommand(CalculatePremiumCommand.class);
          ccp.setPolicyArgRet(arc.getPolicyArgRet());
          ccp.invoke();
          quoteOut = (Quotation) ccp.getPolicyArgRet();
         
          AssessmentSheet sheet = quoteOut.getAssessmentSheet();
         
-         assertEquals(203.28, ((CurrencyAmount)sheet.xpathGet("line[id='total premium']/amount")).getAmount().doubleValue());
+         assertTrue(203.28==((CurrencyAmount)sheet.xpathGet("line[id='total premium']/amount")).getAmount().doubleValue());
     }
 
     /**
@@ -478,7 +463,7 @@ public class TestMotorPlusQuotation extends CoreUserTestCase {
          // The base rate lookup only covers vehicles up to 3000cc, so we won't find a base premium for 9999.
          quoteIn.xpathSet("/asset[id='vehicle1']/attribute[id='cc']/value", "9999");
 
-         AssessRiskCommand arc = (AssessRiskCommand) core.newCommand("AssessRisk");
+         AssessRiskCommand arc = core.newCommand(AssessRiskCommand.class);
          arc.setPolicyArgRet(quoteIn);
          arc.invoke();
                 

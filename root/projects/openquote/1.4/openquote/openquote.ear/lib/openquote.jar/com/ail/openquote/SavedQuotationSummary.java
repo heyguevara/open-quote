@@ -18,6 +18,7 @@ package com.ail.openquote;
 
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.policy.PolicyStatus;
@@ -27,6 +28,7 @@ import com.ail.insurance.policy.PolicyStatus;
  * effect it defines the fields broken out of the quotation object graph to allow for searching
  * and reporting.
  */
+@TypeDefinition
 public class SavedQuotationSummary extends Type {
     private static final long serialVersionUID = 8924615006523668514L;
 

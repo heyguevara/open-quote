@@ -50,7 +50,7 @@ public class QuestionPage extends Page {
         
         super.renderPageHeader(request, response, model);
 
-        String title=(getTitle()!=null) ? i18n(getTitle()) : null;
+        String title=i18n(getTitle());
         
         PrintWriter w = response.getWriter();
         

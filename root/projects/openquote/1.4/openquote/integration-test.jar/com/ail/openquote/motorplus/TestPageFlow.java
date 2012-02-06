@@ -15,26 +15,28 @@
  */
 package com.ail.openquote.motorplus;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import com.ail.core.CoreProxy;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.openquote.ui.Label;
 import com.ail.openquote.ui.PageFlow;
 import com.ail.openquote.ui.SectionScroller;
 import com.ail.openquote.ui.util.Binding;
 
 @SuppressWarnings("deprecation")
-public class TestPageFlow extends CoreUserTestCase {
+public class TestPageFlow extends CoreUserBaseCase {
     private static final long serialVersionUID = 0L;
 
-    public TestPageFlow(String arg0) {
-		super(arg0);
-	}
-	
     /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setupSystemProperties();
     }
     
@@ -43,6 +45,7 @@ public class TestPageFlow extends CoreUserTestCase {
 	 * be instantiated without throwing exceptions.
 	 * @throws Exception
 	 */
+    @Test
 	public void testInstantiateTypes() throws Exception {
 		CoreProxy cp=new CoreProxy();
 		
@@ -53,7 +56,8 @@ public class TestPageFlow extends CoreUserTestCase {
 		cp.newProductType("AIL.Demo.MotorPlus", "QuotationPageFlow");
 	}
     
-	public void testPageFlowStructure() throws Exception {
+    @Test
+    public void testPageFlowStructure() throws Exception {
         CoreProxy cp=new CoreProxy();
         
         PageFlow pf=(PageFlow)cp.newProductType("AIL.Demo.MotorPlus", "QuotationPageFlow");
@@ -61,6 +65,7 @@ public class TestPageFlow extends CoreUserTestCase {
         
     }
     
+    @Test
 	public void testDataElementsOnLabel() throws Exception {
         CoreProxy cp=new CoreProxy();
         

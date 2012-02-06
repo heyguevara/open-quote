@@ -25,7 +25,7 @@ import javax.portlet.PortletSession;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.ExceptionRecord;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.PageFlow;
@@ -33,7 +33,7 @@ import com.ail.openquote.ui.RenderingError;
 import com.ail.openquote.ui.render.Renderer;
 
 /**
- * This class wraps a number of ThreadLocal objects which are initialized at the beginning of each Portal request/response 
+ * This class wraps a number of ThreadLocal objects which are initialised at the beginning of each Portal request/response 
  * calls and are available to any code executed within the portal container during the processing of the request/response.
  */
 public class QuotationContext {
@@ -70,14 +70,14 @@ public class QuotationContext {
                 quotation.setProductTypeId(productName);
             }
     
-        	// The request's Locale could change from one request to the next, if the user switches their browser
+        	// The request's ThreadLocale could change from one request to the next, if the user switches their browser
             // settings for example, so always use the current settings.
         	if (quotation != null) {
-        		quotation.setLocale(new Locale(request.getLocale()));
+        		quotation.setLocale(new ThreadLocale(request.getLocale()));
         	}
         	
     		// Set the thread's locale 
-        	Locale.setThreadLocale(request.getLocale());
+        	ThreadLocale.setThreadLocale(request.getLocale());
 
     		// Fetch the appropriate pageflow object for this session. The 'appropriate' pageflow
             // is the one associated with the product we're quoting for in this session. We get

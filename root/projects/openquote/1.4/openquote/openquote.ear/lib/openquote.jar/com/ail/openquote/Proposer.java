@@ -16,6 +16,7 @@
  */
 package com.ail.openquote;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.party.Address;
 import com.ail.party.Title;
@@ -24,6 +25,7 @@ import com.ail.party.Title;
  * Interface describing the information fields that are common to all proposer
  * types.
  */
+@TypeDefinition
 public interface Proposer {
 	String getEmailAddress();
 

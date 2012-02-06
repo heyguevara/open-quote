@@ -42,6 +42,7 @@ import java.util.regex.Pattern;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
@@ -93,6 +94,7 @@ import com.ail.openquote.ui.util.Functions;
 import com.ail.openquote.ui.util.QuotationContext;
 
 @SuppressWarnings("deprecation")
+@TypeDefinition(name="Renderer:text/xml")
 public class Xform extends Type implements Renderer {
 	private static final long serialVersionUID = 2918957259222383330L;
 	private RenderQuotationSummaryHelper renderQuotationSummaryHelper=new RenderQuotationSummaryHelper();
@@ -108,9 +110,7 @@ public class Xform extends Type implements Renderer {
 	}
 
 	public Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller)	throws IOException {
-		int rowCount=0;
-		
-        for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; rowCount++) {
+        for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; ) {
             Type t=it.next();
                
             for (Answer a: answerScroller.getAnswer()) {

@@ -17,40 +17,24 @@
 
 package com.ail.openquote.motorplus;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.XMLString;
 import com.ail.openquote.Quotation;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/08/28 17:36:36 $
- * @source $Source: /home/bob/CVSRepository/projects/multiquote/test.jar/com/ail/multiquote/motorplus/TestMotorPlusXml.java,v $
- */
-public class TestMotorPlusXml extends TestCase {
-    private static final long serialVersionUID = 2030295330203910171L;
+public class TestMotorPlusXml {
 
     private CoreProxy core = null;
 
     /**
-     * Constructs a test case with the given name.
-     */
-    public TestMotorPlusXml(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestMotorPlusXml.class);
-    }
-
-    /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() {
+    @Before
+    public void setUp() {
         System.setProperty("java.naming.factory.initial","org.jnp.interfaces.NamingContextFactory");
         System.setProperty("java.naming.provider.url","jnp://localhost:1099");
         System.setProperty("org.xml.sax.parser", "org.apache.xerces.parsers.SAXParser");
@@ -66,16 +50,10 @@ public class TestMotorPlusXml extends TestCase {
     }
 
     /**
-     * Tears down the fixture (run after each test finishes)
-     */
-    protected void tearDown() {
-    }
-
-    
-    /**
      * Test that a quotation with an assessment sheet marshals okay.
      * @throws Exception
      */
+    @Test
     public void testAssessmentSheetMarshal() throws Exception {
         System.out.println("test1");
         try {

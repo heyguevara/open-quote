@@ -63,7 +63,7 @@ public class GenerateQuotationDocumentAction extends Action {
                 Quotation quote=(Quotation)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchDocumentCommand cmd=(FetchDocumentCommand)proxy.newCommand("FetchQuoteDocument");
+                FetchDocumentCommand cmd=proxy.newCommand(FetchDocumentCommand.class);
                 cmd.setQuotationNumberArg(quote.getQuotationNumber());
                 cmd.invoke();
                 

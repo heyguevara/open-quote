@@ -1,25 +1,26 @@
 package com.ail.openquote;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import com.ail.core.CoreProxy;
-import com.ail.coretest.CoreUserTestCase;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.financial.CurrencyAmount;
 
 @SuppressWarnings("serial")
-public class TestCurrencyAmountToFromXML extends CoreUserTestCase {
+public class TestCurrencyAmountToFromXML extends CoreUserBaseCase {
     private CoreProxy core;
-
-	public TestCurrencyAmountToFromXML(String name) {
-        super(name);
-	}
 
     /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() { 
+    @Before
+    public void setUp() { 
         setupSystemProperties();
         core = new CoreProxy();
     }
 
+    @Test
     public void testToXml() {
 		CurrencyAmount ca=new CurrencyAmount("321.21", "GBP");
 		System.out.println("amount:"+ca.getAmount());

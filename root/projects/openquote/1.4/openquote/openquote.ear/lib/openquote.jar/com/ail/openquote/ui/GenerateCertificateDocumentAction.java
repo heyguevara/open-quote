@@ -63,7 +63,7 @@ public class GenerateCertificateDocumentAction extends Action {
                 Quotation quote=(Quotation)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchCertificateCommand cmd=(FetchCertificateCommand)proxy.newCommand("FetchCertificateDocument");
+                FetchCertificateCommand cmd=proxy.newCommand(FetchCertificateCommand.class);
                 cmd.setPolicyNumberArg(quote.getPolicyNumber());
                 cmd.invoke();
                 

@@ -2,6 +2,7 @@
 <deployments>
     <deployment>
         <instance>
+            <display-name xml:lang="en"></display-name>
             <instance-id>QuotationDevelopmentPortletInstance</instance-id>
             <portlet-ref>QuotationDevelopmentPortlet</portlet-ref>
         </instance>
@@ -9,6 +10,7 @@
 
     <deployment>
         <instance>
+            <display-name xml:lang="en"></display-name>
             <instance-id>ProductCatalogPortletInstance</instance-id>
             <portlet-ref>ProductCatalogPortlet</portlet-ref>
         </instance>

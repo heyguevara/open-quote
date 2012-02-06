@@ -153,7 +153,7 @@ public class QuestionSection extends PageElement {
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
         String title = getExpandedTitle(QuotationContext.getQuotation(), model);
 
-        title = (title!=null) ? i18n(title) : null;
+        title = i18n(title);
         
         String styleClass = getStyleClass();
         String ref = getRef();

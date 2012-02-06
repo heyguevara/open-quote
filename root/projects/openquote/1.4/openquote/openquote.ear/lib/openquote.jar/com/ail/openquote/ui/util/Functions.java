@@ -32,6 +32,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.annotation.XPathFunctionDefinition;
 import com.ail.core.Attribute;
 import com.ail.core.Type;
 import com.ail.openquote.ui.PageElement;
@@ -39,6 +40,7 @@ import com.ail.openquote.ui.PageElement;
 /**
  * This class defines a collection of functions used by the classes in {@link com.ail.openquote.ui}.
  */
+@XPathFunctionDefinition(namespace="u")
 public class Functions {
     private static SimpleDateFormat longFormat=new SimpleDateFormat("d MMMMM, yyyy");
 

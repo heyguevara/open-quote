@@ -206,7 +206,7 @@ public class Action extends PageElement {
 
 		VersionEffectiveDate ved = (quote.getQuotationDate() != null) ? new VersionEffectiveDate(quote.getQuotationDate()) : new VersionEffectiveDate();
 		CoreProxy cp = new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()),	ved, principal);
-		ExecutePageActionCommand c = (ExecutePageActionCommand) cp.newCommand("ExecutePageAction");
+		ExecutePageActionCommand c = cp.newCommand(ExecutePageActionCommand.class);
 		c.setQuotationArgRet(quote);
 		c.setPortletSessionArg(portletSession);
 		c.setServiceNameArg(commandName);

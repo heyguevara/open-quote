@@ -16,6 +16,7 @@
  */
 package com.ail.openquote.ui.util;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 import com.ail.openquote.Quotation;
 
@@ -23,6 +24,7 @@ import com.ail.openquote.Quotation;
  * Holds an XPath expression designed to be evaluated against a {@link Quotation} object. Binding objects
  * are used where a PageElement needs a collection of XPath expressions (e.g. {@link Label}.
  */
+@TypeDefinition
 public class Binding extends Type {
     private static final long serialVersionUID = -1048535311696230109L;
     private String xpath;

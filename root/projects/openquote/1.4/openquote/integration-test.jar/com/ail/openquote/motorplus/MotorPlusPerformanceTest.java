@@ -29,11 +29,6 @@ import com.ail.openquote.Quotation;
 
 /**
  * This class contains a number of test methods used in performance testing with grinder.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
  */
 public class MotorPlusPerformanceTest {
     private static int issueCount=0;
@@ -96,7 +91,7 @@ public class MotorPlusPerformanceTest {
         String qIn=quote.getQuotationNumber();
 
         // send the cleaned quote back into calc premium
-        CalculatePremiumCommand cmd=(CalculatePremiumCommand)core.newCommand("CalculatePremium");        
+        CalculatePremiumCommand cmd=core.newCommand(CalculatePremiumCommand.class);        
         cmd.setPolicyArgRet(quote);
         cmd.invoke();
 

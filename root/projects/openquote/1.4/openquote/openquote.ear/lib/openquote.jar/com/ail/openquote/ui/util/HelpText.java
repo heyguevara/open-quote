@@ -17,11 +17,13 @@
 
 package com.ail.openquote.ui.util;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
  * Help text is associated with a PageElement. Allows help text to be configured for use in rendered output. 
  */
+@TypeDefinition
 public class HelpText extends Type {
     private static final long serialVersionUID = 6414533098371760797L;
 

@@ -58,7 +58,7 @@ public class ViewWordingButtonAction extends CommandButtonAction {
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 
                 // This will force the wording do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchWordingCommand cmd=(FetchWordingCommand)proxy.newCommand("FetchWordingDocument");
+                FetchWordingCommand cmd=proxy.newCommand(FetchWordingCommand.class);
                 cmd.setPolicyNumberArg(policyNumber);
                 cmd.invoke();
                 

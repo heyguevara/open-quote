@@ -75,8 +75,7 @@ public class QuestionSeparator extends Question {
 
 	@Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title = getExpandedTitle(model);
-        title = (title!=null) ? i18n(title) : null;
+        String title = i18n(getExpandedTitle(model));
         PrintWriter w=response.getWriter();
         
         QuotationContext.getRenderer().renderQuestionSeparator(w, request, response, model, this, title);

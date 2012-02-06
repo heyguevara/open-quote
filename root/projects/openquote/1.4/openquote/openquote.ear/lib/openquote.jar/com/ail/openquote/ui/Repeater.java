@@ -336,7 +336,6 @@ public abstract class Repeater extends PageElement {
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
         boolean error=false;
-        int rowCount=0;
 
         // Loop through the rows
         for(Iterator<Type> it=model.xpathIterate(getBinding()) ; it.hasNext() ; ) {
@@ -346,8 +345,6 @@ public abstract class Repeater extends PageElement {
             for(AttributeField a: item) {
                 error|=a.processValidations(request, response, subModel);
             }
-
-            rowCount++;
         }
 
         return error;

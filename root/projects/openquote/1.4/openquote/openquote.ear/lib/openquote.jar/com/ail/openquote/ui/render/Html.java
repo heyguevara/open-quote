@@ -49,9 +49,10 @@ import java.util.regex.Pattern;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.core.Type;
 import com.ail.core.TypeEnum;
 import com.ail.financial.CurrencyAmount;
@@ -117,6 +118,7 @@ import com.ail.openquote.ui.util.QuotationContext;
 import com.ail.party.Title;
 
 @SuppressWarnings("deprecation")
+@TypeDefinition(name="Renderer:text/html")
 public class Html extends Type implements Renderer {
 	private static final long serialVersionUID = 1L;
 	private RenderAssessmentSheetDetailsHelper renderAssessmentSheetDetailsHelper=new RenderAssessmentSheetDetailsHelper();
@@ -165,15 +167,11 @@ public class Html extends Type implements Renderer {
 	}
 
 	public Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller) throws IOException {
-		int rowCount=0;
-		
-        for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; rowCount++) {
+        for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; ) {
             Type t=it.next();
                
             for (Answer a: answerScroller.getAnswer()) {
-                //w.printf("<tr>");
                 a.renderResponse(request, response, t);
-                //w.printf("</tr>");
             }
 
             w.printf("<tr><td height='4' colspan='2'></td></tr>");
@@ -276,7 +274,7 @@ public class Html extends Type implements Renderer {
 	                int size=(pattern==null) ? 7 : pattern.length()+(pattern.length()/3)+1;
 	                
 	                String numberformat=null;
-	                DecimalFormatSymbols dfs=new DecimalFormatSymbols(Locale.getThreadLocale());
+	                DecimalFormatSymbols dfs=new DecimalFormatSymbols(ThreadLocale.getThreadLocale());
 	                if (pattern==null) {
 	                	numberformat="formatnumber(this, '"+dfs.getDecimalSeparator()+"', '"+dfs.getGroupingSeparator()+"', -1)";
 	                }
@@ -322,7 +320,7 @@ public class Html extends Type implements Renderer {
 		            	post=attr.getUnit();
 	            	}
 	                
-	                DecimalFormatSymbols dfs=new DecimalFormatSymbols(Locale.getThreadLocale());
+	                DecimalFormatSymbols dfs=new DecimalFormatSymbols(ThreadLocale.getThreadLocale());
 	                int places=Currency.getInstance(attr.getUnit()).getDefaultFractionDigits();
 	                String numberformat="formatnumber(this, '"+dfs.getDecimalSeparator()+"', '"+dfs.getGroupingSeparator()+"', "+places+")";
 	           
@@ -1231,8 +1229,8 @@ public class Html extends Type implements Renderer {
         for(int col=0 ; col<rowScroller.getItem().size() ; col++) {
         	AttributeField a=rowScroller.getItem().get(col);
 
-        	String mainTitle=a.getExpandedTitle(model)!=null ? a.getExpandedTitle(model) : "";
-        	String subTitle=a.getExpandedSubTitle(model)!=null ? a.getExpandedSubTitle(model) : "";
+        	String mainTitle=a.getExpandedTitle(model)!=null ? i18n(a.getExpandedTitle(model)) : "";
+        	String subTitle=a.getExpandedSubTitle(model)!=null ? i18n(a.getExpandedSubTitle(model)) : "";
         	String clazz=rowScroller.isBoundToRequiredColumnAttribute(model, rowScroller.getBinding(), col) ? "required-field-indicator" : "optional-field-indicator";
 
         	w.printf("<td align='center'><table>"); 
@@ -1844,8 +1842,8 @@ public class Html extends Type implements Renderer {
             
             String expiryMonth=pc.getExpiryDate()!=null ? monthFormat.format(pc.getExpiryDate()) : "";
             String expiryYear=pc.getExpiryDate()!=null ? yearFormat.format(pc.getExpiryDate()) : "";
-            String startMonth=pc.getExpiryDate()!=null ? monthFormat.format(pc.getStartDate()) : "";
-            String startYear=pc.getExpiryDate()!=null ? yearFormat.format(pc.getStartDate()) : "";
+            String startMonth=pc.getStartDate()!=null ? monthFormat.format(pc.getStartDate()) : "";
+            String startYear=pc.getStartDate()!=null ? yearFormat.format(pc.getStartDate()) : "";
             
             if (pc.getCardHoldersName()==null) {
             	Proposer proposer=(Proposer)quote.getProposer();

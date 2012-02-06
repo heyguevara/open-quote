@@ -16,67 +16,18 @@
 package com.ail.insurance.quotation.notifyparty;
 
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 
 /**
  * This service simply delegates to the service specified by the quotation's product.
  */
-public class NotifyPartyService extends Service {
+public class NotifyPartyService extends Service<NotifyPartyArgument> {
     private static final long serialVersionUID = -4915889686192216902L;
-    private NotifyPartyArg args = null;
     private String configurationNamespace = null;
-    private Core core = null;
-
-    /** Default constructor */
-    public NotifyPartyService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setAuthor("$Author$");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date$");
-        v.setSource("$Source$");
-        v.setState("$State$");
-        v.setVersion("$Revision$");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (NotifyPartyArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CalculateTaxArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
     
     /**
      * Return the product type id of the policy we're assessing the risk for as the
@@ -121,7 +72,7 @@ public class NotifyPartyService extends Service {
         String namespace=Functions.productNameToConfigurationNamespace(quote.getProductTypeId());
         setConfigurationNamespace(namespace);
         
-        NotifyPartyCommand command=(NotifyPartyCommand)core.newCommand("NotifyParty");
+        NotifyPartyCommand command=(NotifyPartyCommand)core.newCommand(NotifyPartyCommand.class);
         
         command.setPolicyArg(quote);
 

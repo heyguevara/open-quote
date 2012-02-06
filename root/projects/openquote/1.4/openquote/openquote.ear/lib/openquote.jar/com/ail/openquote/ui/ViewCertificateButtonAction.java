@@ -58,7 +58,7 @@ public class ViewCertificateButtonAction extends CommandButtonAction {
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 
                 // This will force the certificate do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchCertificateCommand cmd=(FetchCertificateCommand)proxy.newCommand("FetchCertificateDocument");
+                FetchCertificateCommand cmd=proxy.newCommand(FetchCertificateCommand.class);
                 cmd.setPolicyNumberArg(policyNumber);
                 cmd.invoke();
                 

@@ -36,7 +36,17 @@
         </field>
     </class>
 
-    <class name="com.ail.core.Locale" extends="com.ail.core.Type">
+    <class name="com.ail.core.VersionEffectiveDate" extends="com.ail.core.Type">
+        <map-to xml="versionEffectiveDate"/>
+        <field name="time" type="long">
+            <bind-xml node="attribute"/>
+        </field>
+        <field name="date" type="date">
+            <bind-xml node="attribute"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.ThreadLocale" extends="com.ail.core.Type">
         <map-to xml="locale"/>
         <field name="language" type="string">
             <bind-xml node="attribute"/>
@@ -48,7 +58,7 @@
             <bind-xml node="attribute"/>
         </field>
     </class>
-
+    
     <class name="com.ail.core.language.Translation" extends="com.ail.core.Type">
         <map-to xml="translation"/>
         <field name="language" type="string" set-method="%1">
@@ -70,7 +80,7 @@
             </bind-xml>
         </field>
     </class>
-    
+
     <class name="com.ail.core.language.Translations" extends="com.ail.core.Type">
         <map-to xml="translations"/>
         <field name="defaultLanguage" type="string" required="yes" set-method="%1">
@@ -79,21 +89,12 @@
         <field name="translation" type="com.ail.core.language.Translation" collection="arraylist"/>
     </class>
     
-    <class name="com.ail.core.VersionEffectiveDate" extends="com.ail.core.Type">
-        <map-to xml="versionEffectiveDate"/>
-        <field name="time" type="long">
-            <bind-xml node="attribute"/>
-        </field>
-        <field name="date" type="date">
-            <bind-xml node="attribute"/>
-        </field>
+    <class name="com.ail.core.CoreUserImpl">
+        <map-to xml="coreuser"/>
+        <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate"/>
+        <field name="configurationNamespace" type="string"/>
     </class>
-    
-    <class name="com.ail.core.configure.XMLMapping" extends="com.ail.core.Type">
-        <map-to xml="XMLMapping"/>
-        <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
-    </class>
-    
+
 	<class name="com.ail.core.ExceptionRecord" extends="com.ail.core.Type">
         <field name="date" type="date">
             <bind-xml node="attribute"/>
@@ -107,13 +108,41 @@
         <field name="stack" type="string" collection="collection"/>
 	</class>
 
+    <class name="com.ail.core.command.ArgumentImpl" extends="com.ail.core.Type">
+        <field name="callersCore" type="com.ail.core.CoreUserImpl"/>
+    </class>
+
+    <class name="com.ail.core.logging.LoggerArgumentImpl" extends="com.ail.core.command.ArgumentImpl" auto-complete="true"/>
+
+    <class name="com.ail.core.product.listproducts.ListProductsArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="productsRet" type="string" collection="collection"/>
+    </class>
+
+    <class name="com.ail.core.document.generatedocument.StyleDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
+        <field name="styledDocumentRet" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+            <bind-xml type="any" node="element"/> 
+        </field>
+    </class>
+    
+    <class name="com.ail.insurance.quotation.assessrisk.AssessRiskArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="policyArgRet" type="com.ail.insurance.policy.Policy"/>
+    </class>
+    
+    <class name="com.ail.core.configure.XMLMapping" extends="com.ail.core.Type">
+        <map-to xml="XMLMapping"/>
+        <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+    </class>
+
     <class name="com.ail.core.configure.Component" extends="com.ail.core.Type">
         <map-to xml="component"/>
         <field name="name" type="string">
             <bind-xml node="attribute"/>
         </field>        
     </class>
-    
+
     <class name="com.ail.core.configure.Parameter" extends="com.ail.core.configure.Component">
         <map-to xml="parameter"/>
         <field name="value" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
@@ -551,8 +580,9 @@
         <field name="wording" type="com.ail.insurance.policy.Wording" collection="arraylist"/>
         <field name="quotationNumber" type="string"/>
         <field name="paymentDetails" type="com.ail.financial.PaymentSchedule"/>
+        <field name="policyHolder" type="com.ail.party.Party"/>
         <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist"/>
-        <field name="locale" type="com.ail.core.Locale"/>
+        <field name="locale" type="com.ail.core.ThreadLocale"/>
     </class>
 
     <class name="com.ail.util.DateOfBirth" extends="com.ail.core.Type" auto-complete="false">
@@ -1076,42 +1106,30 @@
 		</field>
     </class>
 
-    <!-- services, commands, and their arguments -->
-    <class name="com.ail.core.command.CommandArgImp" extends="com.ail.core.Type"/>
-    
-    <class name="com.ail.insurance.quotation.notifybrokerbyemail.NotifyBrokerByEmailArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
+    <class name="com.ail.insurance.quotation.notifybrokerbyemail.NotifyBrokerByEmailArgumentImpl" extends="com.ail.core.command.ArgumentImpl" auto-complete="true"/>
 
-    <class name="com.ail.insurance.quotation.notifyproposerbyemail.NotifyProposerByEmailArgImp" extends="com.ail.core.command.CommandArgImp" auto-complete="true"/>
+    <class name="com.ail.insurance.quotation.notifyproposerbyemail.NotifyProposerByEmailArgumentImpl" extends="com.ail.core.command.ArgumentImpl" auto-complete="true"/>
 
-    <class name="com.ail.core.document.generatedocument.StyleDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
-        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
-            <bind-xml type="any" node="element"/> 
-        </field>
-        <field name="styledDocumentRet" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
-            <bind-xml type="any" node="element"/> 
-        </field>
-    </class>
-    
-    <class name="com.ail.core.document.generatedocument.RenderDocumentArgImp" extends="com.ail.core.command.CommandArgImp">
+    <class name="com.ail.core.document.generatedocument.RenderDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
         <field name="sourceDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
             <bind-xml type="any" node="element"/> 
         </field>
         <field name="renderOptionsArg" type="string"/>
         <field name="translationUrlArg" type="string"/>
-        <field name="renderedDocumentRet" type="string" get-method="getRenderedDocumentRetAsString" set-method="setRenderedDocumentRetAsString"/>
+        <field name="renderedDocumentRet" collection="array" type="byte"/>
     </class>
 
-    <class name="com.ail.core.configure.server.GetCommandScriptArgImp" auto-complete="false">
+    <class name="com.ail.core.configure.server.GetCommandScriptArgumentImpl" auto-complete="false">
         <description>Default mapping for class com.ail.core.configure.server.GetCommandScriptArgImp</description>
-        <map-to xml="getCommandScriptArgImp"/>
+        <map-to xml="getCommandScriptArgumentImpl"/>
         <field name="commandScriptRet" type="com.ail.core.CommandScript"/>
         <field name="commandNameArg" type="string"/>
         <field name="namespaceArg" type="string"/>
     </class>
     
-    <class name="com.ail.core.configure.server.SetCommandScriptArgImp" auto-complete="false">
+    <class name="com.ail.core.configure.server.SetCommandScriptArgumentImpl" auto-complete="false">
         <description>Default mapping for class com.ail.core.configure.server.SetCommandScriptArgImp</description>
-        <map-to xml="setCommandScriptArgImp"/>
+        <map-to xml="setCommandScriptArgumentImpl"/>
         <field name="commandTypeArg" type="string"/>
         <field name="commandNameArg" type="string"/>
         <field name="namespaceArg" type="string"/>

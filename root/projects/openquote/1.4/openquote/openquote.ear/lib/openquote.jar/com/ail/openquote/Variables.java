@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 
@@ -29,6 +30,7 @@ import com.ail.core.Type;
  * be used from within a Drools rule set as a working-memory version of the
  * application data HashMap which Drools offers.
  */
+@TypeDefinition
 public class Variables extends Type {
     private static final long serialVersionUID = -5362666512306944366L;
 

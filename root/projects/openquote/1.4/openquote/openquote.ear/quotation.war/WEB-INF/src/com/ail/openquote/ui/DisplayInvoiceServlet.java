@@ -39,7 +39,7 @@ public class DisplayInvoiceServlet extends HttpServlet {
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy=new CoreProxy();
-        FetchInvoiceCommand cmd=(FetchInvoiceCommand)proxy.newCommand("FetchInvoiceDocument");
+        FetchInvoiceCommand cmd=proxy.newCommand(FetchInvoiceCommand.class);
         cmd.setPolicyNumberArg(policyNumber);
 
         try {

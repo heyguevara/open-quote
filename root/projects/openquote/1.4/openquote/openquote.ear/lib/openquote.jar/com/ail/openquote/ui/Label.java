@@ -16,6 +16,8 @@
  */
 package com.ail.openquote.ui;
 
+import static com.ail.openquote.ui.messages.I18N.i18n;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -114,7 +116,7 @@ public class Label extends PageElement {
             params[i++] = model.xpathGet(expr.getXpath());
         }
 
-        QuotationContext.getRenderer().renderLabel(response.getWriter(), request, response, model, this, format, params);        
+        QuotationContext.getRenderer().renderLabel(response.getWriter(), request, response, model, this, i18n(format), params);        
         
         return model;
     }

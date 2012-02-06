@@ -17,47 +17,33 @@
 
 package com.ail.openquote.motorplus;
 
-import java.util.List;
-
 import static com.ail.insurance.policy.PolicyStatus.SUBMITTED;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.Core;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.Functions;
 import com.ail.core.XMLString;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.insurance.quotation.notifyparty.NotifyPartyCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 
-/**
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- */
-public class TestNotify extends CoreUserTestCase {
+public class TestNotify extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
-
-    /**
-     * Constructs a test case with the given name.
-     */
-    public TestNotify(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestNotify.class);
-    }
-
+    String configurationNamespace;
+    
+    
     /**
      * Tears down the fixture (run after each test finishes)
      */
+    @After
     @SuppressWarnings("unchecked")
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         // Emails are send async, so give the system a chance to process the emails before we delete 'em!
         Thread.sleep(10000);
         for(SavedQuotation sq: (List<SavedQuotation>)getCore().query("get.savedQuotation.by.quotationNumber", "TESTONE")) {
@@ -79,7 +65,8 @@ public class TestNotify extends CoreUserTestCase {
     /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setupSystemProperties();
         super.setCore(new Core(this));
 
@@ -103,27 +90,36 @@ public class TestNotify extends CoreUserTestCase {
         System.out.println("Created quote systemId: "+sq.getSystemId());
 
         getCore().closePersistenceSession();
-        
+
         setConfigurationNamespace(Functions.productNameToConfigurationNamespace(quote.getProductTypeId()));
     }
 
-    /**
-     */
+    @Test
     public void testSendNotifyEmail() throws Exception {
-        NotifyPartyCommand cmd=(NotifyPartyCommand)getCore().newCommand("SendNotification");
+        NotifyPartyCommand cmd=getCore().newCommand(NotifyPartyCommand.class);
         cmd.setQuotationNumberArg("TESTONE");
         cmd.invoke();
    }
 
+    @Test
     public void testSendReferNotifyEmail() throws Exception {
-        NotifyPartyCommand cmd=(NotifyPartyCommand)getCore().newCommand("SendNotification");
+        NotifyPartyCommand cmd=getCore().newCommand(NotifyPartyCommand.class);
         cmd.setQuotationNumberArg("TESTTWO");
         cmd.invoke();
    }
 
+    @Test
     public void testSendSubmittedNotifyEmail() throws Exception {
-        NotifyPartyCommand cmd=(NotifyPartyCommand)getCore().newCommand("SendNotification");
+        NotifyPartyCommand cmd=getCore().newCommand(NotifyPartyCommand.class);
         cmd.setQuotationNumberArg("TESTTHREE");
         cmd.invoke();
    }
+
+    public String getConfigurationNamespace() {
+        return configurationNamespace;
+    }
+
+    public void setConfigurationNamespace(String configurationNamespace) {
+        this.configurationNamespace = configurationNamespace;
+    }
 }

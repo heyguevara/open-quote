@@ -16,10 +16,12 @@
  */
 package com.ail.openquote;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.CoreProxy;
 import com.ail.core.XMLException;
 import com.ail.core.XMLString;
 
+@TypeDefinition
 public class SavedQuotation extends SavedQuotationSummary {
     private static final long serialVersionUID = 8924615006523668514L;
 

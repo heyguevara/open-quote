@@ -67,7 +67,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/saxon8-9.jar"/>
 	<classpathentry kind="lib" path="target/jboss/lib/endorsed/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/ant-1.6.5.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/bouncycastle-1.29.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/castor-xml-1.1-ail.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/commons-digester-1.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/drools-compiler-4.0.3.jar"/>
@@ -75,7 +74,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/drools-decisiontables-4.0.3.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/drools-jsr94-4.0.3.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/eclipse-jtd-core-3.2.3.v_686_R32x.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/itext-1.2.mg.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/janino-2.5.10.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/jlfgr-1.0.jar"/>
@@ -108,5 +106,14 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mysql-connector-java-5.1.17-bin.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/bcprov-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/bctsp-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/itextpdf-5.1.2.jar"/>
+	<classpathentry kind="lib" path="/development/build/lib/annotation-3.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

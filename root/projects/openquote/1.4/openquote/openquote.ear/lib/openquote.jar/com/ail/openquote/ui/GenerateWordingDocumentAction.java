@@ -63,7 +63,7 @@ public class GenerateWordingDocumentAction extends Action {
                 Quotation quote=(Quotation)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchWordingCommand cmd=(FetchWordingCommand)proxy.newCommand("FetchWordingDocument");
+                FetchWordingCommand cmd=proxy.newCommand(FetchWordingCommand.class);
                 cmd.setPolicyNumberArg(quote.getQuotationNumber());
                 cmd.invoke();
                 

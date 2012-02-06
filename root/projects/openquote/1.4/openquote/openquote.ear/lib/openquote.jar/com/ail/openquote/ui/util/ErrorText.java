@@ -17,6 +17,7 @@
 
 package com.ail.openquote.ui.util;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
 
 /**
@@ -25,6 +26,7 @@ import com.ail.core.Type;
  * with them. Attaching an ErrorText to the page element gives the pageflow author the opportunity to define
  * a more meaningful error message, and to indicate to the renderer how the error should be represented.
  */
+@TypeDefinition
 public class ErrorText extends Type {
     private static final long serialVersionUID = 6414533098371760797L;
 

@@ -17,6 +17,8 @@
 
 package com.ail.openquote.pageflow;
 
+import static org.junit.Assert.*;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Locale;
@@ -25,46 +27,31 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.Core;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.PageFlow;
 import com.ail.openquote.ui.util.QuotationContext;
 
 /**
  */
-public class TestHtmlRender extends CoreUserTestCase {
+public class TestHtmlRender extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
-
-    /**
-     * Constructs a test case with the given name.
-     */
-    public TestHtmlRender(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestHtmlRender.class);
-    }
 
     /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      */
-    protected void setUp() {
+    @Before
+    public void setUp() {
         super.setupSystemProperties();
         super.setCore(new Core(this));
     }
 
-    /**
-     * Tears down the fixture (run after each test finishes)
-     */
-    protected void tearDown() {
-    }
-    
+    @Test
     public void testPageRender() throws Exception {
         XMLString instanceXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusInstance.xml"));
         Quotation instanceObj = (Quotation) super.getCore().fromXML(Quotation.class, instanceXml);

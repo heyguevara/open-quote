@@ -148,9 +148,9 @@ public class AnswerSection extends PageElement {
 
     	PrintWriter w = response.getWriter();
         
-        String title = getExpandedTitle(QuotationContext.getQuotation(), model);
+        String title = i18n(getExpandedTitle(QuotationContext.getQuotation(), model));
 
-        return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, i18n(title));
+        return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, title);
 	}
 
     @Override

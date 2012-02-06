@@ -39,7 +39,7 @@ public class DisplayCertificateServlet extends HttpServlet {
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy=new CoreProxy();
-        FetchCertificateCommand cmd=(FetchCertificateCommand)proxy.newCommand("FetchCertificateDocument");
+        FetchCertificateCommand cmd=proxy.newCommand(FetchCertificateCommand.class);
         cmd.setPolicyNumberArg(policyNumber);
 
         try {

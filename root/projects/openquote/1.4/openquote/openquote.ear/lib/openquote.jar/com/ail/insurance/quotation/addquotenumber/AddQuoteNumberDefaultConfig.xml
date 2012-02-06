@@ -3,10 +3,6 @@
  This file defines the default (factory) configuration for the
  AddQuoteNumber Service. This configuration is used by the entry point's
  resetConfiguration() method.
- This configuration doesn't represent a real live configuration. This
- is only the core service and as such it doesn't define any product
- rules. For these you have to look at the specializations that use this
- service.
 -->
 <configuration 
   xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"

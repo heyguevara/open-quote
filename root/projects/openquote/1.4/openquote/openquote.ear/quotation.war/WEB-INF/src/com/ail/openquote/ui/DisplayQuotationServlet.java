@@ -39,7 +39,7 @@ public class DisplayQuotationServlet extends HttpServlet {
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy=new CoreProxy();
-        FetchDocumentCommand cmd=(FetchDocumentCommand)proxy.newCommand("FetchQuoteDocument");
+        FetchDocumentCommand cmd=proxy.newCommand(FetchDocumentCommand.class);
         cmd.setQuotationNumberArg(quoteNumber);
 
         try {

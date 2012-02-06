@@ -152,8 +152,8 @@ public class Answer extends PageElement {
 
     	PrintWriter w = response.getWriter();
         
-        String aTitle = getExpandedTitle(QuotationContext.getQuotation(), model);
+        String aTitle = i18n(getExpandedTitle(QuotationContext.getQuotation(), model));
 
-        return QuotationContext.getRenderer().renderAnswer(w, request, response, model, this, i18n(aTitle), formattedAnswer(model.xpathGet(binding)));
+        return QuotationContext.getRenderer().renderAnswer(w, request, response, model, this, aTitle, formattedAnswer(model.xpathGet(binding)));
     }
 }

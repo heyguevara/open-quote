@@ -17,6 +17,7 @@ package com.ail.openquote;
 
 import java.util.Date;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
@@ -32,6 +33,7 @@ import com.ail.core.TypeXPathException;
  * type model easier. The major disadvantage is that once you've wrapped an object (e.g. an Asset) in a fact, you 
  * can't then use native rule Condition queries on it as easily.
  */
+@TypeDefinition
 public class Fact extends Type {
     private static final long serialVersionUID = -2842993394541843117L;
     private String name;

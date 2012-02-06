@@ -21,8 +21,10 @@ import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import com.ail.annotation.TypeDefinition;
 import com.ail.openquote.ui.PageElement;
 
+@TypeDefinition
 public class OrderedLinkedList<E extends PageElement> extends LinkedList<E> implements PropertyChangeListener {
     private static final long serialVersionUID = -8406993961417200354L;
 

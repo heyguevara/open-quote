@@ -26,9 +26,10 @@ import java.util.Map;
 
 import org.drools.spi.KnowledgeHelper;
 
+import com.ail.annotation.XPathFunctionDefinition;
 import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
-import com.ail.core.Locale;
+import com.ail.core.ThreadLocale;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
 import com.ail.insurance.policy.Asset;
@@ -38,6 +39,7 @@ import com.ail.insurance.policy.Section;
  * This class defines a set of unrelated functions which are intended to be
  * used from within Drools rulesets. 
  */
+@XPathFunctionDefinition(namespace="m")
 public class Functions {
 
     /**
@@ -262,7 +264,7 @@ public class Functions {
     }
 
     /**
-     * Convert a string to upper case. This simply wraps {@link java.lang.String#toUpperCase(Locale locale)}
+     * Convert a string to upper case. This simply wraps {@link java.lang.String#toUpperCase(ThreadLocale locale)}
      * @param string String to be converted
      * @return Upper case version of <i>string</i>, or null if <i>string</i> is null.
      */
@@ -271,12 +273,12 @@ public class Functions {
     		return null;
     	}
     	else {
-    		return string.toUpperCase(Locale.getThreadLocale());
+    		return string.toUpperCase(ThreadLocale.getThreadLocale());
     	}
     }
 
     /**
-     * Convert a string to lower case. This simply wraps {@link java.lang.String#toLowerCase(Locale locale)}
+     * Convert a string to lower case. This simply wraps {@link java.lang.String#toLowerCase(ThreadLocale locale)}
      * @param string String to be converted
      * @return Lower case version of <i>string</i>, or null if <i>string</i> is null.
      */
@@ -285,7 +287,7 @@ public class Functions {
     		return null;
     	}
     	else {
-    		return string.toLowerCase(Locale.getThreadLocale());
+    		return string.toLowerCase(ThreadLocale.getThreadLocale());
     	}
     }
     

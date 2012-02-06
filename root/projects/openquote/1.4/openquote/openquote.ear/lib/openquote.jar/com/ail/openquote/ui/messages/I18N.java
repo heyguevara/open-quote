@@ -33,7 +33,7 @@ public class I18N {
      * conventional "i18n_" prefix). If the prefix is not present, it will be added and 
      * the resulting key looked up.
      * @param message key identifying the string to be returned.
-     * @return Locale specific string, or the value of <i>message</i> if a match cannot be found. 
+     * @return ThreadLocale specific string, or the value of <i>message</i> if a match cannot be found. 
      */
 	public static String i18n(String message) {
 		if (message==null) {
@@ -52,7 +52,7 @@ public class I18N {
      * Return the translation matching a specific message (aka key). The translation is
      * based on the message passed in and the thread's current locale.
      * @param message key identifying the string to be returned.
-     * @return Locale specific string, or the value of <i>alternative</i> if a match cannot be found. 
+     * @return ThreadLocale specific string, or the value of <i>alternative</i> if a match cannot be found. 
      */
 	public static String i18n(String message, String alternative) {
 		if (message!=null) {

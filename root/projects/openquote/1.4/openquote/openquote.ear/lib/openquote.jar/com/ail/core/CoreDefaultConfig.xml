@@ -1,479 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- This file defines the default (factory) configuration for the Core. This
- configuration is used by the core's resetConfiguration() method.
- -->
-<configuration 
- xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!-- This file defines the default (factory) configuration for the Core. This configuration is used by the core's resetConfiguration() 
+    method. -->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <name>Default Core Configuration</name>
-  <timeout>-1</timeout>
-  <who>factory</who>
-  <version>$Revision$</version>  
+    <name>Default Core Configuration</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>1.4</version>
 
-  <!-- Reset the following namespaces when a "reset all" request is made. -->
-  <!-- Note: com.ail.core.Core is implicitly included.                    -->
-  <group name="NamespacesToResetOnResetAll">
-    <parameter name="com.ail.core.CoreProxy"/>
-    <parameter name="com.ail.core.configure.server.ServerBean"/>
-    <parameter name="com.ail.core.command.CommandServerBean"/>
-    <parameter name="com.ail.core.validator.CommonsValidatorService"/>
-    <parameter name="com.ail.core.product.ProductManagerBean"/>
-    <parameter name="com.ail.core.product.listproducts.ListProductsService"/>
-    <parameter name="com.ail.core.product.resetallproducts.ResetAllProductsService"/>
-    <parameter name="com.ail.core.persistence.PersistenceServerBean"/>
-    <parameter name="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService"/>
-    <parameter name="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService"/>
-    <parameter name="com.ail.insurance.quotation.calculatepremium.CalculatePremiumService"/>
-    <parameter name="com.ail.insurance.quotation.QuotationBean"/>
-    <parameter name="com.ail.insurance.acceptance.AcceptanceBean"/>
-    <parameter name="com.ail.insurance.onrisk.OnRiskBean"/>
-  </group>
+    <!-- Next (unique) Number to use in unique number generation for the various -->
+    <!-- types of number. The GenerateUniqueNumber service updates this parameter -->
+    <!-- as numbers are used. These values can be overridden by product. -->
+    <parameter name="InvoiceNumberNextNumber">1000</parameter>
+    <parameter name="PolicyNumberNextNumber">1000</parameter>
+    <parameter name="QuoteNumberNextNumber">1000</parameter>
 
-  <!-- Define the functions to be made available to JXPath. The name of each -->
-  <!-- parameter becomes the namespace and the value is the class which      -->
-  <!-- implements the functions.                                             -->
-  <group name="JXPathExtensions">
-    <parameter name="c">com.ail.core.Functions</parameter>
-    <parameter name="m">com.ail.openquote.Functions</parameter>
-    <parameter name="u">com.ail.openquote.ui.util.Functions</parameter>
-  </group>
-  
-  <builders>
-    <builder name="ClassBuilder" factory="com.ail.core.factory.ClassFactory"/>
-    <builder name="CachingClassBuilder" factory="com.ail.core.factory.CachingClassFactory"/>
-    <builder name="BeanShellBuilder" factory="com.ail.core.factory.BeanShellFactory"/>
-    <builder name="CastorXMLBuilder" factory="com.ail.core.factory.CastorXMLFactory"/>
-  </builders>
+    <!-- To avoid hitting the database every time a unique number is asked for, -->
+    <!-- the GenerateUniqueNumber service takes a chunk of numbers at a time, -->
+    <!-- keeps track of the ones it uses, then comes back for more when it runs -->
+    <!-- out. *BlockSize controls the number that are allocated on each call. -->
+    <!-- These values can be overridden by product. -->
+    <parameter name="InvoiceNumberBlockSize">100</parameter>
+    <parameter name="PolicyNumberBlockSize">100</parameter>
+    <parameter name="QuoteNumberBlockSize">100</parameter>
 
-  <types>
+    <types>
 
-    <!--====================================-->
-    <!--   Define the default core services -->
-    <!--====================================-->
+        <service name='AcceptanceServicesEJB' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
+            <parameter name='JndiName'>Acceptance</parameter>
+        </service>
 
-    <!-- NullService: This service does nothing, it can be used to stub commands -->
-    <service name="NullService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.NullService</parameter>
-    </service>
+        <service name="GenerateQuotationDocumentService" key="com.ail.core.command.EJBAccessor">
+            <parameter name="JndiName">Quotation</parameter>
+        </service>
 
-    <!-- ToXMLService: Convert an object graph into and XMLString -->
-    <service name="ToXMLService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.xmlbinding.CastorToXMLService</parameter>
-    </service>
+        <service name="OnRiskEJB" key="com.ail.core.command.EJBAccessor">
+            <parameter name="JndiName">OnRisk</parameter>
+        </service>
 
-    <!-- FromXMLService: Convert an XMLString into an object graph -->
-    <service name="FromXMLService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.xmlbinding.CastorFromXMLService</parameter>
-    </service>
+        <service name='PersistenceService' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
+            <parameter name='JndiName'>PersistenceServer</parameter>
+        </service>
 
-    <!-- LoggingService: Writes logging messages to System.out -->
-    <service name="LoggingService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.logging.SystemOutLoggerService</parameter>
-    </service>
+        <service name="JMSQueueService" key="com.ail.core.command.JMSAccessor">
+            <parameter name="Factory">ConnectionFactory</parameter>
+            <parameter name="Queue">queue/AilCommandQueue</parameter>
+        </service>
 
-    <!-- ValidatorService: Validation -->
-    <service name="ValidatorService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.validator.CommonsValidatorService</parameter>
-    </service>
+        <!-- Map all of the logger commands to the stdio logger -->
+        <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
 
-    <!-- GetClassListService: GetClassList -->
-    <service name="GetClassListService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.finder.GetClassListService</parameter>
-    </service>
+        <!-- Map all of the persistence commands to the persistence server -->
+        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
 
-    <!-- GetProductDefinitionListService: Fetch a list of the products known to the system. -->
-    <service name="GetProductDefinitionListService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.product.getproductdefinitionlist.GetProductDefinitionListService</parameter>
-    </service>
+        <command name='FetchQuoteDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.fetchdocument.FetchDocumentCommandImpl'>
+            <parameter name='Accessor'>com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
+        </command>
+        <command name='GenerateQuotationDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.generatedocument.GenerateDocumentCommandImpl'>
+            <parameter name='Accessor'>GenerateQuotationDocumentService</parameter>
+        </command>
+        <command name='GenerateWordingDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.wording.GenerateWordingCommandImpl'>
+            <parameter name='Accessor'>OnRiskEJB</parameter>
+        </command>
+        <command name='GenerateCertificateDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.certificate.GenerateCertificateCommandImpl'>
+            <parameter name='Accessor'>OnRiskEJB</parameter>
+        </command>
+        <command name='GenerateInvoiceDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.invoice.GenerateInvoiceCommandImpl'>
+            <parameter name='Accessor'>OnRiskEJB</parameter>
+        </command>
 
-    <!-- InstantiateProductService: Create an instance of a named product -->
-    <service name="InstantiateProductService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.product.instantiateproduct.InstantiateProductService</parameter>
-    </service>
-    
-    <!-- GetNamespaceService: get a list of the namespaces know to the configure system -->
-    <service name="GetNamespacesService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.GetNamespacesService</parameter>
-    </service>
-    
-    <!-- GetConfigurationService: get a named configuration -->
-    <service name="GetConfigurationService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.GetConfigurationService</parameter>
-    </service>
-    
-    <!-- SetConfigurationService: save a named configuration -->
-    <service name="SetConfigurationService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.SetConfigurationService</parameter>
-    </service>
-    
-    <!-- GetConfigurationHistoryService: fetch a namesapce's history -->
-    <service name="GetNamespacesHistoryService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.GetNamespacesHistoryService</parameter>
-    </service>
+        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommandImpl">
+            <parameter name="Service">AcceptanceServicesEJB</parameter>
+        </command>
 
-    <service name="MakeARecoveryService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.subrogation.makearecovery.MakeARecoveryService</parameter>
-    </service>
- 
-    <!-- PackageCarService: Service to build and return an Configuration ARchive -->
-    <service name="PackageCarService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.PackageCarService</parameter>
-    </service>
-    
-    <!-- DeployCarService: Service which reads configurations from a Configuration ARchive and deploys them -->
-    <service name="DeployCarService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.DeployCarService</parameter>
-    </service>
-    
-    <!-- CatalogCarService: Parse a Configuration ARchive and return a list of the configurations found in it. -->
-    <service name="CatalogCarService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.configure.server.CatalogCarService</parameter>
-    </service>
-    
-    <!-- ListProductsService: Returns a list of all the products know to the system -->
-    <service name="ListProductsService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.product.listproducts.ListProductsService</parameter>
-    </service>
-    
-    <!-- NewProductTypeService: Instantiate a product's type -->
-    <service name="NewProductTypeService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.product.newproducttype.NewProductTypeService</parameter>
-    </service>
-    
-    <!-- ResetAllProductsService: Reset all the products know to the system -->
-    <service name="ResetAllProductsService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.product.resetallproducts.ResetAllProductsService</parameter>
-    </service>
-    
-    <!-- ResetProductService: Reset the specified product -->
-    <service name="ResetProductService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.product.resetproduct.ResetProductService</parameter>
-    </service>
-    
-    <service name='AcceptanceServicesEJB' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
-      <parameter name='JndiName'>Acceptance</parameter>
-    </service>
-    
-    <service name='AssessRiskService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-      <parameter name='ServiceClass'>com.ail.insurance.quotation.assessrisk.AssessRiskService</parameter>
-    </service>
-    
-    <service name="GenerateQuotationDocumentService" key="com.ail.core.command.EJBAccessor">
-      <parameter name="JndiName">Quotation</parameter>
-    </service>
+        <command name="RenderBrokerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.openquote.ui.render.html.BrokerQuotationSummaryService/html</parameter>
+        </command>
 
-    <service name="OnRiskEJB" key="com.ail.core.command.EJBAccessor">
-      <parameter name="JndiName">OnRisk</parameter>
-    </service>
+        <command name="RenderBrokerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
+        </command>
 
-    <service name='CalculatePremiumService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-      <parameter name='ServiceClass'>com.ail.insurance.quotation.calculatepremium.CalculatePremiumService</parameter>
-    </service>
-    
-    <service name="RefreshAssessmentSheetsService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-        <parameter name="ServiceClass">com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsService</parameter>
-    </service>
+        <command name="RenderProposerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.openquote.ui.render.html.ProposerQuotationSummaryService/html</parameter>
+        </command>
 
-    <service name='AddQuoteNumberService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-      <parameter name='ServiceClass'>com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService</parameter>
-    </service>
-   
-    <service name='AddPolicyNumberService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-      <parameter name='ServiceClass'>com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService</parameter>
-    </service>
-    
-    <service name='EnforceComplianceService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-      <parameter name='ServiceClass'>com.ail.insurance.quotation.enforcecompliance.EnforceComplianceService</parameter>
-    </service>
-    
-    <service name='ExecutePageActionService' builder='ClassBuilder' key='com.ail.core.command.ClassAccessor'>
-      <parameter name='ServiceClass'>com.ail.core.product.executepageaction.ExecutePageActionService</parameter>
-    </service>
-    
-    <service name='PersistenceService' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
-      <parameter name='JndiName'>PersistenceServer</parameter>
-    </service>
-    
-    <!-- Hibernate services -->
-    <service name="HibernateOpenSessionService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
-    </service>
-    
-    <service name="HibernateCloseSessionService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
-    </service>
-    
-    <service name="HibernateUpdateService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
-    </service>
-    
-    <service name="HibernateQueryService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
-    </service>
-    
-    <service name="HibernateLoadService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
-    </service>
-    
-    <service name="HibernateCreateService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
-    </service>
-    
-    <service name="HibernateDeleteService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
-    </service>
-    
-    <service name="GenerateQuoteDocumentService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.quotation.generatedocument.GenerateDocumentService</parameter>
-    </service>
-    
-    <service name="FetchQuoteDocumentService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
-    </service>
-    
-    <service name="FetchInvoiceDocumentService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.onrisk.invoice.FetchInvoiceService</parameter>
-    </service>
-    
-    <service name="FetchWordingDocumentService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.onrisk.wording.FetchWordingService</parameter>
-    </service>
-    
-    <service name="FetchCertificateDocumentService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.onrisk.certificate.FetchCertificateService</parameter>
-    </service>
-    
-    <service name="NotifyPartyByEmailService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.quotation.notifyparty.NotifyPartyByEmailService</parameter>
-    </service>
-    
-    <service name="JMSQueueService" key="com.ail.core.command.JMSAccessor">
-      <parameter name="Factory">ConnectionFactory</parameter>
-      <parameter name="Queue">queue/AilCommandQueue</parameter>
-    </service>
-     
-    <service name="RenderBrokerQuotationSummaryService/html" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.openquote.ui.render.html.BrokerQuotationSummaryService</parameter>
-    </service>
-    
-    <service name="RenderProposerQuotationSummaryService/html" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.openquote.ui.render.html.ProposerQuotationSummaryService</parameter>
-    </service>
-    
-    
-    <!--=======================================================================-->
-    <!-- Bind the default core services (above) to Commands used by Core.class -->
-    <!--=======================================================================-->
-    <command name="ToXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.ToXMLCommand">
-      <parameter name="Service">ToXMLService</parameter>
-    </command>
-
-    <command name="FromXML" builder="ClassBuilder" key="com.ail.core.xmlbinding.FromXMLCommand">
-      <parameter name="Service">FromXMLService</parameter>
-    </command>
-
-    <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
-      <parameter name="Service">LoggingService</parameter>
-    </command>
-
-    <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
-      <!-- Set to NullService to turn debug off -->
-      <parameter name="Service">LoggingService</parameter>
-    </command>
-
-    <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
-      <parameter name="Service">LoggingService</parameter>
-    </command>
-
-    <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
-      <parameter name="Service">LoggingService</parameter>
-    </command>
-
-    <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommand">
-      <parameter name="Service">LoggingService</parameter>
-    </command>
-
-    <command name="Validator" builder="ClassBuilder" key="com.ail.core.validator.ValidatorCommand">
-      <parameter name="Service">ValidatorService</parameter>
-    </command>
-
-    <command name="GetClassList" builder="ClassBuilder" key="com.ail.core.configure.finder.GetClassListCommand">
-      <parameter name="Service">GetClassListService</parameter>
-    </command>
-
-    <command name="GetProductDefinitionList" builder="ClassBuilder" key="com.ail.core.product.getproductdefinitionlist.GetProductDefinitionListCommand">
-      <parameter name="Service">GetProductDefinitionListService</parameter>
-    </command>
-
-    <command name="GetProductDefinition" builder="ClassBuilder" key="com.ail.core.product.getproductdefinition.GetProductDefinitionCommand">
-      <parameter name="Service">GetProductDefinitionService</parameter>
-    </command>
-    
-    <command name="InstantiateProduct" builder="ClassBuilder" key="com.ail.core.product.instantiateproduct.InstantiateProductCommand">
-      <parameter name="Service">InstantiateProductService</parameter>
-    </command>
-    
-    <command name="GetNamespaces" builder="ClassBuilder" key="com.ail.core.configure.server.GetNamespacesCommand">
-      <parameter name="Service">GetNamespacesService</parameter>
-    </command>
-    
-    <command name="GetConfiguration" builder="ClassBuilder" key="com.ail.core.configure.server.GetConfigurationCommand">
-      <parameter name="Service">GetConfigurationService</parameter>
-    </command>
-    
-    <command name="SetConfiguration" builder="ClassBuilder" key="com.ail.core.configure.server.SetConfigurationCommand">
-      <parameter name="Service">SetConfigurationService</parameter>
-    </command>
-    
-    <command name="GetNamespacesHistory" builder="ClassBuilder" key="com.ail.core.configure.server.GetNamespacesHistoryCommand">
-      <parameter name="Service">GetNamespacesHistoryService</parameter>
-    </command>
-    
-    <command name="MakeARecovery" builder="ClassBuilder" key="com.ail.insurance.subrogation.makearecovery.MakeARecoveryCommand">
-      <parameter name="Service">MakeARecoveryService</parameter>
-    </command>
-
-    <command name="PackageCar" builder="ClassBuilder" key="com.ail.core.configure.server.PackageCarCommand">
-      <parameter name="Service">PackageCarService</parameter>
-    </command>
-    
-    <command name="DeployCar" builder="ClassBuilder" key="com.ail.core.configure.server.DeployCarCommand">
-      <parameter name="Service">DeployCarService</parameter>
-    </command>
-    
-    <command name="CatalogCar" builder="ClassBuilder" key="com.ail.core.configure.server.CatalogCarCommand">
-      <parameter name="Service">CatalogCarService</parameter>
-    </command>
-    
-    <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommand">
-      <parameter name="Service">ListProductsService</parameter>
-    </command>
-    
-    <command name="NewProductType" builder="ClassBuilder" key="com.ail.core.product.newproducttype.NewProductTypeCommand">
-      <parameter name="Service">NewProductTypeService</parameter>
-    </command>
-    
-    <command name="ResetProduct" builder="ClassBuilder" key="com.ail.core.product.resetproduct.ResetProductCommand">
-      <parameter name="Service">ResetProductService</parameter>
-    </command>
-    
-    <command name="ResetAllProducts" builder="ClassBuilder" key="com.ail.core.product.resetallproducts.ResetAllProductsCommand">
-      <parameter name="Service">ResetAllProductsService</parameter>
-    </command>
-
-    <command name='AssessRisk' builder='ClassBuilder' key='com.ail.insurance.quotation.assessrisk.AssessRiskCommand'>
-      <parameter name='Accessor'>AssessRiskService</parameter>
-    </command>
-    
-    <command name="RefreshAssessmentSheets" builder="ClassBuilder" key="com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand">
-      <parameter name="Service">RefreshAssessmentSheetsService</parameter>
-    </command>
-
-    <command name='CalculatePremium' builder='ClassBuilder' key='com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand'>
-      <parameter name='Accessor'>CalculatePremiumService</parameter>
-    </command>
-    
-    <command name='GenerateQuotationDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.generatedocument.GenerateDocumentCommand'>
-      <parameter name='Accessor'>GenerateQuotationDocumentService</parameter>
-    </command>
-    
-    <command name='GenerateWordingDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.wording.GenerateWordingCommand'>
-      <parameter name='Accessor'>OnRiskEJB</parameter>
-    </command>
-    
-    <command name='GenerateCertificateDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.certificate.GenerateCertificateCommand'>
-      <parameter name='Accessor'>OnRiskEJB</parameter>
-    </command>
-    
-    <command name='GenerateInvoiceDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.invoice.GenerateInvoiceCommand'>
-      <parameter name='Accessor'>OnRiskEJB</parameter>
-    </command>
-    
-    <command name='AddQuoteNumber' builder='ClassBuilder' key='com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand'>
-      <parameter name='Accessor'>AddQuoteNumberService</parameter>
-    </command>
-    
-    <command name='AddPolicyNumber' builder='ClassBuilder' key='com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand'>
-      <parameter name='Accessor'>AddPolicyNumberService</parameter>
-    </command>
-    
-    <command name='EnforceCompliance' builder='ClassBuilder' key='com.ail.insurance.quotation.enforcecompliance.EnforceComplianceCommand'>
-      <parameter name='Accessor'>EnforceComplianceService</parameter>
-    </command>
-    
-    <command name='ExecutePageAction' builder='ClassBuilder' key='com.ail.core.product.executepageaction.ExecutePageActionCommand'>
-      <parameter name='Accessor'>ExecutePageActionService</parameter>
-    </command>
-    
-    <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommand">
-      <parameter name="Service">PersistenceService</parameter>
-    </command>
-    
-    <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommand">
-      <parameter name="Service">PersistenceService</parameter>
-    </command>
-    
-    <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommand">
-      <parameter name="Service">PersistenceService</parameter>
-    </command>
-    
-    <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommand">
-      <parameter name="Service">PersistenceService</parameter>
-    </command>
-    
-    <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommand">
-      <parameter name="Service">PersistenceService</parameter>
-    </command>
-    
-    <command name="GenerateQuoteDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.generatedocument.GenerateDocumentCommand">
-      <parameter name="Service">GenerateQuoteDocumentService</parameter>
-    </command>
-
-    <command name="FetchQuoteDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand">
-      <parameter name="Service">FetchQuoteDocumentService</parameter>
-    </command>
-    
-    <command name="FetchInvoiceDocument" builder="ClassBuilder" key="com.ail.insurance.onrisk.invoice.FetchInvoiceCommand">
-      <parameter name="Service">FetchInvoiceDocumentService</parameter>
-    </command>
-    
-    <command name="FetchWordingDocument" builder="ClassBuilder" key="com.ail.insurance.onrisk.wording.FetchWordingCommand">
-      <parameter name="Service">FetchWordingDocumentService</parameter>
-    </command>
-    
-    <command name="FetchCertificateDocument" builder="ClassBuilder" key="com.ail.insurance.onrisk.certificate.FetchCertificateCommand">
-      <parameter name="Service">FetchCertificateDocumentService</parameter>
-    </command>
-    
-    <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand">
-      <parameter name="Service">AcceptanceServicesEJB</parameter>
-    </command>
-    
-    <command name="RenderBrokerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
-        <parameter name="Service">RenderBrokerQuotationSummaryService/html</parameter>
-    </command>
-    
-    <command name="RenderBrokerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
-        <parameter name="Service">NullService</parameter>
-    </command>
-
-    <command name="RenderProposerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
-        <parameter name="Service">RenderProposerQuotationSummaryService/html</parameter>
-    </command>
-    
-    <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommand">
-        <parameter name="Service">NullService</parameter>
-    </command>
-
-    <!-- Define other types -->
-    <type builder="ClassBuilder" key="com.ail.core.Version" name="Version"/>
-    <type builder="ClassBuilder" key="com.ail.insurance.claim.Claim" name="Claim"/>
-    <type builder="ClassBuilder" key="com.ail.insurance.claim.ClaimSection" name="ClaimSection"/>
-    <type builder="ClassBuilder" key="com.ail.insurance.policy.Policy" name="Policy"/>
-    <type builder="ClassBuilder" key="com.ail.insurance.policy.AssessmentSheet" name="AssessmentSheet"/>
-    <type builder="ClassBuilder" key="com.ail.openquote.ui.render.Html" name="Renderer:text/html" singleInstance="true"/>
-    <type builder="ClassBuilder" key="com.ail.openquote.ui.render.Xform" name="Renderer:text/xml" singleInstance="true"/>
-  </types>
+        <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
+        </command>
+     </types>
 </configuration>

@@ -17,6 +17,8 @@
 
 package com.ail.openquote.motorplus;
 
+import static org.junit.Assert.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,40 +27,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.ail.core.Core;
+import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
 import com.ail.core.configure.AbstractConfigurationLoader;
-import com.ail.coretest.CoreUserTestCase;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.SavedQuotationSummary;
 
-public class TestQuotationPersistence extends CoreUserTestCase {
+public class TestQuotationPersistence extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
     private static boolean onetimeSetupDone = false;
     private static Properties props;    
     private AbstractConfigurationLoader loader = null;
 
     /**
-     * Constructs a test case with the given name.
-     */
-    public TestQuotationPersistence(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestQuotationPersistence.class);
-    }
-
-    /**
      * Sets up the fixture (run before every test). Get an instance of Core, and delete the testnamespace from the config table.
      * @throws ClassNotFoundException 
      */
-    protected void setUp() throws ClassNotFoundException {
+    @Before
+    public void setUp() throws ClassNotFoundException {
         Timer.start("setup");
         
         setCore(new Core(this));
@@ -92,18 +84,12 @@ public class TestQuotationPersistence extends CoreUserTestCase {
 
         Timer.stop("setup");
     }
-
-    /**
-     * Tears down the fixture (run after each test finishes)
-     */
-    protected void tearDown() {
-    }
-
     
     /**
      * A SavedQuotation is a sub-class of SavedQuotationSummary, so it you write a SavedQuotation to the DB you
      * should be able to read it back as a SavedQuotationSummary... But can you?
      */
+    @Test
     public void testSaveAQuotationGetAQuotationSummary() throws Exception {
         long quoteId;
         
@@ -123,8 +109,7 @@ public class TestQuotationPersistence extends CoreUserTestCase {
         }
     }
  
-    /**
-     */
+    @Test
     public void testSaveSomeQuotationsAndQueryThem() throws Exception {
         Timer.start("testSaveSomeQuotationsAndQueryThem");
         
@@ -171,6 +156,7 @@ public class TestQuotationPersistence extends CoreUserTestCase {
      * Had an issues during development where update'ing a quotation always resulted in a new quotation
      * record being created. This test makes sure that doesn't occur.
      */
+    @Test
     public void testUpdateQuotationSummary() throws Exception {
         Quotation quote=null;
 

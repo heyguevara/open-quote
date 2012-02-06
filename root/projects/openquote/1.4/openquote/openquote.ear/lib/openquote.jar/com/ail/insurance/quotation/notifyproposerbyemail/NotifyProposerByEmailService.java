@@ -33,12 +33,10 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
-import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.Version;
-import com.ail.core.command.CommandArg;
 import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
 import com.ail.openquote.Broker;
 import com.ail.openquote.Proposer;
@@ -49,56 +47,11 @@ import com.ail.openquote.ui.util.QuotationContext;
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
  */
-public class NotifyProposerByEmailService extends Service {
+@ServiceImplementation
+public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailArgument> {
     private static final long serialVersionUID = -4915889686192216902L;
-    private NotifyProposerByEmailArg args = null;
     private String configurationNamespace = null;
-    private Core core = null;
 
-    /** Default constructor */
-    public NotifyProposerByEmailService() {
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to fetch the entry point's code. This method is demanded by the EntryPoint class.
-     * @return This entry point's instance of Core.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Fetch the version of this entry point.
-     * @return A version object describing the version of this entry point.
-     */
-    public Version getVersion() {
-        com.ail.core.Version v = (com.ail.core.Version) core.newType("Version");
-        v.setAuthor("$Author$");
-        v.setCopyright("Copyright Applied Industrial Logic Limited 2003. All rights reserved.");
-        v.setDate("$Date$");
-        v.setSource("$Source$");
-        v.setState("$State$");
-        v.setVersion("$Revision$");
-        return v;
-    }
-
-    /**
-     * Setter used to the set the entry points arguments.
-     * @param args for invoke
-     */
-    public void setArgs(CommandArg args) {
-        this.args = (NotifyProposerByEmailArg)args;
-    }
-
-    /**
-     * Getter returning the arguments used by this entry point.
-     * @return An instance of CalculateTaxArgs.
-     */
-    public CommandArg getArgs() {
-        return args;
-    }
-    
     /**
      * Return the product type id of the policy we're assessing the risk for as the
      * configuration namespace. The has the effect of selecting the product's configuration.
@@ -234,7 +187,7 @@ public class NotifyProposerByEmailService extends Service {
     private BodyPart createQuoteDocumentAttachment(SavedQuotation quotation) throws BaseException, MessagingException {
     	// Only attached the document if it has already been generated - don't generate it
     	if (quotation.getQuotationDocument()!=null) {
-	        FetchDocumentCommand cmd=(FetchDocumentCommand)getCore().newCommand("FetchQuoteDocument");
+	        FetchDocumentCommand cmd=getCore().newCommand(FetchDocumentCommand.class);
 	        cmd.setQuotationNumberArg(args.getQuotationNumberArg());
 	        cmd.invoke();
 	
