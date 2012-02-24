@@ -3,6 +3,9 @@
 <project name="BuildSettings" default="dummy">
     <property name="ear.name" value="core.ear" />
 
+	<!-- Location of development dir is overriden on the build server -->
+    <property name="development.dir" value="../development"/>
+  
     <!-- Release version numbers (BTW the build number comes from bamboo.) -->
     <property name="major.version" value="3" />
     <property name="minor.version" value="0" />
@@ -16,5 +19,5 @@
     <property name="dbpassword" value="bombay" />
 
     <!-- Pull in the Common stuff - all projects us these. -->
-    <import file="../development/macros/BuildCommon.xml" />
+    <import file="${development.dir}/macros/BuildCommon.xml" />
 </project>
