@@ -26,5 +26,5 @@
 	<property name="dbpassword" value="bombay" />
 
 	<!-- Pull in the Common stuff - all projects us these. -->
-	<import file=".${development.dir}/macros/BuildCommon.xml" />
+	<import file="${development.dir}/macros/BuildCommon.xml" />
 </project>
