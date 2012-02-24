@@ -39,12 +39,12 @@ import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.server.ServerBean;
-import com.ail.core.dummyservice.DummyArgument;
-import com.ail.core.dummyservice.DummyCommand;
+import com.ail.core.dummyservice.DummyService.DummyArgument;
+import com.ail.core.dummyservice.DummyService.DummyCommand;
 import com.ail.core.dummyservice.DummyService;
-import com.ail.core.logging.LoggerCommand;
 import com.ail.core.logging.Severity;
-import com.ail.core.product.listproducts.ListProductsCommand;
+import com.ail.core.logging.LoggingService.LoggingCommand;
+import com.ail.core.product.ListProductsService.ListProductsCommand;
 
 /**
  * Test that basic service invocation works as specified. Note: These tests
@@ -390,12 +390,12 @@ public class TestServiceInvocation extends CoreUserBaseCase {
     public void testJMSService() throws Exception {
         String testMessage="A test message from the TestJMSCommand";
         
-        LoggerCommand command = getCore().newCommand("TestJMSCommand", LoggerCommand.class);
-        command.setMessage(testMessage);
-        command.setSeverity(Severity.INFO);
-        command.setCallersCore(new CoreProxy());
-        command.setDate(new Date());
-        command.invoke();
+        LoggingCommand loggingCommand = getCore().newCommand("TestJMSCommand", LoggingCommand.class);
+        loggingCommand.setMessage(testMessage);
+        loggingCommand.setSeverity(Severity.INFO);
+        loggingCommand.setCallersCore(new CoreProxy());
+        loggingCommand.setDate(new Date());
+        loggingCommand.invoke();
         
         // wait 10 seconds, then check the log for the message that the command server should
         // have output as a response to being sent a TestJMSCommand

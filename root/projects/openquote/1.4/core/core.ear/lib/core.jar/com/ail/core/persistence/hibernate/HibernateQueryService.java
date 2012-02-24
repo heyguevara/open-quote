@@ -25,7 +25,7 @@ import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.persistence.QueryArgument;
+import com.ail.core.persistence.QueryService.QueryArgument;
 import com.ail.core.persistence.QueryException;
 
 /**

@@ -18,19 +18,54 @@
 package com.ail.core.configure.server;
 
 import java.io.ByteArrayInputStream;
+import java.util.Collection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 
 @ServiceImplementation
-public class DeployCarService extends Service<DeployCarArgument> {
+public class DeployCarService extends Service<DeployCarService.DeployCarArgument> {
+    
+    @ServiceArgument
+    public interface DeployCarArgument extends Argument {
+        /**
+         * Getter for the namespacesArg property. The configuration namespaces to be imported from the supplied par
+         * @return Value of namespacesArg, or null if it is unset
+         */
+        Collection<String> getNamespacesArg();
 
+        /**
+         * Setter for the namespacesArg property. * @see #getNamespacesArg
+         * @param namespacesArg new value for property.
+         */
+        void setNamespacesArg(Collection<String> namespacesArg);
+
+        /**
+         * Getter for the carArg property. The par to import configurations from
+         * @return Value of carArg, or null if it is unset
+         */
+        byte[] getCarArg();
+
+        /**
+         * Setter for the carArg property. * @see #getCarArg
+         * @param carArg new value for property.
+         */
+        void setCarArg(byte[] carArg);
+    }
+
+    @ServiceCommand(defaultServiceClass=DeployCarService.class)
+    public interface DeployCarCommand extends Command, DeployCarArgument {}
+    
     /** The 'business logic' of the entry point. */
     @Override
     public void invoke() throws PreconditionException {

@@ -47,7 +47,7 @@ import com.ail.core.configure.XMLMapping;
  * These arguments and returns are encapsulated in an instance of FromXMLCommandArg.
  */
 @ServiceImplementation
-public class CastorFromXMLService extends Service<FromXMLArgument> {
+public class CastorFromXMLService extends Service<FromXMLService.FromXMLArgument> {
 
 	/**
      * The 'business logic' of the entry point.

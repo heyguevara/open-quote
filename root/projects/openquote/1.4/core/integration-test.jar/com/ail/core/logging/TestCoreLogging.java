@@ -125,7 +125,7 @@ public class TestCoreLogging implements CoreUser, ConfigurationOwner {
 		p=new Parameter();
         t.setName("InfoLogger");
         t.setBuilder("ClassBuilder");
-        t.setKey("com.ail.core.logging.LoggerCommandImpl");
+        t.setKey("com.ail.core.logging.LoggingCommandImpl");
         p.setName("Accessor");
         p.setValue("LoggingService");
 		t.addParameter(p);
@@ -135,7 +135,7 @@ public class TestCoreLogging implements CoreUser, ConfigurationOwner {
 		p=new Parameter();
         t.setName("DebugLogger");
         t.setBuilder("ClassBuilder");
-        t.setKey("com.ail.core.logging.LoggerCommandImpl");
+        t.setKey("com.ail.core.logging.LoggingCommandImpl");
         p.setName("Accessor");
         p.setValue("LoggingService");
 		t.addParameter(p);
@@ -145,7 +145,7 @@ public class TestCoreLogging implements CoreUser, ConfigurationOwner {
 		p=new Parameter();
         t.setName("WarningLogger");
         t.setBuilder("ClassBuilder");
-        t.setKey("com.ail.core.logging.LoggerCommandImpl");
+        t.setKey("com.ail.core.logging.LoggingCommandImpl");
         p.setName("Accessor");
         p.setValue("LoggingService");
 		t.addParameter(p);
@@ -155,7 +155,7 @@ public class TestCoreLogging implements CoreUser, ConfigurationOwner {
 		p=new Parameter();
         t.setName("ErrorLogger");
         t.setBuilder("ClassBuilder");
-        t.setKey("com.ail.core.logging.LoggerCommandImpl");
+        t.setKey("com.ail.core.logging.LoggingCommandImpl");
         p.setName("Accessor");
         p.setValue("LoggingService");
 		t.addParameter(p);
@@ -165,7 +165,7 @@ public class TestCoreLogging implements CoreUser, ConfigurationOwner {
 		p=new Parameter();
         t.setName("FatalLogger");
         t.setBuilder("ClassBuilder");
-        t.setKey("com.ail.core.logging.LoggerCommandImpl");
+        t.setKey("com.ail.core.logging.LoggingCommandImpl");
         p.setName("Accessor");
         p.setValue("LoggingService");
 		t.addParameter(p);

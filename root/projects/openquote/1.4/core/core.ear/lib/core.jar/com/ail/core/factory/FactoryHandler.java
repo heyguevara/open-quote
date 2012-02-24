@@ -155,12 +155,12 @@ public class FactoryHandler {
 
     @SuppressWarnings("unchecked")
     public <T extends Object> T newType(Class<T> clazz, ConfigurationOwner owner, Core core) {
-        return (T)newType(clazz.getName(), owner, core);
+        return (T)newType(typeNameFromClass(clazz), owner, core);
     }
     
     @SuppressWarnings("unchecked")
     public <T extends Object> T newType(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
-        return (T)newType(clazz.getName()+"/"+modifier, owner, core);
+        return (T)newType(typeNameFromClass(clazz)+"/"+modifier, owner, core);
     }
 
     public Command newCommand(String name, ConfigurationOwner owner, Core core) {
@@ -171,11 +171,16 @@ public class FactoryHandler {
 
     @SuppressWarnings("unchecked")
     public <T extends Command> T newCommand(Class<T> clazz, ConfigurationOwner owner, Core core) {
-        return (T)newCommand(clazz.getName(), owner, core);
+        return (T)newCommand(typeNameFromClass(clazz), owner, core);
     }
     
     @SuppressWarnings("unchecked")
     public <T extends Command> T newCommand(Class<T> clazz, String modifier, ConfigurationOwner owner, Core core) {
-        return (T)newCommand(clazz.getName()+"/"+modifier, owner, core);
+        return (T)newCommand(typeNameFromClass(clazz)+"/"+modifier, owner, core);
+    }
+
+    private String typeNameFromClass(Class<?> clazz) {
+        String name=clazz.getName();
+        return name.replace('$', '.');
     }
 }

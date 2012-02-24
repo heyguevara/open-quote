@@ -33,13 +33,13 @@ import com.ail.core.Core;
 import com.ail.core.PreconditionException;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.configure.server.CatalogCarCommand;
-import com.ail.core.configure.server.DeployCarCommand;
-import com.ail.core.configure.server.GetCommandScriptCommand;
-import com.ail.core.configure.server.GetNamespacesCommand;
-import com.ail.core.configure.server.PackageCarCommand;
-import com.ail.core.configure.server.SetCommandScriptCommand;
-import com.ail.core.dummyservice.DummyCommand;
+import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
+import com.ail.core.configure.server.DeployCarService.DeployCarCommand;
+import com.ail.core.configure.server.GetCommandScriptService.GetCommandScriptCommand;
+import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
+import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
+import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
+import com.ail.core.dummyservice.DummyService.DummyCommand;
 import com.ail.core.CoreUserBaseCase;
 
 /**

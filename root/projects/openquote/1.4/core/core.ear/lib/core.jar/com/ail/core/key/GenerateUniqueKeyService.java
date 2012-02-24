@@ -20,18 +20,40 @@ package com.ail.core.key;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.core.configure.Configuration;
 
 @ServiceImplementation
-public class GenerateUniqueKeyService extends Service<GenerateUniqueKeyArgument> {
+public class GenerateUniqueKeyService extends Service<GenerateUniqueKeyService.GenerateUniqueKeyArgument> {
     private static Map<String,UniqueNumberHandler> uniqueNumberHandlers=new HashMap<String,UniqueNumberHandler>();
     private String configurationNamespace;
 
+    @ServiceArgument
+    public interface GenerateUniqueKeyArgument extends Argument {
+        void setKeyIdArg(String keyIdArg);
+        
+        String getKeyIdArg();
+        
+        void setKeyRet(Integer keyRet);
+        
+        Integer getKeyRet();
+        
+        void setProductTypeIdArg(String productTypeId);
+        
+        String getProductTypeIdArg();
+    }
+    
+    @ServiceCommand(defaultServiceClass=GenerateUniqueKeyService.class)
+    public interface GenerateUniqueKeyCommand extends Command, GenerateUniqueKeyArgument {}
+    
     /**
      * Return the product name from the arguments as the configuration namespace. 
      * The has the effect of selecting the product's configuration.

@@ -21,13 +21,17 @@ import javax.ejb.CreateException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.annotation.Configurable;
-
+import com.ail.core.persistence.CreateService.CreateArgument;
+import com.ail.core.persistence.DeleteService.DeleteArgument;
+import com.ail.core.persistence.LoadService.LoadArgument;
+import com.ail.core.persistence.QueryService.QueryArgument;
+import com.ail.core.persistence.UpdateService.UpdateArgument;
 /**
  * EJB Wrapper for the persistence server.
  */
@@ -120,7 +124,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 
     /**
      * Service wrapper method for the CreateCommand service.
-     * @param arg Argument to pass to the service
+     * @param arg LoggingArgument to pass to the service
      * @return Return value from the service
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
@@ -130,7 +134,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 
 	/**
 	 * Service wrapper method for the UpdateCommand service.
-	 * @param arg Argument to pass to the service
+	 * @param arg LoggingArgument to pass to the service
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
@@ -140,7 +144,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 
 	/**
 	 * Service wrapper method for the LoadCommand service.
-	 * @param arg Argument to pass to the service
+	 * @param arg LoggingArgument to pass to the service
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
@@ -150,7 +154,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 
 	/**
 	 * Service wrapper method for the QueryCommand service.
-	 * @param arg Argument to pass to the service
+	 * @param arg LoggingArgument to pass to the service
 	 * @return Return value from the service
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
@@ -160,7 +164,7 @@ public class PersistenceServerBean extends EJBComponent implements SessionBean {
 
     /**
      * Service wrapper method for the DeleteCommand service.
-     * @param arg Argument to pass to the service
+     * @param arg LoggingArgument to pass to the service
      * @return Return value from the service
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */

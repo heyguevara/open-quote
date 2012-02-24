@@ -20,14 +20,19 @@ package com.ail.core.configure.finder;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 
 /**
  * This service finds the classes that implement or extend a given base class. The <code>SearchClass</code>
@@ -46,12 +51,61 @@ import com.ail.core.Service;
  * @todo This service searches the system classpath for classes. This means that it will not find system classes (java.*, etc.) or dynamically created classes.
  */
 @ServiceImplementation
-public class GetClassListService extends Service<GetClassListArgument> {
+public class GetClassListService extends Service<GetClassListService.GetClassListArgument> {
     private Vector<String> allFiles = new Vector<String>();
     private String FILESEPARATOR = System.getProperty("file.separator");
 	private String PATHSEPARATOR = System.getProperty("path.separator");
 
-    /** Default constructor */
+	@ServiceArgument
+	public interface GetClassListArgument extends Argument {
+
+	    /**
+	     * Set the value of the search class argument.
+	     * @see #getSearchClassArg
+	     * @param searchClassName New value for class argument.
+	     */
+	    void setSearchClassArg(String searchClassName);
+
+	    /**
+	     * Fetch the value of the class argument. 
+	     * @see #setSearchClassArg
+	     * @return value of searchClass
+	     */
+	    String getSearchClassArg();
+
+	     /**
+	     * Set value of search package argument. Defaults to com.ail if not set.
+	     * @see #getSearchPackageArg
+	     * @param searchPackage New value for searchPackage argument.
+	     */
+	    public void setSearchPackageArg(String searchPackage);
+
+	    /**
+	     * Get value of search package argument.
+	     * @see #setSearchPackageArg
+	     * @return value of searchPackage
+	     */
+	    public String getSearchPackageArg();
+
+	    /**
+	     * Set value of implementors found argument.
+	     * @see #getFoundImplementorsRet
+	     * @param foundImplementors New value for foundImplementors argument.
+	     */
+	    public void setFoundImplementorsRet(Collection<String> foundImplementors);
+
+	    /**
+	     * Get value of implementors found argument.
+	     * @see #setFoundImplementorsRet
+	     * @return value of foundImplementors
+	     */
+	    public Collection<String> getFoundImplementorsRet();
+	}
+
+	@ServiceCommand(defaultServiceClass=GetClassListService.class)
+	public interface GetClassListCommand extends Command, GetClassListArgument {}
+	
+	/** Default constructor */
     public GetClassListService() {
         super();
     }

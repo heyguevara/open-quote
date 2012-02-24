@@ -22,13 +22,13 @@ import javax.ejb.EJBLocalObject;
 import com.ail.core.BaseException;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsArgument;
-import com.ail.core.product.newproducttype.NewProductTypeArgument;
-import com.ail.core.product.registerproduct.RegisterProductArgument;
-import com.ail.core.product.removeproduct.RemoveProductArgument;
-import com.ail.core.product.resetallproducts.ResetAllProductsArgument;
-import com.ail.core.product.resetproduct.ResetProductArgument;
-import com.ail.core.product.updateproduct.UpdateProductArgument;
+import com.ail.core.product.ListProductsService.ListProductsArgument;
+import com.ail.core.product.NewProductTypeService.NewProductTypeArgument;
+import com.ail.core.product.RegisterProductService.RegisterProductArgument;
+import com.ail.core.product.RemoveProductService.RemoveProductArgument;
+import com.ail.core.product.ResetAllProductsService.ResetAllProductsArgument;
+import com.ail.core.product.ResetProductService.ResetProductArgument;
+import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 public interface ProductManagerLocal extends EJBLocalObject {
     String invokeServiceXML(String xml);

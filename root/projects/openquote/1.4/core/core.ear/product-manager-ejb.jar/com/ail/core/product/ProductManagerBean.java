@@ -27,13 +27,13 @@ import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.product.listproducts.ListProductsArgument;
-import com.ail.core.product.newproducttype.NewProductTypeArgument;
-import com.ail.core.product.registerproduct.RegisterProductArgument;
-import com.ail.core.product.removeproduct.RemoveProductArgument;
-import com.ail.core.product.resetallproducts.ResetAllProductsArgument;
-import com.ail.core.product.resetproduct.ResetProductArgument;
-import com.ail.core.product.updateproduct.UpdateProductArgument;
+import com.ail.core.product.ListProductsService.ListProductsArgument;
+import com.ail.core.product.NewProductTypeService.NewProductTypeArgument;
+import com.ail.core.product.RegisterProductService.RegisterProductArgument;
+import com.ail.core.product.RemoveProductService.RemoveProductArgument;
+import com.ail.core.product.ResetAllProductsService.ResetAllProductsArgument;
+import com.ail.core.product.ResetProductService.ResetProductArgument;
+import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Configurable
 public class ProductManagerBean extends EJBComponent implements SessionBean {
@@ -124,7 +124,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
 
     /**
      * Service wrapper method for the ListProducts service.
-     * @param arg Argument to pass to the service
+     * @param arg LoggingArgument to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
@@ -164,7 +164,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
 
     /**
      * Service wrapper method for the ResetAllProductsCommand service.
-     * @param arg Argument to pass to the service
+     * @param arg LoggingArgument to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
@@ -174,7 +174,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
 
     /**
      * Service wrapper method for the UpdateProductDefinition service.
-     * @param arg Argument to pass to the service
+     * @param arg LoggingArgument to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
@@ -184,7 +184,7 @@ public class ProductManagerBean extends EJBComponent implements SessionBean {
 
     /**
      * Service wrapper method for the NewProductType service.
-     * @param arg Argument to pass to the service
+     * @param arg LoggingArgument to pass to the service
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */

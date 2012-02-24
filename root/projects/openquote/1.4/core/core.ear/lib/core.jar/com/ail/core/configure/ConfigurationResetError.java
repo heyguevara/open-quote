@@ -21,10 +21,6 @@ package com.ail.core.configure;
 /**
  * This error is throw by PropertyLoaders when they fail due to some configuration
  * error.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/10/01 17:12:38 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationResetError.java,v $
  */
 public class ConfigurationResetError extends ConfigurationError {
     public ConfigurationResetError(String description) {

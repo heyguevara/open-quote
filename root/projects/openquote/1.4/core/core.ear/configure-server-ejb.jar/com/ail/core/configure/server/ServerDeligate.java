@@ -24,7 +24,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
-import com.ail.core.configure.finder.GetClassListCommand;
+import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
+import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
+import com.ail.core.configure.server.DeployCarService.DeployCarCommand;
+import com.ail.core.configure.server.GetCommandScriptService.GetCommandScriptCommand;
+import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
+import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
+import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
+import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
+import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 
 /**
  * This class acts as a business delegate to the ConfigureServer EJB.

@@ -40,39 +40,39 @@ import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.Types;
 import com.ail.core.configure.XMLMapping;
-import com.ail.core.configure.finder.GetClassListCommand;
+import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
 import com.ail.core.document.Document;
-import com.ail.core.document.generatedocument.GenerateDocumentCommand;
+import com.ail.core.document.GenerateDocumentService.GenerateDocumentCommand;
 import com.ail.core.factory.Factory;
 import com.ail.core.factory.FactoryHandler;
 import com.ail.core.logging.BootLogger;
-import com.ail.core.logging.LoggerCommand;
 import com.ail.core.logging.Logging;
 import com.ail.core.logging.Severity;
-import com.ail.core.persistence.CloseSessionCommand;
-import com.ail.core.persistence.CreateCommand;
-import com.ail.core.persistence.DeleteCommand;
-import com.ail.core.persistence.LoadCommand;
-import com.ail.core.persistence.OpenSessionCommand;
+import com.ail.core.logging.LoggingService.LoggingCommand;
+import com.ail.core.persistence.CloseSessionService.CloseSessionCommand;
+import com.ail.core.persistence.CreateService.CreateCommand;
+import com.ail.core.persistence.DeleteService.DeleteCommand;
+import com.ail.core.persistence.LoadService.LoadCommand;
+import com.ail.core.persistence.OpenSessionService.OpenSessionCommand;
 import com.ail.core.persistence.Persistence;
-import com.ail.core.persistence.QueryCommand;
-import com.ail.core.persistence.UpdateCommand;
+import com.ail.core.persistence.QueryService.QueryCommand;
+import com.ail.core.persistence.UpdateService.UpdateCommand;
 import com.ail.core.product.DuplicateProductException;
 import com.ail.core.product.Product;
 import com.ail.core.product.ProductDetails;
 import com.ail.core.product.UnknownProductException;
-import com.ail.core.product.listproducts.ListProductsCommand;
-import com.ail.core.product.newproducttype.NewProductTypeCommand;
-import com.ail.core.product.registerproduct.RegisterProductCommand;
-import com.ail.core.product.removeproduct.RemoveProductCommand;
-import com.ail.core.product.resetallproducts.ResetAllProductsCommand;
-import com.ail.core.product.resetproduct.ResetProductCommand;
-import com.ail.core.product.updateproduct.UpdateProductCommand;
+import com.ail.core.product.ListProductsService.ListProductsCommand;
+import com.ail.core.product.NewProductTypeService.NewProductTypeCommand;
+import com.ail.core.product.RegisterProductService.RegisterProductCommand;
+import com.ail.core.product.RemoveProductService.RemoveProductCommand;
+import com.ail.core.product.ResetAllProductsService.ResetAllProductsCommand;
+import com.ail.core.product.ResetProductService.ResetProductCommand;
+import com.ail.core.product.UpdateProductService.UpdateProductCommand;
 import com.ail.core.validator.Validator;
-import com.ail.core.validator.ValidatorCommand;
+import com.ail.core.validator.ValidatorService.ValidatorCommand;
 import com.ail.core.validator.ValidatorResult;
-import com.ail.core.xmlbinding.FromXMLCommand;
-import com.ail.core.xmlbinding.ToXMLCommand;
+import com.ail.core.xmlbinding.FromXMLService.FromXMLCommand;
+import com.ail.core.xmlbinding.ToXMLService.ToXMLCommand;
 import com.ail.core.xmlbinding.XMLBinding;
 
 /**
@@ -205,7 +205,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         t=new com.ail.core.configure.Type();
         ts.addType(t);
         p=new Parameter();
-        t.setName("com.ail.core.xmlbinding.FromXMLCommand");
+        t.setName("com.ail.core.xmlbinding.FromXMLService.FromXMLCommand");
         t.setBuilder("ClassBuilder");
         t.setKey("com.ail.core.xmlbinding.FromXMLCommandImpl");
         p.setName("Accessor");
@@ -224,7 +224,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 		// Save the current core user, to be restored before we return.
 		CoreUser savedCoreUser=getCoreUser();
 		
-		setCoreUser(new CoreUserImpl(CoreUserImpl.SelectLatestConfigurations, null, null));
+		setCoreUser(new CoreUserImpl(CoreUserImpl.SELECT_LATEST_CONFIGURATIONS, null, null));
         
 		try {
 			// In order to 'fromXML' the contents of CoreDefaultConfig.xml, we'll
@@ -383,7 +383,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * @param arguments The arguments to pass to the service.
      * @return The arguments as returned from the service.
      * @throws BaseException Any exception thrown by the service.
-     * @deprecated Use {@link #invokeService(Class, Argument)} instead
+     * @deprecated Use {@link #invokeService(Class, LoggingArgument)} instead
      */
     public Argument invokeService(String commandName, Argument arguments) throws BaseException {
         Command command=newCommand(commandName, Command.class);
@@ -555,7 +555,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logDebug(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=newCommand("DebugLogger", LoggerCommand.class);
+            LoggingCommand cmd=newCommand("DebugLogger", LoggingCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -584,7 +584,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logInfo(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=newCommand("InfoLogger", LoggerCommand.class);
+            LoggingCommand cmd=newCommand("InfoLogger", LoggingCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -614,7 +614,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logWarning(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=newCommand("WarningLogger", LoggerCommand.class);
+            LoggingCommand cmd=newCommand("WarningLogger", LoggingCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -644,7 +644,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logError(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=newCommand("ErrorLogger", LoggerCommand.class);
+		    LoggingCommand cmd=newCommand("ErrorLogger", LoggingCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());
@@ -674,7 +674,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      */
     public void logFatal(String message, Throwable cause) {
 		try {
-            LoggerCommand cmd=newCommand("FatalLogger", LoggerCommand.class);
+		    LoggingCommand cmd=newCommand("FatalLogger", LoggingCommand.class);
             cmd.setMessage(message);
             cmd.setCause(cause);
             cmd.setDate(new Date());

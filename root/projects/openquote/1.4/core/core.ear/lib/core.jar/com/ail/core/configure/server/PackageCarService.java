@@ -19,19 +19,56 @@ package com.ail.core.configure.server;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.XMLString;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.UnknownNamespaceError;
 
 @ServiceImplementation
-public class PackageCarService extends com.ail.core.Service<PackageCarArgument> {
+public class PackageCarService extends com.ail.core.Service<PackageCarService.PackageCarArgument> {
+    
+    @ServiceArgument
+    public interface PackageCarArgument extends Argument {
+        /**
+         * Getter for the namespacesArg property. A collection of strings providing the names (namespaces) of the
+         * configurations to be packaged
+         * @return Value of namespacesArg, or null if it is unset
+         */
+        Collection<String> getNamespacesArg();
+
+        /**
+         * Setter for the namespacesArg property. * @see #getNamespacesArg
+         * @param namespacesArg new value for property.
+         */
+        void setNamespacesArg(Collection<String> namespacesArg);
+
+        /**
+         * Getter for the carRet property. The packaged car as a byte array.
+         * @return Value of carRet, or null if it is unset
+         */
+        byte[] getCarRet();
+
+        /**
+         * Setter for the parRet property.
+         * @see #getCarRet
+         * @param carRet new value for property.
+         */
+        void setCarRet(byte[] carRet);
+    }
+
+    @ServiceCommand(defaultServiceClass=PackageCarService.class)
+    public interface PackageCarCommand extends Command, PackageCarArgument {}
     
     @Override
     public void invoke() throws PreconditionException, PostconditionException {

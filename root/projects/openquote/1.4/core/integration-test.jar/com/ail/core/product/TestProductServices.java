@@ -37,7 +37,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.command.CommandInvocationError;
 import com.ail.core.factory.RecursiveTypeError;
 import com.ail.core.factory.UndefinedTypeError;
-import com.ail.core.key.GenerateUniqueKeyCommand;
+import com.ail.core.key.GenerateUniqueKeyService.GenerateUniqueKeyCommand;
 
 public class TestProductServices extends CoreUserBaseCase {
 

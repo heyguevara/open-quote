@@ -34,12 +34,12 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationSummary;
-import com.ail.core.configure.server.CatalogCarCommand;
-import com.ail.core.configure.server.GetConfigurationCommand;
-import com.ail.core.configure.server.GetNamespacesHistoryCommand;
-import com.ail.core.configure.server.PackageCarCommand;
+import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
+import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
+import com.ail.core.configure.server.GetNamespacesHistoryService.GetNamespacesHistoryCommand;
+import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
 import com.ail.core.configure.server.ServerDeligate;
-import com.ail.core.configure.server.SetConfigurationCommand;
+import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 
 /**
  * Manager (controller) for the configure editor.

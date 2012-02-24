@@ -17,15 +17,69 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.CommandScript;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Type;
 
 @ServiceImplementation
-public class GetCommandScriptService extends Service<GetCommandScriptArgument> {
+public class GetCommandScriptService extends Service<GetCommandScriptService.GetCommandScriptArgument> {
+    
+    @ServiceArgument
+    public interface GetCommandScriptArgument extends Argument {
+        /**
+         * Fetch the value of the namespaceArg argument. The namespace to fetch the command script from.
+         * @see #setNamespaceArg
+         * @return value of namespaceArg
+         */
+        String getNamespaceArg();
+
+        /**
+         * Set the value of the namespaceArg argument. The namespace to fetch the command script from.
+         * @see #getNamespaceArg
+         * @param namespaceArg New value for namespaceArg argument.
+         */
+        void setNamespaceArg(String namespaceArg);
+
+        /**
+         * Fetch the value of the commandNameArg argument. The name of the command that which the script should be returned for.
+         * @see #setCommandNameArg
+         * @return value of commandNameArg
+         */
+        String getCommandNameArg();
+
+        /**
+         * Set the value of the commandNameArg argument. The name of the command that which the script should be returned for.
+         * @see #getCommandNameArg
+         * @param commandNameArg New value for commandNameArg argument.
+         */
+        void setCommandNameArg(String commandNameArg);
+
+        /**
+         * Fetch the value of the commandScriptRet argument. The command script returned.
+         * @see #setCommandScriptRet
+         * @return value of commandScriptRet
+         */
+        CommandScript getCommandScriptRet();
+
+        /**
+         * Set the value of the commandScriptRet argument. The command script returned.
+         * @see #getCommandScriptRet
+         * @param commandScriptRet New value for commandScriptRet argument.
+         */
+        void setCommandScriptRet(CommandScript commandScriptRet);
+    }
+
+    @ServiceCommand(defaultServiceClass=GetCommandScriptService.class)
+    public interface GetCommandScriptCommand extends Command, GetCommandScriptArgument {}
+    
+    
     /**
      * When the core asks us for our namespace, return the one
      * we're getting information from.

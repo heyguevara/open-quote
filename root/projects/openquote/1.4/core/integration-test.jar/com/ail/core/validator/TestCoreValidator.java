@@ -82,7 +82,7 @@ public class TestCoreValidator extends CoreUserBaseCase {
 	 */
     @Test
 	public void testValidatorDirectAccess() throws Exception {
-		ValidatorCommand command = getCore().newCommand("TestValidatorCommand", ValidatorCommand.class);
+        ValidatorService.ValidatorCommand command = getCore().newCommand("TestValidatorCommand", ValidatorService.ValidatorCommand.class);
 
 		try{
 			command.invoke();
@@ -247,7 +247,7 @@ public class TestCoreValidator extends CoreUserBaseCase {
 	 */
 	private String testValidatorServiceGeneric(String key, Object value, String validationXml) throws Exception {
 				
-        ValidatorCommand command = getCore().newCommand("TestValidatorCommand", ValidatorCommand.class);
+	    ValidatorService.ValidatorCommand command = getCore().newCommand("TestValidatorCommand", ValidatorService.ValidatorCommand.class);
 		command.setKeyArg(key);
 		command.setValueArg(value);
 		command.setValidationSpecArg(validationXml);

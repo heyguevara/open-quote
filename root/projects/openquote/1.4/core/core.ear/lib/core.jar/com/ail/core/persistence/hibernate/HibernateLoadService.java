@@ -24,7 +24,7 @@ import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.persistence.LoadArgument;
+import com.ail.core.persistence.LoadService.LoadArgument;
 
 /**
  * Implementation of the update service for Hibernate

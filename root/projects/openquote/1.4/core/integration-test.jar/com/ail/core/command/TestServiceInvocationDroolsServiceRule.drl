@@ -1,6 +1,6 @@
 package com.ail.core.command;
 
-import com.ail.core.dummyservice.DummyArgument;
+import com.ail.core.dummyservice.DummyService.DummyArgument;
 
 rule "Add numbers when X less than 100"
     when

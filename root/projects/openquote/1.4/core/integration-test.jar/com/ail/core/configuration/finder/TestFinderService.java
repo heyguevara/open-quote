@@ -23,7 +23,7 @@ import com.ail.core.Core;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.Type;
 import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.configure.finder.GetClassListCommand;
+import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
 import com.ail.core.CoreUserBaseCase;
 
 import java.util.Iterator;

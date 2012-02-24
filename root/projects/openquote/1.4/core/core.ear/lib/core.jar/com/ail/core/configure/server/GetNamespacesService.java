@@ -17,13 +17,50 @@
 
 package com.ail.core.configure.server;
 
+import java.util.Collection;
+
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.core.configure.ConfigurationHandler;
 
 @ServiceImplementation
-public class GetNamespacesService extends Service<GetNamespacesArgument> {
-	/**
+public class GetNamespacesService extends Service<GetNamespacesService.GetNamespacesArgument> {
+
+    /**
+     * Arg interface for the GetConfiguration entry point. The entry point takes one
+     * argument: a namespace's name, and returns one result: the Configuration object
+     * for the namespace. 
+     */
+    @ServiceArgument
+    public interface GetNamespacesArgument extends Argument {
+        /**
+         * Set the namespaces collection attribute. This collections
+         * contains Strings, each representing a namespace.
+         * @param namespace The collection of Strings
+         */
+        void setNamespaces(Collection<String> namespaces);
+
+        /**
+         * Get the namespace collection.
+         * @see #setNamespaces
+         * @return The collection of instances of {@link com.ail.core.configure.ConfigurationSummary ConfigurationSummary}
+         */
+        Collection<String> getNamespaces();
+    }
+
+    /**
+     * Arg interface for the GetConfiguration entry point. The entry point takes one
+     * argument: a namespace's name, and returns one result: the Configuration object
+     * for the namespace. 
+     */
+    @ServiceCommand(defaultServiceClass=GetNamespacesService.class)
+    public interface GetNamespacesCommand extends Command, GetNamespacesArgument {}
+    
+    /**
      * Fetch the namespace collection from the Configuration handler.
      */
     @Override

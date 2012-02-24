@@ -24,7 +24,7 @@ import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.persistence.CreateException;
-import com.ail.core.persistence.DeleteArgument;
+import com.ail.core.persistence.DeleteService.DeleteArgument;
 
 /**
  * Implementation of the delete service for Hibernate

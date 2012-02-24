@@ -6,37 +6,37 @@
 <configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Product Manager component configuration</name>
-    <timeout>60000</timeout>
+    <timeout>-1</timeout>
     <who>factory</who>
-    <version>$Revision: 1.7 $</version>
+    <version>1.7</version>
 
     <types>
-        <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommandImpl">
-          <parameter name="Service">com.ail.core.product.listproducts.ListProductsService</parameter>
+        <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.ListProductsCommandImpl">
+          <parameter name="Service">com.ail.core.product.ListProductsService</parameter>
         </command>
     
-        <command name="NewProductType" builder="ClassBuilder" key="com.ail.core.product.newproducttype.NewProductTypeCommandImpl">
-          <parameter name="Service">com.ail.core.product.newproduct.NewProductTypeService</parameter>
+        <command name="NewProductType" builder="ClassBuilder" key="com.ail.core.productNewProductTypeCommandImpl">
+          <parameter name="Service">com.ail.core.product.NewProductTypeService</parameter>
         </command>
     
-        <command name="ResetProduct" builder="ClassBuilder" key="com.ail.core.product.resetproduct.ResetProductCommandImpl">
-          <parameter name="Service">com.ail.core.product.resetproduct.ResetProductService</parameter>
+        <command name="ResetProduct" builder="ClassBuilder" key="com.ail.core.product.ResetProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.ResetProductService</parameter>
         </command>
     
-        <command name="ResetAllProducts" builder="ClassBuilder" key="com.ail.core.product.resetallproducts.ResetAllProductsCommandImpl">
-          <parameter name="Service">com.ail.core.product.resetallproducts.ResetAllProductsService</parameter>
+        <command name="ResetAllProducts" builder="ClassBuilder" key="com.ail.core.product.ResetAllProductsCommandImpl">
+          <parameter name="Service">com.ail.core.product.ResetAllProductsService</parameter>
         </command>
     
-        <command name="RegisterProduct" builder="ClassBuilder" key="com.ail.core.product.registerproduct.RegisterProductCommandImpl">
-          <parameter name="Service">com.ail.core.product.registerproduct.RegisterProductService</parameter>
+        <command name="RegisterProduct" builder="ClassBuilder" key="com.ail.core.product.RegisterProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.RegisterProductService</parameter>
         </command>
     
-        <command name="RemoveProduct" builder="ClassBuilder" key="com.ail.core.product.removeproduct.RemoveProductCommandImpl">
-          <parameter name="Service">com.ail.core.product.removeproduct.RemoveProductService</parameter>
+        <command name="RemoveProduct" builder="ClassBuilder" key="com.ail.core.product.RemoveProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.RemoveProductService</parameter>
         </command>
     
-        <command name="UpdateProduct" builder="ClassBuilder" key="com.ail.core.product.updateproduct.UpdateProductCommandImpl">
-          <parameter name="Service">com.ail.core.product.updateproduct.UpdateProductService</parameter>
+        <command name="UpdateProduct" builder="ClassBuilder" key="com.ail.core.product.UpdateProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.UpdateProductService</parameter>
         </command>
     
     </types>

@@ -1,5 +1,5 @@
 import com.ail.core.Version;
-import com.ail.core.dummyservice.DummyArgument;
+import com.ail.core.dummyservice.DummyService.DummyArgument;
 
 public class TestServiceInvocationJaninoClass {
     public static void invoke(DummyArgument args) {

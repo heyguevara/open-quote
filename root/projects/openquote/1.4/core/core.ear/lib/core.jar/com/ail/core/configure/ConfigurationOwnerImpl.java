@@ -59,7 +59,7 @@ public abstract class ConfigurationOwnerImpl extends CoreUserImpl implements Con
     /**
      * Constructor. Create an instance where the default configuration is
      * loaded from a class resource based on the caller's class.
-     * @param configSelectionFlag Either {@link CoreUserImpl#SelectConsistentConfigurations} or {@link CoreUserImpl#SelectLatestConfigurations}
+     * @param configSelectionFlag Either {@link CoreUserImpl#SELECT_CONSISTENT_CONFIGURATIONS} or {@link CoreUserImpl#SELECT_LATEST_CONFIGURATIONS}
      * @param caller Callers class from which the configuration's namespace is derived.
      * @param securityPrincipal Principal of the caller.
      */
@@ -93,7 +93,7 @@ public abstract class ConfigurationOwnerImpl extends CoreUserImpl implements Con
     /**
      * Constructor. Create an instance where the default configuration is
      * loaded from a specified namespace.
-     * @param configSelectionFlag Either {@link CoreUserImpl#SelectConsistentConfigurations} or {@link CoreUserImpl#SelectLatestConfigurations}
+     * @param configSelectionFlag Either {@link CoreUserImpl#SELECT_CONSISTENT_CONFIGURATIONS} or {@link CoreUserImpl#SELECT_LATEST_CONFIGURATIONS}
      * @param caller Callers class from which the configuration's namespace is derived.
      * @param securityPrincipal Principal of the caller.
      */

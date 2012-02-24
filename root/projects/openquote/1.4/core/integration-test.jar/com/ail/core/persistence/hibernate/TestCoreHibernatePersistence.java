@@ -41,13 +41,13 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.AbstractConfigurationLoader;
 import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
-import com.ail.core.persistence.CloseSessionCommand;
+import com.ail.core.persistence.CloseSessionService.CloseSessionCommand;
 import com.ail.core.persistence.ConnectionError;
-import com.ail.core.persistence.CreateCommand;
-import com.ail.core.persistence.LoadCommand;
-import com.ail.core.persistence.OpenSessionCommand;
-import com.ail.core.persistence.QueryCommand;
-import com.ail.core.persistence.UpdateCommand;
+import com.ail.core.persistence.CreateService.CreateCommand;
+import com.ail.core.persistence.LoadService.LoadCommand;
+import com.ail.core.persistence.OpenSessionService.OpenSessionCommand;
+import com.ail.core.persistence.QueryService.QueryCommand;
+import com.ail.core.persistence.UpdateService.UpdateCommand;
 
 /**
  */

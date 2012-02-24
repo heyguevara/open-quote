@@ -23,6 +23,11 @@ import javax.ejb.EJBObject;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
+import com.ail.core.persistence.CreateService.CreateArgument;
+import com.ail.core.persistence.DeleteService.DeleteArgument;
+import com.ail.core.persistence.LoadService.LoadArgument;
+import com.ail.core.persistence.QueryService.QueryArgument;
+import com.ail.core.persistence.UpdateService.UpdateArgument;
 
 public interface PersistenceServer extends EJBObject {
     /** @link dependency */

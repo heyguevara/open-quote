@@ -32,7 +32,15 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
-import com.ail.core.configure.finder.GetClassListCommand;
+import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
+import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
+import com.ail.core.configure.server.DeployCarService.DeployCarCommand;
+import com.ail.core.configure.server.GetCommandScriptService.GetCommandScriptCommand;
+import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
+import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
+import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
+import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
+import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 import com.ail.annotation.Configurable;
 
 @Configurable
@@ -124,7 +132,13 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
 
             // loop through the AllNamespaceReset group, and reset all the configs named
             for(Parameter p: core.getGroup("NamespacesToResetOnResetAll").getParameter()) {
-                resetConfig(p.getName());
+                try {
+                    resetConfig(p.getName());
+                }
+                catch(Throwable t) {
+                    System.err.println("Error resetting configuration for namespace: "+p.getName());
+                    t.printStackTrace(System.err);
+                }
             }
         }
         else {
@@ -195,7 +209,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public SetCommandScriptCommand setCommandScript(com.ail.core.configure.server.SetCommandScriptCommand arg) throws EJBException  {
+    public SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg) throws EJBException  {
         return invokeCommand(core, "SetCommandScript", arg);
     }
 

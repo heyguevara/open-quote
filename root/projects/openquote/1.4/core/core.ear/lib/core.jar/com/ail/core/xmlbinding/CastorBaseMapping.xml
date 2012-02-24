@@ -1,312 +1,320 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapping>
     <class name="com.ail.core.Type">
-        <map-to xml="type"/>
+        <map-to xml="type" />
         <field name="lock" type="boolean">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="serialVersion" type="long">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="systemId" type="long">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="foreignSystemId" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
-        <field name="attribute" type="com.ail.core.Attribute" collection="arraylist"/>
-    </class>    
-    
+        <field name="attribute" type="com.ail.core.Attribute" collection="arraylist" />
+    </class>
+
     <class name="com.ail.core.Attribute" extends="com.ail.core.Type">
-        <map-to xml="attribute"/>
+        <map-to xml="attribute" />
         <field name="unit" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="format" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="id" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="value" type="string" set-method="setValue" get-method="getValueForXmlAttribute">
-			<bind-xml node="attribute"/>  
-		</field>
+            <bind-xml node="attribute" />
+        </field>
         <field name="valueForXmlText" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
-            <bind-xml name="value" node="element"/>
+            <bind-xml name="value" node="element" />
         </field>
     </class>
 
     <class name="com.ail.core.VersionEffectiveDate" extends="com.ail.core.Type">
-        <map-to xml="versionEffectiveDate"/>
+        <map-to xml="versionEffectiveDate" />
         <field name="time" type="long">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="date" type="date">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
     <class name="com.ail.core.ThreadLocale" extends="com.ail.core.Type">
-        <map-to xml="locale"/>
+        <map-to xml="locale" />
         <field name="language" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="country" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="variant" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
     <class name="com.ail.core.language.Translation" extends="com.ail.core.Type">
-        <map-to xml="translation"/>
+        <map-to xml="translation" />
         <field name="language" type="string" set-method="%1">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="extendsLanguage" type="string" set-method="%2">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="key" collection="map">
             <bind-xml name="element">
-                <class name="org.exolab.castor.mapping.MapItem"> 
-                    <field name="key" type="string"> 
-                        <bind-xml node="attribute" name="key"/> 
-                    </field> 
+                <class name="org.exolab.castor.mapping.MapItem">
+                    <field name="key" type="string">
+                        <bind-xml node="attribute" name="key" />
+                    </field>
                     <field name="value" type="string">
-                        <bind-xml name="value" node="text" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
-                    </field> 
-                </class> 
+                        <bind-xml name="value" node="text" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler" />
+                    </field>
+                </class>
             </bind-xml>
         </field>
     </class>
 
     <class name="com.ail.core.language.Translations" extends="com.ail.core.Type">
-        <map-to xml="translations"/>
+        <map-to xml="translations" />
         <field name="defaultLanguage" type="string" required="yes" set-method="%1">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
-        <field name="translation" type="com.ail.core.language.Translation" collection="arraylist"/>
-    </class>
-    
-    <class name="com.ail.core.CoreUserImpl">
-        <map-to xml="coreuser"/>
-        <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate"/>
-        <field name="configurationNamespace" type="string"/>
+        <field name="translation" type="com.ail.core.language.Translation" collection="arraylist" />
     </class>
 
-	<class name="com.ail.core.ExceptionRecord" extends="com.ail.core.Type">
+    <class name="com.ail.core.CoreUserImpl">
+        <map-to xml="coreuser" />
+        <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate" />
+        <field name="configurationNamespace" type="string" />
+    </class>
+
+    <class name="com.ail.core.CoreProxy">
+        <map-to xml="coreproxy" />
+        <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate" />
+        <field name="configurationNamespace" type="string" />
+    </class>
+
+    <class name="com.ail.core.ExceptionRecord" extends="com.ail.core.Type">
         <field name="date" type="date">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="reason" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="catchingClassName" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
-        <field name="stack" type="string" collection="collection"/>
-	</class>
+        <field name="stack" type="string" collection="collection" />
+    </class>
 
     <class name="com.ail.core.command.ArgumentImpl" extends="com.ail.core.Type">
+        <field name="callersCore" type="com.ail.core.CoreUserImpl" />
     </class>
 
-    <class name="com.ail.core.logging.LoggerArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
-        <field name="date" type="date"/>
-        <field name="message" type="string"/>
+    <class name="com.ail.core.logging.LoggingArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="date" type="date" />
+        <field name="message" type="string" />
     </class>
 
-    <class name="com.ail.core.product.listproducts.ListProductsArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
-        <field name="productsRet" type="string" collection="collection"/>
+    <class name="com.ail.core.product.ListProductsArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+        <field name="productsRet" type="string" collection="collection" />
     </class>
 
-    <class name="com.ail.core.document.generatedocument.StyleDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
+    <class name="com.ail.core.document.StyleDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
         <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
-            <bind-xml type="any" node="element"/> 
+            <bind-xml type="any" node="element" />
         </field>
         <field name="styledDocumentRet" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
-            <bind-xml type="any" node="element"/> 
+            <bind-xml type="any" node="element" />
         </field>
     </class>
-    
+
     <class name="com.ail.core.configure.XMLMapping" extends="com.ail.core.Type">
-        <map-to xml="XMLMapping"/>
-        <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
+        <map-to xml="XMLMapping" />
+        <field name="definition" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler" />
     </class>
 
     <class name="com.ail.core.configure.Component" extends="com.ail.core.Type">
-        <map-to xml="component"/>
+        <map-to xml="component" />
         <field name="name" type="string">
-            <bind-xml node="attribute"/>
-        </field>        
+            <bind-xml node="attribute" />
+        </field>
     </class>
 
     <class name="com.ail.core.configure.Parameter" extends="com.ail.core.configure.Component">
-        <map-to xml="parameter"/>
+        <map-to xml="parameter" />
         <field name="value" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
-            <bind-xml node="text"/>
+            <bind-xml node="text" />
         </field>
     </class>
 
     <class name="com.ail.core.configure.Group" extends="com.ail.core.configure.Component">
-        <map-to xml="group"/>
-        <field name="attribute" type="com.ail.core.Attribute" collection="arraylist"/>
-        <field name="parameter" type="com.ail.core.configure.Parameter" collection="arraylist"/>
-        <field name="group" type="com.ail.core.configure.Group" collection="arraylist"/>
+        <map-to xml="group" />
+        <field name="attribute" type="com.ail.core.Attribute" collection="arraylist" />
+        <field name="parameter" type="com.ail.core.configure.Parameter" collection="arraylist" />
+        <field name="group" type="com.ail.core.configure.Group" collection="arraylist" />
     </class>
 
     <class name="com.ail.core.configure.Builder" extends="com.ail.core.configure.Group">
-        <map-to xml="builder"/>
+        <map-to xml="builder" />
         <field name="factory" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
     <class name="com.ail.core.configure.Builders" extends="com.ail.core.configure.Group">
-        <map-to xml="builders"/>
+        <map-to xml="builders" />
         <field name="builder" type="com.ail.core.configure.Builder" get-method="getGroup" set-method="setGroup" collection="arraylist">
-            <bind-xml node="element"/>
+            <bind-xml node="element" />
         </field>
     </class>
 
     <class name="com.ail.core.configure.Type" extends="com.ail.core.configure.Group">
-        <map-to xml="type"/>
+        <map-to xml="type" />
         <field name="key" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="singleInstance" type="boolean">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="builder" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
     <class name="com.ail.core.configure.Service" extends="com.ail.core.configure.Type">
-        <map-to xml="service"/>
+        <map-to xml="service" />
     </class>
 
     <class name="com.ail.core.configure.Command" extends="com.ail.core.configure.Type">
-        <map-to xml="command"/>
+        <map-to xml="command" />
     </class>
 
     <class name="com.ail.core.configure.Types" extends="com.ail.core.configure.Group">
-        <map-to xml="types"/>
-        <field name="type" type="com.ail.core.configure.Type" get-method="getGroup" set-method="setGroup" collection="arraylist"/>
+        <map-to xml="types" />
+        <field name="type" type="com.ail.core.configure.Type" get-method="getGroup" set-method="setGroup" collection="arraylist" />
     </class>
 
     <class name="com.ail.core.configure.Configuration" extends="com.ail.core.configure.Group">
-        <map-to xml="configuration"/>
-        <field name="name" type="string"/>
-        <field name="timeout" type="integer"/>
-        <field name="validTo" type="com.ail.core.VersionEffectiveDate"/>
-        <field name="parentNamespace" type="string"/>
-        <field name="manager" type="string"/>
-        <field name="who" type="string"/>
-        <field name="source" type="string"/>
-        <field name="loadedAt" type="date"/>
-        <field name="version" type="string"/>
-        <field name="validFrom" type="com.ail.core.VersionEffectiveDate"/>
-        <field name="onlyGroups" type="com.ail.core.configure.Group" get-method="getOnlyGroups" set-method="setOnlyGroups" collection="arraylist"/>
-        <field name="xmlMapping" type="com.ail.core.configure.XMLMapping"/>
-        <field name="builders" type="com.ail.core.configure.Builders"/>
-        <field name="types" type="com.ail.core.configure.Types"/>
+        <map-to xml="configuration" />
+        <field name="name" type="string" />
+        <field name="timeout" type="integer" />
+        <field name="validTo" type="com.ail.core.VersionEffectiveDate" />
+        <field name="parentNamespace" type="string" />
+        <field name="manager" type="string" />
+        <field name="who" type="string" />
+        <field name="source" type="string" />
+        <field name="loadedAt" type="date" />
+        <field name="version" type="string" />
+        <field name="validFrom" type="com.ail.core.VersionEffectiveDate" />
+        <field name="onlyGroups" type="com.ail.core.configure.Group" get-method="getOnlyGroups" set-method="setOnlyGroups"
+            collection="arraylist" />
+        <field name="xmlMapping" type="com.ail.core.configure.XMLMapping" />
+        <field name="builders" type="com.ail.core.configure.Builders" />
+        <field name="types" type="com.ail.core.configure.Types" />
     </class>
 
     <class name="com.ail.core.CommandScript" extends="com.ail.core.Type">
-        <map-to xml="commandScript"/>
-        <field name="script" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"/>
-        <field name="commandName" type="string"/>
-        <field name="namespace" type="string"/>
-        <field name="type" type="string"/>
+        <map-to xml="commandScript" />
+        <field name="script" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler" />
+        <field name="commandName" type="string" />
+        <field name="namespace" type="string" />
+        <field name="type" type="string" />
     </class>
 
     <!-- Classes related to document generataion -->
     <class name="com.ail.core.document.model.ItemData" extends="com.ail.core.Type">
-        <map-to xml="itemData"/>
+        <map-to xml="itemData" />
         <field name="id" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="title" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="order" type="long">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="class" type="string" get-method="getStyle" set-method="setStyle">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="value" type="string">
-            <bind-xml node="text"/>
+            <bind-xml node="text" />
         </field>
     </class>
-    
-    <class name="com.ail.core.document.model.ModelData" extends="com.ail.core.document.model.ItemData">        
+
+    <class name="com.ail.core.document.model.ModelData" extends="com.ail.core.document.model.ItemData">
         <field name="binding" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.core.document.model.UrlData" extends="com.ail.core.document.model.ItemData">        
+    <class name="com.ail.core.document.model.UrlData" extends="com.ail.core.document.model.ItemData">
         <field name="url" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.core.document.model.ItemContainer" extends="com.ail.core.document.model.ItemData">        
-        <field name="item" type="com.ail.core.document.model.ItemData" collection="arraylist"/>
+    <class name="com.ail.core.document.model.ItemContainer" extends="com.ail.core.document.model.ItemData">
+        <field name="item" type="com.ail.core.document.model.ItemData" collection="arraylist" />
     </class>
-    
+
     <class name="com.ail.core.document.model.BlockData" extends="com.ail.core.document.model.ItemContainer">
-        <map-to xml="blockData"/>
+        <map-to xml="blockData" />
         <field name="placement" get-method="getPlacementAsString" set-method="setPlacementAsString" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
         <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
     <class name="com.ail.core.document.model.HeaderData" extends="com.ail.core.document.model.ItemContainer">
         <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
-        <field name="leftLogo" type="string"/>
-        <field name="rightLogo" type="string"/>
+        <field name="leftLogo" type="string" />
+        <field name="rightLogo" type="string" />
     </class>
-    
+
     <class name="com.ail.core.document.model.FooterData" extends="com.ail.core.document.model.ItemContainer">
         <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
-        <field name="leftLogo" type="string"/>
-        <field name="rightLogo" type="string"/>
+        <field name="leftLogo" type="string" />
+        <field name="rightLogo" type="string" />
     </class>
 
     <class name="com.ail.core.document.model.RepeatingData" extends="com.ail.core.document.model.ItemContainer">
-        <map-to xml="repeatingData"/>
+        <map-to xml="repeatingData" />
         <field name="binding" type="string">
-            <bind-xml node="attribute"/>
+            <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.core.document.model.ChapterData" extends="com.ail.core.document.model.ItemContainer">        
-        <map-to xml="chapterData"/>
-    </class>
-    
-    <class name="com.ail.core.document.model.DocumentData" extends="com.ail.core.document.model.ItemData">        
-        <map-to name="documentData"/>
-        <field name="headerData" type="com.ail.core.document.model.HeaderData" collection="arraylist"/>
-        <field name="footerData" type="com.ail.core.document.model.FooterData" collection="arraylist"/>
-        <field name="watermark" type="string"/>
-        <field name="chapterData" type="com.ail.core.document.model.ChapterData" collection="arraylist"/>
+    <class name="com.ail.core.document.model.ChapterData" extends="com.ail.core.document.model.ItemContainer">
+        <map-to xml="chapterData" />
     </class>
 
-    <class name="com.ail.core.document.model.DocumentDefinition" extends="com.ail.core.Type">        
-        <map-to name="documentDefinition"/>
-        <field name="mergeCommand" type="string"/>
-        <field name="styleCommand" type="string"/>
-        <field name="renderCommand" type="string"/>
-        <field name="documentData" type="com.ail.core.document.model.DocumentData"/>
+    <class name="com.ail.core.document.model.DocumentData" extends="com.ail.core.document.model.ItemData">
+        <map-to name="documentData" />
+        <field name="headerData" type="com.ail.core.document.model.HeaderData" collection="arraylist" />
+        <field name="footerData" type="com.ail.core.document.model.FooterData" collection="arraylist" />
+        <field name="watermark" type="string" />
+        <field name="chapterData" type="com.ail.core.document.model.ChapterData" collection="arraylist" />
+    </class>
+
+    <class name="com.ail.core.document.model.DocumentDefinition" extends="com.ail.core.Type">
+        <map-to name="documentDefinition" />
+        <field name="mergeCommand" type="string" />
+        <field name="styleCommand" type="string" />
+        <field name="renderCommand" type="string" />
+        <field name="documentData" type="com.ail.core.document.model.DocumentData" />
     </class>
 </mapping>

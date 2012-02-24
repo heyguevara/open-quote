@@ -17,31 +17,31 @@
     <!--   Define the default core services -->
     <!--====================================-->
     <service name="StyleDocumentService" builder="ClassBuilder" key="com.ail.core.command.XSLTAccessor">
-      <parameter name="Url">classpath://com.ail.core.document.generatedocument/DefaultStyleDocumentService.xslt</parameter>
+      <parameter name="Url">classpath://com.ail.core.document/DefaultStyleDocumentService.xslt</parameter>
     </service>
           
     <!--=======================================================================-->
     <!-- Bind the default core services (above) to Commands used by Core.class -->
     <!--=======================================================================-->
     
-    <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommandImpl">
+    <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.StyleDocumentCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
 
     <!-- Map all of the logger commands to the stdio logger -->
-    <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+    <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
-    <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+    <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
-    <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+    <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
-    <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+    <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
-    <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+    <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
       <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
     </command>
 

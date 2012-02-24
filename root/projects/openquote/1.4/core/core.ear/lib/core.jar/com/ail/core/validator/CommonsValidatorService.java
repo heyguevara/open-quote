@@ -32,6 +32,7 @@ import org.apache.commons.validator.ValidatorResults;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.validator.ValidatorService.ValidatorArgument;
 import com.ail.annotation.Configurable;
 
 /**

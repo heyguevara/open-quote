@@ -78,7 +78,7 @@ if (args.getX()>1000) {
       <service name="JaninoService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" >
           <parameter name="Script" xml:space='preserve'><![CDATA[
 import com.ail.core.Version;
-import com.ail.core.dummyservice.DummyArgument;
+import com.ail.core.dummyservice.DummyService.DummyArgument;
 
 public class JaninoService {
 	public static void invoke(DummyArgument args) {
@@ -100,7 +100,7 @@ public class JaninoService {
       <service name="JaninoInheritanceService" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" >
           <parameter name="Extend">JaninoService</parameter>
           <parameter name="Script"><![CDATA[
-import com.ail.core.dummyservice.DummyArgument;
+import com.ail.core.dummyservice.DummyService.DummyArgument;
 
 public class JaninoInheritanceService {
 	public static void invoke(DummyArgument args) {
@@ -243,7 +243,7 @@ public class JaninoInheritanceService {
           <parameter name="Service">DroolsXMLService</parameter>
       </command>
       
-      <command name="TestJMSCommand" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+      <command name="TestJMSCommand" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
           <parameter name="Service">TestJMSService</parameter>
       </command>
       
@@ -283,7 +283,7 @@ public class JaninoInheritanceService {
           <parameter name="Service">DroolsService3</parameter>
       </command>
 
-      <command name="TestXSLTService" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommandImpl">
+      <command name="TestXSLTService" builder="ClassBuilder" key="com.ail.core.product.ListProductsCommandImpl">
           <parameter name="Service">XSLTService</parameter>
       </command>
       
@@ -291,7 +291,7 @@ public class JaninoInheritanceService {
           <parameter name="Service">VelocityService</parameter>
       </command>
       
-      <command name="TestEJBService" builder="ClassBuilder" key="com.ail.core.product.listproducts.ListProductsCommandImpl">
+      <command name="TestEJBService" builder="ClassBuilder" key="com.ail.core.product.ListProductsCommandImpl">
           <parameter name="Service">EJBService</parameter>
       </command>
       

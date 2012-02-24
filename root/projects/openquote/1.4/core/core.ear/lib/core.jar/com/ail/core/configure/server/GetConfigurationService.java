@@ -17,13 +17,38 @@
 
 package com.ail.core.configure.server;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
+import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 
 @ServiceImplementation
-public class GetConfigurationService extends Service<GetConfigurationArgument> {
+public class GetConfigurationService extends Service<GetConfigurationService.GetConfigurationArgument> {
+
+    /**
+     * Arg interface for the GetConfiguration entry point. The entry point takes one
+     * argument: a namespace's name, and returns one result: the Configuration object
+     * for the namespace. 
+     */
+    @ServiceArgument
+    public interface GetConfigurationArgument extends Argument {
+        void setConfigurationRet(Configuration configurationRet);
+
+        Configuration getConfigurationRet();
+
+        void setNamespaceArg(String namespace);
+
+        String getNamespaceArg();
+    }
+    
+    @ServiceCommand(defaultServiceClass=GetConfigurationService.class)
+    public interface GetConfigurationCommand extends Command, GetConfigurationArgument {}
+
     /**
      * Override and return the namespace we've been asked to fetch.
      * @return The namespace we've been invoked to fetch.

@@ -42,7 +42,7 @@ import com.ail.annotation.XPathFunctionDefinition;
  * Utility function class. A collection of useful static methods that are 
  * available for use from java and from XPath queries.
  **/
-@XPathFunctionDefinition(namespace="function")
+@XPathFunctionDefinition(namespace="c")
 public class Functions {
 
 	/**

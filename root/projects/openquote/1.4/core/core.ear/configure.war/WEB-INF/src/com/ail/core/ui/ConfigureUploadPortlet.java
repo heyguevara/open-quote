@@ -40,8 +40,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.portlet.PortletFileUpload;
 
 import com.ail.core.CoreProxy;
-import com.ail.core.configure.server.CatalogCarCommand;
-import com.ail.core.configure.server.DeployCarCommand;
+import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
+import com.ail.core.configure.server.DeployCarService.DeployCarCommand;
 
 public class ConfigureUploadPortlet extends GenericPortlet {
     private CoreProxy core=new CoreProxy();

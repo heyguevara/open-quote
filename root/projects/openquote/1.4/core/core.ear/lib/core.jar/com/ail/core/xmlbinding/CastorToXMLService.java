@@ -50,7 +50,7 @@ import com.ail.core.configure.XMLMapping;
  * These arguments and returns are encapsulated in an instance of ToXMLCommand.
  */
 @ServiceImplementation
-public class CastorToXMLService extends Service<ToXMLArgument> {
+public class CastorToXMLService extends Service<ToXMLService.ToXMLArgument> {
 
     /**
      * Insert an xsi:type attribute in the root element of a string of XML.

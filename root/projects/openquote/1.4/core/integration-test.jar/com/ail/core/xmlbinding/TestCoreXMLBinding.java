@@ -140,7 +140,7 @@ public class TestCoreXMLBinding implements CoreUser, ConfigurationOwner {
         t = new Type();
         ts.addType(t);
         p = new Parameter();
-        t.setName("com.ail.core.xmlbinding.ToXMLCommand");
+        t.setName("com.ail.core.xmlbinding.ToXMLService.ToXMLCommand");
         t.setBuilder("ClassBuilder");
         t.setKey("com.ail.core.xmlbinding.ToXMLCommandImpl");
         p.setName("Accessor");
@@ -160,7 +160,7 @@ public class TestCoreXMLBinding implements CoreUser, ConfigurationOwner {
         t = new Type();
         ts.addType(t);
         p = new Parameter();
-        t.setName("com.ail.core.xmlbinding.FromXMLCommand");
+        t.setName("com.ail.core.xmlbinding.FromXMLService.FromXMLCommand");
         t.setBuilder("ClassBuilder");
         t.setKey("com.ail.core.xmlbinding.FromXMLCommandImpl");
         p.setName("Accessor");

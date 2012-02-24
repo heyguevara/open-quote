@@ -19,36 +19,36 @@
 
     <types>
         <service name="MergeDocumentDataJavaService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.document.generatedocument.JavaMergeDataService</parameter>
+            <parameter name="ServiceClass">com.ail.core.document.JavaMergeDataService</parameter>
         </service>
         
         <service name="StyleDocumentXsltService" builder="ClassBuilder" key="com.ail.core.command.XSLTAccessor">
-            <parameter name="Url">classpath://com.ail.core.document.generatedocument/DefaultStyleDocumentService.xslt</parameter>
+            <parameter name="Url">classpath://com.ail.core.document/DefaultStyleDocumentService.xslt</parameter>
         </service>
         
         <service name="RenderFOPPdfDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderFopPdfDocumentService</parameter>
+            <parameter name="ServiceClass">com.ail.core.document.RenderFopPdfDocumentService</parameter>
         </service>
         
         <service name="RenderITextPdfDocumentService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.document.generatedocument.RenderItextPdfDocumentService</parameter>
+            <parameter name="ServiceClass">com.ail.core.document.RenderItextPdfDocumentService</parameter>
         </service>
         
-        <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.MergeDataCommandImpl">
+        <command name="MergeDocumentDataCommand" builder="ClassBuilder" key="com.ail.core.document.MergeDataCommandImpl">
             <parameter name="Service">MergeDocumentDataJavaService</parameter>
         </command>
         
-        <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.StyleDocumentCommandImpl">
+        <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.StyleDocumentCommandImpl">
             <parameter name="Service">StyleDocumentXsltService</parameter>
         </command>        
         
-        <command name="RenderFOPHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommandImpl">
+        <command name="RenderFOPHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.RenderDocumentCommandImpl">
             <parameter name="Service">RenderFOPPdfDocumentService</parameter>
             <parameter name="RenderOptionsArg">allowCopyContent=FALSE,allowPrint=TRUE</parameter>
             <parameter name="TranslationUrlArg">classpath://com.ail.core.document/TestGenerateDocumentHelloWorld.xsl</parameter>
         </command>
 
-        <command name="RenderITextHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.generatedocument.RenderDocumentCommandImpl">
+        <command name="RenderITextHelloDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.RenderDocumentCommandImpl">
             <parameter name="Service">RenderITextPdfDocumentService</parameter>
             <parameter name="TemplateUrlArg">classpath://com.ail.core.document/TestGenerateDocumentIText.pdf</parameter>
         </command>

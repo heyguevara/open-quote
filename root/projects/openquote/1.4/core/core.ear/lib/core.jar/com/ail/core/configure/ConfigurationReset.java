@@ -61,7 +61,12 @@ public class ConfigurationReset {
 
         // loop through the AllNamespaceReset group, and reset all the configs named
         for(Parameter p: cp.getGroup("NamespacesToResetOnResetAll").getParameter()) {
-            cp.resetConfiguration(p.getName());
+            try {
+                cp.resetConfiguration(p.getName());
+            }
+            catch(ConfigurationResetError e) {
+                e.printStackTrace(System.err);
+            }
         }
     }
     

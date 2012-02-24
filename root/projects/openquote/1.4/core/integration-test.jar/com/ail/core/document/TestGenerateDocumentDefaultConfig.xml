@@ -20,14 +20,14 @@
         <!--====================================-->
 
         <service name="GenDocService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.core.document.generatedocument.GenerateDocumentService</parameter>
+            <parameter name="ServiceClass">com.ail.core.document.GenerateDocumentService</parameter>
         </service>
 
         <!--====================================-->
         <!--  Bind the commands to services     -->
         <!--====================================-->
 
-        <command name="GenerateDoc" builder="ClassBuilder" key="com.ail.core.document.generatedocument.GenerateDocumentCommandImpl">
+        <command name="GenerateDoc" builder="ClassBuilder" key="com.ail.core.document.GenerateDocumentCommandImpl">
             <parameter name="Service">GenDocService</parameter>
         </command>
 

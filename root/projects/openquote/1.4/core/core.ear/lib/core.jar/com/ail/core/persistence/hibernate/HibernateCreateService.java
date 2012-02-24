@@ -23,7 +23,7 @@ import org.hibernate.classic.Session;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.persistence.CreateArgument;
+import com.ail.core.persistence.CreateService.CreateArgument;
 import com.ail.core.persistence.CreateException;
 
 /**
@@ -52,6 +52,7 @@ public class HibernateCreateService extends Service<CreateArgument> {
             session.save(args.getObjectArg());
 		} 
         catch (HibernateException e) {
+            e.printStackTrace();
 			throw new CreateException("Hibernate could not save the object to the database",e);
 		}
         catch(Throwable t) {

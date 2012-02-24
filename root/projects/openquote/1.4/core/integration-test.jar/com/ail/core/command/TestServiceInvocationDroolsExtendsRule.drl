@@ -1,6 +1,6 @@
 package com.ail.core
  
-import com.ail.core.dummyservice.DummyArgument;
+import com.ail.core.dummyservice.DummyService.DummyArgument;
 
 /* This package is used by the inheritance test. It 'extends' TestServiceInvocationDroolsRule.drl (see
  * it's entry in TestServiceInvocationDefaultConfig.xml for details of how) and adds a new rule to those

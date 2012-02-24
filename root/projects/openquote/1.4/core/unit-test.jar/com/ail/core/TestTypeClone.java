@@ -30,10 +30,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.ail.core.logging.LoggerArgument;
-import com.ail.core.logging.LoggerArgumentImpl;
-import com.ail.core.logging.LoggerCommand;
-import com.ail.core.logging.LoggerCommandImpl;
+import com.ail.core.logging.LoggingArgumentImpl;
+import com.ail.core.logging.LoggingCommandImpl;
+import com.ail.core.logging.LoggingService.LoggingArgument;
+import com.ail.core.logging.LoggingService.LoggingCommand;
 import com.ail.core.logging.Severity;
 
 /**
@@ -177,10 +177,10 @@ public class TestTypeClone {
 
     @Test
     public void testCommandClone() throws Exception {
-        LoggerCommand c = new LoggerCommandImpl();
-        LoggerArgument a = new LoggerArgumentImpl();
+        LoggingCommand c = new LoggingCommandImpl();
+        LoggingArgument a = new LoggingArgumentImpl();
         c.setArgs(a);
-        LoggerCommand c1 = (LoggerCommand) ((LoggerCommandImpl)c).clone();
+        LoggingCommand c1 = (LoggingCommand) ((LoggingCommandImpl)c).clone();
         assertTrue(c.hashCode() != c1.hashCode());
         assertTrue(c.getArgs().hashCode() != c1.getArgs().hashCode());
     }
@@ -245,11 +245,11 @@ public class TestTypeClone {
      */
     @Test
     public void testEnumCloning() throws Exception {
-        LoggerArgumentImpl limp=new LoggerArgumentImpl();
+        LoggingArgumentImpl limp=new LoggingArgumentImpl();
         
         limp.setSeverity(Severity.DEBUG);
         
-        LoggerArgumentImpl clon=(LoggerArgumentImpl)limp.clone();
+        LoggingArgumentImpl clon=(LoggingArgumentImpl)limp.clone();
         
         assertEquals(clon.getSeverity(), limp.getSeverity());
     }

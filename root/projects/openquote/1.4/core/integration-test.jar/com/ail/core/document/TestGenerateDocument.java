@@ -35,8 +35,8 @@ import com.ail.core.TypeXPathFunctionRegister;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.Configuration;
-import com.ail.core.document.generatedocument.GenerateDocumentCommand;
-import com.ail.core.document.generatedocument.StyleDocumentArgumentImpl;
+import com.ail.core.document.GenerateDocumentService.GenerateDocumentCommand;
+import com.ail.core.document.StyleDocumentArgumentImpl;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.core.document.model.RenderContext;
 
@@ -136,7 +136,7 @@ public class TestGenerateDocument extends CoreUserBaseCase {
     @Test
     public void testTypeConversion() throws Exception {
         String tin= "<?xml version='1.0' encoding='UTF-8'?>\n"+
-                    "<styleDocumentArgumentImpl xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:type='java:com.ail.core.document.generatedocument.StyleDocumentArgumentImpl'>"+
+                    "<styleDocumentArgumentImpl xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:type='java:com.ail.core.document.StyleDocumentArgumentImpl'>"+
                       "<styledDocumentRet>"+
                         "<something with='an attribute'>but not much more.</something>"+
                       "</styledDocumentRet>"+

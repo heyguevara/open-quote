@@ -24,7 +24,7 @@ import org.hibernate.classic.Session;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.persistence.CloseSessionArgument;
+import com.ail.core.persistence.CloseSessionService.CloseSessionArgument;
 import com.ail.core.persistence.UpdateException;
 
 /**

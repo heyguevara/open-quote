@@ -21,23 +21,19 @@ import java.security.Principal;
 /**
  * Clients of the Core may use an instance of this class to satisfy the Core's
  * callback methods.
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2007/06/10 09:14:06 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CoreUserImpl.java,v $
  */
 public class CoreUserImpl implements CoreUser {
     /**
      * The current date will be returned whenever the version effective date
      * is requested.
      */
-    public static final int SelectLatestConfigurations=0;
+    public static final int SELECT_LATEST_CONFIGURATIONS=0;
 
     /**
      * Whenever CoreUserImpl was instantiated becomes the version effective
      * date for this instance.
      */
-    public static final int SelectConsistentConfigurations=1;
+    public static final int SELECT_CONSISTENT_CONFIGURATIONS=1;
 
     private VersionEffectiveDate ved=null;
     private Principal securityPrincipal=null;
@@ -67,14 +63,14 @@ public class CoreUserImpl implements CoreUser {
     /**
      * Constructor.
      * @deprecated Use {@link #CoreUserImpl(int, Principal)} instead.
-     * @param configSelectionFlag Either {@link #SelectConsistentConfigurations SelectConsistentConfigurations} or {@link #SelectLatestConfigurations SelectLatestConfigurations}
+     * @param configSelectionFlag Either {@link #SELECT_CONSISTENT_CONFIGURATIONS SELECT_CONSISTENT_CONFIGURATIONS} or {@link #SELECT_LATEST_CONFIGURATIONS SELECT_LATEST_CONFIGURATIONS}
      */
     public CoreUserImpl(int configSelectionFlag) {
         switch(configSelectionFlag) {
-            case SelectConsistentConfigurations:
+            case SELECT_CONSISTENT_CONFIGURATIONS:
                 ved=new VersionEffectiveDate();
                 break;
-            case SelectLatestConfigurations:
+            case SELECT_LATEST_CONFIGURATIONS:
                 ved=null;
                 break;
             default:
@@ -86,16 +82,16 @@ public class CoreUserImpl implements CoreUser {
 
     /**
      * Constructor
-     * @param configSelectionFlag Either {@link #SelectConsistentConfigurations SelectConsistentConfigurations} or {@link #SelectLatestConfigurations SelectLatestConfigurations}
+     * @param configSelectionFlag Either {@link #SELECT_CONSISTENT_CONFIGURATIONS SELECT_CONSISTENT_CONFIGURATIONS} or {@link #SELECT_LATEST_CONFIGURATIONS SELECT_LATEST_CONFIGURATIONS}
      * @param configurationNamespace Namespace to associate with this core user.
      * @param securityPrincipal Principal to associate with this Core User, this may be null.
      */
     public CoreUserImpl(int configSelectionFlag, String configurationNamespace, Principal securityPrincipal) {
         switch(configSelectionFlag) {
-            case SelectConsistentConfigurations:
+            case SELECT_CONSISTENT_CONFIGURATIONS:
                 ved=new VersionEffectiveDate();
                 break;
-            case SelectLatestConfigurations:
+            case SELECT_LATEST_CONFIGURATIONS:
                 ved=null;
                 break;
             default:

@@ -25,7 +25,7 @@ import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.Type;
-import com.ail.core.persistence.UpdateArgument;
+import com.ail.core.persistence.UpdateService.UpdateArgument;
 import com.ail.core.persistence.UpdateException;
 
 /**

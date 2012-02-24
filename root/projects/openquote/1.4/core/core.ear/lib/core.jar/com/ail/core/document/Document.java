@@ -21,11 +21,6 @@ import com.ail.core.Type;
 
 /**
  * Define the interfaces that the Core must implement in order to expose the document services.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
  */
 public interface Document {
     

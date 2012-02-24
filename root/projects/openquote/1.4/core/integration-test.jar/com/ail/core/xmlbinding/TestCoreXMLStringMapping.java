@@ -28,8 +28,8 @@ import com.ail.core.Core;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
-import com.ail.core.document.generatedocument.StyleDocumentCommand;
-import com.ail.core.document.generatedocument.StyleDocumentCommandImpl;
+import com.ail.core.document.StyleDocumentService.StyleDocumentCommand;
+import com.ail.core.document.StyleDocumentCommandImpl;
 import com.ail.core.CoreUserBaseCase;
 
 /**
@@ -80,7 +80,7 @@ public class TestCoreXMLStringMapping extends CoreUserBaseCase {
     @Test
     public void testSimpleFromXML() throws Exception {
         XMLString input=new XMLString(
-                "<styleDocumentCommand xsi:type='java:com.ail.core.document.generatedocument.StyleDocumentCommandImpl' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>"+
+                "<styleDocumentCommand xsi:type='java:com.ail.core.document.StyleDocumentCommandImpl' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>"+
                 "<mergedDataArg><hello>plop</hello></mergedDataArg>"+
                 "</styleDocumentCommand>");
         

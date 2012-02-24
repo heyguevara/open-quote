@@ -32,7 +32,7 @@ import com.ail.core.Service;
  * &nbsp;<i>owner</i>:<i>date</i>:<i>severity</i>:<i>effective date</i>:<i>message</i>
  */
 @ServiceImplementation
-public class SystemOutLoggerService extends Service<LoggerArgument> {
+public class SystemOutLoggerService extends Service<LoggingService.LoggingArgument> {
 	private static final SimpleDateFormat format=new SimpleDateFormat("dd/MM/yy hh:mm:ss");
 
 	@Override

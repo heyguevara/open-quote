@@ -17,6 +17,7 @@ import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Parameter;
+import com.ail.core.key.GenerateUniqueKeyService.GenerateUniqueKeyArgument;
 
 public class GenerateUniqueKeyServiceTest {
     private Core mockCore;

@@ -29,8 +29,8 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.ConfigurationSummary;
-import com.ail.core.configure.server.GetNamespacesCommand;
-import com.ail.core.configure.server.GetNamespacesHistoryCommand;
+import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
+import com.ail.core.configure.server.GetNamespacesHistoryService.GetNamespacesHistoryCommand;
 
 /**
  * Form (model) for the configure editor.
@@ -108,7 +108,7 @@ public class ConfigureForm {
     public boolean getEditorDisabled() {
         // Editor disabled if: no configuration has been selected, or the selected one's
         // validTo != 0 (which indicates that it's a historical version).
-        if (selected!=null && selected.getValidTo()==null) {
+        if (selected!=null && (selected.getValidTo()==null || selected.getValidTo().getTime()==0)) {
             return false;
         }
         else {
