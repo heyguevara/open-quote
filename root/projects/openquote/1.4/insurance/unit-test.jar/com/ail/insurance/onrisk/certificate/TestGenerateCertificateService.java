@@ -3,9 +3,9 @@ package com.ail.insurance.onrisk.certificate;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.eq;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +13,11 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
-import com.ail.core.command.Command;
-import com.ail.core.document.generatedocument.RenderDocumentCommand;
+import com.ail.core.document.RenderDocumentService.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
-import com.ail.insurance.onrisk.certificate.GenerateCertificateArgumentImpl;
+import com.ail.insurance.onrisk.GenerateCertificateService;
+import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
+import com.ail.insurance.onrisk.GenerateCertificateArgumentImpl;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 

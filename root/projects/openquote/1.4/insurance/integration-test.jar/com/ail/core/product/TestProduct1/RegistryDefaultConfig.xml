@@ -8,12 +8,12 @@
     <name>Configuration for Test Product 1</name>
     <timeout>60000</timeout>
     <who>factory</who>
-    <version>$Revision$</version>
+    <version>1.0</version>
     <manager>com.ail.core.product.resetproduct.ResetProductService</manager>
     <parentNamespace>com.ail.core.product.Product.Registry</parentNamespace>
     
     <!-- Select the method used to generate new numbers. Options are:                            -->
-    <!--  ConfigurePropertyUniqueNumberHandler - which stores the numbers in configuation.       -->
+    <!--  ConfigurePropertyUniqueNumberHandler - which stores the numbers in configuration.      -->
     <!--  PolicyIdUniqueNumberGeneratorHandler - use the policy's unique ID as the quote number. -->
     <parameter name="UniqueQuotationNumberHandler">ConfigurePropertyUniqueNumberHandler</parameter>
 
@@ -89,7 +89,7 @@
         </service>
         
         
-        <service name="MgmtChgRules" builder="ClassBuilder" key="com.ail.core.command.BeanShellAccessor">
+        <service name="ManagementChargeRules" builder="ClassBuilder" key="com.ail.core.command.BeanShellAccessor">
             <parameter name="Script"><![CDATA[
                 import com.ail.util.*;
                 import com.ail.insurance.policy.*;
@@ -101,28 +101,28 @@
         </service>
 
         <!-- Risk assessment rules (command & service) for this product -->
-        <command name="AssessSectionRisk/TestSectionID" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessSectionRiskCommandImpl">
+        <command name="AssessSectionRisk/TestSectionID" builder="ClassBuilder" key="com.ail.insurance.quotation.AssessSectionRiskCommandImpl">
             <parameter name="Service">AssessRiskRules</parameter>
         </command>
 
         <!-- Tax calc rules (command & service) for this product -->
-        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculatePolicyTaxCommandImpl">
+        <command name="CalculatePolicyTax" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculatePolicyTaxCommandImpl">
             <parameter name="Service">TaxCalcRules</parameter>
         </command>
 
         <!-- Commission calc rules (command & service) for this product -->
-        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculatePolicyCommissionCommandImpl">
+        <command name="CalculatePolicyCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculatePolicyCommissionCommandImpl">
             <parameter name="Service">CommissionCalcRules</parameter>
         </command>
 
         <!-- Brokerage calc rules (command & service) for this product -->
-        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculatePolicyBrokerageCommandImpl">
+        <command name="CalculatePolicyBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculatePolicyBrokerageCommandImpl">
             <parameter name="Service">BrokerageCalcRules</parameter>
         </command>
 
-        <!-- Management cgarge rules (command & service) for this product -->
-        <command name="CalculatePolicyMgmtChg" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculatePolicyMgmtChgCommandImpl">
-            <parameter name="Service">MgmtChgRules</parameter>
+        <!-- Management charge rules (command & service) for this product -->
+        <command name="CalculatePolicyManagementCharge" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculatePolicyManagementChargeCommandImpl">
+            <parameter name="Service">ManagementChargeRules</parameter>
         </command>
 
         <type name="TestProduct1" key="com.ail.core.Type" builder="BeanShellBuilder">

@@ -17,17 +17,39 @@
 
 package com.ail.insurance.acceptance;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand;
+import com.ail.insurance.quotation.AddPolicyNumberService.AddPolicyNumberCommand;
 
 @ServiceImplementation
-public class PutOnRiskService extends com.ail.core.Service<PutOnRiskArgument> {
+public class PutOnRiskService extends com.ail.core.Service<PutOnRiskService.PutOnRiskArgument> {
     private static final long serialVersionUID = 5492150960329684094L;
 
+    @ServiceArgument
+    public interface PutOnRiskArgument extends Argument {
+        /**
+         * Getter for the policyArgRet property. Quoted policy to be put on risk
+         * @return Value of policyArgRet, or null if it is unset
+         */
+        Policy getPolicyArgRet();
+
+        /**
+         * Setter for the policyArgRet property. * @see #getPolicyArgRet
+         * @param policyArgRet new value for property.
+         */
+        void setPolicyArgRet(Policy policyArgRet);
+    }
+    
+    @ServiceCommand(defaultServiceClass=PutOnRiskService.class)
+    public interface PutOnRiskCommand extends Command, PutOnRiskArgument {}
+    
     /**
      * Return the product type id of the policy we're assessing the risk for as the
      * configuration namespace. The has the effect of selecting the product's configuration.

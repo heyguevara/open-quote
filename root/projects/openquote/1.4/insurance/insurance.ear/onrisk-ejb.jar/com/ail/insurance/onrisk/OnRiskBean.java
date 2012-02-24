@@ -27,9 +27,9 @@ import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.onrisk.certificate.GenerateCertificateArgument;
-import com.ail.insurance.onrisk.invoice.GenerateInvoiceArgument;
-import com.ail.insurance.onrisk.wording.GenerateWordingArgument;
+import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
+import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
+import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
 @Configurable
 public class OnRiskBean extends EJBComponent implements SessionBean {

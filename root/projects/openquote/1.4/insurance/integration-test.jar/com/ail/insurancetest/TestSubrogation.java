@@ -47,9 +47,9 @@ import com.ail.insurance.claim.ClaimStatus;
 import com.ail.insurance.claim.PaymentType;
 import com.ail.insurance.claim.Recovery;
 import com.ail.insurance.claim.RecoveryType;
+import com.ail.insurance.subrogation.MakeARecoveryService;
+import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryCommand;
 import com.ail.insurance.subrogation.SubrogationBean;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryCommand;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryService;
 
 /**
  * The tests defined here exercise the Core system's factory.

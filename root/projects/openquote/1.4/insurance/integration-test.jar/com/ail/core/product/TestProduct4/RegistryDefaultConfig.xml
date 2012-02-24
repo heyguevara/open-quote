@@ -8,7 +8,7 @@
     <name>Configuration for Test Product 4</name>
     <timeout>60000</timeout>
     <who>factory</who>
-    <version>$Revision$</version>
+    <version>1.0</version>
     <manager>com.ail.core.product.resetproduct.ResetProductService</manager>
     <parentNamespace>com.ail.core.product.Product.Registry</parentNamespace>
     

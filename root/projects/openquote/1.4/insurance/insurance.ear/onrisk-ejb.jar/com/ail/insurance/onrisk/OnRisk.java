@@ -22,9 +22,9 @@ import java.rmi.RemoteException;
 import javax.ejb.EJBObject;
 
 import com.ail.core.BaseServerException;
-import com.ail.insurance.onrisk.certificate.GenerateCertificateArgument;
-import com.ail.insurance.onrisk.invoice.GenerateInvoiceArgument;
-import com.ail.insurance.onrisk.wording.GenerateWordingArgument;
+import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
+import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
+import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
 public interface OnRisk extends EJBObject {
     String invokeServiceXML(String xml) throws RemoteException;

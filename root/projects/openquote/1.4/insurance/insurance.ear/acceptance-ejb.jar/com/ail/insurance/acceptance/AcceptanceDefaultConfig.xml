@@ -15,8 +15,8 @@
         <command name="CollectPremium" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommandImpl">
             <parameter name="Service">com.ail.insurance.acceptance.CollectPremiumService</parameter>
         </command>
-        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommandImpl">
-            <parameter name="Service">com.ail.insurance.acceptance.acceptquotation.AcceptQuotationService</parameter>
+        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.AcceptQuotationCommandImpl">
+            <parameter name="Service">com.ail.insurance.acceptance.AcceptQuotationService</parameter>
         </command>
     </types>
 </configuration>

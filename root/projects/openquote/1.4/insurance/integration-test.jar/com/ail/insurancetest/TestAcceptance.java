@@ -35,11 +35,11 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.financial.Currency;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
-import com.ail.insurance.acceptance.CollectPremiumCommand;
+import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationCommand;
+import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumCommand;
 import com.ail.insurance.acceptance.PolicyDocumentation;
-import com.ail.insurance.acceptance.ProduceDocumentationCommand;
-import com.ail.insurance.acceptance.PutOnRiskCommand;
-import com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommand;
+import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationCommand;
+import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 

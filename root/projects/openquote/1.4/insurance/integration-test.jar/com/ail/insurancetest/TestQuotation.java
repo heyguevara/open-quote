@@ -41,10 +41,10 @@ import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.JDBCConfigurationLoader;
-import com.ail.core.product.listproducts.ListProductsService;
-import com.ail.core.product.resetallproducts.ResetAllProductsService;
+import com.ail.core.product.ListProductsService;
+import com.ail.core.product.ResetAllProductsService;
 import com.ail.financial.CurrencyAmount;
-import com.ail.insurance.acceptance.AssessPaymentOptionsCommand;
+import com.ail.insurance.acceptance.AssessPaymentOptionsService.AssessPaymentOptionsCommand;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.CalculationLine;
 import com.ail.insurance.policy.ConstrainValueOutOfBounds;
@@ -55,13 +55,13 @@ import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.ReferValueOutOfBounds;
 import com.ail.insurance.policy.Reference;
 import com.ail.insurance.policy.ReferenceType;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommand;
-import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommand;
-import com.ail.insurance.quotation.assessrisk.AssessRiskCommand;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumService;
-import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceCommand;
-import com.ail.insurance.quotation.refreshassessmentsheets.RefreshAssessmentSheetsCommand;
+import com.ail.insurance.quotation.AddPolicyNumberService.AddPolicyNumberCommand;
+import com.ail.insurance.quotation.AddQuoteNumberService.AddQuoteNumberCommand;
+import com.ail.insurance.quotation.AssessRiskService.AssessRiskCommand;
+import com.ail.insurance.quotation.CalculatePremiumService;
+import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumCommand;
+import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceCommand;
+import com.ail.insurance.quotation.RefreshAssessmentSheetsService.RefreshAssessmentSheetsCommand;
 import com.ail.util.Rate;
 
 /**
@@ -298,7 +298,7 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
      * <li>Fail if the policy doesn't have exactly 1 assessment line</li>
      * <li>Pass the policy into calculate premium</li>
      * <li>Fail if the section doesn't have exactly 2 assessment lines</li>
-     * <li>Fail if the policy doesn't have exactly 2 assessment lines</li>
+     * <li>Fail if the policy doesn't have exactly 6 assessment lines</li>
      * <li>Fail if the policy status is not set to Quotation</li>
      * <li>Fail if the total premium assessment line is not set to 250.00</li>
      * <li>Fail if any exceptions are thrown</li>
@@ -315,23 +315,33 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         cmd1.invoke();
         policy = cmd1.getPolicyArgRet();
 
+        // check that only the expected lines are present on the section
+        assertNotNull(policy.getSectionById("sec1").getAssessmentSheet().findLineById("loading1"));
+        assertNotNull(policy.getSectionById("sec1").getAssessmentSheet().findLineById("sum insured"));
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
+
+        // check that only the expected lines are on the policy (flag comes from the base product)
+        assertNotNull(policy.getAssessmentSheet().findLineById("flag"));
         assertEquals(1, policy.getAssessmentSheet().getLineCount());
         
-        System.out.println(core.toXML(policy));
-
         CalculatePremiumCommand cmd2 = core.newCommand(CalculatePremiumCommand.class);
         cmd2.setPolicyArgRet(policy);
         cmd2.invoke();
         policy = cmd2.getPolicyArgRet();
 
-        System.out.println(core.toXML(policy));
-
         assertEquals(PolicyStatus.QUOTATION, policy.getStatus());
         assertEquals(2, policy.getSectionById("sec1").getAssessmentSheet().getLineCount());
-        assertEquals(6, policy.getAssessmentSheet().getLineCount());
-        // make sure there's a tax line
+
+        // check that only the expected lines are present
         assertNotNull(policy.getAssessmentSheet().findLineById("tax"));
+        assertNotNull(policy.getAssessmentSheet().findLineById("charge"));
+        assertNotNull(policy.getAssessmentSheet().findLineById("brokerage"));
+        assertNotNull(policy.getAssessmentSheet().findLineById("commission1"));
+        assertNotNull(policy.getAssessmentSheet().findLineById("flag"));
+        assertNotNull(policy.getAssessmentSheet().findLineById("total premium"));
+        assertEquals(6, policy.getAssessmentSheet().getLineCount());
+
+        // make sure there's a tax line
         assertTrue("332.63==policy.getTotalPremium().getAmount().doubleValue()", 332.63==policy.getTotalPremium().getAmount().doubleValue());
     }
 
@@ -393,8 +403,6 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
 
         assertEquals(PolicyStatus.QUOTATION, policy.getStatus());
 
-        System.out.println("total premium " + policy.getTotalPremium());
-
         // with ordering
         policy = (Policy) core.newProductType("com.ail.core.product.TestProduct2");
 
@@ -416,8 +424,6 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         policy = cmd2.getPolicyArgRet();
 
         assertEquals(PolicyStatus.QUOTATION, policy.getStatus());
-
-        System.out.println("total premium " + policy.getTotalPremium());
     }
 
     /**
@@ -804,7 +810,6 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote=command.getPolicyArgRet();
         
         assertEquals(new CurrencyAmount(200, GBP), quote.getTotalPremium());
-        System.out.println(core.toXML(quote));
     }
 
     /**
@@ -1096,8 +1101,6 @@ public class TestQuotation implements CoreUser, ConfigurationOwner {
         quote=command.getPolicyArgRet();
         
         assertTrue(quote.getAssessmentSheet().isMarkedForRefer());
-        
-        System.out.println(core.toXML(quote));
     }
 
     /**

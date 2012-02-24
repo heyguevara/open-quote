@@ -23,7 +23,7 @@ import javax.ejb.EJBObject;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryArgument;
+import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 public interface Subrogation extends EJBObject {
     VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;

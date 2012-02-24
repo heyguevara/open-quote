@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * Indicates the state of the policy.
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2006/09/03 21:32:08 $
- * @source $Source: /home/bob/CVSRepository/projects/insurance/insurance.ear/insurance.jar/com/ail/insurance/policy/PolicyStatus.java,v $
- * @stereotype enumeration
  */
 public enum PolicyStatus implements TypeEnum {
     ON_RISK("OnRisk"),

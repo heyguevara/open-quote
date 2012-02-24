@@ -8,7 +8,7 @@
     <name>ProductCatalog configuration</name>
     <timeout>60000</timeout>
     <who>factory</who>
-    <version>$Revision: 1.4 $</version>
+    <version>1.0</version>
     <manager>com.ail.core.product.listproducts.ListProductsService</manager>
     
     <group name="products">

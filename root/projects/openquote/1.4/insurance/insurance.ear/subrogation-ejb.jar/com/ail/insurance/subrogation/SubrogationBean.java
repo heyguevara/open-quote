@@ -25,7 +25,7 @@ import com.ail.annotation.Configurable;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryArgument;
+import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Configurable
 public class SubrogationBean extends EJBComponent implements SessionBean {

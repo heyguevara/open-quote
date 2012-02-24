@@ -29,7 +29,6 @@ import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ail.core.CoreUserBaseCase;
@@ -61,7 +60,7 @@ public class TestQuotationEjbXml extends CoreUserBaseCase {
     @Test
     public void testSimplAssessRisk() throws Exception {
         String arg=
-            "<assessRisk xsi:type=\"java:com.ail.insurance.quotation.assessrisk.AssessRiskArgumentImpl\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
+            "<assessRisk xsi:type=\"java:com.ail.insurance.quotation.AssessRiskArgumentImpl\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
                 "<policyArgRet xsi:type=\"java:com.ail.insurance.policy.Policy\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
                     "<status>APPLICATION</status>"+
                     "<productTypeId>com.ail.core.product.TestProduct1</productTypeId>"+

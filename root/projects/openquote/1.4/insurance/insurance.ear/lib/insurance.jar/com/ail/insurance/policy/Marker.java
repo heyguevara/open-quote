@@ -23,7 +23,7 @@ import com.ail.annotation.TypeDefinition;
  * A marker assessment line indicates referral and decline conditions. When risk assessment rules detect a condition
  * that calls for a referral or decline, a line of this type is added to the assessment sheet. The presents of these
  * lines does not necessarily stop premium calculation, but other services may refuse to process quotations when 
- * any of these markers are present. For example, {@link com.ail.insurance.quotation.calculatepremium.CalculatePremiumService
+ * any of these markers are present. For example, {@link com.ail.insurance.quotation.CalculatePremiumService
  * CalculatePremium} will not move a policy to QUOTATION status if any of these markers are present.
  * @see MarkerResolution
  */

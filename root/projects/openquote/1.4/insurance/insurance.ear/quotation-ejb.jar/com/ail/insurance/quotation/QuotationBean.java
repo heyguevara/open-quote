@@ -27,16 +27,16 @@ import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberArgument;
-import com.ail.insurance.quotation.addquotenumber.AddQuoteNumberArgument;
-import com.ail.insurance.quotation.assessrisk.AssessRiskArgument;
-import com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageArgument;
-import com.ail.insurance.quotation.calculatecommission.CalculateCommissionArgument;
-import com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeArgument;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumArgument;
-import com.ail.insurance.quotation.calculatetax.CalculateTaxArgument;
-import com.ail.insurance.quotation.enforcecompliance.EnforceComplianceArgument;
-import com.ail.insurance.quotation.generatedocument.GenerateDocumentArgument;
+import com.ail.insurance.quotation.AddPolicyNumberService.AddPolicyNumberArgument;
+import com.ail.insurance.quotation.AddQuoteNumberService.AddQuoteNumberArgument;
+import com.ail.insurance.quotation.AssessRiskService.AssessRiskArgument;
+import com.ail.insurance.quotation.CalculateBrokerageService.CalculateBrokerageArgument;
+import com.ail.insurance.quotation.CalculateCommissionService.CalculateCommissionArgument;
+import com.ail.insurance.quotation.CalculateManagementChargeService.CalculateManagementChargeArgument;
+import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumArgument;
+import com.ail.insurance.quotation.CalculateTaxService.CalculateTaxArgument;
+import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceArgument;
+import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument;
 
 @Configurable
 public class QuotationBean extends EJBComponent implements SessionBean {
@@ -164,7 +164,7 @@ public class QuotationBean extends EJBComponent implements SessionBean {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public CalculateManagementChargeArgument calculateManagementCharge(CalculateManagementChargeArgument arg) {
-        return invokeCommand(core, "CalculateManagement", arg);
+        return invokeCommand(core, "CalculateManagementCharge", arg);
     }
 
     /**

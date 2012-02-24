@@ -13,9 +13,11 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
-import com.ail.core.command.Command;
-import com.ail.core.document.generatedocument.RenderDocumentCommand;
+import com.ail.core.document.RenderDocumentService.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
+import com.ail.insurance.onrisk.GenerateWordingArgumentImpl;
+import com.ail.insurance.onrisk.GenerateWordingService;
+import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 

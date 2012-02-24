@@ -32,7 +32,7 @@ import com.ail.insurance.claim.PaymentType;
 import com.ail.insurance.claim.Recovery;
 import com.ail.insurance.claim.RecoveryType;
 import com.ail.insurance.claim.SectionNotFoundException;
-import com.ail.insurance.subrogation.makearecovery.MakeARecoveryCommand;
+import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryCommand;
 
 /**
  * This proxy is provided to simplify JSP access to the subrogation component's

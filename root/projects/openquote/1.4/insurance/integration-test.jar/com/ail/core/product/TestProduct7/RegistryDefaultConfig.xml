@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  This file defines a test product which will always has a decline and a referral.
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
     <name>Configuration for Test Product 7</name>
     <timeout>60000</timeout>
     <who>factory</who>
-    <version>$Revision$</version>
+    <version>1.0</version>
     <manager>com.ail.core.product.resetproduct.ResetProductService</manager>
     <parentNamespace>com.ail.core.product.TestProduct1.Registry</parentNamespace>
     

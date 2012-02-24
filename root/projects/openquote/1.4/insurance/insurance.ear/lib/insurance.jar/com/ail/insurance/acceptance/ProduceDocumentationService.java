@@ -17,14 +17,48 @@
 
 package com.ail.insurance.acceptance;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PreconditionException;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
 @ServiceImplementation
-public class ProduceDocumentationService extends com.ail.core.Service<ProduceDocumentationArgument> {
+public class ProduceDocumentationService extends com.ail.core.Service<ProduceDocumentationService.ProduceDocumentationArgument> {
     private static final long serialVersionUID = 8323843668107021681L;
+
+    @ServiceArgument
+    public interface ProduceDocumentationArgument extends Argument {
+        /**
+         * Getter for the policyArg property. Policy to create documentation for
+         * @return Value of policyArg, or null if it is unset
+         */
+        Policy getPolicyArg();
+
+        /**
+         * Setter for the policyArg property. * @see #getPolicyArg
+         * @param policyArg new value for property.
+         */
+        void setPolicyArg(Policy policyArg);
+
+        /**
+         * Getter for the documentationRet property. Type containing policy documentation
+         * @return Value of documentationRet, or null if it is unset
+         */
+        PolicyDocumentation getDocumentationRet();
+
+        /**
+         * Setter for the documentationRet property. * @see #getDocumentationRet
+         * @param documentationRet new value for property.
+         */
+        void setDocumentationRet(PolicyDocumentation documentationRet);
+    }
+
+    @ServiceCommand(defaultServiceClass=ProduceDocumentationService.class)
+    public interface ProduceDocumentationCommand extends Command, ProduceDocumentationArgument {}
 
     @Override
     public void invoke() throws PreconditionException {

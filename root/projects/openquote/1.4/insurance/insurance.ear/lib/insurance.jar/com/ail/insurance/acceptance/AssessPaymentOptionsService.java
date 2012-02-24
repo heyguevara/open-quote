@@ -23,9 +23,13 @@ import static com.ail.financial.FinancialFrequency.ONE_TIME;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.financial.Currency;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.DirectDebit;
@@ -48,11 +52,43 @@ import com.ail.insurance.policy.PolicyStatus;
  *  <li>Postcondition: If total premium > 200, then schedule will include a third option:<ol>
  *     <li>A one time payment of X, followed by 9 payments of Y per month. All payments by direct debit.</li></ol>
  *  </ul>
- * Note: These rules are a default set only and are expected to be overriden in live implementations.
+ * Note: These rules are a default set only and are expected to be overridden in live implementations.
  */
 @ServiceImplementation
-public class AssessPaymentOptionsService extends com.ail.core.Service<AssessPaymentOptionsArgument> {
+public class AssessPaymentOptionsService extends com.ail.core.Service<AssessPaymentOptionsService.AssessPaymentOptionsArgument> {
     private static final long serialVersionUID = 1871676649916485145L;
+
+    @ServiceArgument
+    public interface AssessPaymentOptionsArgument extends Argument {
+        /**
+         * Getter for the policyArg property. Policy to collect premium for
+         * @return Value of policyArg, or null if it is unset
+         */
+        Policy getPolicyArg();
+
+        /**
+         * Setter for the policyArg property. 
+         * @see #getPolicyArg
+         * @param policyArg new value for property.
+         */
+        void setPolicyArg(Policy policyArg);
+
+        /**
+         * Getter returning a list of schedules, each of which is an option
+         * @return List of schedule
+         */
+        ArrayList<PaymentSchedule> getOptionsRet();
+        
+        /**
+         * Setter for the schedule options
+         * @see #getOptionRet()
+         * @param option
+         */
+        void setOptionsRet(ArrayList<PaymentSchedule> option);
+    }
+
+    @ServiceCommand(defaultServiceClass=AssessPaymentOptionsService.class)
+    public interface AssessPaymentOptionsCommand extends Command, AssessPaymentOptionsArgument {}
 
     @Override
     public void invoke() throws PreconditionException, PostconditionException {

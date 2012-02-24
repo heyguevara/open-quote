@@ -8,35 +8,35 @@
     <who>factory</who>
     <version>$Revision: 1.4 $</version>
     <types>
-        <command name="AssessRisk" builder="ClassBuilder" key="com.ail.insurance.quotation.assessrisk.AssessRiskCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.assessrisk.AssessRiskService</parameter>
+        <command name="AssessRisk" builder="ClassBuilder" key="com.ail.insurance.quotation.AssessRiskCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.AssessRiskService</parameter>
         </command>
-        <command name="CalculatePremium" builder="ClassBuilder" key="com.ail.insurance.acceptance.CollectPremiumCommandImpl">
-            <parameter name="Service">com.ail.insurance.acceptance.CollectPremiumService</parameter>
+        <command name="CalculatePremium" builder="ClassBuilder" key="com.ail.insurance.quotation.CollectPremiumCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.CollectPremiumService</parameter>
         </command>
-        <command name="CalculateTax" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatetax.CalculateTaxCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.calculatetax.CalculateTaxService</parameter>
+        <command name="CalculateTax" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculateTaxCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.CalculateTaxService</parameter>
         </command>
-        <command name="CalculateCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatecommission.CalculateCommissionCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.calculatecommission.CalculateCommissionService</parameter>
+        <command name="CalculateCommission" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculateCommissionCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.CalculateCommissionService</parameter>
         </command>
-        <command name="CalculateBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.calculatebrokerage.CalculateBrokerageService</parameter>
+        <command name="CalculateBrokerage" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculateBrokerageCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.CalculateBrokerageService</parameter>
         </command>
-        <command name="CalculateManagement" builder="ClassBuilder" key="com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.calculatemanagementcharge.CalculateManagementChargeService</parameter>
+        <command name="CalculateManagementCharge" builder="ClassBuilder" key="com.ail.insurance.quotation.CalculateManagementChargeCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.CalculateManagementChargeService</parameter>
         </command>
-        <command name="AddQuoteNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.addquotenumber.AddQuoteNumberCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.addquotenumber.AddQuoteNumberService</parameter>
+        <command name="AddQuoteNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.AddQuoteNumberCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.AddQuoteNumberService</parameter>
         </command>
-        <command name="AddPolicyNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.addpolicynumber.AddPolicyNumberService</parameter>
+        <command name="AddPolicyNumber" builder="ClassBuilder" key="com.ail.insurance.quotation.AddPolicyNumberCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.AddPolicyNumberService</parameter>
         </command>
-        <command name="EnforceCompliance" builder="ClassBuilder" key="com.ail.insurance.quotation.enforcecompliance.EnforceComplianceCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.enforcecompliance.EnforceComplianceService</parameter>
+        <command name="EnforceCompliance" builder="ClassBuilder" key="com.ail.insurance.quotation.EnforceComplianceCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.EnforceComplianceService</parameter>
         </command>
-        <command name="GenerateDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.generatedocument.GenerateDocumentCommandImpl">
-            <parameter name="Service">com.ail.insurance.quotation.generatedocument.GenerateDocumentService</parameter>
+        <command name="GenerateDocument" builder="ClassBuilder" key="com.ail.insurance.quotation.GenerateDocumentCommandImpl">
+            <parameter name="Service">com.ail.insurance.quotation.GenerateQuoteService</parameter>
         </command>
     </types>
 </configuration>
