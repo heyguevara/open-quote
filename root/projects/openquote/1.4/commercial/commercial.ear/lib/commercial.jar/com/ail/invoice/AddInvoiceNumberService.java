@@ -17,14 +17,20 @@
 
 package com.ail.invoice;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
 import com.ail.core.document.model.DocumentDefinition;
-import com.ail.core.key.GenerateUniqueKeyCommand;
+import com.ail.core.key.GenerateUniqueKeyService.GenerateUniqueKeyCommand;
+import com.ail.invoice.GenerateInvoiceNumberService.GenerateInvoiceNumberCommand;
+import com.ail.financial.Invoice;
 
 /**
  * Service to generate an invoice document. This service delegates to the three document
@@ -33,10 +39,20 @@ import com.ail.core.key.GenerateUniqueKeyCommand;
  * with the policy for which a document is being generated. By convention, this type is named "InvoiceDocument".
  */
 @ServiceImplementation
-public class AddInvoiceNumberService extends Service<AddInvoiceNumberArgument> {
+public class AddInvoiceNumberService extends Service<AddInvoiceNumberService.AddInvoiceNumberArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
     private String configurationNamespace="com.ail.invoice.AddInvoiceNumberService";
 
+    @ServiceArgument
+    public interface AddInvoiceNumberArgument extends Argument {
+        Invoice getInvoiceArgRet();
+
+        void setInvoiceArgRet(Invoice invoiceArgRet);
+    }
+    
+    @ServiceCommand(defaultServiceClass=AddInvoiceNumberService.class)
+    public interface AddInvoiceNumberCommand extends Command, AddInvoiceNumberArgument {}
+    
     /**
      * Return the product name from the arguments as the configuration namespace. 
      * The has the effect of selecting the product's configuration.
@@ -74,7 +90,7 @@ public class AddInvoiceNumberService extends Service<AddInvoiceNumberArgument> {
         gukc.setKeyIdArg("InvoiceNumber");
         gukc.invoke();
         
-        GenerateInvoiceNumberRuleCommand command=core.newCommand(GenerateInvoiceNumberRuleCommand.class);
+        GenerateInvoiceNumberCommand command=core.newCommand(GenerateInvoiceNumberCommand.class);
         command.setInvoiceArg(args.getInvoiceArgRet());
         command.setUniqueNumberArg(gukc.getKeyRet());
         command.invoke();

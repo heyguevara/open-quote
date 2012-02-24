@@ -17,6 +17,8 @@
 
 package com.ail.invoice;
 
+import com.ail.annotation.ServiceArgument;
+import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.Functions;
@@ -24,10 +26,13 @@ import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLString;
-import com.ail.core.document.generatedocument.MergeDataCommand;
-import com.ail.core.document.generatedocument.RenderDocumentCommand;
-import com.ail.core.document.generatedocument.StyleDocumentCommand;
+import com.ail.core.command.Argument;
+import com.ail.core.command.Command;
+import com.ail.core.document.MergeDataService.MergeDataCommand;
+import com.ail.core.document.RenderDocumentService.RenderDocumentCommand;
+import com.ail.core.document.StyleDocumentService.StyleDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
+import com.ail.financial.Invoice;
 
 /**
  * Service to generate an invoice document. This service delegates to the three document
@@ -36,9 +41,42 @@ import com.ail.core.document.model.DocumentDefinition;
  * with the policy for which a document is being generated. By convention, this type is named "InvoiceDocument".
  */
 @ServiceImplementation
-public class GenerateInvoiceService extends Service<GenerateInvoiceArgument> {
+public class GenerateInvoiceService extends Service<GenerateInvoiceService.GenerateInvoiceArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
 
+    /**
+     * Interface defining the arguments and returns associated with the invoice document generation service.
+     */
+    @ServiceArgument
+    public interface GenerateInvoiceArgument extends Argument {
+        /**
+         * The invoice to generate a document for.
+         * @return
+         */
+        Invoice getInvoiceArg();
+        
+        /**
+         * @see #setInvoiceArg(Invoice)
+         * @param invoiceArg
+         */
+        void setInvoiceArg(Invoice invoiceArg);
+        
+        /**
+         * The generated document.
+         * @return document
+         */
+        byte[] getDocumentRet();
+
+        /**
+         * @see #getDocumentRet()
+         * @param documentRet
+         */
+        void setDocumentRet(byte[] documentRet);
+    }
+
+    @ServiceCommand(defaultServiceClass=GenerateInvoiceService.class)
+    public interface GenerateInvoiceCommand extends Command, GenerateInvoiceArgument {}
+    
     /**
      * Return the product name from the arguments as the configuration namespace. 
      * The has the effect of selecting the product's configuration.

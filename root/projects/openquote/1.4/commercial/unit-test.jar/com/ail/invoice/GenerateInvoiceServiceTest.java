@@ -13,11 +13,12 @@ import com.ail.core.BaseException;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
-import com.ail.core.document.generatedocument.RenderDocumentCommand;
+import com.ail.core.document.RenderDocumentService.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
 import com.ail.financial.Invoice;
 import com.ail.financial.MoneyProvision;
 import com.ail.party.Party;
+import com.ail.invoice.GenerateInvoiceService.GenerateInvoiceArgument;
 
 public class GenerateInvoiceServiceTest {
     private GenerateInvoiceService sut;

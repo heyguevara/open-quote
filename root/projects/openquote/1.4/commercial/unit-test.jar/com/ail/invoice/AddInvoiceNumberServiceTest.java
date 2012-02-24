@@ -13,8 +13,10 @@ import com.ail.core.BaseException;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
-import com.ail.core.key.GenerateUniqueKeyCommand;
+import com.ail.core.key.GenerateUniqueKeyService.GenerateUniqueKeyCommand;
 import com.ail.financial.Invoice;
+import com.ail.invoice.AddInvoiceNumberService.AddInvoiceNumberArgument;
+import com.ail.invoice.GenerateInvoiceNumberService.GenerateInvoiceNumberCommand;
 
 public class AddInvoiceNumberServiceTest {
     AddInvoiceNumberService sut = null;
@@ -37,9 +39,9 @@ public class AddInvoiceNumberServiceTest {
         when(mockGenerateUniqueKeyCommand.getKeyRet()).thenReturn(20);
         when(mockCore.newCommand(eq(GenerateUniqueKeyCommand.class))).thenReturn(mockGenerateUniqueKeyCommand);
         
-        GenerateInvoiceNumberRuleCommand mockGenerateInvoiceNumberRuleCommand=mock(GenerateInvoiceNumberRuleCommand.class);
+        GenerateInvoiceNumberCommand mockGenerateInvoiceNumberRuleCommand=mock(GenerateInvoiceNumberCommand.class);
         when(mockGenerateInvoiceNumberRuleCommand.getInvoiceNumberRet()).thenReturn("123");
-        when(mockCore.newCommand(eq(GenerateInvoiceNumberRuleCommand.class))).thenReturn(mockGenerateInvoiceNumberRuleCommand);
+        when(mockCore.newCommand(eq(GenerateInvoiceNumberCommand.class))).thenReturn(mockGenerateInvoiceNumberRuleCommand);
 
         sut=new AddInvoiceNumberService();
         sut.setCore(mockCore);
