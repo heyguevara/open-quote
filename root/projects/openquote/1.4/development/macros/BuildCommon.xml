@@ -1,8 +1,18 @@
 <!-- This file defines the common section used in all build files Ant build file for the core project. -->
 
 <project name="BuildCommon.xml" default="dummy">
-    <!-- set global properties for this build -->
+    <!-- Set global properties for this build -->
     <property environment="env" />
+
+    <!-- Figure out where everything is - everything's relative to project.dir -->
+    <dirname property="project.dir" file="${ant.file.BuildSettings}" />
+    <property name="target.dir" value="${project.dir}/target" />
+    <property name="jboss.dir" value="${target.dir}/jboss" />
+    <property name="deploy.dir" value="${jboss.dir}/server/default" />
+    <property name="ear.dir" value="${deploy.dir}/deploy/${ear.name}" />
+    <property name="ear.lib" value="${ear.dir}/lib" />
+    <property name="development.dir" value="${project.dir}/../development" />
+    <property name="test.dir" value="${target.dir}/test" />
     <property name="repo.dir" value="${development.dir}/repo" />
     <property name="domain.dir" value="${basedir}/domain/jboss" />
     <property name="lib" value="${basedir}/jars" />
@@ -152,6 +162,7 @@
             </path>
 
             <java classname="com.ail.core.configure.ConfigurationReset" fork="yes" failonerror="yes" classpathref="reset.classpath">
+                <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
                 <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader" />
                 <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver" />
                 <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}" />
@@ -226,5 +237,10 @@
             </copy>
         </sequential>
     </macrodef>
+
+    <import file="BuildJavaMacros.xml" />
+    <import file="BuildJBossMacros.xml" />
+    <import file="BuildRepositoryMacros.xml" />
+    <import file="BuildTestingMacros.xml" />
 </project>
 

@@ -42,8 +42,8 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.StandardLocation;
 
 @SupportedSourceVersion(RELEASE_6)
-@SupportedAnnotationTypes({ "com.ail.annotation.ArgumentDefinition", 
-							"com.ail.annotation.CommandDefinition", 
+@SupportedAnnotationTypes({ "com.ail.annotation.ServiceArgument", 
+							"com.ail.annotation.ServiceCommand", 
 							"com.ail.annotation.ServiceImplementation", 
 							"com.ail.annotation.TypeDefinition",
 							"com.ail.annotation.Configurable",
@@ -71,8 +71,8 @@ public class Processor extends AbstractProcessor {
 		return true;
 	}
 
-	private static String COMMANDS="CommandDefinition";
-	private static String ARGUMENTS="ArgumentDefinition";
+	private static String COMMANDS="ServiceCommand";
+	private static String ARGUMENTS="ServiceArgument";
 	private static String SERVICES="ServiceImplementation";
 	private static String TYPES="TypeDefinition";
 	private static String BUILDERS="Builder";
@@ -157,24 +157,26 @@ public class Processor extends AbstractProcessor {
 		}
 		pw.printf("\n");
 		for (TypeElement te : ElementFilter.typesIn(annots.get(COMMANDS).values())) {
-			CommandDefinition cd = te.getAnnotation(CommandDefinition.class);
+			ServiceCommand sc = te.getAnnotation(ServiceCommand.class);
 			TypeMirror value=null;
 			try {
-				cd.defaultServiceClass();
+				sc.defaultServiceClass();
 			} 
 			catch(MirroredTypeException e) {
 				value=e.getTypeMirror();
 			}
 
-			if (cd != null && value!=null) {
-				pw.printf("<command name='%s' builder='ClassBuilder' key='%sImpl'>\n", te, te);
+			if (sc != null && value!=null) {
+		        String impl = te.getQualifiedName().toString().replaceFirst("[A-Z]{1}.*\\.(.*)Command$","$1CommandImpl");
+		        pw.printf("<command name='%s' builder='ClassBuilder' key='%s'>\n", te, impl);
 				pw.printf("  <parameter name='Service'>%s</parameter>\n", value);
 				pw.printf("</command>\n");
 			}
 		}
 		pw.printf("\n");
 		for (TypeElement te : ElementFilter.typesIn(annots.get(ARGUMENTS).values())) {
-			pw.printf("<type name='%s' builder='ClassBuilder' key='%sImpl'/>\n", te, te);
+		    String impl=te.getQualifiedName().toString().replaceFirst("[A-Z]{1}.*\\.(.*)Argument$","$1ArgumentImpl");
+		    pw.printf("<type name='%s' builder='ClassBuilder' key='%s'/>\n", te, impl);
 		}
 		pw.printf("\n");
 		for (TypeElement te : ElementFilter.typesIn(annots.get(TYPES).values())) {
@@ -217,9 +219,9 @@ public class Processor extends AbstractProcessor {
 	 * Generate the ArgImp class for the command.
 	 */
 	private void generateArgumentImpl(TypeElement te) throws IOException {
-		// com.ail.core.thing.ThingCommand -> com.ail.core.thing.ThingArgImp
-		String qualifiedClassName = te.getQualifiedName().toString().replaceFirst("Argument$", "ArgumentImpl");
-		// ThingCommand -> ThingArgImp
+        // com.ail.core.thing.ThingService.ThingArgument -> com.ail.core.thing.ThingArgumentImpl
+		String qualifiedClassName = te.getQualifiedName().toString().replaceFirst("[A-Z]{1}.*\\.(.*)Argument$","$1ArgumentImpl");
+		// ThingArgument -> ThingArgumentImp
 		String simpleClassName = te.getSimpleName().toString().replaceFirst("Argument$", "ArgumentImpl");
 
 		OutputStream os = filer.createSourceFile(qualifiedClassName, (Element[]) null).openOutputStream();
@@ -232,6 +234,8 @@ public class Processor extends AbstractProcessor {
 		pw.printf("import com.ail.core.command.ArgumentImpl;\n");
 		pw.printf("\n");
 		pw.printf("public class %s extends ArgumentImpl implements %s {\n", simpleClassName, te);
+        pw.printf("  static final long serialVersionUID = %dL;\n", (long)(Math.random()*Long.MAX_VALUE));
+        pw.printf("\n");
 
 		for (ExecutableElement ee : ElementFilter.methodsIn(te.getEnclosedElements())) {
 			if ("get".equals(ee.getSimpleName().subSequence(0, 3))) {
@@ -272,13 +276,12 @@ public class Processor extends AbstractProcessor {
 	 * Generate a CommandImp class for a CommandDefinition
 	 */
 	private void generateCommandImpl(TypeElement te) throws IOException {
-		// com.ail.core.thing.ThingCommand -> com.ail.core.thing.ThingCommandImp
-		String qualifiedClassName = te.getQualifiedName() + "Impl";
-		// ThingCommand -> ThingCommandImp
+		// com.ail.core.thing.ThingService.ThingCommand -> com.ail.core.thing.ThingCommandImp
+        String qualifiedClassName = te.getQualifiedName().toString().replaceFirst("[A-Z]{1}.*\\.(.*)Command$","$1CommandImpl");
+		// ThingCommand -> ThingCommandImp;
 		String simpleClassName = te.getSimpleName() + "Impl";
-		// com.ail.core.thing.ThingCommand ->
-		// com.ail.core.thing.ThingArgumentImpl
-		String qualifiedArgumentImpl = te.getQualifiedName().toString().replaceFirst("Command$", "ArgumentImpl");
+		// com.ail.core.thing.ThingCommand -> com.ail.core.thing.ThingArgumentImpl
+        String qualifiedArgumentImpl = te.getQualifiedName().toString().replaceFirst("[A-Z]{1}.*\\.(.*)Command$","$1ArgumentImpl");
 		// com.ail.core.thing.ThingCommand -> com.ail.core.thing.ThingArgument
 		String qualifiedArgument = te.getQualifiedName().toString().replaceFirst("Command$", "Argument");
 
@@ -294,6 +297,8 @@ public class Processor extends AbstractProcessor {
 		pw.printf("import com.ail.core.command.CommandImpl;\n");
 		pw.printf("\n");
 		pw.printf("public class %s extends CommandImpl implements %s {\n", simpleClassName, te);
+		pw.printf("  static final long serialVersionUID = %dL;\n", (long)(Math.random()*Long.MAX_VALUE));
+        pw.printf("\n");
 		pw.printf("  private Accessor accessor;\n");
 		pw.printf("  private %s args;\n", qualifiedArgument);
 		pw.printf("\n");
