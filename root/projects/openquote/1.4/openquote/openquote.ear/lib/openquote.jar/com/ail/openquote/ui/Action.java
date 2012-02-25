@@ -40,7 +40,7 @@ import org.jboss.portal.common.transaction.Transactions;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.core.product.executepageaction.ExecutePageActionCommand;
+import com.ail.core.product.ExecutePageActionService.ExecutePageActionCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.util.QuotationCommon;
 import com.ail.openquote.ui.util.QuotationContext;

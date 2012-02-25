@@ -47,7 +47,7 @@ public class CoreUserBaseCase implements CoreUser, ConfigurationOwner {
     private String namespace="TestNamespace";
 
     public CoreUserBaseCase() {
-        coreUser=new CoreUserImpl(CoreUserImpl.SelectConsistentConfigurations, namespace, null);
+        coreUser=new CoreUserImpl(CoreUserImpl.SELECT_CONSISTENT_CONFIGURATIONS, namespace, null);
     }
 
     public VersionEffectiveDate getVersionEffectiveDate() {

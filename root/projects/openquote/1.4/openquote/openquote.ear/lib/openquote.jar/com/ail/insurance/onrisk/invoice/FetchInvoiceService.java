@@ -20,6 +20,8 @@ package com.ail.insurance.onrisk.invoice;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceArgument;
+import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceCommand;
 import com.ail.openquote.SavedQuotation;
 /**
  * This service fetches the invoice document associated with a quotation. If the document hasn't been generated

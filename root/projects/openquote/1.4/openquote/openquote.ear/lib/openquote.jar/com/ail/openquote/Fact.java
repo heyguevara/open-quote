@@ -24,7 +24,7 @@ import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
 
 /**
- * A named piece of information used during rule processing. Typically you assert objects into the rule engines
+ * A named piece of information used during rule processing. Typically you assert objects into the rule engine's
  * working memory and these objects need have nothing in common. They don't have to implement a given interface, or
  * sub class a specific class, the engine simply uses reflection to query them. Wrapping objects in an instance of 
  * Fact has some advantages - and some disadvantages. Chief among the advantages are that Facts can be given 

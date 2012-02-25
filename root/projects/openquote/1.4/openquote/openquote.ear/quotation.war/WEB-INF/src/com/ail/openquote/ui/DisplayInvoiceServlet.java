@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.onrisk.invoice.FetchInvoiceCommand;
+import com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceCommand;
 
 public class DisplayInvoiceServlet extends HttpServlet {
     

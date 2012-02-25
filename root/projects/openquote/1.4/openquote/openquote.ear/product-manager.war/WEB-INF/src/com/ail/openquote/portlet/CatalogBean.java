@@ -111,7 +111,7 @@ public class CatalogBean {
     public String resetAllProductsAction() {
         try {
             core.logInfo("Resetting all products.");
-            serverDeligate().resetNamedConfiguration("com.ail.core.product.resetallproducts.ResetAllProductsService");
+            serverDeligate().resetNamedConfiguration("com.ail.core.product.ResetAllProductsService");
             core.logInfo("Reset successful.");
         }
         catch(Exception e) {

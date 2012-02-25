@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.onrisk.certificate.FetchCertificateCommand;
+import com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateCommand;
 
 public class DisplayCertificateServlet extends HttpServlet {
     

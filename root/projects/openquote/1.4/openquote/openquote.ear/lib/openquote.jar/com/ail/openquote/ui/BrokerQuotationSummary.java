@@ -25,7 +25,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.Type;
-import com.ail.openquote.ui.render.RenderCommand;
+import com.ail.openquote.ui.render.RenderService.RenderCommand;
 import com.ail.openquote.ui.util.QuotationContext;
 
 /**

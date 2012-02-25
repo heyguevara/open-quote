@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.quotation.fetchdocument.FetchDocumentCommand;
+import com.ail.insurance.quotation.FetchQuoteService.FetchDocumentCommand;
 
 public class DisplayQuotationServlet extends HttpServlet {
     

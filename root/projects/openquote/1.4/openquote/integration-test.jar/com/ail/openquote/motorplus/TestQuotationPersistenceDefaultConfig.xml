@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- $Revision$
- $Author$
- $State$
- $Date$
- $Source$
--->
 <configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Default Service Invocation Configuration</name>
     <timeout>-1</timeout>
     <who>factory</who>
-    <version>$Revision$</version>
+    <version>1.0</version>
 
     <types>
         <!--====================================-->

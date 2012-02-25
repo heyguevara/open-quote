@@ -25,7 +25,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.onrisk.invoice.FetchInvoiceCommand;
+import com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 import com.ail.openquote.ui.util.QuotationContext;

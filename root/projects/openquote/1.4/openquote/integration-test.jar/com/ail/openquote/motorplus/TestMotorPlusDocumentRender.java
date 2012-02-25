@@ -27,7 +27,7 @@ import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
 import com.ail.insurance.policy.PolicyStatus;
-import com.ail.insurance.quotation.generatedocument.GenerateDocumentCommand;
+import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentCommand;
 import com.ail.openquote.Quotation;
 
 public class TestMotorPlusDocumentRender extends CoreUserBaseCase {

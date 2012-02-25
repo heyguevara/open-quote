@@ -23,7 +23,7 @@ import com.ail.core.CoreProxy;
 import com.ail.core.XMLString;
 import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.policy.PolicyStatus;
-import com.ail.insurance.quotation.calculatepremium.CalculatePremiumCommand;
+import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumCommand;
 import com.ail.insurance.policy.Section;
 import com.ail.openquote.Quotation;
 

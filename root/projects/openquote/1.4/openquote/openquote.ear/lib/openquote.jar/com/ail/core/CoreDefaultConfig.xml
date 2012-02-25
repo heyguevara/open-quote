@@ -49,19 +49,19 @@
         </service>
 
         <!-- Map all of the logger commands to the stdio logger -->
-        <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+        <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
         </command>
-        <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+        <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
         </command>
-        <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+        <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
         </command>
-        <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+        <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
         </command>
-        <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+        <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
         </command>
 
@@ -88,28 +88,33 @@
             <parameter name="Service">PersistenceService</parameter>
         </command>
 
-        <command name='FetchQuoteDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.fetchdocument.FetchDocumentCommandImpl'>
-            <parameter name='Accessor'>com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
+        <command name='FetchQuoteDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.FetchDocumentCommandImpl'>
+            <parameter name='Service'>com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
         </command>
-        <command name='GenerateQuotationDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.generatedocument.GenerateDocumentCommandImpl'>
-            <parameter name='Accessor'>GenerateQuotationDocumentService</parameter>
+        <!-- remove this in 2.0 -->
+        <command name='com.ail.insurance.quotation.FetchQuoteService.FetchDocumentCommand' builder='ClassBuilder' key='com.ail.insurance.quotation.FetchDocumentCommandImpl'>
+            <parameter name='Service'>com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
         </command>
-        <command name='GenerateWordingDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.wording.GenerateWordingCommandImpl'>
-            <parameter name='Accessor'>OnRiskEJB</parameter>
+        
+        <command name='GenerateQuotationDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.GenerateDocumentCommandImpl'>
+            <parameter name='Service'>GenerateQuotationDocumentService</parameter>
         </command>
-        <command name='GenerateCertificateDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.certificate.GenerateCertificateCommandImpl'>
-            <parameter name='Accessor'>OnRiskEJB</parameter>
+        <command name='GenerateWordingDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.GenerateWordingCommandImpl'>
+            <parameter name='Service'>OnRiskEJB</parameter>
         </command>
-        <command name='GenerateInvoiceDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.invoice.GenerateInvoiceCommandImpl'>
-            <parameter name='Accessor'>OnRiskEJB</parameter>
+        <command name='GenerateCertificateDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.GenerateCertificateCommandImpl'>
+            <parameter name='Service'>OnRiskEJB</parameter>
+        </command>
+        <command name='GenerateInvoiceDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.GenerateInvoiceCommandImpl'>
+            <parameter name='Service'>OnRiskEJB</parameter>
         </command>
 
-        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.acceptquotation.AcceptQuotationCommandImpl">
+        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.AcceptQuotationCommandImpl">
             <parameter name="Service">AcceptanceServicesEJB</parameter>
         </command>
 
         <command name="RenderBrokerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
-            <parameter name="Service">com.ail.openquote.ui.render.html.BrokerQuotationSummaryService/html</parameter>
+            <parameter name="Service">com.ail.openquote.ui.render.html.BrokerQuotationSummaryService</parameter>
         </command>
 
         <command name="RenderBrokerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
@@ -117,11 +122,12 @@
         </command>
 
         <command name="RenderProposerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
-            <parameter name="Service">com.ail.openquote.ui.render.html.ProposerQuotationSummaryService/html</parameter>
+            <parameter name="Service">com.ail.openquote.ui.render.html.ProposerQuotationSummaryService</parameter>
         </command>
 
-        <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.openquote.ui.render.RenderCommandImpl">
+        <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder"
+            key="com.ail.openquote.ui.render.RenderCommandImpl">
             <parameter name="Service">com.ail.core.NullService</parameter>
         </command>
-     </types>
+    </types>
 </configuration>

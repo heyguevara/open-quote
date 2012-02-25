@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the configure war project
- $Revision: 1.2 $
- $State: Exp $
- $Date: 2005/10/09 15:46:00 $
- $Source: /home/bob/CVSRepository/projects/openquote/openquote.ear/configure.war/Build.xml,v $
--->
+ -->
 
 <project default="build" name="openquote:openquote.ear/configure.war">
   <import file="../../BuildSettings.xml"/>

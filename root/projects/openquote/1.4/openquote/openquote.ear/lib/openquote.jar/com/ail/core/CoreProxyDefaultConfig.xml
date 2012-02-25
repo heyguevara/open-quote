@@ -6,5 +6,5 @@
     <name>Core Proxy Configuration</name>
     <timeout>-1</timeout>
     <who>factory</who>
-    <version>$Revision$</version>
+    <version>1.0</version>
 </configuration>

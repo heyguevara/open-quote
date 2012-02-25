@@ -20,6 +20,8 @@ package com.ail.insurance.onrisk.certificate;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateArgument;
+import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateCommand;
 import com.ail.openquote.SavedQuotation;
 
 /**

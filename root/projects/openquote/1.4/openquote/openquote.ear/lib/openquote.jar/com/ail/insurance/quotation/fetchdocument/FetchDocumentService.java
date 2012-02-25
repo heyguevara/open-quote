@@ -21,7 +21,8 @@ import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.insurance.quotation.generatedocument.GenerateDocumentCommand;
+import com.ail.insurance.quotation.FetchQuoteService.FetchDocumentArgument;
+import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentCommand;
 import com.ail.openquote.SavedQuotation;
 
 /**

@@ -33,7 +33,7 @@ import com.ail.core.BaseException;
 import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.openquote.portlet.QuotationPortlet;
-import com.ail.openquote.ui.render.RenderCommand;
+import com.ail.openquote.ui.render.RenderService.RenderCommand;
 import com.ail.openquote.ui.util.HelpText;
 import com.ail.openquote.ui.util.ErrorText;
 import com.ail.openquote.ui.util.QuotationCommon;

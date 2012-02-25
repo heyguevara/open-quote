@@ -29,7 +29,7 @@ import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.Functions;
 import com.ail.core.XMLString;
-import com.ail.insurance.quotation.notifyparty.NotifyPartyCommand;
+import com.ail.insurance.quotation.NotifyPartyService.NotifyPartyCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 

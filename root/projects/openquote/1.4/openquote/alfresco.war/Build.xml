@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the alfresco war project
- $Revision: 1.1 $
- $State: Exp $
- $Date: 2006/07/02 09:20:54 $
- $Source: /home/bob/CVSRepository/projects/openquote/alfresco.war/Build.xml,v $
 -->
 
 <project default="build" name="openquote:alfresco.war">

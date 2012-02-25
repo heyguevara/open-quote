@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.onrisk.certificate.FetchCertificateCommand;
+import com.ail.insurance.onrisk.FetchWordingService.FetchWordingCommand;
 
 public class DisplayWordingServlet extends HttpServlet {
     
@@ -39,7 +39,7 @@ public class DisplayWordingServlet extends HttpServlet {
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy=new CoreProxy();
-        FetchCertificateCommand cmd=proxy.newCommand(FetchCertificateCommand.class);
+        FetchWordingCommand cmd=proxy.newCommand(FetchWordingCommand.class);
         cmd.setPolicyNumberArg(policyNumber);
 
         try {

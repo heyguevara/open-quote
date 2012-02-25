@@ -19,6 +19,8 @@ import com.ail.core.BaseException;
 import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.insurance.quotation.NotifyPartyService.NotifyPartyArgument;
+import com.ail.insurance.quotation.NotifyPartyService.NotifyPartyCommand;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;
 

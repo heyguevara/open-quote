@@ -33,7 +33,7 @@ import com.ail.core.CoreProxy;
 import com.ail.core.ExceptionRecord;
 import com.ail.core.XMLString;
 import com.ail.core.product.ProductDetails;
-import com.ail.core.product.listproducts.ListProductsCommand;
+import com.ail.core.product.ListProductsService.ListProductsCommand;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.SavedQuotation;

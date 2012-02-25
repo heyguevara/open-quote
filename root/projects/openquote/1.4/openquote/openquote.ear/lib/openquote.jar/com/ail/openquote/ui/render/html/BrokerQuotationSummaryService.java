@@ -46,7 +46,7 @@ import com.ail.insurance.policy.Marker;
 import com.ail.insurance.policy.RateBehaviour;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.render.RenderArgument;
+import com.ail.openquote.ui.render.RenderService.RenderArgument;
 
 /**
  * Default Java implementation of the broker quotation summary widget for HTML.

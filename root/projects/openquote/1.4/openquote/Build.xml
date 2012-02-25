@@ -31,14 +31,14 @@
     <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreDefaultConfig.xml" />
     <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreProxyDefaultConfig.xml" />
     <delete file="${ear.dir}/lib/core.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml" />
-    <delete file="${ear.dir}/lib/core.jar/com/ail/core/product/listproducts/ListProductsDefaultConfig.xml" />
+    <delete file="${ear.dir}/lib/core.jar/com/ail/core/product/ListProductsDefaultConfig.xml" />
     <delete file="${ear.dir}/lib/core.jar/com/ail/core/persistence/hibernate/HibernateConfiguration.xml" />
     <delete file="${ear.dir}/lib/core.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml" />
     <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateConfiguration.xml" />
     <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml" />
     <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/addquotenumber/AddQuoteNumberDefaultConfig.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/calculatepremium/CalculatePremiumDefaultConfig.xml" />
+    <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/AddQuoteNumberDefaultConfig.xml" />
+    <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/CalculatePremiumDefaultConfig.xml" />
     <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/CoreDefaultConfig.xml" />
     <delete file="${ear.dir}/content-browser.war/WEB-INF/content-browser-object.xml" />
     <delete file="${ear.dir}/content-browser.war/WEB-INF/portlet-instances.xml" />

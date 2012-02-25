@@ -20,6 +20,8 @@ package com.ail.insurance.onrisk.wording;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.insurance.onrisk.FetchWordingService.FetchWordingArgument;
+import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingCommand;
 import com.ail.openquote.SavedQuotation;
 
 /**
