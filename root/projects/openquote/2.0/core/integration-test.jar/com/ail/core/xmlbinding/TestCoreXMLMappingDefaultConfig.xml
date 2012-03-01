@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+    <name>Default XML Mapping test Configuration</name>
+    <timeout>600000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.8 $</version>
+
+    <XMLMapping>
+    	<definition><![CDATA[
+<mapping>
+    <class name="com.ail.core.Version" auto-complete="false">
+        <map-to xml="noisrev"/>
+        <field name="author" type="java.lang.String" required="false"
+            direct="false" transient="false">
+            <bind-xml name="author" node="attribute" reference="false"/>
+        </field>
+        <field name="comment" type="java.lang.String" required="false"
+            direct="false" transient="false">
+            <bind-xml name="comment" node="element" reference="false"/>
+        </field>
+        <field name="date" type="java.lang.String" required="false"
+            direct="false" transient="false">
+            <bind-xml name="date" node="attribute" reference="false"/>
+        </field>
+    </class>
+
+    <class name="com.ail.core.History" auto-complete="false">
+        <description>Default mapping for class com.ail.core.History</description>
+        <map-to xml="history"/>
+        <field name="version" type="com.ail.core.Version"
+            required="false" direct="false" transient="false" collection="collection">
+            <bind-xml name="MyVersion" node="element" reference="false"/>
+        </field>
+    </class>
+</mapping>
+      ]]></definition>
+    </XMLMapping>
+</configuration>

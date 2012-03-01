@@ -1,0 +1,38 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jstl/core">
+
+   <ui:composition template="newWindowTpl.xhtml">
+      <ui:define name="content">
+
+         <table>
+            <tr>
+               <td><b>Portlet:</b></td>
+               <td>#{newWindowWizard.selectedPortlet.name}</td>
+            </tr>
+            <tr>
+               <td><b>Portal:</b></td>
+               <td>#{newWindowWizard.selectedPortal.name}</td>
+            </tr>
+            <tr>
+               <td><b>Page:</b></td>
+               <td>#{newWindowWizard.selectedPage.name}</td>
+            </tr>
+            <tr>
+               <td><b>Region:</b></td>
+               <td>#{newWindowWizard.selectedRegionId}</td>
+            </tr>
+         </table>
+
+         <h:form>
+            <h:commandButton value="Confirm" action="#{newWindowWizard.createWindow}" styleClass="portlet-form-button"/>
+            <h:commandButton value="Cancel" action="#{newWindowWizard.cancel}" styleClass="portlet-form-button"/>
+         </h:form>
+
+      </ui:define>
+   </ui:composition>
+
+</div>

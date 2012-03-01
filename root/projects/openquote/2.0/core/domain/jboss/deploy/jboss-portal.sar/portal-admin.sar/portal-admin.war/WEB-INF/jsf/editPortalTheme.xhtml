@@ -1,0 +1,26 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+   <ui:composition template="objectTemplate.xhtml">
+      <ui:param name="portalObjectScreen" value="Theme"/>
+      <ui:define name="content">
+         <h3>Portal theme properties</h3>
+
+         <p>These settings are inherited by all the pages and windows of this portal. You may override these settings by
+            selecting the appropriate value on the respective Theme settings pages.</p>
+         <br/>
+         <ui:decorate template="common/editTheme.xhtml">
+            <ui:param name="theme" value="#{portalobjectmgr.theme}"/>
+            <ui:define name="form_submit">
+               <h:commandButton value="Update" action="objects" actionListener="#{portalobjectmgr.theme.execute}"
+                                styleClass="portlet-form-button"/>
+               <h:commandButton value="Cancel" action="#{portalobjectmgr.selectObject}"
+                                styleClass="portlet-form-button"/>
+            </ui:define>
+         </ui:decorate>
+      </ui:define>
+   </ui:composition>
+</div>
+
