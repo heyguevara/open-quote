@@ -291,7 +291,7 @@ public class QuotationSummary extends PageContainer {
             navigationSection.getPageElement().add(confirmAndPay);
 
             CommandButtonAction view=new ViewQuotationButtonAction();
-            view.setLabel("i18n_view_document_button_label");
+            view.setLabel("i18n_view_quotation_document_button_label");
             navigationSection.getPageElement().add(view);
         }
         

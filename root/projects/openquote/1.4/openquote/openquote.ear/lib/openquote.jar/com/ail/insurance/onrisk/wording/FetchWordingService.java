@@ -17,6 +17,7 @@
 
 package com.ail.insurance.onrisk.wording;
 
+import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -28,6 +29,7 @@ import com.ail.openquote.SavedQuotation;
  * This service fetches the wording document associated with a quotation. If the document hasn't been generated
  * in the past, the service will generate it and persist it with the quotation for reuse later.
  */
+@ServiceImplementation
 public class FetchWordingService extends Service<FetchWordingArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
 

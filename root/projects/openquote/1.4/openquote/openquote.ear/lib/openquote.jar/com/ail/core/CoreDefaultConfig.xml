@@ -95,6 +95,15 @@
         <command name='com.ail.insurance.quotation.FetchQuoteService.FetchDocumentCommand' builder='ClassBuilder' key='com.ail.insurance.quotation.FetchDocumentCommandImpl'>
             <parameter name='Service'>com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
         </command>
+        <command name='com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceCommand' builder='ClassBuilder' key='com.ail.insurance.onrisk.FetchInvoiceCommandImpl'>
+            <parameter name='Service'>com.ail.insurance.onrisk.invoice.FetchInvoiceService</parameter>
+        </command>
+        <command name='com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateCommand' builder='ClassBuilder' key='com.ail.insurance.onrisk.FetchCertificateCommandImpl'>
+            <parameter name='Service'>com.ail.insurance.onrisk.certificate.FetchCertificateService</parameter>
+        </command>
+        <command name='com.ail.insurance.onrisk.FetchWordingService.FetchWordingCommand' builder='ClassBuilder' key='com.ail.insurance.onrisk.FetchWordingCommandImpl'>
+            <parameter name='Service'>com.ail.insurance.onrisk.wording.FetchWordingService</parameter>
+        </command>
         
         <command name='GenerateQuotationDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.GenerateDocumentCommandImpl'>
             <parameter name='Service'>GenerateQuotationDocumentService</parameter>
