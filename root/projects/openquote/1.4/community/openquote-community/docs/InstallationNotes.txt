@@ -1,8 +1,14 @@
-OpenQuote Service Pack - Installation Notes
-===========================================
+OpenQuote 1.4 Release Candidate 1 - Installation Notes
+======================================================
 
 Welcome to OpenQuote @major.version@.@minor.version@@increment.version@, and thank you for your 
 interest in this project.
+
+Please note that this is a Release Candidate and not a full release. If you
+are planning to use OpenQuote in a production environment, we recommend that
+you download the 1.3SP1 release. Release Candidates are intended for use in
+development and test, or for those who need to try the very latest features,
+they are not considered to be stable.
 
 The notes included here are intended to get you up and running with OpenQuote
 in the shortest possible time; around 10 minutes if you already have the
@@ -33,7 +39,7 @@ Installing the Java Development Kit
 
 - Browse to http://java.sun.com/javase/downloads.
 - Select the appropriate J2SE download for your environment, making sure it
-  is J2SE 5.0 or 6.0.
+  is J2SE 6.0 or above.
 - Once downloaded, follow the installation wizard.
 
 Installing MySql
@@ -41,7 +47,7 @@ Installing MySql
 
 - Browse to http://dev.mysql.com/downloads.
 - Select the appropriate download for your environment. You will need 
-  version 4.1 or higher.
+  version 5.1 or later.
 - Once downloaded, follow the installation wizard - as part of this you will
   be prompted to select a password. You will need this later on.
   
@@ -56,14 +62,6 @@ If you are installing on Windows, we recommend that you don't use Window's
 built-in zip file viewer. A number of issues have been reported on the 
 forums which seem to point at file corruption caused by the build-in tool.
 We recommend that you use winzip, unrar, or jar to unpack the .zip. 
-
-Note: If you are installing OpenQuote for use with Java J2SE 6.0, you also
-need to copy the following files from the openquote-community/jboss/client 
-directory to the openquote-community/jboss/lib/endorsed directory:
-          o jboss-jaxrpc.jar
-          o jboss-jaxws.jar
-          o jboss-saaj.jar
-          o jaxb-api.jar 
 
 Starting the OpenQuote server
 =============================

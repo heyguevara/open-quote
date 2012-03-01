@@ -8,32 +8,24 @@
       
   <!-- Release version numbers -->
   <property name="major.version" value="1"/>
-  <property name="minor.version" value="3"/>
+  <property name="minor.version" value="4"/>
   <property name="increment.version" value="DEV"/> <!-- overridden by bamboo -->
   <property name="build.number" value="(local)"/> <!-- overridden by bamboo -->
 
   <!-- Version of the openquote project to use for this project -->
-  <property name="openquote.version" value="1.4"/>
-  <property name="openquote.build" value="37"/>
+  <property name="openquote.version" value="3.0"/>
+  <property name="openquote.build" value="10"/>
   
   <!-- Version of JBoss to use for this project -->
   <property name="jboss.version" value="4.2.2GA-P2"/>
 
-  <!-- Figure out where everything is - everythings relative to project.dir -->
-  <dirname property="project.dir" file="${ant.file.BuildSettings}"/>
-  <property name="target.dir" value="${project.dir}/target/openquote-community-${major.version}.${minor.version}${increment.version}"/>
-  <property name="jboss.dir" value="${target.dir}/jboss"/>
-  <property name="deploy.dir" value="${jboss.dir}/server/default"/>
-  <property name="ear.dir" value="${deploy.dir}/deploy/${ear.name}"/>
-  <property name="ear.lib" value="${ear.dir}/lib"/>
-  <property name="development.dir" value="${project.dir}/../development"/>
-  <property name="test.dir" value="${target.dir}/test"/>
-  <property name="dbname" value="oq_community_${major.version}_${minor.version}${increment.version}"/>
-  
+  <!-- Define which database we're working with -->
+  <property name="dbname" value="openquote_${major.version}_${minor.version}" />
+  <property name="dbusername" value="openquoteuser" />
+  <property name="dbpassword" value="bombay" />
+
   <!-- Pull in the Common stuff - all projects use these. -->
-  <import file="${development.dir}/BuildCommon.xml"/>
-  <import file="${development.dir}/BuildJ2EEMacros.xml"/>
-  <import file="${development.dir}/BuildJBossMacros.xml"/>
-  <import file="${development.dir}/BuildTestingMacros.xml"/>
-  <import file="${development.dir}/BuildRepositoryMacros.xml" />
+  <dirname property="project.dir" file="${ant.file.BuildSettings}" />
+  <property name="development.dir" value="${project.dir}/../development" />
+  <import file="${development.dir}/macros/BuildCommon.xml" />
 </project>
