@@ -17,6 +17,8 @@
 
 package com.ail.insurance.quotation;
 
+import static com.ail.insurance.policy.PolicyStatus.APPLICATION;
+
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
@@ -28,7 +30,6 @@ import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.core.key.GenerateUniqueKeyService.GenerateUniqueKeyCommand;
 import com.ail.insurance.policy.Policy;
-import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.GenerateQuoteNumberService.GenerateQuoteNumberCommand;
 
 /**
@@ -78,7 +79,7 @@ public class AddQuoteNumberService extends Service<AddQuoteNumberService.AddQuot
             throw new PreconditionException("policy.getStatus()==null");
         }
 
-        if (!policy.getStatus().equals(PolicyStatus.APPLICATION)) {
+        if (!APPLICATION.equals(policy.getStatus())) {
             throw new PreconditionException("policy.getStatus()!=PolicyStatus.Application");
         }
 

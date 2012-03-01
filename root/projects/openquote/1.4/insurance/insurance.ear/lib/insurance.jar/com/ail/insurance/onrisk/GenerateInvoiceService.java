@@ -98,20 +98,26 @@ public class GenerateInvoiceService extends Service<GenerateInvoiceService.Gener
         if (args.getPolicyArg()==null) {
             throw new PreconditionException("args.getPolicyArg()==null");
         }
+        
+        Policy policy=args.getPolicyArg();
 
-        if (args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0) {
-            throw new PreconditionException("args.getPolicyArg().getProductTypeId()==null || args.getPolicyArg().getProductTypeId().length()==0");
+        if (policy.getProductTypeId()==null || policy.getProductTypeId().length()==0) {
+            throw new PreconditionException("policy.getProductTypeId()==null || policy.getProductTypeId().length()==0");
         }
         
-        if (args.getPolicyArg().getTotalPremium()==null) { 
-            throw new PreconditionException("args.getPolicyArg().getTotalPremium()==null");
+        if (policy.getTotalPremium()==null) { 
+            throw new PreconditionException("policy.getTotalPremium()==null");
         }
         
-        if (args.getPolicyArg().getPolicyHolder()==null) {
+        if (policy.getPolicyHolder()==null) {
             throw new PreconditionException("args.getPolicyArg().getPolicyHolder()==null");
         }
         
         DocumentDefinition docDef=(DocumentDefinition)core.newProductType(args.getPolicyArg().getProductTypeId(), "InvoiceDocument");
+        
+        // TODO This should be calling the invoice generation service in the commercial project, not
+        // generating docs itself. All it should to is map a policy's values appropriately into the
+        // invoice object and then invoke the other service.
         
         // 1st step: data merge (if configured)
         if (docDef.getMergeCommand()!=null && docDef.getMergeCommand().length()!=0) {

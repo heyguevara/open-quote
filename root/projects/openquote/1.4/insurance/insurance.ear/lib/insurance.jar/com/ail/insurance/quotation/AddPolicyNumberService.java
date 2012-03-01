@@ -17,6 +17,9 @@
 
 package com.ail.insurance.quotation;
 
+import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
+import static com.ail.insurance.policy.PolicyStatus.SUBMITTED;
+
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
@@ -29,7 +32,6 @@ import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.core.key.GenerateUniqueKeyService.GenerateUniqueKeyCommand;
 import com.ail.insurance.policy.Policy;
-import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.GeneratePolicyNumberService.GeneratePolicyNumberCommand;
 
 @ServiceImplementation
@@ -101,8 +103,8 @@ public class AddPolicyNumberService extends Service<AddPolicyNumberService.AddPo
             throw new PreconditionException("policy.getStatus()==null");
         }
 
-        if (!policy.getStatus().equals(PolicyStatus.QUOTATION)) {
-            throw new PreconditionException("policy.getStatus()!=PolicyStatus.Quotation");
+        if (!(QUOTATION.equals(policy.getStatus()) || SUBMITTED.equals(policy.getStatus()))) {
+            throw new PreconditionException("!(QUOTATION.equals(policy.getStatus()) || SUBMITTED.equals(policy.getStatus()))");
         }
 
         if (policy.getPolicyNumber()!=null && policy.getPolicyNumber().trim().length()!=0) {
@@ -127,7 +129,7 @@ public class AddPolicyNumberService extends Service<AddPolicyNumberService.AddPo
         command.invoke();
         String policyNumber=command.getPolicyNumberRet();
         core.logDebug("Policy number: "+policyNumber+" generated");
-        args.getPolicyArgRet().setPolicyNumber(policyNumber);
+        policy.setPolicyNumber(policyNumber);
         
         if (policy.getPolicyNumber()==null || policy.getPolicyNumber().length()==0) {
             throw new PostconditionException("policy.getPolicyNumber()==null || policy.getPolicyNumber().length()==0");

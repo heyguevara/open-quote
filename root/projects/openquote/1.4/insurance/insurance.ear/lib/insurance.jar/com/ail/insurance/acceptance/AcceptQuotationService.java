@@ -82,7 +82,7 @@ public class AcceptQuotationService extends Service<AcceptQuotationService.Accep
             throw new PreconditionException("args.getPolicyArgRet().getPaymentDetails()==null");
         }
         		
-		// put on risk
+		// Mark policy as having been submitted
 		args.getPolicyArgRet().setStatus(SUBMITTED);
     }
 }

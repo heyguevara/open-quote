@@ -56,7 +56,7 @@ public class Policy extends Type {
     /** The date when the policy was incepted (created) */
     private Date inceptionDate;
 
-    /** The date at which the policy will (of has) expired */
+    /** The date at which the policy will (or has) expired */
     private Date expiryDate;
 
     /** A collection of the wordings associated with the policy (additional wordings may exist at the section level). */
@@ -1144,7 +1144,7 @@ public class Policy extends Type {
      * is currently being processed, so it may change through the life time of the policy. It is intended to influence
      * the way in which the policy is presented. For example, when a US policy is being administered by a US office, you
      * would expect all presentation, documentation etc to render US$ amounts simply as '$'. However, if the same policy
-     * was being administered in an office in Canada, a US$ amount should be shown as US$, and not '$'.
+     * was being administered in a office in Canada, a US$ amount should be shown as US$, and not '$'.
      * @return Locale being used for processing
      */
     public ThreadLocale getLocale() {
