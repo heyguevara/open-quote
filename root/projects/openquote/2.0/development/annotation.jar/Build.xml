@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the unit test jar project
+-->
+
+<project default="build" name="development:annotation.jar">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-jar-macro />
+  </target>
+
+  <target name="_build">
+    <compile-exploded-jar-macro>
+      <javac-classpath/>
+    </compile-exploded-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <!-- call the internal build target -->
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>
