@@ -4,7 +4,7 @@
   <property name="ear.name" value="core.ear" />
 
   <!-- Release version numbers (BTW the build number comes from bamboo.) -->
-  <property name="major.version" value="3" />
+  <property name="major.version" value="4" />
   <property name="minor.version" value="0" />
 
   <!-- Version of JBoss to use for this project -->
