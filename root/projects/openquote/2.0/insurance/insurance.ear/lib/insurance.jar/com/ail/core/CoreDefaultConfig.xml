@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+This file defines the default (factory) configuration for the Core. This 
+configuration is used by the core's resetConfiguration()  method. 
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>Default Core Configuration for Insurance</name>
+    <timeout>60000</timeout>
+    <who>factory</who>
+    <version>$Revision: 1.9 $</version>
+
+    <types>
+        <!--==================================== -->
+        <!-- Define the default core services -->
+        <!--==================================== -->
+
+        <!--======================================================================= -->
+        <!-- Bind the default core services (above) to Commands used by Core.class -->
+        <!--======================================================================= -->
+        <!-- Map all of the logger commands to the stdio logger -->
+        <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggerCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+
+        <!-- Map all of the persistence commands to hibernate -->
+        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
+        </command>
+        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
+        </command>
+        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
+        </command>
+        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
+        </command>
+        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
+        </command>
+        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
+        </command>
+        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
+            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
+        </command>
+    </types>
+
+    <!-- Next (unique) Number to use in unique number generation for the various -->
+    <!-- types of number. The GenerateUniqueNumber service updates this parameter -->
+    <!-- as numbers are used. These values can be overridden by product. -->
+    <parameter name="InvoiceNumberNextNumber">1000</parameter>
+    <parameter name="PolicyNumberNextNumber">1000</parameter>
+    <parameter name="QuoteNumberNextNumber">1000</parameter>
+
+    <!-- To avoid hitting the database every time a unique number is asked for, -->
+    <!-- the GenerateUniqueNumber service takes a chunk of numbers at a time, -->
+    <!-- keeps track of the ones it uses, then comes back for more when it runs -->
+    <!-- out. *BlockSize controls the number that are allocated on each call. -->
+    <!-- These values can be overridden by product. -->
+    <parameter name="InvoiceNumberBlockSize">100</parameter>
+    <parameter name="PolicyNumberBlockSize">100</parameter>
+    <parameter name="QuoteNumberBlockSize">100</parameter>
+</configuration>
