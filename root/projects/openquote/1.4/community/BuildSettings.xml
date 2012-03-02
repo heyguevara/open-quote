@@ -21,7 +21,7 @@
 
   <!-- Define which database we're working with -->
   <property name="dbname" value="openquote_${major.version}_${minor.version}" />
-  <property name="dbusername" value="openquoteuser" />
+  <property name="dbusername" value="openquote" />
   <property name="dbpassword" value="bombay" />
 
   <!-- Pull in the Common stuff - all projects use these. -->
