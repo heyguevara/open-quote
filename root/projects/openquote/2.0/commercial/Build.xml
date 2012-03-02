@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for the commercial project.
+ $Revision: 1.93 $
+ $State: Exp $
+ $Date: 2007/06/06 21:18:36 $
+ $Source: /home/bob/CVSRepository/projects/common/Build.xml,v $
+-->
+
+<project default="build" name="commercial">
+  <import file="./BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <subant-macro target="clean" />
+  </target>
+
+  <target name="_build">
+    <subant-macro target="_build" />
+    <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+    <kick-jboss-macro />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <install-jboss-macro version="${jboss.version}" />
+    <install-base-domain-macro dar="core" version="${core.version}" build="${core.build}" />
+    <delete dir="${deploy.dir}/data/alf_data" />
+    <subant-macro target="setup" />
+    <antcall target="_build" />
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <uninstall-jboss-macro version="${jboss.version}" />
+    <subant-macro target="teardown" />
+    <delete dir="${project.dir}/deploy" failonerror="false" />
+  </target>
+
+  <target name="release" description="build this project's releasable outputs">
+    <!-- Stop the server if it is running -->
+    <ant antfile="BuildCommands.xml" target="jboss: stop server" />
+
+    <!-- Do a clean build before we release -->
+    <antcall target="teardown" />
+    <antcall target="setup" />
+    <antcall target="test" />
+
+    <!-- The only release that commercial makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
+    <release-jboss-domain-macro />
+  </target>
+
+  <target name="test" description="run unit tests and integration tests">
+    <run-unit-tests-macro>
+      <junit-classpath>
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
+        <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar" />
+        <fileset dir="${jboss.dir}">
+          <include name="client/jbossall-client.jar" />
+          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+          <include name="server/default/lib/saxon*.jar" />
+          <include name="lib/endorsed/xalan.jar" />
+        </fileset>
+      </junit-classpath>
+    </run-unit-tests-macro>
+  </target>
+
+</project>
