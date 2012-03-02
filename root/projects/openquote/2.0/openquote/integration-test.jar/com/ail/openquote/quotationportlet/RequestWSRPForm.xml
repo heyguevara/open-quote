@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+	<env:Header />
+	<env:Body>
+		<ns1:getMarkup xmlns:ns1="urn:oasis:names:tc:wsrp:v1:types"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<ns1:registrationContext>
+				<ns1:registrationHandle></ns1:registrationHandle>
+			</ns1:registrationContext>
+			<ns1:portletContext>
+				<ns1:portletHandle>quotation.WSRPQuotationPortlet</ns1:portletHandle>
+			</ns1:portletContext>
+			<ns1:runtimeContext>
+				<ns1:userAuthentication>wsrp:none</ns1:userAuthentication>
+				<ns1:portletInstanceKey>portletinstance</ns1:portletInstanceKey>
+				<ns1:namespacePrefix>portlet_space</ns1:namespacePrefix>
+			</ns1:runtimeContext>
+			<ns1:userContext xsi:nil="1" />
+			<ns1:markupParams>
+				<ns1:secureClientCommunication>false</ns1:secureClientCommunication>
+				<ns1:locales>en-GB</ns1:locales>
+				<ns1:mimeTypes></ns1:mimeTypes>
+				<ns1:mode>wsrp:view</ns1:mode>
+				<ns1:windowState>wsrp:normal</ns1:windowState>
+				<ns1:clientData>
+					<ns1:userAgent>Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-GB;rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3</ns1:userAgent>
+				</ns1:clientData>
+			</ns1:markupParams>
+		</ns1:getMarkup>
+	</env:Body>
+</env:Envelope>

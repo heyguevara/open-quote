@@ -1,0 +1,38 @@
+<deployments>
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+        <page>
+            <page-name>Configure Editor</page-name>
+            <properties />
+            <window>
+                <window-name>ConfigureWindow</window-name>
+                <instance-ref>ConfigurePortletInstance</instance-ref>
+                <region>right</region>
+                <height>0</height>
+            </window>
+            <window>
+                <window-name>ConfigureDownloadPortletWindow1</window-name>
+                <instance-ref>ConfigureDownloadPortletInstance</instance-ref>
+                <default>false</default>
+                <region>left</region>
+                <height>2</height>
+            </window>
+            <window>
+                <window-name>ConfigureUploadPortletWindow1</window-name>
+                <instance-ref>ConfigureUploadPortletInstance</instance-ref>
+                <default>false</default>
+                <region>left</region>
+                <height>3</height>
+            </window>
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Admin</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+</deployments>

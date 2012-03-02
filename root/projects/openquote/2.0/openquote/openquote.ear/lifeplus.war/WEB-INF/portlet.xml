@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app version="1.0"
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+
+    <portlet>
+        <description>OpenQuote portlet for quoting the LifePlus product</description>
+        <portlet-name>LifePlusQuotationPortlet</portlet-name>
+        <display-name>LifePlus Quotation</display-name>
+        <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Quotation Portlet</title>
+            <short-title>Quotation</short-title>
+            <keywords>Quotation, Portlet</keywords>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>product</name>
+                <value>undefined</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+    <portlet>
+        <description>Content browser portlet for the LifePlus product</description>
+        <portlet-name>LifePlusContentBrowserPortlet</portlet-name>
+        <display-name>LifePlus ContentBrowser</display-name>
+        <portlet-class>com.ail.core.portlet.contentbrowser.ContentBrowserPortlet</portlet-class>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>LifePlus Content Browser Portlet</title>
+            <short-title>content-browser</short-title>
+        </portlet-info>
+        <portlet-preferences>
+          <preference>
+            <name>homePageUrl</name>
+          </preference>
+        </portlet-preferences>
+  </portlet>
+
+
+ </portlet-app>

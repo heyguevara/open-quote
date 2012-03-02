@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system-info>
+    <patches>
+        <patch>
+            <id>patch.actionRuleDecouplingPatch</id>
+            <description>Migrate existing rules to the updated model where rules are decoupled from actions.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>14</fixes-to-schema>
+            <target-schema>15</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.authoritiesFolder</id>
+            <description>Ensures the existence of the user authorities folder [JIRA: AR-497].</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>0</fixes-to-schema>
+            <target-schema>6</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.authoritiesFolderPermission</id>
+            <description>Ensures group authorities are visible to everyone.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>32</fixes-to-schema>
+            <target-schema>33</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.AVMAspects</id>
+            <description>Changes storage of aspects on AVM Nodes.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>60</fixes-to-schema>
+            <target-schema>61</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.avmFormPropertyIdentifier</id>
+            <description>Reindex wca:webform to make wca:formname an identifier</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>111</fixes-to-schema>
+            <target-schema>112</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.AVMGuidPatch</id>
+            <description>Set GUIDs on AVM nodes.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>51</fixes-to-schema>
+            <target-schema>52</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.AVMLayeredSnapshot</id>
+            <description>Set indirectionVersion on Layered Nodes.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>55</fixes-to-schema>
+            <target-schema>56</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.AVMLocking</id>
+            <description>Adds existing web projects to locking service.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>58</fixes-to-schema>
+            <target-schema>59</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.AVMProperties</id>
+            <description>Changes storage of properties on AVM Nodes.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>61</fixes-to-schema>
+            <target-schema>62</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.avmStoreAsIdentifier</id>
+            <description>Reindex wca:webfolder to make wca:avmstore an identifier</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>109</fixes-to-schema>
+            <target-schema>110</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.categoryRootPermission</id>
+            <description>Sets required permissions on 'Category Root' folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>5</fixes-to-schema>
+            <target-schema>6</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.contentFormFolderType</id>
+            <description>Update WCM Content Form folder type.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>36</fixes-to-schema>
+            <target-schema>37</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.contentPermission</id>
+            <description>Update permission entries from 'cm:content' to 'sys:base'.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>6</fixes-to-schema>
+            <target-schema>7</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.customMessages</id>
+            <description>Adds 'Messages' folder to Data Dictionary</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>101</fixes-to-schema>
+            <target-schema>102</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.customModels</id>
+            <description>Adds 'Models' folder to Data Dictionary</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>101</fixes-to-schema>
+            <target-schema>102</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.customWebClientExtension</id>
+            <description>Adds 'Web Client Extension' folder to Data Dictionary</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>101</fixes-to-schema>
+            <target-schema>102</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.customWorkflowDefs</id>
+            <description>Adds 'Workflow Definitions' folder to Data Dictionary.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>105</fixes-to-schema>
+            <target-schema>106</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V1.4-PerfIndexes02</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>110</fixes-to-schema>
+            <target-schema>111</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev @build-number@) - Community Network</applied-to-server>
+            <applied-on-date>2008-04-08T07:13:47</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V1.4-TxnCommitTimeIndex</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>110</fixes-to-schema>
+            <target-schema>111</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-ExplicitIndexes</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>63</fixes-to-schema>
+            <target-schema>64</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev @build-number@) - Community Network</applied-to-server>
+            <applied-on-date>2008-04-08T07:13:47</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-FKIndexes</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>63</fixes-to-schema>
+            <target-schema>64</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev @build-number@) - Community Network</applied-to-server>
+            <applied-on-date>2008-04-08T07:13:47</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-JBPMProcessKey</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>62</fixes-to-schema>
+            <target-schema>63</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-JBPMUpdate</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>51</fixes-to-schema>
+            <target-schema>52</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-NotNullColumns</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>51</fixes-to-schema>
+            <target-schema>52</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-RemoveWcmSubmittedAspect</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>103</fixes-to-schema>
+            <target-schema>104</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.db-V2.1-VersionColumns2</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>63</fixes-to-schema>
+            <target-schema>64</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.deploymentMigration</id>
+            <description>Migrates deployment data to the new model.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>116</fixes-to-schema>
+            <target-schema>117</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.descriptorUpdate</id>
+            <description>Update Repository descriptor</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>11</fixes-to-schema>
+            <target-schema>12</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.emailContributorGroup</id>
+            <description>Adds the 'GROUP_EMAIL_CONTRIBUTORS' group.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>108</fixes-to-schema>
+            <target-schema>109</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.emailTemplatesContent</id>
+            <description>Loads the email templates into the Email Templates folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>12</fixes-to-schema>
+            <target-schema>13</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.emailTemplatesFolder</id>
+            <description>Ensures the existence of the 'Email Templates' folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>12</fixes-to-schema>
+            <target-schema>13</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.fixNodeSerializableValues</id>
+            <description>Ensure that property values are not stored as Serializable if at all possible</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>3</fixes-to-schema>
+            <target-schema>4</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.formsFolder</id>
+            <description>Adds 'Forms' folder to Data Dictionary.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>112</fixes-to-schema>
+            <target-schema>113</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.forumsIcons</id>
+            <description>Updates forums icon references</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>12</fixes-to-schema>
+            <target-schema>13</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.groupMembersAsIdentifiers</id>
+            <description>Reindex usr:authorityContainer members as identifiers</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>56</fixes-to-schema>
+            <target-schema>57</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.groupNamesAsIdentifiers</id>
+            <description>Reindex usr:authorityContainer gids as identifiers</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>51</fixes-to-schema>
+            <target-schema>52</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.guestPersonPermission</id>
+            <description>Change Guest Person permission from 'Consumer' to 'Read'</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>5</fixes-to-schema>
+            <target-schema>6</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.guestPersonPermission2</id>
+            <description>Change Guest Person permission to visible by all users as 'Consumer'.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>18</fixes-to-schema>
+            <target-schema>19</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.guestUser</id>
+            <description>Add the guest user, guest home space; and fix permissions on company home, guest home and guest person. </description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>2</fixes-to-schema>
+            <target-schema>3</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.InvalidNameEnding</id>
+            <description>Fixes names ending with a space or full stop.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>21</fixes-to-schema>
+            <target-schema>22</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.invalidUserPersonAndGroup</id>
+            <description>Fix up invalid uids for people and users; and invalid gids for groups</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>51</fixes-to-schema>
+            <target-schema>52</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.LinkNodeFileExtension</id>
+            <description>Fixes link node file extensions to have a .url extension.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>33</fixes-to-schema>
+            <target-schema>34</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.multilingualBootstrap</id>
+            <description>Bootstraps the node that will hold the multilingual containers.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>29</fixes-to-schema>
+            <target-schema>30</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.projectsFolder</id>
+            <description>Adds 'Projects' folder to Company Home.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>114</fixes-to-schema>
+            <target-schema>115</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.projectTemplate</id>
+            <description>Adds the default Project template folder to the Space Templates folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>115</fixes-to-schema>
+            <target-schema>116</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.ReadmeTemplate</id>
+            <description>Deployed ReadMe Template</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>59</fixes-to-schema>
+            <target-schema>60</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.redeploySubmitProcess</id>
+            <description>Re-deploy WCM Submit Process Definition.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>117</fixes-to-schema>
+            <target-schema>118</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2009-09-14T17:22:07</applied-on-date>
+            <was-executed>true</was-executed>
+            <succeeded>true</succeeded>
+            <report>Re-deployed 1 workflows. </report>
+        </patch>
+        <patch>
+            <id>patch.rssFolder</id>
+            <description>Ensures the existence of the 'RSS Templates' folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>16</fixes-to-schema>
+            <target-schema>17</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.savedSearchesFolder</id>
+            <description>Ensures the existence of the 'Saved Searches' folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>1</fixes-to-schema>
+            <target-schema>2</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.savedSearchesPermission</id>
+            <description>Sets required permissions on 'Saved Searches' folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>4</fixes-to-schema>
+            <target-schema>5</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.schemaUpdateScript-V1.4-1</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>19</fixes-to-schema>
+            <target-schema>20</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.schemaUpdateScript-V1.4-2</id>
+            <description>Ensures that the database upgrade script has been run.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>20</fixes-to-schema>
+            <target-schema>21</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.scriptsFolder</id>
+            <description>Ensures the existence of the 'Scripts' folder.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>12</fixes-to-schema>
+            <target-schema>13</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.spacesRootPermission</id>
+            <description>Change Spaces store root permission from 'Consumer' to 'Read'</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>5</fixes-to-schema>
+            <target-schema>6</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.systemDescriptorContent</id>
+            <description>Adds the version properties content to the system descriptor.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>22</fixes-to-schema>
+            <target-schema>23</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.systemRegistryBootstrap</id>
+            <description>Bootstraps the node that will hold system registry metadata.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>34</fixes-to-schema>
+            <target-schema>35</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.systemWorkflowFolderPatch</id>
+            <description>Ensures the existence of the system workflow container.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>15</fixes-to-schema>
+            <target-schema>16</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.tagRootCategory</id>
+            <description>Adds 'Tags' as new top-level category root.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>113</fixes-to-schema>
+            <target-schema>114</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.topLevelGroupParentChildAssociationTypePatch</id>
+            <description>Ensure top level groups have the correct child association type.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>13</fixes-to-schema>
+            <target-schema>14</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.uifacetsTemplates</id>
+            <description>Removes the incorrectly applied uifacets aspect from presentation template files.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>17</fixes-to-schema>
+            <target-schema>18</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.uniqueChildName</id>
+            <description>Checks and renames duplicate children.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>19</fixes-to-schema>
+            <target-schema>20</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.updateGuestPermission</id>
+            <description>Rename guest permission from 'Guest' to 'Consumer'</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>5</fixes-to-schema>
+            <target-schema>6</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.updatePermissionData</id>
+            <description>Update permissions from 'folder' to 'cmobject' [JIRA: AR-344].</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>2</fixes-to-schema>
+            <target-schema>3</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.userAndPersonUserNamesAsIdentifiers</id>
+            <description>Reindex usr:user and cm:person uids as identifiers</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>35</fixes-to-schema>
+            <target-schema>36</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.versionHistoryPerformance</id>
+            <description>Improves the performance of version history lookups.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>38</fixes-to-schema>
+            <target-schema>39</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.webscripts</id>
+            <description>Adds Web Scripts to Data Dictionary.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>50</fixes-to-schema>
+            <target-schema>51</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.webscripts2</id>
+            <description>Adds Web Scripts (second set) to Data Dictionary.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>100</fixes-to-schema>
+            <target-schema>101</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.webscripts3</id>
+            <description>Update Web Scripts ReadMe.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>104</fixes-to-schema>
+            <target-schema>105</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.webscriptsExtension</id>
+            <description>Adds Web Scripts Extension to Data Dictionary.</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>54</fixes-to-schema>
+            <target-schema>55</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+        <patch>
+            <id>patch.webScriptsReadme</id>
+            <description>Applied ReadMe template to Web Scripts folders</description>
+            <fixes-from-schema>0</fixes-from-schema>
+            <fixes-to-schema>59</fixes-to-schema>
+            <target-schema>60</target-schema>
+            <applied-to-schema>117</applied-to-schema>
+            <applied-to-server>2.9.0 (C_dev 816) - Community Network</applied-to-server>
+            <applied-on-date>2012-02-29T17:32:58</applied-on-date>
+            <was-executed>false</was-executed>
+            <succeeded>true</succeeded>
+            <report>Not relevant to schema 117</report>
+        </patch>
+    </patches>
+    <version-store>
+        <counter>
+            <store-ref>archive://SpacesStore</store-ref>
+            <count>0</count>
+        </counter>
+        <counter>
+            <store-ref>system://system</store-ref>
+            <count>0</count>
+        </counter>
+        <counter>
+            <store-ref>user://alfrescoUserStore</store-ref>
+            <count>0</count>
+        </counter>
+        <counter>
+            <store-ref>workspace://lightWeightVersionStore</store-ref>
+            <count>306</count>
+        </counter>
+        <counter>
+            <store-ref>workspace://SpacesStore</store-ref>
+            <count>0</count>
+        </counter>
+    </version-store>
+</system-info>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ This ant include file defines settings that are specific to this project, and imports
+ settings that are common to all projects.
+-->
+<project name="BuildSettings" default="dummy">
+  <property name="ear.name" value="openquote.ear" />
+
+  <!-- Release version numbers (BTW the build number comes from bamboo.) -->
+  <property name="major.version" value="3" />
+  <property name="minor.version" value="0" />
+
+  <!-- Version of the insurance project to use for this project -->
+  <property name="insurance.version" value="3.0" />
+  <property name="insurance.build" value="17" />
+
+  <!-- Version of JBoss to use for this project -->
+  <property name="jboss.version" value="4.2.2GA-P2" />
+
+  <!-- Define which database we're working with -->
+  <property name="dbname" value="openquote_${major.version}_${minor.version}" />
+  <property name="dbusername" value="openquoteuser" />
+  <property name="dbpassword" value="bombay" />
+
+  <!-- Pull in the Common stuff - all projects use these. -->
+  <dirname property="project.dir" file="${ant.file.BuildSettings}" />
+  <property name="development.dir" value="${project.dir}/../development" />
+  <import file="${development.dir}/macros/BuildCommon.xml" />
+</project>
