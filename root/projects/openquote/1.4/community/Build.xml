@@ -103,6 +103,7 @@ USE ${dbname};
     <unexplode-jar-macro jar="${ear.dir}/product-manager-ejb.jar"/>
     <unexplode-jar-macro jar="${ear.dir}/quotation-ejb.jar"/>
     <unexplode-jar-macro jar="${ear.dir}/subrogation-ejb.jar"/>
+    <unexplode-jar-macro jar="${ear.dir}/onrisk-ejb.jar"/>
 
     <unexplode-jar-macro jar="${ear.dir}/configure.war"/>
     <unexplode-jar-macro jar="${ear.dir}/content-browser.war"/>
