@@ -63,8 +63,8 @@
 --
 
 CREATE DATABASE IF NOT EXISTS ${dbname};
-GRANT ALL ON ${dbname}.* TO 'openquote'@'localhost' IDENTIFIED BY 'openquote' WITH GRANT OPTION;
-GRANT ALL ON ${dbname}.* TO 'openquote'@'localhost.localdomain' IDENTIFIED BY 'openquote' WITH GRANT OPTION;
+GRANT ALL ON ${dbname}.* TO '${dbusername}'@'localhost' IDENTIFIED BY '${dbpassword}' WITH GRANT OPTION;
+GRANT ALL ON ${dbname}.* TO '${dbusername}'@'localhost.localdomain' IDENTIFIED BY '${dbpassword}' WITH GRANT OPTION;
 
 SET FOREIGN_KEY_CHECKS=0;
 
