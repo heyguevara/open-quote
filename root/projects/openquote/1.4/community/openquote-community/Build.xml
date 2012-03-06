@@ -10,7 +10,7 @@
   </target>
 
   <target name="_build">
-    <copy todir="${target.dir}">
+    <copy todir="${target.dir}" overwrite="yes">
       <fileset dir="." excludes="Build.xml" includes="**/*" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
