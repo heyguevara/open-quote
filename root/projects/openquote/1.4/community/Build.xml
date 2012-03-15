@@ -29,6 +29,8 @@
         increment.version=${increment.version}
     	build.number=${build.number}
         dbname=${dbname}
+  		dbusermane=${dbusername}
+  		dbpassword=${dbpassword}
     </echo>
 
   	<subant-macro target="setup" includes="domain/Build.xml"/>
