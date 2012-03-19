@@ -331,7 +331,9 @@
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${deploy.dir}" />
     <unzip overwrite="yes" dest="${deploy.dir}" src="${dar.src}" />
-    <delete dir="${deploy.dir}" includes="**/loader.properties" />
+    
+    <!-- Only delete loader.properties when "clean" is defined. Default is ""  -->
+    <delete dir="${deploy.dir}" includes="**/${clean}loader${clean}.properties${clean}" />
 
     <move todir="${deploy.dir}/deploy/${name}">
       <fileset dir="${deploy.dir}/deploy/${dar}.ear" />
@@ -339,11 +341,16 @@
   </target>
 
   <!-- Macro to install jboss in a development tree.   -->
+  <!-- @param dar Name of the archive                  -->
   <!-- @param version The version of jboss to install. -->
+  <!-- @param build The build version of the dar.      -->
+  <!-- @param clean Delete configs, default is yes.    -->
+  <!-- @param name Target folder name.                 -->
   <macrodef name="install-base-domain-macro">
     <attribute name="dar" />
     <attribute name="version" />
     <attribute name="build" />
+    <attribute name="clean" default="" />
     <attribute name="name" default="${ant.project.name}.ear" />
     <sequential>
       <available file="${deploy.dir}/deploy/bsh-deployer.xml" property="domainpresent" />
@@ -352,6 +359,7 @@
         <param name="version" value="@{version}" />
         <param name="build" value="@{build}" />
         <param name="name" value="@{name}" />
+        <param name="clean" value="@{name}" />
       </antcall>
     </sequential>
   </macrodef>

@@ -230,7 +230,6 @@
             <jar destfile="${target.dir}/lib/core.jar" basedir="${ear.lib}/core.jar" />
             <jar destfile="${target.dir}/lib/commercial.jar" basedir="${ear.lib}/commercial.jar" />
             <jar destfile="${target.dir}/lib/insurance.jar" basedir="${ear.lib}/insurance.jar" />
-            <jar destfile="${target.dir}/lib/openquote.jar" basedir="${ear.lib}/openquote.jar" />
             <copy todir="${target.dir}/lib">
                 <fileset dir="${ear.lib}" includes="*.jar" />
                 <fileset dir="${deploy.dir}/deploy/jboss-portal.sar/lib" includes="portal-portlet-jsr168api-lib.jar, portal-identity-lib.jar" />
