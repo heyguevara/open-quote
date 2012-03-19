@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- This ant include file defines settings that are specific to this project, and imports settings that are common to all projects. -->
+<!-- 
+  This ant include file defines settings that are specific to this project, and 
+  imports settings that are common to all projects. 
+-->
 <project name="BuildSettings" default="dummy">
   <property name="ear.name" value="core.ear" />
 

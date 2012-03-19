@@ -116,10 +116,10 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     }
 
 	/**
-     * Get the core's version effective date. This date is used to determin
+     * Get the core's version effective date. This date is used to determine
      * which versions of object and configurations to use when handling requests
      * made by the core. The client (coreUser) will have defines their own
-     * version effective date, this one is only used as a fallback.<p>
+     * version effective date, this one is only used as a fall-back.<p>
      * The core's version effective date is always based on the date/time that
      * this instance of the core was instantiated.
      * @return Date The core's version effective date

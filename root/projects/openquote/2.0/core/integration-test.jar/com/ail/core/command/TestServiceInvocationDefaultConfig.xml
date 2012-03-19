@@ -125,7 +125,7 @@ public class JaninoInheritanceService {
       </service>
       
       <service name="TestServiceInvocationJaninoClassNoMethod" builder="CachingClassBuilder" key="com.ail.core.command.JaninoAccessor" >
-          <parameter name="Url">classpath://com.ail.core.command/TestServiceInvocationJaninoClassNoArgumentNoMethod.janino</parameter>
+          <parameter name="Url">classpath://com.ail.core.command/TestServiceInvocationJaninoClassNoMethod.janino</parameter>
       </service>
       
       <service name="DroolsService" builder="CachingClassBuilder" key="com.ail.core.command.DroolsAccessor">

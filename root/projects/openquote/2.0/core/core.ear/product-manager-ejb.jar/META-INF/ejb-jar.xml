@@ -14,19 +14,7 @@
             <ejb-class>com.ail.core.product.ProductManagerBean</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
-            <env-entry>
-                <description>Define the concrete configuration loader for the Core.</description>
-                <env-entry-name>ConfigurationLoader.classname</env-entry-name>
-                <env-entry-type>java.lang.String</env-entry-type>
-                <env-entry-value>com.ail.core.configure.ConnectionPoolConfigurationLoader</env-entry-value>
-            </env-entry>
-            <env-entry>
-                <description>Define parameters to initialise the configuration loader.</description>
-                <env-entry-name>ConfigurationLoader.params</env-entry-name>
-                <env-entry-type>java.lang.String</env-entry-type>
-                <env-entry-value>@connectionpoolloader.params@</env-entry-value>
-            </env-entry>
-        </session>
+       </session>
     </enterprise-beans>
 
     <assembly-descriptor>

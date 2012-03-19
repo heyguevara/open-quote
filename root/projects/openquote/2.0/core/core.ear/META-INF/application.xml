@@ -38,7 +38,7 @@
     <module>
         <web>
             <web-uri>news-reader.war</web-uri>
-            <context-root>news-readerr</context-root>
+            <context-root>news-reader</context-root>
         </web>
     </module>
 </application>
