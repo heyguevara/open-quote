@@ -14,7 +14,7 @@
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <antcall target="_build"/>
+    <antcall target="_build" />
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
@@ -26,20 +26,24 @@
     <!-- copy files that do need filters to be applied -->
     <copy todir="${deploy.dir}" overwrite="true">
       <fileset dir="./jboss" includes="deploy/*-ds.xml, **/*.jsp, deploy/alfresco.war/**/repository.properties" />
-      <filterset filtersfile="${copyfilter.file}"/>
+      <filterset>
+        <filter token="dbusername" value="${dbusername}" />
+        <filter token="dbpassword" value="${dbpassword}" />
+        <filter token="dbname" value="${dbname}" />
+      </filterset>
     </copy>
 
-    <set-mysql-running-property-macro/>
-    <antcall target="setup-db-if"/>
-    <antcall target="setup-db-unless"/>
+    <set-mysql-running-property-macro />
+    <antcall target="setup-db-if" />
+    <antcall target="setup-db-unless" />
   </target>
 
   <target name="teardown" description="undo whatever setup did">
     <delete dir="${deploy.dir}" />
-    
-    <set-mysql-running-property-macro/>
-    <antcall target="teardown-db-if"/>
-    <antcall target="teardown-db-unless"/>
+
+    <set-mysql-running-property-macro />
+    <antcall target="teardown-db-if" />
+    <antcall target="teardown-db-unless" />
   </target>
 
   <target name="teardown-db-if" if="mysql-running">
@@ -55,16 +59,16 @@
           revoke all privileges, grant option from '${dbusername}'@'localhost';
           drop user '${dbusername}'@'localhost';
     </sql>
-  </target>  
-  
+  </target>
+
   <target name="teardown-db-unless" unless="mysql-running">
     <!-- drop all the databases -->
-    <echo message="Database has not been cleared - mysql doesn't appear to be running"/>
-  </target>  
+    <echo message="Database has not been cleared - mysql doesn't appear to be running" />
+  </target>
 
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
-    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" >
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
       create database if not exists ${dbname};
       grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
       grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
@@ -107,6 +111,6 @@
 
   <target name="setup-db-unless" unless="mysql-running">
     <!-- drop all the databases -->
-    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
-  </target>  
+    <echo message="Database has not been initialised - mysql doesn't appear to be running" />
+  </target>
 </project>
