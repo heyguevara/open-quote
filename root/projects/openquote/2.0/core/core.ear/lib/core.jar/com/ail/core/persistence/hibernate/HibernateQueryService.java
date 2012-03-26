@@ -59,7 +59,7 @@ public class HibernateQueryService extends Service<QueryArgument> {
             }
 		} 
         catch (HibernateException e) {
-			throw new QueryException("Hibernate could not query the database",e);
+			throw new QueryException(e.getMessage(), e);
 		}
     }
 }
