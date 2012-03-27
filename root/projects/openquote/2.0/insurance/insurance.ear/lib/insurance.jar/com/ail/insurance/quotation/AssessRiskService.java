@@ -71,7 +71,7 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
      */
     @Override
     public VersionEffectiveDate getVersionEffectiveDate() {
-        return core.getVersionEffectiveDate();
+        return getCore().getVersionEffectiveDate();
     }
 
     /**
@@ -81,7 +81,7 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
      */
     @Override
     public String getConfigurationNamespace() {
-        return core.getConfigurationNamespace();
+        return getCore().getConfigurationNamespace();
     }
     
     /**
@@ -131,7 +131,7 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
         }
 
         String namespace=Functions.productNameToConfigurationNamespace(args.getPolicyArgRet().getProductTypeId());
-        core=new CoreProxy(namespace, args.getCallersCore()).getCore();
+        setCore(new CoreProxy(namespace, args.getCallersCore()).getCore());
 
         // Loop through each section
         for(Section section: policy.getSection()) {
@@ -144,7 +144,7 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
             // Get the assessment sheet.
             if (section.getAssessmentSheet()==null) {
                 // The section doesn't have one yet, so create it.
-                as=new AssessmentSheet();
+                as=core.newType(AssessmentSheet.class);
             }
             else {
                 // The section has one, so us it - after clearing out the old entries.
@@ -156,8 +156,8 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
             String ruleName="AssessSectionRisk/"+section.getSectionTypeId();
 
             // Load the rule, and populate it with arguments
-            AssessSectionRiskCommand rule=core.newCommand(ruleName, AssessSectionRiskCommand.class);
-            rule.setCoreArg(core);
+            AssessSectionRiskCommand rule=getCore().newCommand(ruleName, AssessSectionRiskCommand.class);
+            rule.setCoreArg(getCore());
             rule.setPolicyArg(policy);
             rule.setSectionArg(section);
             rule.setAssessmentSheetArgRet(as);
@@ -177,14 +177,14 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
             as=new AssessmentSheet();
         }
         else {
-            // The policy has one already, so clear out our old enties and use it.
+            // The policy has one already, so clear out our old entries and use it.
             as=policy.getAssessmentSheet();
             as.removeLinesByOrigin("AssessRisk");
         }
 
         // Load the rule (name=<ProductType>), and populate it with args
-        AssessPolicyRiskCommand rule=core.newCommand("AssessPolicyRisk", AssessPolicyRiskCommand.class);
-        rule.setCoreArg(core);
+        AssessPolicyRiskCommand rule=getCore().newCommand("AssessPolicyRisk", AssessPolicyRiskCommand.class);
+        rule.setCoreArg(getCore());
         rule.setPolicyArg(policy);
         rule.setAssessmentSheetArgRet(as);
 
@@ -193,7 +193,7 @@ public class AssessRiskService extends Service<AssessRiskService.AssessRiskArgum
         rule.invoke();
         rule.getAssessmentSheetArgRet().clearLockingActor();
 
-        // Pull the premium calcuation table out of the results and add it to the policy
+        // Pull the premium calculation table out of the results and add it to the policy
         policy.setAssessmentSheet(rule.getAssessmentSheetArgRet());
     }
 }

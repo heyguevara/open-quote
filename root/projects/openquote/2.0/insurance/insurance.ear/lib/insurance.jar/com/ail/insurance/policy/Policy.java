@@ -20,19 +20,25 @@ package com.ail.insurance.policy;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import com.ail.annotation.TypeDefinition;
 import com.ail.core.Allowable;
+import com.ail.core.ExceptionRecord;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
+import com.ail.core.PageVisit;
 import com.ail.party.Party;
 import com.ail.core.ThreadLocale;
 
 /**
+ * A policy represents the contract between the insured and the insurer. It captures all of the
+ * information related to that contact including the assets covered, the type of coverage
+ * included and the associated financial payments.
  */
 @TypeDefinition
 public class Policy extends Type {
@@ -52,6 +58,20 @@ public class Policy extends Type {
     private String productName = null;
     private String policyNumber = null;
     private ThreadLocale locale = null;
+    private String page=null; // name of the page in the product wizard where the quote currently is
+    private ArrayList<PaymentSchedule> paymentOption;
+    private String username;
+    private boolean userSaved; // true if the user requested that this quote be saved
+    private boolean testCase; // true if this quote has been saved as a test case
+    private Collection<ExceptionRecord> exception; // details of all exceptions thrown during the processing of this quote.
+    private Collection<PageVisit> pageVisit;
+    private Date quotationDate;
+    private Date quotationExpiryDate;
+
+    private Broker broker;
+
+    /** TODO replace with "insured" */
+    private Party proposer;
 
     /** The date when the policy was incepted (created) */
     private Date inceptionDate;
@@ -67,6 +87,52 @@ public class Policy extends Type {
 
     /** The quotation number associated with this policy */
     private String quotationNumber;
+
+    public Policy() {
+        paymentOption=new ArrayList<PaymentSchedule>(0);
+        exception=new ArrayList<ExceptionRecord>(0);
+        pageVisit=new ArrayList<PageVisit>(0);
+    }
+
+    public Broker getBroker() {
+        return broker;
+    }
+
+    public void setBroker(Broker broker) {
+        this.broker = broker;
+    }
+
+    public Party getProposer() {
+        return proposer;
+    }
+
+    public void setProposer(Party proposer) {
+        this.proposer = proposer;
+    }
+
+    public Date getQuotationDate() {
+        return quotationDate;
+    }
+
+    public String getQuotationDateAsString() {
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(getQuotationDate());
+    }
+
+    public void setQuotationDate(Date quotationDate) {
+        this.quotationDate = quotationDate;
+    }
+
+    public Date getQuotationExpiryDate() {
+        return quotationExpiryDate;
+    }
+
+    public void setQuotationExpiryDate(Date quotationExpiryDate) {
+        this.quotationExpiryDate = quotationExpiryDate;
+    }
+
+    public String getQuotationExpiryDateAsString() {
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(getQuotationExpiryDate());
+    }
 
     /**
      * Get the collection of Coverages associated with this policy. Coverages exist at both the
@@ -1157,5 +1223,80 @@ public class Policy extends Type {
      */
     public void setLocale(ThreadLocale locale) {
         this.locale=locale;
+    }
+
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        if (this.page!=null) {
+            addPageVisit(new PageVisit(this.page));
+        }
+        
+        this.page = page;
+    }
+
+    public ArrayList<PaymentSchedule> getPaymentOption() {
+        return paymentOption;
+    }
+
+    public void setPaymentOption(ArrayList<PaymentSchedule> paymentOption) {
+        this.paymentOption = paymentOption;
+    }
+
+    public boolean isUserSaved() {
+        return userSaved;
+    }
+
+    public void setUserSaved(boolean userSaved) {
+        this.userSaved = userSaved;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isTestCase() {
+        return testCase;
+    }
+
+    public void setTestCase(boolean testCase) {
+        this.testCase = testCase;
+    }
+
+    public Collection<ExceptionRecord> getException() {
+        if (exception==null) {
+            exception=new ArrayList<ExceptionRecord>(0);
+        }
+        return exception;
+    }
+
+    public void setException(Collection<ExceptionRecord> exception) {
+        this.exception = exception;
+    }
+    
+    public void addException(ExceptionRecord exception) {
+        getException().add(exception);
+    }
+
+    public Collection<PageVisit> getPageVisit() {
+        return pageVisit;
+    }
+
+    public void setPageVisit(Collection<PageVisit> pageVisit) {
+        this.pageVisit = pageVisit;
+    }
+
+    public void addPageVisit(PageVisit pageVisit) {
+        if (this.pageVisit==null) {
+            this.pageVisit=new ArrayList<PageVisit>(0);
+        }
+        this.pageVisit.add(pageVisit);
     }
 }

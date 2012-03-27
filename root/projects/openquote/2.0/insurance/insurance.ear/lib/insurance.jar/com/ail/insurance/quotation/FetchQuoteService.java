@@ -19,16 +19,22 @@ package com.ail.insurance.quotation;
 
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
-import com.ail.annotation.ServiceInterface;
+import com.ail.annotation.ServiceImplementation;
+import com.ail.core.BaseException;
+import com.ail.core.PreconditionException;
+import com.ail.core.Service;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
+import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentCommand;
 
-@ServiceInterface
-public interface FetchQuoteService {
+@ServiceImplementation
+public class FetchQuoteService extends Service<FetchQuoteService.FetchQuoteArgument> {
+    private static final long serialVersionUID = 3198893603833694389L;
 
     @ServiceArgument
-    public interface FetchDocumentArgument extends Argument {
+    public interface FetchQuoteArgument extends Argument {
         /**
          * The number of the quotation for which a document should be returned
          * @return quotation number.
@@ -66,7 +72,36 @@ public interface FetchQuoteService {
         void setDocumentRet(byte[] documentRet);
     }
 
-    @ServiceCommand
-    public interface FetchDocumentCommand extends Command, FetchDocumentArgument {
+    @ServiceCommand(defaultServiceClass=FetchQuoteService.class)
+    public interface FetchQuoteCommand extends Command, FetchQuoteArgument {
+    }
+
+    /**
+     * The 'business logic' of the entry point.
+     * @throws PreconditionException If one of the preconditions is not met
+     */
+    public void invoke() throws BaseException {
+        if (args.getQuotationNumberArg()==null || args.getQuotationNumberArg().length()==0) {
+            throw new PreconditionException("args.getQuotationNumberArg()==null || args.getQuotationNumberArg().length()==0");
+        }
+
+        // Fetch the saved quote from persistence
+        SavedPolicy savedPolicy=(SavedPolicy)getCore().queryUnique("get.savedPolicy.by.quotationNumber", args.getQuotationNumberArg());
+        
+        if (savedPolicy==null) {
+            throw new PreconditionException("core.queryUnique(get.savedPolicy.by.quotationNumber, "+args.getQuotationNumberArg()+")==null");
+        }
+        
+        // We only generate quote docs on demand, so if there isn't one - generate it.
+        if (savedPolicy.getQuotationDocument()==null) {
+            GenerateDocumentCommand cmd=getCore().newCommand(GenerateDocumentCommand.class);
+            cmd.setPolicyArg(savedPolicy.getPolicy());
+            cmd.invoke();
+            savedPolicy.setQuotationDocument(cmd.getDocumentRet());
+            savedPolicy=getCore().update(savedPolicy);
+            args.setQuotationRet(savedPolicy.getPolicy());
+        }
+
+        args.setDocumentRet(savedPolicy.getQuotationDocument());
     }
 }

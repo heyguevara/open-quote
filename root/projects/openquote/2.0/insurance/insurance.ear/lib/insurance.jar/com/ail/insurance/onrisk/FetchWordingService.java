@@ -19,14 +19,20 @@ package com.ail.insurance.onrisk;
 
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
-import com.ail.annotation.ServiceInterface;
+import com.ail.annotation.ServiceImplementation;
+import com.ail.core.BaseException;
+import com.ail.core.PreconditionException;
+import com.ail.core.Service;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingCommand;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 
-@ServiceInterface
-public interface FetchWordingService {
-
+@ServiceImplementation
+public class FetchWordingService extends Service<FetchWordingService.FetchWordingArgument> {
+    private static final long serialVersionUID = 3198893603833694389L;
+    
     @ServiceArgument
     public interface FetchWordingArgument extends Argument {
         /**
@@ -68,4 +74,33 @@ public interface FetchWordingService {
     
     @ServiceCommand
     public interface FetchWordingCommand extends Command, FetchWordingArgument {}
+
+    /**
+     * The 'business logic' of the entry point.
+     * @throws PreconditionException If one of the preconditions is not met
+     */
+    public void invoke() throws BaseException {
+        if (args.getPolicyNumberArg()==null || args.getPolicyNumberArg().length()==0) {
+            throw new PreconditionException("args.getPolicyNumberArg()==null || args.getPolicyNumberArg().length()==0");
+        }
+
+        // Fetch the saved quote from persistence
+        SavedPolicy savedPolicy=(SavedPolicy)getCore().queryUnique("get.savedPolicy.by.policyNumber", args.getPolicyNumberArg());
+        
+        if (savedPolicy==null) {
+            throw new PreconditionException("core.queryUnique(get.savedPolicy.by.policyNumbe, "+args.getPolicyNumberArg()+")==null");
+        }
+        
+        // We only generate quote docs on demand, so if there isn't one - generate it.
+        if (savedPolicy.getWordingDocument()==null) {
+            GenerateWordingCommand cmd=getCore().newCommand(GenerateWordingCommand.class);
+            cmd.setPolicyArg(savedPolicy.getPolicy());
+            cmd.invoke();
+            savedPolicy.setWordingDocument(cmd.getDocumentRet());
+            savedPolicy=getCore().update(savedPolicy);
+            args.setPolicyRet(savedPolicy.getPolicy());
+        }
+
+        args.setDocumentRet(savedPolicy.getWordingDocument());
+    }
 }

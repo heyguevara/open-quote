@@ -19,13 +19,20 @@ package com.ail.insurance.onrisk;
 
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
-import com.ail.annotation.ServiceInterface;
+import com.ail.annotation.ServiceImplementation;
+import com.ail.core.BaseException;
+import com.ail.core.PreconditionException;
+import com.ail.core.Service;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceCommand;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 
-@ServiceInterface
-public interface FetchInvoiceService {
+@ServiceImplementation
+public class FetchInvoiceService extends Service<FetchInvoiceService.FetchInvoiceArgument> {
+    private static final long serialVersionUID = 3198893603833694389L;
+    
     @ServiceArgument
     public interface FetchInvoiceArgument extends Argument {
         /**
@@ -67,5 +74,38 @@ public interface FetchInvoiceService {
 
     @ServiceCommand
     public interface FetchInvoiceCommand extends Command, FetchInvoiceArgument {
+    }
+
+    /**
+     * The 'business logic' of the entry point.
+     * @throws PreconditionException If one of the preconditions is not met
+     */
+    public void invoke() throws BaseException {
+        if (args.getPolicyNumberArg()==null || args.getPolicyNumberArg().length()==0) {
+            throw new PreconditionException("args.getPolicyNumberArg()==null || args.getPolicyNumberArg().length()==0");
+        }
+
+        // Fetch the saved quote from persistence
+        SavedPolicy savedPolicy=(SavedPolicy)getCore().queryUnique("get.savedPolicy.by.policyNumber", args.getPolicyNumberArg());
+        
+        if (savedPolicy==null) {
+            throw new PreconditionException("core.queryUnique(get.savedPolicy.by.policyNumber, "+args.getPolicyNumberArg()+")==null");
+        }
+        
+        if (savedPolicy.getPolicy()==null || savedPolicy.getPolicy().getPaymentDetails()==null) {
+            throw new PreconditionException("savedQuotation.getQuotation()==null || savedQuotation.getQuotation().getPaymentDetails()==null");
+        }
+        
+        // We only generate quote docs on demand, so if there isn't one - generate it.
+        if (savedPolicy.getInvoiceDocument()==null) {
+            GenerateInvoiceCommand cmd=getCore().newCommand(GenerateInvoiceCommand.class);
+            cmd.setPolicyArg(savedPolicy.getPolicy());
+            cmd.invoke();
+            savedPolicy.setInvoiceDocument(cmd.getDocumentRet());
+            savedPolicy=getCore().update(savedPolicy);
+            args.setPolicyRet(savedPolicy.getPolicy());
+        }
+
+        args.setDocumentRet(savedPolicy.getInvoiceDocument());
     }
 }

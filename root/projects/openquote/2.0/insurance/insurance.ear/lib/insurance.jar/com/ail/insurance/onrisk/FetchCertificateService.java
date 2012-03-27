@@ -19,13 +19,19 @@ package com.ail.insurance.onrisk;
 
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
-import com.ail.annotation.ServiceInterface;
+import com.ail.annotation.ServiceImplementation;
+import com.ail.core.BaseException;
+import com.ail.core.PreconditionException;
+import com.ail.core.Service;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateCommand;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 
-@ServiceInterface
-public interface FetchCertificateService {
+@ServiceImplementation
+public class FetchCertificateService extends Service<FetchCertificateService.FetchCertificateArgument> {
+    private static final long serialVersionUID = 7035672853481950557L;
 
     @ServiceArgument
     public interface FetchCertificateArgument extends Argument {
@@ -71,5 +77,35 @@ public interface FetchCertificateService {
 
     @ServiceCommand
     public interface FetchCertificateCommand extends Command, FetchCertificateArgument {
+    }
+
+
+    /**
+     * The 'business logic' of the entry point.
+     * @throws PreconditionException If one of the preconditions is not met
+     */
+    public void invoke() throws BaseException {
+        if (args.getPolicyNumberArg()==null || args.getPolicyNumberArg().length()==0) {
+            throw new PreconditionException("args.getPolicyNumberArg()==null || args.getPolicyNumberArg().length()==0");
+        }
+
+        // Fetch the saved quote from persistence
+        SavedPolicy savedPolicy=(SavedPolicy)getCore().queryUnique("get.savedPolicy.by.policyNumber", args.getPolicyNumberArg());
+        
+        if (savedPolicy==null) {
+            throw new PreconditionException("core.queryUnique(get.savedPolicy.by.policyNumber, "+args.getPolicyNumberArg()+")==null");
+        }
+        
+        // We only generate quote docs on demand, so if there isn't one - generate it.
+        if (savedPolicy.getCertificateDocument()==null) {
+            GenerateCertificateCommand cmd=getCore().newCommand(GenerateCertificateCommand.class);
+            cmd.setPolicyArg(savedPolicy.getPolicy());
+            cmd.invoke();
+            savedPolicy.setCertificateDocument(cmd.getDocumentRet());
+            savedPolicy=getCore().update(savedPolicy);
+            args.setPolicyRet(savedPolicy.getPolicy());
+        }
+
+        args.setDocumentRet(savedPolicy.getCertificateDocument());
     }
 }
