@@ -1,0 +1,245 @@
+<!-- This file defines the common section used in all build files Ant build file for the core project. -->
+
+<project name="BuildCommon.xml" default="dummy">
+    <!-- Set global properties for this build -->
+    <property environment="env" />
+
+    <!-- Figure out where everything is - everything's relative to project.dir -->
+    <dirname property="project.dir" file="${ant.file.BuildSettings}" />
+    <property name="target.dir" value="${project.dir}/target" />
+    <property name="jboss.dir" value="${target.dir}/jboss" />
+    <property name="deploy.dir" value="${jboss.dir}/server/default" />
+    <property name="ear.dir" value="${deploy.dir}/deploy/${ear.name}" />
+    <property name="ear.lib" value="${ear.dir}/lib" />
+    <property name="development.dir" value="${project.dir}/../development" />
+    <property name="test.dir" value="${target.dir}/test" />
+    <property name="repo.dir" value="${development.dir}/repo" />
+    <property name="domain.dir" value="${basedir}/domain/jboss" />
+    <property name="lib" value="${basedir}/jars" />
+    <property name="tmp" value="${build.dir}/tmp" />
+    <property name="build.number.file" value="${basedir}/Build.number" />
+    <property name="list" value="" />
+    <property name="keystore" value="${basedir}/../development/data/keystore" />
+    <property name="copyfilter.dir" value="${deploy.dir}/lib" />
+    <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
+    <property name="serverBaseUrl" value="localhost:8080" />
+    <property name="java.naming.factory.initial" value="org.jnp.interfaces.NamingContextFactory" />
+    <property name="java.naming.provider.url" value="jnp://localhost:1099" />
+    <property name="grinder.properties" value="${basedir}/grinder.properties" />
+    <property name="connectionpoolloader.params" value="jndiname=java:/ConfigureDS;table=config" />
+    <property name="build.sysclasspath" value="last" />
+    <!-- default build.type is developer, bamboo overrides this with a -D on the command line -->
+    <property name="build.type" value="developer" />
+    <!-- password to use when creating DB's etc. Bamboo overrides this on the build server -->
+    <property name="mysql.root.password" value="" />
+
+    <target name="dummy" />
+
+    <classfileset includes="${development.dir}/lib/*.jar" />
+
+    <!-- Convert the named property from a windows style path to unix style -->
+    <!-- e.g. "c:\my\folder\file.txt" -> "c:/my/folder/file.txt" -->
+    <macrodef name="unixify-path-macro">
+        <attribute name="property" />
+        <sequential>
+            <script language="beanshell">
+                val=project.getProperty("@{property}");
+                project.setProperty("@{property}",
+                val.replaceAll("\\\\","/"));
+            </script>
+        </sequential>
+    </macrodef>
+
+    <!-- The if-macro sets the named property to "true" if the specified condition evaluates to true. The -->
+    <!-- property is "forced" to change breaking ant's normal immutable property rule. -->
+    <scriptdef name="if-macro" language="beanshell">
+        <attribute name="property" />
+        <attribute name="condition" />
+        <attribute name="arg1" />
+        <attribute name="arg2" />
+        property=attributes.get("property");
+        condition=attributes.get("condition"); 
+        arg1=attributes.get("arg1");
+        arg1=arg1.replaceAll("\\\\","/");
+        arg2=attributes.get("arg2");
+    
+        project.setProperty(property,"false");
+
+        if (condition.equals("equals")) {
+          if (arg1.equals(arg2)) {
+	          project.setProperty(property,"true");
+          }
+        }
+        else if (condition.equals("exists")) {
+          if (new File(arg1).exists()) {
+            project.setProperty(property,"true");
+          }
+        }
+        else if (condition.equals("defined")) {
+          if (arg1.length()!=0) {
+            project.setProperty(property,"true");
+          }
+        }
+        else {
+          print("Condition "+condition+" is not understood");
+          throw new Exception("Condition "+condition+" is not understood");
+        }
+    </scriptdef>
+
+    <!-- Run a specified target in all the ant files one level down in the directory structure -->
+    <macrodef name="subant-macro">
+        <attribute name="target" />
+        <attribute name="excludes" default="classes/**" />
+        <attribute name="includes" default="*/Build.xml" />
+        <sequential>
+            <subant target="@{target}" failonerror="yes">
+                <fileset dir="." includes="@{includes}" excludes="@{excludes}" />
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <!-- Macro to truncate the file copy filter -->
+    <macrodef name="truncate-filter-macro">
+        <sequential>
+            <echo file="${copyfilter.file}" append="no" message="# Build generated file - do not edit!${line.separator}" />
+        </sequential>
+    </macrodef>
+
+    <!-- Macro which sets the ${mysql-running} to true if mysql is running -->
+    <macrodef name="set-mysql-running-property-macro">
+        <sequential>
+            <condition property="mysql-running">
+                <socket server="localhost" port="3306" />
+            </condition>
+        </sequential>
+    </macrodef>
+
+    <!-- This macro provides access to the operations supported by the configuration server. -->
+    <macrodef name="configuration-macro">
+        <attribute name="username" />
+        <attribute name="password" />
+        <attribute name="operation" />
+        <attribute name="factory" default="${java.naming.factory.initial}" />
+        <attribute name="provider" default="${java.naming.provider.url}" />
+        <sequential>
+
+            <java fork="yes" classname="com.ail.core.configure.ConfigurationAntTasks">
+                <classpath>
+                    <dirset dir="${ear.lib}" includes="core.jar" />
+                    <fileset dir="${ear.lib}" includes="*.jar" />
+                    <dirset dir="${ear.dir}" includes="*.jar" />
+                    <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
+                    <fileset dir="${jboss.dir}" includes="lib/endorsed/xercesImpl.jar" />
+                    <fileset dir="${jboss.dir}" includes="client/jbossall-client.jar" />
+                </classpath>
+                <arg value="username=@{username}" />
+                <arg value="password=@{password}" />
+                <arg value="operation=@{operation}" />
+                <arg value="provider=@{provider}" />
+                <arg value="factory=@{factory}" />
+            </java>
+        </sequential>
+    </macrodef>
+
+    <!-- Macro to set (i.e. upload to the database) factory configurations. -->
+    <macrodef name="ail-reset-configurations-macro">
+        <sequential>
+
+            <echo message="resetting configurations in database ${dbname}" />
+
+            <path id="reset.classpath">
+                <dirset dir="${ear.dir}" includes="*.jar" />
+                <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
+                <fileset dir="${ear.lib}" includes="*.jar" />
+                <dirset dir="${ear.lib}" includes="*.jar" />
+                <fileset dir="${test.dir}" includes="**/*.jar" />
+                <fileset dir="${jboss.dir}">
+                    <include name="lib/endorsed/xercesImpl.jar" />
+                    <include name="client/jbossall-client.jar" />
+                    <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+                    <include name="server/default/lib/*.jar" />
+                </fileset>
+            </path>
+
+            <java classname="com.ail.core.configure.ConfigurationReset" fork="yes" failonerror="yes" classpathref="reset.classpath">
+                <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
+                <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader" />
+                <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver" />
+                <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}" />
+                <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=${dbusername}" />
+                <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=${dbpassword}" />
+                <jvmarg value="-Dcom.ail.core.configure.loaderParam.table=config" />
+                <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}" />
+                <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser" />
+                <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl" />
+                <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" />
+            </java>
+        </sequential>
+    </macrodef>
+
+    <!-- The annotation processor (in development/annotations.jar) generates fragments of config based on -->
+    <!-- the annotations encountered during compilation. This macro aggregates these fragments and outputs -->
+    <!-- a single file. -->
+    <!-- @param paths A list of file system paths to be searched for fragments. -->
+    <!-- @param output-jar The jar into which the aggregated configuration should be written. -->
+    <macrodef name="ail-aggregate-annotated-configurations">
+        <element name="paths" optional="no" />
+        <attribute name="output-jar" />
+        <sequential>
+
+            <!-- convert the path into a property so it can be passed into ConfiurationReset -->
+            <!-- as a command line param. -->
+            <path id="path.expansion">
+                <paths />
+            </path>
+            <property name="config.search.path" refid="path.expansion" />
+
+            <path id="aggregate.classpath">
+                <dirset dir="${ear.lib}" includes="*.jar" />
+                <fileset dir="${ear.lib}" includes="*.jar" />
+            </path>
+
+            <java classname="com.ail.core.configure.ConfigurationAggregate" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
+                <arg line="-s ${config.search.path} -o @{output-jar}/com/ail/core/AnnotatedTypeConfig.xml" />
+            </java>
+        </sequential>
+    </macrodef>
+
+    <!-- replace an exploded jar folder with a jar file -->
+    <macrodef name="unexplode-jar-macro">
+        <attribute name="jar" />
+        <sequential>
+            <jar basedir="@{jar}" destfile="@{jar}.tmp" />
+            <delete dir="@{jar}" />
+            <move file="@{jar}.tmp" tofile="@{jar}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="release-source-macro">
+        <sequential>
+            <mkdir dir="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}" />
+            <zip update="yes" basedir=".."
+                destfile="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot-src.zip"
+                includes="${ant.project.name}/**" excludes="${ant.project.name}/target/**, **/.svn/**" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build-product-development-lib-macro">
+        <sequential>
+            <mkdir dir="${target.dir}/lib" />
+            <jar destfile="${target.dir}/lib/core.jar" basedir="${ear.lib}/core.jar" />
+            <jar destfile="${target.dir}/lib/commercial.jar" basedir="${ear.lib}/commercial.jar" />
+            <jar destfile="${target.dir}/lib/insurance.jar" basedir="${ear.lib}/insurance.jar" />
+            <copy todir="${target.dir}/lib">
+                <fileset dir="${ear.lib}" includes="*.jar" />
+                <fileset dir="${deploy.dir}/deploy/jboss-portal.sar/lib" includes="portal-portlet-jsr168api-lib.jar, portal-identity-lib.jar" />
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <import file="BuildJavaMacros.xml" />
+    <import file="BuildJBossMacros.xml" />
+    <import file="BuildRepositoryMacros.xml" />
+    <import file="BuildTestingMacros.xml" />
+</project>
+
