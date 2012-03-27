@@ -10,7 +10,7 @@
 
   <target name="clean" description="delete everything that the build can generate">
     <!-- create the databases we'll need for unit testing etc. -->
-    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" >
+    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
 
       delete from ${dbname}.config;
       
@@ -42,35 +42,36 @@
       <fileset dir="./jboss" includes="**" excludes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties" />
     </copy>
 
-		<!-- copy files that do need filters to be applied -->
+    <!-- copy files that do need filters to be applied -->
     <copy todir="${deploy.dir}" overwrite="true">
       <fileset dir="./jboss" includes="deploy/ail-*-ds.xml, deploy/alfresco.war/**/repository.properties" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
-        <filter token="dbname" value="${dbname}"/>
-        <filter token="dbusername" value="${dbusername}"/>
-        <filter token="dbpassword" value="${dbpassword}"/>
+        <filter token="dbname" value="${dbname}" />
+        <filter token="dbusername" value="${dbusername}" />
+        <filter token="dbpassword" value="${dbpassword}" />
       </filterset>
     </copy>
 
-    <set-mysql-running-property-macro/>
-    <antcall target="setup-db-if"/>
-    <antcall target="setup-db-unless"/>
+    <set-mysql-running-property-macro />
+    <antcall target="setup-db-if" />
+    <antcall target="setup-db-unless" />
   </target>
 
   <target name="teardown" description="undo whatever setup did">
     <!-- delete the deployed directory -->
     <delete dir="${deploy.dir}" />
 
-    <set-mysql-running-property-macro/>
-    <antcall target="teardown-db-if"/>
-    <antcall target="teardown-db-unless"/>
+    <set-mysql-running-property-macro />
+    <antcall target="teardown-db-if" />
+    <antcall target="teardown-db-unless" />
   </target>
 
   <target name="teardown-db-if" if="mysql-running">
     <!-- drop all the databases -->
-		<sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
+	<echo level="info" message="Dropping database: ${dbname}"/>
+    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
 	  	    -- Make sure the database and users are there before we try to delete them!
 	        create database if not exists ${dbname};
 	        grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
@@ -81,16 +82,17 @@
 	        revoke all privileges, grant option from '${dbusername}'@'localhost';
 	  	    drop user '${dbusername}'@'localhost';
 		</sql>
-  </target>  
-  
+  </target>
+
   <target name="teardown-db-unless" unless="mysql-running">
     <!-- drop all the databases -->
-    <echo message="Database has not been cleared - mysql doesn't appear to be running"/>
-  </target>  
+    <echo message="Database has not been cleared - mysql doesn't appear to be running" />
+  </target>
 
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
-    <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" >
+	<echo level="info" message="Creating database: ${dbname}"/>
+    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
       create database if not exists ${dbname};
       grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
       grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
@@ -215,11 +217,37 @@
             amount double,
             currency char(4)
       );
+
+      create table if not exists ${dbname}.saved_policy_summary (
+        id bigint(20) auto_increment primary key,
+        version bigint(20),
+        quote_number varchar(255),
+        policy_number varchar(255),
+        quote_date date,
+        expiry_date date,
+        status varchar(255),
+        page varchar(255),
+        premium_amount decimal(19,2),
+        premium_currency varchar(255),
+        username varchar(255),
+        product varchar(255),
+        user_saved bit,
+        test_case bit
+      );
+      
+      create table if not exists ${dbname}.saved_policy (
+        id bigint(20) primary key,
+        policy text,
+        quotation_document longblob,
+        invoice_document longblob,
+        wording_document longblob,
+        certificate_document longblob
+      );
     </sql>
   </target>
 
   <target name="setup-db-unless" unless="mysql-running">
     <!-- drop all the databases -->
-    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
-  </target>  
+    <echo message="Database has not been initialised - mysql doesn't appear to be running" />
+  </target>
 </project>
