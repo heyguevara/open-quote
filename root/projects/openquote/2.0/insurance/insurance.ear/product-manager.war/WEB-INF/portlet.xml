@@ -38,7 +38,7 @@
     <description>AIL quotation portlet with features to support product development.</description>
     <portlet-name>QuotationDevelopmentPortlet</portlet-name>
     <display-name>QuotationDevelopmentPortlet</display-name>
-    <portlet-class>com.ail.openquote.portlet.SandpitPortlet</portlet-class>
+    <portlet-class>com.ail.insurance.pageflow.portlet.SandpitPortlet</portlet-class>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>VIEW</portlet-mode>
