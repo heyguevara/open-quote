@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC '-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN' 'http://java.sun.com/dtd/application_1_3.dtd'>
+
+<!-- 
+This application.xml should include eveything that appears in the equivalent 
+files in the core, commercial and insurance projects, and additionally anything 
+that is specific to the insurance project.
+ -->
+ 
+<application>
+    <display-name>openquote</display-name>
+    <description>AIL OpenQuote Application Ear</description>
+
+    <module>
+        <ejb>command-server-ejb.jar</ejb>
+    </module>
+    
+    <module>
+        <ejb>configure-server-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>persistence-server-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>product-manager-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>configure.war</web-uri>
+            <context-root>configure</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>content-browser.war</web-uri>
+            <context-root>content-browser</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>product-manager.war</web-uri>
+            <context-root>product-manager</context-root>
+        </web>
+    </module>
+  
+    <module>
+        <web>
+            <web-uri>news-reader.war</web-uri>
+            <context-root>news-reader</context-root>
+        </web>
+    </module>
+
+    <module>
+        <ejb>acceptance-ejb.jar</ejb>
+    </module> 
+
+    <module>
+        <ejb>onrisk-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>quotation-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>subrogation-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>quotation.war</web-uri>
+            <context-root>quotation</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>openquote-theme.war</web-uri>
+            <context-root>openquote-theme</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>lifeplus.war</web-uri>
+            <context-root>lifeplus</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>irishbrokerpi.war</web-uri>
+            <context-root>irishbrokerpi</context-root>
+        </web>
+    </module>
+</application>

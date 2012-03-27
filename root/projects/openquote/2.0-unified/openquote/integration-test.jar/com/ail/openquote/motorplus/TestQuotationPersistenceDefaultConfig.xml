@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>Default Service Invocation Configuration</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>1.0</version>
+
+    <types>
+        <!--====================================-->
+        <!--   Define the component's services  -->
+        <!--====================================-->
+
+        <service name="HibernateUpdateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
+        </service>
+        
+        <service name="HibernateQueryService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
+        </service>
+        
+        <service name="HibernateLoadService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
+        </service>
+        
+        <service name="HibernateCreateService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
+        </service>
+        
+        <service name="HibernateDeleteService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
+        </service>
+        
+        <service name="HibernateOpenSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
+        </service>
+        
+        <service name="HibernateCloseSessionService" builder="ClassBuilder" key="com.ail.core.command.ClassAccessor">
+            <parameter name="ServiceClass">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
+        </service>
+                
+		<!--=======================================================================-->
+		<!-- Bind the default core services (above) to Commands used by Core.class -->
+		<!--=======================================================================-->
+        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommand">
+            <parameter name="Service">HibernateUpdateService</parameter>
+        </command>
+        
+        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommand">
+            <parameter name="Service">HibernateQueryService</parameter>
+        </command>
+        
+        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommand">
+            <parameter name="Service">HibernateLoadService</parameter>
+        </command>
+        
+        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommand">
+            <parameter name="Service">HibernateCreateService</parameter>
+        </command>
+        
+        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommand">
+            <parameter name="Service">HibernateDeleteService</parameter>
+        </command>
+
+        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommand">
+            <parameter name="Service">HibernateOpenSessionService</parameter>
+        </command>
+        
+        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommand">
+            <parameter name="Service">HibernateCloseSessionService</parameter>
+        </command>
+    </types>
+</configuration>

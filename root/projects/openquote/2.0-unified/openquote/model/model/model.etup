@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0">
+   <XMI.header>
+      <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
+		<XMI.documentation>
+			<XMI.exporter>
+				Embarcadero's Describe
+			</XMI.exporter>
+			<XMI.exporterVersion>
+				6.0
+			</XMI.exporterVersion>
+		</XMI.documentation>
+   </XMI.header>
+
+   <XMI.content>
+   <UML:Profile xmi.id="DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5" name="Unnamed" isCloned="true" href="./model.etup#//*[@xmi.id=&apos;DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5&apos;]" isDirty="false"><UML:Element.ownedElement>
+<UML:Stereotype xmi.id="DCE.CC17A7DE-2A67-EBCB-38C7-8AC98CA6ED9D" name="interface" owner="__uri_./model.etup#//*[@xmi.id=&apos;DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5&apos;]"/>
+<UML:Stereotype xmi.id="DCE.34B20EEC-7E05-42F5-8D3E-D29E088F9F14" name="PageFlow Action" owner="__uri_./model.etup#//*[@xmi.id=&apos;DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5&apos;]"/>
+<UML:Stereotype xmi.id="DCE.8C64C54D-7266-6712-EDD6-5E4E53C44AF2" name="PageFlow Action" owner="__uri_./model.etup#//*[@xmi.id=&apos;DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5&apos;]"/>
+<UML:Stereotype xmi.id="DCE.92F770BA-7045-DA66-4400-1D649AA11D60" name="Janino Service" owner="__uri_./model.etup#//*[@xmi.id=&apos;DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5&apos;]"/>
+<UML:Stereotype xmi.id="DCE.5F47DB0A-0C37-EC08-40F8-FFF262525955" name="Janino Service" owner="__uri_./model.etup#//*[@xmi.id=&apos;DCE.0AAF28C1-BFD0-094B-68AC-B3BCB6FA17B5&apos;]"/></UML:Element.ownedElement></UML:Profile></XMI.content>
+</XMI>

@@ -1,0 +1,91 @@
+// This bsh script setup the default content of the portal.
+// It is called when the SessionFactoryBinder service has created a schema and needs to populate it
+import org.jboss.portal.common.io.IOTools;
+import org.jboss.portal.common.util.Tools;
+import org.jboss.portal.identity.db.HibernateUserImpl;
+import org.jboss.portal.identity.db.HibernateRoleImpl;
+
+try
+{
+   session = SessionFactory.openSession();
+   tx = session.beginTransaction();
+
+   //
+   HibernateRoleImpl adminRole = new HibernateRoleImpl("Admin", "Administrators");
+   HibernateRoleImpl userRole = new HibernateRoleImpl("User", "Users");
+
+   // OpeQuote roles
+   HibernateRoleImpl developerRole = new HibernateRoleImpl("Developer", "Developers");
+   HibernateRoleImpl proposerRole = new HibernateRoleImpl("Proposer", "Proposers");
+   HibernateRoleImpl brokerRole = new HibernateRoleImpl("Broker", "Brokers");
+	
+   //
+   HibernateUserImpl admin = new HibernateUserImpl("admin");
+   admin.setPassword(Tools.md5AsHexString("admin"));
+   admin.setRealEmail("admin@openquote");
+   admin.setViewRealEmail(true);
+   admin.setEnabled(true);
+   admin.getRoles().add(adminRole);
+   adminRole.getUsers().add(admin);
+
+   //
+   HibernateUserImpl user = new HibernateUserImpl("user");
+   user.setPassword(Tools.md5AsHexString("user"));
+   user.setRealEmail("user@portal.com");
+   user.setViewRealEmail(true);
+   user.setEnabled(true);
+   user.getRoles().add(userRole);
+   userRole.getUsers().add(user);
+
+   // OpenQuote developer
+   HibernateUserImpl davy = new HibernateUserImpl("davy");
+   davy.setPassword(Tools.md5AsHexString("davy"));
+   davy.setGivenName("Davy");
+   davy.setFamilyName("Loper");
+   davy.setRealEmail("davy@openquote");
+   davy.setViewRealEmail(true);
+   davy.setEnabled(true);
+   davy.getRoles().add(developerRole);
+   developerRole.getUsers().add(davy);
+
+   // OpenQuote productreader
+   HibernateUserImpl productreader = new HibernateUserImpl("productreader");
+   productreader.setPassword(Tools.md5AsHexString("prodreader"));
+   productreader.setGivenName("Product");
+   productreader.setFamilyName("Reader");
+   productreader.setRealEmail("productreader@openquote");
+   productreader.setViewRealEmail(true);
+   productreader.setEnabled(true);
+   productreader.getRoles().add(developerRole);
+   developerRole.getUsers().add(productreader);
+
+   // OpenQuote broker
+   HibernateUserImpl broker = new HibernateUserImpl("broker");
+   broker.setPassword(Tools.md5AsHexString("broker"));
+   broker.setGivenName("Demo");
+   broker.setFamilyName("Broker");
+   broker.setRealEmail("broker@openquote");
+   broker.setViewRealEmail(true);
+   broker.setEnabled(true);
+   broker.getRoles().add(brokerRole);
+   developerRole.getUsers().add(broker);
+
+   //
+   session.save(adminRole);
+   session.save(userRole);
+   session.save(developerRole);
+   session.save(proposerRole);
+   session.save(brokerRole);
+   session.save(admin);
+   session.save(user);
+   session.save(davy);
+   session.save(productreader);
+   session.save(broker);
+
+   tx.commit();
+}
+finally
+{
+   IOTools.safeClose(session);
+}
+
