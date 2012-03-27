@@ -8,7 +8,7 @@
         <description>OpenQuote portlet for quoting the LifePlus product</description>
         <portlet-name>LifePlusQuotationPortlet</portlet-name>
         <display-name>LifePlus Quotation</display-name>
-        <portlet-class>com.ail.openquote.portlet.QuotationPortlet</portlet-class>
+        <portlet-class>com.ail.insurance.pageflow.portlet.QuotationPortlet</portlet-class>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>

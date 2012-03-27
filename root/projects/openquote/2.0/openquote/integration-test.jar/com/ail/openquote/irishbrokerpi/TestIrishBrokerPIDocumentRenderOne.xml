@@ -1,4 +1,4 @@
-<quotation serialVersion="6" systemId="1" xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<quotation serialVersion="6" systemId="1" xsi:type="java:com.ail.insurance.policy.Policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
  <excess id="excess" enabled="true" deductible="false">
   <title>Excess</title>
   <amount amount="2600.00" currency="EUR"/>

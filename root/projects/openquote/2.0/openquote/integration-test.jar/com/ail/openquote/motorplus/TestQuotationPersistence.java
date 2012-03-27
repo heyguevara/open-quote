@@ -35,9 +35,9 @@ import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
 import com.ail.core.configure.AbstractConfigurationLoader;
 import com.ail.insurance.policy.PolicyStatus;
-import com.ail.openquote.Quotation;
-import com.ail.openquote.SavedQuotation;
-import com.ail.openquote.SavedQuotationSummary;
+import com.ail.insurance.policy.SavedPolicy;
+import com.ail.insurance.policy.SavedPolicySummary;
+import com.ail.insurance.policy.Policy;
 
 public class TestQuotationPersistence extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
@@ -86,8 +86,8 @@ public class TestQuotationPersistence extends CoreUserBaseCase {
     }
     
     /**
-     * A SavedQuotation is a sub-class of SavedQuotationSummary, so it you write a SavedQuotation to the DB you
-     * should be able to read it back as a SavedQuotationSummary... But can you?
+     * A SavedPolicy is a sub-class of SavedPolicySummary, so it you write a SavedPolicy to the DB you
+     * should be able to read it back as a SavedPolicySummary... But can you?
      */
     @Test
     public void testSaveAQuotationGetAQuotationSummary() throws Exception {
@@ -96,15 +96,15 @@ public class TestQuotationPersistence extends CoreUserBaseCase {
         {
             getCore().openPersistenceSession();
             XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteFive.xml"));
-            Quotation quoteIn = getCore().fromXML(Quotation.class, quoteXml);
-            SavedQuotation sq = getCore().create(new SavedQuotation(quoteIn));
+            Policy quoteIn = getCore().fromXML(Policy.class, quoteXml);
+            SavedPolicy sq = getCore().create(new SavedPolicy(quoteIn));
             quoteId=sq.getSystemId();
             getCore().closePersistenceSession();
         }
 
         {
             getCore().openPersistenceSession();
-            getCore().load(SavedQuotationSummary.class, quoteId);
+            getCore().load(SavedPolicySummary.class, quoteId);
             getCore().closePersistenceSession();
         }
     }
@@ -115,21 +115,21 @@ public class TestQuotationPersistence extends CoreUserBaseCase {
         
         {
             XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteFive.xml"));
-            Quotation quoteIn = getCore().fromXML(Quotation.class, quoteXml);
+            Policy quoteIn = getCore().fromXML(Policy.class, quoteXml);
             quoteIn.setUserSaved(true);
             quoteIn.setUsername("jimbo");
             quoteIn.setStatus(PolicyStatus.QUOTATION);
             
             getCore().openPersistenceSession();
             
-            getCore().create(new SavedQuotation(quoteIn));
-            getCore().create(new SavedQuotation(quoteIn));
-            getCore().create(new SavedQuotation(quoteIn));
-            getCore().create(new SavedQuotation(quoteIn));
-            getCore().create(new SavedQuotation(quoteIn));
-            getCore().create(new SavedQuotation(quoteIn));
+            getCore().create(new SavedPolicy(quoteIn));
+            getCore().create(new SavedPolicy(quoteIn));
+            getCore().create(new SavedPolicy(quoteIn));
+            getCore().create(new SavedPolicy(quoteIn));
+            getCore().create(new SavedPolicy(quoteIn));
+            getCore().create(new SavedPolicy(quoteIn));
 
-            SavedQuotation sq=new SavedQuotation(quoteIn);
+            SavedPolicy sq=new SavedPolicy(quoteIn);
             Timer.start("create one");
             getCore().create(sq);
             Timer.stop("create one");
@@ -142,7 +142,7 @@ public class TestQuotationPersistence extends CoreUserBaseCase {
 
             getCore().openPersistenceSession();
             
-            List<?> sl=getCore().query("get.savedQuotationSummary.by.username", "jimbo");
+            List<?> sl=getCore().query("get.savedPolicySummary.by.username", "jimbo");
             assertEquals(7, sl.size());
             Timer.stop("query");
 
@@ -158,22 +158,22 @@ public class TestQuotationPersistence extends CoreUserBaseCase {
      */
     @Test
     public void testUpdateQuotationSummary() throws Exception {
-        Quotation quote=null;
+        Policy quote=null;
 
         {
             XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteFive.xml"));
-            Quotation quoteIn = getCore().fromXML(Quotation.class, quoteXml);
+            Policy quoteIn = getCore().fromXML(Policy.class, quoteXml);
             getCore().openPersistenceSession();
-            SavedQuotation sq = getCore().create(new SavedQuotation(quoteIn));
+            SavedPolicy sq = getCore().create(new SavedPolicy(quoteIn));
             getCore().closePersistenceSession();
-            quote=sq.getQuotation();
+            quote=sq.getPolicy();
         }
 
         quote.setStatus(PolicyStatus.DECLINED);
         
         {
             getCore().openPersistenceSession();
-            getCore().update(new SavedQuotation(quote));
+            getCore().update(new SavedPolicy(quote));
             getCore().closePersistenceSession();
         }
 

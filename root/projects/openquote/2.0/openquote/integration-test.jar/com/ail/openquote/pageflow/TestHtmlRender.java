@@ -33,9 +33,9 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
-import com.ail.openquote.Quotation;
-import com.ail.openquote.ui.PageFlow;
-import com.ail.openquote.ui.util.QuotationContext;
+import com.ail.insurance.pageflow.PageFlow;
+import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
 
 /**
  */
@@ -54,7 +54,7 @@ public class TestHtmlRender extends CoreUserBaseCase {
     @Test
     public void testPageRender() throws Exception {
         XMLString instanceXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusInstance.xml"));
-        Quotation instanceObj = (Quotation) super.getCore().fromXML(Quotation.class, instanceXml);
+        Policy instanceObj = (Policy) super.getCore().fromXML(Policy.class, instanceXml);
         assertNotNull(instanceObj);
 
         XMLString pageFlowXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusPageFlow.xml"));
@@ -68,7 +68,7 @@ public class TestHtmlRender extends CoreUserBaseCase {
         RenderRequest request=new MockRenderRequest(Locale.UK, session);
         
         QuotationContext.setRequest(request);
-        QuotationContext.setQuotation(instanceObj);
+        QuotationContext.setPolicy(instanceObj);
         QuotationContext.setPageFlow(pageFlowObj);
         
         pageFlowObj.renderResponse(request, response, instanceObj);

@@ -23,32 +23,21 @@
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <install-jboss-macro version="${jboss.version}" />
-    <install-base-domain-macro dar="insurance" version="${insurance.version}" build="${insurance.build}" />
+    <install-base-domain-macro clean="no" dar="insurance" version="${insurance.version}" build="${insurance.build}" />
 
     <!-- the dar contains some things which will only cause confusion if they're left -->
-    <!-- on the classpath - delete them.                                               -->
+    <!-- on the classpath - delete them.                                              -->
     <delete file="${ear.dir}/lib/jaxrpc-1.0.jar" />
-    <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreDefaultConfig.xml" />
-    <delete file="${ear.dir}/lib/core.jar/com/ail/core/CoreProxyDefaultConfig.xml" />
-    <delete file="${ear.dir}/lib/core.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml" />
     <delete file="${ear.dir}/lib/core.jar/com/ail/core/product/ListProductsDefaultConfig.xml" />
-    <delete file="${ear.dir}/lib/core.jar/com/ail/core/persistence/hibernate/HibernateConfiguration.xml" />
-    <delete file="${ear.dir}/lib/core.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateConfiguration.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/xmlbinding/CastorBaseMapping.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/persistence/hibernate/HibernateMapping.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/AddQuoteNumberDefaultConfig.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/insurance/quotation/CalculatePremiumDefaultConfig.xml" />
-    <delete file="${ear.dir}/lib/insurance.jar/com/ail/core/CoreDefaultConfig.xml" />
     <delete file="${ear.dir}/content-browser.war/WEB-INF/content-browser-object.xml" />
     <delete file="${ear.dir}/content-browser.war/WEB-INF/portlet-instances.xml" />
     <delete file="${ear.dir}/news-reader.war/WEB-INF/portlet-instances.xml" />
     <delete file="${deploy.dir}/deploy/ail-persistence-ds.xml" />
     <delete file="${deploy.dir}/deploy/ail-configure-ds.xml" />
     <delete file="${deploy.dir}/deploy/alfresco.war/WEB-INF/alfresco-object.xml" />
-    <delete file="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-news-samples.war/WEB-INF/default-object.xml" />
     <delete dir="${deploy.dir}/data/alf_data" />
     <delete dir="${deploy.dir}/data/portal" />
+    <delete file="${deploy.dir}/deploy/jboss-portal.sar/samples/portal-news-samples.war/WEB-INF/default-object.xml" />
     <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-samples.war" />
     <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.sar" />
     <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.war" />

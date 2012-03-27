@@ -1,5 +1,5 @@
 <!-- 4 drivers, 4 vehicles -->
-<quotation xsi:type="java:com.ail.openquote.Quotation"
+<quotation xsi:type="java:com.ail.insurance.policy.Policy"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
      <quotationDate>2006-02-23T19:31:45.813Z</quotationDate>
      <username>jimbo</username>

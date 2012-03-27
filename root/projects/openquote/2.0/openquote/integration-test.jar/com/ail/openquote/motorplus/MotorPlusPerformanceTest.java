@@ -25,7 +25,7 @@ import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumCommand;
 import com.ail.insurance.policy.Section;
-import com.ail.openquote.Quotation;
+import com.ail.insurance.policy.Policy;
 
 /**
  * This class contains a number of test methods used in performance testing with grinder.
@@ -58,7 +58,7 @@ public class MotorPlusPerformanceTest {
                 core=new CoreProxy();
                 InputStream is=MotorPlusPerformanceTest.class.getResourceAsStream("MotorPlusPerformanceTest0"+idx+".xml");
                 XMLString quoteXml = new XMLString(is);
-                res = new TestQuotation((Quotation) core.fromXML(Quotation.class, quoteXml));
+                res = new TestQuotation((Policy) core.fromXML(Policy.class, quoteXml));
                 is.close();
                 quoteByThread.put(Thread.currentThread(), res);
                 res.quote.setQuotationNumber("T"+Thread.currentThread().getId());
@@ -75,7 +75,7 @@ public class MotorPlusPerformanceTest {
         return res;
     }
     
-    private Quotation cleanQuoteForTest(Quotation quote) {
+    private Policy cleanQuoteForTest(Policy quote) {
         quote.setStatus(PolicyStatus.APPLICATION);
         quote.setAssessmentSheet(null);
         for(Section s: quote.getSection()) {
@@ -87,7 +87,7 @@ public class MotorPlusPerformanceTest {
     public void testCalculatePremium() throws Exception {
         // get the quote we're going to process, take a note of its premium and then clean it
         TestQuotation qt=getQuoteToProcess();
-        Quotation quote=cleanQuoteForTest(qt.quote);
+        Policy quote=cleanQuoteForTest(qt.quote);
         String qIn=quote.getQuotationNumber();
 
         // send the cleaned quote back into calc premium
@@ -120,11 +120,11 @@ public class MotorPlusPerformanceTest {
 }
 
 class TestQuotation {
-    Quotation quote;
+    Policy quote;
     CurrencyAmount premium;
     PolicyStatus status;
 
-    public TestQuotation(Quotation quote) {
+    public TestQuotation(Policy quote) {
         this.quote=quote;
         premium=quote.getTotalPremium();
         status=quote.getStatus();

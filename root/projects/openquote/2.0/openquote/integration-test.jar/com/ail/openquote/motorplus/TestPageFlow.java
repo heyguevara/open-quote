@@ -23,10 +23,10 @@ import org.junit.Test;
 import com.ail.core.CoreProxy;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
-import com.ail.openquote.ui.Label;
-import com.ail.openquote.ui.PageFlow;
-import com.ail.openquote.ui.SectionScroller;
-import com.ail.openquote.ui.util.Binding;
+import com.ail.insurance.pageflow.Label;
+import com.ail.insurance.pageflow.PageFlow;
+import com.ail.insurance.pageflow.SectionScroller;
+import com.ail.insurance.pageflow.util.Binding;
 
 @SuppressWarnings("deprecation")
 public class TestPageFlow extends CoreUserBaseCase {
@@ -49,7 +49,7 @@ public class TestPageFlow extends CoreUserBaseCase {
 	public void testInstantiateTypes() throws Exception {
 		CoreProxy cp=new CoreProxy();
 		
-		cp.newProductType("AIL.Demo.MotorPlus", "Quotation");
+		cp.newProductType("AIL.Demo.MotorPlus", "Policy");
 		cp.newProductType("AIL.Demo.MotorPlus", "VehicleAsset");
 		cp.newProductType("AIL.Demo.MotorPlus", "DriverAsset");
 		cp.newProductType("AIL.Demo.MotorPlus", "DriverHistoryAsset");

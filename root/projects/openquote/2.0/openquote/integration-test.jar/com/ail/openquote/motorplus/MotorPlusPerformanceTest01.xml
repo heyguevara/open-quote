@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<quotation serialVersion="5" systemId="5" xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<quotation serialVersion="5" systemId="5" xsi:type="java:com.ail.insurance.policy.Policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
      <excess id="excess1" enabled="true" deductible="false">
           <title>Accidental Damage Excess</title>
           <amount amount="50.00" currency="GBP"/>

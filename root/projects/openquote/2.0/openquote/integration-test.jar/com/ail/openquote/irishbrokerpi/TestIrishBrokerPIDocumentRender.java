@@ -28,7 +28,7 @@ import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentCommand;
-import com.ail.openquote.Quotation;
+import com.ail.insurance.policy.Policy;
 
 public class TestIrishBrokerPIDocumentRender extends CoreUserBaseCase {
     private static final long serialVersionUID = 2030295330203910171L;
@@ -43,7 +43,7 @@ public class TestIrishBrokerPIDocumentRender extends CoreUserBaseCase {
     public void testGenDocLocal() throws Exception {
         XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestIrishBrokerPIDocumentRenderOne.xml"));
 
-        Quotation quote=getCore().fromXML(Quotation.class, quoteXml);
+        Policy quote=getCore().fromXML(Policy.class, quoteXml);
         quote.setStatus(PolicyStatus.QUOTATION);
                         
         GenerateDocumentCommand cmd=getCore().newCommand(GenerateDocumentCommand.class);

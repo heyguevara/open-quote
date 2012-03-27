@@ -5,19 +5,19 @@ import java.util.Enumeration;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 
-import com.ail.openquote.Quotation;
+import com.ail.insurance.policy.Policy;
 
 public class MockPortletSession implements PortletSession {
-	private Quotation quotation;
+	private Policy policy;
 	
-	public MockPortletSession(Quotation quotation) {
-		this.quotation = quotation;
+	public MockPortletSession(Policy policy) {
+		this.policy = policy;
 	}
 
 	public Object getAttribute(String arg0) throws IllegalStateException,
 			IllegalArgumentException {
-		if ("quotation".equals(arg0)) {
-			return quotation;
+		if ("policy".equals(arg0)) {
+			return policy;
 		}
 
 		return null;

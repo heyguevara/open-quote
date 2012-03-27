@@ -24,7 +24,7 @@ import org.junit.Test;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.XMLString;
-import com.ail.openquote.Quotation;
+import com.ail.insurance.policy.Policy;
 
 public class TestMotorPlusXml {
 
@@ -58,7 +58,7 @@ public class TestMotorPlusXml {
         System.out.println("test1");
         try {
             XMLString quoteXml = new XMLString(this.getClass().getResourceAsStream("TestMotorPlusQuotationQuoteSix.xml"));
-            Quotation q=core.fromXML(Quotation.class, quoteXml);
+            Policy q=core.fromXML(Policy.class, quoteXml);
             assertNotNull(q.getExpiryDate());
         }
         catch(Throwable t) {

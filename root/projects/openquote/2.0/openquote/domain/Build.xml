@@ -54,7 +54,7 @@
   </target>
 
   <target name="teardown-db-if" if="mysql-running">
-    <!-- drop all the databases -->
+	<echo level="info" message="Dropping database: ${dbname}"/>
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
           -- Make sure the database and users are there before we try to delete them!
           create database if not exists ${dbname};
@@ -75,6 +75,7 @@
 
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
+	<echo level="info" message="Creating database: ${dbname}"/>
     <sql driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" >
       create database if not exists ${dbname};
       grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
@@ -88,7 +89,7 @@
         serial int
       );
       
-      create table if not exists ${dbname}.saved_quote_summary (
+      create table if not exists ${dbname}.saved_policy_summary (
         id bigint(20) auto_increment primary key,
         version bigint(20),
         quote_number varchar(255),
@@ -105,9 +106,9 @@
         test_case bit
       );
       
-      create table if not exists ${dbname}.saved_quote (
+      create table if not exists ${dbname}.saved_policy (
         id bigint(20) primary key,
-        quotation text,
+        policy text,
         quotation_document longblob,
         invoice_document longblob,
         wording_document longblob,

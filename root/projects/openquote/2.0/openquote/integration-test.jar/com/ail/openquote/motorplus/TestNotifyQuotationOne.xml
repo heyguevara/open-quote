@@ -1,4 +1,4 @@
-<quotation xsi:type="java:com.ail.openquote.Quotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<quotation xsi:type="java:com.ail.insurance.policy.Policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
  <excess id="excess1" enabled="true" deductible="false">
   <title>Accidental Damage Excess</title>
   <amount amount="50.00" currency="GBP"/>
