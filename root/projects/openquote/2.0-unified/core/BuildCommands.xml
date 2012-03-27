@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for starting utilities & servers etc..
+-->
+
+<project default="" name="core:commands">
+  <import file="./BuildSettings.xml" />
+
+  <target name="jboss: start server" description="start the jboss server">
+    <start-jboss-macro />
+  </target>
+
+  <target name="jboss: stop server" description="start the jboss server">
+    <stop-jboss-macro />
+  </target>
+
+  <target name="jboss: force deployment scan" description="force jboss to scan 'deploy/' for changes">
+    <kick-jboss-macro />
+  </target>
+
+  <target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
+    <content-download-export-macro />
+  </target>
+
+  <target name="ail: reset configurations" description="reset all the ail configurations">
+
+   	<ail-aggregate-annotated-configurations output-jar="${ear.dir}/lib/core.jar">
+      <paths>
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
+        <dirset dir="${ear.dir}" includes="lib/core.jar" />
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
+      </paths>
+   	</ail-aggregate-annotated-configurations>
+
+    <ail-reset-configurations-macro/>
+
+  </target>
+</project>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file defines the default (factory) configuration for the Core. This
+ configuration is used by the core's resetConfiguration() method.
+-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xmlns:xi="http://www.w3.org/2001/XInclude" 
+               xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
+
+  <name>Default Core Configuration</name>
+  <timeout>6000</timeout>
+  <who>factory</who>
+  <version>1.4</version>  
+
+  <types>
+    <!--====================================-->
+    <!--   Define the default core services -->
+    <!--====================================-->
+    <service name="StyleDocumentService" builder="ClassBuilder" key="com.ail.core.command.XSLTAccessor">
+      <parameter name="Url">classpath://com.ail.core.document/DefaultStyleDocumentService.xslt</parameter>
+    </service>
+          
+    <!--=======================================================================-->
+    <!-- Bind the default core services (above) to Commands used by Core.class -->
+    <!--=======================================================================-->
+    
+    <command name="StyleDocumentCommand" builder="ClassBuilder" key="com.ail.core.document.StyleDocumentCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
+
+    <!-- Map all of the logger commands to the stdio logger -->
+    <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
+    <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
+    <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
+    <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
+    <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
+
+    <!-- Map all of the persistence commands to hibernate -->
+    <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
+    </command>    
+    <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
+    </command>
+    <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
+    </command>
+    <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
+    </command>
+    <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
+    </command>    
+    <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
+    </command>
+    <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
+    </command>
+    
+  </types>
+</configuration>
