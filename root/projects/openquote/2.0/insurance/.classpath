@@ -2,13 +2,20 @@
 <classpath>
 	<classpathentry kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
 	<classpathentry kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
-	<classpathentry excluding="acceptance-ejb.jar/|configure-server-ejb.jar/|core.jar/|insurance.jar/|quotation-ejb.jar/|rmt-ejb.jar/|subrogation-ejb.jar/|lib/insurance.jar/|policy-ejb.jar/|onrisk-ejb.jar/" kind="src" path="insurance.ear"/>
+	<classpathentry excluding="acceptance-ejb.jar/|configure-server-ejb.jar/|core.jar/|insurance.jar/|quotation-ejb.jar/|rmt-ejb.jar/|subrogation-ejb.jar/|lib/insurance.jar/|policy-ejb.jar/|onrisk-ejb.jar/|command-server-ejb.jar/|configure.war/|quotation.war/|quotation.war/src/|quotation.war/WEB-INF/src/|product-manager.war/pages/|product-manager.war/WEB-INF/src/|product-manager.war/" kind="src" path="insurance.ear"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/lib/insurance.jar" path="insurance.ear/lib/insurance.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/acceptance-ejb.jar" path="insurance.ear/acceptance-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/insurance.ear/command-server-ejb.jar" path="insurance.ear/command-server-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/configure-server-ejb.jar" path="insurance.ear/configure-server-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/onrisk-ejb.jar" path="insurance.ear/onrisk-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/quotation-ejb.jar" path="insurance.ear/quotation-ejb.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/insurance.ear/subrogation-ejb.jar" path="insurance.ear/subrogation-ejb.jar"/>
+	<classpathentry kind="src" path="insurance.ear/configure.war"/>
+	<classpathentry excluding="images/|jscript/|src/|WEB-INF/src/" kind="src" path="insurance.ear/quotation.war"/>
+	<classpathentry kind="src" path="insurance.ear/quotation.war/WEB-INF/src"/>
+	<classpathentry excluding="Build.xml|WEB-INF/src/|pages/" kind="src" path="insurance.ear/product-manager.war"/>
+	<classpathentry kind="src" path="insurance.ear/product-manager.war/pages"/>
+	<classpathentry kind="src" path="insurance.ear/product-manager.war/WEB-INF/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/lib/proxool-0.7.2.jar"/>
@@ -77,5 +84,11 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-common-lib.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-identity-lib.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/mail.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/insurance.ear/configure.war/WEB-INF/lib/myfaces-api-1.1.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
