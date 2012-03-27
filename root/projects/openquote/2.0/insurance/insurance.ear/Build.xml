@@ -18,6 +18,10 @@
     <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./configure.war" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation.war" antfile="Build.xml" target="_build" />
+    <ant dir="./product-manager.war" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro overlay="true"/>
   </target>
 
