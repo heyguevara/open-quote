@@ -20,6 +20,5 @@
 
   <!-- Pull in the Common stuff - all projects us these. -->
   <dirname property="project.dir" file="${ant.file.BuildSettings}" />
-  <property name="development.dir" value="${project.dir}/../development" />
-  <import file="${development.dir}/macros/BuildCommon.xml" />
+  <import file="build/macros/BuildCommon.xml" />
 </project>

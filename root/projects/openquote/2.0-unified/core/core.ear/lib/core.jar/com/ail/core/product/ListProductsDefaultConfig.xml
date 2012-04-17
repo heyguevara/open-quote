@@ -5,10 +5,10 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd">
     <name>List Products Service</name>
-    <timeout>60000</timeout>
+    <timeout>-1</timeout>
     <who>factory</who>
-    <version>$Revision$</version>
+    <version>1.0</version>
     <manager>com.ail.core.product.ListProductsService</manager>
     
-    <parameter name="productCatalogNamespace">com.ail.core.product.ProductCatalog</parameter>
+    <parameter name="productCatalogNamespace">ProductCatalog</parameter>
 </configuration>

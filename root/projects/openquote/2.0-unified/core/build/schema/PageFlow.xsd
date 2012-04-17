@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xs:import namespace="http://www.w3.org/2001/XMLSchema-instance" schemaLocation="xsi.xsd"/>
+  <xs:element name="pageFlow">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="page"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="page">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="action"/>
+        <xs:element maxOccurs="unbounded" ref="pageElement"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required"/>
+      <xs:attribute name="title"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="action">
+    <xs:complexType>
+      <xs:attribute name="commandName" type="xs:NCName"/>
+      <xs:attribute name="condition" type="xs:anyURI"/>
+      <xs:attribute name="destinationPageId" type="xs:NCName"/>
+      <xs:attribute name="when" use="required" type="WhenOptions"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pageElement">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="pageElement"/>
+        <xs:choice>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="answer"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="action"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="sectionTitle"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="question"/>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="addAndDeleteEnabled" type="xs:boolean"/>
+      <xs:attribute name="binding"/>
+      <xs:attribute name="confirmAndPayDestinationPageId" type="xs:NCName"/>
+      <xs:attribute name="destinationPageId"/>
+      <xs:attribute name="id" type="xs:NCName"/>
+      <xs:attribute name="immediate" type="xs:boolean"/>
+      <xs:attribute name="label" type="xs:NCName"/>
+      <xs:attribute name="maxRows" type="xs:integer"/>
+      <xs:attribute name="minRows" type="xs:integer"/>
+      <xs:attribute name="referralNotificationUrl" type="xs:anyURI"/>
+      <xs:attribute name="requoteDestinationPageId" type="xs:NCName"/>
+      <xs:attribute name="saveDestinationPageId" type="xs:NCName"/>
+      <xs:attribute name="termsAndConditionsUrl" type="xs:anyURI"/>
+      <xs:attribute name="title"/>
+      <xs:attribute name="type" type="xs:NCName"/>
+      <xs:attribute name="url" type="xs:anyURI"/>
+      <xs:attribute name="wordingsUrl" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sectionTitle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="parameter"/>
+      </xs:sequence>
+      <xs:attribute name="format" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parameter">
+    <xs:complexType>
+      <xs:attribute name="xpath" use="required"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:attribute name="binding" use="required"/>
+      <xs:attribute name="detailsBinding"/>
+      <xs:attribute name="detailsTitle"/>
+      <xs:attribute name="subTitle"/>
+      <xs:attribute name="title" use="required"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="answer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="answer"/>
+      </xs:sequence>
+      <xs:attribute name="binding" use="required"/>
+      <xs:attribute name="title"/>
+      <xs:attribute name="titleBinding"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="question">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="subSection"/>
+      </xs:sequence>
+      <xs:attribute name="binding" use="required"/>
+      <xs:attribute name="detailsBinding"/>
+      <xs:attribute name="detailsTitle"/>
+      <xs:attribute name="title" use="required"/>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="subSection">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="pageElement"/>
+        <xs:element maxOccurs="unbounded" ref="question"/>
+      </xs:choice>
+      <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+    <xs:simpleType name="WhenOptions">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onApplyRequestValues"/>
+            <xs:enumeration value="onProcessActions"/>
+            <xs:enumeration value="onProcessValidations"/>
+            <xs:enumeration value="onRenderResponse">
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

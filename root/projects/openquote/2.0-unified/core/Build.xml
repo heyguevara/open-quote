@@ -11,21 +11,35 @@
   </target>
 
   <target name="_build">
-    <subant-macro target="_build" />
-    <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+    <subant-macro target="_build" excludes="build/*" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <subant-macro target="_build" />
+    <subant-macro target="_build" excludes="build/*" />
     <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
     <kick-jboss-macro />
   </target>
 
-  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  <target name="_setup">
+    <subant-macro target="setup" includes="build/Build.xml" />
     <install-jboss-macro version="${jboss.version}" />
-    <subant-macro target="setup" includes="domain/Build.xml" />
-    <subant-macro target="setup" excludes="domain/Build.xml" />
+    <subant-macro target="setup" includes="domain/*" />
+    <subant-macro target="setup" excludes="domain/*,build/*" />
     <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <antcall target="_setup" />
+    <parallel>
+      <start-jboss-macro />
+      <sequential>
+        <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+          <http url="http://localhost:8080/alfresco" />
+        </waitfor>
+        <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+        <stop-jboss-macro />
+      </sequential>
+    </parallel>
   </target>
 
   <target name="teardown" description="undo whatever setup did">
@@ -35,14 +49,40 @@
   </target>
 
   <target name="release" description="build this project's releasable outputs">
-    <echo message="buildnumber: ${build.number}" />
+
     <!-- Stop the server if it is running -->
     <ant antfile="BuildCommands.xml" target="jboss: stop server" />
 
     <!-- Do a clean build and test before we release -->
     <antcall target="teardown" />
-    <antcall target="setup" />
-    <antcall target="test" />
+
+    <!-- Run as much setup as we can without the server starting -->
+    <antcall target="_setup" />
+
+    <parallel>
+
+      <!-- Start the server -->
+      <start-jboss-macro />
+      
+      <sequential>
+        <!-- Wait for the server to start -->
+        <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+          <http url="http://localhost:8080/alfresco" />
+        </waitfor>
+
+        <!-- With the server running, reset the configs -->
+        <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+
+        <!-- Execute unit and integration tests -->
+        <antcall target="test" />
+
+        <!-- Reset the configs as the previous test step will have overwritten them -->
+        <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+
+        <stop-jboss-macro />
+      </sequential>
+
+    </parallel>
 
     <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
     <release-jboss-domain-macro />
@@ -53,7 +93,7 @@
       <test-classpath>
         <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${ear.dir}/lib" includes="*.jar" />
-        <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar"/>
+        <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar" />
         <fileset dir="${jboss.dir}">
           <include name="client/jbossall-client.jar" />
           <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />

@@ -65,7 +65,7 @@ public class TestUrlHandlers {
         }
 
         // try to access the content that does exist
-        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
+        url=new URL("product://localhost:8080/AIL/Base/HTML/ReferralNotification.html");
         Functions.loadUrlContentAsString(url);
     }
 
@@ -173,16 +173,16 @@ public class TestUrlHandlers {
         String ticket=rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<"));
 
         // get content without specifying a local
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome&ticket="+ticket);
-        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote&ticket="+ticket);
+        assertTrue(Functions.loadUrlContentAsString(url).contains("solution for providing"));
 
         // get content with a locale for which content is defined
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome&ticket="+ticket+"&language=de");
-        assertEquals("Hallo Welt!", Functions.loadUrlContentAsString(url));
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote&ticket="+ticket+"&language=de");
+        assertTrue(Functions.loadUrlContentAsString(url).contains("Versicherungs-Zitate"));
 
         // get content with a locale for which content is not defined
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Product/Demo/Demo/Welcome&ticket="+ticket+"&language=fr");
-        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote&ticket="+ticket+"&language=fr");
+        assertTrue(Functions.loadUrlContentAsString(url).contains("solution for providing"));
     }
 
     /**
@@ -195,17 +195,17 @@ public class TestUrlHandlers {
 
          // get content without specifying a local
         com.ail.core.ThreadLocale.setThreadLocale(Locale.ENGLISH);
-        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
-        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+        url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
+        assertTrue(Functions.loadUrlContentAsString(url).contains("Thank you"));
 
         // get content with a locale for which content is defined
         com.ail.core.ThreadLocale.setThreadLocale(Locale.GERMAN);
-        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
-        assertEquals("Hallo Welt!", Functions.loadUrlContentAsString(url));
+        url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
+        assertTrue(Functions.loadUrlContentAsString(url).contains("Danke"));
 
         // get content with a locale for which content is not defined
         com.ail.core.ThreadLocale.setThreadLocale(Locale.FRENCH);
-        url=new URL("product://localhost:8080/Demo/Demo/Welcome");
-        assertEquals("   Hello World!", Functions.loadUrlContentAsString(url));
+        url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
+        assertTrue(Functions.loadUrlContentAsString(url).contains("Thank you"));
     }
 }

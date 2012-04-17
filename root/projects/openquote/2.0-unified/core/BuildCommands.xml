@@ -22,18 +22,37 @@
     <content-download-export-macro />
   </target>
 
+  <target name="alfresco: mount product space" description="mount Product space in Alfresco as a file system">
+    <mount-product-space-macro/>
+  </target>
+
+  <target name="alfresco: unmount product space" description="unmount Product space from local filesystem">
+    <unmount-product-space-macro/>
+  </target>
+    
+  <!-- drop all the tables that portal uses to store it's settings and preferences. These
+         all get recreated when jboss is restarted. -->
+  <target name="jboss: reset portal" description="delete the portal tables - jboss will recreate them on startup">
+    <reset-portal-macro />
+  </target>
+
+  <target name="ail: clear server cache" description="Clear the config cache in jboss">
+    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
+  </target>
+
   <target name="ail: reset configurations" description="reset all the ail configurations">
 
    	<ail-aggregate-annotated-configurations output-jar="${ear.dir}/lib/core.jar">
       <paths>
         <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
-        <dirset dir="${ear.dir}" includes="lib/core.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
       </paths>
    	</ail-aggregate-annotated-configurations>
 
-    <ail-reset-configurations-macro/>
+    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="resetAllConfigurations" />
+    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
 
   </target>
 </project>

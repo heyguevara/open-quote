@@ -153,7 +153,7 @@ public class TestGenerateDocument extends CoreUserBaseCase {
 
         GenerateDocumentCommand com=getCore().newCommand(GenerateDocumentCommand.class);
         com.setModelArg(config);
-        com.setProductNameArg("com.ail.core.product.TestProduct1");
+        com.setProductNameArg("com.ail.core.product.TestProduct01");
         com.setDocumentDefinitionArg("MyTestFOPDocument");
         com.invoke();
     }
@@ -163,7 +163,7 @@ public class TestGenerateDocument extends CoreUserBaseCase {
         XMLString configXml = new XMLString(this.getClass().getResourceAsStream("TestGenerateDocumentDefaultConfig.xml"));
         Configuration model=getCore().fromXML(Configuration.class, configXml);
 
-        byte[] doc=getCore().generateDocument("com.ail.core.product.TestProduct1", "MyTestFOPDocument", model);
+        byte[] doc=getCore().generateDocument("com.ail.core.product.TestProduct01", "MyTestFOPDocument", model);
         
         // uncomment to dump the pdf to a file
         // PrintWriter out=new PrintWriter(new File("./target/test/testGenerateDocumentFromCore.pdf"));
@@ -182,7 +182,7 @@ public class TestGenerateDocument extends CoreUserBaseCase {
 
         GenerateDocumentCommand com=getCore().newCommand(GenerateDocumentCommand.class);
         com.setModelArg(config);
-        com.setProductNameArg("com.ail.core.product.TestProduct1");
+        com.setProductNameArg("com.ail.core.product.TestProduct01");
         com.setDocumentDefinitionArg("MyTestITextDocument");
         com.invoke();
 

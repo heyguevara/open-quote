@@ -121,9 +121,9 @@ public class TestProductServices extends CoreUserBaseCase {
 
     @Test
     public void testProductResetService() {
-        getCore().resetProduct("com.ail.core.product.TestProduct1");
-        getCore().resetProduct("com.ail.core.product.TestProduct2");
-        getCore().resetProduct("com.ail.core.product.TestProduct3");
+        getCore().resetProduct("com.ail.core.product.TestProduct01");
+        getCore().resetProduct("com.ail.core.product.TestProduct02");
+        getCore().resetProduct("com.ail.core.product.TestProduct03");
 
         try {
             getCore().resetProduct("product.that.does.not.exist");
@@ -160,10 +160,19 @@ public class TestProductServices extends CoreUserBaseCase {
             pds.add(dets.getName());
         }
 
-        assertEquals(3, pds.size());
-        assertTrue(pds.contains("com.ail.core.product.TestProduct1"));
-        assertTrue(pds.contains("com.ail.core.product.TestProduct2"));
-        assertTrue(pds.contains("com.ail.core.product.TestProduct3"));
+        assertEquals(12, pds.size());
+        assertTrue(pds.contains("com.ail.core.product.TestProduct01"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct02"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct03"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct04"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct05"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct06"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct07"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct08"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct09"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct10"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct11"));
+        assertTrue(pds.contains("com.ail.core.product.TestProduct12"));
     }
 
     /**
@@ -173,11 +182,11 @@ public class TestProductServices extends CoreUserBaseCase {
     @Test
     public void testDefaultTypeInstantiation() {
         assertNotNull(getCore().newProductType(
-                "com.ail.core.product.TestProduct1"));
+                "com.ail.core.product.TestProduct01"));
         assertNotNull(getCore().newProductType(
-                "com.ail.core.product.TestProduct2"));
+                "com.ail.core.product.TestProduct02"));
         assertNotNull(getCore().newProductType(
-                "com.ail.core.product.TestProduct3"));
+                "com.ail.core.product.TestProduct03"));
 
         try {
             getCore().newProductType("product.that.does.not.exist");
@@ -195,14 +204,14 @@ public class TestProductServices extends CoreUserBaseCase {
     @Test
     public void testNonDefaultProductTypeInstantiation() {
         assertNotNull(getCore().newProductType(
-                "com.ail.core.product.TestProduct1", "TestTypeA"));
+                "com.ail.core.product.TestProduct01", "TestTypeA"));
         assertNotNull(getCore().newProductType(
-                "com.ail.core.product.TestProduct2", "TestTypeB"));
+                "com.ail.core.product.TestProduct02", "TestTypeB"));
         assertNotNull(getCore().newProductType(
-                "com.ail.core.product.TestProduct3", "TestTypeB"));
+                "com.ail.core.product.TestProduct03", "TestTypeB"));
 
         try {
-            getCore().newProductType("com.ail.core.product.TestProduct3",
+            getCore().newProductType("com.ail.core.product.TestProduct03",
                     "TypeThatDoesNotExist");
             fail("Instantiated the default type for a product that doesn't exit!");
         } catch (UndefinedTypeError e) {
@@ -241,7 +250,7 @@ public class TestProductServices extends CoreUserBaseCase {
     @Test
     public void testProductDefaultTypeInheritance() {
         Type def = (Type) getCore().newProductType(
-                "com.ail.core.product.TestProduct3");
+                "com.ail.core.product.TestProduct03");
 
         assertEquals("TestProduct3", def.xpathGet("attribute[id='name']/value"));
         assertEquals("TestProduct3",
@@ -307,13 +316,13 @@ public class TestProductServices extends CoreUserBaseCase {
     public void testDuplicateTypeNameHandling() throws Exception {
         Type t = null;
 
-        t = getCore().newProductType("com.ail.core.product.TestProduct3",
+        t = getCore().newProductType("com.ail.core.product.TestProduct03",
                 "TestTypeC");
         assertEquals("TestProduct2", t.xpathGet("attribute[id='source']/value"));
         assertEquals("TestTypeC", t.xpathGet("attribute[id='name']/value"));
 
         try {
-            getCore().newProductType("com.ail.core.product.TestProduct3",
+            getCore().newProductType("com.ail.core.product.TestProduct03",
                     "TestTypeD");
             fail("Should have got an UndefinedTypeError");
         } catch (UndefinedTypeError e) {
@@ -321,7 +330,7 @@ public class TestProductServices extends CoreUserBaseCase {
         }
 
         try {
-            getCore().newProductType("com.ail.core.product.TestProduct3",
+            getCore().newProductType("com.ail.core.product.TestProduct03",
                     "TestTypeE");
             fail("Should have got an RecursiveTypeError");
         } catch (RecursiveTypeError e) {
@@ -343,20 +352,20 @@ public class TestProductServices extends CoreUserBaseCase {
 
         gukc = getCore().newCommand(GenerateUniqueKeyCommand.class);
         gukc.setKeyIdArg("Key");
-        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct3");
+        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct03");
         gukc.invoke();
         assertEquals(new Integer(1000), gukc.getKeyRet());
 
         gukc = getCore().newCommand(GenerateUniqueKeyCommand.class);
         gukc.setKeyIdArg("Key");
-        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct2");
+        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct02");
         gukc.invoke();
         assertEquals(new Integer(100), gukc.getKeyRet());
 
         for (int i = 1001; i < 1100; i++) {
             gukc = getCore().newCommand(GenerateUniqueKeyCommand.class);
             gukc.setKeyIdArg("Key");
-            gukc.setProductTypeIdArg("com.ail.core.product.TestProduct3");
+            gukc.setProductTypeIdArg("com.ail.core.product.TestProduct03");
             gukc.invoke();
             assertEquals(new Integer(i), gukc.getKeyRet());
         }
@@ -364,14 +373,14 @@ public class TestProductServices extends CoreUserBaseCase {
         for (int i = 10; i < 200; i++) {
             gukc = getCore().newCommand(GenerateUniqueKeyCommand.class);
             gukc.setKeyIdArg("Key");
-            gukc.setProductTypeIdArg("com.ail.core.product.TestProduct1");
+            gukc.setProductTypeIdArg("com.ail.core.product.TestProduct01");
             gukc.invoke();
             assertEquals(new Integer(i), gukc.getKeyRet());
         }
 
         gukc = getCore().newCommand(GenerateUniqueKeyCommand.class);
         gukc.setKeyIdArg("Key");
-        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct2");
+        gukc.setProductTypeIdArg("com.ail.core.product.TestProduct02");
         gukc.invoke();
         assertEquals(new Integer(101), gukc.getKeyRet());
     }

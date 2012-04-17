@@ -13,13 +13,24 @@
 
   <target name="_build">
     <ant dir="./lib/core.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./lib/commercial.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./lib/insurance.jar" antfile="Build.xml" target="_build" />
     <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./acceptance-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure.war" antfile="Build.xml" target="_build" />
     <ant dir="./content-browser.war" antfile="Build.xml" target="_build" />
     <ant dir="./news-reader.war" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation.war" antfile="Build.xml" target="_build" />
+    <ant dir="./product-manager.war" antfile="Build.xml" target="_build" />
+    <ant dir="./openquote-theme.war" antfile="Build.xml" target="_build" />
+    <ant dir="./lifeplus.war" antfile="Build.xml" target="_build" />
+    <ant dir="./irishbrokerpi.war" antfile="Build.xml" target="_build" />
     <compile-ear-descriptors-macro />
   </target>
 
@@ -34,10 +45,10 @@
         <truncate-filter-macro />
       </options>
       <libs-list>
-    <get-lib-macro artifact="alfresco-web-services" group="alfresco" version="1.4" type="jar" repo="openquotecommunity.org/repo" />
+        <get-lib-macro artifact="alfresco-web-services" group="alfresco" version="1.4" type="jar" repo="openquotecommunity.org/repo" />
         <get-lib-macro artifact="axis" group="axis" version="1.4" type="jar" repo="openquotecommunity.org/repo" />
         <get-lib-macro artifact="bctsp-jdk15" group="org/bouncycastle" version="1.46" type="jar" repo="repo1.maven.org/maven2" />
-        <get-lib-macro artifact="bcprov-jdk15" group="org/bouncycastle" version="1.46" type="jar" repo="repo1.maven.org/maven2" />        
+        <get-lib-macro artifact="bcprov-jdk15" group="org/bouncycastle" version="1.46" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="bsh" group="bsh" version="2.0b4" type="jar" repo="openquotecommunity.org/repo" />
         <get-lib-macro artifact="commons-beanutils" group="commons-beanutils" version="1.6.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-collections" group="commons-collections" version="3.1" type="jar" repo="repo1.maven.org/maven2" />
@@ -52,7 +63,7 @@
         <get-lib-macro artifact="commons-lang" group="commons-lang" version="2.4" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-pool" group="commons-pool" version="1.0.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="commons-validator" group="commons-validator" version="1.1.4" type="jar" repo="repo1.maven.org/maven2" />
-        <get-lib-macro artifact="jaxrpc" group="jaxrpc" version="1.0" type="jar" repo="openquotecommunity.org/repo" />
+        <!--get-lib-macro artifact="jaxrpc" group="jaxrpc" version="1.0" type="jar" repo="openquotecommunity.org/repo" /-->
         <get-lib-macro artifact="opensaml" group="xfire" version="1.0.1" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="saaj" group="sun" version="1.1" type="jar" repo="openquotecommunity.org/repo" />
         <get-lib-macro artifact="wss4j" group="wss4j" version="1.3" type="jar" repo="openquotecommunity.org/repo" />
