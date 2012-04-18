@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the insurance jar project
+-->
+
+<project default="build" name="core:core.ear/lib/insurance.jar">
+  <import file="../../../BuildSettings.xml"/>
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-jar-macro/>
+  </target>
+
+  <target name="_build">
+    <compile-exploded-jar-macro>
+      <javac-classpath>
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="core.jar, commercial.jar" />
+        <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <fileset dir="${java.home}/lib" includes="plugin.jar" />
+        <fileset dir="${jboss.dir}">
+          <include name="client/jbossall-client.jar" />
+          <include name="client/activation.jar" />
+          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+          <include name="server/default/lib/saxon*.jar" />
+          <include name="server/default/lib/mail.jar" />
+          <include name="server/default/lib/servlet-api.jar" />
+          <include name="lib/endorsed/xalan.jar" />
+        </fileset>
+      </javac-classpath>
+    </compile-exploded-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build"/>
+    <kick-jboss-macro/>
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>

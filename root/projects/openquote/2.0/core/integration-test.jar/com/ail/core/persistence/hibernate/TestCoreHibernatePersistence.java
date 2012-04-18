@@ -541,7 +541,7 @@ public class TestCoreHibernatePersistence extends CoreUserBaseCase {
     }
 
     /**
-     * Test the persistence of a deep hierarchy. Actually not all that deep, but deep enough to proove the point.
+     * Test the persistence of a deep hierarchy. Actually not all that deep, but deep enough to prove the point.
      * The configure system defines a class hierarchy which is used to hold configurations. It's more or less
      * a copy-book implementation of the composite pattern. We'll play with two types here: Parameter and Group;
      * Both extend Component, and Component extends Type in common with all other model types in the system. Group

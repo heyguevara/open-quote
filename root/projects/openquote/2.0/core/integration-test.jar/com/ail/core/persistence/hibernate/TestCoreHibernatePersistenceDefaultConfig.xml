@@ -38,22 +38,27 @@
     <!--=======================================================================-->
     <!-- Bind the default core services (above) to Commands used by Core.class -->
     <!--=======================================================================-->
-    <command name="com.ail.core.persistence.CreateCommand" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+    <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
       <parameter name="Service">CreateService</parameter>
     </command>
-    <command name="com.ail.core.persistence.UpdateCommand" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+    
+    <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
       <parameter name="Service">UpdateService</parameter>
     </command>
-    <command name="com.ail.core.persistence.LoadCommand" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+
+    <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
       <parameter name="Service">LoadService</parameter>
     </command>
-    <command name="com.ail.core.persistence.QueryCommand" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+
+    <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
       <parameter name="Service">QueryService</parameter>
     </command>
-    <command name="com.ail.core.persistence.OpenSessionCommand" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+
+    <command name="OpenSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
       <parameter name="Service">OpenSessionService</parameter>
     </command>
-    <command name="com.ail.core.persistence.CloseSessionCommand" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+
+    <command name="CloseSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
       <parameter name="Service">CloseSessionService</parameter>
     </command>
 

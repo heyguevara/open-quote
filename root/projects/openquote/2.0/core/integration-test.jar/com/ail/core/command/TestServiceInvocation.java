@@ -607,6 +607,6 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         ListProductsCommand lpc=getCore().newCommand("TestEJBService", ListProductsCommand.class);
         lpc.invoke();
         assertNotNull(lpc.getProductsRet());
-        assertEquals(3, lpc.getProductsRet().size());
+        assertEquals(12, lpc.getProductsRet().size());
     }
 }

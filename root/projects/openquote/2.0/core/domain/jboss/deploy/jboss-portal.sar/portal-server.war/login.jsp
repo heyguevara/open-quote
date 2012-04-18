@@ -22,6 +22,15 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%
+    String username = request.getParameter("username"); 
+    String password = request.getParameter("password"); 
+    if (username != null && password != null) { 
+        String url = "j_security_check?j_username=" + username + "&j_password=" + password; 
+        String redirectUrl = response.encodeRedirectURL(url); 
+        response.sendRedirect(redirectUrl); 
+    } 
+%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
    <style type="text/css">
@@ -40,7 +49,7 @@
 <div class="login-container">
 
    <div class="login-header">
-      <h2>JBoss Portal Login</h2>
+      <h2>OpenQuote Portal Login</h2>
    </div>
    <div class="login-content">
       <div class="error-message"

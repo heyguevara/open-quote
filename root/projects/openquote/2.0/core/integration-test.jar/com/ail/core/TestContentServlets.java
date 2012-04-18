@@ -42,8 +42,8 @@ public class TestContentServlets {
     @Test
     public void testGuestServletsContentExistsNodeRef() throws MalformedURLException, IOException {
         String content;
-        content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/d/d/workspace/SpacesStore/fc6d1198-fc28-11dc-b2b2-4798120be4e3/Alfresco-Tutorial.pdf?guest=true"));
-        assertEquals("Wrong number of characters returned.", 4351571, content.length());
+        content=loadUrlContentAsString(new URL("http://localhost:8080/alfresco/d/a/workspace/SpacesStore/d7baa488-ff4d-11dc-8a11-d1bc3afb87c4/Alfresco-Tutorial.pdf?guest=true"));
+                                                assertEquals("Wrong number of characters returned.", 4351571, content.length());
     }
 
     /**

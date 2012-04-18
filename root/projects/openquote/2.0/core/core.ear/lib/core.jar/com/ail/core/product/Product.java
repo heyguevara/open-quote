@@ -23,10 +23,6 @@ import com.ail.core.Type;
 
 /**
  * Define the interfaces that the Core class must offer to support Product functionality
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/Product.java,v $
  */
 public interface Product {
     /**
@@ -38,7 +34,7 @@ public interface Product {
     void registerProduct(ProductDetails details) throws DuplicateProductException;
     
     /**
-     * Update the product registries details wrt the details passed in.
+     * Update the product registry's details WRT the details passed in.
      * @param name The name of the product to be updated.
      * @param details Details to store
      * @throws UnknownProduct if the product (name) isn't defined.
@@ -74,10 +70,10 @@ public interface Product {
     /**
      * Instantiate a type associated with a product. A product must define at least one type 
      * (see {@link #newProductType(String)}), but may define any number of additional types for 
-     * use during its lifecycle; this method is used to instantantiate specific types by name.<p>
+     * use during its life-cycle; this method is used to instantiate specific types by name.<p>
      * For example, a complex insurance product may define several different types to describe
      * the assets the product covers. A commercial combined product might define a stock asset, a
-     * vehicle asset, a safe asset, etc. Each of these is described within the product as a seperate
+     * vehicle asset, a safe asset, etc. Each of these is described within the product as a separate
      * named type. A client would use this method to instantiate these different types as and when 
      * they needed to be added to an instance of a commercial combined policy.
      * @param productName The product "owning" the type.

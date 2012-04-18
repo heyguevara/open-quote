@@ -1,33 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  This file defines the CoreProxy classes factory default configuration.
- $Revision: 1.6 $
- $State: Exp $
- $Date: 2006/07/15 15:01:44 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CoreProxyDefaultConfig.xml,v $
 -->
 <configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>Core Proxy Configuration</name>
-    <timeout>6000</timeout>
+    <timeout>-1</timeout>
     <who>factory</who>
-    <version>$Revision: 1.6 $</version>
-
-    <types>
-        <!-- Define other types -->
-        <type name="Version" builder="ClassBuilder" key="com.ail.core.Version"/>
-     <type name="BeanShellService" builder="ClassBuilder" key="com.ail.core.command.BeanShellAccessor" >
-          <parameter name="Script"><![CDATA[
-/* make sure we can refer to our classes */
-version=new com.ail.core.Version();
-
-/* a simple bit of logic */
-if (args.getX()<100) {
-  args.setR(args.getX()+args.getY());
-}
-else {
-  args.setR((2*args.getX())+args.getY());
-}
-            ]]></parameter>
-      </type>
-    </types>
+    <version>1.0</version>
 </configuration>

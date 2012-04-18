@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   <title><%= PortalConstants.VERSION.toString() %></title>
+   <title>OpenQuote @major.version@.@minor.version@</title>
    <meta http-equiv="Content-Type" content="text/html;"/>
    <!-- to correct the unsightly Flash of Unstyled Content. -->
    <script type="text/javascript"></script>
@@ -51,7 +51,7 @@
 
 <!-- TODO: Fix the auto jump in this tag -->
 <div id="footer-container" class="portal-copyright">Powered by
-<a class="portal-copyright" href="http://www.jboss.com/products/jbossportal">JBoss Portal</a><br/>
+<a class="portal-copyright" href="http://openquote.opensourceinsurance.org">OpenQuote Community</a><br/>
 </div>
 
 <p:region regionName='AJAXFooter' regionID='AJAXFooter'/>

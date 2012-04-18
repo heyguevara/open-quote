@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="Build.xml" kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
-	<classpathentry excluding="Build.xml" kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
-	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure-server-ws.jar/|configure.war/|configure.war/WEB-INF/src/|configure.war/WEB-INF/src/|configure.war/images/|configure.war/pages/|configure.wsr/|core.jar/|persistence-server-ejb.jar/|product-manager-ejb.jar/|test-ejb.jar/|lib/core.jar/|content-browser.war/|content-browser.war/WEB-INF/src/|news-reader.war/|news-reader.war/WEB-INF/src/|news-reader.war/xsd/|news-reader.war/jsp/|news-reader.war/xls/|command-server-ejb.jar/|product-manager.war/pages/|product-manager.war/|product-manager.war/WEB-INF/src/" kind="src" path="core.ear"/>
+	<classpathentry excluding="Build.xml|com/ail/core/persistence/hibernate/HibernateConfiguration.xml" kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
+	<classpathentry excluding="Build.xml|command-server-ejb.jar/|configure-server-ejb.jar/|configure-server-ws.jar/|configure.war/|configure.war/WEB-INF/src/|configure.war/WEB-INF/src/|configure.war/images/|configure.war/pages/|configure.wsr/|core.jar/|persistence-server-ejb.jar/|product-manager-ejb.jar/|test-ejb.jar/|lib/core.jar/|content-browser.war/|content-browser.war/WEB-INF/src/|news-reader.war/|news-reader.war/WEB-INF/src/|news-reader.war/xsd/|news-reader.war/jsp/|news-reader.war/xls/|command-server-ejb.jar/|product-manager.war/pages/|product-manager.war/|product-manager.war/WEB-INF/src/|lib/commercial.jar/|lib/insurance.jar/|acceptance-ejb.jar/|onrisk-ejb.jar/|quotation-ejb.jar/|subrogation-ejb.jar/|product-manager.war/WEB-INF/src/|product-manager.war/|quotation.war/WEB-INF/src/|quotation.war/|product-manager.war/WEB-INF/src/|product-manager.war/|irishbrokerpi.war/|lifeplus.war/|openquote-theme.war/" kind="src" path="core.ear"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/lib/core.jar" path="core.ear/lib/core.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/lib/commercial.jar" path="core.ear/lib/commercial.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/lib/insurance.jar" path="core.ear/lib/insurance.jar"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/command-server-ejb.jar" path="core.ear/command-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/configure-server-ejb.jar" path="core.ear/configure-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/persistence-server-ejb.jar" path="core.ear/persistence-server-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/product-manager-ejb.jar" path="core.ear/product-manager-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/acceptance-ejb.jar" path="core.ear/acceptance-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/onrisk-ejb.jar" path="core.ear/onrisk-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/quotation-ejb.jar" path="core.ear/quotation-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/subrogation-ejb.jar" path="core.ear/subrogation-ejb.jar"/>
 	<classpathentry excluding="Build.xml|WEB-INF/src/|WEB-INF/src/|images/|pages/" kind="src" path="core.ear/configure.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/configure.war/WEB-INF/classes" path="core.ear/configure.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/" kind="src" path="core.ear/content-browser.war"/>
 	<classpathentry excluding="Build.xml|WEB-INF/src/|xsd/|jsp/|xls/" kind="src" path="core.ear/news-reader.war"/>
 	<classpathentry kind="src" output="target/jboss/server/default/deploy/core.ear/news-reader.war/WEB-INF/classes" path="core.ear/news-reader.war/WEB-INF/src"/>
+	<classpathentry excluding="WEB-INF/src/" kind="src" path="core.ear/product-manager.war"/>
+	<classpathentry kind="src" path="core.ear/product-manager.war/WEB-INF/src"/>
+	<classpathentry excluding="Build.xml|WEB-INF/src/" kind="src" path="core.ear/quotation.war"/>
+	<classpathentry kind="src" path="core.ear/quotation.war/WEB-INF/src"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/openquote-theme.war" path="core.ear/openquote-theme.war"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/irishbrokerpi.war" path="core.ear/irishbrokerpi.war"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/jboss/server/default/deploy/core.ear/lifeplus.war" path="core.ear/lifeplus.war"/>
 	<classpathentry excluding="Build.xml|WEB-INF/alfresco-object.xml|WEB-INF/jboss-app.xml|WEB-INF/jboss-portlet.xml|WEB-INF/portlet.xml|WEB-INF/src/|WEB-INF/web.xml|asset-editor.jar/|jsp/" kind="src" path="alfresco.war"/>
 	<classpathentry excluding="alfresco/repository.properties" kind="src" output="target/jboss/server/default/deploy/alfresco.war/WEB-INF/classes" path="alfresco.war/WEB-INF/src"/>
+	<classpathentry kind="src" path="build/annotation.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/saaj-1.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/proxool-0.7.2.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/odmg-3.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jnlp-1.0.1.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jcs-1.0-dev.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jca-1.0.jar"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jaxrpc-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jakarta-oro-2.0.7.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/jaas-1.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/core.ear/lib/hsqldb-1.7.1.jar"/>
@@ -104,6 +117,10 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/development/build/lib/annotation-3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/annotation-3.0.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/lib/mail.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-identity-lib.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-common-lib.jar"/>
+	<classpathentry kind="lib" path="build/lib/jaxrpc-1.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

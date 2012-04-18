@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <portlet-app version="1.0" 
   xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -25,12 +25,21 @@
       <short-title>Configure Portlet</short-title>
       <keywords>Configure, Portlet</keywords>
     </portlet-info>
+
+    <security-role-ref>
+      <role-name>Developer</role-name>
+    </security-role-ref>
+    <security-role-ref>
+      <role-name>Admin</role-name>
+    </security-role-ref>
   </portlet>
 
   <portlet>
     <description>AIL configurataion upload portlet</description>
     <portlet-name>ConfigureUploadPortlet</portlet-name>
     <portlet-class>com.ail.core.ui.ConfigureUploadPortlet</portlet-class>
+    <supported-locale>en</supported-locale>
+    <!-- <resource-bundle>Resource</resource-bundle> -->
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>VIEW</portlet-mode>
@@ -39,6 +48,13 @@
     <portlet-info>
       <title>Configure Upload Portlet</title>
     </portlet-info>
+
+    <security-role-ref>
+      <role-name>Developer</role-name>
+    </security-role-ref>
+    <security-role-ref>
+      <role-name>Admin</role-name>
+    </security-role-ref>
   </portlet>
 
   <portlet>
@@ -62,5 +78,12 @@
       <short-title>Configure Download Portlet</short-title>
       <keywords>Configure, Portlet, Download, AIL</keywords>
     </portlet-info>
+
+    <security-role-ref>
+      <role-name>Developer</role-name>
+    </security-role-ref>
+    <security-role-ref>
+      <role-name>Admin</role-name>
+    </security-role-ref>
   </portlet>
 </portlet-app>

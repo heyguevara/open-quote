@@ -22,6 +22,22 @@
     </module>
 
     <module>
+        <ejb>acceptance-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>onrisk-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>quotation-ejb.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>subrogation-ejb.jar</ejb>
+    </module>
+
+    <module>
         <web>
             <web-uri>configure.war</web-uri>
             <context-root>configure</context-root>
@@ -39,6 +55,41 @@
         <web>
             <web-uri>news-reader.war</web-uri>
             <context-root>news-reader</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>quotation.war</web-uri>
+            <context-root>quotation</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>product-manager.war</web-uri>
+            <context-root>product-manager</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>openquote-theme.war</web-uri>
+            <context-root>openquote-theme</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>lifeplus.war</web-uri>
+            <context-root>lifeplus</context-root>
+        </web>
+    </module>
+
+    <module>
+        <web>
+            <web-uri>irishbrokerpi.war</web-uri>
+            <context-root>irishbrokerpi</context-root>
         </web>
     </module>
 </application>

@@ -71,7 +71,7 @@ public class EJBLoaderBean implements SessionBean {
 
 
     /**
-     * Deligate to the local configuration loader's loadConfiguration method.
+     * Delegate to the local configuration loader's loadConfiguration method.
      * @param namespace Namespace to load.
      * @param date Date to load the namespace for (version effective date).
      * @return The loaded configuration.

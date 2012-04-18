@@ -147,7 +147,15 @@ protected void processDownloadRequest(HttpServletRequest req, HttpServletRespons
           if (language!=null && language.length()!=0) {
               // process the name based path to resolve the NodeRef and the Filename element
               try {
-                  pathInfo = resolveNamePath(getServletContext(), path+"_"+language);
+                  String langPath=path;
+                  if (path.indexOf('.')>0) {
+                      int index=path.lastIndexOf('.');
+                      langPath=path.substring(0, index)+"_"+language+path.substring(index);
+                  }
+                  else {
+                      langPath=path+"_"+language;
+                  }
+                  pathInfo = resolveNamePath(getServletContext(), langPath);
               }
               catch(Throwable e) {
                   // ignore this - the if below will pick up the real error

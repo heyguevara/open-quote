@@ -157,7 +157,7 @@ public class TestCoreConfigReset implements CoreUser {
         versionEffectiveDate=new VersionEffectiveDate();
         c=core.getConfiguration();
         assertEquals("Default Core Configuration", c.getName());
-        assertEquals(6000, c.getTimeout());
+        assertEquals(-1, c.getTimeout());
     }
 
     /**

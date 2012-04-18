@@ -49,4 +49,10 @@
       <link rel="stylesheet" id="main_css" href="/themes/maple/portal_style.css" type="text/css"/>
       <link rel="shortcut icon" href="/themes/maple/images/favicon.ico"/>
    </theme>
+   <theme>
+      <name>ail</name>
+      <link rel="stylesheet" id="main_css" href="/themes/ail/portal_style.css" type="text/css"/>
+      <link rel="shortcut icon" href="/themes/ail/images/favicon.ico"/>
+      <link rel="icon" href="/themes/ail/images/animated_favicon1.gif" type="image/gif"/>
+   </theme>
 </themes>

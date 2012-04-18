@@ -8,11 +8,11 @@
         <param-value>true</param-value>
     </context-param>
 
-    <servlet>
-        <servlet-name>CarFileDownloadServlet</servlet-name>
-        <description>Servlet to frontend the Car file downloader</description>
-        <servlet-class>com.ail.core.ui.CarFileDownloadServlet</servlet-class>
-    </servlet>
+   <servlet>
+      <servlet-name>CarFileDownloadServlet</servlet-name>
+      <description>Servlet to frontend the Car file downloader</description>
+      <servlet-class>com.ail.core.ui.CarFileDownloadServlet</servlet-class>
+   </servlet>
 
     <servlet>
         <servlet-name>ConfigureOperationServlet</servlet-name>

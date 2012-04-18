@@ -4,6 +4,37 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
+
+    <class name="com.ail.insurance.policy.SavedPolicySummary" table="saved_policy_summary">
+        <id name='systemId' type='long' column='id'>
+            <generator class='native'/>
+        </id>
+        <version name='serialVersion' type='long' column='version'/>
+        <property name='quotationNumber' type='string' column='quote_number'/>
+        <property name='policyNumber' type='string' column='policy_number'/>
+        <property name='quotationDate' type='date' column='quote_date'/>
+        <property name='quotationExpiryDate' type='date' column='expiry_date'/>
+        <property name='statusAsString' column='status' type='string'/>
+        <property name='page' type='string' column='page'/>
+        <component name='premium' class='com.ail.financial.CurrencyAmount'>
+            <property name='amount' column='premium_amount'/>
+            <property name='currencyAsString' column='premium_currency'/>
+        </component>
+        <property name='username' type='string' column='username'/>
+        <property name='product' type='string' column='product'/>
+        <property name='userSaved' type='boolean' column='user_saved'/>
+        <property name='testCase' type='boolean' column='test_case'/>
+        
+        <joined-subclass name='com.ail.insurance.policy.SavedPolicy' table='saved_policy'>
+            <key column='id'/>
+            <property name='policyAsString' column='policy' type='text'/>
+            <property name="quotationDocument" column='quotation_document' type='binary'/>
+            <property name="invoiceDocument" column='invoice_document' type='binary'/>
+            <property name="wordingDocument" column='wording_document' type='binary'/>
+            <property name="certificateDocument" column='certificate_document' type='binary'/>
+        </joined-subclass>
+    </class>
+
     <class name="com.ail.core.Type" table="core_Type">
         <id name="systemId" column="systemId" type="long">
             <generator class="native"/>
@@ -18,9 +49,9 @@
         <joined-subclass name='com.ail.core.Attribute' table='core_Attribute'>
             <key column="systemId"/>
             <property name='id' column='id' type='string'/>
-            <property name='value' column='value' type='string'/>
             <property name='format' column='format' type='string'/>
             <property name='unit' column='unit' type='string'/>
+            <property name='value' column='value' type='string'/>
         </joined-subclass>
         
         <joined-subclass name="com.ail.core.configure.Component" table="core_configure_Component">
@@ -46,50 +77,196 @@
                 </list>             
             </joined-subclass>
         </joined-subclass>
-
-<!-- 
-        <joined-subclass name="com.ail.core.addressbook.Address" table="address">
-            <key column="systemId"/>
-            <property name="line1" column="line1" type="string"/>
-            <property name="line2" column="line2" type="string"/>
-            <property name="line3" column="line3" type="string"/>
-            <property name="line4" column="line4" type="string"/>
-            <property name="postcode" column="postcode" type="string"/>
-        </joined-subclass>
         
-        <joined-subclass name="com.ail.core.addressbook.AddressBook" table="addressbook">
+        <joined-subclass name="com.ail.insurance.policy.Policy" table="insurance_Policy">
             <key column="systemId"/>
-            <any name="me" meta-type="string" id-type="long" cascade="all">
-                <meta-value value="PER" class="com.ail.core.addressbook.Person"/>
-                <meta-value value="ORG" class="com.ail.core.addressbook.Organisation"/>
-                <meta-value value="CMP" class="com.ail.core.addressbook.Company"/>
-                <column name="mePartyType"/>
-                <column name="mePartyId"/>					
-            </any>
-            
-            <list name="party" cascade="all">
+            <property name='id' column='id' type='string'/>
+            <property name='productTypeId' column='productTypeId' type='string'/>
+            <property name='policyNumber' column='policyNumber' type='string'/>
+            <property name='quotationNumber' column='quotationNumber' type='string'/>
+            <property name='inceptionDate' column='inceptionDate' type='timestamp'/>
+            <property name='expiryDate' column='expiryDate' type='timestamp'/>
+            <property name="statusAsString" column="status" type="string"/>
+            <any name="policyHolder" meta-type="string" id-type="long" cascade="all">
+                <meta-value value="Person" class="com.ail.party.Person"/>
+                <meta-value value="Organisation" class="com.ail.party.Organisation"/>
+                <column name="policyHolderPartyType"/>
+                <column name="policyHolderPartyId"/>                    
+            </any>            
+            <many-to-one name="assessmentSheet" column="assessmentSheetId" cascade="all" class="com.ail.insurance.policy.AssessmentSheet"/>
+            <list name="asset" cascade="all">
                 <key column="parentSystemId"/>
                 <index column='rank'/>
-                <one-to-many class="com.ail.core.addressbook.Party"/>
+                <one-to-many class="com.ail.insurance.policy.Asset"/>
+            </list>
+            <list name="section" cascade="all">
+                <key column="parentSystemId"/>
+                <index column='rank'/>
+                <one-to-many class="com.ail.insurance.policy.Section"/>
+            </list>
+            <list name="coverage" cascade="all">
+                <key column="parentSystemId"/>
+                <index column='rank'/>
+                <one-to-many class="com.ail.insurance.policy.Coverage"/>
             </list>
         </joined-subclass>
-        
-        <joined-subclass name="com.ail.core.addressbook.Party" table="party">
+                
+        <joined-subclass name="com.ail.party.Party" table="party_Party">
             <key column="systemId"/>
-            <many-to-one name="address" column="addressId" cascade="all"/>            
-            
-            <joined-subclass name="com.ail.core.addressbook.Person" table="person">
+            <property name="legalName" column="legalName" type="string"/>
+            <many-to-one name="address" column="addressId" cascade="all"/>
+
+            <joined-subclass name="com.ail.party.Person" table="party_Person">
                 <key column="systemId"/>
-                <property name="firstName" column="firstname" type="string"/>
-                <property name="surname" column="surname" type="string"/>                
-            </joined-subclass>
-            
-            <joined-subclass name="com.ail.core.addressbook.Organisation" table="organisation">
-                <key column="systemId"/>
-                <property name="name" column="name" type="string"/>
+                <property name="titleAsString" column="title" type="string"/>
+                <property name="otherTitle" column="otherTitle" type="string"/>
+                <property name="firstName" column="firstName" type="string"/>
+                <property name="surname" column="surname" type="string"/>
+                <component name="dateOfBirth" class="com.ail.util.DateOfBirth">
+                    <property name="date" column="dateOfBirth"/>
+                </component>
             </joined-subclass>
         </joined-subclass>
--->
+
+        <joined-subclass name="com.ail.party.Address" table="party_Address">
+            <key column="systemId"/>
+            <property name='line1' column='line1' type='string'/>
+            <property name='line2' column='line2' type='string'/>
+            <property name='line3' column='line3' type='string'/>
+            <property name='line4' column='line4' type='string'/>
+            <property name='line5' column='line5' type='string'/>
+            <property name='town' column='town' type='string'/>
+            <property name='county' column='county' type='string'/>
+            <property name='country' column='country' type='string'/>
+            <property name='postcode' column='postcode' type='string'/>
+        </joined-subclass>
+        
+        <joined-subclass name="com.ail.insurance.policy.Asset" table="insurance_Asset">
+            <key column="systemId"/>
+            <property name="id" column="id" type="string"/>
+            <property name="assetTypeId" column="assetTypeId" type="string"/>
+        </joined-subclass>
+
+        <joined-subclass name="com.ail.insurance.policy.Section" table="insurance_Section">
+            <key column="systemId"/>
+            <property name="id" column="id" type="string"/>
+            <property name="sectionTypeId" column="sectionTypeId" type="string"/>
+            <property name="includedAsString" column="included" type="string"/>
+            <property name="excludedAsString" column="excluded" type="string"/>
+        </joined-subclass>
+
+        <joined-subclass name="com.ail.insurance.policy.Coverage" table="insurance_Coverage">
+            <key column="systemId"/>
+            <property name="id" column="id" type="string"/>
+            <property name="enabled" column="enabled" type="boolean"/>
+            <property name="optional" column="optional" type="boolean"/>
+            <property name="description" column="description" type="string"/>
+            <component name="limit" class="com.ail.financial.CurrencyAmount">
+                <property name="amount" column="limitAmount"/>
+                <property name="currencyAsString" column="limitCurrency"/>
+            </component>
+            <component name="deductible" class="com.ail.financial.CurrencyAmount">
+                <property name="amount" column="deductibleAmount"/>
+                <property name="currencyAsString" column="deductibleCurrency"/>
+            </component>
+        </joined-subclass>
+
+        <joined-subclass name="com.ail.insurance.policy.AssessmentSheet" table="insurance_AssessmentSheet">
+            <key column="systemId"/>
+            <property name="lockingActor" column="lockingActor" type="string"/>
+            <map name="assessmentList" cascade="all">
+                <key column="parentSystemId" not-null="true"/>
+                <map-key formula="lower(id)" type="string"/>
+                <one-to-many class="com.ail.insurance.policy.AssessmentLine"/>
+            </map>
+        </joined-subclass>            
+    </class>
+    
+    <class name="com.ail.insurance.policy.AssessmentLine" table="insurance_AssessmentLine">
+        <id name="systemId" column="systemId" type="long">
+            <generator class="native"/>
+        </id>
+        <discriminator column="type" type="string"/>
+        <version name='serialVersion' column='versionId' type='long'/>        
+        <property name="id" column="id" type="string"/>
+        <property name="reason" column="reason" type="string"/>
+        <property name="disabled" column="disabled" type="boolean"/>
+        <property name="priority" column="priority" type="int"/>
+        <property name="origin" column="origin" type="string"/>
+        <subclass name="com.ail.insurance.policy.AssessmentNote" discriminator-value="AssessmentNote">
+            <component name="relatesTo" class="com.ail.insurance.policy.Reference">
+                <property name="typeAsString" column="referenceType" type="string"/>
+                <property name="id" column="referenceId" type="string"/>
+            </component>
+        </subclass>
+        <subclass name="com.ail.insurance.policy.MarkerResolution" discriminator-value="MarkerResolution">
+            <property name="behaviourId" column="behaviourId"/>
+        </subclass>
+        <subclass name="com.ail.insurance.policy.Marker" discriminator-value="Marker">
+            <component name="relatesTo" class="com.ail.insurance.policy.Reference">
+                <property name="typeAsString" column="referenceType" type="string"/>
+                <property name="id" column="referenceId" type="string"/>
+            </component>
+            <property name="typeAsString" column="markerType" type="string"/>
+            <subclass name="com.ail.insurance.policy.Subjectivity" discriminator-value="Subjectivity">
+                <property name="createdDate" column="createdDate" type="timestamp"/>
+                <property name="expiryDate" column="expiryDate" type="timestamp"/>
+                <property name="reminderDate" column="reminderDate" type="timestamp"/>
+                <property name="manuscript" column="isManuscript" type="boolean"/>
+                <property name="text" column="subjectivityText" type="string"/>
+            </subclass>
+        </subclass>
+        <subclass name="com.ail.insurance.policy.FixedSum" discriminator-value="FixedSum">
+            <property name="contributesTo" column="contributesTo" type="string"/>
+            <component name="amount" class="com.ail.financial.CurrencyAmount">
+                <property name="amount" column="amount"/>
+                <property name="currencyAsString" column="currency"/>
+            </component>
+            <component name="relatesTo" class="com.ail.insurance.policy.Reference">
+                <property name="typeAsString" column="referenceType" type="string"/>
+                <property name="id" column="referenceId" type="string"/>
+            </component>
+        </subclass>
+        <subclass name="com.ail.insurance.policy.Totalizer" discriminator-value="Totalizer">
+            <property name="contributesTo" column="contributesTo" type="string"/>
+            <component name="amount" class="com.ail.financial.CurrencyAmount">
+                <property name="amount" column="amount"/>
+                <property name="currencyAsString" column="currency"/>
+            </component>
+            <component name="relatesTo" class="com.ail.insurance.policy.Reference">
+                <property name="typeAsString" column="referenceType" type="string"/>
+                <property name="id" column="referenceId" type="string"/>
+            </component>
+            <property name="dependsOn" column="dependsOn"/>
+        </subclass>
+        <subclass name="com.ail.insurance.policy.RateBehaviour" discriminator-value="RateBehaviour">
+            <property name="contributesTo" column="contributesTo" type="string"/>
+            <component name="amount" class="com.ail.financial.CurrencyAmount">
+                <property name="amount" column="amount"/>
+                <property name="currencyAsString" column="currency"/>
+            </component>
+            <component name="relatesTo" class="com.ail.insurance.policy.Reference">
+                <property name="typeAsString" column="referenceType" type="string"/>
+                <property name="id" column="referenceId" type="string"/>
+            </component>
+            <property name="typeAsString" column="behaviourType"/>
+            <component name="rate" class="com.ail.util.Rate">
+                <property name="rate" column="rate"/>
+            </component>
+            <property name="dependsOn" column="dependsOn"/> 
+        </subclass>
+        <subclass name="com.ail.insurance.policy.SumBehaviour" discriminator-value="SumBehaviour">
+            <property name="contributesTo" column="contributesTo" type="string"/>
+            <component name="amount" class="com.ail.financial.CurrencyAmount">
+                <property name="amount" column="amount"/>
+                <property name="currencyAsString" column="currency"/>
+            </component>
+            <component name="relatesTo" class="com.ail.insurance.policy.Reference">
+                <property name="typeAsString" column="referenceType" type="string"/>
+                <property name="id" column="referenceId" type="string"/>
+            </component>
+            <property name="typeAsString" column="behaviourType"/>
+        </subclass>
     </class>
 
     <!-- Note: query by id (as opposed to systemId) _HAS_ to be a SQL query because -->
@@ -98,4 +275,25 @@
     <query name="get.attribute.by.unit">
         from com.ail.core.Attribute as attr where attr.unit = ?
     </query> 
+
+    <query name='get.savedPolicySummary.by.username.and.product'>
+        from com.ail.insurance.policy.SavedPolicySummary as summary where summary.userSaved=true and summary.username=? and summary.product=? and summary.statusAsString='QUOTATION'
+    </query> 
+
+    <query name='get.savedPolicySummary.by.username'>
+        from com.ail.insurance.policy.SavedPolicySummary as summary where summary.userSaved=true and summary.username=? and summary.statusAsString='QUOTATION'
+    </query> 
+
+    <query name='get.savedPolicy.by.quotationNumber'>
+        from com.ail.insurance.policy.SavedPolicy policy fetch all properties where policy.quotationNumber=?
+    </query> 
+    
+    <query name='get.savedPolicy.by.systemId'>
+        from com.ail.insurance.policy.SavedPolicy policy fetch all properties where policy.systemId=?
+    </query> 
+    
+    <query name='get.savedPolicy.by.policyNumber'>
+        from com.ail.insurance.policy.SavedPolicy policy fetch all properties where policy.policyNumber=?
+    </query> 
+    
 </hibernate-mapping> 

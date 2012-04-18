@@ -6,7 +6,7 @@
    <deployment>
       <instance>
          <display-name xml:lang="en">RSS portlet for SourceForge feeds</display-name>
-         <instance-id>NewsReaderPortletInstance</instance-id>
+         <instance-id>OpenQuoteProjectNewsInstance</instance-id>
          <portlet-ref>NewsReaderPortlet</portlet-ref>
          <preferences>
             <preference>

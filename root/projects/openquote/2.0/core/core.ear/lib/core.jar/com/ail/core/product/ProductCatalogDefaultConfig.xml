@@ -13,9 +13,9 @@
     
     <group name="products">
 <!-- List one product per parameter as below. 
-        <parameter name="com.ail.core.product.TestProduct1"/>
-        <parameter name="com.ail.core.product.TestProduct2"/>
-        <parameter name="com.ail.core.product.TestProduct3"/>
+        <parameter name="com.ail.core.product.TestProduct01"/>
+        <parameter name="com.ail.core.product.TestProduct02"/>
+        <parameter name="com.ail.core.product.TestProduct03"/>
 -->
     </group>
 </configuration>
