@@ -46,10 +46,6 @@ import com.ail.core.configure.Configuration;
  * method.<p>
  * In effect we're using soap as a transport mechanism here rather than providing a general
  * accessor that might provide access to any web service.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/WebServiceAccessor.java,v $
  */
 public class WebServiceAccessor extends Accessor implements CoreUser {
     private String url=null;

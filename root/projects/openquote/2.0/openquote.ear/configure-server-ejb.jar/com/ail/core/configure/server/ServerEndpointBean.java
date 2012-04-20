@@ -21,11 +21,8 @@ import javax.ejb.SessionContext;
 
 /**
  * Web service endpoint for the configuration server. This endpoint simply
- * deligates to an instance of {@link com.ail.core.configure.server.ServerDeligate ServerDeligate} passing
+ * delegates to an instance of {@link com.ail.core.configure.server.ServerDeligate ServerDeligate} passing
  * on the XML String argument is was given along with the security principal that the caller supplied.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/server/ServerEndpointBean.java,v $
  */
 public class ServerEndpointBean implements SessionBean {
     private SessionContext sessionContext=null;

@@ -21,15 +21,6 @@ import java.rmi.RemoteException;
 import javax.ejb.CreateException;
 import javax.ejb.EJBHome;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/EJBLoaderHome.java,v $
- */
 public interface EJBLoaderHome extends EJBHome {
-    /** @link dependency */
-    /*# ServerBean lnkEJBLoaderBean; */
-
 	EJBLoader create() throws CreateException, RemoteException;
 }

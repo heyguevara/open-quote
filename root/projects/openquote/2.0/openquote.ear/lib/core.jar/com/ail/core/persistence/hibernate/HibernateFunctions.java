@@ -24,12 +24,6 @@ import org.hibernate.cfg.Configuration;
 
 /**
  * Hibernate functions
- * 
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source:
- *         /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/hibernate/HibernateFunctions.java,v $
  */
 public class HibernateFunctions {
     private static final SessionFactory sessionFactory;

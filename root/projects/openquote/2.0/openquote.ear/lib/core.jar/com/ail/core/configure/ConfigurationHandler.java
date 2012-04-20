@@ -23,12 +23,6 @@ import com.ail.core.VersionEffectiveDate;
 
 import java.util.*;
 
-/**
- * @version $Revision: 1.19 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationHandler.java,v $
- */
 public class ConfigurationHandler {
     /** The actual handler this class will delegate to. */
     private static ConfigurationHandler instance = null;

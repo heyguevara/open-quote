@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the command server EJB jar
- $Revision$
- $Author$
- $State$    
- $Date$
- $Source$
 -->
 
-<project default="build" name="core:core.ear/command-server-ejb.jar">
+<project default="build" name="openquote:openquote.ear/command-server-ejb.jar">
   <import file="${basedir}/../../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

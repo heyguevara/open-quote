@@ -22,10 +22,6 @@ import com.ail.core.BaseException;
 /**
  * Error indicating that validation could not be completed. The error indicates some form of
  * configuration problem.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/ValidationError.java,v $
  */
 public class ValidationError extends BaseError {
     /**

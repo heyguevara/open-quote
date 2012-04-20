@@ -20,10 +20,6 @@ package com.ail.core;
 /**
  * This error is thrown when an operation cannot be completed because some of
  * the functionality required has not yet been implemented.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/NotImplementedError.java,v $
  **/
 public class NotImplementedError extends BaseError {
     public NotImplementedError(String description) {

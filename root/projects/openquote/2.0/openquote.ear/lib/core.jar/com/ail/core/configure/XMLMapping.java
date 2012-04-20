@@ -24,10 +24,6 @@ import com.ail.core.Type;
  * This class holds XML databinding information for a configuration. It holds
  * the mapping description - which is generally a string of XML, and transient
  * instances of a marshaller and unmarshaller object.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/XMLMapping.java,v $
  */
 @TypeDefinition
 public class XMLMapping extends Type {
@@ -43,8 +39,8 @@ public class XMLMapping extends Type {
     }
 
     /**
-     * Get the XML mapping defnition. The actual format of the information
-     * returned depends upon the data binding mechenism being used, but it
+     * Get the XML mapping definition. The actual format of the information
+     * returned depends upon the data binding mechanism being used, but it
      * is generally an XML string that describes how XML nodes are mapped into
      * object instances.
      * @return String describing the mapping.

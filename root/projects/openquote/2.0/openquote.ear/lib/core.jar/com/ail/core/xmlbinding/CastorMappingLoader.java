@@ -33,12 +33,6 @@ import com.ail.core.configure.XMLMapping;
 
 /**
  * The methods defined in this class are shared by the Castor ToxML and FromXML services.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source:
- *         /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/Attic/CastorToXMLService.java,v $
  */
 public class CastorMappingLoader {
     

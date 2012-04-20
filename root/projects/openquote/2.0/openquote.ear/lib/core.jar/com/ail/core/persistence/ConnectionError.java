@@ -20,12 +20,8 @@ import com.ail.core.BaseError;
 import com.ail.core.BaseException;
 
 /**
- * Error indicating that connection to the persistance store could not be completed. The error indicates some form of
+ * Error indicating that connection to the persistence store could not be completed. The error indicates some form of
  * configuration problem.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/ConnectionError.java,v $
  */
 public class ConnectionError extends BaseError {
     /**

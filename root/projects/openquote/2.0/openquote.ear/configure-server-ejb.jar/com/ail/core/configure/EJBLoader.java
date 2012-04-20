@@ -26,15 +26,8 @@ import javax.ejb.EJBException;
 
 /**
  * Remote interface for the EJBLoader bean.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/EJBLoader.java,v $
  */
 public interface EJBLoader extends EJBObject {
-    /** @link dependency */
-    /*# ServerBean lnkEJBLoaderBean; */
-
     public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws RemoteException, EJBConfigurationException;
 
     public void saveConfiguration(String namespace, Configuration config) throws RemoteException, EJBConfigurationException, EJBException;

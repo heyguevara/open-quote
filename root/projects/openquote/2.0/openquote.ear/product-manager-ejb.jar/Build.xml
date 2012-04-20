@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the product manager EJB jar
- $Revision: 1.2 $
- $State: Exp $  
- $Date: 2005/07/16 10:23:30 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/product-manager-ejb.jar/Build.xml,v $
 -->
 
-<project default="build" name="core:core.ear/product-manager-ejb.jar">
+<project default="build" name="openquote:openquote.ear/product-manager-ejb.jar">
   <import file="../../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

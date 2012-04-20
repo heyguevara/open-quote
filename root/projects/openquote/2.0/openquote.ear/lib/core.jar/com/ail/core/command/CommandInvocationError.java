@@ -23,10 +23,6 @@ import com.ail.core.BaseException;
 /**
  * This error is thrown if an unrecoverable error occurs whilst a command is
  * being invoked.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/CommandInvocationError.java,v $
  */
 public class CommandInvocationError extends BaseError {
     /**

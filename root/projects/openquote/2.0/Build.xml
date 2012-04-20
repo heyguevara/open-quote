@@ -11,7 +11,8 @@
   </target>
 
   <target name="_build">
-    <subant-macro target="_build" excludes="build/*" />
+    <subant-macro target="_build" includes="openquote.ear/Build.xml, alfresco.war/Build.xml" />
+    <subant-macro target="_build" includes="*test.ear/Build.xml" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">

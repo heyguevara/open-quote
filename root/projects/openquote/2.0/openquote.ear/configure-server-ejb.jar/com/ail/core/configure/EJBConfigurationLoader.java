@@ -32,10 +32,6 @@ import com.ail.core.VersionEffectiveDate;
  * access to loader being used by the server side. In effect the remote client's requests for
  * configuration information are relayed to the server side configuration server, which in
  * turn relays them to whatever mechanism the server is using (e.g. JDBC).
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/EJBConfigurationLoader.java,v $
  */
 public class EJBConfigurationLoader extends AbstractConfigurationLoader {
     EJBLoader server=null;

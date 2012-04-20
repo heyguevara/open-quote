@@ -21,10 +21,6 @@ package com.ail.core.configure;
 /**
  * This error is thrown when a the request is made to load properties for a
  * namespace for which two records exist.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/10/01 17:12:38 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/DuplicateNamespaceError.java,v $
  */
 public class DuplicateNamespaceError extends ConfigurationError {
     public DuplicateNamespaceError(String description) {

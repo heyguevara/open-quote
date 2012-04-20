@@ -13,6 +13,9 @@
   <macrodef name="_set_output_dir_property_macro">
     <sequential>
       <script language="beanshell">
+        <classpath>
+          <fileset dir="${buildlib.dir}" includes="*.jar"/>
+        </classpath>
 	      projectName=project.getName();
 	      deployUnit=projectName.replaceAll("^.*:","");
           project.setProperty("generated.source.dir", project.getProperty("target.dir")+"/generated/"+deployUnit);
@@ -89,11 +92,11 @@
       <mkdir dir="${generated.source.dir}" />
 
       <!-- compile the java source -->
-      <javac destdir="${output.dir}" verbose="no" debug="yes" target="1.6">
+      <javac destdir="${output.dir}" verbose="no" debug="yes" target="1.6" includeantruntime="false">
         <compilerarg line="-s ${generated.source.dir}" />
         <src path="." />
         <classpath>
-          <fileset dir="${development.dir}/build/lib" includes="annotation*.jar" />
+          <fileset dir="${buildlib.dir}" includes="*.jar" />
           <javac-classpath />
         </classpath>
       </javac>
@@ -125,9 +128,9 @@
       <mkdir dir="${output.dir}" />
 
       <!-- compile the java source -->
-      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes" target="1.6">
+      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes" target="1.6" includeantruntime="false">
         <classpath>
-          <fileset dir="${development.dir}/build/lib" includes="annotation*.jar" />
+          <fileset dir="${buildlib.dir}" includes="*.jar" />
           <javac-classpath />
         </classpath>
       </javac>
@@ -147,11 +150,11 @@
 
   <target name="_compile-exploded-war-macro-docompile=true">
     <!-- compile the java source -->
-    <javac destdir="${output.dir}/WEB-INF/classes" verbose="no" debug="yes" target="1.6">
+    <javac destdir="${output.dir}/WEB-INF/classes" verbose="no" debug="yes" target="1.6" includeantruntime="false">
       <compilerarg line="-s ${generated.source.dir}" />
       <src path="./WEB-INF/src" />
       <classpath>
-        <fileset dir="${development.dir}/build/lib" includes="annotation*.jar" />
+        <fileset dir="${buildlib.dir}" includes="*.jar" />
         <path path="${project.classpath}" />
       </classpath>
     </javac>
@@ -383,7 +386,7 @@
   </macrodef>
 
   <!-- Fork a new any process with a classpath that includes all of the jars in the -->
-  <!-- ${development.dir}/build/lib folder.                                         -->
+  <!-- ${buildlib.dir} folder.                                                      -->
   <!-- @param dir Directory to execute ant in.                                      -->
   <!-- @param antfile The build file to pass to ant.                                -->
   <!-- @param target The ant target within the build file to be run.                -->
@@ -395,7 +398,7 @@
       <java fork="yes" dir="@{dir}" classname="org.apache.tools.ant.Main">
         <arg line="-f @{antfile} @{target}" />
         <classpath>
-          <fileset dir="${development.dir}/build/lib" includes="*.jar" />
+          <fileset dir="${buildlib.dir}" includes="*.jar" />
         </classpath>
       </java>
     </sequential>

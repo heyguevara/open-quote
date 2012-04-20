@@ -26,10 +26,6 @@ import com.ail.core.BaseError;
  * <li>User A modifies their in memory configuration, and saves.</li>
  * <li>User B modifies their in memory configuration, and attempts to save. <b>*Error thrown here*</b></li>
  * </ol>
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationUpdateCollisionError.java,v $
  */
 public class ConfigurationUpdateCollisionError extends BaseError {
     public ConfigurationUpdateCollisionError(String namespace) {

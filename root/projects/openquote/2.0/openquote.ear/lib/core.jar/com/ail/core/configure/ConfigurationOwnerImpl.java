@@ -24,12 +24,6 @@ import com.ail.core.XMLException;
 import java.io.InputStream;
 import java.security.Principal;
 
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationOwnerImpl.java,v $
- */
 public abstract class ConfigurationOwnerImpl extends CoreUserImpl implements ConfigurationOwner {
     private String defaultConfigurationResourceName=null; // Resource to load default config from.
     private String namespace=null;

@@ -21,10 +21,6 @@ package com.ail.core.configure;
 /**
  * This error is thrown when a the request is made to load properties for a
  * namespace which does not exist.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/10/01 17:12:38 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/UnknownNamespaceError.java,v $
  */
 public class UnknownNamespaceError extends ConfigurationError {
     public UnknownNamespaceError(String description) {

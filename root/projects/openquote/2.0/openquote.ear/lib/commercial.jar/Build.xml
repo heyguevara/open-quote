@@ -3,7 +3,7 @@
  Build file for the commercial jar project
 -->
 
-<project default="build" name="core:core.ear/lib/commercial.jar">
+<project default="build" name="openquote:openquote.ear/lib/commercial.jar">
   <import file="../../../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
@@ -13,7 +13,6 @@
   <target name="_build">
     <compile-exploded-jar-macro>
       <javac-classpath>
-        <dirset dir="${ear.dir}" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" />
         <dirset dir="${ear.dir}/lib" includes="core.jar" />
         <fileset dir="${java.home}/lib" includes="plugin.jar" />
@@ -24,7 +23,7 @@
           <include name="server/default/lib/saxon*.jar" />
           <include name="lib/endorsed/xalan.jar" />
         </fileset>
-			</javac-classpath>
+      </javac-classpath>
     </compile-exploded-jar-macro>
   </target>
 

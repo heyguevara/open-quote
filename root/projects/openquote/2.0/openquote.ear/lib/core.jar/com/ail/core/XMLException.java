@@ -21,10 +21,6 @@ import com.ail.core.BaseException;
 /**
  * Exception class to notify exceptions encountered when
  * XML is being processed. 
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/XMLException.java,v $
  **/
 public class XMLException extends BaseException {
     /**

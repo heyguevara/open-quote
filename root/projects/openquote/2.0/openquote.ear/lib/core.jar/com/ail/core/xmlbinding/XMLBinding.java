@@ -23,10 +23,6 @@ import com.ail.core.XMLString;
 /**
  * This interface describes the contract between the Core class and the
  * XML binding framework.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/08/20 15:03:54 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/xmlbinding/XMLBinding.java,v $
  */
 public interface XMLBinding {
 	/**

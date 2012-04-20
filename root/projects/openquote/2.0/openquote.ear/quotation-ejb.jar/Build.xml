@@ -3,7 +3,7 @@
  Build file for the acceptance EJB jar
 -->
 
-<project default="build" name="core:core.ear/quotation-ejb.jar">
+<project default="build" name="openquote:openquote.ear/quotation-ejb.jar">
   <import file="${basedir}/../../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

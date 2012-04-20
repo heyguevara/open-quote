@@ -26,11 +26,6 @@ import com.ail.core.Functions;
  * <li><b>Call</b> Log that a call to the service was made, but include no details.</li>
  * <li><b>Full</b> Include full details of the arguments passed to the service, and the results returned.</li>
  * </ol>
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2006/08/25 18:18:59 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/AccessorLoggingIndicator.java,v $
- * @stereotype enumeration
  */
 public enum AccessorLoggingIndicator {
     /** NONE - perform no logging */

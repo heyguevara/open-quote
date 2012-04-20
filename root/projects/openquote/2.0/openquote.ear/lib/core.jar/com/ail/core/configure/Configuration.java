@@ -27,11 +27,6 @@ import com.ail.core.VersionEffectiveDate;
  * also includes a version number - which indicates the version of the
  * properties held, and caching information which is used to detect stale
  * configuration details.
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Configuration.java,v $
- * @stereotype type
  */
 public class Configuration extends Group {
     static final long serialVersionUID = -1645988206689900185L;

@@ -37,13 +37,6 @@ import com.ail.core.XMLString;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationOwner;
 
-/**
-
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:22 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/XSLTAccessor.java,v $
- */
 public class XSLTAccessor extends Accessor implements ConfigurationOwner {
     private transient Transformer transformer=null;
     private Core core=null;

@@ -3,7 +3,7 @@
  Ant build file for the core project.
 -->
 
-<project default="build" name="core:core.ear">
+<project default="build" name="openquote:openquote.ear">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

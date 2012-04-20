@@ -3,7 +3,7 @@
  Build file for the openquote openquote-theme.war project
 -->
 
-<project default="build" name="core:core.ear/openquote-theme.war">
+<project default="build" name="openquote:openquote.ear/openquote-theme.war">
   <import file="../../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

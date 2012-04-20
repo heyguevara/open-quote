@@ -3,7 +3,7 @@
  Ant build file to deploy the jboss domain
 -->
 
-<project default="build" name="core:domain">
+<project default="build" name="openquote:domain">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
@@ -60,15 +60,19 @@
   <target name="teardown-db-if" if="mysql-running">
     <!-- drop all the databases -->
     <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
-  	    -- Make sure the database and users are there before we try to delete them!
-        create database if not exists ${dbname};
-        grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
-        grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
+      <classpath>
+        <fileset dir="${buildlib.dir}" includes="*.jar"/>
+      </classpath>
+      
+  	  -- Make sure the database and users are there before we try to delete them!
+      create database if not exists ${dbname};
+      grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
+      grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
   	  
-        -- Now do the actual tidy up 
-  	    drop database if exists ${dbname};
-        revoke all privileges, grant option from 'coreuser'@'localhost';
-  	    drop user 'coreuser'@'localhost';
+      -- Now do the actual tidy up 
+  	  drop database if exists ${dbname};
+      revoke all privileges, grant option from '${dbusername}'@'localhost';
+  	  drop user '${dbusername}'@'localhost';
   	</sql>
   </target>  
   
@@ -79,7 +83,11 @@
 
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
-    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
+    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" >
+      <classpath>
+        <fileset dir="${buildlib.dir}" includes="*.jar"/>
+      </classpath>
+      
       create database if not exists ${dbname};
       grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
       grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;

@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * Type safe enumeration representing constant values for PersonalRelationship.
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2006/01/16 23:16:50 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/party/PersonalRelationship.java,v $
- * @stereotype enumeration
  */
 public enum PersonalRelationship implements TypeEnum {
    /** Undefined */

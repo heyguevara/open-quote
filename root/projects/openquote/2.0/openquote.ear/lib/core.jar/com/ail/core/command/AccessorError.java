@@ -23,10 +23,6 @@ import com.ail.core.BaseException;
 /**
  * This error is thrown by command accessors when they fail to contact the
  * command they relate to.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/AccessorError.java,v $
  */
 public class AccessorError extends BaseError {
     public AccessorError(String description) {

@@ -29,10 +29,6 @@ import com.ail.annotation.TypeDefinition;
  * change history of an entity. A history object represents a snapshot of
  * history of an object, rather than the history itself. Changes made to the
  * History object's Version records do not effect the actual history.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/12/18 17:01:18 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/History.java,v $
  */
 @TypeDefinition
 public class History extends Type {

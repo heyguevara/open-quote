@@ -22,10 +22,6 @@ import bsh.EvalError;
 
 /**
  * Any exceptions thrown by BeanShell services are wrapped in the exception.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2006/01/28 16:54:30 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/BeanShellServiceException.java,v $
  */
 public class BeanShellServiceException extends BaseException {
     private EvalError evalError=null;

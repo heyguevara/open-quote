@@ -19,11 +19,6 @@ package com.ail.core.configure;
 
 /**
  * This class is simply a binder containing a number of objects of type 'Type'.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2006/07/15 15:01:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Types.java,v $
- * @stereotype type
  */
 public class Types extends Group {
     static final long serialVersionUID = -6746068039877928473L;
@@ -45,7 +40,7 @@ public class Types extends Group {
      * it will create an instance of com.ail.core.configuration.Types, and
      * then try to call setType("java:com.ail.core.configuration.Types");
 	 * This appears to be because the Types class has a 'type' property.
-	 * This method does absolutly nothing.
+	 * This method does absolutely nothing.
      */
 	public void setType(String plop) {
 	}

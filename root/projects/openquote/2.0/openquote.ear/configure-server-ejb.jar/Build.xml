@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the configure server EJB jar
- $Revision: 1.3 $
- $State: Exp $    
- $Date: 2005/07/23 14:48:37 $
- $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/Build.xml,v $
 -->
 
-<project default="build" name="core:core.ear/configure-server-ejb.jar">
+<project default="build" name="openquote:openquote.ear/configure-server-ejb.jar">
   <import file="${basedir}/../../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

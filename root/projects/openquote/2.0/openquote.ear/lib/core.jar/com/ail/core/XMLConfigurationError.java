@@ -22,10 +22,6 @@ import com.ail.core.BaseError;
  * Error class to notify of serious errors encountered when
  * XML is being processed. These can be a result of bad 
  * configuration of parsers for example.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/XMLConfigurationError.java,v $
  **/
 public class XMLConfigurationError extends BaseError {
     public XMLConfigurationError(String s) {

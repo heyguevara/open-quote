@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  Build file for the alfresco war project
- $Revision: 1.2 $
- $State: Exp $
- $Date: 2006/07/31 20:37:51 $
- $Source: /home/bob/CVSRepository/projects/core/alfresco.war/Build.xml,v $
 -->
 
-<project default="build" name="core:alfresco.war">
+<project default="build" name="openquote:alfresco.war">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

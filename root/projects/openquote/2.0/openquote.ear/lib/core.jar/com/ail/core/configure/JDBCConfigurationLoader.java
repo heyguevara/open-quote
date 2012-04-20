@@ -40,15 +40,15 @@ import java.util.Vector;
  * This loader expects the loader.property file to define the following (as
  * a minimum):<ol>
  * <li><code>driver</code> - the JDBC driver class to use.</li>
- * <li><code>url</code> - The database connection url.</li>
+ * <li><code>url</code> - The database connection URL.</li>
  * <li><code>databaseName</code> - The name of the database in which <code>table</code> can be found.</li>
  * <li><code>table</code> - The name of the database table holding configuration information.</li>
- * <li><code>user</code> - The db user to use when accessing the database.</li>
- * <li><code>password</code> - The db user's password.</li>
+ * <li><code>user</code> - The DB user to use when accessing the database.</li>
+ * <li><code>password</code> - The DB user's password.</li>
  * </ol>
  * The database table defined (<code>table</code> above) is expected to match the
  * description below. Assuming that the <code>user</code> has the necessary
- * privilages, this table will be created automatically:<pre>
+ * privileges, this table will be created automatically:<pre>
  * +---------------+---------------+------+-----+---------+-------+
  * | Field         | Type          | Null | Key | Default | Extra |
  * +---------------+---------------+------+-----+---------+-------+
@@ -60,10 +60,6 @@ import java.util.Vector;
  * | who           | varchar(32)   |      |     |         |       |
  * | version       | varchar(32)   |      |     |         |       |
  * +---------------+---------------+------+-----+---------+-------+</pre>
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2005/12/18 17:01:18 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/JDBCConfigurationLoader.java,v $
  */
 public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
     // we don't want to check for table existance every time we're called,

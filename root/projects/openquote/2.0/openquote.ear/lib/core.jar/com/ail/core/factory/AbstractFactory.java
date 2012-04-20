@@ -26,12 +26,6 @@ import com.ail.core.CoreProxy;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.Type;
 
-/**
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2007/03/27 22:40:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/AbstractFactory.java,v $
- */
 public abstract class AbstractFactory {
 
     /**

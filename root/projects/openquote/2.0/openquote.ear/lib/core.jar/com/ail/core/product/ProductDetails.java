@@ -21,10 +21,6 @@ import com.ail.core.Type;
 
 /**
  * This class encapsulates the details which define a product's entry in the product catalog.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2007/10/05 22:47:50 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/product/ProductDetails.java,v $
  */
 @TypeDefinition
 public class ProductDetails extends Type {

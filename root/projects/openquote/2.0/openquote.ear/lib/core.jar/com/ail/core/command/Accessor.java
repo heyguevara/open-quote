@@ -28,10 +28,6 @@ import com.ail.core.Core;
  * This class is extended by all accessor classes. Its function is simply to
  * group the accessors as a sub-type of AbstractCommand, and to differentiate
  * them from other CommandImpl types.
- * @version $Revision: 1.8 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:22 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/Accessor.java,v $
  */
 abstract public class Accessor extends AbstractCommand {
     private transient Map<Argument, Long> cpuTime=new HashMap<Argument, Long>();

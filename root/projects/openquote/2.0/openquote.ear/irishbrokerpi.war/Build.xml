@@ -3,7 +3,7 @@
  Build file for the openquote irishbrokerpi project
 -->
 
-<project default="build" name="core:core.ear/irishbrokerpi.war">
+<project default="build" name="openquote:openquote.ear/irishbrokerpi.war">
   <import file="../../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

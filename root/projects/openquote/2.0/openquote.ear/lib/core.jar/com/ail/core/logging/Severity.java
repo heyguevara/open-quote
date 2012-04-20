@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * This class represents an enumeration of logging severity levels.
- * @version $Revision: 1.6 $
- * @state $State: Exp $
- * @date $Date: 2006/01/16 22:54:22 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/logging/Severity.java,v $
- * @stereotype enumeration
  */
 public enum Severity implements TypeEnum {
     DEBUG,

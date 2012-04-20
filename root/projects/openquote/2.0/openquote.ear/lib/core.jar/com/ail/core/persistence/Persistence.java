@@ -28,10 +28,6 @@ import com.ail.core.VersionException;
  * to support persistence. The methods exposed also describe the contract
  * between this package and the Core - this package provides a Service
  * implementation for each.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2006/08/20 15:03:54 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/Persistence.java,v $
  */
 public interface Persistence {
 	/**

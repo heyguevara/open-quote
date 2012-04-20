@@ -22,13 +22,6 @@ import com.ail.core.Type;
 import java.util.Vector;
 import java.util.Collection;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2005/12/18 17:01:18 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/validator/ValidatorResult.java,v $
- * @stereotype type
- */
 @TypeDefinition
 public class ValidatorResult extends Type {
     /**

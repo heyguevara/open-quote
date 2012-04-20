@@ -19,12 +19,6 @@ package com.ail.core.factory;
 
 import com.ail.core.BaseError;
 
-/**
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:29 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/factory/FactoryConfigurationError.java,v $
- */
 public class FactoryConfigurationError extends BaseError {
     public FactoryConfigurationError(String description) {
         super(description);

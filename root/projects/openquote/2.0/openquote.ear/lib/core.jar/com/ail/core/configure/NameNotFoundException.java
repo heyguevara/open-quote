@@ -23,10 +23,6 @@ import com.ail.core.BaseException;
  * This exception is thrown to indicate that a named configuration element
  * could not be found. A configuration element is any sub-class of
  * Component.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/NameNotFoundException.java,v $
  */
 public class NameNotFoundException extends BaseException {	
     public NameNotFoundException(String description) {

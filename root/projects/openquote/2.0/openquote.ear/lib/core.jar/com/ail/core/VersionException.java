@@ -19,11 +19,7 @@ package com.ail.core;
 
 /**
  * This exception is thrown when a request is made relating to the version
- * of an artefact that does not exist.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/VersionException.java,v $
+ * of an artifact that does not exist.
  */
 public class VersionException extends BaseException {
     public VersionException(String description) {

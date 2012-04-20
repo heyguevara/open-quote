@@ -21,10 +21,6 @@ import javax.ejb.EJBException;
 /**
  * This exceptions is used to pass server side BaseErrors and BaseExceptions back
  * to the client as an EJBException - so the container will rollback etc.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/BaseServerException.java,v $
  */
 public class BaseServerException extends EJBException {
     private BaseException exception=null;

@@ -22,10 +22,6 @@ import org.apache.commons.jxpath.JXPathException;
 /**
  * The TypeXPathException indicates that an xpath was evaluated on a Type that
  * could not support it - i.e. the xpath could not be evaluated on the type.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/TypeXPathException.java,v $
  */
 public class TypeXPathException extends BaseError {
 	/**

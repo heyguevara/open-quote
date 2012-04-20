@@ -19,13 +19,6 @@ package com.ail.core.configure;
 
 import com.ail.core.configure.Type;
 
-/**
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/03/27 22:40:44 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Service.java,v $
- * @stereotype type
- */
 public class Service extends Type {
     public Service() {
         super();

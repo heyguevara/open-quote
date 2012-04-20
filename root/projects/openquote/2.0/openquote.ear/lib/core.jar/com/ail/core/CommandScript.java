@@ -24,11 +24,6 @@ import com.ail.annotation.TypeDefinition;
  * represent 'soft logic'  (logic which may be altered in a live environment).
  * This type simply holds the script's details as a value object - it doesn't
  * offer any execution type functionality.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/06/13 21:24:36 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/CommandScript.java,v $
- * @stereotype type
  */
 @TypeDefinition
 public class CommandScript extends Type {

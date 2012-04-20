@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * Type safe enumeration representing constant values for QueryOperator.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2006/01/16 22:54:22 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/persistence/QueryOperator.java,v $
- * @stereotype enumeration
  */
 public enum QueryOperator implements TypeEnum {
     Equals;

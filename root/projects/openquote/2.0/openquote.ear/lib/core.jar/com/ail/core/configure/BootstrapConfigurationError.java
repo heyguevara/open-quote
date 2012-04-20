@@ -22,10 +22,6 @@ import com.ail.core.BaseError;
 /**
  * This error is throw by PropertyLoaders when they fail due to some configuration
  * error.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/BootstrapConfigurationError.java,v $
  */
 public class BootstrapConfigurationError extends BaseError {
     public BootstrapConfigurationError(String description) {

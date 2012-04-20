@@ -25,10 +25,6 @@ import java.io.PrintStream;
  * This Exception class represents the base of all bob exceptions; which
  * indicate conditions within bob that applications might want to
  * catch.
- * @version $Revision: 1.4 $
- * @state $State: Exp $
- * @date $Date: 2007/03/20 22:18:39 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/BaseException.java,v $
  **/
 public abstract class BaseException extends Exception {
     private ArrayList<String> errors = null;

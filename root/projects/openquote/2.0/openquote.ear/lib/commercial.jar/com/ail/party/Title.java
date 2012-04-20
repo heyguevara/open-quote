@@ -22,11 +22,6 @@ import com.ail.core.TypeEnum;
 
 /**
  * Type safe enumeration representing constant values for Title.
- * @version $Revision: 1.7 $
- * @state $State: Exp $
- * @date $Date: 2006/01/28 17:00:28 $
- * @source $Source: /home/bob/CVSRepository/projects/common/commercial.ear/commercial.jar/com/ail/party/Title.java,v $
- * @stereotype enumeration
  */
 public enum Title implements TypeEnum {
     /** Undefined */

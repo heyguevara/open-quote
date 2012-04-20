@@ -28,15 +28,11 @@ import java.util.Properties;
  * described here to access the values of their settings. They should use
  * ConfigurationOwner to access the configuration settings as a whole, and
  * to make changes to settings.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Configure.java,v $
  */
 public interface Configure {
 	/**
-     * Retrieve a specific paramater by name.
-     * The name may be dot seperated to drill down through
+     * Retrieve a specific parameter by name.
+     * The name may be dot separated to drill down through
      * nested groups.
      * @param name Parameter name.
      * @return The parameter associated with the name, or null if the parameter is not defined.
@@ -44,8 +40,8 @@ public interface Configure {
 	Parameter getParameter(String name);
 
     /**
-     * Get the value of a parameter by name. The name may be dot seperated to
-     * drill down through nested goups. The following two bits of code are exactly
+     * Get the value of a parameter by name. The name may be dot separated to
+     * drill down through nested groups. The following two bits of code are exactly
      * equivalent with the exception that the second will not fail with a NullPointerException is
      * "parameterName" is undefined:<br>
      * <code>
@@ -68,7 +64,7 @@ public interface Configure {
 
 	/**
      * Retrieve a specific group by name.
-     * The name may be dot seperated to drill down through nested
+     * The name may be dot separated to drill down through nested
      * groups.
      * @param name The group's name.
      * @return The located group, .

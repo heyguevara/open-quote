@@ -3,7 +3,7 @@
  Build file for the subrogation EJB jar
 -->
 
-<project default="build" name="core:core.ear/subrogation-ejb.jar">
+<project default="build" name="openquote:openquote.ear/subrogation-ejb.jar">
   <import file="${basedir}/../../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

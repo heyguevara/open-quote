@@ -16,13 +16,6 @@
  */
 package com.ail.core.configure;
 
-/**
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2006/04/06 20:49:35 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Type.java,v $
- * @stereotype type
- */
 public class Type extends Group {
     static final long serialVersionUID = 7585495513368222454L;
 

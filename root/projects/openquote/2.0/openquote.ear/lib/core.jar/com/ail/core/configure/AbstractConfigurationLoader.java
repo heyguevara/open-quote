@@ -85,10 +85,6 @@ import java.util.Properties;
  * @see EJBConfigurationLoader
  * @see ConnectionPoolConfigurationLoader
  * @see FileConfigurationLoader
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/AbstractConfigurationLoader.java,v $
  */
 public abstract class AbstractConfigurationLoader {
     private static Properties params = new Properties();

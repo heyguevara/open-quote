@@ -30,10 +30,6 @@ import javax.sql.DataSource;
  * by creating the connection itself).<p>
  * This loader expects the loader.property file to define the following properties:<ol>
  * <li><code>jndiname</code> - the JNDI name of the connection pool to use.</li></ol>
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/12/22 10:40:49 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConnectionPoolConfigurationLoader.java,v $
  */
 public class ConnectionPoolConfigurationLoader extends JDBCConfigurationLoader {
     private DataSource dataSource=null;

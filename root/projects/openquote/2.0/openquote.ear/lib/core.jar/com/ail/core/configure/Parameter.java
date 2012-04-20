@@ -20,11 +20,6 @@ package com.ail.core.configure;
  * This type represents the simplest element used in the configuration
  * pattern. Parameter is simply a name/value pair. The value is always
  * a String.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:27 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/Parameter.java,v $
- * @stereotype type
  */
 public class Parameter extends Component {
     static final long serialVersionUID = -8141145979210301320L;

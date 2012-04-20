@@ -24,10 +24,6 @@ import java.util.Collection;
 /**
  * This class handles the loading and saving of property (configuration)
  * information held in files.
- * @version $Revision: 1.5 $
- * @state $State: Exp $
- * @date $Date: 2005/07/31 18:04:03 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/FileConfigurationLoader.java,v $
  */
 public class FileConfigurationLoader extends AbstractConfigurationLoader {
 	public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) {

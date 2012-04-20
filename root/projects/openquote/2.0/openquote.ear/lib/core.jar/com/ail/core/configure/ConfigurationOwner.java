@@ -22,10 +22,6 @@ import com.ail.core.CoreUser;
 /**
  * Any class wishing to 'own' its private configuration details implements
  * this interface.
- * @version $Revision: 1.3 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/configure/ConfigurationOwner.java,v $
  */
 public interface ConfigurationOwner extends CoreUser {
 	/**

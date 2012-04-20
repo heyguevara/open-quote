@@ -64,10 +64,6 @@ import com.ail.core.configure.ConfigurationOwner;
  *    ]]&gt;&lt;/parameter&gt;
  * &lt;/service&gt;
  * </pre>
- * @version $Revision: 1.9 $
- * @state $State: Exp $
- * @date $Date: 2007/06/04 11:56:23 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/core.jar/com/ail/core/command/BeanShellAccessor.java,v $
  */
 public class BeanShellAccessor extends Accessor implements ConfigurationOwner {
     Argument args=null;

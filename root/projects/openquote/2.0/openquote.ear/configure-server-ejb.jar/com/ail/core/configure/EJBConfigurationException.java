@@ -25,10 +25,6 @@ import javax.ejb.EJBException;
  * This exception is throw by the EJBLoader in reponse to any problems that it encounters.
  * Its purpose is simply to wrap the exception/error such that it cause roll backs, and
  * give the client side code access to the actual exception/error.
- * @version $Revision: 1.2 $
- * @state $State: Exp $
- * @date $Date: 2005/07/16 10:23:26 $
- * @source $Source: /home/bob/CVSRepository/projects/core/core.ear/configure-server-ejb.jar/com/ail/core/configure/EJBConfigurationException.java,v $
  */
 public class EJBConfigurationException extends EJBException {
     private Throwable serverSideCause=null;
