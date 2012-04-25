@@ -14,7 +14,7 @@
   <property name="jboss.version" value="4.2.2GA-P2" />
 
   <!-- Define which database we're working with -->
-  <property name="dbname" value="core_${major.version}_${minor.version}" />
+  <property name="dbname" value="openquote_${major.version}_${minor.version}" />
   <property name="dbusername" value="openquote" />
   <property name="dbpassword" value="password" />
 

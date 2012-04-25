@@ -3,7 +3,7 @@
  Ant build file for starting utilities & servers etc..
 -->
 
-<project default="" name="core:commands">
+<project default="" name="openquote:commands">
   <import file="./BuildSettings.xml" />
 
   <target name="jboss: start server" description="start the jboss server">

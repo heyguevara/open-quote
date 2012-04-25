@@ -38,7 +38,7 @@ import com.ail.core.CoreProxy;
  * execute the following:
  * <br/><br/>
  * <code>$java -Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader \<br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver \<br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Dcom.ail.core.configure.loaderParam.driver=com.mysql.jdbc.Driver \<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/core_2_0 \<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Dcom.ail.core.configure.loaderParam.user=root \<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Dcom.ail.core.configure.loaderParam.password=bombay2000 \<br/>

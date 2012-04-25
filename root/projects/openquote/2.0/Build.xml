@@ -3,7 +3,7 @@
  Ant build file for the core project.
 -->
 
-<project default="build" name="core">
+<project default="build" name="openquote">
   <import file="./BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
@@ -12,7 +12,7 @@
 
   <target name="_build">
     <subant-macro target="_build" includes="openquote.ear/Build.xml, alfresco.war/Build.xml" />
-    <subant-macro target="_build" includes="*test.ear/Build.xml" />
+    <subant-macro target="_build" includes="*test.jar/Build.xml" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
@@ -64,7 +64,7 @@
 
       <!-- Start the server -->
       <start-jboss-macro />
-      
+
       <sequential>
         <!-- Wait for the server to start -->
         <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
@@ -95,11 +95,13 @@
         <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar" />
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
         <fileset dir="${jboss.dir}">
           <include name="client/jbossall-client.jar" />
           <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
           <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
           <include name="server/default/lib/saxon*.jar" />
+          <include name="server/default/lib/mysql*.jar" />
           <include name="lib/endorsed/xalan.jar" />
         </fileset>
       </test-classpath>

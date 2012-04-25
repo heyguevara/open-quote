@@ -7322,7 +7322,7 @@ so we check once and hang onto the result in this static.
  execute the following:
  &lt;br/&gt;&lt;br/&gt;
  &lt;code&gt;$java -Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader \&lt;br/&gt;
- &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;-Dcom.ail.core.configure.loaderParam.driver=org.gjt.mm.mysql.Driver \&lt;br/&gt;
+ &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;-Dcom.ail.core.configure.loaderParam.driver=com.mysql.jdbc.Driver \&lt;br/&gt;
  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/core_2_0 \&lt;br/&gt;
  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;-Dcom.ail.core.configure.loaderParam.user=root \&lt;br/&gt;
  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;-Dcom.ail.core.configure.loaderParam.password=bombay2000 \&lt;br/&gt;
