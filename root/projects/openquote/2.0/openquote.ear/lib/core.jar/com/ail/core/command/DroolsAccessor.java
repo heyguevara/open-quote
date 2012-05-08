@@ -31,6 +31,7 @@ import org.drools.RuleBaseConfiguration;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.compiler.DrlParser;
+import org.drools.compiler.DroolsError;
 import org.drools.compiler.DroolsParserException;
 import org.drools.compiler.PackageBuilder;
 import org.drools.compiler.PackageBuilderConfiguration;
@@ -63,6 +64,7 @@ public class DroolsAccessor extends Accessor implements ConfigurationOwner {
     private String extend=null;
     private String url=null;
     private transient RuleBase ruleBase=null;
+    private transient List<DroolsError> errors=new ArrayList<DroolsError>();
 
     /**
      * Factory life cycle method. See {@link AbstractFactory} for details.
@@ -87,7 +89,6 @@ public class DroolsAccessor extends Accessor implements ConfigurationOwner {
      * @param subject Package to merge into
      * @param donor Package to merge from
      */
-    @SuppressWarnings("unchecked")
     public static void mergeRulePackages(PackageDescr subject, PackageDescr donor) {
         // Add rules from the donor which don't already appear in the subject
         rules: for(RuleDescr donorRule: (List<RuleDescr>)donor.getRules()) {
@@ -162,7 +163,13 @@ public class DroolsAccessor extends Accessor implements ConfigurationOwner {
         DrlParser parser = new DrlParser();
 
         // Add it to the list
-        return parser.parse(reader);
+        PackageDescr ret=parser.parse(reader);
+        
+        if (parser.hasErrors()) {
+            errors.addAll(parser.getErrors());
+        }
+        
+        return ret;
     }
 
     /**
@@ -175,13 +182,21 @@ public class DroolsAccessor extends Accessor implements ConfigurationOwner {
         pkgs.add(loadPackage(Functions.loadScriptOrUrlContent(getCore(), getUrl(), getScript())));
         resolveInheritance(pkgs, getExtend());
 
+        // If any errors were found whilst parsing the DRL, throw an exception.
+        if (errors.size()!=0) {
+            StringBuffer message=new StringBuffer();
+            for(DroolsError error: errors) {
+                message.append(error.toString()).append("\n");
+            }
+            throw new DroolsServiceException("Drools errors detected: \n"+message.toString());
+        }
+        
         RuleBaseConfiguration rbc=new RuleBaseConfiguration();
         rbc.setClassLoader(this.getClass().getClassLoader());
         
         ruleBase = RuleBaseFactory.newRuleBase(rbc);
 
-        PackageBuilderConfiguration pbc=new PackageBuilderConfiguration();
-        pbc.setClassLoader(this.getClass().getClassLoader());
+        PackageBuilderConfiguration pbc=new PackageBuilderConfiguration(this.getClass().getClassLoader());
         
         for(PackageDescr desc: pkgs) {
             PackageBuilder builder = new PackageBuilder(pbc);

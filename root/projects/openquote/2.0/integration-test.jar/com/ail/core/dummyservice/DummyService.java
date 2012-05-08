@@ -86,6 +86,10 @@ public class DummyService extends Service<DummyService.DummyArgument> {
          * @param r New value for r argument.
          */
         void setR(int r);
+        
+        String getName();
+        
+        void setName(String name);
 
         void setStringRet(String string);
         

@@ -29,10 +29,10 @@ package com.ail.core.logging;
  * <li><b>warning</b> - These messages indicate that something went wrong, but
  * processing could continue.</li>
  * <li><b>error</b> - The same as warning, but requires investigation.</li>
- * <li><b>fatal</b> - The same as error, but processing could not continee.</li>
+ * <li><b>fatal</b> - The same as error, but processing could not continue.</li>
  * </ol>
  * <p>Clients of the logger can assume that their messages will have certain
- * information addded to them; date-time, security context, and code location.</p>
+ * information added to them; date-time, security context, and code location.</p>
  * @version $Revision: 1.4 $
  */
 public interface Logging {

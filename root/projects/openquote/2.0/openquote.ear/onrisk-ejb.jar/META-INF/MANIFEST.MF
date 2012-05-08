@@ -17,6 +17,10 @@ Class-Path: lib/insurance.jar
   @drools-core.jar@
   @drools-compiler.jar@
   @drools-decisiontables.jar@
+  @drools-jsr94.jar@
+  @knowledge-api.jar@
+  @drools-templates.jar@
+  @mvel2.jar@
   @janino.jar@
   @eclipse-jtd-core.jar@
   @antlr.jar@

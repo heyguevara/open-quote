@@ -311,6 +311,21 @@ public class TestServiceInvocation extends CoreUserBaseCase {
     }
 
     @Test
+    public void testDroolsServiceStringMatchingRule() throws Exception {
+        DummyCommand command = getCore().newCommand("TestDroolsUrlLoader", DummyCommand.class);
+        command.setX(100);
+        command.setName("1234");
+        command.setR(0);
+        command.invoke();
+        assertEquals(999, command.getR());
+ 
+        command.setName("A1234");
+        command.setR(0);
+        command.invoke();
+        assertEquals(0, command.getR());
+ }
+    
+    @Test
     public void testDroolsXMLService() throws Exception {
         DummyCommand command = getCore().newCommand("TestDroolsXMLService", DummyCommand.class);
         command.setX(21);

@@ -1,5 +1,5 @@
 package com.ail.core
- 
+
 import com.ail.core.dummyservice.DummyService.DummyArgument;
 
 rule "Add numbers when X less than 100"
@@ -21,5 +21,12 @@ rule "Test for existence of an object in WM"
 		args : DummyArgument()
 	then 
 		System.out.println("got one!");
+end
+
+rule "Test string matcher"
+	when
+		args: DummyArgument( name matches "^[0-9]*$" )
+	then
+		args.setR(999);
 end
  

@@ -35,4 +35,12 @@ public class DroolsServiceException extends BaseException {
     public DroolsServiceException(String description, Throwable target) {
         super(description, target);
     }
+
+    /**
+     * Constructor
+     * @param e error message
+     */
+    public DroolsServiceException(String e) {
+        super(e);
+    }
 }

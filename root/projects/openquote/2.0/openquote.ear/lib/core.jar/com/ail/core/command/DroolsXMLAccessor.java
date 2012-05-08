@@ -32,13 +32,14 @@ import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.compiler.DroolsParserException;
 import org.drools.compiler.PackageBuilder;
+import org.drools.compiler.PackageBuilderConfiguration;
+import org.drools.compiler.xml.XmlPackageReader;
 import org.drools.event.DebugWorkingMemoryEventListener;
 import org.drools.lang.descr.FunctionDescr;
 import org.drools.lang.descr.GlobalDescr;
 import org.drools.lang.descr.ImportDescr;
 import org.drools.lang.descr.PackageDescr;
 import org.drools.lang.descr.RuleDescr;
-import org.drools.xml.XmlPackageReader;
 import org.xml.sax.SAXException;
 
 import com.ail.core.Core;
@@ -88,7 +89,6 @@ public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
      * @param subject Package to merge into
      * @param donor Package to merge from
      */
-    @SuppressWarnings("unchecked")
     public static void mergeRulePackages(PackageDescr subject, PackageDescr donor) {
         // Add rules from the donor which don't already appear in the subject
         rules: for(RuleDescr donorRule: (List<RuleDescr>)donor.getRules()) {
@@ -160,8 +160,11 @@ public class DroolsXMLAccessor extends Accessor implements ConfigurationOwner {
     private PackageDescr loadPackage(String xmlString) throws IOException, SAXException {
         // Parse the DRL string
         Reader reader = new StringReader(xmlString);
-        XmlPackageReader xpr=new XmlPackageReader();
-
+        PackageBuilderConfiguration pbc=new PackageBuilderConfiguration(this.getClass().getClassLoader());
+        XmlPackageReader xpr=new XmlPackageReader(pbc.getSemanticModules());
+        
+        xpr.getParser().setClassLoader(this.getClass().getClassLoader());
+        
         // Add it to the list
         return xpr.read(reader);
     }

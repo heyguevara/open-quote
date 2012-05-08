@@ -29,12 +29,12 @@ import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.compiler.DrlParser;
+import org.drools.compiler.DroolsError;
 import org.drools.compiler.DroolsParserException;
 import org.drools.compiler.PackageBuilder;
 import org.drools.compiler.PackageBuilderConfiguration;
 import org.drools.decisiontable.InputType;
 import org.drools.decisiontable.SpreadsheetCompiler;
-import org.drools.decisiontable.parser.DecisionTableParseException;
 import org.drools.lang.descr.PackageDescr;
 import org.drools.rule.InvalidRulePackage;
 
@@ -80,12 +80,12 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
                 core.logInfo("Loading decision table for:"+typeSpec.getName()+" from:"+getUrl());
                 loadRuleBase();
             }
-            catch(InvalidRulePackage e) {
-                core.logError("Failed to compile decision table: \n"+e.getMessage());
+            catch(DroolsParserException e) {
+                core.logError("Failed to parse decision table rules: \n"+e.getMessage());
                 compilationError=e;
             }
-            catch(DecisionTableParseException e) {
-                core.logError("Failed to parse decision table: \n"+e.getMessage());
+            catch(InvalidRulePackage e) {
+                core.logError("Failed to compile decision table: \n"+e.getMessage());
                 compilationError=e;
             }
             catch(RuntimeException e) {
@@ -150,14 +150,25 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
         }
         
         // Add it to the list
-        return parser.parse(drl);
+        PackageDescr packDescr=parser.parse(drl);
+        
+        // If there were errors, throw a DroolsParserException containing them
+        if (parser.hasErrors()) {
+            StringBuffer message=new StringBuffer();
+            for(DroolsError error: parser.getErrors()) {
+                message.append(error.toString()).append("\n");
+            }
+            throw new DroolsParserException(message.toString());
+        }
+        
+        return packDescr;
     }
 
     /**
      * Load the rulebase if it hasn't be loaded already.
      * @throws Exception If the load fails
      */
-    private void loadRuleBase() throws Exception {
+    private void loadRuleBase() throws Exception  {
         URL ruleUrl;
 
         ruleUrl=Functions.absoluteConfigureUrl(getCore(), getUrl());
