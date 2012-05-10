@@ -71,7 +71,7 @@
         <get-lib-macro artifact="ant-nodeps" group="ant" version="1.6.5" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="avalon-framework" group="avalon-framework" version="4.2.0" type="jar" repo="openquotecommunity.org/repo" />
         <get-lib-macro artifact="antlr-runtime" group="antlr" version="3.3" type="jar" repo="openquotecommunity.org/repo" />
-        <get-lib-macro artifact="antlr" group="antlr" version="3.3" type="jar" repo="repo1.maven.org/maven2" />
+        <get-lib-macro artifact="antlr" group="antlr" version="3.3" type="jar" repo="openquotecommunity.org/repo" />
         <get-lib-macro artifact="antlr" group="antlr" version="2.7.7" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="asm" group="asm" version="1.5.3" type="jar" repo="repo1.maven.org/maven2" />
         <get-lib-macro artifact="batik-all" group="batik" version="1.6" type="jar" repo="openquotecommunity.org/repo" />
