@@ -42,6 +42,8 @@ import com.ail.insurance.policy.Behaviour;
 import com.ail.insurance.policy.BehaviourType;
 import com.ail.insurance.policy.RateBehaviour;
 import com.ail.openquote.Broker;
+import com.ail.openquote.CommercialProposer;
+import com.ail.openquote.PersonalProposer;
 import com.ail.openquote.Proposer;
 import com.ail.openquote.Quotation;
 import com.ail.openquote.ui.render.RenderService.RenderArgument;
@@ -161,8 +163,16 @@ public class ProposerQuotationSummaryService extends Service<RenderArgument> {
     	Proposer proposer=(Proposer)quote.getProposer();
         w.printf("<table width='100%%' class='portlet-font'>");
         w.printf(  "<tr><td class='portlet-section-selected' colspan='2'>"+i18n("i18n_proposer_quotation_summary_proposer_title")+"</td></tr>");
+        if (proposer instanceof PersonalProposer) {
         w.printf(  "<tr><td>"+i18n("i18n_proposer_quotation_summary_legal_name_label")+"</td><td>%s</td></tr>", proposer.getLegalName());
         w.printf(  "<tr><td>"+i18n("i18n_proposer_quotation_summary_address_label")+"</td><td>%s</td></tr>", proposer.getAddress().getLine1());
+        }
+        else { // Commercial proposer
+            CommercialProposer cp=(CommercialProposer)proposer;
+            w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_contact_name_label")+"</td><td>%s</td></tr>", cp.getContact().getLegalName());
+            w.printf(  "<tr><td>"+i18n("i18n_broker_quotation_summary_address_label")+"</td><td>%s</td></tr>", proposer.getLegalName());
+            w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getLine1());
+        }
         w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getLine2());
         w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getTown());
         w.printf(  "<tr><td>&nbsp;</td><td>%s</td></tr>", proposer.getAddress().getCounty());

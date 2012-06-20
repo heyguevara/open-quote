@@ -23,9 +23,11 @@ import java.io.PrintWriter;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -43,6 +45,7 @@ import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.core.configure.Parameter;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.quotation.FetchQuoteService.FetchDocumentCommand;
 import com.ail.openquote.SavedQuotation;
@@ -140,22 +143,31 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailServi
         Session session=null;
         MimeMessage message=null;
         MimeMultipart multipart=null;
+        Authenticator authenticator=null;
 
     	QuotationContext.setQuotation(savedQuotation.getQuotation());
 
-    	String smtpServer = getCore().getParameterValue("smtp-server", "localhost");
-        String toAddress = savedQuotation.getQuotation().getBroker().getQuoteEmailAddress();
-        String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");
+        final Properties props = new Properties();
         
-        // TODO Load properties from configuration
-        Properties props = new Properties();
-        props.put("mail.smtp.host", smtpServer);
+        for(Parameter p: getCore().getGroup("SMTPServerProperties").getParameter()) {
+            props.put(p.getName(), p.getValue());
+        }
+        
+        if ("true".equals(props.getProperty("mail.smtp.auth"))) {
+            authenticator=new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    String username=props.getProperty("mail.smtp.user");
+                    String password=props.getProperty("mail.smtp.password");
+                    return new PasswordAuthentication(username, password);
+                }
+            };
+        }
 
-        session = Session.getDefaultInstance(props, null);
+        session = Session.getInstance(props, authenticator);
         message = new MimeMessage(session);
         
-        message.addRecipients(Message.RecipientType.TO, toAddress);
-        message.setFrom(new InternetAddress(fromAddress));
+        message.addRecipients(Message.RecipientType.TO, savedQuotation.getQuotation().getBroker().getQuoteEmailAddress());
+        message.setFrom(new InternetAddress(savedQuotation.getQuotation().getBroker().getQuoteEmailAddress()));
 
         // Example subject: "Quotation: QF0001 - Motor Plus - Mr. Jimbo Clucknasty"
         message.setSubject(savedQuotation.getQuotation().getStatus().getLongName()+

@@ -173,7 +173,8 @@ public class Action extends PageElement {
 	}
 
 	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model) {
-		return execute(portletSession, principal, parameters, model).getValidationFailedRet();
+		Boolean vf=execute(portletSession, principal, parameters, model).getValidationFailedRet();
+		return (vf==null) ? false : vf;
 	}
 
 	/**

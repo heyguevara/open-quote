@@ -84,13 +84,13 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
          * field validations.
          * @return true if validation has failed, false otherwise
          */
-        boolean getValidationFailedRet();
+        Boolean getValidationFailedRet();
         
         /**
          * @see #setValidationFailedRet(boolean)
          * @param validationFailed
          */
-        void setValidationFailedRet(boolean validationFailed);
+        void setValidationFailedRet(Boolean validationFailed);
 
         /**
          * The Action element from the PageFlow

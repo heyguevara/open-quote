@@ -22,9 +22,11 @@ import java.io.PrintWriter;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -41,6 +43,7 @@ import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.core.configure.Parameter;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.quotation.FetchQuoteService.FetchDocumentCommand;
 import com.ail.openquote.Broker;
@@ -138,20 +141,32 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailS
         Session session=null;
         MimeMessage message=null;
         MimeMultipart multipart=null;
+        Authenticator authenticator=null;
 
     	QuotationContext.setQuotation(savedQuotation.getQuotation());
 
-    	Proposer proposer=(Proposer)savedQuotation.getQuotation().getProposer();
-    	Broker broker=savedQuotation.getQuotation().getBroker();
-    	String smtpServer = getCore().getParameterValue("smtp-server", "localhost");
+        Proposer proposer = (Proposer) savedQuotation.getQuotation().getProposer();
+        Broker broker = savedQuotation.getQuotation().getBroker();
         String fromAddress = broker.getEmailAddress();
         String toAddress = proposer.getEmailAddress();
-        
-        // TODO Load properties from configuration
-        Properties props = new Properties();
-        props.put("mail.smtp.host", smtpServer);
 
-        session = Session.getDefaultInstance(props, null);
+        final Properties props = new Properties();
+        
+        for(Parameter p: getCore().getGroup("SMTPServerProperties").getParameter()) {
+            props.put(p.getName(), p.getValue());
+        }
+        
+        if ("true".equals(props.getProperty("mail.smtp.auth"))) {
+            authenticator=new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    String username=props.getProperty("mail.smtp.user");
+                    String password=props.getProperty("mail.smtp.password");
+                    return new PasswordAuthentication(username, password);
+                }
+            };
+        }
+
+        session = Session.getInstance(props, authenticator);
         message = new MimeMessage(session);
         
         message.addRecipients(Message.RecipientType.TO, toAddress);
