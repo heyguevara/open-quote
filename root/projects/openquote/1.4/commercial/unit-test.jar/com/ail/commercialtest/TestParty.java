@@ -22,6 +22,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.ail.party.Address;
+import com.ail.party.Person;
+import com.ail.party.Title;
 
 public class TestParty {
     /**
@@ -39,6 +41,21 @@ public class TestParty {
         addr.setPostcode("ABC 1DE");
         
         assertEquals("The House, The Road, Town, County. ABC 1DE", addr.toString());
+    }
+    
+    @Test
+    public void testOtherTitle() throws Exception {
+        Person p=new Person();
+        
+        p.setTitle(Title.DR);
+        p.setFirstName("Jimbo");
+        p.setSurname("Clucknasty");
+        assertEquals("Dr. Jimbo Clucknasty", p.getLegalName());
+        
+        p.setTitle(Title.OTHER);
+        p.setOtherTitle("Lord");
+        assertEquals("Lord Jimbo Clucknasty", p.getLegalName());
+        
     }
 
 }

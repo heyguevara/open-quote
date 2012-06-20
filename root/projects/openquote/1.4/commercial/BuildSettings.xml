@@ -3,9 +3,6 @@
 <project name="BuildSettings" default="dummy">
     <property name="ear.name" value="commercial.ear" />
 
-    <!-- Location of development dir is overridden on the build server -->
-    <property name="development.dir" value="${project.dir}/../development" />
-
     <!-- Release version numbers (BTW the build number comes from bamboo.) -->
     <property name="major.version" value="3" />
     <property name="minor.version" value="0" />

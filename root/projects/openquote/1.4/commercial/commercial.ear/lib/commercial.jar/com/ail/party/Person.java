@@ -151,18 +151,18 @@ public class Person extends Party {
      * @return actual title.
      */
     public String getActualTitle() {
-        return (OTHER.equals(title) ? otherTitle : title.getLongName());
+        if (title!=null) {
+            return (OTHER.equals(title) ? otherTitle : title.getLongName());
+        }
+        else {
+            return "";
+        }
     }
 
     /**
      * Return the person's legal name. This takes the form "&lt;title&gt &lt;firstName&gt; &lt;surname&gt;"
      */
     public String getLegalName() {
-        if (title!=null) {
-            return title.getLongName()+" "+firstName+" "+surname;
-        }
-        else {
-            return firstName+" "+surname;
-        }
+        return getActualTitle() + " " + firstName + " " + surname;
     }
 }
