@@ -51,6 +51,9 @@
 
   <target name="release" description="build this project's releasable outputs">
 
+	<!-- Do a setup in build to make sure we have the jars that the build itself needs -->
+  	<subant-macro target="setup" includes="build/Build.xml" />
+
     <!-- Stop the server if it is running -->
     <ant antfile="BuildCommands.xml" target="jboss: stop server" />
 
