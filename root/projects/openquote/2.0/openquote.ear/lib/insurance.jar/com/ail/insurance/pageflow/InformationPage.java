@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -41,7 +39,7 @@ public class InformationPage extends Page {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        model=super.renderResponse(request, response, model);
+        super.renderResponse(request, response, model);
         
         super.renderPageHeader(request, response, model);
         
@@ -49,7 +47,7 @@ public class InformationPage extends Page {
 
         model=QuotationContext.getRenderer().renderInformationPage(w, request, response, model, this, i18n(getTitle()), super.getPageElement());
         
-        super.renderPageFooter(request, response, model);
+        model=super.renderPageFooter(request, response, model);
         
         return model;
     }

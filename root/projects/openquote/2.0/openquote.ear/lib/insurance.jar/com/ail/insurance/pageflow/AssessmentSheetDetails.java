@@ -44,8 +44,6 @@ public class AssessmentSheetDetails extends PageElement {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        
-        return QuotationContext.getRenderer().renderAssessmentSheetDetails(w, request, response, model, this);
+        return executeTemplateCommand("AssessmentSheetDetails", request, response, model);
     }
 }

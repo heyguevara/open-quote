@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import static com.ail.core.Functions.expand;
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -145,21 +144,19 @@ public class QuestionSection extends PageElement {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+            PrintWriter w = response.getWriter();
+            Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
+            String title = getExpandedTitle(QuotationContext.getPolicy(), model);
+    
+            title = i18n(title);
+            
+            String styleClass = getStyleClass();
+            String ref = getRef();
+            
+            model=QuotationContext.getRenderer().renderQuestionSection(w, request, response, localModel, this, title, styleClass, ref);
     	}
-
-        PrintWriter w = response.getWriter();
-        Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
-        String title = getExpandedTitle(QuotationContext.getPolicy(), model);
-
-        title = i18n(title);
-        
-        String styleClass = getStyleClass();
-        String ref = getRef();
-        
-        QuotationContext.getRenderer().renderQuestionSection(w, request, response, localModel, this, title, styleClass, ref);
-        
+    	
         return model;
 	}
 

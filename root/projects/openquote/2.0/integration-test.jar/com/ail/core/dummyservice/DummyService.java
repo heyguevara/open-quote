@@ -17,6 +17,8 @@
 
 package com.ail.core.dummyservice;
 
+import java.io.Writer;
+
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
@@ -91,9 +93,9 @@ public class DummyService extends Service<DummyService.DummyArgument> {
         
         void setName(String name);
 
-        void setStringRet(String string);
+        Writer getWriterArg();
         
-        String getStringRet();
+        void setWriterArg(Writer writer);
         
         /**
          * Fetch the value of the postconditionflag argument. Flag set by the pre-condition service to show that it has been run.

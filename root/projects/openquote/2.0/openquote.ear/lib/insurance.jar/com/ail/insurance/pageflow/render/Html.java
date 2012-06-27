@@ -160,12 +160,6 @@ public class Html extends Type implements Renderer {
     	return "text/html";
     }
 
-	public Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException {
-		 w.printf("<tr><td>%s</td><td>%s</td></tr>", title, answerText);
-		 
-		 return model;
-	}
-
 	public Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller) throws IOException {
         for(Iterator<Type> it=model.xpathIterate(answerScroller.getBinding(), Type.class) ; it.hasNext() ; ) {
             Type t=it.next();
@@ -189,7 +183,7 @@ public class Html extends Type implements Renderer {
 		}
 		
 		for(Answer a: answerSection.getAnswer()) { 
-		    model=a.renderResponse(request, response, model);
+		    a.renderResponse(request, response, model);
 		}
 		
 		w.printf("</table>");
@@ -460,7 +454,7 @@ public class Html extends Type implements Renderer {
 
         for (PageElement e : pageElements) {
             w.printf("<tr><td>");
-            model=e.renderResponse(request, response, model);
+            e.renderResponse(request, response, model);
             w.printf("</td></tr>");
         }
         
@@ -582,7 +576,7 @@ public class Html extends Type implements Renderer {
         w.printf("<td id='%s-left' width='15%%'>&nbsp;</td>", navigationSection.getId());
         w.printf("<td id='%s-center' width='70%%' align='center'>", navigationSection.getId());
         for(PageElement element: navigationSection.getPageElement()) {
-			model=element.renderResponse(request, response, model);
+			element.renderResponse(request, response, model);
 		}
 		w.printf("</td>");
         w.printf("<td id='%s-right' width='15%%' align='right'>", navigationSection.getId());
@@ -590,7 +584,7 @@ public class Html extends Type implements Renderer {
             w.print("&nbsp;");
         }
         else {
-            model=navigationSection.getQuitButton().renderResponse(request, response, model);
+            navigationSection.getQuitButton().renderResponse(request, response, model);
         }
         w.print("</td></tr></table>");
 
@@ -638,7 +632,7 @@ public class Html extends Type implements Renderer {
             for(int col=0 ; col<pageSection.getColumns() ; col++) {
                 w.printf("<td>");
                 if (it.hasNext()) {
-                    model=it.next().renderResponse(request, response, model);
+                    it.next().renderResponse(request, response, model);
                 }
                 else {
                     w.printf("&nbsp;");
@@ -984,7 +978,7 @@ public class Html extends Type implements Renderer {
 
         for (PageElement e : questionPage.getPageElement()) {
             w.printf("<tr><td>");
-            model=e.renderResponse(request, response, model);
+            e.renderResponse(request, response, model);
             w.printf("</td></tr>");
         }
 
@@ -1122,7 +1116,7 @@ public class Html extends Type implements Renderer {
         w.printf(" <div id='%s' style='visibility:hidden;display:none'>", questionWithSubSection.getId());
         w.print("   <table width='90%'><tr><td width='5%'/><td>");
 		for(PageElement ss:questionWithSubSection.getSubSection()) {
-			model=ss.renderResponse(request, response, model);
+			ss.renderResponse(request, response, model);
 		}
         w.printf("  </td></tr></table>");
         w.printf(" </div>");

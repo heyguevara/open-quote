@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -27,8 +25,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
 
 /**
  * <p>Page element to display a summary of a quotation. The QuotationSummary element is designed to render 
@@ -253,9 +251,7 @@ public class QuotationSummary extends PageContainer {
         PrintWriter w=response.getWriter();
         Policy quote=(com.ail.insurance.policy.Policy)model;
 
-        QuotationContext.getRenderer().renderQuotationSummary(w, request, response, quote, this);
-        
-        return model;
+        return QuotationContext.getRenderer().renderQuotationSummary(w, request, response, quote, this);
 	}
 
     public PageElement loginSection(Type model) {

@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.insurance.pageflow.util.Functions.addError;
 
 import java.io.IOException;

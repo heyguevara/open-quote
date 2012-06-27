@@ -16,18 +16,16 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.core.Functions.expand;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 
 /**
  * <p>An AnswerSection is generally used on summary pages and acts as a container for listing the answers
@@ -52,12 +50,6 @@ public class AnswerSection extends PageElement {
     /** The fixed title to be displayed with the answer */
     private String title;
 
-    /** 
-     * An optional XPath value which can be evaluated against the quotation to fetch a dynamic title.
-     * If defined this is used in preference to the fixed title: @{link #title} 
-     */
-    private String titleBinding;
-    
     public AnswerSection() {
         super();
         answer=new ArrayList<Answer>();
@@ -105,52 +97,21 @@ public class AnswerSection extends PageElement {
      * <i>root</i>. 
      * @param root Model to expand references with respect to.
      * @param local Model to expand local references (xpaths starting ./) with respect to.
-     * @return Title with embedded references expanded
+     * @return Title with embedded references expanded, or null if there is no title
      * @since 1.1
      */
-    public String getExpandedTitle(Type root, Type local) {
+    public String formattedTitle(RenderArgumentImpl args) {
     	if (getTitle()!=null) {
-    		return expand(getTitle(), root, local);
-    	}
-    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
-    	else if (getTitleBinding()!=null) {
-    		return local.xpathGet(getTitleBinding(), String.class);
+    		return i18n(expand(getTitle(), args.getPolicyArg(), args.getModelArgRet()));
     	}
     	else {
-    		return null;
+    	    return null;
     	}
     }
     
-    /**
-     * An optional XPath value which can be evaluated against the quotation to fetch a dynamic title.
-     * If defined this is used in preference to the fixed title: @{link #title} 
-     * @return Title's XPath binding
-     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public String getTitleBinding() {
-        return titleBinding;
-    }
-
-    /**
-     * @see #getTitleBinding()
-     * @param titleBinding
-     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public void setTitleBinding(String titleBinding) {
-        this.titleBinding = titleBinding;
-    }
-
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
-    	}
-
-    	PrintWriter w = response.getWriter();
-        
-        String title = i18n(getExpandedTitle(QuotationContext.getPolicy(), model));
-
-        return QuotationContext.getRenderer().renderAnswerSection(w, request, response, model, this, title);
+        return executeTemplateCommand("AnswerSection", request, response, model);
 	}
 
     @Override

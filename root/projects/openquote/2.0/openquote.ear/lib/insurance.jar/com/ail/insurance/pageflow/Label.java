@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -105,19 +103,18 @@ public class Label extends PageElement {
     }
 
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+
+        	Object[] params = new Object[parameter.size()];
+            int i = 0;
+    
+            for (Binding expr : parameter) {
+                params[i++] = model.xpathGet(expr.getXpath());
+            }
+    
+            model=QuotationContext.getRenderer().renderLabel(response.getWriter(), request, response, model, this, i18n(format), params);        
     	}
 
-    	Object[] params = new Object[parameter.size()];
-        int i = 0;
-
-        for (Binding expr : parameter) {
-            params[i++] = model.xpathGet(expr.getXpath());
-        }
-
-        QuotationContext.getRenderer().renderLabel(response.getWriter(), request, response, model, this, i18n(format), params);        
-        
-        return model;
+    	return model;
     }
 }

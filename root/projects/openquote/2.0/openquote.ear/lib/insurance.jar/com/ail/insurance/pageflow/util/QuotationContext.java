@@ -139,7 +139,7 @@ public class QuotationContext {
 		return core.get();
 	}
 	
-	private static void setCore(CoreProxy coreArg) {
+	public static void setCore(CoreProxy coreArg) {
 		core.set(coreArg);
 	}
 	

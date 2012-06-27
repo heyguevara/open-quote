@@ -1056,9 +1056,6 @@
         <field name="title" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="titleBinding" type="string">
-            <bind-xml node="attribute" />
-        </field>
     </class>
 
     <class name="com.ail.insurance.pageflow.AnswerScroller" extends="com.ail.insurance.pageflow.PageElement">
@@ -1069,9 +1066,6 @@
     <class name="com.ail.insurance.pageflow.AnswerSection" extends="com.ail.insurance.pageflow.PageElement">
         <map-to xml="answerSection" />
         <field name="title" type="string">
-            <bind-xml node="attribute" />
-        </field>
-        <field name="titleBinding" type="string">
             <bind-xml node="attribute" />
         </field>
         <field name="answer" type="com.ail.insurance.pageflow.Answer" collection="arraylist" />

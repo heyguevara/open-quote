@@ -60,8 +60,7 @@ public class PageForwardAction extends Action {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        // do nothing
-    	return model;
+        return model;
     }
 
     @Override
@@ -69,7 +68,6 @@ public class PageForwardAction extends Action {
         if ("onProcessActions".equals(getWhen()) && conditionIsMet(model)) {
             ((Policy)model).setPage(getDestinationPageId());
         }
-        
         return model;
     }
 }

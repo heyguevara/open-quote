@@ -25,7 +25,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
 
@@ -113,10 +112,9 @@ public class CommandButtonAction extends PageElement {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(label)) {
-            ((Policy)model).setPage(destinationPageId);
+            QuotationContext.getPolicy().setPage(destinationPageId);
             model=super.processActions(request, response, model);
         }
-        
         return model;
     }
 
@@ -139,7 +137,7 @@ public class CommandButtonAction extends PageElement {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        model=super.renderResponse(request, response, model);
+        super.renderResponse(request, response, model);
         PrintWriter w=response.getWriter();
         return QuotationContext.getRenderer().renderCommandButtonAction(w, request, response, model, this, label, immediate);
     }

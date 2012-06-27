@@ -17,7 +17,7 @@
 
 package com.ail.core.command;
 
-import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.Principal;
@@ -39,15 +39,15 @@ import com.ail.core.factory.AbstractFactory;
 /**
  * The Velocity Accessor provides access to services implemented using Apache
  * Velocity.<p/>
- * Unlike most service types supported by the code, Velocity can only
- * product one result - the result of performing a merge using the command args
- * as the only context variable. As a result of this limitation - i.e. the 
- * results cannot be mapped back to the command argument passed in, a 
- * convention is adopted in order to determine which of the command argument's 
- * properties the merge result should be placed in. The Accessor looks for a 
- * setter on the command argument which matches the pattern: set*Ret(String)
- * into which it can store the result. If such a setter cannot be found, or if 
- * more than one is found then an exception is thrown.<p/>
+ * Unlike most service types supported by the core, Velocity can only
+ * produce one result - the result of performing a merge using the command args
+ * as the only context variable. As a result of this limitation (i.e. the 
+ * results cannot be mapped back to the command argument passed in) a 
+ * convention is adopted in order to determine where the output of the merge
+ * should be written. The accessor searches the command args for the method
+ * <code>getWriterArg</code> which returns a {@link java.io.Writer Writer}
+ * and will then output the results of the merge to the Writer returned when it is 
+ * invoked.<p/>
  * 
  * The VelocityAccessor does not implement the concept of inheritance which is
  * common to other Accessors as there is no natural way for templates to inherit 
@@ -72,35 +72,34 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
 
     /**
      * The convention in this Accessor is that the result of the velocity merge
-     * is put into the command's args. Specifically, it will be put into the 
-     * return arg which accepts an argument of type String. There must be only one
-     * such argument. This method takes care of locating the appropriate argument
-     * and storing the resulting string in it.
+     * are written to a Writer which is returned by a method named getWriterArg
+     * on the command used to invoke the accessor. This method searches for the
+     * getWriterArg method and invokes it returning the value that it returns.
      * @throws VelocityServiceException If either no appropriate argument can be found, or if there is more than one.
      * @param result Contains the result of the merge.
      * @throws InvocationTargetException 
      * @throws IllegalAccessException 
      * @throws IllegalArgumentException 
      */
-    private void storeResult(StringWriter result) throws VelocityServiceException {
-        Method setter=null;
+    private Writer fetchWriter() throws VelocityServiceException {
+        Method getter=null;
         
         for(Method m: args.getClass().getMethods()) {
-            if (m.getName().startsWith("set") && m.getName().endsWith("Ret")) {
-                if (m.getParameterTypes().length==1 && m.getParameterTypes()[0].equals(String.class)) {
-                    if (setter!=null) {
-                        throw new VelocityServiceException("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: more than on method matches the return convention (e.g. '"+setter.getName()+"' and '"+m.getName()+"')");
+            if (m.getName().equals("getWriterArg")) {
+                if (m.getParameterTypes().length==0 && Writer.class.isAssignableFrom(m.getReturnType())) {
+                    if (getter!=null) {
+                        throw new VelocityServiceException("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: more than on method matches the return convention (e.g. '"+getter.getName()+"' and '"+m.getName()+"')");
                     }
                     else {
-                        setter=m;
+                        getter=m;
                     }
                 }
             }
         }
         
-        if (setter!=null) {
+        if (getter!=null) {
             try {
-                setter.invoke(args, result.getBuffer().toString());
+                return (Writer)getter.invoke(args);
             } catch (Exception e) {
                 throw new VelocityServiceException(e);
             }
@@ -116,7 +115,7 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
         velocityEngine.setProperty("resource.loader", "string");
         velocityEngine.setProperty("string.resource.loader.class", "org.apache.velocity.runtime.resource.loader.StringResourceLoader");
         velocityEngine.setProperty("string.resource.loader.repository.name", core.getConfigurationNamespace());
-
+        velocityEngine.setProperty("runtime.references.strict", true);
         velocityEngine.init();
 
         StringResourceRepository repo=StringResourceLoader.getRepository(core.getConfigurationNamespace());
@@ -165,11 +164,7 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
             
             velocityContext.put("args", args);
             
-            StringWriter output=new StringWriter();
-            
-            template.merge(velocityContext, output);
-            
-            storeResult(output);
+            template.merge(velocityContext, fetchWriter());
         } catch (Exception e) {
             throw new VelocityServiceException(e);
         }

@@ -190,7 +190,7 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailS
         insertStyles(writer);
 
         RenderCommand rbqs=getCore().newCommand("RenderProposerQuotationSummary", "text/html", RenderCommand.class);
-        rbqs.setModelArg(savedPolicy.getPolicy());
+        rbqs.setModelArgRet(savedPolicy.getPolicy());
         rbqs.invoke();
 
         writer.append(rbqs.getRenderedOutputRet());

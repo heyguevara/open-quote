@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import static com.ail.core.Functions.expand;
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -231,7 +230,7 @@ public class AttributeField extends PageElement {
         PrintWriter w=response.getWriter();
         
         w.print(renderAttribute(request, response, model, getBinding(), rowContext, getOnChange(), getOnLoad()));
-        
+
         return model;
     }
 

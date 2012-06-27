@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.insurance.pageflow.util.Functions.convertCsvToList;
 import static com.ail.insurance.pageflow.util.Functions.convertListToCsv;
 import static com.ail.insurance.pageflow.util.Functions.xpathToId;
@@ -155,26 +154,22 @@ public class QuestionWithSubSection extends Question {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    renderResponse(request, response, model, "");
-	    return model;
+	    return renderResponse(request, response, model, "");
     }
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+        	String aTitle = i18n(getExpandedTitle(model));
+            PrintWriter w=response.getWriter();
+            String questionId=xpathToId(rowContext+binding);
+            
+            String styleClass = getStyleClass();
+            String ref = getRef();
+    
+            model=QuotationContext.getRenderer().renderQuestionWithSubSection(w, request, response, model, this, aTitle, rowContext, questionId, styleClass, ref);
     	}
-
-    	String aTitle = i18n(getExpandedTitle(model));
-        PrintWriter w=response.getWriter();
-        String questionId=xpathToId(rowContext+binding);
-        
-        String styleClass = getStyleClass();
-        String ref = getRef();
-
-        QuotationContext.getRenderer().renderQuestionWithSubSection(w, request, response, model, this, aTitle, rowContext, questionId, styleClass, ref);
-
-        return model;
+    	return model;
     }
 
 	@Override

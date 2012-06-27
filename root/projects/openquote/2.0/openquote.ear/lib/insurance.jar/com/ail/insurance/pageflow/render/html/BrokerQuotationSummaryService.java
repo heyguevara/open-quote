@@ -65,13 +65,13 @@ public class BrokerQuotationSummaryService extends Service<RenderArgument> {
 
     /** The 'business logic' of the entry point. */
     public void invoke() throws PreconditionException, BaseException {
-    	if (args.getModelArg()==null || !(args.getModelArg() instanceof Policy)) {
+    	if (args.getModelArgRet()==null || !(args.getModelArgRet() instanceof Policy)) {
     		throw new PreconditionException("args.getModelArg()==null || !(args.getModelArg() instanceof Policy)");
     	}
 
     	StringWriter output=new StringWriter();
     	
-    	renderBrokerQuotationSummary(new PrintWriter(output), (Policy)args.getModelArg());
+    	renderBrokerQuotationSummary(new PrintWriter(output), (Policy)args.getModelArgRet());
     	
     	args.setRenderedOutputRet(output.toString());
 

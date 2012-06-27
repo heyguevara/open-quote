@@ -47,11 +47,13 @@ public abstract class Page extends PageContainer {
     }
 
     @Override
-    public void renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         // Give all the elements a chance to output page level content.
         for (PageElement e : super.getPageElement()) {
-            e.renderPageFooter(request, response, model);
+            model=e.renderPageFooter(request, response, model);
         }
+        
+        return model;
     }
 
     @Override

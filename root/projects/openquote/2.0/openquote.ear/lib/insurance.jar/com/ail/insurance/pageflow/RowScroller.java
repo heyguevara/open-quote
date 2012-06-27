@@ -49,14 +49,12 @@ public class RowScroller extends Repeater {
     
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+            PrintWriter w=response.getWriter();
+
+            model=QuotationContext.getRenderer().renderRowScroller(w, request, response, model, this);
     	}
 
-    	PrintWriter w=response.getWriter();
-
-        QuotationContext.getRenderer().renderRowScroller(w, request, response, model, this);
-        
         return model;
     }
 

@@ -20,6 +20,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
@@ -34,10 +35,11 @@ import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.portlet.QuotationPortlet;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
-import com.ail.insurance.pageflow.util.HelpText;
 import com.ail.insurance.pageflow.util.ErrorText;
+import com.ail.insurance.pageflow.util.HelpText;
 import com.ail.insurance.pageflow.util.QuotationCommon;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.I18N;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -384,8 +386,9 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @throws IllegalStateException
      * @throws IOException
      */
-    public void renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         // default implementation does nothing.
+        return model;
     }
     
     /**
@@ -478,18 +481,32 @@ public abstract class PageElement extends Type implements Identified, Comparable
         changes.firePropertyChange("order", oldOrder, order);
     }
     
+    public String i18n(String key) {
+        return I18N.i18n(key);
+    }
+    
+    public String i18n(String key, Object... args) {
+        String format=I18N.i18n(key);
+        return new Formatter().format(format, args).toString();
+    }
+    
     protected Type executeTemplateCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	try {
+        if (!conditionIsMet(model)) {
+            return model;
+        }
+        
+        try {
 	    	RenderCommand command=QuotationContext.getCore().newCommand(commandName, 
 	    																QuotationContext.getRenderer().getMimeType(),
 	    																RenderCommand.class);
 	    	command.setRequestArg(request);
 	    	command.setResponseArgRet(response);
-	    	command.setModelArg(model);
+	    	command.setModelArgRet(model);
+	    	command.setPolicyArg(QuotationContext.getPolicy());
 	    	command.setPageElementArg(this);
+	    	command.setWriterArg(response.getWriter());
 			command.invoke();
-	    	response.getWriter().print(command.getRenderedOutputRet());
-	    	return model;
+	    	return command.getModelArgRet();
 		} catch (BaseException e) {
 			throw new IllegalStateException(e);
 		}

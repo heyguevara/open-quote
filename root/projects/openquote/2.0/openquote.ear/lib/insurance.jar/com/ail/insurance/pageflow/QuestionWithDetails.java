@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import static com.ail.core.Functions.expand;
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.insurance.pageflow.util.Functions.convertCsvToList;
 import static com.ail.insurance.pageflow.util.Functions.convertListToCsv;
 import static com.ail.insurance.pageflow.util.Functions.xpathToId;
@@ -169,22 +168,20 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+        	String title = i18n(getExpandedTitle(model));
+            String detailTitle = i18n(getExpandedDetailsTitle(model));
+            String questionId = xpathToId(rowContext+binding);
+            String detailId = xpathToId(rowContext+detailsBinding);
+            
+            String styleClass = getStyleClass();
+            String ref = getRef();
+            
+            PrintWriter w = response.getWriter();
+            
+            model=QuotationContext.getRenderer().renderQuestionWithDetails(w, request, response, model, this, title, detailTitle, rowContext, questionId, detailId, styleClass, ref);
     	}
-
-    	String title = i18n(getExpandedTitle(model));
-        String detailTitle = i18n(getExpandedDetailsTitle(model));
-        String questionId = xpathToId(rowContext+binding);
-        String detailId = xpathToId(rowContext+detailsBinding);
-        
-        String styleClass = getStyleClass();
-        String ref = getRef();
-        
-        PrintWriter w = response.getWriter();
-        
-        QuotationContext.getRenderer().renderQuestionWithDetails(w, request, response, model, this, title, detailTitle, rowContext, questionId, detailId, styleClass, ref);
-
-        return model;
+    	
+    	return model;
     }
 }

@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.insurance.pageflow.util.Functions.addError;
 import static com.ail.insurance.pageflow.util.Functions.isEmpty;
 
@@ -35,9 +34,9 @@ import com.ail.financial.DirectDebit;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
 import com.ail.financial.PaymentSchedule;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
 
 /**
  * <p>This element takes care of the collection of payment details. Once the payment schedule

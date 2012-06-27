@@ -84,7 +84,7 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/configure.war/WEB-INF/lib/myfaces-api-1.1.5.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/configure.war/WEB-INF/lib/tomahawk-1.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar" sourcepath="/openquote/openquote.ear/lib/openquote.jar"/>
+	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-portlet-jsr168api-lib.jar" sourcepath="openquote.ear/lib/openquote.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/alfresco-repository.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/alfresco.war/WEB-INF/lib/spring-2.0.2.jar"/>
@@ -109,7 +109,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="build/lib/annotation-3.0.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/lib/mail.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-identity-lib.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/jboss-portal.sar/lib/portal-common-lib.jar"/>
@@ -128,5 +127,6 @@
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/antlr-runtime-3.3.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/mvel2-2.1.0.drools4.jar"/>
 	<classpathentry kind="lib" path="target/jboss/server/default/deploy/openquote.ear/lib/drools-templates-5.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="build/lib/annotation-3.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

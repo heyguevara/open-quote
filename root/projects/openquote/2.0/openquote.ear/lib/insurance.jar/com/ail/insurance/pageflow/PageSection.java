@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 
 import javax.portlet.RenderRequest;
@@ -55,11 +53,11 @@ public class PageSection extends PageContainer {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+    	    model=QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()), getStyleClass(), getRef());
     	}
-
-    	return QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()), getStyleClass(), getRef());
+    	
+    	return model;
     }
 
     @Override

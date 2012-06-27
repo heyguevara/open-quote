@@ -25,7 +25,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.Answer;
 import com.ail.insurance.pageflow.AnswerScroller;
 import com.ail.insurance.pageflow.AnswerSection;
 import com.ail.insurance.pageflow.AssessmentSheetDetails;
@@ -59,14 +58,12 @@ import com.ail.insurance.pageflow.SavedQuotations;
 import com.ail.insurance.pageflow.SectionScroller;
 import com.ail.insurance.pageflow.ViewQuotationButtonAction;
 import com.ail.insurance.policy.Clause;
-import com.ail.insurance.policy.Proposer;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.Proposer;
 
 @SuppressWarnings("deprecation")
 public interface Renderer {
 	String getMimeType();
-	
-	Type renderAnswer(PrintWriter w, RenderRequest request, RenderResponse response, Type model, Answer answer, String title, String answerText) throws IOException;
 	
 	Type renderAnswerScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, AnswerScroller answerScroller) throws IOException;
 	

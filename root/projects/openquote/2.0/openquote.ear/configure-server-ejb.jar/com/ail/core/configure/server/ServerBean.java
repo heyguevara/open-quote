@@ -103,7 +103,7 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
             Class<?> clazz=Class.forName(name);
             ConfigurationOwner owner=(ConfigurationOwner)clazz.newInstance();
             owner.resetConfiguration();
-            core.logDebug("Reset successful for:"+name);
+            core.logInfo("Reset successful for:"+name);
         }
         catch(ClassNotFoundException e) {
             throw new EJBException("Could not find configuration owner class:"+name);

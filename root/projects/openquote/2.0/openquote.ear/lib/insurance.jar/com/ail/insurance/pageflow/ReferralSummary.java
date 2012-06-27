@@ -104,9 +104,7 @@ public class ReferralSummary extends PageContainer {
         PrintWriter w=response.getWriter();
         Policy quote=(com.ail.insurance.policy.Policy)model;
 
-        QuotationContext.getRenderer().renderReferralSummary(w, request, response, quote, this);
-        
-        return model;
+        return QuotationContext.getRenderer().renderReferralSummary(w, request, response, quote, this);
 	}
 
     public NavigationSection getNavigationSection() {

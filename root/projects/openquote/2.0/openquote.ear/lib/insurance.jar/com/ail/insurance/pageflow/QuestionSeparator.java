@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -49,8 +47,9 @@ public class QuestionSeparator extends Question {
     }
 
     @Override
-    public void renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
+    public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
             IOException {
+        return model;
     }
 
     @Override
@@ -78,8 +77,6 @@ public class QuestionSeparator extends Question {
         String title = i18n(getExpandedTitle(model));
         PrintWriter w=response.getWriter();
         
-        QuotationContext.getRenderer().renderQuestionSeparator(w, request, response, model, this, title);
-        
-        return model;
+        return QuotationContext.getRenderer().renderQuestionSeparator(w, request, response, model, this, title);
     }
 }

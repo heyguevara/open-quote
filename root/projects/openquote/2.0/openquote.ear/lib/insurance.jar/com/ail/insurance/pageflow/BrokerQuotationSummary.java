@@ -84,13 +84,14 @@ public class BrokerQuotationSummary extends PageContainer {
 	    																RenderCommand.class);
 	    	command.setRequestArg(request);
 	    	command.setResponseArgRet(response);
-	    	command.setModelArg(model);
+	    	command.setModelArgRet(model);
 	    	command.setPageElementArg(this);
 			command.invoke();
 	    	response.getWriter().print(command.getRenderedOutputRet());
-	    	return model;
 		} catch (BaseException e) {
 			throw new IllegalStateException(e);
 		}
+    	
+    	return model;
 	}
 }

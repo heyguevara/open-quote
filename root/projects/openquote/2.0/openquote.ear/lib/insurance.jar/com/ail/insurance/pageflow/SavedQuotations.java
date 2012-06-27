@@ -209,17 +209,19 @@ public class SavedQuotations extends PageElement {
             	QuotationContext.getRenderer().renderSaveQuotations(w, request, response, quotes, this);
             }
         }
-        
-        return quote;
-	}
+
+        return model;
+    }
 
     @Override
-    public void renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
 
         if (request.getRemoteUser()==null) {
         	model=QuotationContext.getRenderer().renderSaveQuotationsFooter(w, request, response, model, this);
         }
+
+        return model;
     }
 
     /**

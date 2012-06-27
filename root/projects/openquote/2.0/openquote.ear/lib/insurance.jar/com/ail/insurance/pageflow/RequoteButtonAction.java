@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -26,11 +25,11 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.PolicyStatus;
-import com.ail.insurance.policy.Section;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.PolicyStatus;
+import com.ail.insurance.policy.Section;
 
 /**
  * <p>Adds a requote button to a page. By default this button will redirect the user
@@ -70,14 +69,12 @@ public class RequoteButtonAction extends CommandButtonAction {
             quote.markAsNotPersisted();
             super.processActions(request, response, model);
         }
-        
         return model;
     }
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
-        QuotationContext.getRenderer().renderRequoteButtonAction(w, request, response, model, this, i18n(getLabel()));
-        return model;
+        return QuotationContext.getRenderer().renderRequoteButtonAction(w, request, response, model, this, i18n(getLabel()));
     }
 }

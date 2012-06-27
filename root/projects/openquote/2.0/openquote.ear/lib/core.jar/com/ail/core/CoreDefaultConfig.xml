@@ -53,7 +53,7 @@
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
         </command>
         <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+            <parameter name="Service">com.ail.core.NullService</parameter>
         </command>
         <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
             <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>

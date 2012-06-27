@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.insurance.pageflow.util.Functions.addError;
 import static com.ail.insurance.pageflow.util.Functions.isEmpty;
 
@@ -30,11 +29,11 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.CommercialProposer;
-import com.ail.insurance.policy.Proposer;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.CommercialProposer;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.Proposer;
 import com.ail.party.Title;
 
 /**
@@ -189,16 +188,13 @@ public class ProposerDetails extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
-    	}
-
-    	PrintWriter w=response.getWriter();
-    	
-        Proposer proposer=(Proposer)((Policy)model).getProposer();
-
-        QuotationContext.getRenderer().renderProposerDetails(w, request, response, proposer, this);
+    	if (conditionIsMet(model)) {
+        	PrintWriter w=response.getWriter();
+        	
+            Proposer proposer=(Proposer)((Policy)model).getProposer();
         
+            QuotationContext.getRenderer().renderProposerDetails(w, request, response, proposer, this);
+    	}
         return model;
 	}
 }

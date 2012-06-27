@@ -17,6 +17,8 @@
 
 package com.ail.insurance.pageflow.render;
 
+import java.io.Writer;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -27,13 +29,14 @@ import com.ail.core.Type;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.insurance.pageflow.PageElement;
+import com.ail.insurance.policy.Policy;
 
 /**
  * Generic service argument defining the interface to all render services. The actual requirements
  * of render services for each type of widget vary in the arguments that they need. Having this
  * one Arg for all render services has the advantage that we have to maintain far fewer classes, 
  * but the disadvantage that it isn't clear which arguments have to be populated for a given
- * widget and which do not. However, all render services will require a that the {@link #getModelArg() Model}
+ * widget and which do not. However, all render services will require a that the {@link #getModelArgRet() Model}
  * argument is populated; and all will populate the {@link #getRenderedOutputRet RenderedOutputRet} with 
  * the rendered results.
  */
@@ -89,14 +92,18 @@ public interface RenderService {
          * M in MVC.
          * @return The model being rendered
          */
-        Type getModelArg();
+        Type getModelArgRet();
 
         /**
-         * @see #getModelArg()
+         * @see #getModelArgRet()
          * @param modelArg
          */
-        void setModelArg(Type modelArg);
+        void setModelArgRet(Type modelArgRet);
 
+        Policy getPolicyArg();
+        
+        void setPolicyArg(Policy policyArg);
+        
         /**
          * The page element or widget being rendered. This represents the V in MVC and defines
          * how the model needs to be rendered.
@@ -109,10 +116,16 @@ public interface RenderService {
          * @param pageElementArg
          */
         void setPageElementArg(PageElement pageElementArg);
+        
+        void setWriterArg(Writer writer);
+        
+        Writer getWriterArg();
+
     }
 
     @ServiceCommand
     public interface RenderCommand extends Command, RenderArgument {
+
     }
 }
 

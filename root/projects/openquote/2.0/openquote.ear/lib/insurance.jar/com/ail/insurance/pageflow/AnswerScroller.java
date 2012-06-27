@@ -17,14 +17,12 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>An AnswerScroller displays a repeating pattern of answers. It is generally used on summary screens within an 
@@ -73,13 +71,7 @@ public class AnswerScroller extends Answer {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
-    	}
-
-    	PrintWriter w=response.getWriter();
-        
-        return QuotationContext.getRenderer().renderAnswerScroller(w, request, response, model, this);
+   	    return executeTemplateCommand("AnswerScroller", request, response, model);
     }
 }
 

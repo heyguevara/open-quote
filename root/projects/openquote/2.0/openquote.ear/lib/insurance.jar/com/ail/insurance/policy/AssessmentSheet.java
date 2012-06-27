@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import com.ail.annotation.TypeDefinition;
@@ -89,6 +90,30 @@ public class AssessmentSheet extends Type {
         }
         
         return ret;
+    }
+    
+    /**
+     * Return a list of the assessment notes associated with this sheet.
+     * @return List of note lines, this list may be empty but it will not be null.
+     */
+    public List<AssessmentNote> noteLines() {
+        return new ArrayList<AssessmentNote>(getLinesOfType(AssessmentNote.class).values());
+    }
+    
+    /**
+     * Return a list of the calculation lines associated with this sheet.
+     * @return List of calculation lines, this list may be empty but it will not be null.
+     */
+    public List<CalculationLine> calculationLines() {
+        return new ArrayList<CalculationLine>(getLinesOfType(CalculationLine.class).values());
+    }
+    
+    /**
+     * Return a list of the calculation lines associated with this sheet.
+     * @return List of calculation lines, this list may be empty but it will not be null.
+     */
+    public List<Marker> markerLines() {
+        return new ArrayList<Marker>(getLinesOfType(Marker.class).values());
     }
     
     /**

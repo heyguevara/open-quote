@@ -17,10 +17,8 @@
 package com.ail.insurance.pageflow;
 
 import static com.ail.core.Functions.expand;
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,18 +28,18 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Attribute;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 
 /**
  * <p>An Answer simply displays the answer given to a previous asked question. An {@link AnswerSection} is used to 
  * group a number of Answers together. These elements are generally used as part of a summary screen.</p>
  * <p><img src="doc-files/Answer.png"/></p>
  * <p>The screenshot shows an Answer in the context of an {@link AnswerSection} which contains five Answers in all.</p>
- * <p>An Answer displays a title an answer. The title may be defined statically, using the {@link #getTitle() title} 
- * property; or dynamically using the {@link #getTitleBinding() titleBinding} property. The XPath expression defined 
- * by the {@link #getTitleBinding() titleBinding} property is evaluated against the quotation object at page render 
- * time. The answer itself is the result of evaluating the XPath expression defined by {@link PageElement#getBinding()
- * binding} against the quotation object.</p>
+ * <p>An Answer displays a title and answer. The title is defined statically, using the {@link #getTitle() title} 
+ * property; but may include dynamic references into the model in the form "${xpath}". The XPath expression(s) defined 
+ * are evaluated against the quotation object if they are absolute (i.e. begin with a /) or relative to the binding if
+ * they begin "./". Evaluations are performed at page render time. The answer itself is the result of evaluating 
+ * the XPath expression defined by {@link PageElement#getBinding() binding} against the quotation object.</p>
  * @see AnswerScroller
  * @version 1.1
  */
@@ -52,12 +50,6 @@ public class Answer extends PageElement {
     /** The fixed title to be displayed with the answer */
     private String title;
 
-    /** 
-     * An optional XPath value which can be evaluated against the quotation to fetch a dynamic title.
-     * If defined this is used in preference to the fixed title: @{link #title} 
-     */
-    private String titleBinding;
-    
     public Answer() {
     }
     
@@ -86,42 +78,21 @@ public class Answer extends PageElement {
      * <i>root</i>. 
      * @param root Model to expand references with respect to.
      * @param local Model to expand local references (xpaths starting ./) with respect to.
-     * @return Title with embedded references expanded
+     * @return Title with embedded references expanded or null if no title is defined
      * @since 1.1
      */
-    public String getExpandedTitle(Type root, Type local) {
+    public String formattedTitle(RenderArgumentImpl args) {
     	if (getTitle()!=null) {
-    		return expand(getTitle(), root, local);
-    	}
-    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
-    	else if (getTitleBinding()!=null) {
-    		return local.xpathGet(getTitleBinding(), String.class);
+    		return expand(getTitle(), args.getPolicyArg(), args.getModelArgRet());
     	}
     	else {
-    		return null;
+    	    return null;
     	}
     }
-    
-    /**
-     * An optional XPath value which can be evaluated against the quotation to fetch a dynamic title.
-     * If defined this is used in preference to the fixed title: @{link #title} 
-     * @return title binding XPath
-     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public String getTitleBinding() {
-        return titleBinding;
-    }
 
-    /**
-     * @see #getTitleBinding()
-     * @param titleBinding
-     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public void setTitleBinding(String titleBinding) {
-        this.titleBinding = titleBinding;
-    }
-
-    private String formattedAnswer(Object answer) {
+    public String formattedAnswer(RenderArgumentImpl args) {
+        Object answer=args.getModelArgRet().xpathGet(getBinding());
+        
         if (answer instanceof String) {
             return (String)answer;
         }
@@ -146,14 +117,6 @@ public class Answer extends PageElement {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
-    	}
-
-    	PrintWriter w = response.getWriter();
-        
-        String aTitle = i18n(getExpandedTitle(QuotationContext.getPolicy(), model));
-
-        return QuotationContext.getRenderer().renderAnswer(w, request, response, model, this, aTitle, formattedAnswer(model.xpathGet(binding)));
+        return executeTemplateCommand("Answer", request, response, model);
     }
 }

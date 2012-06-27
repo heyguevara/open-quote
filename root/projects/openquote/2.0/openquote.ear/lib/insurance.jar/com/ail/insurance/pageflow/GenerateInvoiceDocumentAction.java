@@ -50,8 +50,7 @@ public class GenerateInvoiceDocumentAction extends Action {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        // do nothing
-    	return model;
+        return model;
     }
 
     @Override
@@ -78,7 +77,6 @@ public class GenerateInvoiceDocumentAction extends Action {
                 throw new RenderingError("Failed to generate/display quote", e);
             }
         }
-        
         return model;
     }
 }

@@ -50,8 +50,7 @@ public class GenerateCertificateDocumentAction extends Action {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        // do nothing
-    	return model;
+        return model;
     }
 
     @Override
@@ -78,7 +77,6 @@ public class GenerateCertificateDocumentAction extends Action {
                 throw new RenderingError("Failed to generate/display wording", e);
             }
         }
-        
         return model;
     }
 }

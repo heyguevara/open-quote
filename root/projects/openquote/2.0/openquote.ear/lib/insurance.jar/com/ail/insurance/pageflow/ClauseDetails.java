@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -30,9 +28,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Clause;
 import com.ail.insurance.policy.Policy;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  */
@@ -64,59 +62,58 @@ public class ClauseDetails extends PageElement {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+
+        	PrintWriter w=response.getWriter();
+        	
+    		Map<String,List<Clause>> groupedClauses=new HashMap<String,List<Clause>>();
+    		Policy quote=(Policy)model;
+    		
+    		for(Clause clause: quote.getClause()) {
+    			StringBuffer compoundKey=new StringBuffer();
+    
+    			if (groupBy!=null) {
+    				for(Iterator<String> it=clause.xpathIterate(groupBy) ; it.hasNext() ; ) {
+    					String gp=it.next();
+    					if (compoundKey.length()==0) {
+    						if (!it.hasNext()) {
+    							compoundKey.append("The following endorsement(s) apply to ").append(gp).append(" only"); // TODO i18n needed
+    						}
+    						else {
+    							compoundKey.append("The following endorsement(s) apply to ").append(gp); // TODO i18n needed
+    						}
+    					}
+    					else if (!it.hasNext()) {
+    						compoundKey.append(" and ").append(gp); // TODO i18n needed
+    					}
+    					else {
+    						compoundKey.append(", ").append(gp);
+    					}
+    				}
+    			}
+    			else {
+    				compoundKey.append("The following endorsement(s) are applicable"); // TODO i18n needed
+    			}
+    			
+    			String key=compoundKey.toString();
+    			
+    			if (!groupedClauses.containsKey(key)) {
+    				groupedClauses.put(key, new ArrayList<Clause>());
+    			}
+    			
+    			groupedClauses.get(key).add(clause);
+    		}
+    
+    		if (groupedClauses.size()==1) {
+    			String oldKey=groupedClauses.keySet().iterator().next();
+    			List<Clause> clauses=groupedClauses.get(oldKey);
+    			groupedClauses.clear();
+    			groupedClauses.put("The following endorsement(s) are applicable", clauses); // TODO i18n needed
+    		}
+    		
+        	model=QuotationContext.getRenderer().renderClauseDetails(w, request, response, model, this, i18n(title), groupedClauses);
     	}
-
-    	PrintWriter w=response.getWriter();
     	
-		Map<String,List<Clause>> groupedClauses=new HashMap<String,List<Clause>>();
-		Policy quote=(Policy)model;
-		
-		for(Clause clause: quote.getClause()) {
-			StringBuffer compoundKey=new StringBuffer();
-
-			if (groupBy!=null) {
-				for(Iterator<String> it=clause.xpathIterate(groupBy) ; it.hasNext() ; ) {
-					String gp=it.next();
-					if (compoundKey.length()==0) {
-						if (!it.hasNext()) {
-							compoundKey.append("The following endorsement(s) apply to ").append(gp).append(" only"); // TODO i18n needed
-						}
-						else {
-							compoundKey.append("The following endorsement(s) apply to ").append(gp); // TODO i18n needed
-						}
-					}
-					else if (!it.hasNext()) {
-						compoundKey.append(" and ").append(gp); // TODO i18n needed
-					}
-					else {
-						compoundKey.append(", ").append(gp);
-					}
-				}
-			}
-			else {
-				compoundKey.append("The following endorsement(s) are applicable"); // TODO i18n needed
-			}
-			
-			String key=compoundKey.toString();
-			
-			if (!groupedClauses.containsKey(key)) {
-				groupedClauses.put(key, new ArrayList<Clause>());
-			}
-			
-			groupedClauses.get(key).add(clause);
-		}
-
-		if (groupedClauses.size()==1) {
-			String oldKey=groupedClauses.keySet().iterator().next();
-			List<Clause> clauses=groupedClauses.get(oldKey);
-			groupedClauses.clear();
-			groupedClauses.put("The following endorsement(s) are applicable", clauses); // TODO i18n needed
-		}
-		
-    	QuotationContext.getRenderer().renderClauseDetails(w, request, response, model, this, i18n(title), groupedClauses);
-        
-        return model;
+    	return model;
 	}
 }

@@ -118,13 +118,13 @@ public class ConfigurationHandler {
         // written in the same millisecond.
         try {
             Thread.sleep(10);
-            core.logBootInfo("Configuration saved: "+namespace);
+            core.logDebug("Configuration saved: "+namespace);
         }
         catch(InterruptedException e) {
             // ignore - it's not the end of the world if two configs do end up
             // with the same timestamp. And thats in the unlikely event that two
             // could be done within 1ms anyway. A message to the log is enough.
-            core.logBootWarning("Sleep failed in configuration update. Overlapping configs may have resulted.");
+            core.logWarning("Sleep failed in configuration update. Overlapping configs may have resulted.");
         }
     }
     
@@ -150,7 +150,7 @@ public class ConfigurationHandler {
 
 		config.setLoadedAt(new Date(System.currentTimeMillis()));
         
-        core.logBootInfo("Configuration loaded: "+owner.getConfigurationNamespace());
+        core.logDebug("Configuration loaded: "+owner.getConfigurationNamespace());
 
 		return config;
     }
@@ -166,8 +166,6 @@ public class ConfigurationHandler {
         Configuration config=loader.loadConfiguration(namespace, user.getVersionEffectiveDate());
 
         config.setLoadedAt(new Date(System.currentTimeMillis()));
-
-        core.logBootInfo("Configuration loaded: "+namespace);
 
         return config;
     }
@@ -260,7 +258,7 @@ public class ConfigurationHandler {
 					&&  System.currentTimeMillis()-config.getLoadedAt().getTime() > config.getTimeout()) {
 						nsl.remove(i);
                         config=null;
-                        core.logBootInfo("Expiring configuration: "+owningNamespace);
+                        core.logInfo("Expiring configuration: "+owningNamespace);
 					}
                     break;
                 }

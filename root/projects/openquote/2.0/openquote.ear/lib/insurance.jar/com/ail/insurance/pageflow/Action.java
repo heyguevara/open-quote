@@ -87,17 +87,17 @@ public class Action extends PageElement {
 
 	@Override
 	public Type processActions(ActionRequest request, ActionResponse response, Type model) {
-		if ("onProcessActions".equals(when) && conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model);
+		if (conditionIsMet(model)) {
+			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model, "onProcessActions");
 		}
-
+		
 		return model;
 	}
 
 	@Override
 	public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
-		if ("onApplyRequestValues".equals(when) && conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model);
+		if (conditionIsMet(model)) {
+			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model, "onApplyRequestValues");
 		}
 
 		return model;
@@ -114,10 +114,7 @@ public class Action extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-		if ("onRenderResponse".equals(when)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model);
-		}
-		return model;
+	    return executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model, "onRenderResponse");
 	}
 
 	/**
@@ -161,15 +158,20 @@ public class Action extends PageElement {
 		this.when = when;
 	}
 
-	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model) {
-		Policy quote = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
+	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model, String currentPhase) {
+	    if (when.equals(currentPhase)) {
+    	    Policy quote = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
+    
+    		// Always persist the quote after running an action - the next
+    		// action/command may need to read the persisted state.
+    		quote = QuotationCommon.persistQuotation(quote);
+    		QuotationContext.setPolicy(quote);
 
-		// Always persist the quote after running an action - the next
-		// action/command may need to read the persisted state.
-		quote = QuotationCommon.persistQuotation(quote);
-		QuotationContext.setPolicy(quote);
-
-		return quote;
+            return quote;
+	    }
+	    else {
+	        return model;
+	    }
 	}
 
 	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model) {

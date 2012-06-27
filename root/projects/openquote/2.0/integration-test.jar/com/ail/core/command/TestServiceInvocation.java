@@ -26,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.Date;
 
 import org.junit.Before;
@@ -602,19 +603,24 @@ public class TestServiceInvocation extends CoreUserBaseCase {
     
     @Test
     public void testVelocity() throws Exception {
+        StringWriter output=new StringWriter();
+        
         DummyCommand command = getCore().newCommand("TestVelocityService", DummyCommand.class);
         command.setX(21);
         command.setY(34);
-
+        command.setWriterArg(output);
+        
         Timer.start("testVelocity");
         command.invoke();
         Timer.split("testVelocity");
         command.invoke();
         Timer.stop("testVelocity");
         
-        assertTrue("Result does not contain expected string: 'The value of X is: 21'", command.getStringRet().contains("The value of X is: 21"));
-        assertTrue("Result does not contain expected string: 'The value of Y is: 34'", command.getStringRet().contains("The value of Y is: 34"));
-        assertTrue("Result does not contain expected string: 'Total is: 55'", command.getStringRet().contains("Total is: 55"));
+        String result=output.toString();
+        
+        assertTrue("Result does not contain expected string: 'The value of X is: 21'", result.contains("The value of X is: 21"));
+        assertTrue("Result does not contain expected string: 'The value of Y is: 34'", result.contains("The value of Y is: 34"));
+        assertTrue("Result does not contain expected string: 'Total is: 55'", result.contains("Total is: 55"));
     }
     
     @Test

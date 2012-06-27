@@ -121,6 +121,7 @@ public abstract class PageContainer extends PageElement {
         for (PageElement e : getPageElement()) {
             model=e.processActions(request, response, model);
         }
+        
         return model;
     }
 

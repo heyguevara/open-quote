@@ -131,7 +131,7 @@ public class Xform extends Type implements Renderer {
 		}
 		
 		for(Answer a: answerSection.getAnswer()) {
-		    model=a.renderResponse(request, response, model);
+		    a.renderResponse(request, response, model);
 		}
 		w.printf("</group>");
 		return model;
@@ -440,7 +440,7 @@ public class Xform extends Type implements Renderer {
         }
 
         for (PageElement e : informationPage.getPageElement()) {
-        	model=e.renderResponse(request, response, model);
+        	e.renderResponse(request, response, model);
         }
 
         w.printf(    "</group>");        
@@ -526,13 +526,13 @@ public class Xform extends Type implements Renderer {
 
     public Type renderNavigationSection(PrintWriter w, RenderRequest request, RenderResponse response, Type model, NavigationSection navigationSection) throws IllegalStateException, IOException {
         for(PageElement element: navigationSection.getPageElement()) {
-			model=element.renderResponse(request, response, model);
+			element.renderResponse(request, response, model);
 		}
         if (navigationSection.isQuitDisabled()) {
             w.print("&nbsp;");
         }
         else {
-            model=navigationSection.getQuitButton().renderResponse(request, response, model);
+            navigationSection.getQuitButton().renderResponse(request, response, model);
         }
 
     	return model;
@@ -576,7 +576,7 @@ public class Xform extends Type implements Renderer {
         while(it.hasNext()) {
             for(int col=0 ; col<pageSection.getColumns() ; col++) {
                 if (it.hasNext()) {
-                    model=it.next().renderResponse(request, response, model);
+                    it.next().renderResponse(request, response, model);
                 }
                 else {
                     w.printf("&nbsp;");
@@ -638,7 +638,7 @@ public class Xform extends Type implements Renderer {
         }
 
         for (PageElement e : questionPage.getPageElement()) {
-            model=e.renderResponse(request, response, model);
+            e.renderResponse(request, response, model);
         }
 
         w.printf(    "</group>");        
@@ -754,7 +754,7 @@ public class Xform extends Type implements Renderer {
         w.printf("</case>");
         w.printf("<case id=\"%s_1\">",questionId);
         for(PageElement ss: questionWithSubSection.getSubSection()) {
-        	model=ss.renderResponse(request, response, model);
+        	ss.renderResponse(request, response, model);
         }
         w.printf("</case></switch>");
        	

@@ -92,33 +92,33 @@ public class ParsedUrlContent extends PageElement {
         boolean success=false;
         String content=null;
         
-    	if (!conditionIsMet(model)) {
-    		return model;
-    	}
-
-    	Policy quote=(com.ail.insurance.policy.Policy)model;
-
-        CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()));
-        Collection<String> namespaces=cp.getConfigurationNamespaceParent();
-        
-        for(String namespace: namespaces) {
-            try {
-                if (namespace.endsWith("Registry")) {
-                    productName=configurationNamespaceToProductName(namespace);
-                    content=expand(loadUrlContentAsString(new URL(expandRelativeUrlToProductUrl(getUrl(), request, productName))), quote);
-                    success=true;
-                    break;
+    	if (conditionIsMet(model)) {
+        	Policy quote=(com.ail.insurance.policy.Policy)model;
+    
+            CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()));
+            Collection<String> namespaces=cp.getConfigurationNamespaceParent();
+            
+            for(String namespace: namespaces) {
+                try {
+                    if (namespace.endsWith("Registry")) {
+                        productName=configurationNamespaceToProductName(namespace);
+                        content=expand(loadUrlContentAsString(new URL(expandRelativeUrlToProductUrl(getUrl(), request, productName))), quote);
+                        success=true;
+                        break;
+                    }
+                }
+                catch(IOException e) {
+                    // next! This just indicates that we didn't find it in this namespace
                 }
             }
-            catch(IOException e) {
-                // next! This just indicates that we didn't find it in this namespace
+            
+            if (!success) {
+                content="ERROR: Content not found for:"+getUrl();
             }
-        }
-        
-        if (!success) {
-            content="ERROR: Content not found for:"+getUrl();
-        }
-        
-        return QuotationContext.getRenderer().renderParsedUrlContent(response.getWriter(), request, response, model, this, content);
+            
+            model=QuotationContext.getRenderer().renderParsedUrlContent(response.getWriter(), request, response, model, this, content);
+    	}
+
+    	return model;
 	}
 }

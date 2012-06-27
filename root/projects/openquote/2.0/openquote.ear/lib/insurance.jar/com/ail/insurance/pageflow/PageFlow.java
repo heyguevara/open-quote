@@ -122,7 +122,7 @@ public class PageFlow extends PageElement {
 		for(Page p: page) {
 			if (p.getId().equals(((Policy)model).getPage())) {
 				model=p.processActions(request, response, model);
-                 break;
+                break;
 			}
 		}
 		return model;
@@ -133,9 +133,10 @@ public class PageFlow extends PageElement {
 		for(Page p: page) {
 			if (p.getId().equals(((Policy)model).getPage())) {
 				model=p.renderResponse(request, response, model);
-                 break;
+                break;
 			}
 		}
+		
 		return model;
 	}
 

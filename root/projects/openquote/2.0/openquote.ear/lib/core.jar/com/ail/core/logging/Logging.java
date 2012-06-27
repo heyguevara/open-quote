@@ -75,7 +75,7 @@ public interface Logging {
 	/**
      * Output a message to the Warning logging channel.
 	 * Messages written to this channel indicate that something unexpected
-     * occured, but that it was dealt with and is not thought (by the developer)
+     * occurred, but that it was dealt with and is not thought (by the developer)
      * to be if great importance.
      * @param message The text of the message to be output.
      */
@@ -84,7 +84,7 @@ public interface Logging {
     /**
      * Output a message to the Warning logging channel with exception details.
      * Messages written to this channel indicate that something unexpected
-     * occured, but that it was dealt with and is not thought (by the developer)
+     * occurred, but that it was dealt with and is not thought (by the developer)
      * to be if great importance.
      * @param message The text of the message to be output.
      * @param cause The cause of the warning message.
@@ -101,7 +101,7 @@ public interface Logging {
     void logError(String message);
 
     /**
-     * Output a message to the Error logging channel with an excpetion.
+     * Output a message to the Error logging channel with an exception.
      * The error channel is reserved for messages that describe serious
      * system problems. The problem didn't stop processing, but is significant
      * enough to require investigation.
@@ -130,88 +130,12 @@ public interface Logging {
     void logFatal(String message, Throwable cause);
     
     /**
-     * Output a message to the Info boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An 'info' message indicates normal operation; it might be used to report that a message
-     * has been sent sucessfully for example.
-     * @param message The text of the message to be output.
+     * The logger to be called if logging through normal means fails for any
+     * reason. If the system is in a state where the normal logging channels
+     * fail, then this method is used as a last resort.
+     * @param message
+     * @param cause
+     * @param severity
      */
-    void logBootInfo(String message);
-
-    /**
-     * Output a message to the Info boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An 'info' message indicates normal operation; it might be used to report that a message
-     * has been sent sucessfully for example.
-     * @param message The text of the message to be output.
-     * @param cause Related cause.
-     */
-    void logBootInfo(String message, Throwable cause);
-    
-    /**
-     * Output a message to the Error boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * Error messages that describe serious system problems. The problem didn't prevent processing, 
-     * but is significant enough to require investigation.
-     * @param message The text of the message to be output.
-     */
-    void logBootError(String message);
-
-    /**
-     * Output a message to the Error boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * Error messages that describe serious system problems. The problem didn't prevent processing, 
-     * but is significant enough to require investigation.
-     * @param message The text of the message to be output.
-     * @param cause The exception that caused the error.
-     */
-    void logBootError(String message, Throwable cause);
-    
-    /**
-     * Output a message to the Warning Boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * Warning messages indicate that something unexpected occured, but that it was dealt with 
-     * and is not thought (by the developer) to be if great importance.
-     * @param message The text of the message to be output.
-     */
-    void logBootWarning(String message);
-
-    /**
-     * Output a message to the Warning Boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * Warning messages indicate that something unexpected occured, but that it was dealt with 
-     * and is not thought (by the developer) to be if great importance.
-     * @param message The text of the message to be output.
-     * @param cause The exception that caused the warning.
-     */
-    void logBootWarning(String message, Throwable cause);
-    
-    /**
-     * Output a message to the Fatal boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An error is fatal if it stops the operation being processed. For example,
-     * if the systems configuration information is defined in an inconsistent way
-     * a fatal error is generated.
-     * @param message The text of the message to be output.
-     */
-    void logBootFatal(String message);
-
-    /**
-     * Output a message to the Fatal boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An error is fatal if it stops the operation being processed. For example,
-     * if the systems configuration information is defined in an inconsistent way
-     * a fatal error is generated.
-     * @param message The text of the message to be output.
-     * @param cause The exception that caused the fatal error.
-     */
-    void logBootFatal(String message, Throwable cause);
+    void logUnloggable(Severity severity, String message, Throwable cause);
 }

@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -54,18 +52,18 @@ public class Question extends AttributeField {
 
 	@Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	if (!conditionIsMet(model)) {
-    		return model;
+    	if (conditionIsMet(model)) {
+        	String title = i18n(getExpandedTitle(model));
+        	
+        	String styleClass = getStyleClass();
+        	
+        	String ref = getRef();
+    
+            PrintWriter w=response.getWriter();
+        
+            model=QuotationContext.getRenderer().renderQuestion(w, request, response, model, this, title, rowContext, styleClass, ref);
     	}
 
-    	String title = i18n(getExpandedTitle(model));
-    	
-    	String styleClass = getStyleClass();
-    	
-    	String ref = getRef();
-
-        PrintWriter w=response.getWriter();
-        
-        return QuotationContext.getRenderer().renderQuestion(w, request, response, model, this, title, rowContext, styleClass, ref);
+    	return model;
     }
 }

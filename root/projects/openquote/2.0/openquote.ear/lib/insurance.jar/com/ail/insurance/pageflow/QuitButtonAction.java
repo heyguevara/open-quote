@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -54,7 +52,6 @@ public class QuitButtonAction extends CommandButtonAction {
             model=super.processActions(request, response, model);
             QuotationContext.setPolicy(null);
         }
-        
         return model;
     }
 
@@ -62,8 +59,6 @@ public class QuitButtonAction extends CommandButtonAction {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         PrintWriter w=response.getWriter();
         
-        QuotationContext.getRenderer().renderQuitButtonAction(w, request, response, model, this, i18n(getLabel()));
-        
-        return model;
+        return QuotationContext.getRenderer().renderQuitButtonAction(w, request, response, model, this, i18n(getLabel()));
     }
 }

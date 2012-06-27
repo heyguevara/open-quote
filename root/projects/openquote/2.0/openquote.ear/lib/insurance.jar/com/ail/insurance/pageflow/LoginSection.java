@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import static com.ail.insurance.pageflow.util.Functions.addError;
 
 import java.io.IOException;
@@ -44,10 +43,10 @@ import org.jboss.portal.identity.UserModule;
 import org.jboss.portal.identity.UserProfileModule;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.Proposer;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.Proposer;
 
 /**
  * The LoginSection page element provides a single UI section which deals with the following

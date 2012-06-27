@@ -16,7 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.insurance.pageflow.util.I18N.i18n;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -27,10 +26,10 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 
 /**
  * <p>Adds a save button to a page. By default this button saves the quote and returns
@@ -63,7 +62,6 @@ public class SaveButtonAction extends CommandButtonAction {
             model=super.processActions(request, response, quote);
             QuotationContext.setPolicy(null);
         }
-        
         return model;
     }
 

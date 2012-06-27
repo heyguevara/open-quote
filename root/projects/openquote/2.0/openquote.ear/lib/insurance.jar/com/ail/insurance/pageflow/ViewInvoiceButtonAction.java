@@ -75,7 +75,6 @@ public class ViewInvoiceButtonAction extends CommandButtonAction {
                 throw new RenderingError("Failed to generate/display invoice", e);
             }
         }
-        
         return model;
     }
 

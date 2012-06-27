@@ -161,7 +161,7 @@ public class PageScript extends PageElement {
 		if (!pageHeader) {
 			model=renderScript(request, response, model);
 		}
-
+		
 		return model;
     }
 

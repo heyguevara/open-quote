@@ -564,8 +564,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             cmd.invoke();
 		}
         catch(Throwable e) {
-            System.err.println("debug logger failed ("+e+") message was: "+message);
-            throw new CommandInvocationError(e.toString());
+            logUnloggable(Severity.DEBUG, message, cause);
         }
     }
 
@@ -593,8 +592,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             cmd.invoke();
 		}
         catch(Throwable e) {
-            System.err.println("info logger failed ("+e+") message was: "+message);
-            throw new CommandInvocationError(e.toString(), e);
+            logUnloggable(Severity.INFO, message, cause);
         }
     }
 
@@ -623,8 +621,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             cmd.invoke();
 		}
         catch(Throwable e) {
-            System.err.println("warning logger failed ("+e+") message was: "+message);
-            throw new CommandInvocationError(e.toString(), e);
+            logUnloggable(Severity.WARNING, message, cause);
         }
     }
 
@@ -653,8 +650,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             cmd.invoke();
 		}
         catch(Throwable e) {
-            System.err.println("error logger failed ("+e+") message was: "+message);
-            throw new CommandInvocationError(e.toString(), e);
+            logUnloggable(Severity.ERROR, message, cause);
         }
     }
 
@@ -683,8 +679,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             cmd.invoke();
 		}
         catch(Throwable e) {
-            System.err.println("fatal logger failed ("+e+") message was: "+message);
-            throw new CommandInvocationError(e.toString(), e);
+            logUnloggable(Severity.FATAL, message, cause);
         }
     }
 
@@ -695,6 +690,10 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         logFatal(message, null);
     }
 
+    public void logUnloggable(Severity severity, String message, Throwable cause) {
+        BootLogger.log(coreUser.getClass(), coreUser.getVersionEffectiveDate(), severity, message, cause);
+    }
+    
     /**
      * @inheritDoc
      */
@@ -1099,86 +1098,6 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         catch(BaseException e) {
             throw new CommandInvocationError(e);
         }
-    }
-
-    /**
-     * Output a message to the Error boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An error is fatal if it stops the operation being processed. For example,
-     * if the systems configuration information is defined in an inconsistent way
-     * a fatal error is generated.
-     * @param message The text of the message to be output.
-     */
-    public void logBootError(String message, Throwable cause) {
-        BootLogger.log(coreUser.getClass(), coreUser.getVersionEffectiveDate(), Severity.ERROR, message, cause);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void logBootError(String message) {
-        logBootError(message, null);
-    }
-    
-    /**
-     * Output a message to the Fatal boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An error is fatal if it stops the operation being processed. For example,
-     * if the systems configuration information is defined in an inconsistent way
-     * a fatal error is generated.
-     * @param message The text of the message to be output.
-     */
-    public void logBootFatal(String message, Throwable cause) {
-        BootLogger.log(coreUser.getClass(), coreUser.getVersionEffectiveDate(), Severity.FATAL, message, cause);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void logBootFatal(String message) {
-        logBootFatal(message, null);
-    }
-    
-    /**
-     * Output a message to the Info boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An error is fatal if it stops the operation being processed. For example,
-     * if the systems configuration information is defined in an inconsistent way
-     * a fatal error is generated.
-     * @param message The text of the message to be output.
-     */
-    public void logBootInfo(String message, Throwable cause) {
-        BootLogger.log(coreUser.getClass(), coreUser.getVersionEffectiveDate(), Severity.INFO, message, cause);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void logBootInfo(String message) {
-        logBootInfo(message, null);
-    }
-
-    /**
-     * Output a message to the Warning boot logging channel. This should only be used when the 
-     * normal logging services are not available - e.g. during startup when the normal service
-     * have yet to be loaded.
-     * An error is fatal if it stops the operation being processed. For example,
-     * if the systems configuration information is defined in an inconsistent way
-     * a fatal error is generated.
-     * @param message The text of the message to be output.
-     */
-    public void logBootWarning(String message, Throwable cause) {
-        BootLogger.log(coreUser.getClass(), coreUser.getVersionEffectiveDate(), Severity.WARNING, message, cause);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void logBootWarning(String message) {
-        logBootWarning(message, null);
     }
 
     /**
