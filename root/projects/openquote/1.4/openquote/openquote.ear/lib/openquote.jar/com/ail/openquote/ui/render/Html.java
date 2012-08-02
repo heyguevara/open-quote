@@ -294,10 +294,10 @@ public class Html extends Type implements Renderer {
 	                // for percentages, use getValue rather than getFormattedValue as the latter will add a trailing % symbol
 	                // to the field's content. Also, add the symbol outside of the field.
 	                if (attr.getFormatOption("percent")!=null) {
-	                	w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%%", id, size, onChangeEvent, attr.getValue());
+	                	w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>%%</td>", id, size, onChangeEvent, attr.getValue());
 	                }
 	                else {
-	                	w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/>", id, size, onChangeEvent, attr.getFormattedValue());
+	                	w.printf("<td width='25px'>&nbsp;</td><td><input name=\"%s\" class='portlet-form-input-field' style='text-align:right' size='%d' %s type='text' value='%s'/></td>", id, size, onChangeEvent, attr.getFormattedValue());
 	                }
 	            }
 	            else if (attr.isCurrencyType()) {
