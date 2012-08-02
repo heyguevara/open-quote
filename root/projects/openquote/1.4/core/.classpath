@@ -108,5 +108,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/development/build/lib/annotation-3.0.jar"/>
+	<classpathentry kind="lib" path="target/jboss/client/mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
