@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -26,14 +25,13 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.Section;
 
 /**
  * <p>Adds a requote button to a page. By default this button will redirect the user
- * to the "ProposerDetails" screen, and is labeled as "Requote". On selection the quotation's
+ * to the "ProposerDetails" screen, and is labelled as "Requote". On selection the quotation's
  * status is set to @{link com.ail.insurance.policy.PolicyStatus.APPLICATION}; 
  * it's quote number is removed; and it is marked as not having been saved. This 
  * has the effect of making this a new quote without any association to the original
@@ -74,7 +72,6 @@ public class RequoteButtonAction extends CommandButtonAction {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        return QuotationContext.getRenderer().renderRequoteButtonAction(w, request, response, model, this, i18n(getLabel()));
+        return executeTemplateCommand("RequoteButtonAction", request, response, model);
     }
 }

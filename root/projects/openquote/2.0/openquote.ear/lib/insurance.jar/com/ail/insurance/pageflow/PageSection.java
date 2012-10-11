@@ -22,7 +22,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * A PageSection renders as a section on the page containing a number of columns (1 by default). The section may
@@ -53,17 +52,11 @@ public class PageSection extends PageContainer {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-    	    model=QuotationContext.getRenderer().renderPageSection(response.getWriter(), request, response, model, this, i18n(getTitle()), getStyleClass(), getRef());
-    	}
-    	
-    	return model;
+        return executeTemplateCommand("PageSection", request, response, model);
     }
 
     @Override
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        for(PageElement element: getPageElement()) {
-            element.renderPageHeader(request, response, model);
-        }
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        return executeTemplateCommand("PageSectionHeader", request, response, model);
     }
 }

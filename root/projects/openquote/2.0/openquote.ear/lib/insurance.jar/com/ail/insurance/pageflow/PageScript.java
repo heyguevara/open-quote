@@ -33,7 +33,6 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * The PageScript element inserts JavaSript in the generated page. The JavaSript to be inserted can be referenced by
@@ -166,20 +165,17 @@ public class PageScript extends PageElement {
     }
 
 	@Override
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
 		if (pageHeader) {
 			renderScript(request, response, model);
 		}
+		return model;
     }
 
 	private Type renderScript(RenderRequest request, RenderResponse response, Type model) throws IOException {
 		initialise(request, model);
 
-		if (conditionIsMet(model)) {
-	    	QuotationContext.getRenderer().renderPageScript(response.getWriter(), request, response, model, this);
-    	}
-
-		return model;
+		return executeTemplateCommand("PageScript", request, response, model);
 	}
 	
 	/**
@@ -190,7 +186,7 @@ public class PageScript extends PageElement {
 	private synchronized void initialise(RenderRequest request, Type model) {
 		if (!initialized) {
 			// If a product relative URL was specified... 
-			if (url.charAt(0)=='~') {
+			if (url!=null && url.charAt(0)=='~') {
 				// ...find the actual resource it relates to by searching the product
 				// hierarchy. We have to do this because the script may be defined in
 				// in one of the current product's ancestors.

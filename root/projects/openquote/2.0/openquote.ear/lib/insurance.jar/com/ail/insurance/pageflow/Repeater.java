@@ -29,12 +29,10 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.OrderedLinkedList;
 import com.ail.insurance.pageflow.util.QuotationContext;
-
-import static com.ail.core.Functions.expand;
+import com.ail.insurance.policy.Policy;
 
 /**
  * A Repeater represents Collections of data on the UI. Subclasses of this type define how the
@@ -74,11 +72,6 @@ public abstract class Repeater extends PageElement {
      */
     protected List<AttributeField> item=null;
 
-    /** 
-     * The title of the repeater as a whole
-     */
-    private String title = null;
-    
     /**
      * The title of each repeated element within the repeater.
      */
@@ -90,40 +83,6 @@ public abstract class Repeater extends PageElement {
         super();
         item=new OrderedLinkedList<AttributeField>();
     }
-
-    /**
-     * The fixed title to be displayed with the repeater. This method returns the raw title without
-     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
-     * @see #getExpandedTitle(Type)
-     * @return value of title
-     * @since 1.1
-     */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * @param title the title to set
-	 * @see #getTitle()
-     * @since 1.1
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-    /**
-     * Get the title with all variable references expanded. References are expanded with 
-     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
-     * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * <i>root</i>. 
-     * @param root Model to expand references with respect to.
-     * @param local Model to expand local references (xpaths starting ./) with respect to.
-     * @return Title with embedded references expanded
-     * @since 1.1
-     */
-	public String getExpandedTitle(Type root, Type local) {
-		return expand(getTitle(), root, local);
-	}
 
 	/**
 	 * @return the repeatedTitle
@@ -151,8 +110,8 @@ public abstract class Repeater extends PageElement {
      * @return Title with embedded references expanded
      * @since 1.1
      */
-	public String getExpandedRepeatedTitle(Type local) {
-		return expand(getRepeatedTitle(), QuotationContext.getPolicy(), local);
+	public String formattedRepeatedTitle(Type local) {
+		return i18n(expand(getRepeatedTitle(), QuotationContext.getPolicy(), local));
 	}
 
 	/**
@@ -352,7 +311,7 @@ public abstract class Repeater extends PageElement {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         Iterator<Type> it=model.xpathIterate(getBinding());
         
         if (it.hasNext()) {
@@ -362,6 +321,8 @@ public abstract class Repeater extends PageElement {
                 a.renderPageLevelResponse(request, response, t, getBinding()+"[0]");
             }
         }
+        
+        return model;
     }
 
     @Override

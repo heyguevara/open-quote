@@ -263,7 +263,12 @@ public class Functions {
     }
 
     public static Object test(Object c) {
-        return ((List<?>)c).size()!=0;
+        try {
+            return ((List<?>)c).size()!=0;
+        }
+        catch(Throwable t) {
+            return false;
+        }
     }
 
     /**

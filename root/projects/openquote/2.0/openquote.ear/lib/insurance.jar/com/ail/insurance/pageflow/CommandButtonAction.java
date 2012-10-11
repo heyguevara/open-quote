@@ -16,8 +16,9 @@
  */
 package com.ail.insurance.pageflow;
 
+import static com.ail.core.Functions.expand;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,6 +26,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
 
@@ -73,7 +75,16 @@ public class CommandButtonAction extends PageElement {
     public void setLabel(String label) {
         this.label = label;
     }
-
+    
+    public String formattedLabel(RenderArgumentImpl args) {
+        if (getLabel()!=null) {
+            return i18n(expand(getLabel(), args.getPolicyArg(), args.getModelArgRet()));
+        }
+        else {
+            return null;
+        }
+    }
+    
     /**
      * Id of another page in the same {@link PageFlow} to forward to.
      * @return Page Id
@@ -138,7 +149,6 @@ public class CommandButtonAction extends PageElement {
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         super.renderResponse(request, response, model);
-        PrintWriter w=response.getWriter();
-        return QuotationContext.getRenderer().renderCommandButtonAction(w, request, response, model, this, label, immediate);
+        return executeTemplateCommand("CommandButtonAction", request, response, model);
     }
 }

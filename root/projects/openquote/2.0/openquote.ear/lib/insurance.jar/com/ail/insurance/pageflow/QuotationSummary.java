@@ -17,7 +17,8 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,7 +26,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -158,6 +158,21 @@ public class QuotationSummary extends PageContainer {
     }
 
     /**
+     * Return the specified wordings URL in an external form which can be used in an <a ref.../> from the browser.
+     * @param QuotationSummary Summary containing the URL to the wordings document - may be product relative
+     * @param policy Policy being rendered for
+     * @param request Request being rendered
+     * @return External form URL
+     * @throws MalformedURLException
+     */
+    public String getWordingUrlExternalForm(QuotationSummary qs, Policy policy, RenderRequest request) throws MalformedURLException {
+        String url;
+        url = expandRelativeUrlToProductUrl(qs.getWordingsUrl(), request, policy.getProductTypeId());
+        url = convertProductUrlToExternalForm(new URL(url)).toExternalForm();
+        return url.toString();
+    }
+    
+    /**
      * ID of a page in the pageflow to forward to when the confirm and pay button is selected.     
      * @return "confirm and pay" destination page id
      */
@@ -248,10 +263,7 @@ public class QuotationSummary extends PageContainer {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        Policy quote=(com.ail.insurance.policy.Policy)model;
-
-        return QuotationContext.getRenderer().renderQuotationSummary(w, request, response, quote, this);
+	    return executeTemplateCommand("QuotationSummary", request, response, model);
 	}
 
     public PageElement loginSection(Type model) {
@@ -271,23 +283,28 @@ public class QuotationSummary extends PageContainer {
     public PageElement navigationSection() {
         if (navigationSection==null) {
             navigationSection=new NavigationSection();
+            navigationSection.setId(this.id+".nav");
             
             SaveButtonAction save=new SaveButtonAction();
             save.setDestinationPageId(saveDestinationPageId);
+            save.setId(this.id+".save");
             navigationSection.getPageElement().add(save);
         
             RequoteButtonAction requote=new RequoteButtonAction();
             requote.setLabel("i18n_requote_button_label");
             requote.setDestinationPageId(requoteDestinationPageId);
+            requote.setId(this.id+".requote");
             navigationSection.getPageElement().add(requote);
     
             CommandButtonAction confirmAndPay=new CommandButtonAction();
             confirmAndPay.setLabel("i18n_confirm_and_pay_button_label");
             confirmAndPay.setDestinationPageId(confirmAndPayDestinationPageId);
+            confirmAndPay.setId(this.id+".pay");
             navigationSection.getPageElement().add(confirmAndPay);
 
             CommandButtonAction view=new ViewQuotationButtonAction();
             view.setLabel(i18n("i18n_view_quotation_document_button_label"));
+            view.setId(this.id+".quote");
             navigationSection.getPageElement().add(view);
         }
         

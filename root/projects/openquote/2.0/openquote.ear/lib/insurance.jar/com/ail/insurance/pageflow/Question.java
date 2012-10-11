@@ -17,13 +17,11 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>The Question page element is probably one of the more commonly used elements in pageflows. It renders as a single line 
@@ -52,18 +50,6 @@ public class Question extends AttributeField {
 
 	@Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-        	String title = i18n(getExpandedTitle(model));
-        	
-        	String styleClass = getStyleClass();
-        	
-        	String ref = getRef();
-    
-            PrintWriter w=response.getWriter();
-        
-            model=QuotationContext.getRenderer().renderQuestion(w, request, response, model, this, title, rowContext, styleClass, ref);
-    	}
-
-    	return model;
+    	return executeTemplateCommand("Question", request, response, model, rowContext);
     }
 }

@@ -113,11 +113,12 @@ public class ConfigurationHandler {
  
         loader.saveConfiguration(namespace, config);
         
-        // Sleep for 2ms. Configurations are saved with timestamps that go down
+        // Sleep for 1ms. Configurations are saved with timestamps that go down
         // to the 1ms resolution. This delay stops two configurations being
         // written in the same millisecond.
         try {
-            Thread.sleep(10);
+            Thread.sleep(1);
+            core.getVersionEffectiveDate().setTime(new VersionEffectiveDate().getTime());
             core.logDebug("Configuration saved: "+namespace);
         }
         catch(InterruptedException e) {
@@ -258,7 +259,6 @@ public class ConfigurationHandler {
 					&&  System.currentTimeMillis()-config.getLoadedAt().getTime() > config.getTimeout()) {
 						nsl.remove(i);
                         config=null;
-                        core.logInfo("Expiring configuration: "+owningNamespace);
 					}
                     break;
                 }

@@ -18,7 +18,12 @@ package com.ail.insurance.pageflow;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -30,16 +35,20 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.Attribute;
 import com.ail.core.BaseException;
+import com.ail.core.CoreProxy;
 import com.ail.core.Identified;
 import com.ail.core.Type;
+import com.ail.core.command.VelocityServiceError;
 import com.ail.insurance.pageflow.portlet.QuotationPortlet;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.ErrorText;
 import com.ail.insurance.pageflow.util.HelpText;
+import com.ail.insurance.pageflow.util.I18N;
 import com.ail.insurance.pageflow.util.QuotationCommon;
 import com.ail.insurance.pageflow.util.QuotationContext;
-import com.ail.insurance.pageflow.util.I18N;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -73,6 +82,10 @@ public abstract class PageElement extends Type implements Identified, Comparable
     /** Optional class to be referred to by style sheets */
     protected String styleClass;
 
+    /** Hints to the UI rendering engine specifying details of how this field should be rendered. The values supported
+     * are specific to the type of attribute being rendered. */ 
+    private String renderHint;
+    
     /** Optional ref for the elements presentation layer */
     protected String ref;
     
@@ -93,6 +106,9 @@ public abstract class PageElement extends Type implements Identified, Comparable
      */
     private String condition;
     
+    /** The fixed title to be displayed with the answer */
+    private String title;
+
     /**
      * Default constructor
      */
@@ -106,6 +122,43 @@ public abstract class PageElement extends Type implements Identified, Comparable
     	this.condition=condition;
     }
 	
+    /**
+     * The fixed title to be displayed with the answer. This method returns the raw title without
+     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * @see #getExpandedTitle(Type)
+     * @return value of title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @see #getTitle()
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded or null if no title is defined
+     * @since 1.1
+     */
+    public String formattedTitle(RenderArgumentImpl args) {
+        if (getTitle()!=null) {
+            return i18n(expand(getTitle(), QuotationContext.getPolicy(), args.getModelArgRet()));
+        }
+        else {
+            return null;
+        }
+    }
+
     protected boolean conditionIsMet(Type model) {
         return condition==null || (Boolean)model.xpathGet(condition)==true;
     }
@@ -209,6 +262,23 @@ public abstract class PageElement extends Type implements Identified, Comparable
         this.ref = ref;
     }    
 	
+    /** 
+     * Hints to the UI rendering engine specifying details of how this field should be rendered. The values supported
+     * are specific to the type of attribute being rendered.  
+     * @return the renderHint
+     */
+    public String getRenderHint() {
+        return renderHint;
+    }
+
+    /**
+     * @see #getRenderHint()
+     * @param renderHint the renderHint to set
+     */
+    public void setRenderHint(String renderHint) {
+        this.renderHint = renderHint;
+    }
+
     /**
      * Get the hints list if any - for this page element. 
      * @return hint 
@@ -373,8 +443,9 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @throws IllegalStateException
      * @throws IOException
      */
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         // default implementation does nothing.
+        return model;
     }
     
     /**
@@ -486,29 +557,319 @@ public abstract class PageElement extends Type implements Identified, Comparable
     }
     
     public String i18n(String key, Object... args) {
-        String format=I18N.i18n(key);
-        return new Formatter().format(format, args).toString();
+        String format = I18N.i18n(key);
+        Formatter formatter = new Formatter();
+        String ret = formatter.format(format, args).toString();
+        formatter.close();
+        return ret;
     }
     
+    /**
+     * @param commandName The name of the render command
+     * @param request Portlet request
+     * @param response Portlet response
+     * @param model The type representing the data to be rendered
+     * @param onChange javascript to be attached to any onchange event
+     * @param onLoad javascript to be attached to any onload event
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     protected Type executeTemplateCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        return executeTemplateCommand(commandName, request, response, model, "");
+    }
+
+    /**
+     * @param commandName The name of the render command
+     * @param request Portlet request
+     * @param response Portlet response
+     * @param model The type representing the data to be rendered
+     * @param rowContext Unique string representing the row being rendered
+     * @param onChange javascript to be attached to any onchange event
+     * @param onLoad javascript to be attached to any onload event
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+    protected Type executeTemplateCommand(String commandName, RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         if (!conditionIsMet(model)) {
             return model;
         }
+
+        RenderCommand command = buildRenderCommand(commandName, request, response, model, rowContext);
+
+        return invokeRenderCommand(command);
+    }
+    
+    /**
+     * Build, but do not execute, a render command
+     * @param commandName The name of the render command
+     * @param request Portlet request
+     * @param response Portlet response
+     * @param model The type representing the data to be rendered
+     * @param rowContext Unique string representing the row being rendered
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+    protected RenderCommand buildRenderCommand(String commandName, RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
+        RenderCommand command = buildRenderCommand(commandName, request, response, model);
+
+        command.setRowContextArg(rowContext);
+        
+        return command;
+    }
+    
+    /**
+     * Build, but do not execute, a render command
+     * @param commandName The name of the render command
+     * @param request Portlet request
+     * @param response Portlet response
+     * @param model The type representing the data to be rendered
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+    protected RenderCommand buildRenderCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        RenderCommand command=null;
+
+        command=QuotationContext.getCore().newCommand(commandName, 
+                QuotationContext.getRenderer().getMimeType(),
+                RenderCommand.class);
+        
+        command.setRequestArg(request);
+        command.setResponseArgRet(response);
+        command.setModelArgRet(model);
+        command.setPolicyArg(QuotationContext.getPolicy());
+        command.setPageElementArg(this);
+        command.setWriterArg(response.getWriter());
+        command.setStyleClassArg(getStyleClass());
+        command.setRefArg(getRef());
+        command.setCoreArg(QuotationContext.getCore().getCore());
+        command.setRenderHintArg(getRenderHint());
+        
+        return command;
+    }
+    
+    protected Type invokeRenderCommand(RenderCommand command) {
+        try {
+            command.invoke();
+            return command.getModelArgRet();
+        } catch(VelocityServiceError e) {
+            throw e;
+        } catch (BaseException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+    
+    private static void lookupErrorTranslation(String error, StringBuffer errors, List<ErrorText> errorList) {
+        boolean errorFound=false;
+        
+        if (errorList.size()!=0) {
+            for(ErrorText e: errorList) {
+                if (error.equals(e.getError())) {
+                    if (errors.length()!=0) {
+                        errors.append(", ");
+                    }
+                    errors.append(e.getText());
+                    errorFound=true;
+                }
+            }
+        }
+
+        if (!errorFound) {
+            errors.append(error);
+        }
+    }
+    
+    /**
+     * Find all the the errors (if any) associated with an element in a model, and return them.
+     * @param model The model to look in for the error
+     * @return The error message, or "&nbsp;" (an empty String) if no message is found.
+     */
+    public String findErrors(Type model, PageElement element) {
+        return findError("", model, element);
+    }
+
+    /**
+     * Find the error(s) (if any) associated with an element in a model, and return them.
+     * @param errorFilter Which errors to return
+     * @param model The model to look in for the error
+     * @return The error message, or "&nbsp;" (an empty String) if no message is found.
+     */
+    public String findError(String errorFilter, Type model, PageElement element) {
+        StringBuffer error=new StringBuffer();
+
+        if (model!=null) {
+            for(Attribute attr: model.getAttribute()) {
+                if (attr.getId().startsWith("error."+errorFilter)) {
+                    lookupErrorTranslation(attr.getValue(), error, element.getErrorText());
+                }
+            }
+        }
+        
+        return (error.length()==0) ? "&nbsp;" : error.toString();
+    }
+    
+    /**
+     * return true if the specified object has a specific error marker associated with it.
+     * @see #hasErrorMarkers(Type)
+     * @param id Name of error marker to look for
+     * @param model Object to check for the error marker
+     * @return true if the error marker is found, false otherwise (including if model==null).
+     */
+    public boolean hasErrorMarker(String id, Type model) {
+        if (model!=null) {
+            for(Attribute a: model.getAttribute()) {
+                if(a.getId().startsWith("error."+id)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return true if the specified object has any UI error markers associated with it. UI 
+     * components use the conversion of attaching error attributes to model element to indicate
+     * validation failures. This method will return true if it finds any such attributes
+     * associated with the specified object.
+     * @param model Object to check for error markers
+     * @return true if error markers are found, false otherwise (including if model==null).
+     */
+    public boolean hasErrorMarkers(Type model) {
+        if (model!=null) {
+            for(Attribute a: model.getAttribute()) {
+                if(a.getId().startsWith("error.")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Product URLs (using the "product" protocol) are only accessible within the OpenQuote
+     * server, by virtue of {@link com.ail.code.urlhandler.product.Handler Handler}. This 
+     * method converts a product URL into a form which can be used externally.
+     * @param url URL to be converted
+     * @return External URL
+     * @throws MalformedURLException 
+     */
+    public URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
+        return new URL("http", productUrl.getHost(), productUrl.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+productUrl.getPath()); 
+    }
+    
+    /**
+     * Products frequently refer to content from their Registry or Pageflows by "relative" URLs. This method
+     * expands relative URLs into absolute product URLs - i.e. a URL using the "product:" protocol. A relative URL 
+     * is one that starts with "~/", where "~" is shorthand for the product's home location. None relative URLs are
+     * returned without modification.
+     * @param url URL to be checked and expanded if necessary
+     * @param request Associated request
+     * @param productTypeId Product to be used in the expanded URL
+     * @return Expanded URL if it was relative, URL as passed in otherwise.
+     */
+    public String expandRelativeUrlToProductUrl(String url, RenderRequest request, String productTypeId) {
+        if (url.startsWith("~/")) {
+            return "product://"+request.getServerName()+":"+request.getServerPort()+"/"+productTypeId.replace('.', '/')+url.substring(1); 
+        }
+        else {
+            return url;
+        }
+    }
+    
+    /**
+     * Utility method to expand 'variables' embedded in a string with respect to a model. Variables
+     * are in the form '${&lt;xpath&gt;}', where xpath is an expression compatible with JXPath. The 
+     * xpath expression is evaluated against a <i>model</i> and the result placed into the string returned.</p>
+     * <p>Two models are supported: <code>root</code> and <code>local</code>. XPath expressions starting with '.' 
+     * are evaluated against <code>local</code>; all others are evaluated against <code>root</code>.</p>
+     * For example: if the <i>src</i> value of <b>"Your quote number is: ${/quoteNumber}"</b> is passed in with a
+     * <i>model</i> containing value of 'FQ1234' in it's <code>quoteNumber</code> property; this method would
+     * return <b>"Your quote number is: FQ1234"</b>.
+     * @param src Source string containing embedded variables
+     * @param root Any xpath expression not starting with '.' is evaluated against this instance
+     * @param local Any xpath expression starting with '.' is evaluated against this instance
+     * @return A string matching <i>src</i> but with variable references expanded.
+     * @see #expand(String, Type)
+     */
+    public static String expand(String src, Type root, Type local) {
+        if (src!=null) { 
+            int tokenStart, tokenEnd;
+            StringBuilder buf=new StringBuilder(src);
+    
+            do {
+                tokenStart=buf.indexOf("${");
+                tokenEnd=buf.indexOf("}", tokenStart);
+                
+                if (tokenStart>=0 && tokenEnd>tokenStart) {
+                    String val=null;
+                    
+                    try {
+                        if (buf.charAt(tokenStart+2)=='.') {
+                            val=(String)local.xpathGet(buf.substring(tokenStart+2, tokenEnd));
+                        }
+                        else {
+                            val=(String)root.xpathGet(buf.substring(tokenStart+2, tokenEnd));
+                        }
+                    }
+                    catch(Throwable t) {
+                        // ignore this - the 'if val==null' below will handle the problem.
+                    }
+    
+                    if (val==null) {
+                        val="<b>could not resolve: "+buf.substring(tokenStart+2, tokenEnd)+"</b>";                    
+                    }
+                    
+                    buf.replace(tokenStart, tokenEnd+1, val);
+                }
+            } while(tokenStart>=0 && tokenEnd>=0);
+            
+            return buf.toString();
+        }
+        else {
+            return null;
+        }
+    }
+    
+    /**
+     * Utility method to expand 'variables' embedded in a string with respect to a model. Variables
+     * are in the form '${&lt;xpath&gt;}', where xpath is an expression compatible with JXPath. The 
+     * xpath expression is evaluated against <i>root</i> and the result placed into the string returned.</p>
+     * For example: if the <i>src</i> value of <b>"Your quote number is: ${/quoteNumber}"</b> is passed in with a
+     * <i>model</i> containing value of 'FQ1234' in it's <code>quoteNumber</code> property; this method would
+     * return <b>"Your quote number is: FQ1234"</b>.
+     * @param src Source string containing embedded variables
+     * @param model All xpath expressions are evaluated against this object
+     * @return A string matching <i>src</i> but with variable references expanded.
+     * @see #expand(String, Type, Type)
+     */
+    public static String expand(String src, Type model) {
+        StringWriter writer = new StringWriter();
+        BufferedReader reader = null;
         
         try {
-	    	RenderCommand command=QuotationContext.getCore().newCommand(commandName, 
-	    																QuotationContext.getRenderer().getMimeType(),
-	    																RenderCommand.class);
-	    	command.setRequestArg(request);
-	    	command.setResponseArgRet(response);
-	    	command.setModelArgRet(model);
-	    	command.setPolicyArg(QuotationContext.getPolicy());
-	    	command.setPageElementArg(this);
-	    	command.setWriterArg(response.getWriter());
-			command.invoke();
-	    	return command.getModelArgRet();
-		} catch (BaseException e) {
-			throw new IllegalStateException(e);
-		}
+            URL url=new URL(src);
+            reader=new BufferedReader(new InputStreamReader(url.openStream()));
+            
+            for(String line=reader.readLine() ; line!=null ; line=reader.readLine()) {
+                writer.write(expand(line, model, model));
+            }
+        }
+        catch(Exception e) {
+            new CoreProxy().logError("Failed to read input stream.", e);
+        }
+        finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                new CoreProxy().logError("Failed to read input stream.", e);
+            }
+        }
+        
+        return writer.toString();
     }
 }

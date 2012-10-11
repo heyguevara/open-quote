@@ -81,6 +81,6 @@ public class PaymentOptionSelector extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        return QuotationContext.getRenderer().renderPaymentOptionSelector(response.getWriter(), request, response, (Policy)model, this);
+        return executeTemplateCommand("PaymentOptionSelector", request, response, model);
     }
 }

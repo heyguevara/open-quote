@@ -22,7 +22,6 @@ import static com.ail.insurance.pageflow.util.Functions.convertListToCsv;
 import static com.ail.insurance.pageflow.util.Functions.xpathToId;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,12 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.Attribute;
 import com.ail.core.Type;
+import com.ail.core.TypeXPathException;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
+import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
@@ -59,6 +63,8 @@ public class QuestionWithDetails extends Question {
     /** Hints to the UI rendering engine specifying details of how the details field should be rendered. The values supported
      * are specific to the type of attribute being rendered. */ 
     private String detailsRenderHint=null;
+    private String detailsOnChange=null;
+    private String detailsOnLoad=null;
 	private List<String> detailsEnabledFor;
     
     public QuestionWithDetails() {
@@ -135,6 +141,25 @@ public class QuestionWithDetails extends Question {
 		return expand(getDetailsTitle(), QuotationContext.getPolicy(), local);
     }
     
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded, or null if there is no title
+     * @since 1.1
+     */
+    public String formattedDetailsTitle(RenderArgumentImpl args) {
+        if (getTitle()!=null) {
+            return i18n(expand(getDetailsTitle(), args.getPolicyArg(), args.getModelArgRet()));
+        }
+        else {
+            return null;
+        }
+    }
+    
     @Override
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         return applyRequestValues(request, response, model, "");
@@ -153,9 +178,19 @@ public class QuestionWithDetails extends Question {
 	    // validate the yes/no part of the question
         error|=super.processValidations(request, response, model);
 
+        // if there's an error there already on the details attribute, remove it.
+        try {
+            Functions.removeErrorMarkers(model.xpathGet(getDetailsBinding(), Attribute.class));
+        }
+        catch(TypeXPathException e) {
+            // ignore this - it'll get thrown if there weren't any errors
+        }
+
         // if the question's answer is one for which details are enabled, validate the details
-        if (detailsEnabledFor.contains(model.xpathGet(getBinding()+"/value"))) {
-            error|=applyAttributeValidation(model, getDetailsBinding());
+        for(String def: detailsEnabledFor) {
+            if (def.equals(model.xpathGet(getBinding()+"/value"))) {
+                error|=applyAttributeValidation(model, getDetailsBinding());
+            }
         }
 
         return error;
@@ -168,20 +203,27 @@ public class QuestionWithDetails extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-        	String title = i18n(getExpandedTitle(model));
-            String detailTitle = i18n(getExpandedDetailsTitle(model));
-            String questionId = xpathToId(rowContext+binding);
-            String detailId = xpathToId(rowContext+detailsBinding);
-            
-            String styleClass = getStyleClass();
-            String ref = getRef();
-            
-            PrintWriter w = response.getWriter();
-            
-            model=QuotationContext.getRenderer().renderQuestionWithDetails(w, request, response, model, this, title, detailTitle, rowContext, questionId, detailId, styleClass, ref);
-    	}
-    	
-    	return model;
+        RenderCommand command = buildRenderCommand("QuestionWithDetails", request, response, model, rowContext);
+
+        command.setDetailIdArg(xpathToId(rowContext + detailsBinding));
+        command.setRenderIdArg(xpathToId(rowContext + binding));
+        
+        return invokeRenderCommand(command);
+    }
+
+    public String getDetailsOnChange() {
+        return detailsOnChange;
+    }
+
+    public void setDetailsOnChange(String detailsOnChange) {
+        this.detailsOnChange = detailsOnChange;
+    }
+
+    public String getDetailsOnLoad() {
+        return detailsOnLoad;
+    }
+
+    public void setDetailsOnLoad(String detailsOnLoad) {
+        this.detailsOnLoad = detailsOnLoad;
     }
 }

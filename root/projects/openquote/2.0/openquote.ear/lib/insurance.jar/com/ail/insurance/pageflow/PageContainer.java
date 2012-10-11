@@ -35,29 +35,9 @@ public abstract class PageContainer extends PageElement {
     /** List of elements contained. */
     private List<PageElement> pageElement;
 
-    /** Container's title. */
-    private String title;
-
     public PageContainer() {
         super();
         pageElement = new OrderedLinkedList<PageElement>();
-    }
-
-    /** 
-     * Each concrete sub-class may choose to render its title differently, but
-     * all have a title.
-     * @return Container's title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @see #getTitle()
-     * @param title Container's title
-     */
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**

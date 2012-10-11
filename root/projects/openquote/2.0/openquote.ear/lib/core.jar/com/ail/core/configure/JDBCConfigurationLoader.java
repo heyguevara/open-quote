@@ -204,7 +204,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
 
                 st=con.prepareStatement(
                     "SELECT CONFIGURATION,VALIDFROM,VALIDTO FROM "+getLoaderParams().get("table")+
-                    " WHERE namespace=? AND ?>=validfrom AND validto>=?");
+                    " WHERE namespace=? AND ?>=validfrom AND validto>?");
                 st.setString(1, namespace);
                 st.setLong(2, ts);
                 st.setLong(3, ts);
@@ -272,7 +272,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
             // First update the existing record (if there is one) setting its validto to now.
             // If the config we're saving has a validFrom then make sure we only update that
             // entry - that way we'll avoid updating a record that someone else has already
-            // updated (i.e. avoid a colloision).
+            // updated (i.e. avoid a collision).
             long ts=new VersionEffectiveDate().getTime();
             StringBuffer sql=new StringBuffer();
 
@@ -309,7 +309,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
             st.setString(1, namespace);
             st.setString(2, config.getManager());
             st.setBytes(3, baos.toByteArray());
-            st.setLong(4, ts + 1);
+            st.setLong(4, ts);
             st.setString(5, config.getWho());
             st.setString(6, config.getVersion());
             

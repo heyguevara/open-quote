@@ -43,6 +43,14 @@ public class VersionEffectiveDate extends Type {
     }
 
     /**
+     * Create a new instance with the same property values as an existing instance.
+     * @param that Instance to copy property values from.
+     */
+    public VersionEffectiveDate(VersionEffectiveDate that) {
+        ved = that.ved;
+    }
+    
+    /**
      * Create a VersionEffectiveDate based on another Date object. The
      * date supplied is used "as is" - no attempt is made to adjust it
      * to UTC.

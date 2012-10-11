@@ -958,7 +958,7 @@ public class Html extends Type implements Renderer {
 
     	w.printf("<td id='%s-label'%s>%s%s</td>", question.getId(), cssClass, req, title);
         
-    	w.printf("<td id='%s-field'%s colspan='3' align='left'>%s</td>", question.getId(), cssClass, question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
+    	//w.printf("<td id='%s-field'%s colspan='3' align='left'>%s</td>", question.getId(), cssClass, question.renderAttribute(request, response, model, question.getBinding(), rowContext, question.getOnChange(), question.getOnLoad()));
     	
     	return model;
     }
@@ -1057,9 +1057,9 @@ public class Html extends Type implements Renderer {
     	String req=attr.isRequired() ? "<div class='required-field-indicator'></div>" : "<div class='optional-field-indicator'></div>";
 
     	w.printf("<td>%s%s</td>", req, title);
-        w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getBinding(), rowContext, onChange, questionWithDetails.getOnLoad()));
+//        w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getBinding(), rowContext, onChange, questionWithDetails.getOnLoad()));
         w.printf("<td>%s</td>", detailTitle);
-        w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getDetailsBinding(), rowContext, questionWithDetails.getOnChange(), questionWithDetails.getOnLoad()));
+//        w.printf("<td>%s</td>", questionWithDetails.renderAttribute(request, response, model, questionWithDetails.getDetailsBinding(), rowContext, questionWithDetails.getOnChange(), questionWithDetails.getOnLoad()));
         
         // Disable the 'detail' textarea unless the question's answer is 'Yes'
         if ("radio".equals(questionWithDetails.getRenderHint())) {
@@ -1110,7 +1110,7 @@ public class Html extends Type implements Renderer {
     	Attribute attr=model.xpathGet(questionWithSubSection.getBinding(), Attribute.class);
     	String req=attr.isRequired() ? "<div class='required-field-indicator'></div>" : "<div class='optional-field-indicator'></div>";
     	w.printf("<td>%s%s</td>", req, title);
-        w.printf("<td colspan='3'>%s</td>", questionWithSubSection.renderAttribute(request, response, model, questionWithSubSection.getBinding(), rowContext, onChange, questionWithSubSection.getOnLoad()));
+        w.printf("<td colspan='3'>%s</td>", questionWithSubSection.renderAttribute(request, response, model, questionWithSubSection.getBinding(), rowContext, onChange, questionWithSubSection.getOnLoad(), questionWithSubSection.getRenderHint()));
         w.printf("</tr>");
         w.printf("<tr><td colspan='4'>");
         w.printf(" <div id='%s' style='visibility:hidden;display:none'>", questionWithSubSection.getId());
@@ -1207,98 +1207,6 @@ public class Html extends Type implements Renderer {
     }
 
 	public Type renderRowScroller(PrintWriter w, RenderRequest request, RenderResponse response, Type model, RowScroller rowScroller) throws IllegalStateException, IOException {
-        // Start the table for the scroller (size()+1 to allow for the trash can column)
-        int columns=rowScroller.isAddAndDeleteEnabled() ? rowScroller.getItem().size()+1 : rowScroller.getItem().size();
-
-        w.printf("<table id='%s' width='100%%' border='0'>", rowScroller.getId());
-
-        if (rowScroller.getTitle()!=null) {
-            w.printf("  <tr id='title' class='portlet-section-subheader'><td colspan='%d'>", columns);
-            w.print(rowScroller.getExpandedRepeatedTitle(model));
-            w.printf("  </td></tr>");
-        }
-        
-        // Output the column headers
-        w.printf(" <tr id='heading' class='portlet-section-alternate'>");
-        for(int col=0 ; col<rowScroller.getItem().size() ; col++) {
-        	AttributeField a=rowScroller.getItem().get(col);
-
-        	String mainTitle=a.getExpandedTitle(model)!=null ? i18n(a.getExpandedTitle(model)) : "";
-        	String subTitle=a.getExpandedSubTitle(model)!=null ? i18n(a.getExpandedSubTitle(model)) : "";
-        	String clazz=rowScroller.isBoundToRequiredColumnAttribute(model, rowScroller.getBinding(), col) ? "required-field-indicator" : "optional-field-indicator";
-
-        	w.printf("<td align='center'><table>"); 
-        	w.printf( "<tr>");
-        	w.printf(  "<td>");
-        	w.printf(   "<div>");
-        	w.printf(    "<div class='%s'></div>%s", clazz, mainTitle);
-        	w.printf(   "</div>");
-        	w.printf(  "</td>");
-            w.printf( "</tr>");
-        	w.printf(  "<td>");
-        	w.printf(    "%s", subTitle);
-            w.printf( "</tr>");
-            w.printf("</table></td>");
-        }
-
-        // Add a column for the trash can, if it's enabled
-        if (rowScroller.isAddAndDeleteEnabled()) {
-            w.printf("<td>&nbsp;</td>");
-            w.printf(" </tr>");
-        }
-        
-        // Now output the rows of data
-        int rowCount=0;
-        for(Iterator<Type> it=model.xpathIterate(rowScroller.getBinding(), Type.class) ; it.hasNext() ; ) {
-            Type t=it.next();
-            
-            w.printf("<tr>");
-
-            for(AttributeField a: rowScroller.getItem()) {
-                w.printf("<td id='record' align='center'>");
-                a.renderResponse(request, response, t, rowScroller.getBinding()+"["+rowCount+"]");
-                w.printf("</td>");
-            }
-
-            // Add the trash can for this row if enabled.
-            if (rowScroller.isAddAndDeleteEnabled()) {
-                if (rowCount>=rowScroller.getMinRows()) {
-                    w.printf("<td align='center'>");
-                    w.printf("<input id='delete' type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", rowScroller.getId(), rowCount);
-                    w.printf("</td>");
-                }
-                else {
-                    w.printf("<td>&nbsp;</td>");
-                }
-            }
-            
-            w.printf("</tr>");
-           
-            rowCount++;
-        }
-
-        // if Add and Delete are enabled, put an 'Add' button to the bottom right of the scroller.
-        if (rowScroller.isAddAndDeleteEnabled()) {
-            w.print("<tr>");
-            for(int i=0 ; i<rowScroller.getItem().size() ; i++) {
-                w.print("<td>&nbsp;</td>");
-            }
-            
-            w.printf("<td align='center'>");
-
-            // disabled the button if we've reached 'maxRows'.
-            if (rowScroller.getMaxRows()!=-1 && rowCount==rowScroller.getMaxRows()) {
-                w.printf("<input id='add-disabled' type='image' src='/quotation/images/add-disabled.gif' name='op=add:id=%s:immediate=true:' disabled='true'/>", rowScroller.getId());
-            }
-            else {
-                w.printf("<input id='add' type='image' src='/quotation/images/add.gif' name='op=add:id=%s:immediate=true:'/>", rowScroller.getId());
-            }
-            
-            w.printf("</td></tr>");
-        }
-        
-        w.printf("</table>");
-
         return model;
     }
 
@@ -1334,11 +1242,15 @@ public class Html extends Type implements Renderer {
 
         for(Object o: quotationSummaries) {
             SavedPolicySummary savedQuote=(SavedPolicySummary)o;
+            String quotationDate=(savedQuote.getQuotationDate()!=null) ? dateFormat.format(savedQuote.getQuotationDate()) : "&nbsp;";
+            String expiryDate=(savedQuote.getQuotationExpiryDate()!=null) ? dateFormat.format(savedQuote.getQuotationExpiryDate()) : "&nbsp;";
+            String premium=(savedQuote.getPremium()!=null) ? savedQuote.getPremium().toFormattedString() : "&nbsp;";
+            
             w.printf("<tr>");
             w.printf(  "<td align='center' class='portlet-font'>%s</td>", savedQuote.getQuotationNumber());
-            w.printf(  "<td align='center' class='portlet-font'>%s</td>", dateFormat.format(savedQuote.getQuotationDate()));
-            w.printf(  "<td align='center' class='portlet-font'>%s</td>", dateFormat.format(savedQuote.getQuotationExpiryDate()));
-            w.printf(  "<td align='center' class='portlet-font'>%s</td>", savedQuote.getPremium().toFormattedString());
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", quotationDate);
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", expiryDate);
+            w.printf(  "<td align='center' class='portlet-font'>%s</td>", premium);
             w.printf(  "<td align='left'>");
             w.printf(    "<input type='submit' name='op=confirm:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(saveedQuotations.getConfirmAndPayLabel()));
             w.printf(    "<input type='submit' name='op=requote:id=%s' class='portlet-form-input-field' value='%s'/>", savedQuote.getQuotationNumber(), i18n(saveedQuotations.getRequoteLabel()));
@@ -1397,7 +1309,7 @@ public class Html extends Type implements Renderer {
         
         if (sectionScroller.getTitle()!=null) {
             w.printf("  <tr id='title' class='portlet-section-subheader'><td colspan='4'>");
-            w.print(i18n(sectionScroller.getExpandedRepeatedTitle(model)));
+            //w.print(i18n(sectionScroller.getExpandedRepeatedTitle(model)));
             w.printf("  </td></tr>");
         }
 
@@ -1409,24 +1321,24 @@ public class Html extends Type implements Renderer {
             w.printf(" <table id='section' width='100%%' border='0' cellpadding='4'>");
             
             // TODO sectionTitle should be removed for 2.0
-            if (sectionScroller.getSectionTitle()!=null) {
-                w.printf("  <tr class='portlet-section-subheader'>");
-                w.printf("    <td id='title' colspan='4'>");
-                sectionScroller.getSectionTitle().renderResponse(request, response, t);
-                if (sectionScroller.isAddAndDeleteEnabled() && rowCount>=sectionScroller.getMinRows()) {
-                	w.printf("&nbsp;&nbsp;<input type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", sectionScroller.getId(), rowCount);
-                }
-                else {
-                	w.printf("&nbsp;");
-                }
-                w.printf("    </td>");
-                w.printf("  </tr>");
-            }
+//            if (sectionScroller.g             etSectionTitle()!=null) {
+//                w.printf("  <tr class='portlet-section-subheader'>");
+//                w.printf("    <td id='title' colspan='4'>");
+//                sectionScroller.getSectionTitle().renderResponse(request, response, t);
+//                if (sectionScroller.isAddAndDeleteEnabled() && rowCount>=sectionScroller.getMinRows()) {
+//                	w.printf("&nbsp;&nbsp;<input type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", sectionScroller.getId(), rowCount);
+//                }
+//                else {
+//                	w.printf("&nbsp;");
+//                }
+//                w.printf("    </td>");
+//                w.printf("  </tr>");
+//            }
 
             if (sectionScroller.getRepeatedTitle()!=null) {
                 w.printf("  <tr class='portlet-section-subheader'>");
                 w.printf("    <td id='title' colspan='4'>");
-                w.print(i18n(sectionScroller.getExpandedRepeatedTitle(t)));
+                //w.print(i18n(sectionScroller.getExpandedRepeatedTitle(t)));
                 if (sectionScroller.isAddAndDeleteEnabled() && rowCount>=sectionScroller.getMinRows()) {
                 	w.printf("&nbsp;&nbsp;<input id='delete' type='image' src='/quotation/images/delete.gif' name='op=delete:id=%s:row=%d:immediate=true:'/>", sectionScroller.getId(), rowCount);
                 }
@@ -1969,7 +1881,7 @@ public class Html extends Type implements Renderer {
             
             w.printf("<form name='%s' action='%s' method='post'>", quotationSummary.getId(), response.createActionURL());
 
-            quotationSummary.navigationSection().renderResponse(request, response, quote);
+            //quotationSummary.navigationSection().renderResponse(request, response, quote);
 
             w.printf(  "</form>");
 
@@ -2073,7 +1985,7 @@ public class Html extends Type implements Renderer {
             w.printf("   </tr>");
             w.printf("   <tr>");
             w.printf("       <td class='portlet-font'>");
-            referralSummary.getNavigationSection().renderResponse(request, response, quote);
+//            referralSummary.getNavigationSection().renderResponse(request, response, quote);
             w.printf("       </td>");
             w.printf("   </tr>");
             w.printf("</table>");

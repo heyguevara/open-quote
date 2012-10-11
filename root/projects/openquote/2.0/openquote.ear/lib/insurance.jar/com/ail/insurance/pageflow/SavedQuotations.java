@@ -31,6 +31,8 @@ import com.ail.core.Type;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicySummaries;
+import com.ail.insurance.policy.SavedPolicySummary;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
 
@@ -196,17 +198,22 @@ public class SavedQuotations extends PageElement {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
         Policy quote=(Policy)model;
 
         // If the user is logged in...
         if (request.getRemoteUser()!=null) {
             // get a list of the user's saved quotes.
             List<?> quotes=new CoreProxy().query("get.savedPolicySummary.by.username.and.product", request.getRemoteUser(), quote.getProductTypeId());
-
+            
             // If the user has saved quotes...
             if (quotes.size()!=0) {
-            	QuotationContext.getRenderer().renderSaveQuotations(w, request, response, quotes, this);
+                // copy the quotations summaries into a SavedPolicySummary instance
+                SavedPolicySummaries sas=QuotationContext.getCore().newType(SavedPolicySummaries.class);
+                for(Object o: quotes) {
+                    sas.getPolicySummary().add((SavedPolicySummary)o);
+                }
+                
+                executeTemplateCommand("SavedQuotations", request, response, sas);
             }
         }
 

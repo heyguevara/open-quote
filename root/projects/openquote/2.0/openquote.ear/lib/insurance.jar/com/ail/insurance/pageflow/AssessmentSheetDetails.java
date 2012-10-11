@@ -17,13 +17,11 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>Page element to display the contents of a quotation's assessment sheet(s) in a tabular format.</p>

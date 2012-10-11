@@ -16,20 +16,19 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.core.Functions.expand;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.Attribute;
 import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
 
@@ -51,7 +50,7 @@ import com.ail.insurance.pageflow.util.QuotationContext;
  * <p>Each AttributeField defines it's column {@link #getTitle() title}, and an optional {@link #getSubTitle() subTitle}
  * which can be used when the titles are fixed. Dynamic titles - the text of which is picked up from another part of
  * the quote - can be defined using {@link #getTitleBinding() titleBinding} and {@link #getSubTitleBinding() subTitleBinding}. 
- * It may also define javascript to be executed either onLoad (when the page is loaded); or onChange (when a fields 
+ * It may also define JavaScript to be executed either onLoad (when the page is loaded); or onChange (when a fields 
  * value is changed).</p>
  * <p>The AttributeField also supports the concept of RenderHints. The rendering engine will take these hints into account
  * as it displays the field within the page. The values of hint supported are dependent on the Attribute being rendered.
@@ -69,35 +68,23 @@ import com.ail.insurance.pageflow.util.QuotationContext;
 public class AttributeField extends PageElement {
     private static final long serialVersionUID = 7118438575837087257L;
 
-    /** The fixed title to be displayed with the answer */
-    private String title;
-
     /** The fixed subtitle to be displayed with the answer */
     private String subTitle;
 
-    /** A dynamic title taken from some other part of the quote instance to be displayed with the answer */
-    private String titleBinding;
-
-    /** The dynamic subtitle taken from some other part of the quote instance to be displayed with the answer */
-    private String subTitleBinding;
-
-    /** Javascript to be executed when the page loads */
+    /** JavaScript to be executed when the page loads */
     private String onLoad;
 
-    /** Javascript to be executed when a field's value is changed */
+    /** JavaScript to be executed when a field's value is changed */
     private String onChange;
     
-    /** Hints to the UI rendering engine specifying details of how this field should be rendered. The values supported
-     * are specific to the type of attribute being rendered. */ 
-    private String renderHint;
-
+    
 	public AttributeField() {
 		super();
 	}
 
     /**
      * The fixed sub title to be displayed with the answer. This method returns the raw sub title without
-     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
+     * expanding embedded variables (i.e. Xpath references like ${person/firstname}).
      * @see #getExpendedSubTitle(Type)
      * @return value of title
      */
@@ -122,53 +109,9 @@ public class AttributeField extends PageElement {
      * @return Title with embedded references expanded
      * @since 1.1
      */
-    public String getExpandedSubTitle(Type local) {
+    public String formattedSubTitle(RenderArgumentImpl args) {
     	if (getTitle()!=null) {
-    		return expand(getSubTitle(), QuotationContext.getPolicy(), local);
-    	}
-    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
-    	else if (getSubTitleBinding()!=null) {
-    		return local.xpathGet(getSubTitleBinding(), String.class);
-    	}
-    	else {
-    		return null;
-    	}
-    }
-    
-    /**
-     * The fixed title to be displayed with the answer. This method returns the raw title without
-     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
-     * @see #getExpandedTitle(Type)
-     * @return value of title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @see #getTitle()
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * Get the title with all variable references expanded. References are expanded with 
-     * reference to the model passed in. Relative xpaths (i.e. those starting ./) are
-     * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * the current quotation (from {@link QuotationContext}). 
-     * @param local Model to expand local references (xpaths starting ./) with respect to.
-     * @return Title with embedded references expanded
-     * @since 1.1
-     */
-    public String getExpandedTitle(Type local) {
-    	if (getTitle()!=null) {
-    		return expand(getTitle(), QuotationContext.getPolicy(), local);
-    	}
-    	// TODO Check getTitleBinding for backward compatibility only - remove for OQ2.0
-    	else if (getTitleBinding()!=null) {
-    		return local.xpathGet(getTitleBinding(), String.class);
+    		return i18n(expand(getSubTitle(), QuotationContext.getPolicy(), args.getModelArgRet()));
     	}
     	else {
     		return null;
@@ -227,71 +170,18 @@ public class AttributeField extends PageElement {
 	}
 
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        
-        w.print(renderAttribute(request, response, model, getBinding(), rowContext, getOnChange(), getOnLoad()));
-
-        return model;
+        return renderAttribute(request, response, model, getBinding(), rowContext, getOnChange(), getOnLoad(), getRenderHint());
     }
 
     @Override
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         renderPageLevelResponse(request, response, model, "");
+        return model;
     }
 
     public void renderPageLevelResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        w.print(renderAttributePageLevel(request, response, model, getBinding(), rowContext));
+        renderAttributePageLevel(request, response, model, getBinding(), rowContext);
     }
-
-    /**
-     * @return the titleBinding
-     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public String getTitleBinding() {
-        return titleBinding;
-    }
-
-    /**
-     * @param titleBinding the titleBinding to set
-     * @deprecated Use {@link #getExpandedTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public void setTitleBinding(String titleBinding) {
-        this.titleBinding = titleBinding;
-    }
-
-    /**
-     * @return the subTitleBinding
-     * @deprecated Use {@link #getExpendedSubTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public String getSubTitleBinding() {
-        return subTitleBinding;
-    }
-
-    /**
-     * @param subTitleBinding the subTitleBinding to set
-     * @deprecated Use {@link #getExpendedSubTitle(Type)} in combination with embedded xpath references within the title.
-     */
-    public void setSubTitleBinding(String subTitleBinding) {
-        this.subTitleBinding = subTitleBinding;
-    }
-
-    /** 
-     * Hints to the UI rendering engine specifying details of how this field should be rendered. The values supported
-     * are specific to the type of attribute being rendered.  
-	 * @return the renderHint
-	 */
-	public String getRenderHint() {
-		return renderHint;
-	}
-
-	/**
-	 * @see #getRenderHint()
-	 * @param renderHint the renderHint to set
-	 */
-	public void setRenderHint(String renderHint) {
-		this.renderHint = renderHint;
-	}
 
 	/**
 	 * Render an AttributeField on the UI. This is quite a common requirement throughout the classes
@@ -309,68 +199,28 @@ public class AttributeField extends PageElement {
 	 * @throws IOException
 	 * @throws PostconditionException 
 	 */
-	public String renderAttribute(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad) throws IllegalStateException, IOException {
+	public Type renderAttribute(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad, String renderHint) throws IllegalStateException, IOException {
 		// If we're not bound to anything, output nothing.
 		// If our condition isn't met, output nothing.
 	    if (boundTo==null || !conditionIsMet(model)) {
-    		return "";
+    		return model;
     	}
 
-    	// Create the StringWriter - out output will go here.
-	    StringWriter ret=new StringWriter();
-	    PrintWriter w=new PrintWriter(ret);
-	
-	    String id=Functions.xpathToId(rowContext+boundTo);
-	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-	    
-	    String styleClass = getStyleClass();
-	    String ref = getRef();
-	    
-	    QuotationContext.getRenderer().renderAttributeField(w, request, response, attr, this, boundTo, id, onChange, onLoad, "", styleClass, ref);
-	    
-	    return ret.toString();
-	}
-	
-	/**
-	 * Render an AttributeField on the UI. This is quite a common requirement throughout the classes
-	 * of the ui package, so it's put here for convenience. The result of calling this method
-	 * is some kind of HTML form element (input, select, textarea, etc) being returned as a String.
-	 * The actual element returned depends on the specifics of the Attribute it is being rendered 
-	 * for.
-	 * @param data The 'model' (in MVC terms) containing the AttributeField to be rendered
-	 * @param boundTo An XPath expressing pointing at the AttributeField in 'data' that we're rendering.
-	 * @param rowContext If we're rendering into a scroller, this'll be the row number in xpath predicate format (e.g. "[1]"). Otherwise ""
-	 * @param onChange JavaScript onChange event
-	 * @param onLoad JavaScript onLoad event
-	 * @param String title (to Bypass titles)
-	 * @return The HTML representing the attribute as a form element.
-	 * @throws IllegalStateException
-	 * @throws IOException
-	 * @throws PostconditionException 
-	 */
-	public String renderAttributeWithTitle(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext, String onChange, String onLoad, String title) throws IllegalStateException, IOException {
-		// If we're not bound to anything, output nothing.
-		// If our condition isn't met, output nothing.
-	    if (boundTo==null || !conditionIsMet(model)) {
-    		return "";
-    	}
+        com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
 
-    	// Create the StringWriter - out output will go here.
-	    StringWriter ret=new StringWriter();
-	    PrintWriter w=new PrintWriter(ret);
+        RenderCommand command=buildRenderCommand("AttributeField", request, response, attr);
+        command.setRowContextArg(rowContext);
+        command.setRenderIdArg(Functions.xpathToId(rowContext+boundTo));
+        command.setStyleClassArg(getStyleClass());
+        command.setOnChangeArg(onChange);
+        command.setOnLoadArg(onLoad);
+        command.setRenderHintArg(renderHint);
+
+        invokeRenderCommand(command);
+        
+        return model;
+ 	}
 	
-	    String id=Functions.xpathToId(rowContext+boundTo);
-
-	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
-	    
-	    String styleClass = getStyleClass();
-	    String ref = getRef();
-	    
-	    QuotationContext.getRenderer().renderAttributeField(w, request, response, attr, this, boundTo, id, onChange, onLoad, title, styleClass, ref);
-	    
-	    return ret.toString();
-	}
-
 	/**
 	 * Validate that the values contained in the model (at a specific xpath) are valid. If
 	 * errors are found, the details are added to the attribute as a sub-attribute with the
@@ -427,22 +277,10 @@ public class AttributeField extends PageElement {
 	    return error;
 	}
 
-	protected String renderAttributePageLevel(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext) throws IllegalStateException, IOException {
-	    // If we're not bound to anything, output nothing.
-		// If our condition is not met, output nothing.
-	    if (boundTo==null || !conditionIsMet(model)) {
-	        return "";
-	    }
-	
-    	StringWriter ret=new StringWriter();
-	    PrintWriter w=new PrintWriter(ret);
-	
-	    String id=Functions.xpathToId(rowContext+boundTo);
-	    com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(boundTo);
+	private Type renderAttributePageLevel(RenderRequest request, RenderResponse response, Type model, String boundTo, String rowContext) throws IllegalStateException, IOException {
+	    Attribute attr=model.xpathGet(boundTo, Attribute.class);
 	    
-	    QuotationContext.getRenderer().renderAttributeFieldPageLevel(w, request, response, attr, this, boundTo, id);
-	    
-	    return ret.toString();
+        return executeTemplateCommand("AttributeFieldPageLevel", request, response, attr);
 	}
 
 	/**
@@ -469,7 +307,10 @@ public class AttributeField extends PageElement {
     		model.xpathSet(boundTo+"/value", request.getParameter(name).trim());
         }
         else if (value==null && "checkbox".equals(getRenderHint())) {
-            model.xpathSet(boundTo+"/value", "No");
+            Attribute attr=model.xpathGet(boundTo, Attribute.class);
+            if (attr.isYesornoType()) {
+                attr.setValue("No");
+            }
         }
 	    
 	    return model;

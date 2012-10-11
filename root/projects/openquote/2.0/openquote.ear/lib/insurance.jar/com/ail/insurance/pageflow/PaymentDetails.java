@@ -20,7 +20,6 @@ import static com.ail.insurance.pageflow.util.Functions.addError;
 import static com.ail.insurance.pageflow.util.Functions.isEmpty;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,7 +34,6 @@ import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentCard;
 import com.ail.financial.PaymentSchedule;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -78,16 +76,26 @@ public class PaymentDetails extends PageElement {
                 pc.setCardHoldersName(request.getParameter("cardHoldersName"));
                 
                 try {
-                    Date d=monthYearFormat.parse(request.getParameter("startMonth")+request.getParameter("startYear"));
-                    pc.setStartDate(d);
+                    if (!isEmpty(request.getParameter("startMonth")) && !isEmpty(request.getParameter("startYear"))) {
+                        Date d=monthYearFormat.parse(request.getParameter("startMonth")+request.getParameter("startYear"));
+                        pc.setStartDate(d);
+                    }
+                    else {
+                        pc.setStartDate(null);
+                    }
                 }
                 catch (Exception e) {
                     pc.setExpiryDate(null);
                 }
 
                 try {
-                    Date d=monthYearFormat.parse(request.getParameter("expiryMonth")+request.getParameter("expiryYear"));
-                    pc.setExpiryDate(d);
+                    if (!isEmpty(request.getParameter("expiryMonth")) && !isEmpty(request.getParameter("expiryYear"))) {
+                        Date d=monthYearFormat.parse(request.getParameter("expiryMonth")+request.getParameter("expiryYear"));
+                        pc.setExpiryDate(d);
+                    }
+                    else {
+                        pc.setExpiryDate(null);
+                    }
                 }
                 catch (Exception e) {
                     pc.setExpiryDate(null);
@@ -180,10 +188,6 @@ public class PaymentDetails extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    Policy quote=(Policy)model;
-        PrintWriter w=response.getWriter();
-
-        return QuotationContext.getRenderer().renderPaymentDetails(w, request, response, quote, this);
+	    return executeTemplateCommand("PaymentDetails", request, response, model);
     }
-
 }

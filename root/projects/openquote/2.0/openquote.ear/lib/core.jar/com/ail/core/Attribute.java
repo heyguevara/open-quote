@@ -93,6 +93,8 @@ import com.ail.annotation.TypeDefinition;
  */
 @TypeDefinition
 public class Attribute extends Type implements Identified {
+    private static final Pattern formattedCurrencyPattern=Pattern.compile("([^0-9,.']*)([0-9,.']*)([^0-9,.']*)");
+
     private static final Pattern formatOptionsPattern=Pattern.compile("(size=([0-9]*))|"+
                                                                       "(min=[0-9.]*)|"+
                                                                       "(max=[0-9.]*)|"+
@@ -106,7 +108,9 @@ public class Attribute extends Type implements Identified {
                                                                       "(percent)");
     
     private static Map<Thread,Type> referenceContext=Collections.synchronizedMap(new HashMap<Thread,Type>());
+
     transient private String localFormat;
+    
     public static String YES_OR_NO_FORMAT="choice,options=-1#?|0#No|1#Yes";
 
     /** The name of the facet - generally unique in a collection */
@@ -343,8 +347,8 @@ public class Attribute extends Type implements Identified {
             return value;
         }
         else {
-            Format format=formatter(ThreadLocale.getThreadLocale());
-            
+            Format format=formatter();
+
             if (format instanceof MessageFormat) {
                 return format.format(new Object[]{getObject()});
             }
@@ -352,6 +356,43 @@ public class Attribute extends Type implements Identified {
                 return format.format(getObject());
             }
         }
+    }
+    
+    /**
+     * Return the value of this attribute split into three parts. The values
+     * are split into prefix (index 0), value (index 1) and suffix (index 2).
+     * The content of each element of the return array depends on the type
+     * of attribute being represented, but the return will always contain 3
+     * elements and none of them will ever be null.
+     * The currency type is probably the best example of how this method is used.
+     * In this case, the value will always contain the financial amount, and either
+     * the prefix or suffix will contain the currency symbol or ISO Code as is 
+     * appropriate to represent that currency in the user's locale.
+     * @return
+     */
+    public String[] getCurrencySplitValue() {
+        String[] ret = {"", "", ""};
+        
+        if (isCurrencyType()) {
+            // If we can get the formatted value from the currency, this will give use all the locale specific symbols
+            // to place before or after the value. However, as Attributes are allowed to hold invalid values, we will 
+            // adopt the fall back position of of using the value as the fields content with nothing to the left of the
+            // field, and the currency's ISO on the right.
+            try {
+                Matcher m=formattedCurrencyPattern.matcher(getFormattedValue());
+                m.matches();
+                ret[0]=m.group(1);
+                ret[1]=m.group(2);
+                ret[2]=m.group(3);
+            }
+            catch(Throwable e) {
+                ret[0]="&nbsp;";
+                ret[1]=getValue();
+                ret[2]=getUnit();
+            }        
+        }
+        
+        return ret;
     }
 
     /**
@@ -490,7 +531,7 @@ public class Attribute extends Type implements Identified {
                 }
             }
             else {
-                ret=formatter(com.ail.core.ThreadLocale.getThreadLocale()).parseObject(value);
+                ret=formatter().parseObject(value);
             }
         }
         catch(NullPointerException e) {
@@ -511,7 +552,9 @@ public class Attribute extends Type implements Identified {
      * @param locale
      * @return A message format suitable for formatting this attribute.
      */
-    private Format formatter(Locale locale) {
+    public Format formatter() {
+        Locale locale = ThreadLocale.getThreadLocale();
+
         // handle special cases of format - those in addition to what you get from
         // the default MessageFormat.
         if (isStringType() || isNoteType()) {
@@ -536,7 +579,7 @@ public class Attribute extends Type implements Identified {
                         format=NumberFormat.getCurrencyInstance(locale);
                     }
                     format.setCurrency(Currency.getInstance(unit));
-                    
+
                     return format;
                 }
                 catch (Exception e) {

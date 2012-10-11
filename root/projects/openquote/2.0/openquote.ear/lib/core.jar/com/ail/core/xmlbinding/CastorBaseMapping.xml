@@ -574,6 +574,7 @@
     </class>
 
     <class name="com.ail.insurance.policy.Policy" extends="com.ail.core.Type">
+        <field name="versionEffectiveDate" type="com.ail.core.VersionEffectiveDate" />
         <field name="allowable" type="com.ail.core.Allowable" collection="arraylist" />
         <field name="excess" type="com.ail.insurance.policy.Excess" collection="arraylist" />
         <field name="asset" type="com.ail.insurance.policy.Asset" collection="arraylist" />
@@ -790,12 +791,6 @@
         <field name="subTitle" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="titleBinding" type="string">
-            <bind-xml node="attribute" />
-        </field>
-        <field name="subTitleBinding" type="string">
-            <bind-xml node="attribute" />
-        </field>
         <field name="onChange" type="string">
             <bind-xml node="attribute" />
         </field>
@@ -816,14 +811,6 @@
         <field name="xpath" type="string">
             <bind-xml node="attribute" />
         </field>
-    </class>
-
-    <class name="com.ail.insurance.pageflow.Label" extends="com.ail.insurance.pageflow.PageElement">
-        <map-to xml="label" />
-        <field name="format" type="string">
-            <bind-xml node="attribute" />
-        </field>
-        <field name="parameter" type="com.ail.insurance.pageflow.util.Binding" collection="arraylist" />
     </class>
 
     <class name="com.ail.insurance.pageflow.PageScript" extends="com.ail.insurance.pageflow.PageElement">
@@ -997,7 +984,6 @@
 
     <class name="com.ail.insurance.pageflow.SectionScroller" extends="com.ail.insurance.pageflow.Repeater">
         <map-to xml="sectionScroller" />
-        <field name="sectionTitle" type="com.ail.insurance.pageflow.Label" />
     </class>
 
     <class name="com.ail.insurance.pageflow.PageSection" extends="com.ail.insurance.pageflow.PageContainer">
@@ -1080,6 +1066,9 @@
             <bind-xml node="attribute" />
         </field>
         <field name="invitationLinkText" type="string">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="forwardToPageName" type="string">
             <bind-xml node="attribute" />
         </field>
     </class>

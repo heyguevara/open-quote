@@ -117,6 +117,14 @@ public class AssessmentSheet extends Type {
     }
     
     /**
+     * Return a list of the behaviour lines associated with this sheet.
+     * @return List of behaviour lines, this list may be empty but it will not be null.
+     */
+    public List<Behaviour> behaviourLines() {
+        return new ArrayList<Behaviour>(getLinesOfType(Behaviour.class).values());
+    }
+    
+    /**
      * Fetch the collection of line objects associated with this instance. The Collection returned includes
      * {@link AssessmentLine#isDisabled() disabled} lines. Use {@link #getEnabledLine getEnabledLine} to fetch
      * only those that are enabled. 

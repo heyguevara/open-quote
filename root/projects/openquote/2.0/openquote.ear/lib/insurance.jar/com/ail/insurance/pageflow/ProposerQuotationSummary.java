@@ -23,10 +23,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.BaseException;
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>This PageElement renders a summary of a quotation which is aimed at proposer. The detailed format of the element
@@ -71,27 +68,8 @@ public class ProposerQuotationSummary extends PageContainer {
         return super.processValidations(request, response, model);
     }
 
-
-    /**
-     * @throws  
-     * @inheritDoc
-     */
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	try {
-	    	RenderCommand command=QuotationContext.getCore().newCommand("RenderProposerQuotationSummary", 
-	    																QuotationContext.getRenderer().getMimeType(),
-	    																RenderCommand.class);
-	    	command.setRequestArg(request);
-	    	command.setResponseArgRet(response);
-	    	command.setModelArgRet(model);
-	    	command.setPageElementArg(this);
-			command.invoke();
-	    	response.getWriter().print(command.getRenderedOutputRet());
-		} catch (BaseException e) {
-			throw new IllegalStateException(e);
-		}
-    	
-    	return model;
+        return executeTemplateCommand("ProposerQuotationSummary", request, response, model);
 	}
 }

@@ -25,6 +25,7 @@ import javax.portlet.RenderResponse;
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceInterface;
+import com.ail.core.Core;
 import com.ail.core.Type;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
@@ -100,8 +101,16 @@ public interface RenderService {
          */
         void setModelArgRet(Type modelArgRet);
 
+        /**
+         * Get the instance of the policy which is being processed.
+         * @return Policy instance
+         */
         Policy getPolicyArg();
         
+        /**
+         * @see #getPolicyArg()
+         * @param policyArg
+         */
         void setPolicyArg(Policy policyArg);
         
         /**
@@ -117,15 +126,125 @@ public interface RenderService {
          */
         void setPageElementArg(PageElement pageElementArg);
         
-        void setWriterArg(Writer writer);
+        /**
+         * When the element being rendered is being rendered within a table, the
+         * rowContext uniquely identifies the row within that table.
+         * @return row context
+         */
+        String getRowContextArg();
+
+        /**
+         * @see #getRowContextArg()
+         */
+        void setRowContextArg(String rowContext);
+
+        /**
+         * The onChangeArg defines an optional piece of javascript that should be 
+         * attached to the generated HTML form element's onchange event.
+         */
+        String getOnChangeArg();
+
+        /**
+         * @see #setOnChangeArg(String)
+         * @param onChange
+         */
+        void setOnChangeArg(String onChange);
+
+        /**
+         * The onLoadArg defines an optional piece of javascript that should be 
+         * attached to the generated HTML form element's onload event.
+         */
+        String getOnLoadArg();
+
+        /**
+         * @see #setOnLoadArg(String)
+         * @param onChange
+         */
+        void setOnLoadArg(String onLoad);
+
+        /**
+         * The name of the style class (css) to be associated with the element when it is rendered.
+         * @return
+         */
+        String getStyleClassArg();
+        
+        /**
+         * @see #getStyleClassArg()
+         * @param styleClass
+         */
+        void setStyleClassArg(String styleClass);
+
+        String getRefArg();
+        
+        void setRefArg(String ref);
+        
+        /**
+         * Instance of Core which the render templates may use to access other core services.
+         * @return
+         */
+        Core getCoreArg();
+        
+        /**
+         * @see #getCoreArg()
+         * @param core
+         */
+        void setCoreArg(Core core);
+        
+        /**
+         * Unique ID within the page for us in the identification of page elements
+         * @return
+         */
+        String getRenderIdArg();
+        
+        /**
+         * @see #getRenderIdArg()
+         * @param renderIdArg
+         */
+        void setRenderIdArg(String renderIdArg);
         
         Writer getWriterArg();
 
+        void setWriterArg(Writer writer);
+
+        /**
+         * Id for use on the "detail" elements of widget where appropriate - for example the
+         * questionWithDetails widget.
+         * @return
+         */
+        String getDetailIdArg();
+        
+        /**
+         * @see #getDetailIdArg()
+         * @param detailIdArg
+         */
+        void setDetailIdArg(String detailIdArg);
+        
+        /**
+         * Hint to be passed to the renderer to help guide it in the way that the attribute is rendered
+         * @return render hint
+         */
+        String getRenderHintArg();
+        
+        /**
+         * @see #getRenderHint()
+         * @param renderHint
+         */
+        void setRenderHintArg(String renderHint);
+        
+        /**
+         * Optional argument used by page elements (e.g. ParseUrlContent) which render content directly on the UI.
+         * @return Content to be rendered.
+         */
+        String getContentArg();
+        
+        /**
+         * @see #setContentArg(String) 
+         */
+        void setContentArg(String content);
     }
 
     @ServiceCommand
     public interface RenderCommand extends Command, RenderArgument {
-
     }
 }
 

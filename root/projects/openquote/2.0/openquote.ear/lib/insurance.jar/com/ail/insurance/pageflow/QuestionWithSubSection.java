@@ -16,12 +16,12 @@
  */
 package com.ail.insurance.pageflow;
 
+import static com.ail.core.Functions.expand;
 import static com.ail.insurance.pageflow.util.Functions.convertCsvToList;
 import static com.ail.insurance.pageflow.util.Functions.convertListToCsv;
 import static com.ail.insurance.pageflow.util.Functions.xpathToId;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 
 /**
  * <p>If the answer to a given question is yes, a number of subsequent questions are asked. This
@@ -112,6 +113,25 @@ public class QuestionWithSubSection extends Question {
     	super.applyElementId(basedId);
 	}
 
+    /**
+     * Get the title with all variable references expanded. References are expanded with 
+     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
+     * expanded with respect to <i>local</i>, all others are expanded with respect to
+     * <i>root</i>. 
+     * @param root Model to expand references with respect to.
+     * @param local Model to expand local references (xpaths starting ./) with respect to.
+     * @return Title with embedded references expanded, or null if there is no title
+     * @since 1.1
+     */
+    public String formattedTitle(RenderArgumentImpl args) {
+        if (getTitle()!=null) {
+            return i18n(expand(getTitle(), args.getPolicyArg(), args.getModelArgRet()));
+        }
+        else {
+            return null;
+        }
+    }
+    
     @Override
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
         return applyRequestValues(request, response, model, "");
@@ -138,12 +158,12 @@ public class QuestionWithSubSection extends Question {
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
 	    boolean error=false;
 
-	    // validate the yes/no part of the question
+	    // validate the main question which is either a yes/no or a choice
         error|=super.processValidations(request, response, model);
 
         // If 'Yes' is selected, validate the subsection
         com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(getBinding());
-        if (attr.isYesornoType() && detailsEnabledFor.contains(attr.getValue())) {
+        if ((attr.isYesornoType() || attr.isChoiceType()) && detailsEnabledFor.contains(attr.getValue())) {
     		for(PageElement ss:subSection) {
     			error|=ss.processValidations(request, response, model);
     		}
@@ -159,24 +179,19 @@ public class QuestionWithSubSection extends Question {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-        	String aTitle = i18n(getExpandedTitle(model));
-            PrintWriter w=response.getWriter();
-            String questionId=xpathToId(rowContext+binding);
-            
-            String styleClass = getStyleClass();
-            String ref = getRef();
-    
-            model=QuotationContext.getRenderer().renderQuestionWithSubSection(w, request, response, model, this, aTitle, rowContext, questionId, styleClass, ref);
-    	}
-    	return model;
+        RenderCommand command = buildRenderCommand("QuestionWithSubSection", request, response, model, rowContext);
+
+        command.setRenderIdArg(xpathToId(rowContext + binding));
+        
+        return invokeRenderCommand(command);
     }
 
 	@Override
-	public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-		super.renderPageHeader(request, response, model);
-		for(PageElement ss: subSection) {
-			ss.renderPageHeader(request, response, model);
-		}
-	}
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        model = super.renderPageHeader(request, response, model);
+        for (PageElement ss : subSection) {
+            ss.renderPageHeader(request, response, model);
+        }
+        return model;
+    }
 }

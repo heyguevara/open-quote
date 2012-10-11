@@ -17,13 +17,11 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * An information page typically contains more information than question/answer elements (which are better housed in a
@@ -43,12 +41,6 @@ public class InformationPage extends Page {
         
         super.renderPageHeader(request, response, model);
         
-        PrintWriter w = response.getWriter();
-
-        model=QuotationContext.getRenderer().renderInformationPage(w, request, response, model, this, i18n(getTitle()), super.getPageElement());
-        
-        model=super.renderPageFooter(request, response, model);
-        
-        return model;
+        return executeTemplateCommand("InformationPage", request, response, model);
     }
 }

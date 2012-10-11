@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,7 +24,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>The QuestionSeparator is used to break up long list of questions with either a title, or simple white space.</p>
@@ -42,22 +40,6 @@ public class QuestionSeparator extends Question {
 	}
 
     @Override
-    public Type processActions(ActionRequest request, ActionResponse response, Type model) {
-    	return model;
-    }
-
-    @Override
-    public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException,
-            IOException {
-        return model;
-    }
-
-    @Override
-    public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model, String rowContext) {
-    	return model;
-    }
-
-    @Override
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
     	return model;
     }
@@ -68,15 +50,12 @@ public class QuestionSeparator extends Question {
     }
 
     @Override
-	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        return renderResponse(request, response, model, null);
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        return model;
     }
 
 	@Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
-        String title = i18n(getExpandedTitle(model));
-        PrintWriter w=response.getWriter();
-        
-        return QuotationContext.getRenderer().renderQuestionSeparator(w, request, response, model, this, title);
-    }
+	    return executeTemplateCommand("QuestionSeparator", request, response, model);
+	}
 }

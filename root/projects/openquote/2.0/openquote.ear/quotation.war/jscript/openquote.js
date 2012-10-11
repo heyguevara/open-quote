@@ -1,4 +1,4 @@
-/* 'item' is a string, 'list' is a string of semicolon separated values. This
+/* 'item' is a string, 'list' is a string of comma separated values. This
  * function returns true if 'item' appears in 'list'.
  */
 function isInList(item, list) {
@@ -76,12 +76,12 @@ function showHideDivDisplay(showCondition, hideCondition, id) {
     }
 }
 
-function showHideDivDisplayForRadioChoice(radioId, enableForValues, id) {
-	radios=findElementsByName(radioId);
-	hideDivDisplay(id);
+function showHideDivDisplayForRadioChoice(divId, enableForValues, questionId) {
+	hideDivDisplay(divId);
+	radios=document.getElementsByName(questionId);
 	for(var i=0 ; i<radios.length ; i++) {
 	    if (radios[i].checked && isInList(radios[i].value, enableForValues)) {
-	        showDivDisplay(id);
+	        showDivDisplay(divId);
 	    }
 	}
 }

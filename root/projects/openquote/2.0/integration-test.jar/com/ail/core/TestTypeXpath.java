@@ -301,6 +301,15 @@ public class TestTypeXpath extends CoreUserBaseCase {
         assertEquals("Wrong number of Attribute returned", count, 9);
     }
 
+    @Test
+    public void testXpathWithNullArguments() {
+        Attribute attr=new Attribute("AttrId", "string value", "string");
+        assertEquals(null, attr.xpathGet(null));
+        assertEquals(null, attr.xpathGet(null, String.class));
+        assertEquals(null, attr.xpathIterate(null));
+        assertEquals(null, attr.xpathIterate(null, String.class));
+    }
+    
     /**
      * Define a few simple functions for use from JXPath expressions
      * 

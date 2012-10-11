@@ -17,10 +17,8 @@
 package com.ail.insurance.pageflow;
 
 import static com.ail.core.Functions.configurationNamespaceToProductName;
-import static com.ail.core.Functions.expand;
 import static com.ail.core.Functions.loadUrlContentAsString;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
-import static com.ail.insurance.pageflow.util.Functions.expandRelativeUrlToProductUrl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,8 +31,8 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
+import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.policy.Policy;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * A PageElement which contains content read from an arbitrary URL. The content is parsed
@@ -102,7 +100,7 @@ public class ParsedUrlContent extends PageElement {
                 try {
                     if (namespace.endsWith("Registry")) {
                         productName=configurationNamespaceToProductName(namespace);
-                        content=expand(loadUrlContentAsString(new URL(expandRelativeUrlToProductUrl(getUrl(), request, productName))), quote);
+                        content=expand(loadUrlContentAsString(new URL(expandRelativeUrlToProductUrl(getUrl(), request, productName))), quote, quote);
                         success=true;
                         break;
                     }
@@ -116,7 +114,9 @@ public class ParsedUrlContent extends PageElement {
                 content="ERROR: Content not found for:"+getUrl();
             }
             
-            model=QuotationContext.getRenderer().renderParsedUrlContent(response.getWriter(), request, response, model, this, content);
+            RenderCommand command = buildRenderCommand("ParsedUrlContent", request, response, model);
+            command.setContentArg(content);
+            model = invokeRenderCommand(command);
     	}
 
     	return model;

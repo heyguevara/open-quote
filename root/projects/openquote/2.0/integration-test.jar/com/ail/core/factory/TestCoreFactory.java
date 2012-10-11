@@ -641,11 +641,9 @@ public class TestCoreFactory implements CoreUser, ConfigurationOwner {
      * <li>Save configuration one.</li>
      * <li>Set the effective date to now.</li>
      * <li>set timeOne to the effective date.</li>
-     * <li>Sleep for 10ms.</li>
      * <li>Save configuration two.</li>
      * <li>Set the effective date to now.</li>
      * <li>set timeTwo to the effective date.</li>
-     * <li>Sleep for 10ms.</li>
      * <li>Set the effective date to timeOne.</li>
      * <li>Create an instance of 'SetVersion' using the factory.</li>
      * <li>Fail if the object returns does not have the settings defined in configuration one.</li>
@@ -661,14 +659,10 @@ public class TestCoreFactory implements CoreUser, ConfigurationOwner {
         Version v=null;
         try {
             core.setConfiguration(this.createConfigurationOne());
-            versionEffectiveDate=new VersionEffectiveDate();
-            VersionEffectiveDate timeOne=versionEffectiveDate;
-            Thread.sleep(10);
-
+            VersionEffectiveDate timeOne = new VersionEffectiveDate(core.getVersionEffectiveDate());
+            
             core.setConfiguration(this.createConfigurationTwo());
-            versionEffectiveDate=new VersionEffectiveDate();
-            VersionEffectiveDate timeTwo=versionEffectiveDate;
-            Thread.sleep(10);
+            VersionEffectiveDate timeTwo = new VersionEffectiveDate(core.getVersionEffectiveDate());
 
             for(int i=0 ; i<2 ; i++) {
                 versionEffectiveDate=timeOne;
@@ -683,6 +677,7 @@ public class TestCoreFactory implements CoreUser, ConfigurationOwner {
             }
         }
         catch(Throwable e) {
+            e.printStackTrace();
             fail("Unexpected exception:"+e);
         }
     }

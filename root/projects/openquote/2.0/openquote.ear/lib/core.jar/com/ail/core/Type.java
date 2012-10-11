@@ -170,6 +170,10 @@ public class Type implements Serializable, Cloneable {
      * @return Result of evaluation.
 	 */
     public Object xpathGet(String xpath) {
+        if (xpath==null) {
+            return null;
+        }
+
         try {
             return fetchJXPathContext().getValue(xpath);
         } catch (JXPathException e) {
@@ -186,6 +190,10 @@ public class Type implements Serializable, Cloneable {
      */
     @SuppressWarnings("rawtypes")
     public Iterator xpathIterate(String xpath) {
+        if (xpath==null) {
+            return null;
+        }
+
         try {
             return (Iterator)fetchJXPathContext().iterate(xpath);
         } catch (JXPathException e) {
@@ -202,6 +210,10 @@ public class Type implements Serializable, Cloneable {
      */
     @SuppressWarnings("unchecked")
     public <T extends Object> Iterator<T> xpathIterate(String xpath, Class<T> clazz) {
+        if (xpath==null) {
+            return null;
+        }
+
         try {
             return (Iterator<T>)fetchJXPathContext().iterate(xpath);
         } catch (JXPathException e) {
@@ -218,6 +230,10 @@ public class Type implements Serializable, Cloneable {
      */
     @SuppressWarnings("unchecked")
     public <T extends Object> T xpathGet(String xpath, Class<T> clazz) {
+        if (xpath==null) {
+            return null;
+        }
+
         try {
             return (T)fetchJXPathContext().getValue(xpath, clazz);
         } catch (JXPathException e) {

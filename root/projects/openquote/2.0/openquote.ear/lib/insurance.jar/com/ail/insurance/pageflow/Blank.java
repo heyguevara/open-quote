@@ -24,7 +24,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * A blank page element outputs nothing. Specifically it renders a non-breaking space.
@@ -50,6 +49,6 @@ public class Blank extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-		return QuotationContext.getRenderer().renderBlank(response.getWriter(), request, response, model, this);
+		return executeTemplateCommand("Blank", request, response, model);
 	}
 }

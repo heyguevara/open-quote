@@ -247,7 +247,7 @@ public class Functions {
     
             do {
                 tokenStart=buf.indexOf("${");
-                tokenEnd=buf.indexOf("}");
+                tokenEnd=buf.indexOf("}", tokenStart);
                 
                 if (tokenStart>=0 && tokenEnd>tokenStart) {
                     String val=null;

@@ -80,7 +80,7 @@ public class Functions {
     
     /**
      * Convert null strings into empty strings. When a UI component is rendering it'll frequently
-     * want to render null strings. The default java behavior when you ask to output a null String
+     * want to render null strings. The default java behaviour when you ask to output a null String
      * is to write "null" to the output - which isn't what we typically want on the UI. 
      * @param s String to check
      * @return "" if the string was null, or the value of the string if it was not.
@@ -317,7 +317,7 @@ public class Functions {
     }
     
     /**
-     * Products frequently refer to content from their Registries or Pageflows by "relative" URLs. This method
+     * Products frequently refer to content from their Registry or Pageflows by "relative" URLs. This method
      * expands relative URLs into absolute product URLs - i.e. a URL using the "product:" protocol. A relative URL 
      * is one that starts with "~/", where "~" is shorthand for the product's home location. None relative URLs are
      * returned without modification.

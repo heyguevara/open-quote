@@ -19,7 +19,6 @@ package com.ail.insurance.pageflow;
 import static com.ail.insurance.pageflow.util.Functions.addError;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,7 +43,6 @@ import org.jboss.portal.identity.UserProfileModule;
 
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.Proposer;
 
@@ -110,6 +108,10 @@ public class LoginSection extends PageContainer {
         this.invitationMessageText = invitationMessageText;
     }
 
+    public String getFormattedInvitationMessageText(String link) {
+        return String.format(getInvitationMessageText(), link);
+    }
+    
     /**
      * Text of the label to appear on the login button. This defaults to "Login".
      * @return Login button's label text
@@ -150,7 +152,7 @@ public class LoginSection extends PageContainer {
      * @param response
      * @return Name of the "current" portal
      */
-    private String nameOfForwardToPortal(RenderResponse response) {
+    public String nameOfForwardToPortal(RenderResponse response) {
         return Functions.getPortalName(response);
     }
 
@@ -328,19 +330,30 @@ public class LoginSection extends PageContainer {
         return model;
     }
 
+    public String getUsernameGuess(Policy policy, RenderRequest request) {
+        String usernameGuess = null;
+
+        if (policy.getUsername() != null) {
+            usernameGuess = policy.getUsername();
+        }
+
+        if (policy.getProposer() != null) {
+            Proposer proposer = (Proposer) policy.getProposer();
+            if (proposer.getEmailAddress() != null) {
+                usernameGuess = proposer.getEmailAddress();
+            }
+        }
+
+        if (usernameGuess != null && isAnExistingUser(usernameGuess, request)) {
+            return usernameGuess;
+        } else {
+            return "";
+        }
+    }
+    
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        Policy policy=(Policy)model;
-        Proposer proposer=(Proposer)policy.getProposer();
-
-        // Guess the username from the quotation or the proposer's email address.
-        String usernameGuess=policy.getUsername()!=null ? policy.getUsername() : proposer.getEmailAddress();
-        usernameGuess=isAnExistingUser(usernameGuess, request) ? usernameGuess : "";
-        
-        String nameOfForwardToPortal=nameOfForwardToPortal(response);
-        	
-        return QuotationContext.getRenderer().renderLoginSection(w, request, response, model, this, usernameGuess, nameOfForwardToPortal);
+        return executeTemplateCommand("LoginSection", request, response, model);
     }
 
     private boolean isAnExistingUser(String username, PortletRequest request) {

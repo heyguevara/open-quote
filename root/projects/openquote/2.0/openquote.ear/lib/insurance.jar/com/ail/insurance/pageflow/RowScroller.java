@@ -17,13 +17,11 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * A RowScroller represents a Collection of records in a table format with one row per record.<br>
@@ -49,17 +47,15 @@ public class RowScroller extends Repeater {
     
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-            PrintWriter w=response.getWriter();
-
-            model=QuotationContext.getRenderer().renderRowScroller(w, request, response, model, this);
-    	}
-
-        return model;
+        return executeTemplateCommand("RowScroller", request, response, model);
     }
 
     /**
-     * SHOULD BE ON ROWSCROLLER NO?
+     * Is the specified column bound to a "required" attribute - that is a column with it's required 
+     * attribute set to true.
+     * @param model The model instance to be checked (into which binding will be evaluated).
+     * @param binding The binding of the asset in which the attribute defined.
+     * @param column The index of the attribute inside the asset
      */
     public boolean isBoundToRequiredColumnAttribute(Type model, String binding, int column) {
 		Type t=model.xpathGet(binding, Type.class);

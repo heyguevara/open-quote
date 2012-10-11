@@ -18,8 +18,6 @@ package com.ail.insurance.pageflow.util;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
-import java.util.Date;
-
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
@@ -29,9 +27,8 @@ import com.ail.core.ThreadLocale;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.pageflow.PageFlow;
 import com.ail.insurance.pageflow.RenderingError;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.render.Renderer;
-import com.ail.insurance.pageflow.util.QuotationCommon;
+import com.ail.insurance.policy.Policy;
 
 /**
  * This class wraps a number of ThreadLocal objects which are initialised at the beginning of each Portal request/response 
@@ -49,6 +46,7 @@ public class QuotationContext {
 	 * @param request Initialise the context with respect to this request
 	 */
     public static void initialise(PortletRequest request) {
+        boolean newPolicy = false;
         Policy policy = null;
     	PageFlow pageFlow = null;
     	PortletSession session=request.getPortletSession();
@@ -69,10 +67,12 @@ public class QuotationContext {
         	if (policy == null && productName != null) {
                 policy=(Policy)core.newProductType(productName, "Policy");
                 policy.setProductTypeId(productName);
+                newPolicy=true;
             }
     
-        	// The request's ThreadLocale could change from one request to the next, if the user switches their browser
-            // settings for example, so always use the current settings.
+            // The request's ThreadLocale could change from one request to the
+            // next, if the user switches their browser settings for example, so
+            // always use the current settings.
         	if (policy != null) {
         		policy.setLocale(new ThreadLocale(request.getLocale()));
         	}
@@ -80,23 +80,34 @@ public class QuotationContext {
     		// Set the thread's locale 
         	ThreadLocale.setThreadLocale(request.getLocale());
 
-    		// Fetch the appropriate pageflow object for this session. The 'appropriate' pageflow
-            // is the one associated with the product we're quoting for in this session. We get
-            // the product's name from the quote.
-            // If the quote has a quote date, use that as the ved - if it doesn't (as in the case of
-            // a new quote), use the date now.
+            // Fetch the appropriate PageFlow object for this session. The
+            // 'appropriate' pageflow is the one associated with the product
+            // we're quoting for in this session. We get the product's name from
+            // the quote.
+            // If the quote already has a version effective date then use it; if
+            // it has a quote date, use that as the VED; if it doesn't have
+            // either (as in the case of a new quote), use the date now.
         	if (productName!=null) {
-	            Date ved=(policy.getQuotationDate() != null) ? policy.getQuotationDate() : new Date();
-	            core.setVersionEffectiveDate(new VersionEffectiveDate(ved));
-	            pageFlow=(PageFlow)core.newProductType(productName, "QuotationPageFlow");
+        	    if (policy.getVersionEffectiveDate() != null) {
+        	        core.setVersionEffectiveDate(policy.getVersionEffectiveDate());
+        	    }
+        	    else if (policy.getQuotationDate() != null) {
+        	        core.setVersionEffectiveDate(new VersionEffectiveDate(policy.getQuotationDate()));
+        	    }
+        	    else {
+        	        core.setVersionEffectiveDateToNow();
+        	    }
+
+        	    pageFlow=(PageFlow)core.newProductType(productName, "QuotationPageFlow");
 
 	            pageFlow.applyElementId("OQ0");
-	            
-	            // if the pageflow defines the page to start on, use it. Otherwise
-	            // we rely on the setting defined in the policy in the product definition.
-	            if (pageFlow.getStartPage()!=null) {
-	            	policy.setPage(pageFlow.getStartPage());
-	            }
+        	}
+        	
+            // if the policy was just create and the PageFlow defines the page
+            // to start on, use it. Otherwise we rely on the setting defined in
+            // the policy in the product definition.
+        	if (newPolicy &&  pageFlow.getStartPage()!=null) {
+                policy.setPage(pageFlow.getStartPage());
         	}
         }
         catch(Error e) {

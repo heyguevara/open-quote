@@ -17,21 +17,27 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
- * <p>The QuestionPage element is the most commonly used page within {@link PageFlow PageFlows}. As the name
- * suggests a QuestionPage is designed to hold elements that ask questions.</p>
- * <p>A QuestionPage is only really visible on the UI in terms of the Questions (etc.) that it contains. It may
- * optionally have a {@link #getTitle() title} which will be rendered as a banner across the top of the page if
- * it is defined, and it should define an {@link #getId() id} as pages can only be navigated to by their IDs, so 
- * a page without an ID will not ever be displayed.</p>
+ * <p>
+ * The QuestionPage element is the most commonly used page within
+ * {@link PageFlow PageFlows}. As the name suggests a QuestionPage is designed
+ * to hold elements that ask questions.
+ * </p>
+ * <p>
+ * A QuestionPage is only really visible on the UI in terms of the Questions
+ * (etc.) that it contains. It may optionally have a {@link #getTitle() title}
+ * which will be rendered as a banner across the top of the page if it is
+ * defined, and it should define an {@link #getId() id} as pages can only be
+ * navigated to by their IDs, so a page without an ID will not ever be
+ * displayed.
+ * </p>
+ * 
  * @see InformationPage
  * @see PageFlow
  */
@@ -44,18 +50,14 @@ public class QuestionPage extends Page {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        super.renderResponse(request, response, model);
-        
-        super.renderPageHeader(request, response, model);
+        model = super.renderResponse(request, response, model);
 
-        String title=i18n(getTitle());
-        
-        PrintWriter w = response.getWriter();
-        
-        model=QuotationContext.getRenderer().renderQuestionPage(w, request, response, model, this, title);
-        
-        model=super.renderPageFooter(request, response, model);
-        
+        model = super.renderPageHeader(request, response, model);
+
+        model = executeTemplateCommand("QuestionPage", request, response, model);
+
+        model = super.renderPageFooter(request, response, model);
+
         return model;
     }
 }

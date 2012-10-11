@@ -35,9 +35,11 @@ import com.ail.core.XMLString;
 import com.ail.core.product.ProductDetails;
 import com.ail.core.product.ListProductsService.ListProductsCommand;
 import com.ail.insurance.pageflow.AssessmentSheetDetails;
+import com.ail.insurance.pageflow.Page;
+import com.ail.insurance.pageflow.PageFlow;
 import com.ail.insurance.pageflow.util.QuotationCommon;
 import com.ail.insurance.pageflow.util.QuotationContext;
-import com.ail.insurance.policy.PolicyStatus;
+import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
 
@@ -63,42 +65,63 @@ public class SandpitPortlet extends GenericPortlet {
     String statusMessage = null;
 
     public void processAction(ActionRequest request, ActionResponse response) {
+        boolean processingComplete = false;
+
         PortletSession session = request.getPortletSession();
         statusMessage = null;
-        
-        QuotationContext.initialise(request);
-        CoreProxy core=QuotationContext.getCore();
 
         try {
+            QuotationContext.initialise(request);
+            CoreProxy core=QuotationContext.getCore();
+
             if (request.getParameter("saveAsTestcase") != null) {
                 SavedPolicy q = new SavedPolicy(QuotationContext.getPolicy());
                 q.setTestCase(true);
                 core.update(q);
                 statusMessage = "Policy '" + q.getQuotationNumber() + "' saved as a testcase";
-            } else if (request.getParameter("resetQuote") !=null) {
+                processingComplete = true;
+            }
+            
+            if (request.getParameter("resetQuote") !=null) {
                 String selectedProduct=QuotationContext.getPolicy().getProductTypeId();
                 QuotationContext.setPolicy(null);
                 session.setAttribute("product", selectedProduct);
                 session.setAttribute("view", WIZARD_MODE);
-            } else if (request.getParameter("loadQuote") != null) {
+                processingComplete = true;
+            }
+            
+            if (request.getParameter("loadQuote") != null) {
                 String selectedQuote = request.getParameter("selectedQuote");
                 SavedPolicy q = (SavedPolicy) core.queryUnique("get.savedPolicy.by.quotationNumber", selectedQuote);
                 if (q != null) {
                     QuotationContext.setPolicy(q.getPolicy());
                     session.setAttribute("product", q.getProduct());
                     session.setAttribute("view", WIZARD_MODE);
+                    processingComplete = true;
                 } else {
                     statusMessage = "Policy '" + selectedQuote + "' not found";
                 }
-            } else if (request.getParameter("selectedProduct") != null) {
+            }
+            
+            if (!processingComplete && request.getParameter("selectedPage") != null && QuotationContext.getPolicy() !=null ) {
+                String selectedPage = request.getParameter("selectedPage");
+                String currentPage = QuotationContext.getPolicy().getPage();
+                if (!"?".equals(selectedPage) && !selectedPage.equals(currentPage)) {
+                    QuotationContext.getPolicy().setPage(selectedPage);
+                    processingComplete = true;
+                }
+            } 
+            
+            if (!processingComplete && request.getParameter("selectedProduct") != null) {
                 String selectedProduct = request.getParameter("selectedProduct");
                 String selectedView = request.getParameter("selectedView");
-
-                if (selectedProduct != null && !"?".equals(selectedProduct)) {
+                
+                if (!"?".equals(selectedProduct)) {
                     if (!selectedProduct.equals(QuotationCommon.productName(request))) {
                         QuotationContext.setPolicy(null);
                         session.setAttribute("product", selectedProduct);
                         selectedView = WIZARD_MODE;
+                        processingComplete = true;
                     }
                 }
 
@@ -115,8 +138,9 @@ public class SandpitPortlet extends GenericPortlet {
                 }
 
                 session.setAttribute("view", selectedView);
-
-            } else if (processingQuotation(request)) {
+            }
+            
+            if (!processingComplete && processingQuotation(request)) {
                 Policy quote = QuotationContext.getPolicy();
                 int exceptionCount = (quote != null) ? quote.getException().size() : 0;
 
@@ -297,23 +321,28 @@ public class SandpitPortlet extends GenericPortlet {
     private void renderProductDebugPanel(RenderRequest request, RenderResponse response) throws IOException {
         boolean disableSaveAsTestCaseButton = true;
         boolean disableResetButton = true;
+        boolean disablePageList = true;
         String product = null;
-
+        Policy policy = null;
+        PageFlow pageFlow = null;
+        
+        
         // Decide which buttons to turn on/off - they're disabled by default
         if (processingQuotation(request)) {
 
             product = (String) request.getPortletSession().getAttribute("product");
-
-            Policy quote = QuotationContext.getPolicy();
-
+            policy = QuotationContext.getPolicy();
+            pageFlow = QuotationContext.getPageFlow();
+            
             // we're processing a quote and we've actually quoted - so allow a
             // save as testcase.
-            if (quote != null && PolicyStatus.QUOTATION.equals(quote.getStatus())) {
-                disableSaveAsTestCaseButton = false;
-            }
+            disableSaveAsTestCaseButton = (policy==null || !QUOTATION.equals(policy.getStatus()));
+            
+            // hide the pageList if we don't have both the policy and the pageflow
+            disablePageList = (policy==null || pageFlow==null);
             
             // if we're in a quote, enable the reset button.
-            disableResetButton = (quote==null);
+            disableResetButton = (policy==null);
         }
 
         PrintWriter w = response.getWriter();
@@ -323,8 +352,13 @@ public class SandpitPortlet extends GenericPortlet {
         w.printf("<tr class='portlet-table-alternate'>");
         
         w.printf("<td align='center'>");
-        w.printf("Quote for:");
-        w.printf("<select name='selectedProduct' onChange='submit()' class='pn-normal'>%s</select>", getProductSelectOptions(product));
+        w.printf("Product:");
+        w.printf("<select name='selectedProduct' onChange='submit()' class='portlet-form-input-field'>%s</select>", buildProductSelectOptions(product));
+        w.printf("</td>");
+        
+        w.printf("<td align='center'>");
+        w.printf("Page:");
+        w.printf("<select name='selectedPage' %s onChange='submit()' class='portlet-form-input-field'>%s</select>", disablePageList ? "disabled=disabled" : "", buildPageSelectOptioon(pageFlow, policy));
         w.printf("</td>");
         
         w.printf("<td align='center'><input type='submit' name='resetQuote' %s value='Reset quote' class='portlet-form-input-field'/></td>", disableResetButton ? "disabled=disabled" : "");        
@@ -337,7 +371,7 @@ public class SandpitPortlet extends GenericPortlet {
         
         w.printf("<td align='center'>");
         w.printf("View:");
-        w.printf("<select name='selectedView' onChange='submit()' class='pn-normal'>%s</select>", getViewSelectOptions(getCurrentView(request)));
+        w.printf("<select name='selectedView' onChange='submit()' class='portlet-form-input-field'>%s</select>", getViewSelectOptions(getCurrentView(request)));
         w.printf("</td>");
         
         w.printf("<td align='center'><input type='submit' name='saveAsTestcase' %s value='Save as testcase' class='portlet-form-input-field'/></td>", disableSaveAsTestCaseButton ? "disabled=disabled" : "");
@@ -384,11 +418,41 @@ public class SandpitPortlet extends GenericPortlet {
     }
 
     /**
+     * Build an option list for the sandpit's page list. Based on the currently selected pageflow and
+     * policy, populat the list with all of the pages in the pageflow and mark the page that the
+     * policy is currently at as selected.
+     * @param pageFlow
+     * @param policy
+     * @return
+     */
+    private String buildPageSelectOptioon(PageFlow pageFlow, Policy policy) {
+        StringBuffer ret = new StringBuffer();
+
+        if (policy!=null && pageFlow!=null) {
+            for(Page page: pageFlow.getPage()) {
+                if (policy.getPage()!=null && policy.getPage().equals(page.getId())) {
+                    ret.append("<option selected='yes'>").append(page.getId()).append("</option>");
+                }
+                else {
+                    ret.append("<option>").append(page.getId()).append("</option>");
+                }
+            }
+        }
+        
+        if (ret.length()==0) {
+            ret.append("<option>?</option>");
+        }
+        
+        return ret.toString();
+    }
+
+
+    /**
      * Build an HTML select option string listing all the available products.
      * 
      * @return String of products on option format. May be null.
      */
-    private String getProductSelectOptions(String product) {
+    private String buildProductSelectOptions(String product) {
         try {
             ListProductsCommand lpods = QuotationContext.getCore().newCommand(ListProductsCommand.class);
 

@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,27 +27,15 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Clause;
 import com.ail.insurance.policy.Policy;
 
-/**
- */
 public class ClauseDetails extends PageElement {
 	private static final long serialVersionUID = -4810599045554021748L;
-	private String title;
 	private String groupBy;
 
 	public ClauseDetails() {
 		super();
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getGroupBy() {
@@ -59,61 +46,49 @@ public class ClauseDetails extends PageElement {
 		this.groupBy = groupBy;
 	}
 
-	@SuppressWarnings("unchecked")
+	public Map<String, List<Clause>> getGroupedClauses(Policy policy) {
+        Map<String,List<Clause>> groupedClauses=new HashMap<String,List<Clause>>();
+        
+        for(Clause clause: policy.getClause()) {
+            StringBuffer compoundKey=new StringBuffer();
+
+            if (groupBy!=null) {
+                for(Iterator<String> it=clause.xpathIterate(groupBy, String.class) ; it.hasNext() ; ) {
+                    String gp=it.next();
+                    if (compoundKey.length()==0) {
+                        if (!it.hasNext()) {
+                            compoundKey.append(String.format(i18n("i18n_clause_details_apply_to_only"), gp));
+                        }
+                        else {
+                            compoundKey.append(String.format(i18n("i18n_clause_details_apply_to"), gp));
+                        }
+                    }
+                    else if (!it.hasNext()) {
+                        compoundKey.append(i18n("i18n_clause_details_last_separator")).append(gp);
+                    }
+                    else {
+                        compoundKey.append(i18n("i18n_clause_details_separator")).append(gp);
+                    }
+                }
+            }
+            else {
+                compoundKey.append(i18n("i18n_clause_details_applicable"));
+            }
+            
+            String key=compoundKey.toString();
+            
+            if (!groupedClauses.containsKey(key)) {
+                groupedClauses.put(key, new ArrayList<Clause>());
+            }
+            
+            groupedClauses.get(key).add(clause);
+        }
+
+        return groupedClauses;
+	}
+	
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-
-        	PrintWriter w=response.getWriter();
-        	
-    		Map<String,List<Clause>> groupedClauses=new HashMap<String,List<Clause>>();
-    		Policy quote=(Policy)model;
-    		
-    		for(Clause clause: quote.getClause()) {
-    			StringBuffer compoundKey=new StringBuffer();
-    
-    			if (groupBy!=null) {
-    				for(Iterator<String> it=clause.xpathIterate(groupBy) ; it.hasNext() ; ) {
-    					String gp=it.next();
-    					if (compoundKey.length()==0) {
-    						if (!it.hasNext()) {
-    							compoundKey.append("The following endorsement(s) apply to ").append(gp).append(" only"); // TODO i18n needed
-    						}
-    						else {
-    							compoundKey.append("The following endorsement(s) apply to ").append(gp); // TODO i18n needed
-    						}
-    					}
-    					else if (!it.hasNext()) {
-    						compoundKey.append(" and ").append(gp); // TODO i18n needed
-    					}
-    					else {
-    						compoundKey.append(", ").append(gp);
-    					}
-    				}
-    			}
-    			else {
-    				compoundKey.append("The following endorsement(s) are applicable"); // TODO i18n needed
-    			}
-    			
-    			String key=compoundKey.toString();
-    			
-    			if (!groupedClauses.containsKey(key)) {
-    				groupedClauses.put(key, new ArrayList<Clause>());
-    			}
-    			
-    			groupedClauses.get(key).add(clause);
-    		}
-    
-    		if (groupedClauses.size()==1) {
-    			String oldKey=groupedClauses.keySet().iterator().next();
-    			List<Clause> clauses=groupedClauses.get(oldKey);
-    			groupedClauses.clear();
-    			groupedClauses.put("The following endorsement(s) are applicable", clauses); // TODO i18n needed
-    		}
-    		
-        	model=QuotationContext.getRenderer().renderClauseDetails(w, request, response, model, this, i18n(title), groupedClauses);
-    	}
-    	
-    	return model;
+	    return executeTemplateCommand("ClauseDetails", request, response, model);
 	}
 }

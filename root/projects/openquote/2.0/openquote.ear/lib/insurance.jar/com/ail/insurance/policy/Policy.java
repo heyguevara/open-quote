@@ -29,6 +29,7 @@ import com.ail.annotation.TypeDefinition;
 import com.ail.core.Allowable;
 import com.ail.core.ExceptionRecord;
 import com.ail.core.Type;
+import com.ail.core.VersionEffectiveDate;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
 import com.ail.core.PageVisit;
@@ -44,7 +45,8 @@ import com.ail.core.ThreadLocale;
 public class Policy extends Type {
     static final long serialVersionUID = 3175904078936470552L;
 
-	private List<Allowable> allowable = new ArrayList<Allowable>();
+    private VersionEffectiveDate versionEffectiveDate=null;
+    private List<Allowable> allowable = new ArrayList<Allowable>();
     private List<Excess> excess = new ArrayList<Excess>();
     private List<Asset> asset = new ArrayList<Asset>();
     private List<Section> section = new ArrayList<Section>();
@@ -1298,5 +1300,21 @@ public class Policy extends Type {
             this.pageVisit=new ArrayList<PageVisit>(0);
         }
         this.pageVisit.add(pageVisit);
+    }
+
+    /**
+     * The version effective date to be used when processing this policy. This will be used
+     * to select the appropriate configurations to use during processing. 
+     * @return Version effective date or null.
+     */
+    public VersionEffectiveDate getVersionEffectiveDate() {
+        return versionEffectiveDate;
+    }
+
+    /**
+     * @see #getVersionEffectiveDate()
+     */
+    public void setVersionEffectiveDate(VersionEffectiveDate versionEffectiveDate) {
+        this.versionEffectiveDate = versionEffectiveDate;
     }
 }

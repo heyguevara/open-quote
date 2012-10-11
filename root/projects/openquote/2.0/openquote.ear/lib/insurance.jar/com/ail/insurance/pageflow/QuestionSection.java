@@ -19,7 +19,6 @@ package com.ail.insurance.pageflow;
 import static com.ail.core.Functions.expand;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.portlet.ActionRequest;
@@ -28,7 +27,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 
 /**
  * <p>A QuestionSection renders itself as a section within a {@link Page Page} or other {@link PageContainer PageContainer}. 
@@ -38,7 +37,7 @@ import com.ail.insurance.pageflow.util.QuotationContext;
  * <li>A page is too long and needs to be broken into parts - Breaking a long page of questions into sections,
  * and giving each of those sections a separate title helps usability.</li>
  * <li>Improved page layout - Each QuestionSection is rendered as it's own html table. Separating questions 
- * into separate sections therefore give the browser a better chance to optimize its use of space. This has
+ * into separate sections therefore give the browser a better chance to optimise its use of space. This has
  * been used to good affect above. Had these two sections been rendered as one, the dropdowns would have all 
  * been aligned down the page making it look clumsy.</li></ul>
  * @see PageContainer
@@ -48,43 +47,12 @@ import com.ail.insurance.pageflow.util.QuotationContext;
 public class QuestionSection extends PageElement {
 	private static final long serialVersionUID = 6794522768423045427L;
     private ArrayList<? extends Question> question; 
-
-    /** Title for this section on the page */
-    private String title;
     
     public QuestionSection() {
         super();
         question=new ArrayList<Question>();
     }
 
-    /**
-     * Section title. This is rendered at the top of the section and is intended to help the
-     * user identify the section.
-     * @return Section's title string
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Get the title with all variable references expanded. References are expanded with 
-     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
-     * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * <i>root</i>. 
-     * @param root Model to expand references with respect to.
-     * @param local Model to expand local references (xpaths starting ./) with respect to.
-     * @return Title with embedded references expanded
-     * @since 1.1
-     */
-    public String getExpandedTitle(Type root, Type local) {
-    	if (getTitle()!=null) {
-    		return expand(getTitle(), root, local);
-    	}
-    	else {
-    		return null;
-    	}
-    }
-    
     /**
      * List of Questions which this section contains.
      * @return Question list of Questions
@@ -101,14 +69,6 @@ public class QuestionSection extends PageElement {
         this.question = question;
     }
 
-    /**
-     * @see #getTitle()
-     * @param title Section's title string
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
     @Override
     public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
         boolean error=false;
@@ -144,28 +104,17 @@ public class QuestionSection extends PageElement {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-            PrintWriter w = response.getWriter();
-            Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
-            String title = getExpandedTitle(QuotationContext.getPolicy(), model);
-    
-            title = i18n(title);
-            
-            String styleClass = getStyleClass();
-            String ref = getRef();
-            
-            model=QuotationContext.getRenderer().renderQuestionSection(w, request, response, localModel, this, title, styleClass, ref);
-    	}
-    	
-        return model;
+        return executeTemplateCommand("QuestionSection", request, response, model);
 	}
 
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         Type localModel = (getBinding()==null) ? model : model.xpathGet(getBinding(), Type.class);
 
         for(Question q: question) {
             q.renderPageHeader(request, response, localModel);
         }
+        
+        return model;
     }
 
     @Override

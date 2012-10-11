@@ -20,7 +20,6 @@ import static com.ail.insurance.pageflow.util.Functions.addError;
 import static com.ail.insurance.pageflow.util.Functions.isEmpty;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
@@ -30,7 +29,6 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.CommercialProposer;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.Proposer;
@@ -61,18 +59,9 @@ public class ProposerDetails extends PageElement {
     private static final Pattern emailPattern=Pattern.compile("^[0-9a-zA-Z.-]*@[0-9a-zA-Z.-]*[.][0-9a-zA-Z.-]*$");
     private static final Pattern mobilePattern=Pattern.compile("(^[+()0-9 -]*$)");
     private static final Pattern phonePattern=Pattern.compile("(^[+()0-9 -]*$)|(^[+()0-9 -]*[extEXT]{0,3}[ ()0-9]*$)");
-	private String title;
 
 	public ProposerDetails() {
 		super();
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	@Override
@@ -188,13 +177,6 @@ public class ProposerDetails extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-        	PrintWriter w=response.getWriter();
-        	
-            Proposer proposer=(Proposer)((Policy)model).getProposer();
-        
-            QuotationContext.getRenderer().renderProposerDetails(w, request, response, proposer, this);
-    	}
-        return model;
+        return executeTemplateCommand("ProposerDetails", request, response, model);
 	}
 }

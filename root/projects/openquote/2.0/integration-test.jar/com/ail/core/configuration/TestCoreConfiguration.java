@@ -39,6 +39,7 @@ import java.security.Principal;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Properties;
 
 import org.junit.After;
@@ -440,13 +441,13 @@ public class TestCoreConfiguration implements CoreUser, ConfigurationOwner {
      * <li>Set the version effective date to now.</li>
      * <li>Read the values of the 'tom', 'dick', and 'harry' root parameters.</li>
      * <li>Fail if 'tom' doesn't return 'Thomas', 'dick' doesn't return 'Richard', or 'harry' doesn't return 'harold'.</li>
-	 * <li>Fail if any excepations are thrown.</li>
+	 * <li>Fail if any exception are thrown.</li>
      * </ol>
      */
     @Test
 	public void testGettingSimpleParameterValuesFromConfiguration() throws Exception {
         core.setConfiguration(this.createComplexConfiguration());
-        versionEffectiveDate=new VersionEffectiveDate();
+        versionEffectiveDate=new VersionEffectiveDate(new Date());
         assertEquals("Thomas", core.getParameter("tom").getValue());
         assertEquals("Richard", core.getParameter("dick").getValue());
         assertEquals("Harold", core.getParameter("harry").getValue());
@@ -847,17 +848,17 @@ public class TestCoreConfiguration implements CoreUser, ConfigurationOwner {
     }
 
 	/**
-	 * Test the effectiviness of the configuration timeout cache.
+	 * Test the effectiveness of the configuration timeout cache.
      * With a timeout set to zero the database should be hit on each request for
      * 'new' configuration. Setting the timeout to a more realistic value (1000),
      * should result in database hits only every 1000ms.
      * <ol>
      * <li>Save a configuration with a timeout of zero.</li>
-     * <li>Time how long it takes to make 1000 configuration queries.</li>
+     * <li>Time how long it takes to make 1000000 configuration queries.</li>
      * <li>Save the same configuration again, but this time with a timeout of 1000.</li>
-     * <li>Time how long it now takes to make 1000 configuration queries.</li>
+     * <li>Time how long it now takes to make 1000000 configuration queries.</li>
      * <li>File if any exceptions are thrown.</li>
-     * <li>Fail if the second time is more that 1/100th of the first.</li>
+     * <li>Fail if the second time is more than 5 times the first.</li>
      * </ol>
      */
     @Test
@@ -901,8 +902,9 @@ public class TestCoreConfiguration implements CoreUser, ConfigurationOwner {
             endAt=System.currentTimeMillis();
             secondLoop=endAt-startAt;
             
-            // second loop should be atleast 50 times faster than the first
-            assertTrue("Caching not effective: was "+secondLoop+" max is:"+firstLoop, secondLoop*2 < firstLoop);
+            // second loop should be at least 50 times faster than the first
+            System.out.println("Caching effect was "+secondLoop+" (cached) v. "+firstLoop+" (uncached)");
+            assertTrue("Caching not effective: was "+secondLoop+" max is:"+firstLoop, secondLoop*5 < firstLoop);
         }
         catch(Throwable e) {
             fail("Unexpected exception:"+e);

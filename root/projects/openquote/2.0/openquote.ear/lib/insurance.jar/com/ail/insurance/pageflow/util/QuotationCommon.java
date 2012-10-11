@@ -83,6 +83,20 @@ public class QuotationCommon {
     }
 
     /**
+     * Fetch the productTypeID of the policy currently being quoted, or an empty String if
+     * no product is currently being quoted.
+     * @return ProductTypeId of the policy being processed, or "" if none is being processed.
+     */
+    public static String currentProduct() {
+        if (QuotationContext.getPolicy()!=null && QuotationContext.getPolicy().getProductTypeId()!=null) {
+            return QuotationContext.getPolicy().getProductTypeId();
+        }
+        else {
+            return "";
+        }
+    }
+    
+    /**
      * Return true if this request is 'immediate'. Immediate requests are used to indicate that the actions
      * associated with the request should be immediately executed - even if the page would fail validation. This 
      * is useful, for example, when implementing a '&lt;&lt;Back' button on a page as it will allow the user

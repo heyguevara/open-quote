@@ -25,9 +25,10 @@ import java.security.Principal;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.VelocityException;
 import org.apache.velocity.runtime.resource.loader.StringResourceLoader;
 import org.apache.velocity.runtime.resource.util.StringResourceRepository;
-
 import com.ail.core.BaseException;
 import com.ail.core.Core;
 import com.ail.core.Functions;
@@ -75,20 +76,20 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
      * are written to a Writer which is returned by a method named getWriterArg
      * on the command used to invoke the accessor. This method searches for the
      * getWriterArg method and invokes it returning the value that it returns.
-     * @throws VelocityServiceException If either no appropriate argument can be found, or if there is more than one.
+     * @throws VelocityServiceError If either no appropriate argument can be found, or if there is more than one.
      * @param result Contains the result of the merge.
      * @throws InvocationTargetException 
      * @throws IllegalAccessException 
      * @throws IllegalArgumentException 
      */
-    private Writer fetchWriter() throws VelocityServiceException {
+    private Writer fetchWriter() throws VelocityServiceError {
         Method getter=null;
         
         for(Method m: args.getClass().getMethods()) {
             if (m.getName().equals("getWriterArg")) {
                 if (m.getParameterTypes().length==0 && Writer.class.isAssignableFrom(m.getReturnType())) {
                     if (getter!=null) {
-                        throw new VelocityServiceException("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: more than on method matches the return convention (e.g. '"+getter.getName()+"' and '"+m.getName()+"')");
+                        throw new VelocityServiceError("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: more than on method matches the return convention (e.g. '"+getter.getName()+"' and '"+m.getName()+"')");
                     }
                     else {
                         getter=m;
@@ -101,11 +102,11 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
             try {
                 return (Writer)getter.invoke(args);
             } catch (Exception e) {
-                throw new VelocityServiceException(e);
+                throw new VelocityServiceError(e);
             }
         }
         else {
-            throw new VelocityServiceException("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: no method matche the return convention (i.e. void set*Ret(String))");
+            throw new VelocityServiceError("CommandImpl argument '"+args.getClass().getName()+"' cannot be used by the Velocity accessor: no method matche the return convention (i.e. void set*Ret(String))");
         }
     }
     
@@ -150,7 +151,7 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
 
         if (!velocityEngineInitialised) {
             if (velocityInitialiseError!=null) {
-                throw new VelocityServiceException("Velocity engine initialisation failure", velocityInitialiseError);
+                throw new VelocityServiceError("Velocity engine initialisation failure", velocityInitialiseError);
             }
             else {
                 throw new IllegalStateException("Velocity engine is not available for ("+getUrl()+"). Was there an error during initialiseation?");
@@ -163,10 +164,22 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
             VelocityContext velocityContext=new VelocityContext();
             
             velocityContext.put("args", args);
+            velocityContext.put("date", new VelocityDateUtils());
             
             template.merge(velocityContext, fetchWriter());
+        } catch(VelocityServiceError e) {
+            throw e;
+        } catch(MethodInvocationException e) {
+            if (e.getWrappedThrowable() instanceof VelocityServiceError) {
+                throw (VelocityServiceError)e.getWrappedThrowable();
+            }
+            else {
+                throw new VelocityServiceError(e.getMessage());
+            }
+        } catch(VelocityException e) {
+            throw new VelocityServiceError(e.getMessage());
         } catch (Exception e) {
-            throw new VelocityServiceException(e);
+            throw new VelocityServiceError(e);
         }
         
         super.logExit();

@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,7 +24,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>A navigation section acts as a container for buttons like 'Next' and 'Previous' which are used to navigate through the
@@ -92,9 +90,7 @@ public class NavigationSection extends PageContainer {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-
-        return QuotationContext.getRenderer().renderNavigationSection(w, request, response, model, this);
+        return executeTemplateCommand("NavigationSection", request, response, model);
     }
 
     @Override

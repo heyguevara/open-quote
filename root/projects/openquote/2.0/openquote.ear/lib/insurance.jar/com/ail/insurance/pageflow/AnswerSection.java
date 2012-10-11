@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.core.Functions.expand;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -25,7 +23,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 
 /**
  * <p>An AnswerSection is generally used on summary pages and acts as a container for listing the answers
@@ -46,9 +43,6 @@ public class AnswerSection extends PageElement {
     
     /** List of things to be rendered in the section */
     private ArrayList<? extends Answer> answer; 
-
-    /** The fixed title to be displayed with the answer */
-    private String title;
 
     public AnswerSection() {
         super();
@@ -72,43 +66,6 @@ public class AnswerSection extends PageElement {
         this.answer = answer;
     }
 
-    /**
-     * The fixed title to be displayed with the answer. This method returns the raw title without
-     * expanding embedded variables (i.e. xpath references like ${person/firstname}).
-     * @see #getExpandedTitle(Type)
-     * @return value of title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @see #getTitle()
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * Get the title with all variable references expanded. References are expanded with 
-     * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
-     * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * <i>root</i>. 
-     * @param root Model to expand references with respect to.
-     * @param local Model to expand local references (xpaths starting ./) with respect to.
-     * @return Title with embedded references expanded, or null if there is no title
-     * @since 1.1
-     */
-    public String formattedTitle(RenderArgumentImpl args) {
-    	if (getTitle()!=null) {
-    		return i18n(expand(getTitle(), args.getPolicyArg(), args.getModelArgRet()));
-    	}
-    	else {
-    	    return null;
-    	}
-    }
-    
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         return executeTemplateCommand("AnswerSection", request, response, model);

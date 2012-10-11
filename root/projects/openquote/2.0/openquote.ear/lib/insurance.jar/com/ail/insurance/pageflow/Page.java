@@ -22,7 +22,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * An abstract UI element providing default handler methods common to its concrete sub-classes.
@@ -38,29 +37,16 @@ public abstract class Page extends PageContainer {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         response.setContentType(request.getResponseContentType());
 
-        // Execute any page actions defined for this page
-        for (Action a : getAction()) {
-            model=a.renderResponse(request, response, model);
-        }
-
-        return QuotationContext.getRenderer().renderPage(response.getWriter(), request, response, model, this);
+        return executeTemplateCommand("Page", request, response, model);
     }
 
     @Override
     public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        // Give all the elements a chance to output page level content.
-        for (PageElement e : super.getPageElement()) {
-            model=e.renderPageFooter(request, response, model);
-        }
-        
-        return model;
+        return executeTemplateCommand("PageFooter", request, response, model);
     }
 
     @Override
-    public void renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        // Give all the elements a chance to output page level content.
-        for (PageElement e : super.getPageElement()) {
-            e.renderPageHeader(request, response, model);
-        }
+    public Type renderPageHeader(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        return executeTemplateCommand("PageHeader", request, response, model);
     }
 }

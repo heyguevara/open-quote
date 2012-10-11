@@ -17,13 +17,11 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>A Section scroller displays repeating blocks of questions. The data for the questions is selected
@@ -44,38 +42,9 @@ import com.ail.insurance.pageflow.util.QuotationContext;
 public class SectionScroller extends Repeater {
 	private static final long serialVersionUID = -6043887157243002172L;
 
-    /** Label rendered within the repeated sections to identify them */
-    @SuppressWarnings("deprecation")
-	private Label sectionTitle;
-    
-    /**
-     * This label is rendered within each repeating section of the SectionScroller. This is intended to help
-     * the user identify the record which the sections belong to.
-     * @return section label
-     * @deprecated Use {@link #getTitle()} with embedded xpaths instead
-     */
-    public Label getSectionTitle() {
-        return sectionTitle;
-    }
-
-    /**
-     * @see #getSectionTitle()
-     * @param sectionTitle
-     * @deprecated Use {@link #getTitle()} with embedded xpaths instead
-     */
-    public void setSectionTitle(Label sectionTitle) {
-        this.sectionTitle = sectionTitle;
-    }
-
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-    	if (conditionIsMet(model)) {
-            PrintWriter w=response.getWriter();
-            
-            model=QuotationContext.getRenderer().renderSectionScroller(w, request, response, model, this);
-    	}
-
-    	return model;
+        return executeTemplateCommand("SectionScroller", request, response, model);
     }
 }
 

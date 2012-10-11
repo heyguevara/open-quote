@@ -101,26 +101,26 @@ public class ReferralSummary extends PageContainer {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-        Policy quote=(com.ail.insurance.policy.Policy)model;
-
-        return QuotationContext.getRenderer().renderReferralSummary(w, request, response, quote, this);
+	    return executeTemplateCommand("ReferralSummary", request, response, model);
 	}
 
     public NavigationSection getNavigationSection() {
         if (navigationSection==null) {
             navigationSection=new NavigationSection();
+            navigationSection.setId(this.id+".nav");
             
             // The Save button is optional - only add it if a destination was specified
             if (saveDestinationPageId!=null && saveDestinationPageId.length()!=0) {
                 SaveButtonAction save=new SaveButtonAction();
                 save.setDestinationPageId(saveDestinationPageId);
+                save.setId(this.id+".save");
                 navigationSection.getPageElement().add(save);
             }
         
             RequoteButtonAction requote=new RequoteButtonAction();
             requote.setLabel("i18n_requote_button_label");
             requote.setDestinationPageId(requoteDestinationPageId);
+            requote.setId(this.id+".requote");
             navigationSection.getPageElement().add(requote);
 
             getPageElement().add(navigationSection);
