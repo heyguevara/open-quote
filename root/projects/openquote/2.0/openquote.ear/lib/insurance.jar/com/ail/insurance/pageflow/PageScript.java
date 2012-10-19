@@ -18,8 +18,6 @@ package com.ail.insurance.pageflow;
 
 import static com.ail.core.Functions.configurationNamespaceToProductName;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
-import static com.ail.insurance.pageflow.util.Functions.convertProductUrlToExternalForm;
-import static com.ail.insurance.pageflow.util.Functions.expandRelativeUrlToProductUrl;
 
 import java.io.IOException;
 import java.net.URL;

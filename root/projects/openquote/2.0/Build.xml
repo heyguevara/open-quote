@@ -55,7 +55,7 @@
   	<subant-macro target="setup" includes="build/Build.xml" />
 
     <!-- Stop the server if it is running -->
-    <ant antfile="BuildCommands.xml" target="jboss: stop server" />
+    <stop-jboss-macro/>
 
     <!-- Do a clean build and test before we release -->
     <antcall target="teardown" />
@@ -109,6 +109,7 @@
         </fileset>
       </test-classpath>
     </run-all-tests-macro>
+
+  	<stop-jboss-macro />
   </target>
 </project>
-

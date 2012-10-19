@@ -160,14 +160,14 @@ public class Action extends PageElement {
 
 	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model, String currentPhase) {
 	    if (when.equals(currentPhase)) {
-    	    Policy quote = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
+    	    Policy policy = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
     
     		// Always persist the quote after running an action - the next
     		// action/command may need to read the persisted state.
-    		quote = QuotationCommon.persistQuotation(quote);
-    		QuotationContext.setPolicy(quote);
+    		policy = QuotationCommon.persistQuotation(policy);
+    		QuotationContext.setPolicy(policy);
 
-            return quote;
+            return policy;
 	    }
 	    else {
 	        return model;

@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,8 +24,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.Policy;
-import com.ail.insurance.pageflow.util.QuotationContext;
 
 /**
  * <p>Page element to display a summary of a referral. The ReferralSummary element is designed to render 

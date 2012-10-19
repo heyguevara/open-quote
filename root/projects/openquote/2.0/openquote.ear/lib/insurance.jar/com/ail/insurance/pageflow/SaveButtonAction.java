@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,8 +66,6 @@ public class SaveButtonAction extends CommandButtonAction {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-
-        return QuotationContext.getRenderer().renderSaveButtonAction(w, request, response, model, this, i18n(getLabel()), request.getRemoteUser()!=null);
+        return executeTemplateCommand("SaveButtonAction", request, response, model);
     }
 }

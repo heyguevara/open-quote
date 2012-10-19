@@ -16,8 +16,6 @@
  */
 package com.ail.insurance.pageflow;
 
-import static com.ail.core.Functions.expand;
-
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;

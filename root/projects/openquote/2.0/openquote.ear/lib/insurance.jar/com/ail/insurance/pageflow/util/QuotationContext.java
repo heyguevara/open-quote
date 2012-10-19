@@ -27,7 +27,6 @@ import com.ail.core.ThreadLocale;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.pageflow.PageFlow;
 import com.ail.insurance.pageflow.RenderingError;
-import com.ail.insurance.pageflow.render.Renderer;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -39,7 +38,6 @@ public class QuotationContext {
 	private static ThreadLocal<PageFlow> pageFlow = new ThreadLocal<PageFlow>();	
 	private static ThreadLocal<PortletRequest> request = new ThreadLocal<PortletRequest>();	
 	private static ThreadLocal<CoreProxy> core = new ThreadLocal<CoreProxy>();
-	private static ThreadLocal<Renderer> renderer = new ThreadLocal<Renderer>();
 	
 	/**
 	 * Initialize the PageFlowContext for the current thread. 
@@ -124,7 +122,6 @@ public class QuotationContext {
 		setPolicy(policy);
 		setCore(core);
 		setPageFlow(pageFlow);
-    	setRenderer((Renderer)core.newType("Renderer:"+request.getResponseContentType()));
     }
     
 	/**
@@ -184,21 +181,5 @@ public class QuotationContext {
 	 */
 	public static void setPageFlow(PageFlow pageFlowArg) {
 		pageFlow.set(pageFlowArg);
-	}
-	
-	/**
-	 * Fetch the renderer to be used by this thread
-	 * @return renderer
-	 */
-	public static Renderer getRenderer() {
-		return renderer.get();
-	}
-	
-	/**
-	 * Fetch the renderer to be used by this thread
-	 * @return renderer
-	 */
-	public static void setRenderer(Renderer rendererArg) {
-		renderer.set(rendererArg);
 	}
 }

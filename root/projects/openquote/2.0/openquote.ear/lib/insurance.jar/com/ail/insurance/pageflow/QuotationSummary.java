@@ -324,4 +324,12 @@ public class QuotationSummary extends PageContainer {
     public void setNavigationSection(NavigationSection navigationSection) {
         this.navigationSection = navigationSection;
     }    
+
+    @Override
+    public void applyElementId(String basedId) {
+        if (navigationSection!=null) {
+            navigationSection.applyElementId(basedId+ID_SEPARATOR+"nav");
+        }
+        super.applyElementId(basedId);
+    }
 }

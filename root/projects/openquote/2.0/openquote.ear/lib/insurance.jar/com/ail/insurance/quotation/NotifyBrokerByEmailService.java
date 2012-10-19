@@ -43,7 +43,6 @@ import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
-import com.ail.insurance.pageflow.render.Html;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
@@ -193,7 +192,7 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailServi
         PrintWriter writer=new PrintWriter(baos);
         insertStyles(writer);
 
-        RenderCommand rbqs=getCore().newCommand("RenderBrokerQuotationSummary", "text/html", RenderCommand.class);
+        RenderCommand rbqs=getCore().newCommand("BrokerQuotationSummary", "text/html", RenderCommand.class);
         rbqs.setModelArgRet(savedPolicy.getPolicy());
         rbqs.invoke();
 
@@ -242,12 +241,17 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailServi
      * @throws XMLException
      * @throws IOException 
      */
-    private BodyPart createAssessmentSheetAttachment(SavedPolicy savedPolicy) throws MessagingException, XMLException, IOException {
+    private BodyPart createAssessmentSheetAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException {
         // Use the UI's rendered to create the HTML output - email is a kind of UI after all!
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
         insertStyles(writer);
-        new Html().renderAssessmentSheetDetails(writer, null, null, savedPolicy.getPolicy(), null);
+
+        RenderCommand rbqs=getCore().newCommand("RenderBrokerQuotationSummary", "text/html", RenderCommand.class);
+        rbqs.setModelArgRet(savedPolicy.getPolicy());
+        rbqs.invoke();
+        
+        writer.append(rbqs.getRenderedOutputRet());
         writer.close();
         String content=new String(baos.toByteArray());
         

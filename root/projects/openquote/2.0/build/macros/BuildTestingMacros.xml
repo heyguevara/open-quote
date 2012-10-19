@@ -42,13 +42,10 @@
         </batchtest>
       </junit>
 
-      <antcall target="stop-jboss-and-fail-on-test-error" />
-      <antcall target="stop-jboss-and-fail-on-test-failure" />
-
     </sequential>
   </macrodef>
 
-  <!-- Run the unit tests associated with a project. Reports are written to -->
+  <!-- Run the integration tests associated with a project. Reports are written to -->
   <!-- ${test.dir}/reports.                                                 -->
   <macrodef name="run-integration-tests-macro">
     <element name="junit-classpath" optional="no" />

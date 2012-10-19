@@ -120,11 +120,11 @@ public class QuotationCommon {
      * @throws XMLException
      */
     private static void persistQuote() throws XMLException {
-        Policy quote=QuotationContext.getPolicy();
+        Policy policy=QuotationContext.getPolicy();
 
-        if (quote!=null) {
-        	quote=persistQuotation(quote);
-        	QuotationContext.setPolicy(quote);
+        if (policy!=null) {
+        	policy=persistQuotation(policy);
+        	QuotationContext.setPolicy(policy);
         }
     }
 

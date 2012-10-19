@@ -17,7 +17,6 @@
 package com.ail.insurance.pageflow;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Properties;
 
@@ -28,13 +27,13 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.policy.PolicyStatus;
-import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.policy.Policy;
-import com.ail.insurance.policy.SavedPolicySummaries;
-import com.ail.insurance.policy.SavedPolicySummary;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.PolicyStatus;
+import com.ail.insurance.policy.SavedPolicy;
+import com.ail.insurance.policy.SavedPolicySummaries;
+import com.ail.insurance.policy.SavedPolicySummary;
 
 /**
  * <p>Display a list of a user's saved quotations. If the user is logged in, a list of their saved
@@ -222,10 +221,8 @@ public class SavedQuotations extends PageElement {
 
     @Override
     public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        PrintWriter w=response.getWriter();
-
         if (request.getRemoteUser()==null) {
-        	model=QuotationContext.getRenderer().renderSaveQuotationsFooter(w, request, response, model, this);
+        	executeTemplateCommand("SavedQuotationss", request, response, model);
         }
 
         return model;

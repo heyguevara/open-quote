@@ -27,9 +27,8 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.financial.PaymentSchedule;
-import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.policy.Policy;
 
 /**
  * <p>This element displays the payment options available and prompts the user to select

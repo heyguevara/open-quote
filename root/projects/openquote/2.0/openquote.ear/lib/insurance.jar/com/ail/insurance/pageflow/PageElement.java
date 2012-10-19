@@ -633,9 +633,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
     protected RenderCommand buildRenderCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         RenderCommand command=null;
 
-        command=QuotationContext.getCore().newCommand(commandName, 
-                QuotationContext.getRenderer().getMimeType(),
-                RenderCommand.class);
+        command=QuotationContext.getCore().newCommand(commandName, request.getResponseContentType(), RenderCommand.class);
         
         command.setRequestArg(request);
         command.setResponseArgRet(response);

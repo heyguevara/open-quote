@@ -610,7 +610,7 @@ public class Policy extends Type {
 
     /**
      * Fetch a reference to a section by its ID. Each section has a unique id within a policy which
-     * other parts of the policy (other sections, excesses, etc) use to refer to it. This method seaches
+     * other parts of the policy (other sections, excesses, etc) use to refer to it. This method searches
      * through the sections in the policy the appropriate section if found.
      * @param sectionId section's id
      * @return A section, or null if an section by this ID cannot be found.
@@ -872,6 +872,14 @@ public class Policy extends Type {
         return false;
     }
 
+    /**
+     * Determine if the policy has a total premium value associated with it.
+     * @return true if a total premium is defined, false otherwise.
+     */
+    public boolean isTotalPremiumDefined() {
+        return assessmentSheet!=null && assessmentSheet.findLineById("total premium")!=null;
+    }
+    
     /**
      * Get the total premium. The premium is a calculate value held in the assessment sheet,
      * it will only be present once the premium has been calculated.
