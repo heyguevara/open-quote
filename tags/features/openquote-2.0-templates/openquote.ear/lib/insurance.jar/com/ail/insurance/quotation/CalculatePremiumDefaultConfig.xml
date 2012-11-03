@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file can define override configurations for the CalculatePremium service.
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>CalculatePremium service default configuration</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>1.0</version>
+    
+</configuration>

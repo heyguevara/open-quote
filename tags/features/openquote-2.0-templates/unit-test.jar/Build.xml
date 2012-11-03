@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the unit test jar project
+-->
+
+<project default="build" name="openquote:unit-test.jar">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-jar-macro />
+  </target>
+
+  <target name="_build">
+    <compile-exploded-jar-macro>
+      <javac-classpath>
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
+        <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
+        <fileset dir="${java.home}/lib" includes="plugin.jar" />
+        <fileset dir="${jboss.dir}">
+          <include name="client/jbossall-client.jar" />
+          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+          <include name="server/default/lib/saxon*.jar" />
+          <include name="lib/endorsed/xalan.jar" />
+        </fileset>
+      </javac-classpath>
+    </compile-exploded-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <!-- call the internal build target -->
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <get-libs-macro todir="${test.dir}/lib">
+      <libs-list>
+        <get-lib-macro repo="openquotecommunity.org/repo" group="commons-logging" artifact="commons-logging" version="1.1-dev" type="jar"/>
+        <get-lib-macro repo="repo1.maven.org/maven2" group="junit" artifact="junit" version="4.10" type="jar" />
+        <get-lib-macro repo="repo1.maven.org/maven2" group="org/mockito" artifact="mockito-all" version="1.8.5" type="jar" />
+      </libs-list>
+    </get-libs-macro>
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${test.dir}" failonerror="no" />
+  </target>
+</project>

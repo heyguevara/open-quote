@@ -1,0 +1,106 @@
+<div
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jstl/core">
+
+<c:choose>
+   <c:when test="#{not empty prefs.entries}">
+      <h:form>
+         <table class="full-width datatable">
+            <thead class="portlet-section-header" style="text-align:left;">
+               <tr>
+                  <th>Key</th>
+                  <th>Name</th>
+                  <th>ReadOnly</th>
+                  <c:if test="#{prefs.mutable}">
+                     <th>Value</th>
+                  </c:if>
+               </tr>
+            </thead>
+            <tbody>
+               <c:forEach items="#{prefs.entries}" var="pref" varStatus="status">
+                  <tr class="#{status.index % 2 == 0 ? 'portlet-section-body' : 'portlet-section-alternate'}">
+                     <td>
+                        <c:choose>
+                           <c:when test="#{prefs.mutable and pref.readOnly == false}">
+                              <h:commandLink
+                                 rendered="#{pref.readOnly == false}"
+                                 action="#{pref.select}">#{pref.name}</h:commandLink>
+                           </c:when>
+                           <c:otherwise>#{pref.name}</c:otherwise>
+                        </c:choose>
+                     </td>
+                     <td>
+                        <h:outputText value="#{pref.displayName.value}"/>
+                     </td>
+                     <td>
+                        <h:selectBooleanCheckbox disabled="true" value="#{pref.readOnly}"/>
+                     </td>
+                     <c:if test="#{prefs.mutable}">
+                        <td>
+                           <h:outputText value="#{pref.value}"/>
+                        </td>
+                     </c:if>
+                  </tr>
+               </c:forEach>
+            </tbody>
+         </table>
+      </h:form>
+   </c:when>
+   <c:otherwise>
+      <p>No defined preferences for this portlet.</p>
+   </c:otherwise>
+</c:choose>
+
+<c:if test="#{prefs.selectedEntry != null}">
+   <h:form style="padding: 1em 0 1em 0">
+      <fieldset style="border: 1px solid;">
+         <legend>Edit existing values</legend>
+         <table>
+            <tbody>
+               <c:forEach items="#{prefs.selectedEntry.indices}" var="index" varStatus="status">
+                  <tr>
+                     <td>
+                        <h:outputLabel for="row_#{status.index}">
+                           <h:outputText value="Value #{status.index}: " styleClass="portlet-form-field-label"/>
+                        </h:outputLabel>
+                     </td>
+                     <td>
+                        <h:inputText value="#{prefs.selectedEntry[index]}" styleClass="portlet-form-input-field"/>
+                     </td>
+                     <td>
+                        <h:commandButton
+                           id="row_#{status.index}"
+                           actionListener="#{prefs.selectedEntry.deleteLine}"
+                           value="Delete"
+                           styleClass="portlet-form-button"/>
+                     </td>
+                  </tr>
+               </c:forEach>
+               <tr>
+                  <td colspan="3">
+                     <h:commandButton value="Update" styleClass="portlet-form-button"/>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </fieldset>
+   </h:form>
+
+   <h:form>
+      <fieldset style="border: 1px solid;">
+         <legend>Append a value</legend>
+         <h:outputLabel for="new_value">
+            <h:outputText value="New value: " styleClass="portlet-form-field-label"/>
+         </h:outputLabel>
+         <h:inputText id="new_value" value="#{prefs.selectedEntry.line}" styleClass="portlet-form-input-field"/>
+         <h:commandButton action="#{prefs.selectedEntry.appendLine}" value="Append"
+                          styleClass="portlet-form-button"/>
+      </fieldset>
+   </h:form>
+
+</c:if>
+
+</div>

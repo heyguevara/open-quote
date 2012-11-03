@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1' ?>
+<!--
+ Build file for the development project.
+-->
+<project name="openquote:build" default="build">
+  <property name="build.sysclasspath" value="first" />
+  <property name="repo.dir" value="${basedir}/repo" />
+  <import file="../BuildSettings.xml" />
+  <import file="macros/BuildRepositoryMacros.xml" />
+
+  <classfileset includes="build/bootstrap/*.jar" />
+
+  <target name="clean" description="clear the build/lib folder">
+    <ant dir="./annotation.jar" antfile="Build.xml" target="clean" />
+  </target>
+
+  <target name="build">
+    <fork-ant-macro dir="./annotation.jar" antfile="Build.xml" target="_build" />
+  </target>
+
+  <target name="setup" description="download all the jars the build system itself needs">
+    <repo-get-macro repo="openquotecommunity.org/repo" group="alfresco" artifact="alfresco-web-services" version="1.4" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="bouncycastle" artifact="bouncycastle" version="1.29.mg" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="bsh" artifact="bsh" version="2.0b4" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="jaxrpc" artifact="jaxrpc" version="1.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="jboss" artifact="activation" version="1.0.2" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="sun" artifact="mail" version="1.3.1" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="sun" artifact="saaj" version="1.2" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="wss4j" artifact="wss4j" version="1.4.2_08-b03" type="jar" dest="./lib" />
+    <repo-get-macro repo="openquotecommunity.org/repo" group="ail" artifact="annotation" version="3.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="axis" artifact="axis" version="1.2" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="axis" artifact="axis-ant" version="1.4" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="bsf" artifact="bsf" version="2.3.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="commons-discovery" artifact="commons-discovery" version="0.2" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="commons-httpclient" artifact="commons-httpclient" version="2.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="commons-jxpath" artifact="commons-jxpath" version="1.1" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="commons-logging" artifact="commons-logging" version="1.1" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="commons-net" artifact="commons-net" version="1.1.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="jdom" artifact="jdom" version="1.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="junit" artifact="junit" version="4.10" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="org/mockito" artifact="mockito-all" version="1.8.5" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="mysql" artifact="mysql-connector-java" version="5.1.17" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="wsdl4j" artifact="wsdl4j" version="1.5.1" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="xalan" artifact="xalan" version="2.6.0" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="xfire" artifact="opensaml" version="1.0.1" type="jar" dest="./lib" />
+    <repo-get-macro repo="repo1.maven.org/maven2" group="xml-security" artifact="xmlsec" version="1.2.1" type="jar" dest="./lib" />
+    <antcall target="build" />
+  </target>
+
+  <target name="teardown" description="clear out the jars downloaded by 'setup'">
+    <delete dir="${target.dir}" />
+    <delete dir="${cache.dir}" />
+    <delete dir="build/lib" />
+  </target>
+
+  <target name="release" description="build and promote releasable artifacts">
+    <antcall target="teardown" />
+    <antcall target="setup" />
+    <release-jar-macro jar.name="annotation" />
+  </target>
+</project>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the configure war project
+-->
+
+<project default="build" name="openquote:openquote.ear/configure.war">
+  <import file="../../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-war-macro />
+  </target>
+
+  <target name="_build">
+    <compile-exploded-war-macro>
+      <javac-classpath>
+        <fileset dir="${output.dir}/WEB-INF/lib" includes="*.jar" />
+        <dirset dir="${ear.dir}" includes="*.jar" />
+        <fileset dir="${ear.dir}/../jboss-portal.sar/lib" includes="*.jar" />
+        <fileset dir="${ear.dir}/lib" includes="*.jar" />
+        <dirset dir="${ear.dir}/lib" includes="*.jar" />
+        <fileset dir="${jboss.dir}/client" includes="jbossall-client.jar" />
+        <fileset dir="${jboss.dir}/server/default/lib" includes="servlet-api.jar" />
+      </javac-classpath>
+    </compile-exploded-war-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+    <kick-jboss-macro />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <get-libs-macro todir="${output.dir}/WEB-INF/lib">
+      <libs-list>
+        <get-lib-macro artifact="jakarta-standard-taglib" group="jakarta" version="1.1.2" type="jar" repo="openquotecommunity.org/repo" />
+        <get-lib-macro artifact="commons-jxpath" group="commons-jxpath" version="1.2" type="jar" repo="repo1.maven.org/maven2" />
+        <get-lib-macro artifact="commons-validator" group="commons-validator" version="1.1.4" type="jar" repo="repo1.maven.org/maven2" />
+        <get-lib-macro artifact="commons-fileupload" group="commons-fileupload" version="1.0" type="jar" repo="repo1.maven.org/maven2" />
+        <get-lib-macro artifact="commons-el" group="commons-el" version="1.0" type="jar" repo="openquotecommunity.org/repo" />
+        <get-lib-macro artifact="myfaces-api" group="myfaces" version="1.1.5" type="jar" repo="openquotecommunity.org/repo" />
+        <get-lib-macro artifact="myfaces-impl" group="myfaces" version="1.1.5" type="jar" repo="openquotecommunity.org/repo" />
+        <get-lib-macro artifact="tomahawk" group="myfaces" version="1.1.1" type="jar" repo="repo1.maven.org/maven2" />
+      </libs-list>
+    </get-libs-macro>
+  </target>
+
+  <target name="teardown" description="undo whatever setup did" depends="clean">
+  </target>
+</project>

@@ -1,0 +1,94 @@
+<!--
+ This file defines ant macros related to repository manipulations
+-->
+
+<project name="BuildRepository.xml" default="dummy">
+  <target name="dummy" />
+
+  <target name="_repo.install.file.fetch" unless="already.downloaded">
+    <mkdir dir="${repo.dir}/${group}/${artifact}/${version}" />
+    <get src="http://${repo}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" dest="${repo.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" ignoreerrors="yes" verbose="yes"/>
+  </target>
+
+  <target name="_repo.install.file.install" unless="dont.install">
+    <copy file="${repo.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" todir="${dest}" />
+  </target>
+
+  <target name="_repo.install.file">
+    <echo message="Processing: ${group}/${artifact}/${version}/${artifact}-${version}.${type}" />
+    <available file="${repo.dir}/${group}/${artifact}/${version}/${artifact}-${version}.${type}" property="already.downloaded" />
+    <condition property="dont.install">
+      <equals arg1="${dest}" arg2="dont.install" />
+    </condition>
+    <antcall target="_repo.install.file.fetch" />
+    <antcall target="_repo.install.file.install" />
+  </target>
+
+  <!-- Fetch a specific file from a maven-like repository. The file will be stored in the local -->
+  <!-- repo (development/repo/...) for reuse later, and copied to the specified destinaton      -->
+  <!-- (see dest attribute)                                                                     -->
+  <!-- @param repo Root of the repostory's URL (e.g. repo.ail-ltd.co.uk)                        -->
+  <!-- @param group Maven groupId                                                               -->
+  <!-- @param artifact Maven artifactId                                                         -->
+  <!-- @param version Maven version                                                             -->
+  <!-- @param dest Destination folder to copy the file to                                       -->
+  <macrodef name="repo-get-macro">
+    <attribute name="repo" />
+    <attribute name="group" />
+    <attribute name="artifact" />
+    <attribute name="version" />
+    <attribute name="type" />
+    <attribute name="dest" default="dont.install" />
+    <sequential>
+      <antcall target="_repo.install.file" inheritall="false">
+        <param name="repo" value="@{repo}" />
+        <param name="group" value="@{group}" />
+        <param name="artifact" value="@{artifact}" />
+        <param name="version" value="@{version}" />
+        <param name="type" value="@{type}" />
+        <param name="dest" value="@{dest}" />
+        <param name="repo.dir" value="${repo.dir}" />
+      </antcall>
+    </sequential>
+  </macrodef>
+
+  <!-- Get a list of jars (or other files) from the repository into the local ./lib folder. -->
+  <!-- @param libs-list A collection of get-lib-macro elements.                             -->
+  <macrodef name="get-libs-macro">
+    <element name="libs-list" optional="no" />
+    <element name="options" optional="yes" />
+    <attribute name="todir" default="${ear.dir}/lib" />
+    <sequential>
+      <property name="get.libs.macro.todir" value="@{todir}" />
+      <unixify-path-macro property="get.libs.macro.todir" />
+      <mkdir dir="${copyfilter.dir}" />
+      <options />
+      <libs-list />
+    </sequential>
+  </macrodef>
+
+  <!-- Fetch an individual jar (or other file) into the local ./lib folder and add its details -->
+  <!-- to the lib's filter file.                                                               -->
+  <!-- @param name Short name for the file.                                                    -->
+  <!-- @param jarname Full name for the file as it appears in the repository.                  -->
+  <!-- @param todir destination to copy jar into - default to the ear's lib folder.            -->
+  <macrodef name="get-lib-macro">
+    <attribute name="repo" />
+    <attribute name="group" />
+    <attribute name="artifact" />
+    <attribute name="version" />
+    <attribute name="type" />
+    <sequential>
+      <!-- this will set ${deploy.unit} based on the current projects name -->
+      <_set_output_dir_property_macro />
+
+      <!-- get the file from the repository, and copy into ./lib -->
+      <repo-get-macro dest="${get.libs.macro.todir}" repo="@{repo}" group="@{group}" artifact="@{artifact}" version="@{version}" type="@{type}" />
+
+      <!-- write a line to the filter -->
+      <echo file="${copyfilter.file}" append="yes" message="@{artifact}.@{type}=lib/@{artifact}-@{version}.@{type}${line.separator}" />
+    </sequential>
+  </macrodef>
+
+</project>
+
