@@ -37,7 +37,7 @@ import com.ail.core.configure.server.ServerDeligate;
  */
 public class CatalogBean {
     private CoreProxy core=new CoreProxy();
-    private ListDataModel products=new ListDataModel();
+    private ListDataModel<Parameter> products=new ListDataModel<Parameter>();
     private Throwable errorCause;
     private String errorMessage;
     private String productName;
@@ -48,11 +48,11 @@ public class CatalogBean {
     public CatalogBean() {
     }
 
-    public ListDataModel getProducts() {
+    public ListDataModel<Parameter> getProducts() {
         return products;
     }
 
-    public void setProducts(ListDataModel products) {
+    public void setProducts(ListDataModel<Parameter> products) {
         this.products = products;
     }
 
@@ -101,7 +101,7 @@ public class CatalogBean {
     }
 
     public String displayPropertiesAction() {
-        Parameter prod=(Parameter)getProducts().getRowData();
+        Parameter prod=getProducts().getRowData();
         setProductName(prod.getName());
         setProductNameAsLoaded(prod.getName());
         setProductDescription(prod.getValue());
@@ -146,7 +146,7 @@ public class CatalogBean {
      */
     public String clearProductCacheAction() {
         try {
-            Parameter prod=(Parameter)getProducts().getRowData();
+            Parameter prod=getProducts().getRowData();
             String selectedProduct=prod.getName();
             String configurationName=Functions.productNameToConfigurationNamespace(selectedProduct);
             core.logInfo("Clearing cache for product: "+selectedProduct);

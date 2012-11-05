@@ -16,24 +16,29 @@
  */
 package com.ail.core.command;
 
+import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJBContext;
-import javax.ejb.MessageDrivenBean;
+import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
-import com.ail.annotation.Configurable;
 
 /**
  * Message Driven Bean which listens on a queue for commands to execute.
  */
 @Configurable
-public class CommandServerBean extends EJBComponent implements MessageDrivenBean, MessageListener {
+@MessageDriven(activationConfig = {
+@ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
+@ActivationConfigProperty(propertyName="destination", propertyValue="queue/AilCommandQueue")}
+)
+public class CommandServerBean extends EJBComponent implements MessageListener {
     private MessageDrivenContext ctx = null;
     private Core core=null;
     private VersionEffectiveDate versionEffectiveDate=null;

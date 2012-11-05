@@ -17,12 +17,11 @@
 
 package com.ail.core.configure.server;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface ServerEndpoint extends Remote {
-    /** @link dependency */
-    /*# ServerBean lnkServerBean; */
+import javax.ejb.Remote;
 
+@Remote 
+public interface ServerEndpoint {
     String invokeServiceXML(String xml) throws RemoteException;
 }

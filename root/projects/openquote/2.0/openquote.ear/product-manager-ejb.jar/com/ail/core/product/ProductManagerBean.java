@@ -18,8 +18,8 @@
 package com.ail.core.product;
 
 import javax.ejb.CreateException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -36,7 +36,8 @@ import com.ail.core.product.ResetProductService.ResetProductArgument;
 import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Configurable
-public class ProductManagerBean extends EJBComponent implements SessionBean {
+@Stateless
+public class ProductManagerBean extends EJBComponent implements ProductManager {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;
     private SessionContext ctx = null;

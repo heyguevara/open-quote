@@ -17,9 +17,7 @@
 
 package com.ail.core.product;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBObject;
+import javax.ejb.Remote;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
@@ -31,32 +29,33 @@ import com.ail.core.product.ResetAllProductsService.ResetAllProductsArgument;
 import com.ail.core.product.ResetProductService.ResetProductArgument;
 import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
-public interface ProductManager extends EJBObject {
-    String invokeServiceXML(String xml) throws RemoteException;
+@Remote
+public interface ProductManager {
+    String invokeServiceXML(String xml);
 
-    VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    void setConfiguration(Configuration config) throws RemoteException;
+    void setConfiguration(Configuration config);
 
-    Configuration getConfiguration() throws RemoteException;
+    Configuration getConfiguration();
 
-    String getConfigurationNamespace() throws RemoteException;
+    String getConfigurationNamespace();
 
-    void resetConfiguration() throws RemoteException;
+    void resetConfiguration();
 
-    ListProductsArgument getListProducts(ListProductsArgument arg) throws RemoteException;
+    ListProductsArgument getListProducts(ListProductsArgument arg);
 
-    RegisterProductArgument registerProduct(RegisterProductArgument arg) throws RemoteException;
+    RegisterProductArgument registerProduct(RegisterProductArgument arg);
 
-    RemoveProductArgument removeProduct(RemoveProductArgument arg) throws RemoteException;
+    RemoveProductArgument removeProduct(RemoveProductArgument arg);
 
-    ResetProductArgument getProductDefinition(ResetProductArgument arg) throws RemoteException;
+    ResetProductArgument getProductDefinition(ResetProductArgument arg);
 
-    ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg) throws RemoteException;
+    ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg);
 
-    UpdateProductArgument updateProduct(UpdateProductArgument arg) throws RemoteException;
+    UpdateProductArgument updateProduct(UpdateProductArgument arg);
 
-    NewProductTypeArgument newProductType(NewProductTypeArgument arg) throws RemoteException;
+    NewProductTypeArgument newProductType(NewProductTypeArgument arg);
 }
 
 

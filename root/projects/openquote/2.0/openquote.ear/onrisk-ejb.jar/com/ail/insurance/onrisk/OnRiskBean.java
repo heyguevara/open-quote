@@ -19,8 +19,8 @@ package com.ail.insurance.onrisk;
 
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -32,7 +32,8 @@ import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
 import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
 @Configurable
-public class OnRiskBean extends EJBComponent implements SessionBean {
+@Stateless
+public class OnRiskBean extends EJBComponent implements OnRisk {
     private static final long serialVersionUID = 6789993103676049055L;
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;

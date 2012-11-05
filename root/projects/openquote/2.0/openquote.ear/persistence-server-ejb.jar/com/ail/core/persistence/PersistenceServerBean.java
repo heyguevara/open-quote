@@ -18,8 +18,8 @@
 package com.ail.core.persistence;
 
 import javax.ejb.CreateException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -36,7 +36,8 @@ import com.ail.core.persistence.UpdateService.UpdateArgument;
  * EJB Wrapper for the persistence server.
  */
 @Configurable
-public class PersistenceServerBean extends EJBComponent implements SessionBean {
+@Stateless
+public class PersistenceServerBean extends EJBComponent implements PersistenceServerLocal {
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;
     private SessionContext ctx = null;

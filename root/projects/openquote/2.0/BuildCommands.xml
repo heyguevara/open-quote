@@ -6,41 +6,35 @@
 <project default="" name="openquote:commands">
   <import file="./BuildSettings.xml" />
 
-  <target name="jboss: start server" description="start the jboss server">
-    <start-jboss-macro />
+  <target name="liferay: start server" description="start the liferay server">
+    <start-liferay-macro />
   </target>
 
-  <target name="jboss: stop server" description="start the jboss server">
-    <stop-jboss-macro />
+  <target name="liferay: stop server" description="start the liferay server">
+    <stop-liferay-macro />
   </target>
 
-  <target name="jboss: force deployment scan" description="force jboss to scan 'deploy/' for changes">
-    <kick-jboss-macro />
+  <target name="liferay: force deployment scan" description="force liferay to scan 'deploy/' for changes">
+    <kick-liferay-macro />
   </target>
 
-  <target name="alfresco: download export" description="Download a repository export from alfresco and unpack into the folder deploy/export">
+  <target name="liferay: export repository" description="Export the content repository into the source tree">
     <content-download-export-macro />
   </target>
 
-  <target name="alfresco: mount product space" description="mount Product space in Alfresco as a file system">
+  <target name="liferay: mount product space" description="Mount Product space in Liferay as a file system">
     <mount-product-space-macro/>
   </target>
 
-  <target name="alfresco: unmount product space" description="unmount Product space from local filesystem">
+  <target name="liferay: unmount product space" description="Unmount Product space from local filesystem">
     <unmount-product-space-macro/>
   </target>
     
-  <!-- drop all the tables that portal uses to store it's settings and preferences. These
-         all get recreated when jboss is restarted. -->
-  <target name="jboss: reset portal" description="delete the portal tables - jboss will recreate them on startup">
-    <reset-portal-macro />
-  </target>
-
-  <target name="ail: clear server cache" description="Clear the config cache in jboss">
+  <target name="openquote: clear server cache" description="Clear the config cache in liferay">
     <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
   </target>
 
-  <target name="ail: reset configurations" description="reset all the ail configurations">
+  <target name="openquote: reset configurations" description="reset all the ail configurations">
 
    	<ail-aggregate-annotated-configurations output-jar="${ear.dir}/lib/core.jar">
       <paths>

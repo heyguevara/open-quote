@@ -25,7 +25,7 @@ import java.util.Collection;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
-import org.apache.myfaces.custom.fileupload.UploadedFile;
+//import org.apache.myfaces.custom.fileupload.UploadedFile;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.ConfigurationSummary;
@@ -37,19 +37,19 @@ import com.ail.core.configure.server.GetNamespacesHistoryService.GetNamespacesHi
  */
 public class ConfigureForm {
     private CoreProxy core=new CoreProxy();
-    private ListDataModel namespaces=new ListDataModel();
-    private ListDataModel history=new ListDataModel();
+    private ListDataModel<ConfigurationSummary> namespaces=new ListDataModel<ConfigurationSummary>();
+    private ListDataModel<ConfigurationSummary> history=new ListDataModel<ConfigurationSummary>();
     private String configurationXML;
     private ConfigurationSummary selected;
     private Throwable error;
     private String carFileName=null;
-    private UploadedFile uploadedCarFile=null;
+//    private UploadedFile uploadedCarFile=null;
     
     public ConfigureForm() throws Exception {
         refresh();
     }
 
-    public DataModel getNamespaces() {
+    public DataModel<ConfigurationSummary> getNamespaces() {
         return namespaces;
     }
 
@@ -57,7 +57,7 @@ public class ConfigureForm {
         this.namespaces.setWrappedData(namespaces);
     }
     
-    public DataModel getHistory() {
+    public DataModel<ConfigurationSummary> getHistory() {
         return history;
     }
 
@@ -144,15 +144,15 @@ public class ConfigureForm {
         return carFileName!=null;
     }
 
-    public UploadedFile getUploadedCarFile() {
-        return uploadedCarFile;
-    }
-
-    public void setUploadedCarFile(UploadedFile uploadCarFile) {
-        this.uploadedCarFile = uploadCarFile;
-    }
-
-    public boolean getUploadedCarFileAvailable() {
-        return this.uploadedCarFile!=null;
-    }
+//    public UploadedFile getUploadedCarFile() {
+//        return uploadedCarFile;
+//    }
+//
+//    public void setUploadedCarFile(UploadedFile uploadCarFile) {
+//        this.uploadedCarFile = uploadCarFile;
+//    }
+//
+//    public boolean getUploadedCarFileAvailable() {
+//        return this.uploadedCarFile!=null;
+//    }
 }

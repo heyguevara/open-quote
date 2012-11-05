@@ -25,8 +25,9 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 
 import javax.ejb.CreateException;
-import javax.ejb.SessionBean;
+import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.core.BaseError;
 import com.ail.core.VersionEffectiveDate;
@@ -37,7 +38,8 @@ import com.ail.core.VersionEffectiveDate;
  * access to server side configuration for remote clients (e.g. web start apps)
  * which need to access the server's configuration information.
  */
-public class EJBLoaderBean implements SessionBean {
+@Stateless
+public class EJBLoaderBean implements EJBLoaderLocal {
     SessionContext ctx=null;
     AbstractConfigurationLoader loader=null;
 

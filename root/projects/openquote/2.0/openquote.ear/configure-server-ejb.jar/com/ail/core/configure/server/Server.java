@@ -17,10 +17,7 @@
 
 package com.ail.core.configure.server;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-import javax.ejb.EJBObject;
+import javax.ejb.Remote;
 
 import org.w3c.dom.Element;
 
@@ -36,47 +33,45 @@ import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
 import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
 import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 
-public interface Server extends EJBObject {
-    /** @link dependency */
-    /*# ServerBean lnkServerBean; */
+@Remote
+public interface Server {
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    VersionEffectiveDate getVersionEffectiveDate() throws RemoteException, EJBException;
+    void setConfiguration(Configuration config);
 
-    void setConfiguration(Configuration config) throws RemoteException;
+    Configuration getConfiguration();
 
-    Configuration getConfiguration() throws RemoteException;
+    String getConfigurationNamespace();
 
-    String getConfigurationNamespace() throws RemoteException;
+    void resetConfiguration();
 
-    void resetConfiguration() throws RemoteException;
+    void resetCoreConfiguration();
 
-    void resetCoreConfiguration() throws RemoteException, EJBException;
+    void resetNamedConfiguration(String name);
 
-    void resetNamedConfiguration(String name) throws RemoteException, EJBException;
+    void clearConfigurationCache();
 
-    void clearConfigurationCache() throws RemoteException, EJBException;
+    void clearNamedConfigurationCache(String namespace);
 
-    void clearNamedConfigurationCache(String namespace) throws RemoteException, EJBException;
+    String invokeServiceXML(String xml);
 
-    String invokeServiceXML(String xml) throws RemoteException, EJBException;
+    Element[] invokeServiceSoap(Element[] xml);
 
-    Element[] invokeServiceSoap(Element[] xml) throws RemoteException, EJBException;
+    GetNamespacesCommand getNamespaces(GetNamespacesCommand arg);
 
-    GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws RemoteException, EJBException;
+    GetConfigurationCommand getConfiguration(GetConfigurationCommand arg);
 
-    GetConfigurationCommand getConfiguration(GetConfigurationCommand arg) throws RemoteException, EJBException;
+    SetConfigurationCommand setConfiguration(SetConfigurationCommand arg);
 
-    SetConfigurationCommand setConfiguration(SetConfigurationCommand arg) throws RemoteException, EJBException;
+    GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg);
 
-    GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg) throws RemoteException, EJBException;
+    SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg);
 
-    SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg) throws RemoteException, EJBException;
+    GetClassListCommand getClassList(GetClassListCommand arg);
 
-    GetClassListCommand getClassList(GetClassListCommand arg) throws RemoteException, EJBException;
-
-    DeployCarCommand deployCar(DeployCarCommand arg) throws RemoteException, EJBException;
+    DeployCarCommand deployCar(DeployCarCommand arg);
     
-    PackageCarCommand packageCar(PackageCarCommand arg) throws RemoteException, EJBException;
+    PackageCarCommand packageCar(PackageCarCommand arg);
 
-    CatalogCarCommand catalogCar(CatalogCarCommand arg) throws RemoteException, EJBException;
+    CatalogCarCommand catalogCar(CatalogCarCommand arg);
 }

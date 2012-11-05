@@ -16,14 +16,10 @@
  */
 package com.ail.core.configure;
 
-import java.rmi.RemoteException;
 import java.util.Collection;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.rmi.PortableRemoteObject;
+import javax.ejb.EJB;
 
-import com.ail.core.BaseError;
 import com.ail.core.VersionEffectiveDate;
 
 /**
@@ -34,38 +30,11 @@ import com.ail.core.VersionEffectiveDate;
  * turn relays them to whatever mechanism the server is using (e.g. JDBC).
  */
 public class EJBConfigurationLoader extends AbstractConfigurationLoader {
-    EJBLoader server=null;
-
-    private void handleException(RemoteException e) {
-        for(Throwable t=e ; t!=null ; t=t.getCause()) {
-            if (t instanceof BaseError) {
-                throw (BaseError)t;
-            }
-            else if (t instanceof EJBConfigurationException) {
-                throw (BaseError)((EJBConfigurationException)t).getServerSideCause();
-            }
-        }
-        throw new BootstrapConfigurationError("Failed to contact configuration server:"+e);
-    }
-
+    @EJB
+    static EJBLoader loader;
+    
     private void handleException(EJBConfigurationException e) {
         throw e.getBaseErrorCause();
-    }
-
-    /**
-     * Fetch an instance of the remote facade that will perform the configuration
-     * operations for us.
-     * @return Instance of the facade EJB.
-     */
-    public EJBLoader getLoaderEJB() {
-        try {
-            Context context=new InitialContext();
-            EJBLoaderHome home=(EJBLoaderHome)context.lookup("EJBLoader");
-            server=(EJBLoader)PortableRemoteObject.narrow(home.create(), EJBLoader.class);
-            return server;
-        } catch(Throwable e) {
-            throw new BootstrapConfigurationError("Failed to contact configuration server:"+e);
-        }
     }
 
 	/**
@@ -79,9 +48,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
         Configuration config=null;
 
         try {
-            config=getLoaderEJB().loadConfiguration(namespace, date);
-        } catch(RemoteException e) {
-            handleException(e);
+            config=loader.loadConfiguration(namespace, date);
         } catch(EJBConfigurationException e) {
             handleException(e);
         }
@@ -105,9 +72,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
      */
     public void saveConfiguration(String namespace, Configuration config) {
         try {
-            getLoaderEJB().saveConfiguration(namespace, config);
-        }  catch(RemoteException e) {
-            handleException(e);
+            loader.saveConfiguration(namespace, config);
         } catch(EJBConfigurationException e) {
             handleException(e);
         }
@@ -121,10 +86,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
     public Collection<String> getNamespaces() {
         Collection<String> ret=null;
         try {
-            ret=getLoaderEJB().getNamespaces();
-        }
-        catch(RemoteException e) {
-            handleException(e);
+            ret=loader.getNamespaces();
         }
         catch(EJBConfigurationException e) {
             handleException(e);
@@ -137,10 +99,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
         Collection<ConfigurationSummary> ret=null;
 
         try {
-            ret=getLoaderEJB().getNamespacesDetail();
-        } 
-        catch(RemoteException e) {
-            handleException(e);
+            ret=loader.getNamespacesDetail();
         } 
         catch(EJBConfigurationException e) {
             handleException(e);
@@ -153,10 +112,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
         Collection<ConfigurationSummary> ret=null;
 
         try {
-            ret=getLoaderEJB().getNamespacesHistoryDetail(namespace);
-        } 
-        catch(RemoteException e) {
-            handleException(e);
+            ret=loader.getNamespacesHistoryDetail(namespace);
         } 
         catch(EJBConfigurationException e) {
             handleException(e);
@@ -172,9 +128,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
      */
     public void reset() {
         try {
-            getLoaderEJB().reset();
-        } catch(RemoteException e) {
-            handleException(e);
+            loader.reset();
         } catch(EJBConfigurationException e) {
             handleException(e);
         }
@@ -187,9 +141,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
      */
     public void purgeAllConfigurations() {
         try {
-            getLoaderEJB().purgeAllConfigurations();
-        } catch(RemoteException e) {
-            handleException(e);
+            loader.purgeAllConfigurations();
         } catch(EJBConfigurationException e) {
             handleException(e);
         }
@@ -203,9 +155,7 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
      */
     public void deleteConfigurationRepository() {
         try {
-            getLoaderEJB().deleteConfigurationRepository();
-        } catch(RemoteException e) {
-            handleException(e);
+            loader.deleteConfigurationRepository();
         } catch(EJBConfigurationException e) {
             handleException(e);
         }

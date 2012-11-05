@@ -34,10 +34,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.portlet.PortletFileUpload;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
@@ -78,7 +77,6 @@ public class ConfigureUploadPortlet extends GenericPortlet {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, java.io.IOException {
         String op = request.getParameter("op");
 
@@ -129,27 +127,26 @@ public class ConfigureUploadPortlet extends GenericPortlet {
     private byte[] readFileFromRequest(ActionRequest request) throws FileUploadException, IOException {
         StringBuffer file=new StringBuffer();
 
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        PortletFileUpload upload = new PortletFileUpload(factory);
+//        DiskFileItemFactory factory = new DiskFileItemFactory();
+        //PortletFileUpload upload = new PortletFileUpload(factory);
 
-        @SuppressWarnings("unchecked")
-        List<FileItem> fileItems = (List<FileItem>)upload.parseRequest(request);
+        //List<FileItem> fileItems = (List<FileItem>)upload.parseRequest(request);
 
-        Iterator<FileItem> itr = fileItems.iterator();
+        //Iterator<FileItem> itr = fileItems.iterator();
         
-        if (itr.hasNext()) {
-            FileItem item = itr.next();
-            byte[] block=new byte[4096];
-
-            // check if the current item is a form field or an uploaded file
-            if (!item.isFormField()) {
-                InputStream is = item.getInputStream();
-                
-                for(int read=is.read(block) ; read>0 ; read=is.read(block)) {
-                    file.append(new String(block, 0, read));
-                }
-            }
-        }
+//        if (itr.hasNext()) {
+//            FileItem item = itr.next();
+//            byte[] block=new byte[4096];
+//
+//            // check if the current item is a form field or an uploaded file
+//            if (!item.isFormField()) {
+//                InputStream is = item.getInputStream();
+//                
+//                for(int read=is.read(block) ; read>0 ; read=is.read(block)) {
+//                    file.append(new String(block, 0, read));
+//                }
+//            }
+//        }
         
         return file.toString().getBytes();
     }

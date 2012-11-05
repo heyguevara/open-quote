@@ -17,34 +17,34 @@
 
 package com.ail.core.configure;
 
-import com.ail.core.VersionEffectiveDate;
-
-import javax.ejb.EJBObject;
-import java.rmi.RemoteException;
 import java.util.Collection;
-import javax.ejb.EJBException;
+
+import javax.ejb.Remote;
+
+import com.ail.core.VersionEffectiveDate;
 
 /**
  * Remote interface for the EJBLoader bean.
  */
-public interface EJBLoader extends EJBObject {
-    public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws RemoteException, EJBConfigurationException;
+@Remote
+public interface EJBLoader {
+    public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws EJBConfigurationException;
 
-    public void saveConfiguration(String namespace, Configuration config) throws RemoteException, EJBConfigurationException, EJBException;
+    public void saveConfiguration(String namespace, Configuration config) throws EJBConfigurationException;
 
-    public Collection<String> getNamespaces() throws RemoteException, EJBConfigurationException, EJBException;
+    public Collection<String> getNamespaces() throws EJBConfigurationException;
 
-    public Collection<ConfigurationSummary> getNamespacesHistoryDetail(String namespace) throws RemoteException, EJBConfigurationException, EJBException;
+    public Collection<ConfigurationSummary> getNamespacesHistoryDetail(String namespace) throws EJBConfigurationException;
 
-    public Collection<ConfigurationSummary> getNamespacesDetail() throws RemoteException, EJBConfigurationException, EJBException;
+    public Collection<ConfigurationSummary> getNamespacesDetail() throws EJBConfigurationException;
 
-    public byte[] loadConfigurationAsByteArray(String namespace, VersionEffectiveDate date) throws EJBException, RemoteException;
+    public byte[] loadConfigurationAsByteArray(String namespace, VersionEffectiveDate date);
 
-    public int saveConfiguration(String namespace, byte[] config) throws EJBException, RemoteException;
+    public int saveConfiguration(String namespace, byte[] config);
 
-    public int reset() throws RemoteException;
+    public int reset();
 
-    public int purgeAllConfigurations() throws RemoteException;
+    public int purgeAllConfigurations();
 
-    public int deleteConfigurationRepository() throws RemoteException;
+    public int deleteConfigurationRepository();
 }

@@ -17,24 +17,23 @@
 
 package com.ail.insurance.subrogation;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBObject;
+import javax.ejb.Remote;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
-public interface Subrogation extends EJBObject {
-    VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
+@Remote
+public interface Subrogation {
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    void setConfiguration(Configuration config) throws RemoteException;
+    void setConfiguration(Configuration config);
 
-    Configuration getConfiguration() throws RemoteException;
+    Configuration getConfiguration();
 
-    String getConfigurationNamespace() throws RemoteException;
+    String getConfigurationNamespace();
 
-    void resetConfiguration() throws RemoteException;
+    void resetConfiguration();
 
-    MakeARecoveryArgument makeARecovery(MakeARecoveryArgument command) throws RemoteException;
+    MakeARecoveryArgument makeARecovery(MakeARecoveryArgument command);
 }

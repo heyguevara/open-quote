@@ -17,7 +17,7 @@
 
 package com.ail.core.product;
 
-import javax.ejb.EJBLocalObject;
+import javax.ejb.Local;
 
 import com.ail.core.BaseException;
 import com.ail.core.VersionEffectiveDate;
@@ -30,7 +30,8 @@ import com.ail.core.product.ResetAllProductsService.ResetAllProductsArgument;
 import com.ail.core.product.ResetProductService.ResetProductArgument;
 import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
-public interface ProductManagerLocal extends EJBLocalObject {
+@Local
+public interface ProductManagerLocal {
     String invokeServiceXML(String xml);
 
     VersionEffectiveDate getVersionEffectiveDate();

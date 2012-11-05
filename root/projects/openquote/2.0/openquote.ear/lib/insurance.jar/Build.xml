@@ -17,13 +17,11 @@
         <fileset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${java.home}/lib" includes="plugin.jar" />
         <fileset dir="${jboss.dir}">
-          <include name="client/jbossall-client.jar" />
+          <include name="bin/client/jboss-client.jar" />
           <include name="client/activation.jar" />
-          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
-          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
-          <include name="server/default/lib/saxon*.jar" />
-          <include name="server/default/lib/mail.jar" />
-          <include name="server/default/lib/servlet-api.jar" />
+          <include name="modules/com/liferay/portal/main/portlet.jar"/>
+          <include name="modules/javax/mail/api/main/mail-1.4.4.jar" />
+          <include name="modules/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
           <include name="lib/endorsed/xalan.jar" />
         </fileset>
       </javac-classpath>

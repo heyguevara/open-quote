@@ -89,7 +89,6 @@ public class Functions {
         return (s==null) ? "" : s;
     }
 
-    @SuppressWarnings("unchecked")
     public static Properties getOperationParameters(ActionRequest request) {
         String nm;
         String[] parts;

@@ -17,9 +17,7 @@
 
 package com.ail.core.persistence;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBObject;
+import javax.ejb.Remote;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
@@ -29,32 +27,29 @@ import com.ail.core.persistence.LoadService.LoadArgument;
 import com.ail.core.persistence.QueryService.QueryArgument;
 import com.ail.core.persistence.UpdateService.UpdateArgument;
 
-public interface PersistenceServer extends EJBObject {
-    /** @link dependency */
+@Remote
+public interface PersistenceServer {
+    String invokeServiceXML(String xml);
 
-    /*# PersistenceServerBean lnkPersistenceServerBean; */
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    String invokeServiceXML(String xml) throws RemoteException;
+    void setConfiguration(Configuration config);
 
-    VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
+    Configuration getConfiguration();
 
-    void setConfiguration(Configuration config) throws RemoteException;
+    String getConfigurationNamespace();
 
-    Configuration getConfiguration() throws RemoteException;
+    void resetConfiguration();
 
-    String getConfigurationNamespace() throws RemoteException;
+    CreateArgument createCommand(CreateArgument arg);
 
-    void resetConfiguration() throws RemoteException;
+	UpdateArgument updateCommand(UpdateArgument arg);
 
-    CreateArgument createCommand(CreateArgument arg) throws RemoteException;
+	LoadArgument loadCommand(LoadArgument arg);
 
-	UpdateArgument updateCommand(UpdateArgument arg) throws RemoteException;
+	QueryArgument queryCommand(QueryArgument arg);
 
-	LoadArgument loadCommand(LoadArgument arg) throws RemoteException;
-
-	QueryArgument queryCommand(QueryArgument arg) throws RemoteException;
-
-	DeleteArgument deleteCommand(DeleteArgument arg) throws RemoteException;
+	DeleteArgument deleteCommand(DeleteArgument arg);
 }
 
 

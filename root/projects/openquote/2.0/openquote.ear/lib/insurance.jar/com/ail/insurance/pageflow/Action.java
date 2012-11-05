@@ -33,9 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 import java.lang.reflect.Field;
-import org.jboss.portal.common.transaction.TransactionException;
-import org.jboss.portal.common.transaction.TransactionManagerProvider;
-import org.jboss.portal.common.transaction.Transactions;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
@@ -158,7 +155,7 @@ public class Action extends PageElement {
 		this.when = when;
 	}
 
-	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model, String currentPhase) {
+	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model, String currentPhase) {
 	    if (when.equals(currentPhase)) {
     	    Policy policy = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
     
@@ -174,7 +171,7 @@ public class Action extends PageElement {
 	    }
 	}
 
-	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model) {
+	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
 		return execute(portletSession, principal, parameters, model).getValidationFailedRet();
 	}
 
@@ -186,24 +183,23 @@ public class Action extends PageElement {
 	 * should provide a mechanism for specific parameters to be passed on. This
 	 * mechanism doesn't work in JBoss Portal, hence the ugly hack below.
 	 */
-	@SuppressWarnings("unchecked")
-	private Map<String, String> extractParams(PortletRequest request) {
+	private Map<String, String[]> extractParams(PortletRequest request) {
 		Field f;
 		try {
 			f = request.getClass().getSuperclass().getSuperclass().getDeclaredField("dreq");
 			f.setAccessible(true);
 			HttpServletRequest originalReq;
 			originalReq = (HttpServletRequest) f.get(request);
-			return (Map<String, String>) originalReq.getParameterMap();
+			return (Map<String, String[]>) originalReq.getParameterMap();
 		} catch (Exception e) {
 			new CoreProxy().logError("Failed to get parameters from request", e);
-			return new HashMap<String,String>();
+			return new HashMap<String,String[]>();
 		}
 	}
 
-	private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Map<String, String> parameters, Type model) {
-		TransactionManager tm = null;
-		Transaction tx = null;
+	private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
+//		TransactionManager tm = null;
+//		Transaction tx = null;
 		Policy quote = (Policy) model;
 
 		VersionEffectiveDate ved = (quote.getQuotationDate() != null) ? new VersionEffectiveDate(quote.getQuotationDate()) : new VersionEffectiveDate();
@@ -217,17 +213,17 @@ public class Action extends PageElement {
 		c.setProductTypeIdArg(quote.getProductTypeId());
 		
 		try {
-			tm = TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
-			tx = Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
+			// tm = TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
+			// tx = Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
 			c.invoke();
 		} catch (Throwable e) {
 			throw new RenderingError("Failed to execute action command: " + getCommandName(), e);
 		} finally {
-			try {
-				Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
-			} catch (TransactionException e) {
-				throw new RenderingError("Transaction exception while executing command:" + getCommandName(), e);
-			}
+//			try {
+//				Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
+//			} catch (TransactionException e) {
+//				throw new RenderingError("Transaction exception while executing command:" + getCommandName(), e);
+//			}
 		}
 
 		return c;

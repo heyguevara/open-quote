@@ -17,7 +17,7 @@
 
 package com.ail.insurance.acceptance;
 
-import java.rmi.RemoteException;
+import javax.ejb.Remote;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationArgument;
@@ -25,26 +25,27 @@ import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumArgument
 import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationArgument;
 import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
-public interface Acceptance extends javax.ejb.EJBObject {
-    String invokeServiceXML(String xml) throws RemoteException;
+@Remote
+public interface Acceptance {
+    String invokeServiceXML(String xml);
 
-    VersionEffectiveDate getVersionEffectiveDate() throws RemoteException;
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    void setConfiguration(com.ail.core.configure.Configuration config) throws RemoteException;
+    void setConfiguration(com.ail.core.configure.Configuration config);
 
-    com.ail.core.configure.Configuration getConfiguration() throws RemoteException;
+    com.ail.core.configure.Configuration getConfiguration();
 
-    String getConfigurationNamespace() throws RemoteException;
+    String getConfigurationNamespace();
 
-    void resetConfiguration() throws RemoteException;
+    void resetConfiguration();
 
-    ProduceDocumentationArgument produceDocumentation(ProduceDocumentationArgument argument) throws RemoteException;
+    ProduceDocumentationArgument produceDocumentation(ProduceDocumentationArgument argument);
 
-    PutOnRiskArgument putOnRisk(PutOnRiskArgument argument) throws RemoteException;
+    PutOnRiskArgument putOnRisk(PutOnRiskArgument argument);
 
-    CollectPremiumArgument collectPremium(CollectPremiumArgument argument) throws RemoteException;
+    CollectPremiumArgument collectPremium(CollectPremiumArgument argument);
 
-    AcceptQuotationArgument acceptQuotation(AcceptQuotationArgument argument) throws RemoteException;
+    AcceptQuotationArgument acceptQuotation(AcceptQuotationArgument argument);
 }
 
 

@@ -19,27 +19,27 @@ package com.ail.insurance.pageflow;
 import static com.ail.insurance.pageflow.util.Functions.addError;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+//import java.util.Date;
+//import java.util.HashSet;
+//import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
+//import javax.transaction.Transaction;
+//import javax.transaction.TransactionManager;
 
-import org.jboss.portal.common.transaction.TransactionException;
-import org.jboss.portal.common.transaction.TransactionManagerProvider;
-import org.jboss.portal.common.transaction.Transactions;
-import org.jboss.portal.identity.MembershipModule;
-import org.jboss.portal.identity.Role;
-import org.jboss.portal.identity.RoleModule;
-import org.jboss.portal.identity.User;
-import org.jboss.portal.identity.UserModule;
-import org.jboss.portal.identity.UserProfileModule;
+//import org.jboss.portal.common.transaction.TransactionException;
+//import org.jboss.portal.common.transaction.TransactionManagerProvider;
+//import org.jboss.portal.common.transaction.Transactions;
+//import org.jboss.portal.identity.MembershipModule;
+//import org.jboss.portal.identity.Role;
+//import org.jboss.portal.identity.RoleModule;
+//import org.jboss.portal.identity.User;
+//import org.jboss.portal.identity.UserModule;
+//import org.jboss.portal.identity.UserProfileModule;
 
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
@@ -255,38 +255,38 @@ public class LoginSection extends PageContainer {
 
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
-        TransactionManager tm=null;
-        Transaction tx=null;
+//        TransactionManager tm=null;
+//        Transaction tx=null;
 
         String op=Functions.getOperationParameters(request).getProperty("op");
 
         if ("Create".equals(op)) {            
             Policy quote=(Policy)model;
-            Proposer proposer=(Proposer)quote.getProposer();
+//            Proposer proposer=(Proposer)quote.getProposer();
             String password=request.getParameter("password");
 
             // This assumes that the attributes ("UserModule" etc) have been injected into the session's context in 
             // the jboss-portal.xml portal descriptor file.
-            UserModule userModule=(UserModule)request.getPortletSession().getPortletContext().getAttribute("UserModule");
-            UserProfileModule userProfileModule=(UserProfileModule)request.getPortletSession().getPortletContext().getAttribute("UserProfileModule");;
-            RoleModule roleModule=(RoleModule)request.getPortletSession().getPortletContext().getAttribute("RoleModule");
-            MembershipModule membershipModule=(MembershipModule)request.getPortletSession().getPortletContext().getAttribute("MembershipModule");
+//            UserModule userModule=(UserModule)request.getPortletSession().getPortletContext().getAttribute("UserModule");
+//            UserProfileModule userProfileModule=(UserProfileModule)request.getPortletSession().getPortletContext().getAttribute("UserProfileModule");;
+//            RoleModule roleModule=(RoleModule)request.getPortletSession().getPortletContext().getAttribute("RoleModule");
+//            MembershipModule membershipModule=(MembershipModule)request.getPortletSession().getPortletContext().getAttribute("MembershipModule");
 
             try {
-                tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
-                tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
-                User user=userModule.createUser(quote.getUsername(), password);
-                userProfileModule.setProperty(user, User.INFO_USER_ENABLED, true);
-                userProfileModule.setProperty(user, User.INFO_USER_NAME_FAMILY, proposer.getSurname());
-                userProfileModule.setProperty(user, User.INFO_USER_NAME_GIVEN, proposer.getFirstName());
-                userProfileModule.setProperty(user, User.INFO_USER_EMAIL_REAL, proposer.getEmailAddress());
-                userProfileModule.setProperty(user, User.INFO_USER_LOCALE, request.getLocale().toString());
-                userProfileModule.setProperty(user, User.INFO_USER_REGISTRATION_DATE, new Date());
-
-                Set<Role> roleSet = new HashSet<Role>();
-                Role role = roleModule.findRoleByName("Proposer");
-                roleSet.add(role);    
-                membershipModule.assignRoles(user, roleSet);
+//                tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
+//                tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
+//                User user=userModule.createUser(quote.getUsername(), password);
+//                userProfileModule.setProperty(user, User.INFO_USER_ENABLED, true);
+//                userProfileModule.setProperty(user, User.INFO_USER_NAME_FAMILY, proposer.getSurname());
+//                userProfileModule.setProperty(user, User.INFO_USER_NAME_GIVEN, proposer.getFirstName());
+//                userProfileModule.setProperty(user, User.INFO_USER_EMAIL_REAL, proposer.getEmailAddress());
+//                userProfileModule.setProperty(user, User.INFO_USER_LOCALE, request.getLocale().toString());
+//                userProfileModule.setProperty(user, User.INFO_USER_REGISTRATION_DATE, new Date());
+//
+//                Set<Role> roleSet = new HashSet<Role>();
+//                Role role = roleModule.findRoleByName("Proposer");
+//                roleSet.add(role);    
+//                membershipModule.assignRoles(user, roleSet);
 
                 String pageName=Functions.getOperationParameters(request).getProperty("page");
                 String portalName=Functions.getOperationParameters(request).getProperty("portal");
@@ -296,14 +296,14 @@ public class LoginSection extends PageContainer {
                 // TODO Send a support email
                 e.printStackTrace();
             }
-            finally {
-                try {
-                    Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
-                }
-                catch(TransactionException e) {
-                    e.printStackTrace();
-                }
-            }
+//            finally {
+//                try {
+//                    Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
+//                }
+//                catch(TransactionException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }
         else if (loginButtonLabel.equals(op) && request.getUserPrincipal()==null) {
             // We're performing a save and the user isn't logged in yet.
@@ -358,32 +358,32 @@ public class LoginSection extends PageContainer {
 
     private boolean isAnExistingUser(String username, PortletRequest request) {
         boolean ret=false;
-        TransactionManager tm=null;
-        Transaction tx=null;
+//        TransactionManager tm=null;
+//        Transaction tx=null;
 
         // check if the username is already being used.
-        UserModule userModule=(UserModule)request.getPortletSession().getPortletContext().getAttribute("UserModule");
+//        UserModule userModule=(UserModule)request.getPortletSession().getPortletContext().getAttribute("UserModule");
 
         try {
-            tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
-            tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
-
-            if (userModule.findUserByUserName(username)!=null) {
-                ret=true;
-            }
+//            tm=TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
+//            tx=Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
+//
+//            if (userModule.findUserByUserName(username)!=null) {
+//                ret=true;
+//            }
         }
         catch(Exception e) {
             // ignore
         }
-        finally {
-            try {
-                Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
-            }
-            catch(TransactionException e) {
-                e.printStackTrace();
-            }
-            
-        }
+//        finally {
+//            try {
+//                Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
+//            }
+//            catch(TransactionException e) {
+//                e.printStackTrace();
+//            }
+//            
+//        }
         
         return ret;
     }

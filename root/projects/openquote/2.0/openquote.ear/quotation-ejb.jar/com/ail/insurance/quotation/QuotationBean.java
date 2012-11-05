@@ -19,8 +19,8 @@ package com.ail.insurance.quotation;
 
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -39,7 +39,8 @@ import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceArg
 import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument;
 
 @Configurable
-public class QuotationBean extends EJBComponent implements SessionBean {
+@Stateless
+public class QuotationBean extends EJBComponent implements Quotation {
     private static final long serialVersionUID = 6789993103676049055L;
     private VersionEffectiveDate versionEffectiveDate = null;
     private Core core = null;

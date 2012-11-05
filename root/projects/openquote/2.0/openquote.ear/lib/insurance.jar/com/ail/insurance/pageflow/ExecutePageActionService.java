@@ -120,13 +120,13 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
          * Get the request parameters.
          * @return
          */
-        Map<String, String> getRequestParameterArg();
+        Map<String, String[]> getRequestParameterArg();
 
         /**
          * @see #getRequestParameterArg()
          * @param parameters
          */
-        void setRequestParameterArg(Map<String, String> parameters);
+        void setRequestParameterArg(Map<String, String[]> parameters);
     }
 
     @ServiceCommand(defaultServiceClass=ExecutePageActionService.class)

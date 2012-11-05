@@ -11,40 +11,39 @@
   </target>
 
   <target name="_build">
-    <subant-macro target="_build" includes="openquote.ear/Build.xml, alfresco.war/Build.xml" />
+    <subant-macro target="_build" includes="openquote.ear/Build.xml" />
     <subant-macro target="_build" includes="*test.jar/Build.xml" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
     <subant-macro target="_build" excludes="build/*" />
     <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
-    <kick-jboss-macro />
+    <kick-liferay-macro />
   </target>
 
   <target name="_setup">
-    <subant-macro target="setup" includes="build/Build.xml" />
-    <install-jboss-macro version="${jboss.version}" />
-    <subant-macro target="setup" includes="domain/*" />
-    <subant-macro target="setup" excludes="domain/*,build/*" />
-    <antcall target="_build" />
+    <subant-macro target="setup" includes="build/Build.xml, domain/Build.xml" />
+    <subant-macro target="setup" excludes="build/Build.xml, domain/Build.xml" />
+    <antcall target="_build" /> 
+    <kick-liferay-macro />
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <antcall target="_setup" />
-    <parallel>
-      <start-jboss-macro />
+    <!--start-liferay-macro /-->
+    <!--parallel>
+      <start-liferay-macro />
       <sequential>
-        <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
-          <http url="http://localhost:8080/alfresco" />
-        </waitfor>
+        <wait-for-liferay-to-start-macro/>
         <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
-        <stop-jboss-macro />
+        <stop-liferay-macro />
       </sequential>
-    </parallel>
+    </parallel-->
   </target>
 
   <target name="teardown" description="undo whatever setup did">
-    <uninstall-jboss-macro version="${jboss.version}" />
+    <stop-liferay-macro/>
+    <uninstall-liferay-macro version="${liferay.version}" />
     <subant-macro target="teardown" />
     <delete dir="${target.dir}" failonerror="false" />
   </target>
@@ -53,9 +52,6 @@
 
 	<!-- Do a setup in build to make sure we have the jars that the build itself needs -->
   	<subant-macro target="setup" includes="build/Build.xml" />
-
-    <!-- Stop the server if it is running -->
-    <stop-jboss-macro/>
 
     <!-- Do a clean build and test before we release -->
     <antcall target="teardown" />
@@ -66,50 +62,45 @@
     <parallel>
 
       <!-- Start the server -->
-      <start-jboss-macro />
+      <!--start-liferay-macro /-->
 
       <sequential>
         <!-- Wait for the server to start -->
-        <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
-          <http url="http://localhost:8080/alfresco" />
-        </waitfor>
+        <!--waitfor-liferay-to-start-macro /-->
 
         <!-- With the server running, reset the configs -->
-        <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+        <!--ant antfile="BuildCommands.xml" target="ail: reset configurations" /-->
 
         <!-- Execute unit and integration tests -->
         <antcall target="test" />
 
         <!-- Reset the configs as the previous test step will have overwritten them -->
-        <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+        <!--ant antfile="BuildCommands.xml" target="ail: reset configurations" /-->
 
-        <stop-jboss-macro />
+        <!--stop-liferay-macro /-->
       </sequential>
 
     </parallel>
 
     <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
-    <release-jboss-domain-macro />
+    <release-liferay-domain-macro />
   </target>
 
   <target name="test" description="run unit tests and integration tests">
-    <run-all-tests-macro>
-      <test-classpath>
+    <!--run-all-tests-macro-->
+    <run-unit-tests-macro>
+      <junit-classpath>
         <dirset dir="${ear.dir}" includes="*.jar" />
         <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar" />
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <fileset dir="${jboss.dir}">
-          <include name="client/jbossall-client.jar" />
-          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
-          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
-          <include name="server/default/lib/saxon*.jar" />
-          <include name="server/default/lib/mysql*.jar" />
-          <include name="lib/endorsed/xalan.jar" />
-        </fileset>
-      </test-classpath>
-    </run-all-tests-macro>
+        <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
+        <fileset dir="${jboss.dir}/modules/com/liferay/portal/main" includes="portlet.jar, mysql.jar" />
+        <fileset dir="${jboss.dir}/modules/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
+        <fileset dir="${jboss.dir}/modules/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
+      </junit-classpath>
+    </run-unit-tests-macro>
 
-  	<stop-jboss-macro />
+  	<!--stop-liferay-macro /-->
   </target>
 </project>

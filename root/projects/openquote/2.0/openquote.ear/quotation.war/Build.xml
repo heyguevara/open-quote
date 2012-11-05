@@ -17,11 +17,11 @@
       <javac-classpath>
         <fileset dir="${output.dir}/WEB-INF/lib" includes="*.jar"/>
         <dirset dir="${ear.dir}" includes="*.jar"/>
-        <fileset dir="${ear.dir}/../jboss-portal.sar/lib" includes="*.jar"/>
+        <fileset dir="${jboss.dir}/modules/com/liferay/portal/main" includes="portlet.jar" />
         <dirset dir="${ear.dir}/lib" includes="*.jar" />
         <fileset dir="${ear.dir}/lib" includes="*.jar"/>
-        <fileset dir="${jboss.dir}/client" includes="jbossall-client.jar" />
-        <fileset dir="${jboss.dir}/server/default/lib" includes="servlet-api.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
+        <fileset dir="${jboss.dir}/modules/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
       </javac-classpath>
     </compile-exploded-war-macro>
   </target>

@@ -114,21 +114,21 @@ public class ConfigureManager {
     }
 
     public String uploadCarFileAction() {
-        if (getForm().getUploadedCarFileAvailable()) {
+//        if (getForm().getUploadedCarFileAvailable()) {
             try {
                 CatalogCarCommand ccc=core.newCommand(CatalogCarCommand.class);
-                ccc.setCarArg(getForm().getUploadedCarFile().getBytes());
+//                ccc.setCarArg(getForm().getUploadedCarFile().getBytes());
                 ccc.invoke();
             }
             catch (Exception ex) {
                 return fail("uploadCarFileAction.failed", ex);
             }
-        }
+//        }
         return null;
     }
     
     public String uploadConfigurationAction() {
-        getForm().setUploadedCarFile(null);
+//        getForm().setUploadedCarFile(null);
         return "uploadConfigurationAction.success";
     }
     

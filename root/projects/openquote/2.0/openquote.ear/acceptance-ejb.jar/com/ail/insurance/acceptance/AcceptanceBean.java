@@ -18,6 +18,7 @@
 package com.ail.insurance.acceptance;
 
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -29,7 +30,8 @@ import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumenta
 import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
 @Configurable
-public class AcceptanceBean extends com.ail.core.EJBComponent implements javax.ejb.SessionBean {
+@Stateless
+public class AcceptanceBean extends com.ail.core.EJBComponent implements Acceptance {
     private static final long serialVersionUID = -1235854950858098351L;
 
     private VersionEffectiveDate versionEffectiveDate = null;

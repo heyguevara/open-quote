@@ -17,18 +17,22 @@
 
 package com.ail.core.configure.server;
 
+import java.security.Principal;
+
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import org.w3c.dom.Element;
 
+import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.Core;
 import com.ail.core.CoreUser;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
+import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
@@ -41,10 +45,10 @@ import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
 import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
 import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
 import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
-import com.ail.annotation.Configurable;
 
 @Configurable
-public class ServerBean extends EJBComponent implements SessionBean, CoreUser, ConfigurationOwner {
+@Stateless
+public class ServerBean extends EJBComponent implements Server, CoreUser {
 	private Core core=null;
     private SessionContext ctx=null;
 
@@ -263,5 +267,29 @@ public class ServerBean extends EJBComponent implements SessionBean, CoreUser, C
      */
     public String getConfigurationNamespace() {
         return "com.ail.core.configure.server.ServerBean";
+    }
+
+    @Override
+    public Principal getSecurityPrincipal() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void setConfiguration(Configuration config) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void resetConfiguration() {
+        // TODO Auto-generated method stub
+        
     }
 }

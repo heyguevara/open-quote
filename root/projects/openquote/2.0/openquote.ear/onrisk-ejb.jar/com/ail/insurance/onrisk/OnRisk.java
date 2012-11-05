@@ -17,17 +17,16 @@
 
 package com.ail.insurance.onrisk;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBObject;
+import javax.ejb.Remote;
 
 import com.ail.core.BaseServerException;
 import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
 import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
 import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
-public interface OnRisk extends EJBObject {
-    String invokeServiceXML(String xml) throws RemoteException;
+@Remote
+public interface OnRisk {
+    String invokeServiceXML(String xml);
 
     /**
      * Service wrapper business method for the GenerateCertificateCommand service.
@@ -35,7 +34,7 @@ public interface OnRisk extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument) throws RemoteException;
+    GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument);
 
     /**
      * Service wrapper business method for the GenerateInvoiceCommand service.
@@ -43,7 +42,7 @@ public interface OnRisk extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument) throws RemoteException;
+    GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument);
 
     /**
      * Service wrapper business method for the GenerateWordingCommand service.
@@ -51,7 +50,7 @@ public interface OnRisk extends EJBObject {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateWordingArgument generateWording(GenerateWordingArgument argument) throws RemoteException;
+    GenerateWordingArgument generateWording(GenerateWordingArgument argument);
 }
 
 

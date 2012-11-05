@@ -17,8 +17,7 @@
 
 package com.ail.core.persistence;
 
-import javax.ejb.EJBException;
-import javax.ejb.EJBLocalObject;
+import javax.ejb.Local;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
@@ -28,29 +27,27 @@ import com.ail.core.persistence.LoadService.LoadArgument;
 import com.ail.core.persistence.QueryService.QueryArgument;
 import com.ail.core.persistence.UpdateService.UpdateArgument;
 
-public interface PersistenceServerLocal extends EJBLocalObject {
-    /** @link dependency */
-    /*# ServerBean lnkServerBean; */
+@Local
+public interface PersistenceServerLocal {
+    String invokeServiceXML(String xml);
 
-    String invokeServiceXML(String xml) throws EJBException;
+    VersionEffectiveDate getVersionEffectiveDate();
 
-    VersionEffectiveDate getVersionEffectiveDate() throws EJBException;
+    void setConfiguration(Configuration config);
 
-    void setConfiguration(Configuration config) throws EJBException;
+    Configuration getConfiguration();
 
-    Configuration getConfiguration() throws EJBException;
+    String getConfigurationNamespace();
 
-    String getConfigurationNamespace() throws EJBException;
+    void resetConfiguration();
 
-    void resetConfiguration() throws EJBException;
+    CreateArgument createCommand(CreateArgument arg);
 
-    CreateArgument createCommand(CreateArgument arg) throws EJBException;
+    UpdateArgument updateCommand(UpdateArgument arg);
 
-    UpdateArgument updateCommand(UpdateArgument arg) throws EJBException;
+    LoadArgument loadCommand(LoadArgument arg);
 
-    LoadArgument loadCommand(LoadArgument arg) throws EJBException;
+    QueryArgument queryCommand(QueryArgument arg);
 
-    QueryArgument queryCommand(QueryArgument arg) throws EJBException;
-
-    DeleteArgument deleteCommand(DeleteArgument arg) throws EJBException;
+    DeleteArgument deleteCommand(DeleteArgument arg);
 }

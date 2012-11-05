@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Macro file defining a collection of ant macros concerned with managing Liferay
+-->
+
+<project default="dummy" name="BuildLiferayMacros.xml">
+
+  <target name="dummy" />
+
+  <target name="_install.base" unless="base">
+    <!-- Get the Liferay zip into the cache -->
+    <repo-get-macro repo="75.101.150.249/repo" group="liferay" artifact="liferay-portal" version="${version}" type="zip" />
+
+    <!-- Unpack the cached zip into the dev tree -->
+    <mkdir dir="${target.dir}" />
+    <unzip overwrite="yes" dest="${target.dir}" src="${repo.dir}/liferay/liferay-portal/${version}/liferay-portal-${version}.zip" />
+    <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${jboss.dir}/bin">
+      <arg line="-c 'chmod 755 *.sh'" />
+    </exec>
+  </target>
+
+  <!-- Macro to install Liferay in a development tree.   -->
+  <!-- @param version The version of Liferay to install. -->
+  <macrodef name="install-liferay-macro">
+    <attribute name="version" />
+    <sequential>
+      <available file="${liferay.dir}/readme.html" property="base" />
+      <antcall target="_install.base">
+        <param name="version" value="@{version}" />
+      </antcall>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to uninstall liferay in a development tree.   -->
+  <!-- @param version The version of liferay to uninstall. -->
+  <macrodef name="uninstall-liferay-macro">
+    <attribute name="version" />
+    <sequential>
+      <!-- Delete the installed tree -->
+      <delete dir="${liferay.dir}" failonerror="no" />
+    </sequential>
+  </macrodef>
+
+  <target name="_start-liferay-if-liferay-running=false" unless="liferay-running">
+    <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.sh" os="Linux,Mac OS X,Solaris,Sun OS">
+      <env key="DEBUG_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+    </exec>
+    <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.bat" os="Windows 2000,Windows XP,Windows 7">
+      <env key="DEBUG_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+    </exec>
+  </target>
+
+  <target name="_start-liferay-if-liferay-running=true" if="liferay-running">
+    <echo level="info" message="Liferay can't be started, it is already running!" />
+  </target>
+
+  <macrodef name="wait-for-liferay-to-start-macro">
+    <sequential>
+      <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+        <http url="http://localhost:8080" />
+      </waitfor>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="wait-for-liferay-to-stop-macro">
+    <sequential>
+      <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+        <not>
+          <http url="http://localhost:8080" />
+        </not>
+      </waitfor>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to start the liferay server if it isn't running already. -->
+  <macrodef name="start-liferay-macro">
+    <sequential>
+      <set-liferay-running-property-macro />
+      <antcall target="_start-liferay-if-liferay-running=true" />
+      <antcall target="_start-liferay-if-liferay-running=false" />
+    </sequential>
+  </macrodef>
+
+  <target name="_stop-liferay-if-liferay-running=true" if="liferay-running">
+    <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.sh" os="Linux,Mac OS X,Solaris,Sun OS">
+      <arg line="--connect :shutdown"/>
+    </exec>
+    <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.bat" os="Windows 2000,Windows XP,Windows 7">
+      <arg line="--connect :shutdown"/>
+    </exec>
+    <waitfor-liferay-to-stop-macro/>
+  </target>
+
+  <target name="_stop-liferay-if-liferay-running=false" unless="liferay-running">
+    <echo level="info" message="Liferay can't be stopped - it isn't running!" />
+  </target>
+
+  <!-- Macro to stop liferay if it is running. -->
+  <macrodef name="stop-liferay-macro">
+    <sequential>
+      <set-liferay-running-property-macro />
+      <antcall target="_stop-liferay-if-liferay-running=true" />
+      <antcall target="_stop-liferay-if-liferay-running=false" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="kick-liferay-macro">
+    <sequential>
+      <touch file="${deploy.dir}/${ear.name}.dodeploy"/>
+    </sequential>
+  </macrodef>
+
+  <!-- Under an integration build we upload the results of the relese to the project wide repository -->
+  <target name="_release-liferay-domain-type=integration" depends="_release-liferay-domain-type=developer">
+    <mkdir dir="${release.repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}" />
+    <copy file="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot.dar" tofile="${release.repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}/${ant.project.name}-${major.version}.${minor.version}-build.${build.number}.dar" />
+  </target>
+
+  <!-- For a local 'developer' build, we simply put a SNAPSHOT copy of the .dar in the local cache dir for other projects to use -->
+  <target name="_release-liferay-domain-type=developer">
+    <mkdir dir="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}" />
+    <zip basedir="${deploy.dir}" destfile="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot.dar" />
+  </target>
+
+  <!-- Macro to "release" the current project's liferay domain. -->
+  <macrodef name="release-liferay-domain-macro">
+    <sequential>
+      <antcall target="_release-liferay-domain-type=${build.type}" />
+    </sequential>
+  </macrodef>
+
+  <!-- Macro which sets the ${liferay-running} to true if liferay is running -->
+  <macrodef name="set-liferay-running-property-macro">
+    <sequential>
+      <condition property="liferay-running">
+        <and>
+          <socket server="localhost" port="8080" />
+        </and>
+      </condition>
+    </sequential>
+  </macrodef>
+
+  <target name="_mount-product-space-properties">
+    <property name="unix.mountpoint" value="../openquote-product" />
+  </target>
+
+  <target name="_mount-product-space-Mac OS X" depends="_mount-product-space-properties">
+    <mkdir dir="${unix.mountpoint}" />
+    <exec os="Mac OS X" executable="mount_smbfs" failonerror="yes">
+      <arg value="//admin:admin@localhost:1445/Alfresco/Product" />
+      <arg value="${unix.mountpoint}" />
+    </exec>
+    <echo message="Product space mounted on ${unix.mountpoint}" />
+  </target>
+
+  <target name="_unmount-product-space-Mac OS X" depends="_mount-product-space-properties">
+    <exec os="Mac OS X" executable="umount" failonerror="yes">
+      <arg value="${unix.mountpoint}" />
+    </exec>
+    <delete dir="${unix.mountpoint}" />
+    <echo message="Product space unmounted from ${unix.mountpoint}" />
+  </target>
+
+  <macrodef name="mount-product-space-macro">
+    <sequential>
+      <antcall target="_mount-product-space-${os.name}" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="unmount-product-space-macro">
+    <sequential>
+      <antcall target="_unmount-product-space-${os.name}" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="_content-download-export-macro-database">
+    <sequential>
+      <echo file="${mysql.setup.file}">
+      -- OpenQuote Community database setup script.
+      --
+      -- This script will create a database suitable for use with ${major.version}.${minor.version}${increment.version}. The
+      -- script is totally specific to that version and should not be expected to work with any other version; this is
+      -- largely due to the way in which Liferay content indexes are defined in this database, while the actual content
+      -- is held within the file system.
+      --
+
+      --
+      -- Create the OpenQuote database, users and rights.
+      --
+      CREATE DATABASE IF NOT EXISTS $${dbname} character set utf8;
+      GRANT ALL ON $${dbname}.* TO '$${dbusername}'@'localhost' IDENTIFIED BY '$${dbpassword}' WITH GRANT OPTION;
+      GRANT ALL ON $${dbname}.* TO '$${dbusername}'@'localhost.localdomain' IDENTIFIED BY '$${dbpassword}' WITH GRANT OPTION;
+
+      SET FOREIGN_KEY_CHECKS=0;
+
+      USE $${dbname};
+      </echo>
+
+      <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">
+        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} --opt ${dbname} >> ${mysql.setup.file}"' />
+      </exec>
+
+      <copy todir="domain/liferay">
+        <fileset dir="${liferay.dir}" includes="data/document_library/**, data/lucene/**, data/jackrabbit/**"/>
+      </copy>
+
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to export content from the liferay repository into the source tree. -->
+  <macrodef name="content-download-export-macro">
+    <sequential>
+      <_content-download-export-macro-database/>
+    </sequential>
+  </macrodef>
+</project>

@@ -18,8 +18,8 @@
 package com.ail.insurance.subrogation;
 
 import javax.ejb.CreateException;
-import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.Core;
@@ -28,7 +28,8 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Configurable
-public class SubrogationBean extends EJBComponent implements SessionBean {
+@Stateless
+public class SubrogationBean extends EJBComponent implements Subrogation {
     private static final long serialVersionUID = 6506879017396687519L;
     private VersionEffectiveDate versionEffectiveDate=null;
 	private Core core=null;

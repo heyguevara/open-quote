@@ -17,8 +17,7 @@
 
 package com.ail.core.configure.server;
 
-import javax.ejb.EJBException;
-import javax.ejb.EJBLocalObject;
+import javax.ejb.Local;
 
 import org.w3c.dom.Element;
 
@@ -34,11 +33,9 @@ import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
 import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
 import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 
-public interface ServerLocal extends EJBLocalObject {
-    /** @link dependency */
-    /*# ServerBean lnkServerBean; */
-
-    VersionEffectiveDate getVersionEffectiveDate() throws EJBException;
+@Local
+public interface ServerLocal {
+    VersionEffectiveDate getVersionEffectiveDate();
 
     void setConfiguration(Configuration config);
 
@@ -48,31 +45,31 @@ public interface ServerLocal extends EJBLocalObject {
 
     void resetConfiguration();
 
-    void resetCoreConfiguration() throws EJBException;
+    void resetCoreConfiguration();
 
-    void resetNamedConfiguration(String name) throws EJBException;
+    void resetNamedConfiguration(String name);
 
-    void clearConfigurationCache() throws EJBException;
+    void clearConfigurationCache();
 
-    String invokeServiceXML(String xml) throws EJBException;
+    String invokeServiceXML(String xml);
 
-    Element[] invokeServiceSoap(Element[] xml) throws EJBException;
+    Element[] invokeServiceSoap(Element[] xml);
 
-    GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws EJBException;
+    GetNamespacesCommand getNamespaces(GetNamespacesCommand arg);
 
-    GetConfigurationCommand getConfiguration(GetConfigurationCommand arg) throws EJBException;
+    GetConfigurationCommand getConfiguration(GetConfigurationCommand arg);
 
-    SetConfigurationCommand setConfiguration(SetConfigurationCommand arg) throws EJBException;
+    SetConfigurationCommand setConfiguration(SetConfigurationCommand arg);
 
-    GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg) throws EJBException;
+    GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg);
 
-    SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg) throws EJBException;
+    SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg);
 
-    GetClassListCommand getClassList(GetClassListCommand arg) throws EJBException;
+    GetClassListCommand getClassList(GetClassListCommand arg);
 
-    DeployCarCommand deployCar(DeployCarCommand arg) throws EJBException;
+    DeployCarCommand deployCar(DeployCarCommand arg);
     
-    PackageCarCommand packageCar(PackageCarCommand arg) throws EJBException;
+    PackageCarCommand packageCar(PackageCarCommand arg);
 
-    CatalogCarCommand catalogCar(CatalogCarCommand arg) throws EJBException;
+    CatalogCarCommand catalogCar(CatalogCarCommand arg);
 }

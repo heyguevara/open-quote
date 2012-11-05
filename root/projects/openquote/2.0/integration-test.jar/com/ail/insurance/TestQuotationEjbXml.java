@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import java.rmi.RemoteException;
 
 import javax.ejb.CreateException;
+import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -35,11 +36,11 @@ import org.junit.Test;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.XMLString;
 import com.ail.insurance.quotation.Quotation;
-import com.ail.insurance.quotation.QuotationHome;
 
 public class TestQuotationEjbXml extends CoreUserBaseCase {
     private static final long serialVersionUID = 1L;
-
+    @EJB Quotation quotationBean;
+    
     /**
      * Sets up the fixture (run before every test).
      * Get an instance of Core, and delete the testnamespace from the config table.
@@ -47,15 +48,6 @@ public class TestQuotationEjbXml extends CoreUserBaseCase {
     @Before
     public void setUp() {
         resetConfigurations();
-    }
-
-    private Quotation getBean() throws NamingException, RemoteException, CreateException {
-        setupSystemProperties();
-        Context context=new InitialContext();
-        QuotationHome home=(QuotationHome)context.lookup("Quotation");
-        Quotation bean=(Quotation)PortableRemoteObject.narrow(home.create(), Quotation.class);
-
-        return bean;
     }
 
     @Test
@@ -75,7 +67,7 @@ public class TestQuotationEjbXml extends CoreUserBaseCase {
 
         arg=arg.replaceAll("%EFFECTIVEDATE%", Long.toString(System.currentTimeMillis()));
         
-        String ret=getBean().invokeServiceXML(arg);
+        String ret=quotationBean.invokeServiceXML(arg);
 
         assertNotNull(ret);
 

@@ -37,24 +37,10 @@
         <ejb>subrogation-ejb.jar</ejb>
     </module>
 
-    <module>
+    <!--module>
         <web>
             <web-uri>configure.war</web-uri>
             <context-root>configure</context-root>
-        </web>
-    </module>
-
-    <module>
-        <web>
-            <web-uri>content-browser.war</web-uri>
-            <context-root>content-browser</context-root>
-        </web>
-    </module>
-
-    <module>
-        <web>
-            <web-uri>news-reader.war</web-uri>
-            <context-root>news-reader</context-root>
         </web>
     </module>
 
@@ -91,5 +77,5 @@
             <web-uri>irishbrokerpi.war</web-uri>
             <context-root>irishbrokerpi</context-root>
         </web>
-    </module>
+    </module-->
 </application>
