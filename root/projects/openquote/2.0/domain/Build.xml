@@ -18,16 +18,16 @@
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
 
-    <!-- copy the domain into <jboss>/server/default -->
-    <copy todir="${deploy.dir}">
-      <fileset dir="./jboss" includes="**" excludes="deploy/ail-*-ds.xml" />
+    <install-liferay-macro version="${liferay.version}" />
+
+    <!-- copy comain files without variable expansion -->
+    <copy todir="${liferay.dir}">
+      <fileset dir="liferay" includes="data" />
     </copy>
     
-    <!-- remove this before commit -->
-    <delete dir="${deploy.dir}/deploy/jboss-portal.sar/portal-cms.sar"/>
-
-    <copy todir="${deploy.dir}">
-      <fileset dir="./jboss" includes="deploy/ail-*-ds.xml" />
+    <!-- copy domain files with variables expanded -->    
+    <copy todir="${liferay.dir}">
+      <fileset dir="liferay" excludes="data" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />
@@ -37,9 +37,7 @@
       </filterset>
     </copy>
 
-	<condition property="mysql-running">
-		<socket server="localhost" port="3306"/>
-    </condition>
+    <set-mysql-running-property-macro/>
     
 	<antcall target="setup-db-if"/>
 	<antcall target="setup-db-unless"/>
@@ -49,9 +47,7 @@
     <!-- delete the deployed directory -->
     <delete dir="${deploy.dir}" />
 
-    <condition property="mysql-running">
-      <socket server="localhost" port="3306"/>
-    </condition>
+    <set-mysql-running-property-macro/>
     
     <antcall target="teardown-db-if"/>
     <antcall target="teardown-db-unless"/>
@@ -65,14 +61,13 @@
       </classpath>
       
   	  -- Make sure the database and users are there before we try to delete them!
-      create database if not exists ${dbname};
+      create database if not exists ${dbname} character set utf8;
       grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
       grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
   	  
       -- Now do the actual tidy up 
   	  drop database if exists ${dbname};
       revoke all privileges, grant option from '${dbusername}'@'localhost';
-  	  drop user '${dbusername}'@'localhost';
   	</sql>
   </target>  
   
@@ -83,15 +78,19 @@
 
   <target name="setup-db-if" if="mysql-running">
     <!-- create the databases we'll need for unit testing etc. -->
-    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" >
+    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" src="${mysql.setup.file}">
       <classpath>
         <fileset dir="${buildlib.dir}" includes="*.jar"/>
       </classpath>
-      
-      create database if not exists ${dbname};
-      grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
-      grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
-    
+    </sql>
+  </target>
+
+  <target name="setup-db-unless" unless="mysql-running">
+    <!-- drop all the databases -->
+    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
+  </target>  
+</project>
+<!--
       create table if not exists ${dbname}.core_Type(
           systemId int auto_increment primary key,
           versionId int
@@ -125,36 +124,36 @@
           rank int
       );
             
-      create table if not exists ${dbname}.party (
+      create table if not exists ${dbname}.commercial_party (
           systemId int primary key,
           addressId int,
           parentSystemId int,
           rank int
       );
       
-      create table if not exists ${dbname}.person (
+      create table if not exists ${dbname}.commercial_person (
           systemId int primary key,
           firstname varchar(80),
           surname varchar(80)
       );
       
-      create table if not exists ${dbname}.organisation (
+      create table if not exists ${dbname}.commercial_organisation (
           systemId int primary key,
           name varchar(80)
       );
       
-      create table if not exists ${dbname}.company (
+      create table if not exists ${dbname}.commercial_company (
           systemId int primary key,
           companyNumber varchar(20)
       );
       
-      create table if not exists ${dbname}.addressbook (
+      create table if not exists ${dbname}.commercial_addressbook (
           systemId int primary key,
           mePartyType char(3),
           mePartyId int
       );
       
-      create table if not exists ${dbname}.address (
+      create table if not exists ${dbname}.commercial_address (
           systemId int primary key,
           line1 varchar(20),
           line2 varchar(20),
@@ -163,10 +162,6 @@
           line5 varchar(20),
           postcode varchar(10)
       );
-      
-      
-      
-      
       
       create table if not exists ${dbname}.core_Type (
           systemId int auto_increment primary key,
@@ -317,11 +312,4 @@
           wording_document longblob,
           certificate_document longblob
       );
-    </sql>
-  </target>
-
-  <target name="setup-db-unless" unless="mysql-running">
-    <!-- drop all the databases -->
-    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
-  </target>  
-</project>
+-->
