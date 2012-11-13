@@ -14,6 +14,7 @@
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
     <unzip overwrite="yes" dest="${target.dir}" src="${repo.dir}/liferay/liferay-portal/${version}/liferay-portal-${version}.zip" />
+    <unzip overwrite="yes" dest="${liferay.dir}" src="${content.setup.file}"/>
     <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${jboss.dir}/bin">
       <arg line="-c 'chmod 755 *.sh'" />
     </exec>
@@ -88,7 +89,7 @@
     <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.bat" os="Windows 2000,Windows XP,Windows 7">
       <arg line="--connect :shutdown"/>
     </exec>
-    <waitfor-liferay-to-stop-macro/>
+    <wait-for-liferay-to-stop-macro/>
   </target>
 
   <target name="_stop-liferay-if-liferay-running=false" unless="liferay-running">
@@ -200,9 +201,9 @@
         <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} --opt ${dbname} >> ${mysql.setup.file}"' />
       </exec>
 
-      <copy todir="domain/liferay">
+      <zip file="${content.setup.file}">
         <fileset dir="${liferay.dir}" includes="data/document_library/**, data/lucene/**, data/jackrabbit/**"/>
-      </copy>
+      </zip>
 
     </sequential>
   </macrodef>

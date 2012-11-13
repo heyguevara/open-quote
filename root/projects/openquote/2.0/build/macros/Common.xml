@@ -29,7 +29,7 @@
   <!-- password to use when creating DB's etc. Bamboo overrides this on the build server -->
   <property name="mysql.root.password" value="" />
   <property name="mysql.setup.file" value="${project.dir}/domain/OpenQuote-MySql-Setup.sql" />
-  
+  <property name="content.setup.file" value="${project.dir}/domain/OpenQuote-Content-Setup.zip" />
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />
