@@ -14,7 +14,7 @@
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
     <unzip overwrite="yes" dest="${target.dir}" src="${repo.dir}/liferay/liferay-portal/${version}/liferay-portal-${version}.zip" />
-    <unzip overwrite="yes" dest="${liferay.dir}" src="${content.setup.file}"/>
+    <unzip overwrite="yes" dest="${liferay.dir}" src="${content.setup.file}" />
     <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${jboss.dir}/bin">
       <arg line="-c 'chmod 755 *.sh'" />
     </exec>
@@ -70,6 +70,7 @@
           <http url="http://localhost:8080" />
         </not>
       </waitfor>
+      <sleep seconds="5"/>
     </sequential>
   </macrodef>
 
@@ -84,12 +85,12 @@
 
   <target name="_stop-liferay-if-liferay-running=true" if="liferay-running">
     <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.sh" os="Linux,Mac OS X,Solaris,Sun OS">
-      <arg line="--connect :shutdown"/>
+      <arg line="--connect :shutdown" />
     </exec>
     <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.bat" os="Windows 2000,Windows XP,Windows 7">
-      <arg line="--connect :shutdown"/>
+      <arg line="--connect :shutdown" />
     </exec>
-    <wait-for-liferay-to-stop-macro/>
+    <wait-for-liferay-to-stop-macro />
   </target>
 
   <target name="_stop-liferay-if-liferay-running=false" unless="liferay-running">
@@ -107,7 +108,7 @@
 
   <macrodef name="kick-liferay-macro">
     <sequential>
-      <touch file="${deploy.dir}/${ear.name}.dodeploy"/>
+      <touch file="${deploy.dir}/${ear.name}.dodeploy" />
     </sequential>
   </macrodef>
 
@@ -176,6 +177,8 @@
 
   <macrodef name="_content-download-export-macro-database">
     <sequential>
+      <stop-liferay-macro/>
+      
       <echo file="${mysql.setup.file}">
       -- OpenQuote Community database setup script.
       --
@@ -202,7 +205,7 @@
       </exec>
 
       <zip file="${content.setup.file}">
-        <fileset dir="${liferay.dir}" includes="data/document_library/**, data/lucene/**, data/jackrabbit/**"/>
+        <fileset dir="${liferay.dir}" includes="data/document_library/**, data/lucene/**, data/jackrabbit/**" />
       </zip>
 
     </sequential>
@@ -211,7 +214,7 @@
   <!-- Macro to export content from the liferay repository into the source tree. -->
   <macrodef name="content-download-export-macro">
     <sequential>
-      <_content-download-export-macro-database/>
+      <_content-download-export-macro-database />
     </sequential>
   </macrodef>
 </project>

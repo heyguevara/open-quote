@@ -42,16 +42,16 @@
             <web-uri>configure.war</web-uri>
             <context-root>configure</context-root>
         </web>
-    </module>
+    </module-->
 
-    <module>
+    <!--module>
         <web>
             <web-uri>quotation.war</web-uri>
             <context-root>quotation</context-root>
         </web>
-    </module>
+    </module-->
 
-    <module>
+    <!--module>
         <web>
             <web-uri>product-manager.war</web-uri>
             <context-root>product-manager</context-root>

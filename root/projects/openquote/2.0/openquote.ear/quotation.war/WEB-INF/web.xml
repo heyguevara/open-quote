@@ -1,17 +1,15 @@
 <?xml version="1.0"?>
-<!DOCTYPE web-app PUBLIC
-   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-   "http://java.sun.com/dtd/web-app_2_3.dtd">
+
 <web-app>
-   <context-param>
+   <!--context-param>
       <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
       <param-value>true</param-value>
-   </context-param>
+   </context-param!-->
    
-   <listener>
-      <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-   </listener>
-
+<!--    <listener> -->
+<!--       <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class> -->
+<!--    </listener> -->
+  
    <servlet>
       <servlet-name>DisplayQuotationServlet</servlet-name>
       <description>Servlet which streams quotation documents to the client</description>
@@ -23,7 +21,7 @@
       <description>Servlet which streams wording documents to the client</description>
       <servlet-class>com.ail.insurance.pageflow.servlet.DisplayWordingServlet</servlet-class>
    </servlet>
-   
+    
    <servlet>
       <servlet-name>DisplayInvoiceServlet</servlet-name>
       <description>Servlet which streams invoice documents to the client</description>
