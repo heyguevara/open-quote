@@ -3,17 +3,18 @@
  Macro file defining a collection of ant macros concerned with managing Liferay
 -->
 
-<project default="dummy" name="BuildLiferayMacros.xml">
+<project default="dummy" name="BuildLiferayMacros.xml" xmlns:ivy="antlib:org.apache.ivy.ant">
 
   <target name="dummy" />
 
   <target name="_install.base" unless="base">
     <!-- Get the Liferay zip into the cache -->
-    <repo-get-macro repo="75.101.150.249/repo" group="liferay" artifact="liferay-portal" version="${version}" type="zip" />
-
+    <fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" />
+    <property name="liferay.zip" refid="liferay.zip.pathid"/>
+    
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
-    <unzip overwrite="yes" dest="${target.dir}" src="${repo.dir}/liferay/liferay-portal/${version}/liferay-portal-${version}.zip" />
+    <unzip overwrite="yes" dest="${target.dir}" src="${liferay.zip}" />
     <unzip overwrite="yes" dest="${liferay.dir}" src="${content.setup.file}" />
     <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${jboss.dir}/bin">
       <arg line="-c 'chmod 755 *.sh'" />
@@ -52,7 +53,7 @@
   </target>
 
   <target name="_start-liferay-if-liferay-running=true" if="liferay-running">
-    <echo level="info" message="Liferay can't be started, it is already running!" />
+    <echo level="info" message="Liferay running." />
   </target>
 
   <macrodef name="wait-for-liferay-to-start-macro">
@@ -94,7 +95,7 @@
   </target>
 
   <target name="_stop-liferay-if-liferay-running=false" unless="liferay-running">
-    <echo level="info" message="Liferay can't be stopped - it isn't running!" />
+    <echo level="info" message="Liferay stopped." />
   </target>
 
   <!-- Macro to stop liferay if it is running. -->
@@ -108,7 +109,7 @@
 
   <macrodef name="kick-liferay-macro">
     <sequential>
-      <touch file="${deploy.dir}/${ear.name}.dodeploy" />
+      <!--touch file="${deploy.dir}/${ear.name}.dodeploy" /-->
     </sequential>
   </macrodef>
 

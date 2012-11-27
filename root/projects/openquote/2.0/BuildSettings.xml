@@ -4,8 +4,6 @@
   imports settings that are common to all projects. 
 -->
 <project name="BuildSettings" default="dummy">
-  <property name="ear.name" value="openquote.ear" />
-
   <!-- Release version numbers (BTW the build number comes from bamboo.) -->
   <property name="major.version" value="2" />
   <property name="minor.version" value="0" />

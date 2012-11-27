@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the core jar project
+-->
+
+<project default="build" name="openquote:modules/com/ail/core.jar" >
+  <import file="../../../../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-jar-macro />
+  </target>
+
+  <target name="_build">
+    <compile-exploded-jar-macro>
+      <javac-classpath>
+        <fileset dir="${module.dir}/com/ail/core/main"  includes="*.jar" />
+        <fileset dir="${jboss.dir}">
+          <include name="bin/client/jboss-client.jar" />
+          <include name="modules/com/liferay/portal/main/portlet.jar"/>
+          <include name="modules/javax/xml/rpc/api/main/jboss-jaxrpc-api_1.1_spec-1.0.0.Final.jar" />
+        </fileset>
+      </javac-classpath>
+    </compile-exploded-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+    <kick-liferay-macro />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <update-module-dependencies-macro />
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>

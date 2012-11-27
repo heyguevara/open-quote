@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file defines the default (factory) configuration for the Core. This configuration is used by the core's resetConfiguration() 
+    method. -->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <name>Default Core Configuration</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>1.4</version>
+
+    <!-- Next (unique) Number to use in unique number generation for the various -->
+    <!-- types of number. The GenerateUniqueNumber service updates this parameter -->
+    <!-- as numbers are used. These values can be overridden by product. -->
+    <parameter name="InvoiceNumberNextNumber">1000</parameter>
+    <parameter name="PolicyNumberNextNumber">1000</parameter>
+    <parameter name="QuoteNumberNextNumber">1000</parameter>
+
+    <!-- To avoid hitting the database every time a unique number is asked for, -->
+    <!-- the GenerateUniqueNumber service takes a chunk of numbers at a time, -->
+    <!-- keeps track of the ones it uses, then comes back for more when it runs -->
+    <!-- out. *BlockSize controls the number that are allocated on each call. -->
+    <!-- These values can be overridden by product. -->
+    <parameter name="InvoiceNumberBlockSize">100</parameter>
+    <parameter name="PolicyNumberBlockSize">100</parameter>
+    <parameter name="QuoteNumberBlockSize">100</parameter>
+
+    <types>
+
+        <service name='AcceptanceServicesEJB' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
+            <parameter name='JndiName'>Acceptance</parameter>
+        </service>
+
+        <service name="GenerateQuotationDocumentService" key="com.ail.core.command.EJBAccessor">
+            <parameter name="JndiName">Quotation</parameter>
+        </service>
+
+        <service name="OnRiskEJB" key="com.ail.core.command.EJBAccessor">
+            <parameter name="JndiName">OnRisk</parameter>
+        </service>
+
+        <service name='PersistenceService' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
+            <parameter name='JndiName'>PersistenceServer</parameter>
+        </service>
+
+        <service name="JMSQueueService" key="com.ail.core.command.JMSAccessor">
+            <parameter name="Factory">ConnectionFactory</parameter>
+            <parameter name="Queue">queue/AilCommandQueue</parameter>
+        </service>
+
+        <!-- Map all of the logger commands to the stdio logger -->
+        <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
+        </command>
+        <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+        <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+        </command>
+
+        <!-- Map all of the persistence commands to the persistence server -->
+        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
+            <parameter name="Service">PersistenceService</parameter>
+        </command>
+
+        <command name='FetchQuoteDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.FetchDocumentCommandImpl'>
+            <parameter name='Service'>com.ail.insurance.quotation.fetchdocument.FetchDocumentService</parameter>
+        </command>
+        
+        <command name='GenerateQuotationDocument' builder='ClassBuilder' key='com.ail.insurance.quotation.GenerateDocumentCommandImpl'>
+            <parameter name='Service'>GenerateQuotationDocumentService</parameter>
+        </command>
+        <command name='GenerateWordingDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.GenerateWordingCommandImpl'>
+            <parameter name='Service'>OnRiskEJB</parameter>
+        </command>
+        <command name='GenerateCertificateDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.GenerateCertificateCommandImpl'>
+            <parameter name='Service'>OnRiskEJB</parameter>
+        </command>
+        <command name='GenerateInvoiceDocument' builder='ClassBuilder' key='com.ail.insurance.onrisk.GenerateInvoiceCommandImpl'>
+            <parameter name='Service'>OnRiskEJB</parameter>
+        </command>
+
+        <command name="AcceptQuotation" builder="ClassBuilder" key="com.ail.insurance.acceptance.AcceptQuotationCommandImpl">
+            <parameter name="Service">AcceptanceServicesEJB</parameter>
+        </command>
+
+        <!-- TODO Remove for 2.0 -->
+        <command name="RenderBrokerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.insurance.pageflow.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.insurance.pageflow.render.html.BrokerQuotationSummaryService</parameter>
+        </command>
+
+        <command name="RenderBrokerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.insurance.pageflow.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
+        </command>
+
+        <command name="RenderProposerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.insurance.pageflow.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.insurance.pageflow.render.html.ProposerQuotationSummaryService</parameter>
+        </command>
+
+        <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder"
+            key="com.ail.insurance.pageflow.render.RenderCommandImpl">
+            <parameter name="Service">com.ail.core.NullService</parameter>
+        </command>
+    </types>
+</configuration>

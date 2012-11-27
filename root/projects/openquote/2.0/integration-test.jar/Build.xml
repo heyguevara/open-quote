@@ -13,18 +13,17 @@
   <target name="_build">
     <compile-exploded-jar-macro>
       <javac-classpath>
-        <dirset dir="${ear.dir}" includes="*.jar" />
-        <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <fileset dir="${ear.dir}/lib" includes="*.jar" />
-        <dirset dir="${ear.dir}/lib" includes="*.jar" />
-        <fileset dir="${java.home}/lib" includes="plugin.jar" />
-        <fileset dir="${jboss.dir}">
-          <include name="bin/client/jboss-client.jar" />
-          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
-          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
-          <include name="server/default/lib/saxon*.jar" />
-          <include name="lib/endorsed/xalan.jar" />
-        </fileset>
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" /> 
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" /> 
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
+        <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
+        <fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
       </javac-classpath>
     </compile-exploded-jar-macro>
   </target>
@@ -35,13 +34,7 @@
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <get-libs-macro todir="${test.dir}/lib">
-      <libs-list>
-        <get-lib-macro repo="openquotecommunity.org/repo" group="commons-logging" artifact="commons-logging" version="1.1-dev" type="jar"/>
-        <get-lib-macro repo="repo1.maven.org/maven2" group="junit" artifact="junit" version="4.10" type="jar" />
-        <get-lib-macro repo="repo1.maven.org/maven2" group="org/mockito" artifact="mockito-all" version="1.8.5" type="jar" />
-      </libs-list>
-    </get-libs-macro>
+    <update-dependencies-macro todir="${test.dir}/lib" />
   </target>
 
   <target name="teardown" description="undo whatever setup did">

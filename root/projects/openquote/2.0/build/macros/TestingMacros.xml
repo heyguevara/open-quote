@@ -125,8 +125,6 @@
         <classpath>
           <fileset dir="${test.dir}" includes="jar.jar" />
           <fileset dir="${test.dir}/lib" includes="*.jar" />
-          <dirset dir="${ear.dir}" includes="*.jar" />
-          <fileset dir="${ear.dir}/lib" includes="*.jar" />
           <fileset dir="${jboss.dir}">
             <include name="client/jbossall-client.jar" />
             <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />

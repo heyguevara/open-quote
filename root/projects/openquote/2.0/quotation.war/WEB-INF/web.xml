@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<web-app>
+   <!--context-param>
+      <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+      <param-value>true</param-value>
+   </context-param!-->
+   
+<!--    <listener> -->
+<!--       <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class> -->
+<!--    </listener> -->
+  
+   <servlet>
+      <servlet-name>DisplayQuotationServlet</servlet-name>
+      <description>Servlet which streams quotation documents to the client</description>
+      <servlet-class>com.ail.insurance.pageflow.servlet.DisplayQuotationServlet</servlet-class>
+   </servlet>
+   
+   <servlet>
+      <servlet-name>DisplayWordingServlet</servlet-name>
+      <description>Servlet which streams wording documents to the client</description>
+      <servlet-class>com.ail.insurance.pageflow.servlet.DisplayWordingServlet</servlet-class>
+   </servlet>
+    
+   <servlet>
+      <servlet-name>DisplayInvoiceServlet</servlet-name>
+      <description>Servlet which streams invoice documents to the client</description>
+      <servlet-class>com.ail.insurance.pageflow.servlet.DisplayInvoiceServlet</servlet-class>
+   </servlet>
+   
+   <servlet>
+      <servlet-name>DisplayCertificateServlet</servlet-name>
+      <description>Servlet which streams certificate documents to the client</description>
+      <servlet-class>com.ail.insurance.pageflow.servlet.DisplayCertificateServlet</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+      <servlet-name>DisplayQuotationServlet</servlet-name>
+      <url-pattern>/DisplayQuotationServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>DisplayCertificateServlet</servlet-name>
+      <url-pattern>/DisplayCertificateServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>DisplayInvoiceServlet</servlet-name>
+      <url-pattern>/DisplayInvoiceServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>DisplayWordingServlet</servlet-name>
+      <url-pattern>/DisplayWordingServlet</url-pattern>
+   </servlet-mapping>
+</web-app>

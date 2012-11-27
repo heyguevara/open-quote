@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the subrogation EJB jar
+-->
+
+<project default="build" name="openquote:subrogation-ejb.jar">
+  <import file="${basedir}/../BuildSettings.xml"/>
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-ejb-jar-macro/>
+  </target>
+  
+  <target name="_build">
+    <compile-exploded-ejb-jar-macro>
+      <javac-classpath>
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
+        <fileset dir="${module.dir}/javax/jms/api/main" includes="jboss-jms-api_1.1_spec-1.0.0.Final.jar" />
+      </javac-classpath>
+    </compile-exploded-ejb-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build"/>
+    <kick-liferay-macro/>
+  </target>
+  
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>

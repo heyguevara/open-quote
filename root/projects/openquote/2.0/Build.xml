@@ -11,7 +11,23 @@
   </target>
 
   <target name="_build">
-    <subant-macro target="_build" includes="openquote.ear/Build.xml" />
+    <ant dir="./modules/com/ail/core.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./modules/com/ail/commercial.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./modules/com/ail/insurance.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./acceptance-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./configure.war" antfile="Build.xml" target="_build" />
+    <ant dir="./quotation.war" antfile="Build.xml" target="_build" />
+    <ant dir="./product-manager.war" antfile="Build.xml" target="_build" />
+    <ant dir="./openquote-theme.war" antfile="Build.xml" target="_build" />
+    <ant dir="./lifeplus.war" antfile="Build.xml" target="_build" />
+    <ant dir="./irishbrokerpi.war" antfile="Build.xml" target="_build" />
     <subant-macro target="_build" includes="*test.jar/Build.xml" />
   </target>
 
@@ -90,14 +106,12 @@
     <!--run-all-tests-macro-->
     <run-unit-tests-macro>
       <junit-classpath>
-        <dirset dir="${ear.dir}" includes="*.jar" />
-        <dirset dir="${ear.dir}/lib" includes="*.jar" />
-        <fileset dir="${ear.dir}/lib" includes="*.jar" excludes="ant-1.6.5.jar" />
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
-        <fileset dir="${jboss.dir}/modules/com/liferay/portal/main" includes="portlet.jar, mysql.jar" />
-        <fileset dir="${jboss.dir}/modules/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
-        <fileset dir="${jboss.dir}/modules/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
       </junit-classpath>
     </run-unit-tests-macro>
 

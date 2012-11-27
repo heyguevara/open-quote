@@ -44,13 +44,13 @@
   </target>
 
   <target name="teardown" description="undo whatever setup did">
-    <!-- delete the deployed directory -->
-    <delete dir="${deploy.dir}" />
-
     <set-mysql-running-property-macro/>
     
     <antcall target="teardown-db-if"/>
     <antcall target="teardown-db-unless"/>
+
+    <!-- delete the deployed directory -->
+    <delete dir="${liferay.dir}" />
   </target>
 
   <target name="teardown-db-if" if="mysql-running">

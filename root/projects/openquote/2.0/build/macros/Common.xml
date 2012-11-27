@@ -10,10 +10,7 @@
   <property name="liferay.dir" value="${target.dir}/liferay-portal-${liferay.version}" />
   <property name="jboss.dir" value="${liferay.dir}/jboss-${jboss.version}" />
   <property name="deploy.dir" value="${jboss.dir}/standalone/deployments" />
-  <property name="ear.dir" value="${deploy.dir}/${ear.name}" />
-  <property name="ear.lib" value="${ear.dir}/lib" />
   <property name="test.dir" value="${target.dir}/test" />
-  <property name="repo.dir" value="${project.dir}/build/repo" />
   <property name="buildlib.dir" value="${project.dir}/build/lib" />
   <property name="domain.dir" value="${basedir}/domain/jboss" />
   <property name="tmp" value="${build.dir}/tmp" />
@@ -30,11 +27,39 @@
   <property name="mysql.root.password" value="" />
   <property name="mysql.setup.file" value="${project.dir}/domain/OpenQuote-MySql-Setup.sql" />
   <property name="content.setup.file" value="${project.dir}/domain/OpenQuote-Content-Setup.zip" />
+  <property name="module.dir" value="${jboss.dir}/modules/"/>
+  <!-- configure ivy to put dependencies in the core module by default -->
+
+  <filterset id="copy.filterset" >
+    <filter token="dbname" value="${dbname}"/>
+    <filter token="dbusername" value="${dbusername}"/>
+    <filter token="dbpassword" value="${dbpassword}"/>
+    <filter token="major.version" value="${major.version}"/>
+    <filter token="minor.version" value="${minor.version}"/>
+  </filterset>
+
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />
 
-  <!-- Convert the named property from a windows style path to unix style -->
+  <!-- Convert a package name into a path name -->
+  <!-- e.g. "my.package.name" -> "my/package/name" -->
+  <macrodef name="pathify-package-name-macro">
+    <attribute name="property" />
+    <attribute name="value"  />
+    <sequential>
+      <script language="beanshell">
+        <classpath>
+          <fileset dir="${buildlib.dir}" includes="*.jar" />
+        </classpath>
+        
+        project.setProperty("@{property}", "@{value}".replaceAll("[.]", "/"));
+        
+      </script>
+    </sequential>
+  </macrodef>
+
+  <!-- Convert the named property from a windows style path to a unix style -->
   <!-- e.g. "c:\my\folder\file.txt" -> "c:/my/folder/file.txt" -->
   <macrodef name="unixify-path-macro">
     <attribute name="property" />
@@ -95,7 +120,7 @@
   <macrodef name="subant-macro">
     <attribute name="target" />
     <attribute name="excludes" default="classes/**" />
-    <attribute name="includes" default="*/Build.xml" />
+    <attribute name="includes" default="*/**/Build.xml" />
     <sequential>
       <subant target="@{target}" failonerror="yes">
         <fileset dir="." includes="@{includes}" excludes="@{excludes}" />
@@ -128,12 +153,8 @@
     <attribute name="provider" default="${java.naming.provider.url}" />
     <sequential>
 
-      <java fork="yes" classname="com.ail.core.configure.ConfigurationAntTasks">
+      <java fork="yes" classname="com.ail.core.configure.Main">
         <classpath>
-          <dirset dir="${ear.lib}" includes="core.jar" />
-          <fileset dir="${ear.lib}" includes="*.jar" />
-          <dirset dir="${ear.dir}" includes="*.jar" />
-          <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
           <fileset dir="${jboss.dir}" includes="lib/endorsed/xercesImpl.jar" />
           <fileset dir="${jboss.dir}" includes="client/jbossall-client.jar" />
         </classpath>
@@ -153,10 +174,6 @@
       <echo message="resetting configurations in database ${dbname}" />
 
       <path id="reset.classpath">
-        <dirset dir="${ear.dir}" includes="*.jar" />
-        <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
-        <fileset dir="${ear.lib}" includes="*.jar" />
-        <dirset dir="${ear.lib}" includes="*.jar" />
         <fileset dir="${test.dir}" includes="**/*.jar" />
         <fileset dir="${jboss.dir}">
           <include name="lib/endorsed/xercesImpl.jar" />
@@ -218,13 +235,6 @@
       <jar basedir="@{jar}" destfile="@{jar}.tmp" />
       <delete dir="@{jar}" />
       <move file="@{jar}.tmp" tofile="@{jar}" />
-    </sequential>
-  </macrodef>
-
-  <macrodef name="release-source-macro">
-    <sequential>
-      <mkdir dir="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}" />
-      <zip update="yes" basedir=".." destfile="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot-src.zip" includes="${ant.project.name}/**" excludes="${ant.project.name}/target/**, **/.svn/**" />
     </sequential>
   </macrodef>
 

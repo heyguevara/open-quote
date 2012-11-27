@@ -7,74 +7,60 @@
 
   <target name="dummy" />
 
-  <!-- Macro to figure out the deploy path from the ant project name. By convension ant J2EE     -->
-  <!-- projects have names like core:core.ear/something.war. This beanshell script creates a new -->
-  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."core.ear/something.war")    -->
+  <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE     -->
+  <!-- projects have names like core:something.war. This Beanshell script creates a new -->
+  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war")    -->
   <macrodef name="_set_output_dir_property_macro">
     <sequential>
       <script language="beanshell">
         <classpath>
           <fileset dir="${buildlib.dir}" includes="*.jar"/>
         </classpath>
-	      projectName=project.getName();
-	      deployUnit=projectName.replaceAll("^.*:","");
-          project.setProperty("generated.source.dir", project.getProperty("target.dir")+"/generated/"+deployUnit);
+	      projectName = project.getName();
+	      deployUnit = projectName.replaceAll("^.*:", "");
+          project.setProperty("generated.source.dir", project.getProperty("target.dir") + "/generated/" + deployUnit);
 	      project.setProperty("deploy.unit", deployUnit);
-		  if (projectName.contains(".war") || projectName.contains(".ear")) {
-	          deployDir=project.getProperty("deploy.dir");
-	          project.setProperty("output.dir", deployDir+"/"+deployUnit);
+		  if (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
+	          deployDir = project.getProperty("deploy.dir");
+              outputDir = deployDir + "/" + deployUnit;
+          }
+          else if (projectName.contains(":modules")) {
+              deploy.dir = project.getProperty("jboss.dir");
+              rootPath = deployUnit.replaceAll("/[^/]*$","");
+              name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
+              outputDir = deploy.dir + "/" + rootPath + "/" + name + "/main/" + name + ".jar";
           }
 	      else if (projectName.contains(":unit-test.jar")) {
-            project.setProperty("output.dir", project.getProperty("test.dir")+"/unit-test.jar");
+              outputDir=project.getProperty("test.dir") + "/unit-test.jar";
 	      }
 	      else if (projectName.contains(":integration-test.jar")) {
-	        project.setProperty("output.dir", project.getProperty("test.dir")+"/integration-test.jar");
+	          outputDir = project.getProperty("test.dir") + "/integration-test.jar";
 	      }
 	      else if (projectName.contains(":test.jar")) {
-	        project.setProperty("output.dir", project.getProperty("test.dir")+"/test.jar");
+	          outputDir = project.getProperty("test.dir") + "/test.jar";
 	      }
 	      else {
-            project.setProperty("output.dir", project.getProperty("target.dir")+"/"+deployUnit);
+              outputDir = project.getProperty("target.dir") + "/"+deployUnit;
 	      }
+          project.setProperty("output.dir", outputDir);
 	    </script>
     </sequential>
   </macrodef>
 
-  <macrodef name="compile-ear-descriptors-macro">
-    <attribute name="overlay" default="false" />
+  <macrodef name="_copy-resources-macro">
+    <attribute name="srcdir" />
+    <attribute name="destdir" />
     <sequential>
-      <_set_output_dir_property_macro />
-
-      <copy todir="${output.dir}/META-INF">
-        <filterset filtersfile="${copyfilter.file}" />
-        <fileset dir="META-INF" includes="**/*.properties, **/*.xml, **/*.MF" />
+      <!-- install text files (properties, xml, etc) with the filter turned on -->
+      <copy todir="@{destdir}">
+        <filterset refid="copy.filterset" />
+        <fileset dir="@{srcdir}" includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm" excludes="Build.xml, Ivy.xml" />
       </copy>
-    </sequential>
-  </macrodef>
 
-  <target name="_delete-ear-descriptors-overlay=false">
-    <_set_output_dir_property_macro />
-    <delete dir="${output.dir}/META-INF" failonerror="no" />
-  </target>
-
-  <!-- Deleting descriptors in overlay mode means only delete descriptors for which     -->
-  <!-- the tree contains the source. In effect we're overlaying this tree's descriptors -->
-  <!-- on those from another project.                                                   -->
-  <target name="_delete-ear-descriptors-overlay=true">
-    <_set_output_dir_property_macro />
-    <delete failonerror="no">
-      <fileset dir="${output.dir}/META-INF" includes="**/*.MF, **/*.xml" excludes="Build.xml">
-        <present targetdir="${basedir}/META-INF">
-          <mapper type="identity" />
-        </present>
-      </fileset>
-    </delete>
-  </target>
-
-  <macrodef name="delete-ear-descriptors-macro">
-    <attribute name="overlay" default="false" />
-    <sequential>
-      <antcall target="_delete-ear-descriptors-overlay=@{overlay}" />
+      <!-- copy binary files with the filter turned off -->
+      <copy todir="@{destdir}">
+        <fileset dir="@{srcdir}" includes="**/*.Processor, **/*.pdf, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls" />
+      </copy>
     </sequential>
   </macrodef>
 
@@ -101,16 +87,8 @@
         </classpath>
       </javac>
 
-      <!-- Install text files (properties, xml, etc) with the filter turned on -->
-      <copy todir="${output.dir}">
-        <filterset filtersfile="${copyfilter.file}" />
-        <fileset dir="." includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm" excludes="Build.xml" />
-      </copy>
+      <_copy-resources-macro srcdir="." destdir="${output.dir}" />
 
-      <!-- copy binary files with the filter turned off -->
-      <copy todir="${output.dir}">
-        <fileset dir="." includes="**/*.Processor, **/*.pdf, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls" />
-      </copy>
     </sequential>
   </macrodef>
 
@@ -135,16 +113,7 @@
         </classpath>
       </javac>
 
-      <!-- Install text files (properties, xml, etc) with the filter turned on -->
-      <copy todir="${output.dir}">
-        <filterset filtersfile="${copyfilter.file}" />
-        <fileset dir="." includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino" excludes="Build.xml" />
-      </copy>
-
-      <!-- copy binary files with the filter turned off -->
-      <copy todir="${output.dir}">
-        <fileset dir="." includes="**/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls" />
-      </copy>
+      <_copy-resources-macro srcdir="." destdir="${output.dir}" />
     </sequential>
   </macrodef>
 
@@ -159,11 +128,9 @@
       </classpath>
     </javac>
 
-    <copy todir="${output.dir}/WEB-INF/classes">
-      <filterset filtersfile="${copyfilter.file}" />
-      <fileset dir="./WEB-INF/src" excludes="Build.xml, **/*.gif, **/*.jpg, **/*.png, **/*.ico, **/*.java" />
-    </copy>
+    <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
   </target>
+
   <target name="_compile-exploded-war-macro-docompile=false" />
 
   <!-- Macro to compile a war project into an exploded war deployment folder -->
@@ -184,17 +151,8 @@
       <mkdir dir="${output.dir}/WEB-INF/classes" />
       <mkdir dir="${generated.source.dir}" />
 
-      <!-- copy text files (properties, xml, etc) with the filter turned on -->
-      <copy todir="${output.dir}">
-        <filterset filtersfile="${copyfilter.file}" />
-        <fileset dir="." excludes="WEB-INF/src/**, Build.xml, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.java, **/*.jar" />
-      </copy>
-
-      <!-- copy binary files with the filter turned off -->
-      <copy todir="${output.dir}">
-        <fileset dir="." includes="**/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.jar" excludes="WEB-INF/src/**" />
-      </copy>
-
+       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
+ 
       <!-- compile java code if there is any -->
       <if-macro condition="exists" property="docompile" arg1="${basedir}/WEB-INF/src" />
       <antcall target="_compile-exploded-war-macro-docompile=${docompile}" />
@@ -215,9 +173,7 @@
       <axis-java2wsdl location="http://this.value.is.replaced.by.jboss" serviceElementName="@{name}Service" servicePortName="@{name}Endpoint" output="${output.dir}/META-INF/wsdl/@{name}.wsdl" use="LITERAL" className="@{classname}" namespace="@{namespace}">
         <mapping namespace="urn:AIL" package="com.ail.core.configure.server" />
         <classpath>
-          <dirset dir="${ear.dir}" includes="*.jar" />
           <fileset dir="${jboss.dir}/client" includes="jbossall-client.jar" />
-          <fileset dir="${ear.dir}/lib" includes="*.jar" />
         </classpath>
       </axis-java2wsdl>
       <compile-exploded-war-macro />
@@ -231,7 +187,7 @@
   <target name="_delete-exploded-jar-overlay=true">
     <_set_output_dir_property_macro />
     <delete failonerror="no">
-      <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.png, **/*.ico, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml">
+      <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.png, **/*.ico, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml, Ivy.xml">
         <present targetdir="${basedir}">
           <mapper type="identity" />
         </present>
@@ -252,7 +208,7 @@
   <target name="_delete-exploded-war-overlay=true">
     <_set_output_dir_property_macro />
     <delete failonerror="no">
-      <fileset dir="${output.dir}" includes="**/*.MF, **/*.jsp, **/*.xml, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.jar" excludes="Build.xml, WEB-INF/src/*">
+      <fileset dir="${output.dir}" includes="**/*.MF, **/*.jsp, **/*.xml, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.jar" excludes="Build.xml, Ivy.xml, sshWEB-INF/src/*">
         <present targetdir="${basedir}">
           <mapper type="identity" />
         </present>
@@ -313,57 +269,6 @@
   <macrodef name="delete-exploded-wsr-macro">
     <sequential>
       <delete-exploded-jar-macro />
-    </sequential>
-  </macrodef>
-
-  <target name="_install-base-domain" unless="domainpresent">
-    <!-- Get the jboss zip into the cache -->
-    <repo-get-macro group="ail" artifact="${dar}" version="${version}-build.${build}" repo="75.101.150.249/repo" type="dar" />
-
-    <!-- Determin the whether we want to use the *-snapshot file, or the repository's latest.  -->
-    <!-- We'll use which ever is newer on the filesystem                                       -->
-    <condition property="dar.src" value="${repo.dir}/ail/${dar}/${version}/${dar}-${version}-snapshot.dar" else="${repo.dir}/ail/${dar}/${version}-build.${build}/${dar}-${version}-build.${build}.dar">
-      <or>
-        <not>
-          <available file="${repo.dir}/ail/${dar}/${version}-build.${build}/${dar}-${version}-build.${build}.dar" />
-        </not>
-        <uptodate srcfile="${repo.dir}/ail/${dar}/${version}-build.${build}/${dar}-${version}-build.${build}.dar" targetfile="${repo.dir}/ail/${dar}/${version}/${dar}-${version}-snapshot.dar" />
-      </or>
-    </condition>
-
-    <!-- Unpack the cached zip into the dev tree -->
-    <mkdir dir="${deploy.dir}" />
-    <unzip overwrite="yes" dest="${deploy.dir}" src="${dar.src}" />
-    
-    <!-- Only delete loader.properties when "clean" is defined. Default is ""  -->
-    <delete dir="${deploy.dir}" includes="**/${clean}loader${clean}.properties${clean}" />
-
-    <move todir="${deploy.dir}/deploy/${name}">
-      <fileset dir="${deploy.dir}/deploy/${dar}.ear" />
-    </move>
-  </target>
-
-  <!-- Macro to install jboss in a development tree.   -->
-  <!-- @param dar Name of the archive                  -->
-  <!-- @param version The version of jboss to install. -->
-  <!-- @param build The build version of the dar.      -->
-  <!-- @param clean Delete configs, default is yes.    -->
-  <!-- @param name Target folder name.                 -->
-  <macrodef name="install-base-domain-macro">
-    <attribute name="dar" />
-    <attribute name="version" />
-    <attribute name="build" />
-    <attribute name="clean" default="" />
-    <attribute name="name" default="${ant.project.name}.ear" />
-    <sequential>
-      <available file="${deploy.dir}/deploy/bsh-deployer.xml" property="domainpresent" />
-      <antcall target="_install-base-domain">
-        <param name="dar" value="@{dar}" />
-        <param name="version" value="@{version}" />
-        <param name="build" value="@{build}" />
-        <param name="name" value="@{name}" />
-        <param name="clean" value="@{name}" />
-      </antcall>
     </sequential>
   </macrodef>
 

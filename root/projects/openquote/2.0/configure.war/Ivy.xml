@@ -1,0 +1,9 @@
+<ivy-module version="2.0">
+    <info organisation="com.openquote" module="configure.war" />
+    <dependencies>
+        <dependency name="jakarta-standard-taglib" org="jakarta" rev="1.1.2"  />
+        <dependency name="commons-fileupload" org="commons-fileupload" rev="1.0" />
+        <dependency name="commons-el" org="commons-el" rev="1.0" />
+        <dependency name="myfaces-api" org="org.apache.myfaces.core" rev="2.1.9" />
+    </dependencies>
+</ivy-module>

@@ -1,0 +1,209 @@
+<deployments>
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+
+        <page>
+            <page-name>Content Manager</page-name>
+            <properties>
+                <property>
+                    <name>layout.id</name>
+                    <value>OneColumn</value>
+                </property>
+            </properties>
+
+            <window>
+                <window-name>AlfrescoClientWindow</window-name>
+                <instance-ref>AlfrescoClientInstance</instance-ref>
+                <region>center</region>
+                <height>0</height>
+            </window>
+
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Admin</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+        <page>
+            <page-name>Users and Groups</page-name>
+            <properties>
+                <property>
+                    <name>layout.id</name>
+                    <value>OneColumn</value>
+                </property>
+            </properties>
+            <window>
+                <window-name>IdentityAdminPortletWindow</window-name>
+                <instance-ref>IdentityAdminPortletInstance</instance-ref>
+                <region>center</region>
+                <height>0</height>
+                <properties>
+                    <property>
+                        <name>theme.renderSetId</name>
+                        <value>emptyRenderer</value>
+                    </property>
+                </properties>
+            </window>
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Admin</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+
+        <page>
+            <page-name>Pages</page-name>
+            <properties>
+                <property>
+                    <name>layout.id</name>
+                    <value>OneColumn</value>
+                </property>
+            </properties>
+
+            <window>
+                <window-name>AdminPortletWindow</window-name>
+                <instance-ref>AdminPortletInstance</instance-ref>
+                <region>center</region>
+                <height>0</height>
+                <properties>
+                    <property>
+                        <name>theme.renderSetId</name>
+                        <value>emptyRenderer</value>
+                    </property>
+                </properties>
+            </window>
+
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Admin</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+
+        <page>
+            <page-name>WSRP</page-name>
+            <properties>
+                <property>
+                    <name>layout.id</name>
+                    <value>OneColumn</value>
+                </property>
+            </properties>
+
+             <window>
+                <window-name>WSRPConfigurationPortletWindow</window-name>
+                <instance-ref>WSRPConfigurationPortletInstance</instance-ref>
+                <region>center</region>
+                <height>0</height>
+             </window>
+
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Admin</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+
+        <page>
+            <page-name>Sandpit</page-name>
+            <properties>
+                <property>
+                    <name>layout.id</name>
+                    <value>OneColumn</value>
+                </property>
+            </properties>
+            <window>
+                <window-name>QuotationDevelopmentWindow</window-name>
+                <instance-ref>QuotationDevelopmentPortletInstance
+                </instance-ref>
+                <region>center</region>
+                <height>0</height>
+            </window>
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Developer</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+
+    <deployment>
+        <if-exists>overwrite</if-exists>
+        <parent-ref>default</parent-ref>
+        <properties />
+
+        <page>
+            <page-name>Product Manager</page-name>
+            <properties>
+                <property>
+                    <name>layout.id</name>
+                    <value>TwoColumns</value>
+                </property>
+            </properties>
+
+            <window>
+                <window-name>AlfrescoClientWindow</window-name>
+                <instance-ref>AlfrescoClientInstance</instance-ref>
+                <region>right</region>
+                <height>0</height>
+            </window>
+
+            <window>
+                <window-name>ConfigureWindow</window-name>
+                <instance-ref>ConfigurePortletInstance</instance-ref>
+                <region>left</region>
+                <height>0</height>
+            </window>
+
+            <window>
+                <window-name>ProductCatalogPortletWindow</window-name>
+                <instance-ref>ProductCatalogPortletInstance
+                </instance-ref>
+                <region>left</region>
+                <height>0</height>
+            </window>
+
+            <security-constraint>
+                <policy-permission>
+                    <role-name>Developer</role-name>
+                    <action-name>viewrecursive</action-name>
+                    <action-name>personalizerecursive</action-name>
+                </policy-permission>
+            </security-constraint>
+        </page>
+    </deployment>
+</deployments>
