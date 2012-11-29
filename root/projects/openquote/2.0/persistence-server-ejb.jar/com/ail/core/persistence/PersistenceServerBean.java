@@ -23,10 +23,7 @@ import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.Configuration;
 import com.ail.core.persistence.CreateService.CreateArgument;
 import com.ail.core.persistence.DeleteService.DeleteArgument;
 import com.ail.core.persistence.LoadService.LoadArgument;
@@ -38,13 +35,11 @@ import com.ail.core.persistence.UpdateService.UpdateArgument;
 @Configurable
 @Stateless
 public class PersistenceServerBean extends EJBComponent implements PersistenceServerLocal {
-    private VersionEffectiveDate versionEffectiveDate = null;
-    private Core core = null;
+    private static final String NAMESPACE="com.ail.core.persistence.PersistenceServerBean";
     private SessionContext ctx = null;
 
     public PersistenceServerBean() {
-        versionEffectiveDate = new VersionEffectiveDate();
-        core = new Core(this);
+        initialise(NAMESPACE);
     }
 
     public void setSessionContext(SessionContext context) {
@@ -54,73 +49,9 @@ public class PersistenceServerBean extends EJBComponent implements PersistenceSe
     public SessionContext getSessionContext() {
         return ctx;
     }
-
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbRemove() {
-    }
-
+    
     public void ejbCreate() throws CreateException {
-        versionEffectiveDate = new VersionEffectiveDate();
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Expose services of this EJB via XML. This method unmarshals the XML argument string into
-     * an object, finds a method on the EJB to accept that object type as an argument
-     * and invokes it. The result returned from the method is marshalled back into XM and returned.<p>
-     * The methods are invoked on the context's local interface if possible (if one
-     * exists). If no local interface is found then the remote interface is used instead.
-     * Invoking methods via the local/remote interface means that the deployment settings
-     * for security and transacts will be honoured.
-     * @param xml XML argument to be passed to the service.
-     * @return XML returned from the service.
-     */
-    public String invokeServiceXML(String xml) {
-        return super.invokeServiceXML(xml, ctx);
-    }
-
-    public Core getCore() {
-        return core;
-    }
-
-    public VersionEffectiveDate getVersionEffectiveDate() {
-        return versionEffectiveDate;
-    }
-
-    public void setConfiguration(Configuration config) {
-        try {
-            super.setConfiguration(config);
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
-    public Configuration getConfiguration() {
-        try {
-            return super.getConfiguration();
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
-    public String getConfigurationNamespace() {
-        return super.getConfigurationNamespace();
-    }
-
-    public void resetConfiguration() {
-        try {
-            super.resetConfiguration();
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
+        initialise(NAMESPACE);
     }
 
     /**
@@ -130,7 +61,7 @@ public class PersistenceServerBean extends EJBComponent implements PersistenceSe
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
     public CreateArgument createCommand(CreateArgument arg) throws BaseServerException {
-        return invokeCommand(core, "Create", arg);
+        return invokeCommand("Create", arg);
     }
 
 	/**
@@ -140,7 +71,7 @@ public class PersistenceServerBean extends EJBComponent implements PersistenceSe
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
 	public UpdateArgument updateCommand(UpdateArgument arg) throws BaseServerException {
-		return invokeCommand(core, "Update", arg);
+		return invokeCommand("Update", arg);
 	}
 
 	/**
@@ -150,7 +81,7 @@ public class PersistenceServerBean extends EJBComponent implements PersistenceSe
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
 	public LoadArgument loadCommand(LoadArgument arg) throws BaseServerException {
-		return invokeCommand(core, "Load", arg);
+		return invokeCommand("Load", arg);
 	}
 
 	/**
@@ -160,7 +91,7 @@ public class PersistenceServerBean extends EJBComponent implements PersistenceSe
 	 * @throws BaseServiceException In response to exceptions thrown by the service.
 	 */
 	public QueryArgument queryCommand(QueryArgument arg) throws BaseServerException {
-		return invokeCommand(core, "Query", arg);
+		return invokeCommand("Query", arg);
 	}
 
     /**
@@ -170,7 +101,7 @@ public class PersistenceServerBean extends EJBComponent implements PersistenceSe
      * @throws BaseServiceException In response to exceptions thrown by the service.
      */
     public DeleteArgument deleteCommand(DeleteArgument arg) throws BaseServerException {
-        return invokeCommand(core, "Delete", arg);
+        return invokeCommand("Delete", arg);
     }
 }
 

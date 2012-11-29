@@ -19,8 +19,6 @@ package com.ail.core.configure.server;
 
 import javax.ejb.Remote;
 
-import org.w3c.dom.Element;
-
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
@@ -52,10 +50,6 @@ public interface Server {
     void clearConfigurationCache();
 
     void clearNamedConfigurationCache(String namespace);
-
-    String invokeServiceXML(String xml);
-
-    Element[] invokeServiceSoap(Element[] xml);
 
     GetNamespacesCommand getNamespaces(GetNamespacesCommand arg);
 

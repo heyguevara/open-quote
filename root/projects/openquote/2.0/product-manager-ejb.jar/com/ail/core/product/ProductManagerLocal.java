@@ -20,8 +20,6 @@ package com.ail.core.product;
 import javax.ejb.Local;
 
 import com.ail.core.BaseException;
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.Configuration;
 import com.ail.core.product.ListProductsService.ListProductsArgument;
 import com.ail.core.product.NewProductTypeService.NewProductTypeArgument;
 import com.ail.core.product.RegisterProductService.RegisterProductArgument;
@@ -32,18 +30,6 @@ import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Local
 public interface ProductManagerLocal {
-    String invokeServiceXML(String xml);
-
-    VersionEffectiveDate getVersionEffectiveDate();
-
-    void setConfiguration(Configuration config);
-
-    Configuration getConfiguration();
-
-    String getConfigurationNamespace();
-
-    void resetConfiguration();
-
     ListProductsArgument getListProducts(ListProductsArgument arg) throws BaseException;
 
     RegisterProductArgument registerProduct(RegisterProductArgument arg) throws BaseException;

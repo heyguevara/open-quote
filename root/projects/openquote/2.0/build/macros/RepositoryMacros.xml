@@ -35,6 +35,40 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="generate-module-descriptor-macro">
+    <attribute name="path" />
+	  <sequential>
+        <!-- generate a new module.xml descriptor -->
+	    <script language="beanshell">
+	      <classpath>
+	        <fileset dir="${buildlib.dir}" includes="*.jar" />
+	      </classpath>
+	        
+	      import java.io.*;
+	        
+	      modulePath = new File("@{path}").getCanonicalFile().getParent();
+	      moduleName = modulePath.replaceAll(".*modules/(.*)/main", "$1").replace('/', '.');
+	
+	      mos = new PrintStream(new FileOutputStream(modulePath+"/module.xml"));
+	        
+	      mos.println("&lt;module xmlns='urn:jboss:module:1.1' name='"+moduleName+"'&gt;");
+	      mos.println("  &lt;resources&gt;");
+	        
+	      files=new File(modulePath).listFiles();
+	      for(i=0 ; i!=files.length-1 ; i++) {
+	          if (!files[i].getName().matches(".*(-javadoc.jar|-sources.jar|module.xml)")) {
+	              mos.println("    &lt;resource-root path='"+files[i].getName()+"'/&gt;");
+	          }
+	      }
+	        
+	      mos.println("  &lt;/resources&gt;");
+	      mos.println("&lt;/module&gt;");
+	      mos.close();
+	        
+	    </script>
+	</sequential>
+  </macrodef>
+
   <macrodef name="update-module-dependencies-macro">
     <sequential>
       <_initialise_ivy_macro/>
@@ -45,33 +79,8 @@
       <!-- fetch all the dependencies to the module folder (in addition to whatever might already be there) -->
       <ivy:retrieve log="download-only"  pattern="${output.dir}/../[artifact]-[revision](-[classifier]).[ext]"/>
 
-      <!-- generate a new module.xml descriptor -->
-      <script language="beanshell">
-        <classpath>
-          <fileset dir="${buildlib.dir}" includes="*.jar" />
-        </classpath>
-        
-        import java.io.*;
-        
-        outputDir=project.getProperty("output.dir");
-
-        mos = new PrintStream(new FileOutputStream(outputDir+"/../module.xml"));
-        
-        mos.println("&lt;module xmlns='urn:jboss:module:1.1' name='com.ail.core'&gt;");
-        mos.println("  &lt;resources&gt;");
-        
-        files=new File(outputDir+"/..").listFiles();
-        for(i=0 ; i!=files.length-1 ; i++) {
-            if (files[i].getName().matches(".*[0-9]+[.]{1}jar$")) {
-                mos.println("    &lt;resource-root path='"+files[i].getName()+"'/&gt;");
-            }
-        }
-        
-        mos.println("  &lt;/resources&gt;");
-        mos.println("&lt;/module&gt;");
-        mos.close();
-        
-      </script>
+      <!-- (re)generate the module descriptor -->
+      <generate-module-descriptor-macro path="${output.dir}/../module.xml" />
     </sequential>
   </macrodef>
 

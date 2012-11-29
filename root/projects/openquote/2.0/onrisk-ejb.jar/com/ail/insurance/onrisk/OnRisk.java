@@ -26,8 +26,6 @@ import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
 @Remote
 public interface OnRisk {
-    String invokeServiceXML(String xml);
-
     /**
      * Service wrapper business method for the GenerateCertificateCommand service.
      * @param arg The command to pass to the service.

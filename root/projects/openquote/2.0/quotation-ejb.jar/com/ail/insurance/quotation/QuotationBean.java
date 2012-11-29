@@ -18,15 +18,12 @@
 package com.ail.insurance.quotation;
 
 import javax.ejb.CreateException;
-import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.quotation.AddPolicyNumberService.AddPolicyNumberArgument;
 import com.ail.insurance.quotation.AddQuoteNumberService.AddQuoteNumberArgument;
 import com.ail.insurance.quotation.AssessRiskService.AssessRiskArgument;
@@ -41,14 +38,11 @@ import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument
 @Configurable
 @Stateless
 public class QuotationBean extends EJBComponent implements Quotation {
-    private static final long serialVersionUID = 6789993103676049055L;
-    private VersionEffectiveDate versionEffectiveDate = null;
-    private Core core = null;
+    private static final String namespace="com.ail.insurance.quotation.QuotationBean";
     private SessionContext ctx = null;
-
+    
     public QuotationBean() {
-        core=new Core(this);
-        versionEffectiveDate=new VersionEffectiveDate();
+        initialise(namespace);
     }
 
     public void setSessionContext(SessionContext context) {
@@ -59,53 +53,8 @@ public class QuotationBean extends EJBComponent implements Quotation {
         return ctx;
     }
 
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbRemove() {
-    }
-
     public void ejbCreate() throws CreateException {
-        versionEffectiveDate = new VersionEffectiveDate();
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to return the core this component is using.
-     * @return Core instance.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Return the component's version effective date. This date will determine
-     * the effective date that the component will run as - and hence the version
-     * of configuration information it uses.
-     * @return version effective date
-     * @throws EJBException
-     */
-    public VersionEffectiveDate getVersionEffectiveDate() {
-        return versionEffectiveDate;
-    }
-
-    /**
-     * Expose services via XML. This method unmarshals the XML argument string into
-     * an object, finds a method on the EJB to accept that object type as an argument
-     * and invokes it. The result returned from the method is marshalled back into XM
-     * and returned.<p>
-     * The methods are invoked on the context's local interface if possible (if one
-     * exists). If no local interface is found then the remote interface is used instead.
-     * Invoking methods via the local/remote interface means that the deployment settings
-     * for security and transacts will be honoured.
-     * @param xml XML argument to be passed to the service.
-     * @return XML returned from the service.
-     */
-    public String invokeServiceXML(String xml) {
-        return super.invokeServiceXML(xml, ctx);
+        initialise(namespace);
     }
 
     /**
@@ -115,7 +64,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public AssessRiskArgument assessRisk(AssessRiskArgument arg) {
-        return invokeCommand(core, "AssessRisk", arg);
+        return invokeCommand("AssessRisk", arg);
     }
 
     /**
@@ -125,7 +74,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public CalculatePremiumArgument calculatePremium(CalculatePremiumArgument arg) {
-        return invokeCommand(core, "CalculatePremium", arg);
+        return invokeCommand("CalculatePremium", arg);
     }
 
     /**
@@ -135,7 +84,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public CalculateTaxArgument calculateTax(CalculateTaxArgument arg) {
-        return invokeCommand(core, "CalculateTax", arg);
+        return invokeCommand("CalculateTax", arg);
     }
 
     /**
@@ -145,7 +94,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public CalculateCommissionArgument calculateCommission(CalculateCommissionArgument arg) {
-        return invokeCommand(core, "CalculateCommission", arg);
+        return invokeCommand("CalculateCommission", arg);
     }
 
     /**
@@ -155,7 +104,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public CalculateBrokerageArgument calculateBrokerage(CalculateBrokerageArgument arg) {
-        return invokeCommand(core, "CalculateBrokerage", arg);
+        return invokeCommand("CalculateBrokerage", arg);
     }
 
     /**
@@ -165,7 +114,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public CalculateManagementChargeArgument calculateManagementCharge(CalculateManagementChargeArgument arg) {
-        return invokeCommand(core, "CalculateManagementCharge", arg);
+        return invokeCommand("CalculateManagementCharge", arg);
     }
 
     /**
@@ -175,7 +124,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public AddQuoteNumberArgument addQuoteNumber(AddQuoteNumberArgument arg) {
-        return invokeCommand(core, "AddQuoteNumber", arg);
+        return invokeCommand("AddQuoteNumber", arg);
     }
 
     /**
@@ -185,7 +134,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public AddPolicyNumberArgument addPolicyNumber(AddPolicyNumberArgument arg) {
-        return invokeCommand(core, "AddPolicyNumber", arg);
+        return invokeCommand("AddPolicyNumber", arg);
     }
 
     /**
@@ -195,7 +144,7 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public EnforceComplianceArgument enforceCompliance(EnforceComplianceArgument arg) {
-        return invokeCommand(core, "EnforceCompliance", arg);
+        return invokeCommand("EnforceCompliance", arg);
     }
 
     /**
@@ -205,19 +154,8 @@ public class QuotationBean extends EJBComponent implements Quotation {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public GenerateDocumentArgument generateDocument(GenerateDocumentArgument arg) {
-        return invokeCommand(core, "GenerateDocument", arg);
+        return invokeCommand("GenerateDocument", arg);
     }
-
-	/**
-	 * Hard code the namespace to "com.ail.insurance.quotation.QuotationBean". Generally,
-	 * the super class will automatically provide a namespace based on the class name, 
-	 * but for EJBs this can be a problem. Some app server generated containers effect
-	 * the name of the class causing the configuration to fail. Weblogic is one such.
-	 * @return The namespace of the configuration.
-	 */
-	public String getConfigurationNamespace() {
-		return "com.ail.insurance.quotation.QuotationBean";
-	}
 }
 
 

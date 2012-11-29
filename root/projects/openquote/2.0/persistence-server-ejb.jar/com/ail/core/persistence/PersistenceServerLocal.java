@@ -19,8 +19,6 @@ package com.ail.core.persistence;
 
 import javax.ejb.Local;
 
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.Configuration;
 import com.ail.core.persistence.CreateService.CreateArgument;
 import com.ail.core.persistence.DeleteService.DeleteArgument;
 import com.ail.core.persistence.LoadService.LoadArgument;
@@ -29,17 +27,6 @@ import com.ail.core.persistence.UpdateService.UpdateArgument;
 
 @Local
 public interface PersistenceServerLocal {
-    String invokeServiceXML(String xml);
-
-    VersionEffectiveDate getVersionEffectiveDate();
-
-    void setConfiguration(Configuration config);
-
-    Configuration getConfiguration();
-
-    String getConfigurationNamespace();
-
-    void resetConfiguration();
 
     CreateArgument createCommand(CreateArgument arg);
 

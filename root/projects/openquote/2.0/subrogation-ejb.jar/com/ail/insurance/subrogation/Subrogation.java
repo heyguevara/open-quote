@@ -19,21 +19,9 @@ package com.ail.insurance.subrogation;
 
 import javax.ejb.Remote;
 
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.Configuration;
 import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Remote
 public interface Subrogation {
-    VersionEffectiveDate getVersionEffectiveDate();
-
-    void setConfiguration(Configuration config);
-
-    Configuration getConfiguration();
-
-    String getConfigurationNamespace();
-
-    void resetConfiguration();
-
     MakeARecoveryArgument makeARecovery(MakeARecoveryArgument command);
 }

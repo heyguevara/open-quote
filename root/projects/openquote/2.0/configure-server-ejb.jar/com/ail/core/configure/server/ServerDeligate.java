@@ -70,10 +70,6 @@ public class ServerDeligate {
         server.clearNamedConfigurationCache(namespace);
     }
 
-    public String invokeServiceXML(String xml) throws Exception {
-        return server.invokeServiceXML(xml);
-    }
-
     public GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws Exception {
         return server.getNamespaces(arg);
     }

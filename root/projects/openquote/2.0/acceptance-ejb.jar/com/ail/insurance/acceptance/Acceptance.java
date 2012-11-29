@@ -19,7 +19,6 @@ package com.ail.insurance.acceptance;
 
 import javax.ejb.Remote;
 
-import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationArgument;
 import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumArgument;
 import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationArgument;
@@ -27,18 +26,6 @@ import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
 @Remote
 public interface Acceptance {
-    String invokeServiceXML(String xml);
-
-    VersionEffectiveDate getVersionEffectiveDate();
-
-    void setConfiguration(com.ail.core.configure.Configuration config);
-
-    com.ail.core.configure.Configuration getConfiguration();
-
-    String getConfigurationNamespace();
-
-    void resetConfiguration();
-
     ProduceDocumentationArgument produceDocumentation(ProduceDocumentationArgument argument);
 
     PutOnRiskArgument putOnRisk(PutOnRiskArgument argument);

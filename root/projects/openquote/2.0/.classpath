@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry excluding="Build.xml" kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
 	<classpathentry excluding="Build.xml|com/ail/core/persistence/hibernate/HibernateConfiguration.xml" kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
-	<classpathentry kind="src" path="build/annotation.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/core.jar" path="modules/com/ail/core.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/commercial/main/commercial.jar" path="modules/com/ail/commercial.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/insurance/main/insurance.jar" path="modules/com/ail/insurance.jar"/>
@@ -23,6 +22,7 @@
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openquote-theme.war"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/irishbrokerpi.war" path="irishbrokerpi.war"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/lifeplus.war" path="lifeplus.war"/>
+	<classpathentry kind="src" path="build/annotation.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>

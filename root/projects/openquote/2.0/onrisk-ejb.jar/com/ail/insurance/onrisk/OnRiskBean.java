@@ -18,15 +18,12 @@
 package com.ail.insurance.onrisk;
 
 import javax.ejb.CreateException;
-import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
 import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
 import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
@@ -34,14 +31,11 @@ import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 @Configurable
 @Stateless
 public class OnRiskBean extends EJBComponent implements OnRisk {
-    private static final long serialVersionUID = 6789993103676049055L;
-    private VersionEffectiveDate versionEffectiveDate = null;
-    private Core core = null;
+    private static final String namespace="com.ail.insurance.onrisk.OnRiskBean";
     private SessionContext ctx = null;
 
     public OnRiskBean() {
-        core=new Core(this);
-        versionEffectiveDate=new VersionEffectiveDate();
+        initialise(namespace);
     }
 
     public void setSessionContext(SessionContext context) {
@@ -52,53 +46,8 @@ public class OnRiskBean extends EJBComponent implements OnRisk {
         return ctx;
     }
 
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbRemove() {
-    }
-
     public void ejbCreate() throws CreateException {
-        versionEffectiveDate = new VersionEffectiveDate();
-        core = new Core(this);
-    }
-
-    /**
-     * Getter to return the core this component is using.
-     * @return Core instance.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Return the component's version effective date. This date will determine
-     * the effective date that the component will run as - and hence the version
-     * of configuration information it uses.
-     * @return version effective date
-     * @throws EJBException
-     */
-    public VersionEffectiveDate getVersionEffectiveDate() {
-        return versionEffectiveDate;
-    }
-
-    /**
-     * Expose services via XML. This method unmarshals the XML argument string into
-     * an object, finds a method on the EJB to accept that object type as an argument
-     * and invokes it. The result returned from the method is marshalled back into XM
-     * and returned.<p>
-     * The methods are invoked on the context's local interface if possible (if one
-     * exists). If no local interface is found then the remote interface is used instead.
-     * Invoking methods via the local/remote interface means that the deployment settings
-     * for security and transacts will be honoured.
-     * @param xml XML argument to be passed to the service.
-     * @return XML returned from the service.
-     */
-    public String invokeServiceXML(String xml) {
-        return super.invokeServiceXML(xml, ctx);
+        initialise(namespace);
     }
 
     /**
@@ -108,7 +57,7 @@ public class OnRiskBean extends EJBComponent implements OnRisk {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument) {
-        return invokeCommand(core, "GenerateCertificate", argument);
+        return invokeCommand("GenerateCertificate", argument);
     }
     
     /**
@@ -118,7 +67,7 @@ public class OnRiskBean extends EJBComponent implements OnRisk {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument) {
-        return invokeCommand(core, "GenerateInvoice", argument);
+        return invokeCommand("GenerateInvoice", argument);
     }
     
     /**
@@ -128,19 +77,8 @@ public class OnRiskBean extends EJBComponent implements OnRisk {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public GenerateWordingArgument generateWording(GenerateWordingArgument argument) {
-        return invokeCommand(core, "GenerateWording", argument);
+        return invokeCommand("GenerateWording", argument);
     }
-
-	/**
-	 * Hard code the namespace to "com.ail.insurance.onrisk.OnRiskBean". Generally,
-	 * the super class will automatically provide a namespace based on the class name, 
-	 * but for EJBs this can be a problem. Some app servers generated containers affect
-	 * the name of the class causing the configuration to fail. Weblogic is one such.
-	 * @return The namespace of the configuration.
-	 */
-	public String getConfigurationNamespace() {
-		return "com.ail.insurance.onrisk.OnRiskBean";
-	}
 }
 
 

@@ -23,10 +23,7 @@ import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.Configuration;
 import com.ail.core.product.ListProductsService.ListProductsArgument;
 import com.ail.core.product.NewProductTypeService.NewProductTypeArgument;
 import com.ail.core.product.RegisterProductService.RegisterProductArgument;
@@ -38,13 +35,11 @@ import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 @Configurable
 @Stateless
 public class ProductManagerBean extends EJBComponent implements ProductManager {
-    private VersionEffectiveDate versionEffectiveDate = null;
-    private Core core = null;
+    private static final String NAMESPACE="com.ail.core.product.ProductManagerBean";
     private SessionContext ctx = null;
 
     public ProductManagerBean() {
-        versionEffectiveDate = new com.ail.core.VersionEffectiveDate();
-        core = new Core(this);
+        initialise(NAMESPACE);
     }
 
     public void setSessionContext(SessionContext context) {
@@ -55,72 +50,8 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
         return ctx;
     }
 
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbRemove() {
-    }
-
     public void ejbCreate() throws CreateException {
-        versionEffectiveDate = new com.ail.core.VersionEffectiveDate();
-        core = new com.ail.core.Core(this);
-    }
-
-    /**
-     * Expose services of this EJB via XML. This method unmarshals the XML argument string into
-     * an object, finds a method on the EJB to accept that object type as an argument
-     * and invokes it. The result returned from the method is marshalled back into XM and returned.<p>
-     * The methods are invoked on the context's local interface if possible (if one
-     * exists). If no local interface is found then the remote interface is used instead.
-     * Invoking methods via the local/remote interface means that the deployment setting
-     * for security and transacts will be honoured.
-     * @param xml XML argument to be passed to the service.
-     * @return XML returned from the service.
-     */
-    public String invokeServiceXML(String xml) {
-        return super.invokeServiceXML(xml, ctx);
-    }
-
-    public Core getCore() {
-        return core;
-    }
-
-    public VersionEffectiveDate getVersionEffectiveDate() {
-        return versionEffectiveDate;
-    }
-
-    public void setConfiguration(Configuration config) {
-        try {
-            super.setConfiguration(config);
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
-    public Configuration getConfiguration() {
-        try {
-            return super.getConfiguration();
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
-    }
-
-    public String getConfigurationNamespace() {
-        return super.getConfigurationNamespace();
-    }
-
-    public void resetConfiguration() {
-        try {
-            super.resetConfiguration();
-        }
-        catch (com.ail.core.BaseError e) {
-            throw new com.ail.core.BaseServerException(e);
-        }
+        initialise(NAMESPACE);
     }
 
     /**
@@ -130,7 +61,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public ListProductsArgument getListProducts(ListProductsArgument arg) throws BaseServerException {
-        return invokeCommand(core, "ListProducts", arg);
+        return invokeCommand("ListProducts", arg);
     }
 
     /**
@@ -140,7 +71,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public RegisterProductArgument registerProduct(RegisterProductArgument arg) throws BaseServerException {
-        return invokeCommand(core, "RegisterProduct", arg);
+        return invokeCommand("RegisterProduct", arg);
     }
 
     /**
@@ -150,7 +81,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public RemoveProductArgument removeProduct(RemoveProductArgument arg) throws BaseServerException {
-        return invokeCommand(core, "RemoveProduct", arg);
+        return invokeCommand("RemoveProduct", arg);
     }
 
     /**
@@ -160,7 +91,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public ResetProductArgument getProductDefinition(ResetProductArgument arg) throws BaseServerException {
-        return invokeCommand(core, "ResetProduct", arg);
+        return invokeCommand("ResetProduct", arg);
     }
 
     /**
@@ -170,7 +101,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg) throws BaseServerException {
-        return invokeCommand(core, "ResetAllProducts", arg);
+        return invokeCommand("ResetAllProducts", arg);
     }
 
     /**
@@ -180,7 +111,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public UpdateProductArgument updateProduct(UpdateProductArgument arg) throws BaseServerException {
-        return invokeCommand(core, "UpdateProduct", arg);
+        return invokeCommand("UpdateProduct", arg);
     }
 
     /**
@@ -190,7 +121,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
     public NewProductTypeArgument newProductType(NewProductTypeArgument arg) throws BaseServerException {
-        return invokeCommand(core, "NewProductType", arg);
+        return invokeCommand("NewProductType", arg);
     }
 }
 

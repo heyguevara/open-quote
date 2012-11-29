@@ -33,8 +33,6 @@ import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument
 
 @Remote
 public interface Quotation {
-    String invokeServiceXML(String xml);
-
     /**
      * Service wrapper business method for the AssessRisk service.
      * @param arg The argument to pass to the service.

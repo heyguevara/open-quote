@@ -114,6 +114,8 @@
       </javac>
 
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
+      
+      <touch file="${output.dir}.dodeploy" />
     </sequential>
   </macrodef>
 

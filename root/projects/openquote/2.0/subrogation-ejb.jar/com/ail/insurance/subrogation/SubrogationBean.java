@@ -22,22 +22,18 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
-import com.ail.core.Core;
 import com.ail.core.EJBComponent;
-import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Configurable
 @Stateless
 public class SubrogationBean extends EJBComponent implements Subrogation {
     private static final long serialVersionUID = 6506879017396687519L;
-    private VersionEffectiveDate versionEffectiveDate=null;
-	private Core core=null;
+    private static final String NAMESPACE="com.ail.insurance.subrogation.SubrogationBean";
     private SessionContext ctx=null;
     
     public SubrogationBean() {
-        core=new Core(this);
-        versionEffectiveDate=new VersionEffectiveDate();
+        initialise(NAMESPACE);
     }
 
     public void setSessionContext(SessionContext context) {
@@ -48,44 +44,11 @@ public class SubrogationBean extends EJBComponent implements Subrogation {
         return ctx;
     }
 
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbRemove() {
-    }
-
     public void ejbCreate() throws CreateException {
-		versionEffectiveDate=new VersionEffectiveDate();
-		core=new Core(this);
+        initialise(NAMESPACE);
 	}
 
-    public VersionEffectiveDate getVersionEffectiveDate() {
-		return versionEffectiveDate;
-    }
-
     public MakeARecoveryArgument makeARecovery(MakeARecoveryArgument arg) {
-        return invokeCommand(core, "MakeARecovery", arg);
-    }
-
-    /**
-     * Getter to return the core this component is using.
-     * @return Core instance.
-     */
-    public Core getCore() {
-        return core;
-    }
-
-    /**
-     * Hard code the namespace to "com.ail.insurance.quotation.QuotationBean". Generally,
-     * the super class will automatically provide a namespace based on the class name, 
-     * but for EJBs this can be a problem. Some app server generated containers effect
-     * the name of the class causing the configuration to fail. Weblogic is one such.
-     * @return The namespace of the configuration.
-     */
-    public String getConfigurationNamespace() {
-        return "com.ail.insurance.subrogation.SubrogationBean";
+        return invokeCommand("MakeARecovery", arg);
     }
 }

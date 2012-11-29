@@ -24,6 +24,9 @@
         </fileset>
       </javac-classpath>
     </compile-exploded-jar-macro>
+
+    <generate-module-descriptor-macro path="${output.dir}/../module.xml"/>
+
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">

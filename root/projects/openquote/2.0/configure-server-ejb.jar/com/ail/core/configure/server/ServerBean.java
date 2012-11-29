@@ -17,22 +17,15 @@
 
 package com.ail.core.configure.server;
 
-import java.security.Principal;
-
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
-import org.w3c.dom.Element;
-
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.Core;
 import com.ail.core.CoreUser;
 import com.ail.core.EJBComponent;
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
@@ -49,11 +42,11 @@ import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCom
 @Configurable
 @Stateless
 public class ServerBean extends EJBComponent implements Server, CoreUser {
-	private Core core=null;
+    private static final String NAMESPACE="com.ail.core.configure.server.ServerBean";
     private SessionContext ctx=null;
 
     public ServerBean() {
-        core=new Core(this);
+        initialise(NAMESPACE);
     }
 
     public void setSessionContext(SessionContext context) {
@@ -64,36 +57,15 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
         return ctx;
     }
 
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbRemove() {
-    }
-
     public void ejbCreate() throws CreateException {
-		core=new Core(this);
+        initialise(NAMESPACE);
 	}
-
-    /**
-     * The version effective date for the bean is always 'now'.
-     * @return version effective date.
-     */
-    public VersionEffectiveDate getVersionEffectiveDate() throws EJBException  {
-        return new VersionEffectiveDate();
-    }
-
-    public Core getCore() throws EJBException  {
-        return core;
-    }
 
     /**
      * Reset the Core's configuration to its factory settings.
      */
     public void resetCoreConfiguration() throws EJBException  {
-        core.resetConfiguration();
+        getCore().resetConfiguration();
         ConfigurationHandler.resetCache();
     }
 
@@ -103,11 +75,11 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      */
     private void resetConfig(String name) {
         try {
-            core.logDebug("Requesting reset for:"+name);
+            getCore().logDebug("Requesting reset for:"+name);
             Class<?> clazz=Class.forName(name);
             ConfigurationOwner owner=(ConfigurationOwner)clazz.newInstance();
             owner.resetConfiguration();
-            core.logInfo("Reset successful for:"+name);
+            getCore().logInfo("Reset successful for:"+name);
         }
         catch(ClassNotFoundException e) {
             throw new EJBException("Could not find configuration owner class:"+name);
@@ -131,11 +103,11 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
         if (name.equalsIgnoreCase("all")) {
 
             // reset the Core config first
-            core.resetConfiguration();
+            getCore().resetConfiguration();
             ConfigurationHandler.resetCache();
 
             // loop through the AllNamespaceReset group, and reset all the configs named
-            for(Parameter p: core.getGroup("NamespacesToResetOnResetAll").getParameter()) {
+            for(Parameter p: getCore().getGroup("NamespacesToResetOnResetAll").getParameter()) {
                 try {
                     resetConfig(p.getName());
                 }
@@ -165,36 +137,16 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
         ConfigurationHandler.reset(namespace);
     }
 
-    /**
-     * Expose services via XML. This method unmarshals the XML argument string into
-     * an object, finds a method on the EJB to accept that object type as an argument
-     * and invokes it. The result returned from the method is marshalled back into XM
-     * and returned.<p>
-     * The methods are invoked on the context's local interface if possible (if one
-     * exists). If no local interface is found then the remote interface is used instead.
-     * Invoking methods via the local/remote interface means that the deployment settings
-     * for security and transacts will be honored.
-     * @param xml XML argument to be passed to the service.
-     * @return XML returned from the service.
-     */
-    public String invokeServiceXML(String xml) throws EJBException  {
-        return super.invokeServiceXML(xml, ctx);
-    }
-
-    public Element[] invokeServiceSoap(Element[] xml) throws EJBException {
-        return xml;
-    }
-
     public GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws EJBException  {
-        return invokeCommand(core, "GetNamespaces", arg);
+        return invokeCommand("GetNamespaces", arg);
     }
 
     public GetConfigurationCommand getConfiguration(GetConfigurationCommand arg) throws EJBException  {
-        return invokeCommand(core, "GetConfiguration", arg);
+        return invokeCommand("GetConfiguration", arg);
     }
 
     public SetConfigurationCommand setConfiguration(SetConfigurationCommand arg) throws EJBException  {
-        return invokeCommand(core, "SetConfiguration", arg);
+        return invokeCommand("SetConfiguration", arg);
     }
 
     /**
@@ -204,7 +156,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg) throws EJBException  {
-        return invokeCommand(core, "GetCommandScript", arg);
+        return invokeCommand("GetCommandScript", arg);
     }
 
     /**
@@ -214,7 +166,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg) throws EJBException  {
-        return invokeCommand(core, "SetCommandScript", arg);
+        return invokeCommand("SetCommandScript", arg);
     }
 
 
@@ -225,7 +177,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public GetClassListCommand getClassList(GetClassListCommand arg) throws EJBException  {
-        return invokeCommand(core, "GetClassList", arg);
+        return invokeCommand("GetClassList", arg);
     }
     
     /**
@@ -235,7 +187,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public DeployCarCommand deployCar(DeployCarCommand arg) throws EJBException  {
-        return invokeCommand(core, "DeployCar", arg);
+        return invokeCommand("DeployCar", arg);
     }
 
     /**
@@ -245,7 +197,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public PackageCarCommand packageCar(PackageCarCommand arg) throws EJBException  {
-        return invokeCommand(core, "PackageCar", arg);
+        return invokeCommand("PackageCar", arg);
     }
 
     /**
@@ -255,41 +207,6 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws BaseServerException In response to any exception thrown by the service.
      */
     public CatalogCarCommand catalogCar(CatalogCarCommand arg) throws EJBException  {
-        return invokeCommand(core, "CatalogCar", arg);
-    }
-
-    /**
-     * Hard code the namespace to "com.ail.core.configure.server.ServerBean". Generally,
-     * the super class will automatically provide a namespace based on the class name, 
-     * but for EJBs this can be a problem. Some app server generated containers effect
-     * the name of the class causing the configuration to fail. Weblogic is one such.
-     * @return The namespace of the configuration.
-     */
-    public String getConfigurationNamespace() {
-        return "com.ail.core.configure.server.ServerBean";
-    }
-
-    @Override
-    public Principal getSecurityPrincipal() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void setConfiguration(Configuration config) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public Configuration getConfiguration() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void resetConfiguration() {
-        // TODO Auto-generated method stub
-        
+        return invokeCommand("CatalogCar", arg);
     }
 }
