@@ -14,7 +14,7 @@
     <sequential>
       <script language="beanshell">
         <classpath>
-          <fileset dir="${buildlib.dir}" includes="*.jar"/>
+          <fileset dir="${bootlib.dir}" includes="*.jar"/>
         </classpath>
 	      projectName = project.getName();
 	      deployUnit = projectName.replaceAll("^.*:", "");

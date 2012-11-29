@@ -12,6 +12,7 @@
   <property name="deploy.dir" value="${jboss.dir}/standalone/deployments" />
   <property name="test.dir" value="${target.dir}/test" />
   <property name="buildlib.dir" value="${project.dir}/build/lib" />
+  <property name="bootlib.dir" value="${project.dir}/build/boot" />
   <property name="domain.dir" value="${basedir}/domain/jboss" />
   <property name="tmp" value="${build.dir}/tmp" />
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
@@ -50,7 +51,7 @@
     <sequential>
       <script language="beanshell">
         <classpath>
-          <fileset dir="${buildlib.dir}" includes="*.jar" />
+          <fileset dir="${bootlib.dir}" includes="*.jar" />
         </classpath>
         
         project.setProperty("@{property}", "@{value}".replaceAll("[.]", "/"));
@@ -66,7 +67,7 @@
     <sequential>
       <script language="beanshell">
         <classpath>
-          <fileset dir="${buildlib.dir}" includes="*.jar" />
+          <fileset dir="${bootlib.dir}" includes="*.jar" />
         </classpath>
         
         val=project.getProperty("@{property}");

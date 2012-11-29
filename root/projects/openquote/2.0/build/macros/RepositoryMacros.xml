@@ -41,7 +41,7 @@
         <!-- generate a new module.xml descriptor -->
 	    <script language="beanshell">
 	      <classpath>
-	        <fileset dir="${buildlib.dir}" includes="*.jar" />
+	        <fileset dir="${bootlib.dir}" includes="*.jar" />
 	      </classpath>
 	        
 	      import java.io.*;
