@@ -22,7 +22,7 @@
       </javac-classpath>
     </compile-exploded-jar-macro>
     
-    <generate-module-descriptor-macro path="${output.dir}/../module.xml"/>
+    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.liferay.portal, javax.xml.rpc.api, javax.ejb.api"/>
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">

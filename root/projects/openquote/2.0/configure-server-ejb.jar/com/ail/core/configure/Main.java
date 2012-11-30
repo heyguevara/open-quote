@@ -18,9 +18,12 @@ package com.ail.core.configure;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import com.ail.core.configure.server.ServerDeligate;
+import javax.ejb.EJB;
+
+import com.ail.core.configure.server.Server;
 
 public class Main {
+    @EJB private Server server;
     private String username;
     private String password;
     private String operation;
@@ -129,12 +132,10 @@ public class Main {
         System.setProperty("java.naming.provider.url", provider);
         
         try {
-            try {
-                ServerDeligate del=new ServerDeligate(username, password);
-    
-                Method method=del.getClass().getMethod(operation);
+            try {    
+                Method method=server.getClass().getMethod(operation);
                 
-                method.invoke(del);
+                method.invoke(server);
             }
             catch(InvocationTargetException e) {
                 throw e.getCause();

@@ -18,13 +18,11 @@
         <fileset dir="${jboss.dir}">
           <include name="bin/client/jboss-client.jar" />
           <include name="modules/com/openquote/core/main/*.jar" />
-          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
-          <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
         </fileset>
       </javac-classpath>
     </compile-exploded-jar-macro>
 
-    <generate-module-descriptor-macro path="${output.dir}/../module.xml"/>
+    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.ail.core"/>
 
   </target>
 

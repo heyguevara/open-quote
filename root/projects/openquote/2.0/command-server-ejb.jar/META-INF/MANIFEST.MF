@@ -1,6 +1,5 @@
 Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.5.3 
-Created-By: 1.4.1_06-b01 (Sun Microsystems Inc.)
+Created-By: 1.6.0_37
 Built-By: Applied Industrial Logic
 Dependencies: com.ail.core, com.ail.commercial, com.ail.insurance
 

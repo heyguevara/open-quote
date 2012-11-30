@@ -18,13 +18,14 @@ package com.ail.core.ui;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.CoreProxy;
-import com.ail.core.configure.server.ServerDeligate;
+import com.ail.core.configure.server.Server;
 
 /**
  * This servlet performs common operations on the core configure system in response to user requests.
@@ -43,6 +44,7 @@ import com.ail.core.configure.server.ServerDeligate;
  * @since 2.0
  */
 public class ConfigureOperationServlet extends HttpServlet {
+    @EJB Server server;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String op=request.getParameter("op");
@@ -65,7 +67,7 @@ public class ConfigureOperationServlet extends HttpServlet {
             }
             else if ("resetNamedConfiguration".equals(op)) {
                 String namespace=request.getParameter("namespace");
-                new ServerDeligate(request.getUserPrincipal()).resetNamedConfiguration(namespace);
+                server.resetNamedConfiguration(namespace);
                 core.setVersionEffectiveDateToNow();
                 core.logInfo("Configuration reset for namespace: "+namespace);
                 response.getWriter().append("<html><body>Reset configuration namespace: "+namespace+"</body></html>");

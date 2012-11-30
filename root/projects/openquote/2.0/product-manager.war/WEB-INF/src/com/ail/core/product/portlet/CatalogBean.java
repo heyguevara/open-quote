@@ -20,6 +20,7 @@ import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 import java.security.Principal;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.ListDataModel;
@@ -30,7 +31,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
-import com.ail.core.configure.server.ServerDeligate;
+import com.ail.core.configure.server.Server;
 
 /**
  * JSF backing bean for the product catalog portlet.
@@ -43,7 +44,7 @@ public class CatalogBean {
     private String productName;
     private String productNameAsLoaded;
     private String productDescription;
-    private ServerDeligate serverDeligate;
+    @EJB private Server server;
 
     public CatalogBean() {
     }
@@ -111,7 +112,7 @@ public class CatalogBean {
     public String resetAllProductsAction() {
         try {
             core.logInfo("Resetting all products.");
-            serverDeligate().resetNamedConfiguration("com.ail.core.product.ResetAllProductsService");
+            server.resetNamedConfiguration("com.ail.core.product.ResetAllProductsService");
             core.logInfo("Reset successful.");
         }
         catch(Exception e) {
@@ -150,7 +151,7 @@ public class CatalogBean {
             String selectedProduct=prod.getName();
             String configurationName=Functions.productNameToConfigurationNamespace(selectedProduct);
             core.logInfo("Clearing cache for product: "+selectedProduct);
-            serverDeligate().clearNamedConfigurationCache(configurationName);
+            server.clearNamedConfigurationCache(configurationName);
             core.logInfo("Clear successful.");
         }
         catch(Exception e) {
@@ -217,7 +218,7 @@ public class CatalogBean {
                     prod.setName(getProductName());
                     prod.setValue(getProductDescription());
                     core.setConfiguration(config);
-                    serverDeligate().clearNamedConfigurationCache("ProductCatalog");
+                    server.clearNamedConfigurationCache("ProductCatalog");
                 }
                 else {
                     core.logError("Attempted to update a product ("+getProductNameAsLoaded()+") that no longer exists.");
@@ -263,7 +264,7 @@ public class CatalogBean {
                 if (prods.getParameter(i).getName().equals(getProductNameAsLoaded())) {
                     prods.removeParameter(i);
                     core.setConfiguration(config);
-                    serverDeligate().clearNamedConfigurationCache("ProductCatalog");
+                    server.clearNamedConfigurationCache("ProductCatalog");
                     core.logInfo("Product removed successfully.");
                     return "removeProductAction.success";
                 }
@@ -278,14 +279,6 @@ public class CatalogBean {
         return "removeProductAction.success";        
     }
     
-    private ServerDeligate serverDeligate() {
-        if (serverDeligate==null) {
-            serverDeligate=new ServerDeligate(core.getSecurityPrincipal());
-        }
-        
-        return serverDeligate;
-    }    
-
     public void refresh() {
         Principal p=FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         VersionEffectiveDate ved=new VersionEffectiveDate();

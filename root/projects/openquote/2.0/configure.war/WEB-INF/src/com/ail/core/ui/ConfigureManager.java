@@ -22,6 +22,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,26 +39,26 @@ import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
 import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
 import com.ail.core.configure.server.GetNamespacesHistoryService.GetNamespacesHistoryCommand;
 import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
-import com.ail.core.configure.server.ServerDeligate;
+import com.ail.core.configure.server.Server;
 import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 
 /**
  * Manager (controller) for the configure editor.
  */
 public class ConfigureManager {
+    @EJB
+    private Server server=null;
     private CoreProxy core;
-    private ServerDeligate serverDeligate=null;
     
     public ConfigureManager() throws Exception {
         core=new CoreProxy();
         Principal p=FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         core.setSecurityPrincipal(p);
-        serverDeligate=new ServerDeligate(core.getSecurityPrincipal());
     }
 
     public String resetAllAction() {
         try {
-            serverDeligate.resetNamedConfiguration("all");
+            server.resetNamedConfiguration("all");
             core.setVersionEffectiveDateToNow();
             //getForm().refresh();
 
@@ -70,7 +71,7 @@ public class ConfigureManager {
     
     public String clearCacheAction() {
         try {
-            serverDeligate.clearConfigurationCache();
+            server.clearConfigurationCache();
             core.setVersionEffectiveDateToNow();
             return "clearCacheAction.success";
         }
@@ -86,10 +87,10 @@ public class ConfigureManager {
             core.setVersionEffectiveDateToNow();
 
             if ("com.ail.core.Core".equals(selected.getNamespace())) {
-                serverDeligate.resetCoreConfiguration();
+                server.resetCoreConfiguration();
             }
             else {
-                serverDeligate.resetNamedConfiguration(selected.getManager());
+                server.resetNamedConfiguration(selected.getManager());
             }
 
             getForm().refresh();
