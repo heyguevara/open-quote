@@ -75,7 +75,7 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bctsp-jdk15-1.46.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bctsp-jdk16-1.46.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bsh-2.0b5.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/castor-xml-ail-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/castor-xml-ail-1.1.jar" sourcepath="/Users/richarda/Downloads/castor-1.1/src/main/java"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-beanutils-1.4.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-collections-3.2.1.jar"/>

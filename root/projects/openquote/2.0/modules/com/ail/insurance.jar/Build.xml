@@ -25,7 +25,7 @@
       </javac-classpath>
     </compile-exploded-jar-macro>
 
-    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.ail.core, com.ail.commercial"/>
+    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.liferay.portal, com.ail.core, com.ail.commercial"/>
 
   </target>
 

@@ -252,7 +252,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     }
 
     Configuration loadAndMergeAnnotatedConfig(Configuration factoryConfig) throws IOException, XMLException {
-        // load the CoreDefaultConfig resource into an XMLString
+        // load the merged annotation config
         InputStream in=null;
         XMLString factoryConfigXML=null;;
         
