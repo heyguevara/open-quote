@@ -21,15 +21,7 @@ import javax.ejb.Local;
 
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.Configuration;
-import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
-import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
-import com.ail.core.configure.server.DeployCarService.DeployCarCommand;
-import com.ail.core.configure.server.GetCommandScriptService.GetCommandScriptCommand;
-import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
-import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
-import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
-import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
-import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
+import com.ail.core.configure.finder.GetClassListCommandImpl;
 
 @Local
 public interface ServerLocal {
@@ -49,21 +41,21 @@ public interface ServerLocal {
 
     void clearConfigurationCache();
 
-    GetNamespacesCommand getNamespaces(GetNamespacesCommand arg);
+    GetNamespacesCommandImpl getNamespaces(GetNamespacesCommandImpl arg);
 
-    GetConfigurationCommand getConfiguration(GetConfigurationCommand arg);
+    GetConfigurationCommandImpl getConfiguration(GetConfigurationCommandImpl arg);
 
-    SetConfigurationCommand setConfiguration(SetConfigurationCommand arg);
+    SetConfigurationCommandImpl setConfiguration(SetConfigurationCommandImpl arg);
 
-    GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg);
+    GetCommandScriptCommandImpl getCommandScript(GetCommandScriptCommandImpl arg);
 
-    SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg);
+    SetCommandScriptCommandImpl setCommandScript(SetCommandScriptCommandImpl arg);
 
-    GetClassListCommand getClassList(GetClassListCommand arg);
+    GetClassListCommandImpl getClassList(GetClassListCommandImpl arg);
 
-    DeployCarCommand deployCar(DeployCarCommand arg);
+    DeployCarCommandImpl deployCar(DeployCarCommandImpl arg);
     
-    PackageCarCommand packageCar(PackageCarCommand arg);
+    PackageCarCommandImpl packageCar(PackageCarCommandImpl arg);
 
-    CatalogCarCommand catalogCar(CatalogCarCommand arg);
+    CatalogCarCommandImpl catalogCar(CatalogCarCommandImpl arg);
 }

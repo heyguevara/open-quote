@@ -18,6 +18,7 @@
 package com.ail.core.persistence;
 
 import javax.ejb.CreateException;
+import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
@@ -34,6 +35,7 @@ import com.ail.core.persistence.UpdateService.UpdateArgument;
  */
 @Configurable
 @Stateless
+@Remote(PersistenceServer.class)
 public class PersistenceServerBean extends EJBComponent implements PersistenceServerLocal {
     private static final String NAMESPACE="com.ail.core.persistence.PersistenceServerBean";
     private SessionContext ctx = null;

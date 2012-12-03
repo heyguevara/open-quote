@@ -19,8 +19,11 @@ package com.ail.core.configure.server;
 
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
+import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -29,18 +32,12 @@ import com.ail.core.EJBComponent;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
-import com.ail.core.configure.finder.GetClassListService.GetClassListCommand;
-import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
-import com.ail.core.configure.server.DeployCarService.DeployCarCommand;
-import com.ail.core.configure.server.GetCommandScriptService.GetCommandScriptCommand;
-import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
-import com.ail.core.configure.server.GetNamespacesService.GetNamespacesCommand;
-import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
-import com.ail.core.configure.server.SetCommandScriptService.SetCommandScriptCommand;
-import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
+import com.ail.core.configure.finder.GetClassListCommandImpl;
 
 @Configurable
 @Stateless
+@Remote(Server.class)
+@WebService
 public class ServerBean extends EJBComponent implements Server, CoreUser {
     private static final String NAMESPACE="com.ail.core.configure.server.ServerBean";
     private SessionContext ctx=null;
@@ -49,14 +46,17 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
         initialise(NAMESPACE);
     }
 
+    @WebMethod(exclude=true)
     public void setSessionContext(SessionContext context) {
         ctx = context;
     }
 
+    @WebMethod(exclude=true)
     public SessionContext getSessionContext() {
         return ctx;
     }
 
+    @WebMethod(exclude=true)
     public void ejbCreate() throws CreateException {
         initialise(NAMESPACE);
 	}
@@ -64,6 +64,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
     /**
      * Reset the Core's configuration to its factory settings.
      */
+    @WebMethod
     public void resetCoreConfiguration() throws EJBException  {
         getCore().resetConfiguration();
         ConfigurationHandler.resetCache();
@@ -99,6 +100,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @param name The class name of the ConfigurationOwner, or "all" to reset the predefined list.
      * @throws EJBException if the configurationOwner class cannot be found/instantiated.
      */
+    @WebMethod
     public void resetNamedConfiguration(String name) throws EJBException  {
         if (name.equalsIgnoreCase("all")) {
 
@@ -125,6 +127,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
     /**
      * Reset the server side cache used to hold configuration information.
      */
+    @WebMethod
     public void clearConfigurationCache() throws EJBException  {
         ConfigurationHandler.resetCache();
     }
@@ -133,19 +136,23 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * Reset the server side cache used to hold configuration information.
      * @param namespace The namespace to be cleared from the cache.
      */
+    @WebMethod
     public void clearNamedConfigurationCache(String namespace) throws EJBException  {
         ConfigurationHandler.reset(namespace);
     }
 
-    public GetNamespacesCommand getNamespaces(GetNamespacesCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public GetNamespacesCommandImpl getNamespaces(GetNamespacesCommandImpl arg) throws EJBException  {
         return invokeCommand("GetNamespaces", arg);
     }
 
-    public GetConfigurationCommand getConfiguration(GetConfigurationCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public GetConfigurationCommandImpl getConfiguration(GetConfigurationCommandImpl arg) throws EJBException  {
         return invokeCommand("GetConfiguration", arg);
     }
 
-    public SetConfigurationCommand setConfiguration(SetConfigurationCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public SetConfigurationCommandImpl setConfiguration(SetConfigurationCommandImpl arg) throws EJBException  {
         return invokeCommand("SetConfiguration", arg);
     }
 
@@ -155,7 +162,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GetCommandScriptCommand getCommandScript(GetCommandScriptCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public GetCommandScriptCommandImpl getCommandScript(GetCommandScriptCommandImpl arg) throws EJBException  {
         return invokeCommand("GetCommandScript", arg);
     }
 
@@ -165,10 +173,10 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public SetCommandScriptCommand setCommandScript(SetCommandScriptCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public SetCommandScriptCommandImpl setCommandScript(SetCommandScriptCommandImpl arg) throws EJBException  {
         return invokeCommand("SetCommandScript", arg);
     }
-
 
     /**
      * Service wrapper business method for the GetClassList service.
@@ -176,7 +184,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GetClassListCommand getClassList(GetClassListCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public GetClassListCommandImpl getClassList(GetClassListCommandImpl arg) throws EJBException  {
         return invokeCommand("GetClassList", arg);
     }
     
@@ -186,7 +195,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public DeployCarCommand deployCar(DeployCarCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public DeployCarCommandImpl deployCar(DeployCarCommandImpl arg) throws EJBException  {
         return invokeCommand("DeployCar", arg);
     }
 
@@ -196,7 +206,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public PackageCarCommand packageCar(PackageCarCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public PackageCarCommandImpl packageCar(PackageCarCommandImpl arg) throws EJBException  {
         return invokeCommand("PackageCar", arg);
     }
 
@@ -206,7 +217,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public CatalogCarCommand catalogCar(CatalogCarCommand arg) throws EJBException  {
+    @WebMethod(exclude=true)
+    public CatalogCarCommandImpl catalogCar(CatalogCarCommandImpl arg) throws EJBException  {
         return invokeCommand("CatalogCar", arg);
     }
 }

@@ -18,6 +18,7 @@
 package com.ail.core.product;
 
 import javax.ejb.CreateException;
+import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
@@ -34,6 +35,7 @@ import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Configurable
 @Stateless
+@Remote(ProductManager.class)
 public class ProductManagerBean extends EJBComponent implements ProductManager {
     private static final String NAMESPACE="com.ail.core.product.ProductManagerBean";
     private SessionContext ctx = null;

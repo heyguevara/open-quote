@@ -18,6 +18,7 @@
 package com.ail.insurance.quotation;
 
 import javax.ejb.CreateException;
+import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
@@ -37,7 +38,8 @@ import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument
 
 @Configurable
 @Stateless
-public class QuotationBean extends EJBComponent implements Quotation {
+@Remote(Quotation.class)
+public class QuotationBean extends EJBComponent implements QuotationLocal {
     private static final String namespace="com.ail.insurance.quotation.QuotationBean";
     private SessionContext ctx = null;
     

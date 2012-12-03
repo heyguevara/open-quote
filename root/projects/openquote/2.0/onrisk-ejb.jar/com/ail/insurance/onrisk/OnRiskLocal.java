@@ -17,70 +17,39 @@
 
 package com.ail.insurance.onrisk;
 
-import javax.ejb.CreateException;
-import javax.ejb.Remote;
-import javax.ejb.SessionContext;
-import javax.ejb.Stateless;
+import javax.ejb.Local;
 
-import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.EJBComponent;
 import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
 import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
 import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
-@Configurable
-@Stateless
-@Remote(OnRisk.class)
-public class OnRiskBean extends EJBComponent implements OnRiskLocal {
-    private static final String namespace="com.ail.insurance.onrisk.OnRiskBean";
-    private SessionContext ctx = null;
-
-    public OnRiskBean() {
-        initialise(namespace);
-    }
-
-    public void setSessionContext(SessionContext context) {
-        ctx = context;
-    }
-
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-
-    public void ejbCreate() throws CreateException {
-        initialise(namespace);
-    }
-
+@Local
+public interface OnRiskLocal {
     /**
-     * Service wrapper business method for the GenerateCertificateArgument service.
-     * @param arg The argument to pass to the service.
-     * @return The objects returned from the service.
-     * @throws BaseServerException In response to any exception thrown by the service.
-     */
-    public GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument) {
-        return invokeCommand("GenerateCertificate", argument);
-    }
-    
-    /**
-     * Service wrapper business method for the GenerateInvoiceCommand service.
+     * Service wrapper business method for the GenerateCertificateCommand service.
      * @param arg The command to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument) {
-        return invokeCommand("GenerateInvoice", argument);
-    }
-    
+    GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument);
+
+    /**
+     * Service wrapper business method for the GenerateInvoiceCommand service.
+     * @param arg The Argument to pass to the service.
+     * @return The objects returned from the service.
+     * @throws BaseServerException In response to any exception thrown by the service.
+     */
+    GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument);
+
     /**
      * Service wrapper business method for the GenerateWordingCommand service.
      * @param arg The command to pass to the service.
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateWordingArgument generateWording(GenerateWordingArgument argument) {
-        return invokeCommand("GenerateWording", argument);
-    }
+    GenerateWordingArgument generateWording(GenerateWordingArgument argument);
 }
+
 
 

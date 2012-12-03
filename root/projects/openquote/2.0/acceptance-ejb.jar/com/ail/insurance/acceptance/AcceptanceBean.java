@@ -17,6 +17,7 @@
 
 package com.ail.insurance.acceptance;
 
+import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
@@ -29,6 +30,7 @@ import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
 @Configurable
 @Stateless
+@Remote(Acceptance.class)
 public class AcceptanceBean extends com.ail.core.EJBComponent implements Acceptance {
     private static final String namespace="com.ail.insurance.acceptance.AcceptanceBean"; 
     private javax.ejb.SessionContext ctx = null;

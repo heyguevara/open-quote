@@ -18,6 +18,7 @@
 package com.ail.insurance.subrogation;
 
 import javax.ejb.CreateException;
+import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
@@ -27,7 +28,8 @@ import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Configurable
 @Stateless
-public class SubrogationBean extends EJBComponent implements Subrogation {
+@Remote(Subrogation.class)
+public class SubrogationBean extends EJBComponent implements SubrogationLocal {
     private static final long serialVersionUID = 6506879017396687519L;
     private static final String NAMESPACE="com.ail.insurance.subrogation.SubrogationBean";
     private SessionContext ctx=null;
