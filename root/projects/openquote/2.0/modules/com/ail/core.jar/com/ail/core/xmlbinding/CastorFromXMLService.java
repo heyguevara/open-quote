@@ -65,7 +65,9 @@ public class CastorFromXMLService extends Service<FromXMLService.FromXMLArgument
 			
             resolver = CastorMappingLoader.fetchClassResolver(args.getXmlMappingInOut());
 
-            Unmarshaller unmarshaller=new Unmarshaller(args.getClassIn(), this.getClass().getClassLoader());
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            
+            Unmarshaller unmarshaller=new Unmarshaller(args.getClassIn(), classLoader);
 
             // many configs (etc) contain embedded text and we don't want to lose the formatting.
             unmarshaller.setWhitespacePreserve(true);

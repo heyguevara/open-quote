@@ -119,7 +119,7 @@ public class ConfigurationAggregate {
      * @throws TransformerException 
      * @throws SAXException 
      */
-    private void mergeAnnotationGeneratedConfigs(String searchPath, String annotationTypeOutputFile) throws Exception {
+    public void mergeAnnotationGeneratedConfigs(String searchPath, String annotationTypeOutputFile) throws Exception {
         PrintWriter pw=new PrintWriter(annotationTypeOutputFile);
 
         Collection<File> configs=findAnnotationConfigs(searchPath);

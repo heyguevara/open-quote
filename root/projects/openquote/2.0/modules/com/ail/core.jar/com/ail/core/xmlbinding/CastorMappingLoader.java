@@ -57,7 +57,7 @@ public class CastorMappingLoader {
             InputStream defaultMappingStream=null;
             
             // ... create a new Mapping
-            Mapping mapping=new Mapping();
+            Mapping mapping=new Mapping(Thread.currentThread().getContextClassLoader());
             
             // add the default mapping to it
             defaultMappingStream=CastorMappingLoader.class.getResourceAsStream("CastorBaseMapping.xml");
@@ -76,9 +76,12 @@ public class CastorMappingLoader {
                 mapping.loadMapping(source);
             }
 
-            resolver = (XMLClassDescriptorResolver) ClassDescriptorResolverFactory.createClassDescriptorResolver(BindingType.XML);
             MappingUnmarshaller mum = new MappingUnmarshaller();
+
             MappingLoader loader = mum.getMappingLoader(mapping, BindingType.XML);
+            
+            resolver = (XMLClassDescriptorResolver) ClassDescriptorResolverFactory.createClassDescriptorResolver(BindingType.XML);
+            
             resolver.setMappingLoader(loader);
 
             // save the mapping file for use later, we'll use it here too before we return.
