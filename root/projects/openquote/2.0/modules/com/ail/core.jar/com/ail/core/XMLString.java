@@ -33,23 +33,22 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.apache.xpath.XPathAPI;
 import org.apache.xpath.objects.XObject;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.traversal.NodeIterator;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -269,34 +268,40 @@ public class XMLString implements Cloneable, Serializable {
     }
 
     /**
-     * Apply the specified xpath expression to the current XMLString.
+     * Apply the specified XPath expression to the current XMLString.
      * @param expr XPath expression
      * @return The result of the query.
      * @throws XPathExpressionException 
      * @throws SAXException 
+     * @throws TransformerException 
      **/
-    public String eval(String expr) throws XPathExpressionException, SAXException  {
-		StringWriter sw=new StringWriter();
+    public String eval(String expr) throws XPathExpressionException, SAXException, TransformerException {
+        StringWriter sw = new StringWriter();
 
-	    XPathFactory factory = XPathFactory.newInstance();
-	    XPath xpath = factory.newXPath();
-	    XPathExpression compiledExpr = xpath.compile(expr);
+        Transformer serializer;
+        serializer = getTransformer(null);
 
-	    Object result = compiledExpr.evaluate(getXmlDocument(), XPathConstants.NODESET);
-	    NodeList nodes = (NodeList) result;
-	    for (int i = 0; i < nodes.getLength(); i++) {
-	        sw.append(nodes.item(i).getNodeValue()); 
-	    }
-		
-		return(sw.toString());
+        serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+
+        NodeIterator ni = XPathAPI.selectNodeIterator(getXmlDocument(), expr);
+        for (Node n = null; (n = ni.nextNode()) != null;) {
+            if (n.getNodeType() == Node.ATTRIBUTE_NODE) {
+                sw.append(n.getNodeValue());
+            } else {
+                serializer.transform(new DOMSource(n), new StreamResult(sw));
+            }
+        }
+
+        return (sw.toString());
     }
 
     /**
      * Apply the specified xpath expression to the current XMLString.
      * @param xpath XMLString representing the query
      * @return The result of the query.
+     * @throws TransformerException 
      **/
-    public String eval(XMLString xpath) throws XPathExpressionException, SAXException {
+    public String eval(XMLString xpath) throws XPathExpressionException, SAXException, TransformerException {
 		return (this.eval(xpath.toString()));
     }
 
@@ -326,7 +331,7 @@ public class XMLString implements Cloneable, Serializable {
 	}
 
 
-    private String evalToTextLocal(String xpath) throws XPathExpressionException, SAXException {
+    private String evalToTextLocal(String xpath) throws XPathExpressionException, SAXException, TransformerException {
         if (xpath.indexOf('@')==-1) {
             return eval(xpath+"/text()");
         }
@@ -342,8 +347,9 @@ public class XMLString implements Cloneable, Serializable {
      * @see #evalToText(com.ail.core.XMLString)
      * @param xpath The xpath expression
      * @return The value of the text element or attribute.
+     * @throws TransformerException 
      */
-    public String evalToText(String xpath) throws XPathExpressionException, SAXException {
+    public String evalToText(String xpath) throws XPathExpressionException, SAXException, TransformerException {
         // If there's an empty array in the xpath, we have to iterate over it
         int brIdx=xpath.indexOf("[]");
 
@@ -394,8 +400,9 @@ public class XMLString implements Cloneable, Serializable {
      * to return the string 'fred|wilma'.
      * @param xpath The xpath expression
      * @return The value of the text element or attribute.
+     * @throws TransformerException 
      */
-    public String evalToText(XMLString xpath) throws XPathExpressionException, SAXException {
+    public String evalToText(XMLString xpath) throws XPathExpressionException, SAXException, TransformerException {
         return evalToText(xpath.toString());
     }
 
@@ -403,8 +410,9 @@ public class XMLString implements Cloneable, Serializable {
      * Apply the specified xpath expression to the current XMLString, and
      * replace the current contents of the XMLString with the result.
      * @param xpath A string representing the query to apply.
+     * @throws TransformerException 
      **/
-    public void evalInline(String xpath) throws XPathExpressionException, SAXException {
+    public void evalInline(String xpath) throws XPathExpressionException, SAXException, TransformerException {
 		setXMLString(this.eval(xpath));
     }
 
@@ -412,8 +420,9 @@ public class XMLString implements Cloneable, Serializable {
      * Apply the specified xpath expression to the current XMLString, and
      * replace the current contents of the XMLString with the result.
      * @param xpath An XMLString representing the query to apply.
+     * @throws TransformerException 
      **/
-    public void evalInline(XMLString xpath) throws XPathExpressionException, SAXException {
+    public void evalInline(XMLString xpath) throws XPathExpressionException, SAXException, TransformerException {
 		this.evalInline(xpath.toString());
     }
 

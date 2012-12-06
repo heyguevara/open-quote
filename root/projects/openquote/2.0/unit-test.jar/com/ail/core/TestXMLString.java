@@ -24,9 +24,13 @@ import com.ail.core.XMLString;
 import java.io.File;
 import java.util.Locale;
 
+import javax.xml.transform.TransformerException;
+import javax.xml.xpath.XPathExpressionException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 /**
  * Tests for the XMLString class. These tests use the following example xml/xsl
@@ -266,6 +270,12 @@ public class TestXMLString {
         xml = new XMLString(
                 "<quoteSection xsi:type=\"java:com.ail.insurance.policy.Policy\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
         assertEquals("failed without space or header", "com.ail.insurance.policy.Policy", xml.getXsiType());
+    }
+    
+    @Test
+    public void testConfigExtractXpath() throws XPathExpressionException, SAXException, TransformerException {
+        XMLString xml=new XMLString("<configuration><builders><builder name='test' class='com.ail.core.Test'/></builders></configuration>");
+        assertEquals("<builder class=\"com.ail.core.Test\" name=\"test\"/>", xml.eval("/configuration/builders/*").toString());
     }
 }
 
