@@ -13,7 +13,6 @@
   <property name="test.dir" value="${target.dir}/test" />
   <property name="buildlib.dir" value="${project.dir}/build/lib" />
   <property name="bootlib.dir" value="${project.dir}/build/boot" />
-  <property name="domain.dir" value="${basedir}/domain/jboss" />
   <property name="tmp" value="${build.dir}/tmp" />
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
@@ -42,7 +41,17 @@
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />
-
+  
+  <macrodef name="_initialise-ant-contribs-macro">
+    <sequential>
+      <taskdef resource="net/sf/antcontrib/antlib.xml" >
+        <classpath>
+          <pathelement location="${bootlib.dir}/ant-contrib-1.0b3.jar" />
+        </classpath>
+      </taskdef>
+    </sequential>
+  </macrodef>
+  
   <!-- Convert a package name into a path name -->
   <!-- e.g. "my.package.name" -> "my/package/name" -->
   <macrodef name="pathify-package-name-macro">
@@ -156,8 +165,9 @@
 
       <java fork="yes" classname="com.ail.core.configure.Main">
         <classpath>
-          <fileset dir="${jboss.dir}" includes="lib/endorsed/xercesImpl.jar" />
-          <fileset dir="${jboss.dir}" includes="client/jbossall-client.jar" />
+          <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+          <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+          <dirset dir="${deploy.dir}" includes="configure-server-ejb.jar" />
         </classpath>
         <arg value="username=@{username}" />
         <arg value="password=@{password}" />
@@ -168,63 +178,30 @@
     </sequential>
   </macrodef>
 
-  <!-- Macro to set (i.e. upload to the database) factory configurations. -->
-  <macrodef name="ail-reset-configurations-macro">
-    <sequential>
-
-      <echo message="resetting configurations in database ${dbname}" />
-
-      <path id="reset.classpath">
-        <fileset dir="${test.dir}" includes="**/*.jar" />
-        <fileset dir="${jboss.dir}">
-          <include name="lib/endorsed/xercesImpl.jar" />
-          <include name="client/jbossall-client.jar" />
-          <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
-          <include name="server/default/lib/*.jar" />
-        </fileset>
-      </path>
-
-      <java classname="com.ail.core.configure.ConfigurationReset" fork="yes" failonerror="yes" classpathref="reset.classpath">
-        <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
-        <jvmarg value="-Dcom.ail.core.configure.loader=com.ail.core.configure.JDBCConfigurationLoader" />
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.driver=com.mysql.jdbc.Driver" />
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.url=jdbc:mysql://localhost:3306/${dbname}" />
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.user=${dbusername}" />
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.password=${dbpassword}" />
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.table=config" />
-        <jvmarg value="-Dcom.ail.core.configure.loaderParam.databaseName=${dbname}" />
-        <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser" />
-        <jvmarg value="-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl" />
-        <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" />
-      </java>
-    </sequential>
-  </macrodef>
-
   <!-- The annotation processor (in development/annotations.jar) generates fragments of config based on -->
   <!-- the annotations encountered during compilation. This macro aggregates these fragments and outputs -->
   <!-- a single file. -->
-  <!-- @param paths A list of file system paths to be searched for fragments. -->
-  <!-- @param output-jar The jar into which the aggregated configuration should be written. -->
-  <macrodef name="ail-aggregate-annotated-configurations">
-    <element name="paths" optional="no" />
-    <attribute name="output-jar" />
+  <macrodef name="aggregate-annotated-configurations-macro">
     <sequential>
 
       <!-- convert the path into a property so it can be passed into ConfiurationReset -->
       <!-- as a command line param. -->
       <path id="path.expansion">
-        <paths />
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
+        <dirset dir="${deploy.dir}" includes="*.war/WEB-INF/classes" />
       </path>
       <property name="config.search.path" refid="path.expansion" />
 
       <path id="aggregate.classpath">
-        <dirset dir="${ear.lib}" includes="*.jar" />
-        <fileset dir="${ear.lib}" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${buildlib.dir}" includes="*.jar" />
       </path>
 
       <java classname="com.ail.core.configure.ConfigurationAggregate" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
-        <arg line="-s ${config.search.path} -o @{output-jar}/com/ail/core/AnnotatedTypeConfig.xml" />
+        <arg line="-s ${config.search.path} -o ${module.dir}/com/ail/core/main/core.jar/com/ail/core/AnnotatedTypeConfig.xml" />
       </java>
     </sequential>
   </macrodef>

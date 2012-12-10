@@ -20,7 +20,6 @@ package com.ail.core;
 import java.security.Principal;
 
 import javax.ejb.EJBContext;
-import javax.ejb.EJBException;
 
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
@@ -40,8 +39,9 @@ public abstract class EJBComponent extends Component {
     public abstract EJBContext getSessionContext();
 
     protected void initialise(String namespace) {
-        core=new Core(this);
-        versionEffectiveDate=new VersionEffectiveDate();
+        this.namespace = namespace;
+        core = new Core(this);
+        versionEffectiveDate = new VersionEffectiveDate();
     }
     
     /**
@@ -57,10 +57,17 @@ public abstract class EJBComponent extends Component {
      * the effective date that the component will run as - and hence the version
      * of configuration information it uses.
      * @return version effective date
-     * @throws EJBException
      */
     public VersionEffectiveDate getVersionEffectiveDate() {
         return versionEffectiveDate;
+    }
+
+    /**
+     * @see #getVersionEffectiveDate()
+     * @param ved version effective date
+     */
+    public void setVersionEffectiveDate(VersionEffectiveDate ved) {
+        this.versionEffectiveDate = ved;
     }
 
     /**

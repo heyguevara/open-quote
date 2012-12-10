@@ -11,7 +11,7 @@
   </target>
 
   <target name="_build">
-    <compile-exploded-jar-macro>
+    <compile-exploded-jar-macro merge-configs="no">
       <javac-classpath/>
     </compile-exploded-jar-macro>
   </target>

@@ -124,10 +124,6 @@ public class ConfigurationAggregate {
 
         Collection<File> configs=findAnnotationConfigs(searchPath);
         
-        for(File file: configs) {
-            System.out.println("merging "+file);
-        }
-
         pw.printf("<!-- This is a generated file. The types defined here are automatically create -->\n");
         pw.printf("<!-- by the build system in response to annotations in source code. Edits to   -->\n");
         pw.printf("<!-- this file will be lost.                                                   -->\n");

@@ -35,18 +35,7 @@
   </target>
 
   <target name="openquote: reset configurations" description="reset all the ail configurations">
-
-   	<ail-aggregate-annotated-configurations output-jar="${ear.dir}/lib/core.jar">
-      <paths>
-        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
-        <dirset dir="${ear.dir}/lib" includes="*.jar" />
-        <dirset dir="${ear.dir}" includes="*.jar" />
-        <dirset dir="${ear.dir}" includes="*.war/WEB-INF/classes" />
-      </paths>
-   	</ail-aggregate-annotated-configurations>
-
     <configuration-macro username="${dbusername}" password="${dbpassword}" operation="resetAllConfigurations" />
     <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
-
   </target>
 </project>

@@ -10,7 +10,7 @@
   <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE     -->
   <!-- projects have names like core:something.war. This Beanshell script creates a new -->
   <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war")    -->
-  <macrodef name="_set_output_dir_property_macro">
+  <macrodef name="_set-output-dir-property-macro">
     <sequential>
       <script language="beanshell">
         <classpath>
@@ -55,12 +55,14 @@
       <copy todir="@{destdir}">
         <filterset refid="copy.filterset" />
         <fileset dir="@{srcdir}" includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm" excludes="Build.xml, Ivy.xml" />
+        <fileset dir="@{srcdir}" includes="META-INF/**/*" />
       </copy>
 
       <!-- copy binary files with the filter turned off -->
       <copy todir="@{destdir}">
         <fileset dir="@{srcdir}" includes="**/*.Processor, **/*.pdf, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls" />
       </copy>
+
     </sequential>
   </macrodef>
 
@@ -70,10 +72,12 @@
   <!-- folder will be ${deploy.dir}/deploy/core.ear/core.jar.                                       -->
   <macrodef name="compile-exploded-jar-macro">
     <attribute name="overlay" default="false" />
+    <attribute name="merge-configs" default="true" />
     <element name="javac-classpath" optional="no" />
     <sequential>
 
-      <_set_output_dir_property_macro />
+      <_initialise-ant-contribs-macro />
+      <_set-output-dir-property-macro />
       <mkdir dir="${output.dir}" />
       <mkdir dir="${generated.source.dir}" />
 
@@ -89,6 +93,13 @@
 
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
 
+      <if>
+        <istrue value="@{merge-configs}"/>
+        <then>
+          <aggregate-annotated-configurations-macro />
+        </then>
+      </if>
+    
     </sequential>
   </macrodef>
 
@@ -101,7 +112,7 @@
     <element name="javac-classpath" optional="no" />
     <sequential>
 
-      <_set_output_dir_property_macro />
+      <_set-output-dir-property-macro />
 
       <mkdir dir="${output.dir}" />
 
@@ -142,7 +153,7 @@
     <sequential>
 
       <!-- this will set ${deploy.unit} based on the current projects name -->
-      <_set_output_dir_property_macro />
+      <_set-output-dir-property-macro />
 
       <path id="_temp">
         <javac-classpath />
@@ -167,7 +178,7 @@
     <attribute name="name" />
     <attribute name="namespace" />
     <sequential>
-      <_set_output_dir_property_macro />
+      <_set-output-dir-property-macro />
 
       <mkdir dir="${output.dir}/META-INF/wsdl" />
 
@@ -187,7 +198,7 @@
   <!-- project has we delete the corresponding .class file - but other .class    -->
   <!-- files are left alone.                                                     -->
   <target name="_delete-exploded-jar-overlay=true">
-    <_set_output_dir_property_macro />
+    <_set-output-dir-property-macro />
     <delete failonerror="no">
       <fileset dir="${output.dir}" includes="**/*.MF, **/*.xml, **/*.png, **/*.ico, **/*.gif, **/*.jpg, **/*.jar" excludes="Build.xml, Ivy.xml">
         <present targetdir="${basedir}">
@@ -208,7 +219,7 @@
   <!-- project has we delete the corresponding .class file - but other .class    -->
   <!-- files are left alone.                                                     -->
   <target name="_delete-exploded-war-overlay=true">
-    <_set_output_dir_property_macro />
+    <_set-output-dir-property-macro />
     <delete failonerror="no">
       <fileset dir="${output.dir}" includes="**/*.MF, **/*.jsp, **/*.xml, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.jar" excludes="Build.xml, Ivy.xml, sshWEB-INF/src/*">
         <present targetdir="${basedir}">
@@ -231,7 +242,7 @@
   <!-- Deleting a exploded jar in non-overlay mode is simple - just delete the -->
   <!-- whole exploded jar.                                                     -->
   <target name="_delete-exploded-jar-overlay=false">
-    <_set_output_dir_property_macro />
+    <_set-output-dir-property-macro />
     <delete dir="${generated.source.dir}" failonerror="no" />
     <delete dir="${output.dir}" failonerror="no" />
   </target>
@@ -239,7 +250,7 @@
   <!-- Deleting a exploded war in non-overlay mode is simple - just delete the -->
   <!-- whole exploded war.                                                     -->
   <target name="_delete-exploded-war-overlay=false">
-    <_set_output_dir_property_macro />
+    <_set-output-dir-property-macro />
     <delete dir="${output.dir}" failonerror="no" />
   </target>
 

@@ -34,7 +34,7 @@ import com.ail.core.configure.ConfigurationOwner;
  * source java interpreter (www.beanshell.org). It interprets a scripting language that looks
  * very like java - the most notable exception being that the variables are not "typed". It
  * literally interprets - from Strings or files, there is no compilation phase involved.<p>
- * The interpreter runs 'in-jvm' and through the adoption of a simple convension it has access
+ * The interpreter runs 'in-jvm' and through the adoption of a simple convention it has access
  * to the command argument instance passed to the service, and can modify the instance's 
  * values.<p>
  * This accessor supports the notion of extending (or inheriting) from another BeanShell service.

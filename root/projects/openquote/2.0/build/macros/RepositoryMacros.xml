@@ -28,10 +28,11 @@
 
   <macrodef name="update-dependencies-macro">
     <attribute name="todir" />
+    <attribute name="pattern" default="[artifact]-[revision](-[classifier]).[ext]" />
     <sequential>
-      <_set_output_dir_property_macro />
+      <_set-output-dir-property-macro />
       <_initialise_ivy_macro/>
-      <ivy:retrieve log="download-only" pattern="@{todir}/[artifact]-[revision](-[classifier]).[ext]"/>
+      <ivy:retrieve log="download-only" pattern="@{todir}/@{pattern}"/>
     </sequential>
   </macrodef>
 
@@ -57,7 +58,7 @@
             
           files=new File(modulePath).listFiles();
           for(i=0 ; i!=files.length-1 ; i++) {
-              if (!files[i].getName().matches(".*(-javadoc.jar|-sources.jar|module.xml)")) {
+              if (!files[i].getName().matches(".*(-javadoc.jar|-sources.jar|module.xml|index)")) {
                   mos.println("    &lt;resource-root path='"+files[i].getName()+"'/&gt;");
               }
           }
@@ -85,7 +86,7 @@
   <macrodef name="update-module-dependencies-macro">
     <sequential>
       <_initialise_ivy_macro/>
-      <_set_output_dir_property_macro/>
+      <_set-output-dir-property-macro/>
 
       <mkdir dir="${output.dir}"/>
 

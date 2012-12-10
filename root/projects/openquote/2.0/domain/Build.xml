@@ -37,6 +37,8 @@
       </filterset>
     </copy>
 
+    <update-dependencies-macro todir="${jboss.dir}" pattern="[artifact](-[classifier]).[ext]"/>
+    
     <set-mysql-running-property-macro/>
     
 	<antcall target="setup-db-if"/>

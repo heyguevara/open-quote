@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+    <info organisation="com.ail" module="domain" />
+    <dependencies>
+        <dependency org="org.jboss.modules" name="jboss-modules" rev="1.1.2.GA" />
+    </dependencies>
+</ivy-module>
