@@ -52,12 +52,6 @@ public class CommandServerBean extends EJBComponent implements MessageListener {
         this.ctx = ctx;
     }
     
-    public void ejbCreate() {
-    }
-
-    public void ejbRemove() {
-    }
-                
     public void onMessage(Message msg) {
         try {
             TextMessage tm = (TextMessage) msg;

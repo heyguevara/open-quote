@@ -17,7 +17,8 @@
 
 package com.ail.insurance.onrisk;
 
-import javax.ejb.CreateException;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -40,6 +41,7 @@ public class OnRiskBean extends EJBComponent implements OnRiskLocal {
         initialise(namespace);
     }
 
+    @Resource
     public void setSessionContext(SessionContext context) {
         ctx = context;
     }
@@ -48,7 +50,8 @@ public class OnRiskBean extends EJBComponent implements OnRiskLocal {
         return ctx;
     }
 
-    public void ejbCreate() throws CreateException {
+    @PostConstruct
+    public void postConstruct() {
         initialise(namespace);
     }
 

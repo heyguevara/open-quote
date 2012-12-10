@@ -17,7 +17,8 @@
 
 package com.ail.core.product;
 
-import javax.ejb.CreateException;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -44,6 +45,7 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
         initialise(NAMESPACE);
     }
 
+    @Resource
     public void setSessionContext(SessionContext context) {
         ctx = context;
     }
@@ -52,7 +54,8 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
         return ctx;
     }
 
-    public void ejbCreate() throws CreateException {
+    @PostConstruct
+    public void postConstruct() {
         initialise(NAMESPACE);
     }
 

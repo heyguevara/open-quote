@@ -17,7 +17,8 @@
 
 package com.ail.insurance.subrogation;
 
-import javax.ejb.CreateException;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -38,6 +39,7 @@ public class SubrogationBean extends EJBComponent implements SubrogationLocal {
         initialise(NAMESPACE);
     }
 
+    @Resource
     public void setSessionContext(SessionContext context) {
         ctx = context;
     }
@@ -46,7 +48,8 @@ public class SubrogationBean extends EJBComponent implements SubrogationLocal {
         return ctx;
     }
 
-    public void ejbCreate() throws CreateException {
+    @PostConstruct
+    public void postConstruct() {
         initialise(NAMESPACE);
 	}
 

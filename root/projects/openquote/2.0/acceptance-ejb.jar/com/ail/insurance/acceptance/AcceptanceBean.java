@@ -17,6 +17,8 @@
 
 package com.ail.insurance.acceptance;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -39,6 +41,7 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements Accepta
         initialise(namespace);
     }
 
+    @Resource
     public void setSessionContext(javax.ejb.SessionContext context) {
         ctx = context;
     }
@@ -47,7 +50,8 @@ public class AcceptanceBean extends com.ail.core.EJBComponent implements Accepta
         return ctx;
     }
 
-    public void ejbCreate() throws javax.ejb.CreateException {
+    @PostConstruct
+    public void postConstruct() {
         initialise(namespace);
     }
 

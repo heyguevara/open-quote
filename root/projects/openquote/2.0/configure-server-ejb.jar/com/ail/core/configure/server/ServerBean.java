@@ -17,7 +17,8 @@
 
 package com.ail.core.configure.server;
 
-import javax.ejb.CreateException;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
@@ -29,6 +30,7 @@ import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.CoreUser;
 import com.ail.core.EJBComponent;
+import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
@@ -47,6 +49,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
     }
 
     @WebMethod(exclude=true)
+    @Resource
     public void setSessionContext(SessionContext context) {
         ctx = context;
     }
@@ -56,8 +59,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
         return ctx;
     }
 
-    @WebMethod(exclude=true)
-    public void ejbCreate() throws CreateException {
+    @PostConstruct
+    public void postConstruct() {
         initialise(NAMESPACE);
 	}
 
@@ -66,6 +69,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      */
     @WebMethod
     public void resetCoreConfiguration() throws EJBException  {
+        setVersionEffectiveDate(new VersionEffectiveDate());
         getCore().resetConfiguration();
         ConfigurationHandler.resetCache();
     }
@@ -102,6 +106,8 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      */
     @WebMethod
     public void resetNamedConfiguration(String name) throws EJBException  {
+        setVersionEffectiveDate(new VersionEffectiveDate());
+
         if (name.equalsIgnoreCase("all")) {
 
             // reset the Core config first

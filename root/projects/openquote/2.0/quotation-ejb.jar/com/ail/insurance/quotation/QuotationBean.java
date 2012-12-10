@@ -17,7 +17,8 @@
 
 package com.ail.insurance.quotation;
 
-import javax.ejb.CreateException;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -47,6 +48,7 @@ public class QuotationBean extends EJBComponent implements QuotationLocal {
         initialise(namespace);
     }
 
+    @Resource
     public void setSessionContext(SessionContext context) {
         ctx = context;
     }
@@ -55,7 +57,8 @@ public class QuotationBean extends EJBComponent implements QuotationLocal {
         return ctx;
     }
 
-    public void ejbCreate() throws CreateException {
+    @PostConstruct
+    public void postConstruct() {
         initialise(namespace);
     }
 

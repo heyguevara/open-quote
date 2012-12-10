@@ -24,7 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
 
-import javax.ejb.CreateException;
+import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
@@ -45,21 +45,10 @@ public class EJBLoaderBean implements EJBLoaderLocal {
     SessionContext ctx=null;
     AbstractConfigurationLoader loader=null;
 
+    @Resource
     public void setSessionContext(SessionContext sessionContext) {
         ctx=sessionContext;
     }
-
-    public void ejbRemove() {
-    }
-
-    public void ejbActivate() {
-    }
-
-    public void ejbPassivate() {
-    }
-
-    public void ejbCreate() throws CreateException {
-	}
 
     /**
      * Get an instance of the configuration loader being used
