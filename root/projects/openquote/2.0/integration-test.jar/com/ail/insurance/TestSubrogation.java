@@ -92,7 +92,6 @@ public class TestSubrogation implements CoreUser, ConfigurationOwner {
 
 				// Reset the Rainbow bean's configuration
 				SubrogationBean b=new SubrogationBean();
-		        b.ejbCreate();
 		        b.resetConfiguration();
 
                 new MakeARecoveryService().resetConfiguration();
