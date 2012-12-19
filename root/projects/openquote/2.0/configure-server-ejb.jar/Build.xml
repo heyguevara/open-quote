@@ -19,6 +19,7 @@
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
         <fileset dir="${module.dir}/javax/jms/api/main" includes="jboss-jms-api_1.1_spec-1.0.0.Final.jar" />
+        <fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
       </javac-classpath>
     </compile-exploded-ejb-jar-macro>
   </target>

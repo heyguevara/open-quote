@@ -19,7 +19,7 @@ package com.ail.core;
 
 import java.security.Principal;
 
-import javax.ejb.EJBContext;
+import javax.ejb.SessionContext;
 
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
@@ -36,7 +36,7 @@ public abstract class EJBComponent extends Component {
      * Returns the context passed to the EJB's setSessionContext method.
      * @return session context.
      */
-    public abstract EJBContext getSessionContext();
+    public abstract SessionContext getSessionContext();
 
     protected void initialise(String namespace) {
         this.namespace = namespace;

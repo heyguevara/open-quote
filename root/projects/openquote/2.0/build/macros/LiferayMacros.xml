@@ -202,7 +202,7 @@
       </echo>
 
       <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">
-        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} --opt ${dbname} >> ${mysql.setup.file}"' />
+        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} --ignore-table ${dbname}.config --opt ${dbname} >> ${mysql.setup.file}"' />
       </exec>
 
       <zip file="${content.setup.file}">

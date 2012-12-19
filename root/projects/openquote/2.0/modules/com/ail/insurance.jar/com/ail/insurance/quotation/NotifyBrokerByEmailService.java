@@ -16,6 +16,8 @@
 package com.ail.insurance.quotation;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,6 +45,7 @@ import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.core.configure.Parameter;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
@@ -139,18 +142,30 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailServi
         Session session=null;
         MimeMessage message=null;
         MimeMultipart multipart=null;
+        Authenticator authenticator=null;
 
     	QuotationContext.setPolicy(savedPolicy.getPolicy());
 
-    	String smtpServer = getCore().getParameterValue("smtp-server", "localhost");
         String toAddress = savedPolicy.getPolicy().getBroker().getQuoteEmailAddress();
         String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");
         
-        // TODO Load properties from configuration
-        Properties props = new Properties();
-        props.put("mail.smtp.host", smtpServer);
+        final Properties props = new Properties();
+        
+        for(Parameter p: getCore().getGroup("SMTPServerProperties").getParameter()) {
+            props.put(p.getName(), p.getValue());
+        }
+        
+        if ("true".equals(props.getProperty("mail.smtp.auth"))) {
+            authenticator=new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    String username=props.getProperty("mail.smtp.user");
+                    String password=props.getProperty("mail.smtp.password");
+                    return new PasswordAuthentication(username, password);
+                }
+            };
+        }
 
-        session = Session.getDefaultInstance(props, null);
+        session = Session.getInstance(props, authenticator);
         message = new MimeMessage(session);
         
         message.addRecipients(Message.RecipientType.TO, toAddress);

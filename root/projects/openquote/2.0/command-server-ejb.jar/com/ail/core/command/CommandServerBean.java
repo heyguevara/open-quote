@@ -16,16 +16,16 @@
  */
 package com.ail.core.command;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
-import javax.ejb.EJBContext;
 import javax.ejb.MessageDriven;
-import javax.ejb.MessageDrivenContext;
+import javax.ejb.SessionContext;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.ail.annotation.Configurable;
-import com.ail.core.Core;
 import com.ail.core.EJBComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
@@ -39,24 +39,23 @@ import com.ail.core.XMLString;
 @ActivationConfigProperty(propertyName="destination", propertyValue="queue/AilCommandQueue")}
 )
 public class CommandServerBean extends EJBComponent implements MessageListener {
-    private MessageDrivenContext ctx = null;
-    private Core core=null;
-    private VersionEffectiveDate versionEffectiveDate=null;
+    private static final String namespace="com.ail.core.command.CommandServerBean";
+    private SessionContext ctx; 
     
     public CommandServerBean() {
-        versionEffectiveDate = new com.ail.core.VersionEffectiveDate();
-        core = new Core(this);
+        initialise(namespace);
     }
     
-    public void setMessageDrivenContext(MessageDrivenContext ctx) {
-        this.ctx = ctx;
+    @PostConstruct
+    public void postConstruct() {
+        initialise(namespace);
     }
     
     public void onMessage(Message msg) {
         try {
             TextMessage tm = (TextMessage) msg;
             
-            versionEffectiveDate.setTime(tm.getLongProperty("VersionEffectiveDate"));
+            setVersionEffectiveDate(new VersionEffectiveDate(tm.getLongProperty("VersionEffectiveDate")));
             
             // the command comes to us as a string of XML
             XMLString argumentXml=new XMLString(tm.getText());
@@ -68,7 +67,7 @@ public class CommandServerBean extends EJBComponent implements MessageListener {
             String commandName=argument.getClass().getName();
             commandName=commandName.substring(commandName.lastIndexOf('.')+1);
             
-            com.ail.core.command.Command command = core.newCommand(commandName, Command.class);
+            com.ail.core.command.Command command = getCore().newCommand(commandName, Command.class);
             command.setArgs(argument);
             command.setCallersCore(this);
             command.invoke();
@@ -79,18 +78,13 @@ public class CommandServerBean extends EJBComponent implements MessageListener {
         }
     }
 
+    @Resource
+    private void setSessionContext(SessionContext ctx) {
+      this.ctx = ctx;
+    }
+    
     @Override
-    public EJBContext getSessionContext() {
+    public SessionContext getSessionContext() {
         return ctx;
-    }
-
-    @Override
-    public Core getCore() {
-        return core;
-    }
-
-    @Override
-    public VersionEffectiveDate getVersionEffectiveDate() {
-        return versionEffectiveDate;
     }
 }

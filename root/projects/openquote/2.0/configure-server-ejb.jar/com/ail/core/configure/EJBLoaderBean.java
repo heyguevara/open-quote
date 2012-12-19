@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 import javax.ejb.EJBException;
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -41,6 +42,7 @@ import com.ail.core.VersionEffectiveDate;
  */
 @Stateless
 @Remote(EJBLoader.class)
+@Local(EJBLoaderLocal.class)
 public class EJBLoaderBean implements EJBLoaderLocal {
     SessionContext ctx=null;
     AbstractConfigurationLoader loader=null;

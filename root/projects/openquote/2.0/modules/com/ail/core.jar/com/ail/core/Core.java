@@ -243,7 +243,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
 			setConfiguration(factoryConfig);
 		}
         catch(Exception e) {
-			throw new ConfigurationResetError("Failed to reset Core configuration", e);
+			throw new ConfigurationResetError("Failed to reset Core configuration: "+e.getMessage(), e);
         }
 		finally {
 		    // restore the saved core user

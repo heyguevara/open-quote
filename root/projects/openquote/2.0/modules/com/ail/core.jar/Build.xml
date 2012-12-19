@@ -18,11 +18,13 @@
           <include name="bin/client/jboss-client.jar" />
           <include name="modules/com/liferay/portal/main/portlet.jar"/>
           <include name="modules/javax/xml/rpc/api/main/jboss-jaxrpc-api_1.1_spec-1.0.0.Final.jar" />
+          <include name="modules/org/apache/org/apache/httpcomponents/main/httpcore-4.1.4.jar" />
+          <include name="modules/org/apache/org/apache/httpcomponents/main/httpclient-4.1.2.jar" />
         </fileset>
       </javac-classpath>
     </compile-exploded-jar-macro>
     
-    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.liferay.portal, javax.xml.rpc.api, javax.ejb.api"/>
+    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.liferay.portal, javax.xml.rpc.api, javax.ejb.api, org.apache.httpcomponents"/>
     
   </target>
 

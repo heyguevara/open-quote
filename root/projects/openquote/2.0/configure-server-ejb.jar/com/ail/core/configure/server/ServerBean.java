@@ -25,6 +25,8 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -59,6 +61,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
         return ctx;
     }
 
+    @WebMethod(exclude=true)
     @PostConstruct
     public void postConstruct() {
         initialise(NAMESPACE);
@@ -68,6 +71,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * Reset the Core's configuration to its factory settings.
      */
     @WebMethod
+    @RolesAllowed({"Administrator"})
     public void resetCoreConfiguration() throws EJBException  {
         setVersionEffectiveDate(new VersionEffectiveDate());
         getCore().resetConfiguration();
@@ -105,28 +109,40 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @throws EJBException if the configurationOwner class cannot be found/instantiated.
      */
     @WebMethod
+    @RolesAllowed({"Administrator"})
     public void resetNamedConfiguration(String name) throws EJBException  {
         setVersionEffectiveDate(new VersionEffectiveDate());
 
-        if (name.equalsIgnoreCase("all")) {
+        resetConfig(name);
+    }
 
-            // reset the Core config first
-            getCore().resetConfiguration();
-            ConfigurationHandler.resetCache();
+    /**
+     * Reset a named configuration owner to its factory settings. The <code>name</code> argument
+     * may be "all" in which case a predefined set of configurations (defined in this component's config)
+     * are reset.
+     * @param name The class name of the ConfigurationOwner, or "all" to reset the predefined list.
+     * @throws EJBException if the configurationOwner class cannot be found/instantiated.
+     */
+    @WebMethod
+    @RolesAllowed({"Administrator"})
+    public void resetAllConfigurations() throws EJBException  {
+        setVersionEffectiveDate(new VersionEffectiveDate());
 
-            // loop through the AllNamespaceReset group, and reset all the configs named
-            for(Parameter p: getCore().getGroup("NamespacesToResetOnResetAll").getParameter()) {
-                try {
-                    resetConfig(p.getName());
-                }
-                catch(Throwable t) {
-                    System.err.println("Error resetting configuration for namespace: "+p.getName());
-                    t.printStackTrace(System.err);
-                }
+        // reset the Core config first
+        resetCoreConfiguration();
+        
+        // set the date again so that we pick up the code config just saved.
+        setVersionEffectiveDate(new VersionEffectiveDate(getVersionEffectiveDate().getTime()+1));
+
+        // loop through the AllNamespaceReset group, and reset all the configs named
+        for(Parameter p: getCore().getGroup("NamespacesToResetOnResetAll").getParameter()) {
+            try {
+                resetConfig(p.getName());
             }
-        }
-        else {
-            resetConfig(name);
+            catch(Throwable t) {
+                System.err.println("Error resetting configuration for namespace: "+p.getName());
+                t.printStackTrace(System.err);
+            }
         }
     }
 
@@ -134,6 +150,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * Reset the server side cache used to hold configuration information.
      */
     @WebMethod
+    @RolesAllowed({"Administrator"})
     public void clearConfigurationCache() throws EJBException  {
         ConfigurationHandler.resetCache();
     }
@@ -143,6 +160,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
      * @param namespace The namespace to be cleared from the cache.
      */
     @WebMethod
+    @RolesAllowed({"Administrator"})
     public void clearNamedConfigurationCache(String namespace) throws EJBException  {
         ConfigurationHandler.reset(namespace);
     }

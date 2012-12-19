@@ -138,5 +138,8 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/slf4j-simple-1.6.1.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/saxon-8.7.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/saxon-dom-8.7.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/httpcomponents/main/httpclient-4.1.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/httpcomponents/main/httpcore-4.1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/annotation/api/main/jboss-annotations-api_1.1_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
