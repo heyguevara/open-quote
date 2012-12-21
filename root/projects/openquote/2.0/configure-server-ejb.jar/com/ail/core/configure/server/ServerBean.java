@@ -20,13 +20,16 @@ package com.ail.core.configure.server;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJBException;
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
+import org.jboss.ws.api.annotation.WebContext;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
@@ -41,8 +44,12 @@ import com.ail.core.configure.finder.GetClassListCommandImpl;
 @Configurable
 @Stateless
 @Remote(Server.class)
+@Local(ServerLocal.class)
 @WebService
-public class ServerBean extends EJBComponent implements Server, CoreUser {
+@WebContext(contextRoot="configure", urlPattern="server", authMethod = "BASIC")
+@SecurityDomain("other")
+@RolesAllowed({"Administrator"})
+public class ServerBean extends EJBComponent implements CoreUser {
     private static final String NAMESPACE="com.ail.core.configure.server.ServerBean";
     private SessionContext ctx=null;
 
@@ -65,7 +72,7 @@ public class ServerBean extends EJBComponent implements Server, CoreUser {
     @PostConstruct
     public void postConstruct() {
         initialise(NAMESPACE);
-	}
+    }
 
     /**
      * Reset the Core's configuration to its factory settings.
