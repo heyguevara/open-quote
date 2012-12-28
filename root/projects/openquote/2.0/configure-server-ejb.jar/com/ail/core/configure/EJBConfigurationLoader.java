@@ -160,6 +160,11 @@ public class EJBConfigurationLoader extends AbstractConfigurationLoader {
             handleException(e);
         }
     }
+
+    @Override
+    public boolean isConfigurationRepositoryCreated() {
+        return loader.isConfigurationRepositoryCreated();
+    }
 }
 
 

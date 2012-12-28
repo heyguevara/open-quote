@@ -79,7 +79,7 @@ public class ServerBean extends EJBComponent implements CoreUser {
      */
     @WebMethod
     @RolesAllowed({"Administrator"})
-    public void resetCoreConfiguration() throws EJBException  {
+    public void resetCoreConfiguration() {
         setVersionEffectiveDate(new VersionEffectiveDate());
         getCore().resetConfiguration();
         ConfigurationHandler.resetCache();

@@ -310,4 +310,13 @@ public abstract class AbstractConfigurationLoader {
      * <b>NOTE: ALL CONFIGURATION INFORMATION WILL BE LOST!</b>
      */
     public abstract void deleteConfigurationRepository();
+    
+    /**
+     * Return true if the repository used by the configured loader has been created, false 
+     * otherwise. Implementations may use the value returned by this method to determine
+     * whether they need to create a repository. This is likely to happen only once during
+     * the lifetime of a system.
+     * @return true if the repository has been created, false otherwise.
+     */
+    public abstract boolean isConfigurationRepositoryCreated();
 }

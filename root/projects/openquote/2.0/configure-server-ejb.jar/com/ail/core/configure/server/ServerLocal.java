@@ -38,6 +38,8 @@ public interface ServerLocal {
     void resetCoreConfiguration();
 
     void resetNamedConfiguration(String name);
+    
+    void resetAllConfigurations();
 
     void clearConfigurationCache();
 

@@ -62,7 +62,7 @@ import java.util.Vector;
  * +---------------+---------------+------+-----+---------+-------+</pre>
  */
 public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
-    // we don't want to check for table existance every time we're called,
+    // we don't want to check for table existence every time we're called,
     // so we check once and hang onto the result in this static.
     protected static Boolean configTableExists=null;
 
@@ -250,11 +250,11 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
      * insert a new record with validFrom set to now+1ms, and validTo set to zero.<p>
      * If either the database or table specified in loader.properties does not
      * exist on the first attempt to save a configuration, this method will
-     * attempt to create both. For this to work the db user specified in loader.properties
+     * attempt to create both. For this to work the DB user specified in loader.properties
      * must have the necessary 'GRANTS' for table and database creation.
      * @param namespace The namespace the configuration is associated with.
      * @param config The configuration to be saved.
-     * @throws BootstrapConfigurationError if the configuration cannot be serialized, or the database access fails.
+     * @throws BootstrapConfigurationError if the configuration cannot be serialised, or the database access fails.
      */
     public void saveConfiguration(String namespace, Configuration config) {
 
@@ -296,7 +296,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
             st.close();
             st=null;
 
-            // unmarshal the config object into a serialized byte array
+            // unmarshal the config object into a serialised byte array
             ByteArrayOutputStream baos=new ByteArrayOutputStream();
             ObjectOutputStream oos=new ObjectOutputStream(baos);
             oos.writeObject(config);
@@ -456,7 +456,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
      * configuration information {@link #purgeAllConfigurations} but also removes the
      * repository itself.<p>
      * <b>NOTE: ALL CONFIGURATION INFORMATION WILL BE LOST!</b>
-     * <p>In the context of the JDBCConfigurationLoader this simply means droping the
+     * <p>In the context of the JDBCConfigurationLoader this simply means dropping the
      * config table.
      */
     public void deleteConfigurationRepository() {
@@ -496,5 +496,10 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
         finally {
             Functions.closeJdbc(con, st, null);
         }
+    }
+
+    @Override
+    public boolean isConfigurationRepositoryCreated() {
+        return !configTableDoesNotExist();
     }
 }

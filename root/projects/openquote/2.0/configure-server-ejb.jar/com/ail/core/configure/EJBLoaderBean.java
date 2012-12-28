@@ -213,4 +213,11 @@ public class EJBLoaderBean implements EJBLoaderLocal {
         getLoader().deleteConfigurationRepository();
         return 0;
     }
+    
+    /**
+     * Pass isConfigurationRepositoryCreated requests onto the loader.
+     */
+    public boolean isConfigurationRepositoryCreated() {
+        return getLoader().isConfigurationRepositoryCreated();
+    }
 }

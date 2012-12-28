@@ -44,4 +44,6 @@ public interface EJBLoaderLocal {
     public int purgeAllConfigurations();
 
     public int deleteConfigurationRepository();
+
+    public boolean isConfigurationRepositoryCreated();
 }

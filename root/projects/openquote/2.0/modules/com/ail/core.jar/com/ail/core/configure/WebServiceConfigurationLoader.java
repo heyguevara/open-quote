@@ -297,4 +297,9 @@ public class WebServiceConfigurationLoader extends AbstractConfigurationLoader {
     public Collection<ConfigurationSummary> getNamespacesHistorySummary(String namespace) {
         throw new NotImplementedError("FileConfigurationLoader.getNamespacesHistorySummary");
     }
+
+    @Override
+    public boolean isConfigurationRepositoryCreated() {
+        throw new NotImplementedError("FileConfigurationLoader.isConfigurationRepositoryCreated");
+    }
 }
