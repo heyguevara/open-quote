@@ -54,7 +54,7 @@
       <!-- install text files (properties, xml, etc) with the filter turned on -->
       <copy todir="@{destdir}">
         <filterset refid="copy.filterset" />
-        <fileset dir="@{srcdir}" includes="**/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm" excludes="Build.xml, Ivy.xml" />
+        <fileset dir="@{srcdir}" includes="**/*.jsp, **/*.tld, **/*.js, **/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm, **/*.css" excludes="Build.xml, Ivy.xml" />
         <fileset dir="@{srcdir}" includes="META-INF/**/*" />
       </copy>
 
@@ -170,26 +170,7 @@
       <if-macro condition="exists" property="docompile" arg1="${basedir}/WEB-INF/src" />
       <antcall target="_compile-exploded-war-macro-docompile=${docompile}" />
 
-    </sequential>
-  </macrodef>
-
-  <macrodef name="generate-wsdl-for-endpoint-macro">
-    <attribute name="classname" />
-    <attribute name="name" />
-    <attribute name="namespace" />
-    <sequential>
-      <_set-output-dir-property-macro />
-
-      <mkdir dir="${output.dir}/META-INF/wsdl" />
-
-      <!-- build wsdl for service -->
-      <axis-java2wsdl location="http://this.value.is.replaced.by.jboss" serviceElementName="@{name}Service" servicePortName="@{name}Endpoint" output="${output.dir}/META-INF/wsdl/@{name}.wsdl" use="LITERAL" className="@{classname}" namespace="@{namespace}">
-        <mapping namespace="urn:AIL" package="com.ail.core.configure.server" />
-        <classpath>
-          <fileset dir="${jboss.dir}/client" includes="jbossall-client.jar" />
-        </classpath>
-      </axis-java2wsdl>
-      <compile-exploded-war-macro />
+      <touch file="${output.dir}.dodeploy" />
     </sequential>
   </macrodef>
 
