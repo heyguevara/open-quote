@@ -17,8 +17,8 @@
 	<classpathentry kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/configure.war/WEB-INF/classes" path="configure.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/" kind="src" path="product-manager.war"/>
 	<classpathentry kind="src" path="product-manager.war/WEB-INF/src"/>
-	<classpathentry excluding="WEB-INF/src/" kind="src" path="quotation.war"/>
-	<classpathentry kind="src" path="quotation.war/WEB-INF/src"/>
+	<classpathentry excluding="WEB-INF/src/" kind="src" path="quotation-portlet.war"/>
+	<classpathentry kind="src" path="quotation-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openquote-theme.war"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/irishbrokerpi.war" path="irishbrokerpi.war"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/lifeplus.war" path="lifeplus.war"/>
