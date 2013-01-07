@@ -75,30 +75,7 @@
     <!-- Run as much setup as we can without the server starting -->
     <antcall target="_setup" />
 
-    <parallel>
-
-      <!-- Start the server -->
-      <!--start-liferay-macro /-->
-
-      <sequential>
-        <!-- Wait for the server to start -->
-        <!--waitfor-liferay-to-start-macro /-->
-
-        <!-- With the server running, reset the configs -->
-        <!--ant antfile="BuildCommands.xml" target="ail: reset configurations" /-->
-
-        <!-- Execute unit and integration tests -->
-        <antcall target="test" />
-
-        <!-- Reset the configs as the previous test step will have overwritten them -->
-        <!--ant antfile="BuildCommands.xml" target="ail: reset configurations" /-->
-
-        <!--stop-liferay-macro /-->
-      </sequential>
-
-    </parallel>
-
-    <!-- The only release the core makes is a zip'ed up domain archive (.dar) - which includes the exploded ear. -->
+    <!-- The only release the core makes is a zip'ed up domain archive (.dar). -->
     <release-liferay-domain-macro />
   </target>
 
