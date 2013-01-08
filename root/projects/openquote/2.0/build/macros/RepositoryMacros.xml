@@ -32,7 +32,7 @@
     <sequential>
       <_set-output-dir-property-macro />
       <_initialise_ivy_macro/>
-      <ivy:retrieve log="download-only" pattern="@{todir}/@{pattern}"/>
+      <ivy:retrieve file="Ivy.xml" log="download-only" pattern="@{todir}/@{pattern}"/>
     </sequential>
   </macrodef>
 
