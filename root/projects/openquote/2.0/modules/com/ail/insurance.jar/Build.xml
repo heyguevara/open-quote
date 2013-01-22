@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!--
- Build file for the insurance jar project
--->
+<!-- Build file for the insurance jar project -->
 
 <project default="build" name="openquote:modules/com/ail/insurance.jar">
-  <import file="../../../../BuildSettings.xml" />
+	<import file="../../../../BuildSettings.xml" />
 
-  <target name="clean" description="delete everything that the build can generate">
-    <delete-exploded-jar-macro />
-  </target>
+	<target name="clean" description="delete everything that the build can generate">
+		<delete-exploded-jar-macro />
+	</target>
 
-  <target name="_build">
-    <compile-exploded-jar-macro>
-      <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main/" includes="*.jar" />
-        <fileset dir="${jboss.dir}">
-          <include name="bin/client/jboss-client.jar" />
-          <include name="modules/com/liferay/portal/main/portlet.jar" />
-          <include name="modules/javax/mail/api/main/mail-1.4.4.jar" />
-          <include name="modules/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
-        </fileset>
-      </javac-classpath>
-    </compile-exploded-jar-macro>
+	<target name="_build">
+		<compile-exploded-jar-macro>
+			<javac-classpath>
+				<dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+				<dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+                <fileset dir="${module.dir}/com/ail/core/main/" includes="*.jar" />
+				<fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
+				<fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
+				<fileset dir="${module.dir}/javax/mail/api/main" includes="mail-1.4.4.jar" />
+				<fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
+			</javac-classpath>
+		</compile-exploded-jar-macro>
 
-    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.liferay.portal, com.ail.core, com.ail.commercial"/>
+		<generate-module-descriptor-macro dependencies="com.liferay.portal, com.ail.core, com.ail.commercial" />
 
-  </target>
+	</target>
 
-  <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <antcall target="_build" />
-    <kick-liferay-macro />
-  </target>
+	<target name="build" description="compile (generate, copy, etc) all build outputs">
+		<antcall target="_build" />
+		<kick-liferay-macro />
+	</target>
 
-  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-  </target>
+	<target name="setup" description="run all the one-time-only steps - like copying libs into place">
+	</target>
 
-  <target name="teardown" description="undo whatever setup did">
-  </target>
+	<target name="teardown" description="undo whatever setup did">
+	</target>
 </project>

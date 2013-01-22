@@ -37,9 +37,22 @@
   </macrodef>
 
   <macrodef name="generate-module-descriptor-macro">
-    <attribute name="path" />
     <attribute name="dependencies" default="none"/>
     <sequential>
+      <_initialise_ivy_macro/>
+      <_initialise-ant-contribs-macro />
+      <_set-output-dir-property-macro />
+
+      <if>
+          <contains string="${output.dir}" substring=".jar" />
+          <then>
+            <property name="module.output.dir" value="${output.dir}/.."/>
+          </then>
+          <else>
+            <property name="module.output.dir" value="${output.dir}/main"/>
+          </else>
+      </if>
+
       <!-- generate a new module.xml descriptor -->
       <script language="beanshell">
         <classpath>
@@ -47,19 +60,28 @@
         </classpath>
             
           import java.io.*;
-            
-          modulePath = new File("@{path}").getCanonicalFile().getParent();
-          moduleName = modulePath.replaceAll(".*modules/(.*)/main", "$1").replace('/', '.');
-    
-          mos = new PrintStream(new FileOutputStream(modulePath+"/module.xml"));
+        
+          moduleOutputDir=project.getProperty("module.output.dir");
+          modulePath = new File(moduleOutputDir).getCanonicalFile().getParent();
+          moduleName = modulePath.replaceAll(".*modules/(.*)", "$1").replace('/', '.');
+          mos = new PrintStream(new FileOutputStream(moduleOutputDir+"/module.xml"));
             
           mos.println("&lt;module xmlns='urn:jboss:module:1.1' name='"+moduleName+"'&gt;");
           mos.println("  &lt;resources&gt;");
             
-          files=new File(modulePath).listFiles();
-          for(i=0 ; i!=files.length-1 ; i++) {
-              if (!files[i].getName().matches(".*(-javadoc.jar|-sources.jar|module.xml|index)")) {
-                  mos.println("    &lt;resource-root path='"+files[i].getName()+"'/&gt;");
+          files=new File(moduleOutputDir).listFiles();
+          for(i=0 ; i!=files.length ; i++) {
+              if (files[i].isDirectory()) {
+                  if (!files[i].getName().matches(".*(-javadoc.jar|-sources.jar|module.xml|index)")) {
+                      mos.println("    &lt;resource-root path='"+files[i].getName()+"'/&gt;");
+                  }
+              }
+          }
+          for(i=0 ; i!=files.length ; i++) {
+              if (files[i].isFile()) {
+                  if (!files[i].getName().matches(".*(-javadoc.jar|-sources.jar|module.xml|index)")) {
+                      mos.println("    &lt;resource-root path='"+files[i].getName()+"'/&gt;");
+                  }
               }
           }
             
@@ -86,15 +108,30 @@
   <macrodef name="update-module-dependencies-macro">
     <sequential>
       <_initialise_ivy_macro/>
+      <_initialise-ant-contribs-macro />
       <_set-output-dir-property-macro/>
 
       <mkdir dir="${output.dir}"/>
 
+      <!-- There are two "styles" of module source folder. Ones (like core.jar) into which -->
+      <!-- we are building our code, and those (like modules/org/drools) where we are just -->
+      <!-- packaging up 3rd party jars. We need to differentiate between them here, so we  -->
+      <!-- will do so based on the project's name ending with a .jar or not.               -->
+      <if>
+          <contains string="${output.dir}" substring=".jar" />
+          <then>
+            <property name="module.output.dir" value="${output.dir}/.."/>
+          </then>
+          <else>
+            <property name="module.output.dir" value="${output.dir}/main"/>
+          </else>
+      </if>
+      
       <!-- fetch all the dependencies to the module folder (in addition to whatever might already be there) -->
-      <ivy:retrieve log="download-only"  pattern="${output.dir}/../[artifact]-[revision](-[classifier]).[ext]"/>
+      <ivy:retrieve log="download-only" pattern="${module.output.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
 
       <!-- (re)generate the module descriptor -->
-      <generate-module-descriptor-macro path="${output.dir}/../module.xml" />
+      <generate-module-descriptor-macro />
     </sequential>
   </macrodef>
 

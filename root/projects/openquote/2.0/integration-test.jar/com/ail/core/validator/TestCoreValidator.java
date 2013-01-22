@@ -80,19 +80,11 @@ public class TestCoreValidator extends CoreUserBaseCase {
 	 * Test basic access to the validator service
 	 * @throws Exception
 	 */
-    @Test
+    @Test(expected=PreconditionException.class)
 	public void testValidatorDirectAccess() throws Exception {
         ValidatorService.ValidatorCommand command = getCore().newCommand("TestValidatorCommand", ValidatorService.ValidatorCommand.class);
 
-		try{
-			command.invoke();
-		}
-		catch(PreconditionException e){
-			// exception is what this text expects
-			return;
-		}
-
-		fail("validate with null args should throw a PreconditionException");
+		command.invoke();
     }
 
 	/**

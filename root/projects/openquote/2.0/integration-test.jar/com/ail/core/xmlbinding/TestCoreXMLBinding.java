@@ -55,7 +55,7 @@ public class TestCoreXMLBinding implements CoreUser, ConfigurationOwner {
     private String TestNamespace = "TESTNAMESPACE";
     private String configurationNamespace = TestNamespace;
     private String simpleTestString = 
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
         "<version systemId=\"-1\" attributeCount=\"0\" lock=\"false\" persisted=\"false\" serialVersion=\"0\" xsi:type=\"java:com.ail.core.Version\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"+
         " <version>1.0</version>\n"+
         " <date>14/10/2002</date>\n"+
@@ -288,7 +288,7 @@ public class TestCoreXMLBinding implements CoreUser, ConfigurationOwner {
     }
 
     /**
-     * Check that the core corrently converts a string of XML into the
+     * Check that the core currently converts a string of XML into the
      * corresponding object.
      */
     @Test

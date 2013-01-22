@@ -187,7 +187,7 @@ public class TestCoreXMLMapping implements CoreUser, ConfigurationOwner {
      */
     @Test
     public void testSimpleToXML() throws Exception {
-    	String expected="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+cr+
+    	String expected="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
 		                "<noisrev author=\"Jimbo Clucknasty\" date=\"Some time today\" xsi:type=\"java:com.ail.core.Version\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+cr+
 						" <comment>The floor is far to dark</comment>"+cr+
 						"</noisrev>"+cr;
@@ -282,7 +282,7 @@ public class TestCoreXMLMapping implements CoreUser, ConfigurationOwner {
 	 */
     @Test
 	public void testEmbeddedObject() throws Exception {
-		String expected="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+cr+
+		String expected="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
 		                "<history xsi:type=\"java:com.ail.core.History\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+cr+
 						" <MyVersion author=\"Jimbo Clucknasty\" date=\"Some time today\">"+cr+
 						"  <comment>The floor is far to dark</comment>"+cr+

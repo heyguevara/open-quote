@@ -31,12 +31,12 @@ import org.junit.Test;
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.ThreadLocale;
+import com.ail.core.configure.ConfigurationHandler;
+import com.ail.core.configure.server.ServerBean;
 import com.ail.core.persistence.CloseSessionService.CloseSessionCommand;
 import com.ail.core.persistence.CreateService.CreateCommand;
 import com.ail.core.persistence.LoadService.LoadCommand;
 import com.ail.core.persistence.OpenSessionService.OpenSessionCommand;
-import com.ail.core.product.ListProductsService;
-import com.ail.core.product.ResetAllProductsService;
 import com.ail.insurance.policy.AssessmentNote;
 import com.ail.insurance.policy.AssessmentSheet;
 import com.ail.insurance.policy.BehaviourType;
@@ -49,40 +49,31 @@ import com.ail.insurance.policy.RateBehaviour;
 import com.ail.insurance.policy.Subjectivity;
 import com.ail.insurance.policy.SumBehaviour;
 import com.ail.insurance.policy.Totalizer;
-import com.ail.insurance.quotation.CalculatePremiumService;
 import com.ail.party.Person;
 import com.ail.party.Title;
 import com.ail.util.DateOfBirth;
 
 @SuppressWarnings("deprecation")
-public class TestPolicyPersistence  {
+public class TestPolicyPersistence {
     private Locale savedLocale;
     private CoreProxy core;
-    
-    /**
-     * Sets up the fixture (run before every test). 
-     * Get an instance of Core, and delete the testnamespace from the config table.
-     */
+
     @Before
     public void setUp() {
-        System.setProperty("org.xml.sax.parser", "org.apache.xerces.parsers.SAXParser"); 
+        System.setProperty("org.xml.sax.parser", "org.apache.xerces.parsers.SAXParser");
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
         System.setProperty("java.protocol.handler.pkgs", "com.ail.core.urlhandler");
-        System.setProperty("java.naming.factory.initial","org.jnp.interfaces.NamingContextFactory");
-        System.setProperty("java.naming.provider.url","jnp://localhost:1099");
+        System.setProperty("java.naming.factory.initial", "org.jnp.interfaces.NamingContextFactory");
+        System.setProperty("java.naming.provider.url", "jnp://localhost:1099");
 
-        new CalculatePremiumService().resetConfiguration();
-        new ListProductsService().resetConfiguration();
-        new ResetAllProductsService().resetConfiguration();
+        new ServerBean().resetAllConfigurations();
+        ConfigurationHandler.resetCache();
 
-        core=new CoreProxy();
-        savedLocale=ThreadLocale.getThreadLocale();
+        core = new CoreProxy();
+        savedLocale = ThreadLocale.getThreadLocale();
         ThreadLocale.setThreadLocale(Locale.UK);
     }
 
-    /**
-     * Tears down the fixture (run after each test finishes)
-     */
     @After
     public void tearDown() {
         ThreadLocale.setThreadLocale(savedLocale);
@@ -90,7 +81,8 @@ public class TestPolicyPersistence  {
 
     /**
      * Test put on risk from quotation status
-     * @throws BaseException 
+     * 
+     * @throws BaseException
      * 
      * @throws Exception
      */
@@ -122,7 +114,7 @@ public class TestPolicyPersistence  {
 
             core.newCommand(OpenSessionCommand.class).invoke();
 
-            CreateCommand create=core.newCommand(CreateCommand.class);
+            CreateCommand create = core.newCommand(CreateCommand.class);
             create.setObjectArg(policy);
             create.invoke();
 
@@ -139,12 +131,12 @@ public class TestPolicyPersistence  {
             long start = System.currentTimeMillis();
 
             core.newCommand(OpenSessionCommand.class).invoke();
-            
-            LoadCommand loadCommand=core.newCommand(LoadCommand.class);
+
+            LoadCommand loadCommand = core.newCommand(LoadCommand.class);
             loadCommand.setTypeArg(Policy.class);
             loadCommand.setSystemIdArg(policySystemId);
             loadCommand.invoke();
-            Policy policy=(Policy)loadCommand.getObjectRet();
+            Policy policy = (Policy) loadCommand.getObjectRet();
 
             assertNotNull(policy);
             assertEquals("0101010", policy.getId());
@@ -182,8 +174,8 @@ public class TestPolicyPersistence  {
             assertEquals("East river tea bag cover", policy.getCoverageById("c1").getDescription());
             assertTrue(policy.getCoverageById("c1").isEnabled());
             assertTrue(!policy.getCoverageById("c1").isOptional());
-            assertEquals("\u00A3"+"1,000.00", policy.getCoverageById("c1").getLimit().toString());
-            assertEquals("\u00A3"+"500.00", policy.getCoverageById("c1").getDeductible().toString());
+            assertEquals("\u00A3" + "1,000.00", policy.getCoverageById("c1").getLimit().toString());
+            assertEquals("\u00A3" + "500.00", policy.getCoverageById("c1").getDeductible().toString());
 
             AssessmentSheet sheet = policy.getAssessmentSheet();
 
@@ -220,7 +212,7 @@ public class TestPolicyPersistence  {
             assertEquals("ASSET", fix1.getRelatesTo().getTypeAsString());
             assertEquals("as1", fix1.getRelatesTo().getId());
             assertEquals("final premium", fix1.getContributesTo());
-            assertEquals("\u00A3"+"123.00", fix1.getAmount().toString());
+            assertEquals("\u00A3" + "123.00", fix1.getAmount().toString());
 
             Totalizer tot = (Totalizer) sheet.findLineById("tot");
             assertEquals("tot", tot.getId());
@@ -247,7 +239,7 @@ public class TestPolicyPersistence  {
             assertEquals("as2", sum.getRelatesTo().getId());
             assertEquals("final premium", sum.getContributesTo().toString());
             assertTrue(BehaviourType.LOAD.equals(sum.getType()));
-            assertEquals("\u00A3"+"321.00", sum.getAmount().toString());
+            assertEquals("\u00A3" + "321.00", sum.getAmount().toString());
 
             core.newCommand(CloseSessionCommand.class).invoke();
 

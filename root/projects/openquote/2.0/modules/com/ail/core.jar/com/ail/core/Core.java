@@ -232,7 +232,6 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             // minimal "bootstrap" configuration.
 			saveBootstrapConfiguration();
 			clearConfigurationCache();
-			Thread.sleep(1);
 
 			Configuration factoryConfig;
 			

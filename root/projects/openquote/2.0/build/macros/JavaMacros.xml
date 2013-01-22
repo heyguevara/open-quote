@@ -7,46 +7,6 @@
 
   <target name="dummy" />
 
-  <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE     -->
-  <!-- projects have names like core:something.war. This Beanshell script creates a new -->
-  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war")    -->
-  <macrodef name="_set-output-dir-property-macro">
-    <sequential>
-      <script language="beanshell">
-        <classpath>
-          <fileset dir="${bootlib.dir}" includes="*.jar"/>
-        </classpath>
-	      projectName = project.getName();
-	      deployUnit = projectName.replaceAll("^.*:", "");
-          project.setProperty("generated.source.dir", project.getProperty("target.dir") + "/generated/" + deployUnit);
-	      project.setProperty("deploy.unit", deployUnit);
-		  if (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
-	          deployDir = project.getProperty("deploy.dir");
-              outputDir = deployDir + "/" + deployUnit;
-          }
-          else if (projectName.contains(":modules")) {
-              deploy.dir = project.getProperty("jboss.dir");
-              rootPath = deployUnit.replaceAll("/[^/]*$","");
-              name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
-              outputDir = deploy.dir + "/" + rootPath + "/" + name + "/main/" + name + ".jar";
-          }
-	      else if (projectName.contains(":unit-test.jar")) {
-              outputDir=project.getProperty("test.dir") + "/unit-test.jar";
-	      }
-	      else if (projectName.contains(":integration-test.jar")) {
-	          outputDir = project.getProperty("test.dir") + "/integration-test.jar";
-	      }
-	      else if (projectName.contains(":test.jar")) {
-	          outputDir = project.getProperty("test.dir") + "/test.jar";
-	      }
-	      else {
-              outputDir = project.getProperty("target.dir") + "/"+deployUnit;
-	      }
-          project.setProperty("output.dir", outputDir);
-	    </script>
-    </sequential>
-  </macrodef>
-
   <macrodef name="_copy-resources-macro">
     <attribute name="srcdir" />
     <attribute name="destdir" />
@@ -94,12 +54,12 @@
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
 
       <if>
-        <istrue value="@{merge-configs}"/>
+        <istrue value="@{merge-configs}" />
         <then>
           <aggregate-annotated-configurations-macro />
         </then>
       </if>
-    
+
     </sequential>
   </macrodef>
 
@@ -125,7 +85,7 @@
       </javac>
 
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
-      
+
       <touch file="${output.dir}.dodeploy" />
     </sequential>
   </macrodef>
@@ -164,8 +124,8 @@
       <mkdir dir="${output.dir}/WEB-INF/classes" />
       <mkdir dir="${generated.source.dir}" />
 
-       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
- 
+      <_copy-resources-macro srcdir="." destdir="${output.dir}" />
+
       <!-- compile java code if there is any -->
       <if-macro condition="exists" property="docompile" arg1="${basedir}/WEB-INF/src" />
       <antcall target="_compile-exploded-war-macro-docompile=${docompile}" />
@@ -233,6 +193,7 @@
   <target name="_delete-exploded-war-overlay=false">
     <_set-output-dir-property-macro />
     <delete dir="${output.dir}" failonerror="no" />
+    <delete file="${output.dir}.deployed" />
   </target>
 
   <!-- Delete an exploded jar projects output folder -->

@@ -7,7 +7,10 @@
 			<module name="org.apache.log4j" />
 		</exclusions>
 		<dependencies>
-			<module name="com.liferay.portal" />
+            <module name="com.ail.insurance" />
+            <module name="com.ail.commercial" />
+            <module name="com.ail.core" />
+            <module name="com.liferay.portal" />
 			<module name="javax.mail.api" />
 			<module name="org.jboss.modules" />
 		</dependencies>

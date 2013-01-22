@@ -26,8 +26,11 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.XMLException;
+import com.ail.core.product.ProductDetails;
+import com.ail.core.product.ListProductsService.ListProductsCommand;
 import com.ail.insurance.pageflow.PageFlow;
 import com.ail.insurance.pageflow.RowScroller;
 import com.ail.insurance.policy.SavedPolicy;
@@ -78,7 +81,7 @@ public class QuotationCommon {
         if (request.getProperty("openquote.product")!=null) { 
         	productName=request.getProperty("openquote.product");
         }
-        
+
         return productName;
     }
 
@@ -150,5 +153,44 @@ public class QuotationCommon {
         }
         
         return quote;
+    }
+
+    /**
+     * Build an HTML select option string listing all the available products.
+     * 
+     * @return String of products on option format. May be null.
+     */
+    public static String buildProductSelectOptions(String product) {
+        try {
+            ListProductsCommand lpods = QuotationContext.getCore().newCommand(ListProductsCommand.class);
+
+            lpods.invoke();
+
+            StringBuffer ret = new StringBuffer("<option>?</option>");
+
+            for (ProductDetails p : lpods.getProductsRet()) {
+                // It is admittedly naff to hard-code a product name here, but
+                // at the moment the product
+                // catalog doesn't have sufficient structure to indicate whether
+                // a product is "abstract" -
+                // i.e. it cannot be quoted from but is instead a base which
+                // other products extend.
+                // TODO Remove this when the catalog has more meta data
+                if ("AIL.Base".equals(p.getName())) {
+                    continue;
+                }
+
+                if (p.getName().equals(product)) {
+                    ret.append("<option selected='yes'>" + p.getName() + "</option>");
+                } else {
+                    ret.append("<option>" + p.getName() + "</option>");
+                }
+            }
+
+            return ret.toString();
+        } catch (BaseException e) {
+            e.printStackTrace();
+            return "<option>***ERROR***</option>";
+        }
     }
 }

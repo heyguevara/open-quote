@@ -18,7 +18,6 @@
 package com.ail.core;
 
 import java.io.BufferedReader;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,8 +34,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-import com.ail.core.command.CommandInvocationError;
 import com.ail.annotation.XPathFunctionDefinition;
+import com.ail.core.command.CommandInvocationError;
 
 /**
  * Utility function class. A collection of useful static methods that are 

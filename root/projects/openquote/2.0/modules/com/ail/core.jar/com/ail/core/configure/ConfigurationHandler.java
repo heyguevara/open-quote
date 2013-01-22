@@ -245,25 +245,22 @@ public class ConfigurationHandler {
         }
         else {
             // ...search through the list of (historical) configs in the namespace...
-			for(int i=0 ; i<nsl.size() ; i++) {
-				config=(Configuration)nsl.get(i);
-				// ...if the config's date range spans the owner's version effective date...
-                if (config.getValidFrom().compareTo(user.getVersionEffectiveDate())<=0
-                &&  (config.getValidTo()==null || config.getValidTo().compareTo(user.getVersionEffectiveDate())>=0)) {
-					// ...if the cached config has timed out, remove it to force a reload.
+            for (Configuration c : nsl) {
+                // ...if the config's date range spans the owner's version effective date...
+                if (c.getValidFrom().compareTo(user.getVersionEffectiveDate()) <= 0 && (c.getValidTo() == null || c.getValidTo().compareTo(user.getVersionEffectiveDate()) >= 0)) {
+                    config = c;
+                    // ...if the cached config has timed out, remove it to force a reload.
                     // Note: A -1 as a config timeout means "never timeout".
                     // TODO This needs to say "and there's a newer version of the config in the DB"
-                    // TODO we'll need a new 'isNewerConfig(...)' method in the AbstractLoader to help here. 
-					if (config.getValidTo()==null 
-                    && config.getTimeout() > -1
-					&&  System.currentTimeMillis()-config.getLoadedAt().getTime() > config.getTimeout()) {
-						nsl.remove(i);
-                        config=null;
-					}
+                    // TODO we'll need a new 'isNewerConfig(...)' method in the AbstractLoader to help here.
+                    if (config.getValidTo() == null && config.getTimeout() > -1 && System.currentTimeMillis() - config.getLoadedAt().getTime() > config.getTimeout()) {
+                        nsl.remove(config);
+                        config = null;
+                    }
                     break;
                 }
-                config=null;
-			}
+                config = null;
+            }
 
 			// if config is still null, there wasn't one with the right date. Load it,
             // and put it in the cache.

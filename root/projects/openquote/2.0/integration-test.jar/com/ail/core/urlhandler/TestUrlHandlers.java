@@ -17,10 +17,11 @@
 
 package com.ail.core.urlhandler;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -122,70 +123,6 @@ public class TestUrlHandlers {
     }
 
     /**
-     * Test raw access to the alfresco repository. This test uses the same method of access
-     * as the alfresco content URL handler uses.
-     * @throws Exception
-     */
-    @Test
-    public void testAlfrescoUrlAccessWithoutATicket() throws Exception {
-        URL url=null;
-
-        // try to access the content without a ticket
-        try {
-            url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl");
-            String p=Functions.loadUrlContentAsString(url);
-            System.out.println("res:"+p);
-            fail("got content even though we didn't pass a vaid ticket in");
-        }
-        catch(IOException e) {
-            assertTrue("expected error to contain: 'HTTP response code: 401', but message was: '"+e.getMessage()+"'", e.getMessage().contains("HTTP response code: 401"));
-        }
-    }
-
-    @Test
-    public void testAlfrescoUrlAccessWithATicket() throws Exception {
-        URL url=null;
-
-        // get a ticket for admin/admin
-        url=new URL("http://localhost:8080/alfresco/service/api/login?u=admin&pw=admin");
-        String rawTicketResponse=Functions.loadUrlContentAsString(url);        
-        assertTrue(rawTicketResponse.indexOf("<ticket>")>0);
-        String ticket=rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<"));
-
-        // try to access the content again, but with a ticket
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Data%20Dictionary/Email%20Templates/invite_user_email.ftl&ticket="+ticket);
-        Functions.loadUrlContentAsString(url);
-    }
-
-    /**
-     * Test raw access to the alfresco repository with and without defining the language. This test uses the same method of access
-     * as the alfresco content URL handler uses.
-     * @throws Exception
-     */
-    @Test
-    public void testAlfrescoUrlAccessWithLocale() throws Exception {
-        URL url=null;
-
-        // get a ticket for admin/admin
-        url=new URL("http://localhost:8080/alfresco/service/api/login?u=admin&pw=admin");
-        String rawTicketResponse=Functions.loadUrlContentAsString(url);        
-        assertTrue(rawTicketResponse.indexOf("<ticket>")>0);
-        String ticket=rawTicketResponse.substring(rawTicketResponse.indexOf("<ticket>")+8, rawTicketResponse.lastIndexOf("<"));
-
-        // get content without specifying a local
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote&ticket="+ticket);
-        assertTrue(Functions.loadUrlContentAsString(url).contains("solution for providing"));
-
-        // get content with a locale for which content is defined
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote&ticket="+ticket+"&language=de");
-        assertTrue(Functions.loadUrlContentAsString(url).contains("Versicherungs-Zitate"));
-
-        // get content with a locale for which content is not defined
-        url=new URL("http://localhost:8080/alfresco/download/direct?path=/Company%20Home/Guest%20Home/Welcome%20to%20OpenQuote&ticket="+ticket+"&language=fr");
-        assertTrue(Functions.loadUrlContentAsString(url).contains("solution for providing"));
-    }
-
-    /**
      * Test product access to the alfresco repository with and without defining the language.
      * @throws Exception
      */
@@ -204,7 +141,7 @@ public class TestUrlHandlers {
         assertTrue(Functions.loadUrlContentAsString(url).contains("Danke"));
 
         // get content with a locale for which content is not defined
-        com.ail.core.ThreadLocale.setThreadLocale(Locale.FRENCH);
+        com.ail.core.ThreadLocale.setThreadLocale(Locale.KOREAN);
         url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
         assertTrue(Functions.loadUrlContentAsString(url).contains("Thank you"));
     }

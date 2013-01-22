@@ -15,5 +15,7 @@
 		<dependency name="xmlsec" org="xml-security" rev="1.2.1" />
 		<dependency name="bsh" org="org.beanshell" rev="2.0b5" />
 		<dependency name="annotation" org="com.ail" rev="3.0" />
+		<dependency name="nexus-staging-ant-tasks" org="org.sonatype.nexus.ant" rev="1.1" />
+		<exclude module="nexus-staging-client" org="com.sonatype.nexus.staging" />
 	</dependencies>
 </ivy-module>

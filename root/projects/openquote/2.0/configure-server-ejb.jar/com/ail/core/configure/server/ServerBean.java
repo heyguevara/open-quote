@@ -80,9 +80,9 @@ public class ServerBean extends EJBComponent implements CoreUser {
     @WebMethod
     @RolesAllowed({"Administrator"})
     public void resetCoreConfiguration() {
-        setVersionEffectiveDate(new VersionEffectiveDate());
         getCore().resetConfiguration();
-        ConfigurationHandler.resetCache();
+        clearConfigurationCache();
+        setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
     /**
@@ -118,9 +118,9 @@ public class ServerBean extends EJBComponent implements CoreUser {
     @WebMethod
     @RolesAllowed({"Administrator"})
     public void resetNamedConfiguration(String name) throws EJBException  {
-        setVersionEffectiveDate(new VersionEffectiveDate());
-
         resetConfig(name);
+        clearConfigurationCache();
+        setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
     /**
@@ -133,14 +133,9 @@ public class ServerBean extends EJBComponent implements CoreUser {
     @WebMethod
     @RolesAllowed({"Administrator"})
     public void resetAllConfigurations() throws EJBException  {
-        setVersionEffectiveDate(new VersionEffectiveDate());
-
         // reset the Core config first
         resetCoreConfiguration();
         
-        // set the date again so that we pick up the code config just saved.
-        setVersionEffectiveDate(new VersionEffectiveDate(getVersionEffectiveDate().getTime()+1));
-
         // loop through the AllNamespaceReset group, and reset all the configs named
         for(Parameter p: getCore().getGroup("NamespacesToResetOnResetAll").getParameter()) {
             try {
@@ -151,6 +146,9 @@ public class ServerBean extends EJBComponent implements CoreUser {
                 t.printStackTrace(System.err);
             }
         }
+        
+        clearConfigurationCache();
+        setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
     /**

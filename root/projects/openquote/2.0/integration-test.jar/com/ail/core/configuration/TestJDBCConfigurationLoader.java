@@ -267,8 +267,4 @@ public class TestJDBCConfigurationLoader extends TestCase {
         }
         con.close();
     }
-
-    public void testWebserviceConfigurationLoader() throws Exception {
-
-    }
 }

@@ -14,15 +14,13 @@
     <compile-exploded-jar-macro>
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${java.home}/lib" includes="plugin.jar" />
-        <fileset dir="${jboss.dir}">
-          <include name="bin/client/jboss-client.jar" />
-          <include name="modules/com/openquote/core/main/*.jar" />
-        </fileset>
+        <fileset dir="${jboss.dir}/bin/client/" includes="jboss-client.jar" />
       </javac-classpath>
     </compile-exploded-jar-macro>
 
-    <generate-module-descriptor-macro path="${output.dir}/../module.xml" dependencies="com.ail.core"/>
+    <generate-module-descriptor-macro dependencies="com.ail.core"/>
 
   </target>
 

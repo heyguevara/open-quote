@@ -59,7 +59,7 @@ public class TestFactoryTypeMerging extends CoreUserBaseCase {
     
             ConfigurationHandler.resetCache();
     
-            new ServerBean().resetNamedConfiguration("all");
+            new ServerBean().resetAllConfigurations();
             new DummyService().resetConfiguration();
             resetConfiguration();
     

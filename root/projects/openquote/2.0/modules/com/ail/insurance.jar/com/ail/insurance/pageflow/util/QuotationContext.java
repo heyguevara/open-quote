@@ -62,7 +62,9 @@ public class QuotationContext {
         	core = (productName!=null) ? new CoreProxy(productNameToConfigurationNamespace(productName)) 
         						       : new CoreProxy();
         	
-        	if (policy == null && productName != null) {
+            setCore(core);
+
+            if (policy == null && productName != null) {
                 policy=(Policy)core.newProductType(productName, "Policy");
                 policy.setProductTypeId(productName);
                 newPolicy=true;
@@ -120,7 +122,6 @@ public class QuotationContext {
         // initialize the thread context
 		setRequest(request);
 		setPolicy(policy);
-		setCore(core);
 		setPageFlow(pageFlow);
     }
     

@@ -74,7 +74,8 @@ public class TestServiceInvocation extends CoreUserBaseCase {
     
             ConfigurationHandler.resetCache();
     
-            new ServerBean().resetNamedConfiguration("all");
+            new ServerBean().resetCoreConfiguration();
+            new ServerBean().resetAllConfigurations();
             new DummyService().resetConfiguration();
             resetConfiguration();
     

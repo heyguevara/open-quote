@@ -133,7 +133,7 @@ public class CoreUserBaseCase implements CoreUser, ConfigurationOwner {
      * known state.
      */
     protected void resetConfigurations() {
-        new ServerBean().resetNamedConfiguration("all");
+        new ServerBean().resetAllConfigurations();
         resetConfiguration();
         ConfigurationHandler.resetCache();
     }

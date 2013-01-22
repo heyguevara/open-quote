@@ -150,7 +150,7 @@
   <target name="_mount-product-space-Mac OS X" depends="_mount-product-space-properties">
     <mkdir dir="${unix.mountpoint}" />
     <exec os="Mac OS X" executable="mount_smbfs" failonerror="yes">
-      <arg value="//admin:admin@localhost:1445/Alfresco/Product" />
+      <arg value="//admin:admin@localhost:8080/api/secure/webdav/guest/document_library/Product" />
       <arg value="${unix.mountpoint}" />
     </exec>
     <echo message="Product space mounted on ${unix.mountpoint}" />

@@ -1,17 +1,51 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later 
- * version.
+ * Redistribution and use of this software and associated documentation
+ * ("Software"), with or without modification, are permitted provided
+ * that the following conditions are met:
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
+ * 1. Redistributions of source code must retain copyright
+ *    statements and notices.  Redistributions must also contain a
+ *    copy of this document.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 51 
- * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * 2. Redistributions in binary form must reproduce the
+ *    above copyright notice, this list of conditions and the
+ *    following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ *
+ * 3. The name "Exolab" must not be used to endorse or promote
+ *    products derived from this Software without prior written
+ *    permission of Intalio, Inc.  For written permission,
+ *    please contact info@exolab.org.
+ *
+ * 4. Products derived from this Software may not be called "Exolab"
+ *    nor may "Exolab" appear in their names without prior written
+ *    permission of Intalio, Inc. Exolab is a registered
+ *    trademark of Intalio, Inc.
+ *
+ * 5. Due credit should be given to the Exolab Project
+ *    (http://www.exolab.org/).
+ *
+ * THIS SOFTWARE IS PROVIDED BY INTALIO, INC. AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT
+ * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL
+ * INTALIO, INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Copyright 1999-2004 (C) Intalio, Inc. All Rights Reserved.
+ *
+ * This file was originally developed by Keith Visco during the
+ * course of employment at Intalio Inc.
+ * All portions of this file developed by Keith Visco after Jan 19 2005 are
+ * Copyright (C) 2005 Keith Visco. All Rights Reserved.
+ *
+ * $Id: XMLClassDescriptorResolverImpl.java 6795 2007-02-01 10:25:42Z wguttmn $
  */
 package org.exolab.castor.xml.util;
 
@@ -48,9 +82,8 @@ import org.exolab.castor.xml.XMLMappingLoader;
  * The default implementation of the ClassDescriptorResolver interface.
  *
  * @author <a href="mailto:keith AT kvisco DOT com">Keith Visco</a>
- * @version $Revision$ $Date$
+ * @version $Revision: 6795 $ $Date: 2006-04-25 15:08:23 -0600 (Tue, 25 Apr 2006) $
  */
-@SuppressWarnings("unchecked")
 public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolver {
 
     /**
@@ -126,7 +159,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.XMLClassDescriptorResolver#resolveXML(java.lang.Class)
      */
-    @SuppressWarnings("rawtypes")
     public XMLClassDescriptor resolveXML(Class type) throws ResolverException {
         if (type == null) {
             return null;
@@ -162,7 +194,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.ClassDescriptorResolver#resolve(java.lang.Class)
      */
-    public ClassDescriptor resolve(@SuppressWarnings("rawtypes") Class type) throws ResolverException {
+    public ClassDescriptor resolve(Class type) throws ResolverException {
         return resolveXML(type);
     }
 
@@ -198,7 +230,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
         }
 
         // -- try to load class for creating a descriptor via introspection
-        Class<?> _class = _classCache.loadClass(className, classLoader);
+        Class _class = _classCache.loadClass(className, classLoader);
         if (_class != null) {
             descriptor = this.createDescriptor(_class);
             if (descriptor != null) {
@@ -215,7 +247,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.XMLClassDescriptorResolver#resolveByXMLName(java.lang.String, java.lang.String, java.lang.ClassLoader)
      */
-    @SuppressWarnings("rawtypes")
     public XMLClassDescriptor resolveByXMLName(String xmlName, String namespaceURI, ClassLoader loader) {
         if (xmlName == null || xmlName.length() == 0) {
             throw new IllegalArgumentException("Cannot resolve a null or zero-length xml name.");
@@ -301,7 +332,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      *
      * @see org.exolab.castor.xml.ClassDescriptorResolver#setMappingLoader(org.exolab.castor.mapping.MappingLoader)
      */
-    @SuppressWarnings("rawtypes")
     public void setMappingLoader(MappingLoader mappingLoader) {
         _mappingLoader = (XMLMappingLoader) mappingLoader;
 
@@ -332,7 +362,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      * @throws ResolverException
      *             If creating the descriptor failed.
      */
-    private XMLClassDescriptor createDescriptor(Class<?> type) throws ResolverException {
+    private XMLClassDescriptor createDescriptor(Class type) throws ResolverException {
         if (!_useIntrospection) {
             return null;
         }
@@ -396,7 +426,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      */
     private XMLClassDescriptor loadDescriptorClass(String className, ClassLoader loader) {
         String descriptorClassName = className + XMLConstants.DESCRIPTOR_SUFFIX;
-        Class<?> descriptorClass = _classCache.loadClass(descriptorClassName, this.getClassLoader(loader));
+        Class descriptorClass = _classCache.loadClass(descriptorClassName, this.getClassLoader(loader));
         if (descriptorClass == null) {
             return null;
         }
@@ -541,7 +571,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
         /**
          * A list of classes that could not be loaded.
          */
-        @SuppressWarnings("rawtypes")
         private List _missingClasses = new ArrayList();
 
         /**
@@ -562,7 +591,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *         class could not be loaded or is contained in the list of
          *         missing classes.
          */
-        public Class<?> loadClass(String className, ClassLoader loader) {
+        public Class loadClass(String className, ClassLoader loader) {
             if (this._missingClasses.contains(className)) {
                 return null;
             }
@@ -609,29 +638,24 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
         /**
          * List of class names a descriptor is not available for.
          */
-        @SuppressWarnings("rawtypes")
         private List                _missingTypes;
         /**
          * Map of cached descriptors with the class names they describe as key.
          */
-        @SuppressWarnings("rawtypes")
         private Map                 _typeMap;
         /**
          * Map of cached descriptors with their XML names as key.
          */
-        @SuppressWarnings("rawtypes")
         private Map                 _xmlNameMap;
         /**
          * List of package mapping name that haven already been tried to load.
          * (Both successfully and unsuccessfully).
          */
-        @SuppressWarnings("rawtypes")
         private List                _loadedPackageMappings;
         /**
          * List of CDR file that have already been tried to load. (Both
          * successfully and unsuccessfully).
          */
-        @SuppressWarnings("rawtypes")
         private List                _loadedCDRLists;
         /**
          * Flag indicating whether package mappings should be loaded or not.
@@ -645,7 +669,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * <br>
          * Initializes alls list and maps.
          */
-        @SuppressWarnings("rawtypes")
         public DescriptorCache() {
             super();
 
@@ -676,7 +699,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *
          * @see #INTERNAL_CONTAINER_NAME
          */
-        @SuppressWarnings("rawtypes")
         private void addDescriptor(String className, XMLClassDescriptor descriptor) {
             _typeMap.put(className, descriptor);
 
@@ -754,7 +776,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          *         list if no such descriptor is stored in this cache. This
          *         method will never return <code>null</code>!
          */
-        @SuppressWarnings("rawtypes")
         public List getDescriptorList(String xmlName) {
             List list = (List) _xmlNameMap.get(xmlName);
 
@@ -787,7 +808,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @see ConcurrentModificationException
          * @see List#iterator()
          */
-        @SuppressWarnings("rawtypes")
         public Iterator getDescriptors(String xmlName) {
             return this.getDescriptorList(xmlName).iterator();
         }
@@ -841,7 +861,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @throws ResolverException
          *             If a CDR file is available but cannot be opened or read.
          */
-        @SuppressWarnings("rawtypes")
         public synchronized void loadCDRList(String packageName, ClassLoader loader) throws ResolverException {
             if (_loadedCDRLists.contains(packageName)) {
                 return;
@@ -861,7 +880,7 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
                     String className = (String) classes.nextElement();
                     String descriptorClassName = (String) cdrList.get(className);
                     try {
-                        Class<?> descriptorClass = loader.loadClass(descriptorClassName);
+                        Class descriptorClass = loader.loadClass(descriptorClassName);
                         this.addDescriptor(className, ((XMLClassDescriptor) descriptorClass.newInstance()));
                     } catch (Exception e) {
                         // -- TODO: report error, but continue
@@ -897,7 +916,6 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
          * @see #setLoadPackageMappings(boolean)
          * @see MappingLoader
          */
-        @SuppressWarnings("rawtypes")
         public synchronized void loadPackageMapping(String packageName, ClassLoader loader) {
             if (!_loadPackageMappings || _loadedPackageMappings.contains(packageName)) {
                 return;
@@ -1015,13 +1033,11 @@ public class XMLClassDescriptorResolverImpl implements XMLClassDescriptorResolve
      */
     static class XCDEnumerator implements ClassDescriptorEnumeration {
 
-        @SuppressWarnings("rawtypes")
         private final Iterator _descriptors;
 
         /**
          * Creates an XCDEnumerator
          */
-        @SuppressWarnings("rawtypes")
         XCDEnumerator(Iterator descriptors) {
             super();
 

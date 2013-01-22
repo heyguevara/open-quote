@@ -126,15 +126,15 @@ public class CastorXMLFactory extends AbstractFactory {
         if (xmlClassResolver==null) {
             try {
                 // ... create a new Mapping
-                Mapping mapping=new Mapping();
+                Mapping mapping=new Mapping(Thread.currentThread().getContextClassLoader());
                 
                 // add the default mapping to it
                 InputStream stream=getClass().getResourceAsStream("/com/ail/core/xmlbinding/CastorBaseMapping.xml");
                 mapping.loadMapping(new InputSource(stream));
 
-                xmlClassResolver = (XMLClassDescriptorResolver) ClassDescriptorResolverFactory.createClassDescriptorResolver(BindingType.XML);
                 MappingUnmarshaller mum = new MappingUnmarshaller();
                 MappingLoader loader = mum.getMappingLoader(mapping, BindingType.XML);
+                xmlClassResolver = (XMLClassDescriptorResolver) ClassDescriptorResolverFactory.createClassDescriptorResolver(BindingType.XML);
                 xmlClassResolver.setMappingLoader(loader);
                 
                 stream.close();
@@ -174,9 +174,9 @@ public class CastorXMLFactory extends AbstractFactory {
                 configurationURL=configureUrl.toExternalForm();
             }
 
-            Class<?> type=Class.forName(typeSpec.getKey());
+            Class<?> type=Thread.currentThread().getContextClassLoader().loadClass(typeSpec.getKey());
             
-            Unmarshaller unmarshaller=new Unmarshaller(type, this.getClass().getClassLoader());
+            Unmarshaller unmarshaller=new Unmarshaller(type, Thread.currentThread().getContextClassLoader());
 
             unmarshaller.setResolver(fetchXmlClassResolver());
 
@@ -211,12 +211,12 @@ public class CastorXMLFactory extends AbstractFactory {
 
     /**
      * EntityResolver to convert '~/' URIs into a URI relative to the URI from which the 
-     * type is being loaded. If the string defining a type is read from a url (see URL Parameter here: 
+     * type is being loaded. If the string defining a type is read from a URL (see URL Parameter here: 
      * {@link CastorXMLFactory}) we want the contents of that URL to be able to 'xinclude' other
-     * content from the same location. However, by defalt xinclude doesn't support relative href
-     * (this is a simplification, but for us using xml:base doesn't help becuase it has to defined
+     * content from the same location. However, by default xinclude doesn't support relative href
+     * (this is a simplification, but for us using xml:base doesn't help because it has to defined
      * an absolute URI too). This Resolver turns any 'href' found in the type's string into 
-     * a URI relative to the file that xincludes it.
+     * a URI relative path to the file that xincludes it.
      */
     class RelativeURLEntityResolver implements EntityResolver {
         String baseURL=null;

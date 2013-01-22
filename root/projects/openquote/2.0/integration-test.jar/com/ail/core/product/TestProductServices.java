@@ -76,10 +76,10 @@ public class TestProductServices extends CoreUserBaseCase {
      * services.
      * <ul>
      * <li>Invoke core.newProductType() with a null argument</li>
-     * <li>Fail if a CommandInvocationError isn't thown (null is an illegal
+     * <li>Fail if a CommandInvocationError isn't thrown (null is an illegal
      * argument).</li>
      * <li>Invoke core.resetProduct() with a null argument</li>
-     * <li>Fail if a CommandInvocationError isn't thown (null is an illegal
+     * <li>Fail if a CommandInvocationError isn't thrown (null is an illegal
      * argument).</li>
      * <li>Invoke core.resetAllProducts()</li>
      * <li>Fail if any exceptions are thrown (resetAll doesn't take any args).</li>

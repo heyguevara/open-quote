@@ -25,7 +25,7 @@
     <!--ant dir="./configure.war" antfile="Build.xml" target="_build" /-->
     <ant dir="./quotation-portlet.war" antfile="Build.xml" target="_build" />
     <!--ant dir="./product-manager.war" antfile="Build.xml" target="_build" /-->
-    <!--ant dir="./openquote-theme.war" antfile="Build.xml" target="_build" /-->
+    <ant dir="./openquote-theme.war" antfile="Build.xml" target="_build" />
     <!--ant dir="./lifeplus.war" antfile="Build.xml" target="_build" /-->
     <!--ant dir="./irishbrokerpi.war" antfile="Build.xml" target="_build" /-->
     <subant-macro target="_build" includes="*test.jar/Build.xml" />

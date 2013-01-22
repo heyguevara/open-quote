@@ -16,6 +16,8 @@
  */
 package com.ail.insurance.pageflow.portlet;
 
+import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -28,20 +30,16 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.ExceptionRecord;
 import com.ail.core.XMLString;
-import com.ail.core.product.ProductDetails;
-import com.ail.core.product.ListProductsService.ListProductsCommand;
 import com.ail.insurance.pageflow.AssessmentSheetDetails;
 import com.ail.insurance.pageflow.Page;
 import com.ail.insurance.pageflow.PageFlow;
 import com.ail.insurance.pageflow.util.QuotationCommon;
 import com.ail.insurance.pageflow.util.QuotationContext;
-import static com.ail.insurance.policy.PolicyStatus.QUOTATION;
-import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 
 /**
  * This Portlet performs a similar function to the {@link QuotationPortlet}, but
@@ -353,7 +351,7 @@ public class SandpitPortlet extends GenericPortlet {
         
         w.printf("<td align='center'>");
         w.printf("Product:");
-        w.printf("<select name='selectedProduct' onChange='submit()' class='portlet-form-input-field'>%s</select>", buildProductSelectOptions(product));
+        w.printf("<select name='selectedProduct' onChange='submit()' class='portlet-form-input-field'>%s</select>", QuotationCommon.buildProductSelectOptions(product));
         w.printf("</td>");
         
         w.printf("<td align='center'>");
@@ -446,45 +444,6 @@ public class SandpitPortlet extends GenericPortlet {
         return ret.toString();
     }
 
-
-    /**
-     * Build an HTML select option string listing all the available products.
-     * 
-     * @return String of products on option format. May be null.
-     */
-    private String buildProductSelectOptions(String product) {
-        try {
-            ListProductsCommand lpods = QuotationContext.getCore().newCommand(ListProductsCommand.class);
-
-            lpods.invoke();
-
-            StringBuffer ret = new StringBuffer("<option>?</option>");
-
-            for (ProductDetails p : lpods.getProductsRet()) {
-                // It is admittedly naff to hard-code a product name here, but
-                // at the moment the product
-                // catalog doesn't have sufficient structure to indicate whether
-                // a product is "abstract" -
-                // i.e. it cannot be quoted from but is instead a base which
-                // other products extend.
-                // TODO Remove this when the catalog has more meta data
-                if ("AIL.Base".equals(p.getName())) {
-                    continue;
-                }
-
-                if (p.getName().equals(product)) {
-                    ret.append("<option selected='yes'>" + p.getName() + "</option>");
-                } else {
-                    ret.append("<option>" + p.getName() + "</option>");
-                }
-            }
-
-            return ret.toString();
-        } catch (BaseException e) {
-            e.printStackTrace();
-            return "<option>***ERROR***</option>";
-        }
-    }
 
     /**
      * Figure out which view mode we're in based on the session.

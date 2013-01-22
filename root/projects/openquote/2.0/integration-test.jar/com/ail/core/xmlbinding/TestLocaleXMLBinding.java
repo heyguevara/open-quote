@@ -28,8 +28,10 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.ThreadLocale;
+import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 import com.ail.core.configure.ConfigurationHandler;
+import com.ail.core.configure.server.ServerBean;
 
 public class TestLocaleXMLBinding extends CoreUserBaseCase {
     static boolean setup=false;
@@ -42,12 +44,14 @@ public class TestLocaleXMLBinding extends CoreUserBaseCase {
     public void setUp() {
         tidyUpTestData();
         setupSystemProperties();
-        setCore(new Core(this));
         if (!setup) {
-            getCore().resetConfiguration();
+            new ServerBean().resetCoreConfiguration();
+            new ServerBean().resetAllConfigurations();
             ConfigurationHandler.resetCache();
             setup=true;
         }
+        setCore(new Core(this));
+        setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
     /**
