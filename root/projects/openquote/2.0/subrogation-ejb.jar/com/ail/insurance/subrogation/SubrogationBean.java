@@ -17,41 +17,23 @@
 
 package com.ail.insurance.subrogation;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.Remote;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
-import com.ail.core.EJBComponent;
+import com.ail.core.StatelessComponent;
 import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Configurable
 @Stateless
 @Remote(Subrogation.class)
-public class SubrogationBean extends EJBComponent implements SubrogationLocal {
+public class SubrogationBean extends StatelessComponent implements SubrogationLocal {
     private static final long serialVersionUID = 6506879017396687519L;
-    private static final String NAMESPACE="com.ail.insurance.subrogation.SubrogationBean";
-    private SessionContext ctx=null;
-    
+
     public SubrogationBean() {
-        initialise(NAMESPACE);
+        initialise("com.ail.insurance.subrogation.SubrogationBean");
+        
     }
-
-    @Resource
-    public void setSessionContext(SessionContext context) {
-        ctx = context;
-    }
-
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        initialise(NAMESPACE);
-	}
 
     public MakeARecoveryArgument makeARecovery(MakeARecoveryArgument arg) {
         return invokeCommand("MakeARecovery", arg);

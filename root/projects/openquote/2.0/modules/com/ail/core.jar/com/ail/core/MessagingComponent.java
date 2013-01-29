@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 2002. All rights reserved. */
+/* Copyright Applied Industrial Logic Limited 2002. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,19 +15,28 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.core.configure;
+package com.ail.core;
 
-import com.ail.core.BaseError;
+import java.security.Principal;
+import javax.annotation.Resource;
+import javax.ejb.MessageDrivenContext;
 
 /**
- * This error is thrown when an error is found in the system's configuration.
+ * This class is use as a superclass by all message bean components. 
  */
-public class ConfigurationError extends BaseError {
-    public ConfigurationError(String description) {
-        super(description);
+public abstract class MessagingComponent extends EJBComponent {
+    private MessageDrivenContext ctx;
+    
+    @Resource
+    public void setSessionContext(MessageDrivenContext context) {
+        ctx = context;
     }
 
-    public ConfigurationError(String description, Throwable target) {
-        super(description, target);
+    public MessageDrivenContext getSessionContext() {
+        return ctx;
+    }
+    
+    public Principal getSecurityPrincipal() {
+        return ctx==null ? null : ctx.getCallerPrincipal();
     }
 }

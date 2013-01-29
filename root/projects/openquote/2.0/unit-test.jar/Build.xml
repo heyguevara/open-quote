@@ -2,33 +2,47 @@
 <!-- Build file for the unit test jar project -->
 
 <project default="build" name="openquote:unit-test.jar">
-	<import file="../BuildSettings.xml" />
+  <import file="../BuildSettings.xml" />
 
-	<target name="clean" description="delete everything that the build can generate">
-		<delete-exploded-jar-macro />
-	</target>
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-jar-macro />
+  </target>
 
-	<target name="_build">
-		<compile-exploded-jar-macro>
-			<javac-classpath>
-				<dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-				<dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-				<dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-				<fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-			</javac-classpath>
-		</compile-exploded-jar-macro>
-	</target>
+  <target name="_build">
+    <compile-exploded-jar-macro>
+      <javac-classpath>
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+      </javac-classpath>
+    </compile-exploded-jar-macro>
+  </target>
 
-	<target name="build" description="compile (generate, copy, etc) all build outputs">
-		<!-- call the internal build target -->
-		<antcall target="_build" />
-	</target>
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <!-- call the internal build target -->
+    <antcall target="_build" />
+  </target>
 
-	<target name="setup" description="run all the one-time-only steps - like copying libs into place">
-		<update-dependencies-macro todir="${test.dir}/lib" />
-	</target>
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <update-dependencies-macro todir="${test.dir}/lib" />
+  </target>
 
-	<target name="teardown" description="undo whatever setup did">
-		<delete dir="${test.dir}" failonerror="no" />
-	</target>
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${test.dir}" failonerror="no" />
+  </target>
+
+  <target name="test" description="run tests defined in this project">
+    <run-unit-tests-macro>
+      <junit-classpath>
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
+      </junit-classpath>
+    </run-unit-tests-macro>
+  </target>
+
 </project>

@@ -171,8 +171,8 @@ public class JaninoInheritanceService {
       </service>
 
       <service name="TestJMSService" builder="ClassBuilder" key="com.ail.core.command.JMSAccessor">
-          <parameter name="Factory">ConnectionFactory</parameter>
-          <parameter name="Queue">queue/AilCommandQueue</parameter>
+          <parameter name="Factory">jms/RemoteConnectionFactory</parameter>
+          <parameter name="Queue">jms/queue/OpenQuoteCommandQueue</parameter>
       </service>
             
       <service name="VelocityService" builder="ClassBuilder" key="com.ail.core.command.VelocityAccessor">
@@ -180,7 +180,7 @@ public class JaninoInheritanceService {
       </service>
       
       <service name="EJBService" builder="ClassBuilder" key="com.ail.core.command.EJBAccessor">
-        <parameter name='JndiName'>ProductManager</parameter>
+        <parameter name='JndiName'>ejb:/product-manager-ejb//ProductManagerBean!com.ail.core.product.ProductManagerRemote</parameter>
       </service>
 
 

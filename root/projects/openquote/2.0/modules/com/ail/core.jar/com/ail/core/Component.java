@@ -117,10 +117,10 @@ public abstract class Component implements CoreUser, ConfigurationOwner {
 	        setConfiguration(factoryConfig);
 	    }
         catch(XMLException e) {
-            throw new ConfigurationResetError("Default Configuration XML error for '"+name+"' sax error is:"+e.getMessage());
+            throw new ConfigurationResetError("Default Configuration XML error for '"+name+"' sax error", e);
         }
         catch(Exception e) {
-	        throw new ConfigurationResetError("Failed to reset "+name+" configuration: "+e);
+	        throw new ConfigurationResetError("Failed to reset "+name+" configuration.", e);
         }
     }
 

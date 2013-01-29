@@ -17,16 +17,13 @@
 
 package com.ail.core.configure.server;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Local;
 import javax.ejb.Remote;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.annotation.security.RolesAllowed;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.ws.api.annotation.WebContext;
@@ -34,7 +31,7 @@ import org.jboss.ws.api.annotation.WebContext;
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.CoreUser;
-import com.ail.core.EJBComponent;
+import com.ail.core.StatelessComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.ConfigurationOwner;
@@ -49,29 +46,10 @@ import com.ail.core.configure.finder.GetClassListCommandImpl;
 @WebContext(contextRoot="configure", urlPattern="server", authMethod = "BASIC")
 @SecurityDomain("other")
 @RolesAllowed({"Administrator"})
-public class ServerBean extends EJBComponent implements CoreUser {
-    private static final String NAMESPACE="com.ail.core.configure.server.ServerBean";
-    private SessionContext ctx=null;
+public class ServerBean extends StatelessComponent implements CoreUser {
 
     public ServerBean() {
-        initialise(NAMESPACE);
-    }
-
-    @WebMethod(exclude=true)
-    @Resource
-    public void setSessionContext(SessionContext context) {
-        ctx = context;
-    }
-
-    @WebMethod(exclude=true)
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-
-    @WebMethod(exclude=true)
-    @PostConstruct
-    public void postConstruct() {
-        initialise(NAMESPACE);
+        initialise("com.ail.core.configure.server.ServerBean");
     }
 
     /**

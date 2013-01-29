@@ -1084,6 +1084,24 @@ public class TestCoreConfiguration implements CoreUser, ConfigurationOwner {
         assertNull(core.getGroup("GroupB"));
         assertNull(core.getGroup("GroupC"));
     }
+    
+    @Test
+    public void testGetParameterAsPropertiesHappyPath() {
+        Configuration config=createComplexConfiguration();
+        
+        Properties p=config.findGroup("plants.trees.oak").getParameterAsProperties();
+        assertEquals(2, p.size());
+        assertEquals("acorns", p.get("fruit"));
+        assertEquals("green", p.get("colour"));
+    }
+
+    @Test
+    public void testGetParameterAsPropertiesForEmptyGroup() {
+        Configuration config=createComplexConfiguration();
+        
+        Properties p=config.findGroup("plants.trees").getParameterAsProperties();
+        assertEquals(0, p.size());
+    }
 }
 
 

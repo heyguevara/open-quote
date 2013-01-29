@@ -17,15 +17,12 @@
 
 package com.ail.core.persistence;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.Remote;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.EJBComponent;
+import com.ail.core.StatelessComponent;
 import com.ail.core.persistence.CreateService.CreateArgument;
 import com.ail.core.persistence.DeleteService.DeleteArgument;
 import com.ail.core.persistence.LoadService.LoadArgument;
@@ -37,26 +34,10 @@ import com.ail.core.persistence.UpdateService.UpdateArgument;
 @Configurable
 @Stateless
 @Remote(PersistenceServer.class)
-public class PersistenceServerBean extends EJBComponent implements PersistenceServerLocal {
-    private static final String NAMESPACE="com.ail.core.persistence.PersistenceServerBean";
-    private SessionContext ctx = null;
+public class PersistenceServerBean extends StatelessComponent implements PersistenceServerLocal {
 
     public PersistenceServerBean() {
-        initialise(NAMESPACE);
-    }
-
-    @Resource
-    public void setSessionContext(SessionContext context) {
-        ctx = context;
-    }
-    
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-    
-    @PostConstruct
-    public void postConstruct() {
-        initialise(NAMESPACE);
+        initialise("com.ail.core.persistence.PersistenceServerBean");
     }
 
     /**

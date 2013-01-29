@@ -17,15 +17,13 @@
 
 package com.ail.core.product;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import javax.ejb.Local;
 import javax.ejb.Remote;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.EJBComponent;
+import com.ail.core.StatelessComponent;
 import com.ail.core.product.ListProductsService.ListProductsArgument;
 import com.ail.core.product.NewProductTypeService.NewProductTypeArgument;
 import com.ail.core.product.RegisterProductService.RegisterProductArgument;
@@ -36,44 +34,35 @@ import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Configurable
 @Stateless
-@Remote(ProductManager.class)
-public class ProductManagerBean extends EJBComponent implements ProductManager {
-    private static final String NAMESPACE="com.ail.core.product.ProductManagerBean";
-    private SessionContext ctx = null;
+@Remote(ProductManagerRemote.class)
+@Local(ProductManagerLocal.class)
+public class ProductManagerBean extends StatelessComponent implements ProductManagerRemote {
 
     public ProductManagerBean() {
-        initialise(NAMESPACE);
-    }
-
-    @Resource
-    public void setSessionContext(SessionContext context) {
-        ctx = context;
-    }
-
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        initialise(NAMESPACE);
+        initialise("com.ail.core.product.ProductManagerBean");
     }
 
     /**
      * Service wrapper method for the ListProducts service.
-     * @param arg LoggingArgument to pass to the service
+     * 
+     * @param arg
+     *            LoggingArgument to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
-    public ListProductsArgument getListProducts(ListProductsArgument arg) throws BaseServerException {
+    public ListProductsArgument listProducts(ListProductsArgument arg) throws BaseServerException {
         return invokeCommand("ListProducts", arg);
     }
 
     /**
      * Service wrapper method for the RegisterProduct service.
-     * @param arg Command to pass to the service
+     * 
+     * @param arg
+     *            Command to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
     public RegisterProductArgument registerProduct(RegisterProductArgument arg) throws BaseServerException {
         return invokeCommand("RegisterProduct", arg);
@@ -81,9 +70,12 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
 
     /**
      * Service wrapper method for the RemoveProduct service.
-     * @param arg Command to pass to the service
+     * 
+     * @param arg
+     *            Command to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
     public RemoveProductArgument removeProduct(RemoveProductArgument arg) throws BaseServerException {
         return invokeCommand("RemoveProduct", arg);
@@ -91,19 +83,25 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
 
     /**
      * Service wrapper method for the ResetProduct service.
-     * @param arg Command to pass to the service
+     * 
+     * @param arg
+     *            Command to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
-    public ResetProductArgument getProductDefinition(ResetProductArgument arg) throws BaseServerException {
+    public ResetProductArgument resetProduct(ResetProductArgument arg) throws BaseServerException {
         return invokeCommand("ResetProduct", arg);
     }
 
     /**
      * Service wrapper method for the ResetAllProductsCommand service.
-     * @param arg LoggingArgument to pass to the service
+     * 
+     * @param arg
+     *            LoggingArgument to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
     public ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg) throws BaseServerException {
         return invokeCommand("ResetAllProducts", arg);
@@ -111,9 +109,12 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
 
     /**
      * Service wrapper method for the UpdateProductDefinition service.
-     * @param arg LoggingArgument to pass to the service
+     * 
+     * @param arg
+     *            LoggingArgument to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
     public UpdateProductArgument updateProduct(UpdateProductArgument arg) throws BaseServerException {
         return invokeCommand("UpdateProduct", arg);
@@ -121,13 +122,14 @@ public class ProductManagerBean extends EJBComponent implements ProductManager {
 
     /**
      * Service wrapper method for the NewProductType service.
-     * @param arg LoggingArgument to pass to the service
+     * 
+     * @param arg
+     *            LoggingArgument to pass to the service
      * @return Return value from the service
-     * @throws BaseServerException In response to exceptions thrown by the service.
+     * @throws BaseServerException
+     *             In response to exceptions thrown by the service.
      */
     public NewProductTypeArgument newProductType(NewProductTypeArgument arg) throws BaseServerException {
         return invokeCommand("NewProductType", arg);
     }
 }
-
-

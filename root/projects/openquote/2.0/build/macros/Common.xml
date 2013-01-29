@@ -17,8 +17,8 @@
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
   <property name="serverBaseUrl" value="localhost:8080" />
-  <property name="java.naming.factory.initial" value="org.jnp.interfaces.NamingContextFactory" />
-  <property name="java.naming.provider.url" value="jnp://localhost:1099" />
+  <property name="java.naming.factory.initial" value="org.jboss.naming.remote.client.InitialContextFactory" />
+  <property name="java.naming.provider.url" value="remote://localhost:4447" />
   <property name="grinder.properties" value="${basedir}/grinder.properties" />
   <property name="connectionpoolloader.params" value="jndiname=java:/ConfigureDS;table=config" />
   <!-- default build.type is developer, bamboo overrides this with a -D on the command line -->

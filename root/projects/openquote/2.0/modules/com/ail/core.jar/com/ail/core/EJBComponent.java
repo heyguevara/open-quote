@@ -19,8 +19,6 @@ package com.ail.core;
 
 import java.security.Principal;
 
-import javax.ejb.SessionContext;
-
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 
@@ -36,7 +34,7 @@ public abstract class EJBComponent extends Component {
      * Returns the context passed to the EJB's setSessionContext method.
      * @return session context.
      */
-    public abstract SessionContext getSessionContext();
+    public abstract Principal getSecurityPrincipal();
 
     protected void initialise(String namespace) {
         this.namespace = namespace;
@@ -79,19 +77,6 @@ public abstract class EJBComponent extends Component {
      */
     public String getConfigurationNamespace() {
         return namespace;
-    }
-
-    /**
-     * Return the security principal associated with this EJB. This will be the
-     * same principal passed to the bean in the SessionContext.
-     */
-    public Principal getSecurityPrincipal() {
-        try {
-            return getSessionContext().getCallerPrincipal();
-        }
-        catch(NullPointerException e) {
-            return null;
-        }
     }
 
     protected <T extends Argument> T invokeCommand(String name, T sourceArgument) {

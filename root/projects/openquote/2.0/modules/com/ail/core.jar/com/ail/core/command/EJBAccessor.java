@@ -19,20 +19,15 @@ package com.ail.core.command;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.rmi.RemoteException;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import javax.ejb.EJBHome;
-import javax.ejb.EJBMetaData;
-import javax.ejb.EJBObject;
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.rmi.PortableRemoteObject;
 
 import com.ail.core.BaseException;
 import com.ail.core.BaseServerException;
+import com.ail.core.CoreProxy;
 import com.ail.core.CoreUser;
 import com.ail.core.CoreUserImpl;
 import com.ail.core.NotImplementedError;
@@ -48,113 +43,57 @@ public class EJBAccessor extends Accessor {
     private Argument args=null;
 
     /**
-     * Get a class representing the remote interface of the EJB.
-     * There are two ways we can do this: Use home.getEJBMetaData, or (if that
-     * fails) create an instance of the bean (home.create) and take the class
-     * of the object returned by the create().<p>
-     * The latter is defo a bad way to go about things, but some app servers
-     * (SunONE for one) don't respond well to getEJBMetaData. 
-     * @param home
-     * @param createMethod
-     * @return A class representing the remote bean class
-     * @throws RemoteException
-     */
-    @SuppressWarnings("unchecked")
-    private Class<EJBObject> remoteInterface(EJBHome home, Method createMethod) throws RemoteException {
-      try {
-        // Method 1 - the smart approach:
-        //  Get the home interface and get the meta data from it.
-        //  Get the EJBs remote interface.
-        EJBMetaData meta=home.getEJBMetaData();
-  
-        return (Class<EJBObject>)meta.getRemoteInterfaceClass();
-      }
-      catch(RemoteException e) {
-        // Method 2 - The dumb approach
-        //  Create an instance of the EJB using home.create().
-        //  Get the class of whatever is returned, and use that.
-        try {
-          Object obj=createMethod.invoke(home);
-          return (Class<EJBObject>)obj.getClass();
-        }
-        catch(Exception ignore) {
-          throw e;
-        }
-      }
-    }
-    
-    /**
      * Get hold of the EJBHome associated with this accessor
 	 * Each instance of this class (EJBAccessor) has an EJB associated with it.
      * This method finds the EJBHome associated with this instance.
      * @return The home interface of the EJB associated with this accessor.
      */
 	private CacheElement getEJBDetails(String methodName, Object[] args) {
-        Method createMethod=null;
-        EJBHome home=null;
-        Class<EJBObject> remoteInterfaceClass=null;
+        Class<?> remoteInterfaceClass=null;
+        Object remoteInterface=null;
 
-        // get initial context
-        Properties p=new Properties();
-
-        if (getFactory()!=null) {
-            p.put(Context.INITIAL_CONTEXT_FACTORY, getFactory());
-        }
-
-        if (settings.getUrl()!=null) {
-            p.put(Context.PROVIDER_URL, settings.getUrl());
-        }
+        CoreProxy cp=new CoreProxy(getArgs().getCallersCore());
+        
+        Properties props=cp.getGroup("JEEAccessorContext").getParameterAsProperties();
 
         // Get the home interface
         try {
-            InitialContext context=new InitialContext(p);
-            home=(EJBHome)context.lookup(getJndiName());
+            InitialContext context=new InitialContext(props);
+            remoteInterface=context.lookup(getJndiName());
         }
         catch(NamingException e) {
             throw new AccessorError("EJBAccessor: failed to find EJB: "+e);
         }
 
         // get the create and invoke methods details.
-        try {
-            int idx=0;
+        int idx=0;
 
-            // create an instance of the bean - experimentation showed that we have to
-            // use reflection here :-(
-            createMethod=home.getClass().getMethod("create");
+        remoteInterfaceClass=remoteInterface.getClass();
 
-            remoteInterfaceClass=remoteInterface(home, createMethod);
-
-            // loop through the methods on the remote interface looking for the method by
-            // name if one was specified, or returning the type of our argument (by convention
-            // EJB components accept one arg and return an object of the same type).
-            Method methods[]=remoteInterfaceClass.getDeclaredMethods();
-            for(idx=0 ; idx<methods.length ; idx++) {
-                if (methodName==null) {
-                    if (methods[idx].getReturnType().isAssignableFrom(args[0].getClass())) {
-                        break;
-                    }
+        // loop through the methods on the remote interface looking for the method by
+        // name if one was specified, or returning the type of our argument (by convention
+        // EJB components accept one arg and return an object of the same type).
+        Method methods[]=remoteInterfaceClass.getDeclaredMethods();
+        for(idx=0 ; idx<methods.length ; idx++) {
+            if (methodName==null) {
+                if (methods[idx].getReturnType().isAssignableFrom(args[0].getClass())) {
+                    break;
                 }
-                else {
-                    if (methodName.equals(methods[idx].getName())) {
-                        break;
-                    }
-                }
-            }
-
-            // if we dropped out of the above loop early, then we found a match,
-            // create a cache element and add it to the cache.
-            if (idx!=methods.length) {
-                return new CacheElement(createMethod, methods[idx], home, remoteInterfaceClass);
             }
             else {
-                throw new AccessorError("EJBAccessor: "+getJndiName()+"."+getRemoteMethod()+"() NoSuchMethodException");
+                if (methodName.equals(methods[idx].getName())) {
+                    break;
+                }
             }
         }
-        catch(NoSuchMethodException e) {
-            throw new AccessorError("EJBAccessor: "+getJndiName()+"."+getRemoteMethod()+"() NoSuchMethodException");
+
+        // if we dropped out of the above loop early, then we found a match,
+        // create a cache element and add it to the cache.
+        if (idx!=methods.length) {
+            return new CacheElement(remoteInterface, methods[idx]);
         }
-        catch(RemoteException e) {
-            throw new AccessorError("EJBAccessor: failed to find EJB: "+e);
+        else {
+            throw new AccessorError("EJBAccessor: "+getJndiName()+"."+getRemoteMethod()+"() NoSuchMethodException");
         }
     }
 
@@ -196,7 +135,7 @@ public class EJBAccessor extends Accessor {
                 }
             }
 
-		    return element.getInvokeMethod().invoke(element.create(), args);
+		    return element.getRemoteMethod().invoke(element.getRemoteInterface(), args);
         }
         catch(IllegalAccessException e) {
             throw new AccessorError("EJBAccessor: "+getJndiName()+"."+getRemoteMethod()+"() IllegalAccessException");
@@ -262,38 +201,6 @@ public class EJBAccessor extends Accessor {
         throw new NotImplementedError("EJBCommand.setConfiguration");
     }
 
-    public void setFactory(String factory) {
-		settings.setFactory(factory);
-    }
-
-    public String getFactory() {
-		return settings.getFactory();
-    }
-
-    public void setServer(String server) {
-        settings.setServer(server);
-    }
-
-    public String getServer() {
-		return settings.getServer();
-    }
-
-    public void setProtocol(String protocol) {
-        settings.setProtocol(protocol);
-    }
-
-    public String getProtocol() {
-        return settings.getProtocol();
-    }
-
-    public void setPortNumber(String portNumber) {
-        settings.setPortNumber(portNumber);
-    }
-
-    public String getPortNumber() {
-        return settings.getPortNumber();
-    }
-
     public void setJndiName(String jndiName) {
         settings.setJndiName(jndiName);
     }
@@ -308,14 +215,6 @@ public class EJBAccessor extends Accessor {
 
     public String getRemoteMethod() {
         return settings.getRemoteMethod();
-    }
-
-    public void setUrl(String url) {
-        settings.setUrl(url);
-    }
-
-    public String getUrl() {
-        return settings.getUrl();
     }
 
     public EJBAccessorSettings getSettings() {
@@ -337,15 +236,10 @@ public class EJBAccessor extends Accessor {
  * a separate class.
  */
 class EJBAccessorSettings {
-    private String factory=null;
-    private String server=null;
-    private String protocol=null;
-    private String portNumber=null;
     private String jndiName=null;
     private String remoteMethod=null;
-    private String url=null;
     private String argType=null;
-    private int[] hashParts=new int[8];
+    private int[] hashParts=new int[3];
     private int hashValue;
 
     /**
@@ -363,63 +257,13 @@ class EJBAccessorSettings {
         for(int i=0 ; i<hashParts.length ; hashValue+=hashParts[i++]);
     }
 
-    /**
-     * Get the factory class' name. For JBoss this would be
-     * <code>org.jnp.interfaces.NamingContextFactory</code> for example.
-     * @return The factory classes name.
-     */
-    public String getFactory() {
-        return factory;
-    }
-
-    /**
-     * Set the value of the factory property.
-     * @see #getFactory
-     * @param factory New factory setting
-     */
-    public void setFactory(String factory) {
-        this.factory = factory;
-        setHashValue(0, factory);
-    }
-
-    /**
-     * Get the server property. This property holds the server name.
-     * @return
-     */
-    public String getServer() {
-        return server;
-    }
-
-    public void setServer(String server) {
-        this.server = server;
-        setHashValue(1, server);
-    }
-
-    public String getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-        setHashValue(2, protocol);
-    }
-
-    public String getPortNumber() {
-        return portNumber;
-    }
-
-    public void setPortNumber(String portNumber) {
-        this.portNumber = portNumber;
-        setHashValue(3, portNumber);
-    }
-
     public String getJndiName() {
         return jndiName;
     }
 
     public void setJndiName(String jndiName) {
         this.jndiName = jndiName;
-        setHashValue(4, jndiName);
+        setHashValue(0, jndiName);
     }
 
     public String getRemoteMethod() {
@@ -428,7 +272,7 @@ class EJBAccessorSettings {
 
     public void setRemoteMethod(String remoteMethod) {
         this.remoteMethod = remoteMethod;
-        setHashValue(5, remoteMethod);
+        setHashValue(1, remoteMethod);
     }
 
     public String getArgType() {
@@ -437,24 +281,7 @@ class EJBAccessorSettings {
 
     public void setArgType(String argType) {
         this.argType=argType;
-        setHashValue(6, argType);
-    }
-
-    public String getUrl() {
-        if (url!=null) {
-            return url;
-        }
-        else if (getProtocol()!=null && getServer()!=null && getPortNumber()!=null) {
-            return getProtocol()+"://"+getServer()+":"+getPortNumber();
-        }
-        else {
-            return null;
-        }
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-        setHashValue(7, url);
+        setHashValue(2, argType);
     }
 
     public int hashCode() {
@@ -474,93 +301,27 @@ class EJBAccessorSettings {
  * Instances of this class are cached to speed up EJB service access.
  */
 class CacheElement {
-    private Method createMethod = null;
-    private Method invokeMethod = null;
-    private EJBHome home = null;
-    private Class<EJBObject> remoteInterfaceClass = null;
+    private Object remoteInterface = null;
+    private Method remoteMethod = null;
 
-    /**
-     * Constructor
-     * @param createMethod The method to use when creating an instance of the EJB.
-     * @param invokeMethod The method to use when invoking the service on the EJB.
-     * @param home The EJBs home interface.
-     */
-    public CacheElement(Method createMethod, Method invokeMethod, EJBHome home, Class<EJBObject> remoteInterfaceClass) {
-        setCreateMethod(createMethod);
-        setInvokeMethod(invokeMethod);
-        setHome(home);
-        setRemoteInterfaceClass(remoteInterfaceClass);
+    public CacheElement(Object remoteInterface, Method remoteMethod) {
+        setRemoteInterface(remoteInterface);
+        setRemoteMethod(remoteMethod);
     }
 
-    /**
-     * Get the create method. The create method is used on the home interface to create
-     * a new instance of the bean
-     * @return create method.
-     */
-    public Method getCreateMethod() {
-        return createMethod;
+    public Object getRemoteInterface() {
+        return remoteInterface;
     }
 
-    /**
-     * Set the create method.
-     * @param method The create method.
-     */
-    public void setCreateMethod(Method method) {
-        this.createMethod = method;
+    public void setRemoteInterface(Object remoteInterface) {
+        this.remoteInterface = remoteInterface;
     }
 
-    /**
-     * Getter to fetch the EJB's home interface.
-     * @return The EJB's home interface.
-     */
-    public EJBHome getHome() {
-        return home;
+    public Method getRemoteMethod() {
+        return remoteMethod;
     }
 
-    /**
-     * Setter to set the EJB's home interface.
-     * @param home Home interface.
-     */
-    public void setHome(EJBHome home) {
-        this.home = home;
+    public void setRemoteMethod(Method remoteMethod) {
+        this.remoteMethod = remoteMethod;
     }
-
-    /**
-     * Getter to fetch the method used to access the service method on the
-     * EJB's remote interface.
-     * @return Service's invoke method
-     */
-    public Method getInvokeMethod() {
-        return invokeMethod;
-    }
-
-    /**
-     * Setter to set the service's EJB remote method.
-     * @param invokeMethod The remote method
-     */
-    public void setInvokeMethod(Method invokeMethod) {
-        this.invokeMethod = invokeMethod;
-    }
-
-    /**
-     * Getter returning the remote interface class supplied by the EJB.
-     * @return Remote interface
-     */
-    public Class<EJBObject> getRemoteInterfaceClass() {
-        return remoteInterfaceClass;
-    }
-
-    /**
-     * Setter to set the remote interface class offered by the EJB
-     * @param remoteInterfaceClass
-     */
-    public void setRemoteInterfaceClass(Class<EJBObject> remoteInterfaceClass) {
-        this.remoteInterfaceClass = remoteInterfaceClass;
-    }
-
-    public EJBObject create() throws IllegalAccessException, InvocationTargetException {
-        Object obj=createMethod.invoke(home);
-        return (EJBObject)PortableRemoteObject.narrow(obj, remoteInterfaceClass);
-    }
-
 }

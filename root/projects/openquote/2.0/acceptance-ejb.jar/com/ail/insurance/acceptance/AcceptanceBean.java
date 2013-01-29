@@ -17,14 +17,12 @@
 
 package com.ail.insurance.acceptance;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.Remote;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
+import com.ail.core.StatelessComponent;
 import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationArgument;
 import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumArgument;
 import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationArgument;
@@ -33,26 +31,10 @@ import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 @Configurable
 @Stateless
 @Remote(Acceptance.class)
-public class AcceptanceBean extends com.ail.core.EJBComponent implements Acceptance {
-    private static final String namespace="com.ail.insurance.acceptance.AcceptanceBean"; 
-    private javax.ejb.SessionContext ctx = null;
+public class AcceptanceBean extends StatelessComponent implements Acceptance {
 
     public AcceptanceBean() {
-        initialise(namespace);
-    }
-
-    @Resource
-    public void setSessionContext(javax.ejb.SessionContext context) {
-        ctx = context;
-    }
-
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        initialise(namespace);
+        initialise("com.ail.insurance.acceptance.AcceptanceBean");
     }
 
     /**

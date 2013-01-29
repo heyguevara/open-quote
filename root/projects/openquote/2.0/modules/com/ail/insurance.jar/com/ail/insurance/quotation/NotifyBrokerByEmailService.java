@@ -16,8 +16,6 @@
 package com.ail.insurance.quotation;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,9 +23,11 @@ import java.io.PrintWriter;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -45,7 +45,6 @@ import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
-import com.ail.core.configure.Parameter;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.QuotationContext;
 import com.ail.insurance.policy.Policy;
@@ -149,11 +148,7 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailServi
         String toAddress = savedPolicy.getPolicy().getBroker().getQuoteEmailAddress();
         String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");
         
-        final Properties props = new Properties();
-        
-        for(Parameter p: getCore().getGroup("SMTPServerProperties").getParameter()) {
-            props.put(p.getName(), p.getValue());
-        }
+        final Properties props=getCore().getGroup("SMTPServerProperties").getParameterAsProperties();
         
         if ("true".equals(props.getProperty("mail.smtp.auth"))) {
             authenticator=new Authenticator() {

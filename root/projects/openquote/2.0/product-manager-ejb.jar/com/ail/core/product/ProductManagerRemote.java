@@ -28,14 +28,14 @@ import com.ail.core.product.ResetProductService.ResetProductArgument;
 import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Remote
-public interface ProductManager {
-    ListProductsArgument getListProducts(ListProductsArgument arg);
+public interface ProductManagerRemote {
+    ListProductsArgument listProducts(ListProductsArgument arg);
 
     RegisterProductArgument registerProduct(RegisterProductArgument arg);
 
     RemoveProductArgument removeProduct(RemoveProductArgument arg);
 
-    ResetProductArgument getProductDefinition(ResetProductArgument arg);
+    ResetProductArgument resetProduct(ResetProductArgument arg);
 
     ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg);
 

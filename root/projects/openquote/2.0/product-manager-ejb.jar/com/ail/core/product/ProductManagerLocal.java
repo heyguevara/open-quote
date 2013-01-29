@@ -30,13 +30,13 @@ import com.ail.core.product.UpdateProductService.UpdateProductArgument;
 
 @Local
 public interface ProductManagerLocal {
-    ListProductsArgument getListProducts(ListProductsArgument arg) throws BaseException;
+    ListProductsArgument listProducts(ListProductsArgument arg) throws BaseException;
 
     RegisterProductArgument registerProduct(RegisterProductArgument arg) throws BaseException;
 
     RemoveProductArgument removeProduct(RemoveProductArgument arg) throws BaseException;
 
-    ResetProductArgument getProductDefinition(ResetProductArgument arg) throws BaseException;
+    ResetProductArgument resetProduct(ResetProductArgument arg) throws BaseException;
 
     ResetAllProductsArgument resetAllProducts(ResetAllProductsArgument arg) throws BaseException;
 

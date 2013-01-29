@@ -17,6 +17,9 @@
 
 package com.ail.core.command;
 
+import java.util.Properties;
+
+import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
@@ -30,10 +33,12 @@ import com.ail.core.CoreProxy;
 import com.ail.core.configure.Configuration;
 
 /**
- * Deployment specific command for use with JMS. This accessor object acts
- * as a client to a point-to-point JMS queue. The accessor takes two parameters: Factory and Queue which it uses to
- * locate the ConnectionFacctory and Queue via JNDI.</p>
- * The following example shows how a JMSAccessor can be configured:
+ * Deployment specific command for use with JMS. This accessor object acts as a
+ * client to a point-to-point JMS queue. The accessor takes two parameters:
+ * Factory and Queue which it uses to locate the ConnectionFacctory and Queue
+ * via JNDI.</p> The following example shows how a JMSAccessor can be
+ * configured:
+ * 
  * <pre>
  *   &lt;service name="NotifyPartyByEmailService" builder="ClassBuilder" key="com.ail.core.command.JMSAccessor"&gt;
  *     &lt;parameter name="Factory"&gt;ConnectionFactory&lt;/parameter&gt;
@@ -42,94 +47,105 @@ import com.ail.core.configure.Configuration;
  * </pre>
  */
 public class JMSAccessor extends Accessor {
-    private String factory=null;
-    private String queue=null;
-    private Argument args=null;
-    private transient QueueConnectionFactory connectionFactoryInstance=null;
-    private transient Queue queueInstance=null;
+    private String factory = null;
+    private String queue = null;
+    private Argument args = null;
+    private transient QueueConnectionFactory connectionFactoryInstance = null;
+    private transient Queue queueInstance = null;
+    private String queueConnectionPrincipal;
+    private String queueConnectionPassword;
 
     public void invoke() throws JMSServiceException {
         TextMessage msg;
-        QueueConnection conn=null;
-        QueueSession session=null;
-        QueueSender sender=null;
+        QueueConnection conn = null;
+        QueueSession session = null;
+        QueueSender sender = null;
 
         try {
-            conn = getConnectionFactoryInstance().createQueueConnection();
+            conn = getQueueConnection();
             session = conn.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
             conn.start();
-                        
-            msg=session.createTextMessage(new CoreProxy().toXML(args).toString());
+
+            msg = session.createTextMessage(new CoreProxy().toXML(args).toString());
             msg.setStringProperty("ArgType", args.getClass().getName());
             msg.setLongProperty("VersionEffectiveDate", args.getCallersCore().getVersionEffectiveDate().getTime());
             msg.setStringProperty("ConfigurationNamespace", args.getCallersCore().getConfigurationNamespace());
-            
+
             sender = session.createSender(getQueueInstance());
             sender.send(msg);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new JMSServiceException(e);
-        }
-        finally {
+        } finally {
             try {
-                if (sender!=null) sender.close();
-                if (conn!=null) conn.stop();
-                if (session!=null) session.close();
-                if (conn!=null) conn.close();
-            }
-            catch (Exception e) {
+                if (sender != null)
+                    sender.close();
+                if (conn != null)
+                    conn.stop();
+                if (session != null)
+                    session.close();
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
                 throw new JMSServiceException(e);
             }
         }
     }
 
     public void setArgs(Argument args) {
-        this.args=args;
+        this.args = args;
     }
 
     public Argument getArgs() {
         return args;
     }
 
-	public Configuration getConfiguration() {
+    public Configuration getConfiguration() {
         throw new CommandInvocationError("Get configuration cannot be invoked on a JMSAccessor service");
     }
 
-	public void setConfiguration(Configuration properties) {
+    public void setConfiguration(Configuration properties) {
         throw new CommandInvocationError("Set configuration cannot be invoked on a JMSAccessor service");
     }
 
     public void setFactory(String factory) {
-		this.factory=factory;
+        this.factory = factory;
     }
 
     public String getFactory() {
-		return factory;
+        return factory;
     }
 
     public void setQueue(String queue) {
-		this.queue=queue;
+        this.queue = queue;
     }
 
     public String getQueue() {
-		return queue;
+        return queue;
     }
 
-    private QueueConnectionFactory getConnectionFactoryInstance() throws NamingException {
-        if (connectionFactoryInstance==null) {
-            InitialContext iniCtx = new InitialContext();;
-            connectionFactoryInstance = (QueueConnectionFactory)iniCtx.lookup(getFactory());
+    private QueueConnection getQueueConnection() throws NamingException, JMSException {
+        CoreProxy cp = new CoreProxy(args.getCallersCore());
+
+        if (connectionFactoryInstance == null) {
+            Properties props = cp.getGroup("JEEAccessorContext").getParameterAsProperties();
+            InitialContext iniCtx = new InitialContext(props);
+            connectionFactoryInstance = (QueueConnectionFactory) iniCtx.lookup(getFactory());
+            queueConnectionPrincipal = props.getProperty("java.naming.security.principal");
+            queueConnectionPassword = props.getProperty("java.naming.security.credentials");
         }
-        
-        return connectionFactoryInstance;
+
+        return connectionFactoryInstance.createQueueConnection(queueConnectionPrincipal, queueConnectionPassword);
     }
 
     private Queue getQueueInstance() throws NamingException {
-        if (queueInstance==null) {
-            InitialContext iniCtx = new InitialContext();;
+        CoreProxy cp = new CoreProxy(args.getCallersCore());
+
+        if (queueInstance == null) {
+            Properties props = cp.getGroup("JEEAccessorContext").getParameterAsProperties();
+            InitialContext iniCtx = new InitialContext(props);
             queueInstance = (Queue) iniCtx.lookup(getQueue());
         }
-        
+
         return queueInstance;
     }
 }

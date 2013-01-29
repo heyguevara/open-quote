@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * A Group simply provides a container to give the Configuration file
@@ -96,6 +97,20 @@ public class Group extends Component {
      **/
     public List<Parameter> getParameter() {
         return getParameterList();
+    }
+    
+    /**
+     * Return the parameters associated with this group as a Properties object.
+     * @return
+     */
+    public Properties getParameterAsProperties() {
+        Properties props=new Properties();
+
+        for(Parameter param: getParameterList()) {
+            props.put(param.getName(), param.getValue());
+        }
+        
+        return props;
     }
 
     /**

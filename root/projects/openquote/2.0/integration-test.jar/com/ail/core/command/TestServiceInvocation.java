@@ -67,8 +67,11 @@ public class TestServiceInvocation extends CoreUserBaseCase {
             System.setProperty("org.xml.sax.parser", "org.apache.xerces.parsers.SAXParser"); 
             System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
             System.setProperty("java.protocol.handler.pkgs", "com.ail.core.urlhandler");
-            System.setProperty("java.naming.factory.initial","org.jnp.interfaces.NamingContextFactory");
-            System.setProperty("java.naming.provider.url","jnp://localhost:1099");
+            System.setProperty("java.naming.factory.url.pkgs", "org.jboss.ejb.client.naming");
+            System.setProperty("java.naming.factory.initial","org.jboss.naming.remote.client.InitialContextFactory");
+            System.setProperty("java.naming.provider.url","remote://localhost:4447");
+            System.setProperty("jboss.naming.client.ejb.context", "true");
+
     
             tidyUpTestData();
     
@@ -418,7 +421,7 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         // have output as a response to being sent a TestJMSCommand
         Thread.sleep(1000*10);
         
-        File logFile=new File("./target/jboss/server/default/log/server.log");
+        File logFile=new File("./target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/log/server.log");
         BufferedReader logReader=new BufferedReader(new InputStreamReader(new FileInputStream(logFile)));
         boolean foundLogEntry=false;
         for(String line=logReader.readLine() ; line!=null ; line=logReader.readLine()) {

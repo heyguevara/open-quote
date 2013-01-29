@@ -30,6 +30,7 @@ public class CatalogPhaseListener implements PhaseListener {
         // do nothing
     }
 
+    @SuppressWarnings("deprecation")
     public void beforePhase(PhaseEvent event) {
         FacesContext ctx=FacesContext.getCurrentInstance();
         CatalogBean catalog=(CatalogBean)ctx.getApplication().getVariableResolver().resolveVariable(ctx, "catalog");

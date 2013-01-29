@@ -16,17 +16,14 @@
  */
 package com.ail.core.command;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
-import javax.ejb.SessionContext;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.ail.annotation.Configurable;
-import com.ail.core.EJBComponent;
+import com.ail.core.MessagingComponent;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.XMLString;
 
@@ -34,57 +31,40 @@ import com.ail.core.XMLString;
  * Message Driven Bean which listens on a queue for commands to execute.
  */
 @Configurable
-@MessageDriven(activationConfig = {
-@ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
-@ActivationConfigProperty(propertyName="destination", propertyValue="queue/AilCommandQueue")}
-)
-public class CommandServerBean extends EJBComponent implements MessageListener {
-    private static final String namespace="com.ail.core.command.CommandServerBean";
-    private SessionContext ctx; 
-    
+@MessageDriven(name = "CommandServerBean", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/OpenQuoteCommandQueue"),
+        @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "AUTO_ACKNOWLEDGE") })
+public class CommandServerBean extends MessagingComponent implements MessageListener {
+
     public CommandServerBean() {
-        initialise(namespace);
+        initialise("com.ail.core.command.CommandServerBean");
     }
-    
-    @PostConstruct
-    public void postConstruct() {
-        initialise(namespace);
-    }
-    
-    public void onMessage(Message msg) {
+
+    @Override
+    public void onMessage(final Message msg) {
         try {
             TextMessage tm = (TextMessage) msg;
-            
-            setVersionEffectiveDate(new VersionEffectiveDate(tm.getLongProperty("VersionEffectiveDate")));
-            
-            // the command comes to us as a string of XML
-            XMLString argumentXml=new XMLString(tm.getText());
-            
-            Argument argument=(Argument)getCore().fromXML(argumentXml.getType(), argumentXml);
 
-            // We take the base name of the class as the command name: i.e. if the command class is
-            // "com.ail.core.logging.LoggerArgumentImpl" the command name will be "LoggerArgumentImpl".
-            String commandName=argument.getClass().getName();
-            commandName=commandName.substring(commandName.lastIndexOf('.')+1);
-            
+            setVersionEffectiveDate(new VersionEffectiveDate(tm.getLongProperty("VersionEffectiveDate")));
+
+            // the command comes to us as a string of XML
+            XMLString argumentXml = new XMLString(tm.getText());
+
+            Argument argument = (Argument) getCore().fromXML(argumentXml.getType(), argumentXml);
+
+            // We take the base name of the class as the command name: i.e. if
+            // the command class is "com.ail.core.logging.LoggerArgumentImpl"
+            // the command name will be "LoggerArgumentImpl".
+            String commandName = argument.getClass().getName();
+            commandName = commandName.substring(commandName.lastIndexOf('.') + 1);
+
             com.ail.core.command.Command command = getCore().newCommand(commandName, Command.class);
             command.setArgs(argument);
             command.setCallersCore(this);
             command.invoke();
-        }
-        catch(Throwable t) {
+        } catch (Throwable t) {
             t.printStackTrace();
-            ctx.setRollbackOnly();
+            getSessionContext().setRollbackOnly();
         }
-    }
-
-    @Resource
-    private void setSessionContext(SessionContext ctx) {
-      this.ctx = ctx;
-    }
-    
-    @Override
-    public SessionContext getSessionContext() {
-        return ctx;
     }
 }

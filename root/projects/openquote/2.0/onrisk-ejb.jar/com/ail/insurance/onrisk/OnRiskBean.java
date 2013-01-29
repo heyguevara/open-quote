@@ -17,15 +17,12 @@
 
 package com.ail.insurance.onrisk;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.Remote;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
-import com.ail.core.EJBComponent;
+import com.ail.core.StatelessComponent;
 import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
 import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
 import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
@@ -33,26 +30,10 @@ import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 @Configurable
 @Stateless
 @Remote(OnRisk.class)
-public class OnRiskBean extends EJBComponent implements OnRiskLocal {
-    private static final String namespace="com.ail.insurance.onrisk.OnRiskBean";
-    private SessionContext ctx = null;
+public class OnRiskBean extends StatelessComponent implements OnRiskLocal {
 
     public OnRiskBean() {
-        initialise(namespace);
-    }
-
-    @Resource
-    public void setSessionContext(SessionContext context) {
-        ctx = context;
-    }
-
-    public SessionContext getSessionContext() {
-        return ctx;
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        initialise(namespace);
+        initialise("com.ail.insurance.onrisk.OnRiskBean");
     }
 
     /**

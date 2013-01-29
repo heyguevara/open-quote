@@ -37,24 +37,11 @@
     <kick-liferay-macro />
   </target>
 
-  <target name="_setup">
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <subant-macro target="setup" includes="build/Build.xml, domain/Build.xml" />
     <subant-macro target="setup" excludes="build/Build.xml, domain/Build.xml" />
     <antcall target="_build" /> 
     <kick-liferay-macro />
-  </target>
-
-  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <antcall target="_setup" />
-    <!--start-liferay-macro /-->
-    <!--parallel>
-      <start-liferay-macro />
-      <sequential>
-        <wait-for-liferay-to-start-macro/>
-        <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
-        <stop-liferay-macro />
-      </sequential>
-    </parallel-->
   </target>
 
   <target name="teardown" description="undo whatever setup did">
@@ -73,7 +60,7 @@
     <antcall target="teardown" />
 
     <!-- Run as much setup as we can without the server starting -->
-    <antcall target="_setup" />
+    <antcall target="setup" />
 
     <!-- The only release the core makes is a zip'ed up domain archive (.dar). -->
     <release-liferay-domain-macro />
