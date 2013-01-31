@@ -30,12 +30,23 @@ import com.ail.core.Attribute;
 import com.ail.core.CoreProxy;
 import com.ail.core.ThreadLocale;
 import com.ail.core.XMLString;
+import com.ail.core.configure.ConfigurationHandler;
 
 /**
  * Tests to exercise the facilities offered by he Core's Attribute class.
  */
 public class TestAttributeXMLTranslations {
 
+    private boolean oneTimeSetupDone=false;
+
+    @Before
+    public void oneTimeSetup() {
+        if (!oneTimeSetupDone) {
+            new CoreProxy().resetConfiguration();;
+            oneTimeSetupDone=true;
+        }
+    }
+    
     @Before
     public void setUp() throws Exception {
         ThreadLocale.setThreadLocale(UK);

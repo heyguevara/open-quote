@@ -2,42 +2,70 @@
 <!-- Build file for the integration test jar project -->
 
 <project default="build" name="openquote:integration-test.jar">
-	<import file="../BuildSettings.xml" />
+  <import file="../BuildSettings.xml" />
 
-	<target name="clean" description="delete everything that the build can generate">
-		<delete-exploded-jar-macro />
-	</target>
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-exploded-jar-macro />
+  </target>
 
-	<target name="_build">
-		<compile-exploded-jar-macro>
-			<javac-classpath>
-				<dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-				<dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-				<dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-				<dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
-				<dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
-				<dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
-				<fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-				<fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
-				<fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
-				<fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
-				<fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
-				<fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
-				<fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
-			</javac-classpath>
-		</compile-exploded-jar-macro>
-	</target>
+  <target name="_build">
+    <compile-exploded-jar-macro>
+      <javac-classpath>
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
+        <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
+        <fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
+        <fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
+        <fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
+      </javac-classpath>
+    </compile-exploded-jar-macro>
+  </target>
 
-	<target name="build" description="compile (generate, copy, etc) all build outputs">
-		<!-- call the internal build target -->
-		<antcall target="_build" />
-	</target>
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <!-- call the internal build target -->
+    <antcall target="_build" />
+  </target>
 
-	<target name="setup" description="run all the one-time-only steps - like copying libs into place">
-		<update-dependencies-macro todir="${test.dir}/lib" />
-	</target>
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <update-dependencies-macro todir="${test.dir}/lib" />
+  </target>
 
-	<target name="teardown" description="undo whatever setup did">
-		<delete dir="${test.dir}" failonerror="no" />
-	</target>
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${test.dir}" failonerror="no" />
+  </target>
+
+  <target name="test" description="run tests defined in this project">
+    <run-integration-tests-macro>
+      <junit-classpath>
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="command-server-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="persistence-server-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="product-manager-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="acceptance-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="onrisk-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
+        <fileset dir="${module.dir}/org/apache/xalan/main" includes="*.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
+        <fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
+        <fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
+      </junit-classpath>
+    </run-integration-tests-macro>
+  </target>
+
 </project>

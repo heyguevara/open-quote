@@ -7,21 +7,13 @@
 
   <target name="dummy" />
 
-  <target name="stop-jboss-and-fail-on-test-error" if="errored">
-    <stop-jboss-macro/>
-    <fail message="unit test errors were detected." />
-  </target>
-  
-  <target name="stop-jboss-and-fail-on-test-failure" if="failed">
-    <stop-jboss-macro/>
-    <fail message="unit test failures were detected" />
-  </target>
   
   <!-- Run the unit tests associated with a project. Reports are written to -->
   <!-- ${test.dir}/reports.                                                 -->
   <macrodef name="run-unit-tests-macro">
     <element name="junit-classpath" optional="no" />
     <sequential>
+      <_initialise-ant-contribs-macro />
 
       <mkdir dir="${test.dir}/reports" />
 
@@ -41,6 +33,16 @@
           <fileset dir="${test.dir}/unit-test.jar" includes="**/*Test*.class" />
         </batchtest>
       </junit>
+      
+      <if>
+        <or>
+          <istrue value="${errored}"/>
+          <istrue value="${failed}"/>
+        </or>
+        <then>
+          <fail message="Unit test errors/failures"/>
+        </then>
+      </if>
 
     </sequential>
   </macrodef>
@@ -50,17 +52,16 @@
   <macrodef name="run-integration-tests-macro">
     <element name="junit-classpath" optional="no" />
     <sequential>
+      <_initialise-ant-contribs-macro />
 
       <mkdir dir="${test.dir}/reports" />
 
       <parallel>
-        <start-jboss-macro />
+        <start-liferay-macro />
 
         <sequential>
-          <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
-            <http url="http://localhost:8080/alfresco" />
-          </waitfor>
-
+          <wait-for-liferay-to-start-macro/>
+          
           <junit showoutput="yes" printsummary="yes" fork="yes" errorproperty="errored" failureproperty="failed">
             <!--jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" /-->
             <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
@@ -69,7 +70,6 @@
 
             <classpath>
               <dirset dir="${test.dir}" includes="integration-test.jar" />
-              <dirset dir="${test.dir}" includes="unit-test.jar" />
               <junit-classpath />
             </classpath>
 
@@ -80,29 +80,20 @@
             </batchtest>
           </junit>
 
-          <antcall target="stop-jboss-and-fail-on-test-error" />
-          <antcall target="stop-jboss-and-fail-on-test-failure" />
+          <stop-liferay-macro/>
+          
+          <if>
+            <or>
+              <istrue value="${errored}"/>
+              <istrue value="${failed}"/>
+            </or>
+            <then>
+              <fail message="Unit test errors/failures"/>
+            </then>
+          </if>
 
         </sequential>
       </parallel>
-    </sequential>
-  </macrodef>
-
-  <!-- Run all tests, unit tests and integration tests -->
-  <macrodef name="run-all-tests-macro">
-    <element name="test-classpath" optional="no" />
-    <sequential>
-      <run-unit-tests-macro>
-        <junit-classpath>
-          <test-classpath />
-        </junit-classpath>
-      </run-unit-tests-macro>
-
-      <run-integration-tests-macro>
-        <junit-classpath>
-          <test-classpath />
-        </junit-classpath>
-      </run-integration-tests-macro>
     </sequential>
   </macrodef>
 

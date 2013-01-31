@@ -41,6 +41,7 @@
         <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
+        <fileset dir="${module.dir}/org/apache/xalan/main" includes="*.jar" />
       </junit-classpath>
     </run-unit-tests-macro>
   </target>

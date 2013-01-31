@@ -69,9 +69,13 @@ public class TestEJBConfigurationLoader {
      */
 	@Before
 	public void setUp() {
-        System.setProperty("com.ail.core.configure.loader", "com.ail.core.configure.EJBConfigurationLoader");
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.jnp.interfaces.NamingContextFactory");
-        System.setProperty(Context.PROVIDER_URL,"jnp://localhost:1099");
+        System.setProperty("org.xml.sax.parser", "org.apache.xerces.parsers.SAXParser"); 
+        System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
+        System.setProperty("java.protocol.handler.pkgs", "com.ail.core.urlhandler");
+        System.setProperty("java.naming.factory.url.pkgs", "org.jboss.ejb.client.naming");
+        System.setProperty("java.naming.factory.initial","org.jboss.naming.remote.client.InitialContextFactory");
+        System.setProperty("java.naming.provider.url","remote://localhost:4447");
+        System.setProperty("jboss.naming.client.ejb.context", "true");
 
         // load the loader
         if (loader==null) {

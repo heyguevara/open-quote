@@ -67,18 +67,7 @@
   </target>
 
   <target name="test" description="run unit tests and integration tests">
-    <!--run-all-tests-macro-->
-    <run-unit-tests-macro>
-      <junit-classpath>
-        <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
-      </junit-classpath>
-    </run-unit-tests-macro>
-
-  	<!--stop-liferay-macro /-->
+    <ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
+    <ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
   </target>
 </project>
