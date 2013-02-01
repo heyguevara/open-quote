@@ -128,7 +128,7 @@
       </if>
       
       <!-- fetch all the dependencies to the module folder (in addition to whatever might already be there) -->
-      <ivy:retrieve log="download-only" pattern="${module.output.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
+      <ivy:retrieve file="Ivy.xml" log="download-only" pattern="${module.output.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
 
       <!-- (re)generate the module descriptor -->
       <generate-module-descriptor-macro />
