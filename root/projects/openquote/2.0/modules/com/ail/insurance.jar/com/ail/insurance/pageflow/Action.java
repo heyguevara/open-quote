@@ -19,18 +19,14 @@ package com.ail.insurance.pageflow;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
@@ -83,7 +79,7 @@ public class Action extends PageElement {
 	@Override
 	public Type processActions(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model, "onProcessActions");
+			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, "onProcessActions");
 		}
 		
 		return model;
@@ -92,7 +88,7 @@ public class Action extends PageElement {
 	@Override
 	public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model, "onApplyRequestValues");
+			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, "onApplyRequestValues");
 		}
 
 		return model;
@@ -101,7 +97,7 @@ public class Action extends PageElement {
 	@Override
 	public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
 		if ("onProcessValidations".equals(when) && conditionIsMet(model)) {
-			return executeValidation(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model);
+			return executeValidation(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model);
 		} else {
 			return false;
 		}
@@ -109,7 +105,7 @@ public class Action extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    return executeAction(request.getPortletSession(), request.getUserPrincipal(), extractParams(request), model, "onRenderResponse");
+	    return executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, "onRenderResponse");
 	}
 
 	/**
@@ -171,28 +167,6 @@ public class Action extends PageElement {
 
 	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
 		return execute(portletSession, principal, parameters, model).getValidationFailedRet();
-	}
-
-	/**
-	 * This method is bad in so many ways but under the currency version of
-	 * JBoss portal we have little choice but to this. We need to get the
-	 * parameters from the original HTTP request, a portal mustn't give portlets
-	 * direct access to the request parameters according to the spec, but it
-	 * should provide a mechanism for specific parameters to be passed on. This
-	 * mechanism doesn't work in JBoss Portal, hence the ugly hack below.
-	 */
-	private Map<String, String[]> extractParams(PortletRequest request) {
-		Field f;
-		try {
-			f = request.getClass().getSuperclass().getSuperclass().getDeclaredField("dreq");
-			f.setAccessible(true);
-			HttpServletRequest originalReq;
-			originalReq = (HttpServletRequest) f.get(request);
-			return (Map<String, String[]>) originalReq.getParameterMap();
-		} catch (Exception e) {
-			new CoreProxy().logError("Failed to get parameters from request", e);
-			return new HashMap<String,String[]>();
-		}
 	}
 
 	private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {

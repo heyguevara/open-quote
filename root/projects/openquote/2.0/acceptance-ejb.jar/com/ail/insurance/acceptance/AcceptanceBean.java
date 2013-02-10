@@ -18,6 +18,7 @@
 package com.ail.insurance.acceptance;
 
 import javax.ejb.Remote;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 import com.ail.annotation.Configurable;
@@ -30,8 +31,9 @@ import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
 @Configurable
 @Stateless
-@Remote(Acceptance.class)
-public class AcceptanceBean extends StatelessComponent implements Acceptance {
+@Remote(AcceptanceRemote.class)
+@Local(AcceptanceLocal.class)
+public class AcceptanceBean extends StatelessComponent {
 
     public AcceptanceBean() {
         initialise("com.ail.insurance.acceptance.AcceptanceBean");

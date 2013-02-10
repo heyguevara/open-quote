@@ -92,6 +92,15 @@
             <logger category="jacorb.config">
                 <level name="ERROR"/>
             </logger>
+            <logger category="org.exolab.castor">
+                <level name="ERROR"/>
+            </logger>
+            <logger category="org.hibernate">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.quartz.simpl">
+                <level name="ERROR"/>
+            </logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>

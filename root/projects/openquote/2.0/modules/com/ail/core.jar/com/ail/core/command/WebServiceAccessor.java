@@ -98,7 +98,7 @@ public class WebServiceAccessor extends Accessor implements CoreUser {
             ServiceFactory factory=ServiceFactory.newInstance();
             Service service=factory.createService(url, qname);
             
-            Class<?> endpointClass=Class.forName(getEndpointClass());
+            Class<?> endpointClass=Class.forName(getEndpointClass(), true, Thread.currentThread().getContextClassLoader());
             Remote endpoint=service.getPort(endpointClass);
 
             Method method=endpoint.getClass().getDeclaredMethod(getOperationName(), new Class[]{String.class});

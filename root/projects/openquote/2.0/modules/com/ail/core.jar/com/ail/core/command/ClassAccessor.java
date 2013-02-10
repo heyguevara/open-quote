@@ -17,6 +17,8 @@
 
 package com.ail.core.command;
 
+import static com.ail.core.Functions.classForName;
+
 import com.ail.core.BaseException;
 import com.ail.core.Service;
 import com.ail.core.configure.Configuration;
@@ -55,7 +57,7 @@ public class ClassAccessor extends Accessor {
 	@SuppressWarnings("unchecked")
     public void setServiceClass(String serviceClass) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.serviceClass=serviceClass;
-		this.instance=(Service<? extends Argument>)Class.forName(serviceClass).newInstance();
+		this.instance=(Service<? extends Argument>)classForName(serviceClass).newInstance();
     }
 
 	public String getServiceClass() {

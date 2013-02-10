@@ -44,7 +44,19 @@ import com.ail.core.command.CommandInvocationError;
 @XPathFunctionDefinition(namespace="c")
 public class Functions {
 
-	/**
+    /**
+     * Utility method to load a class in a standard way. Using this method rather than
+     * directly invoking Class.forName to allow for classes to be loaded in a consistent
+     * way.
+     * @param name Name of the class to be loaded
+     * @return Loaded, and initialised class
+     * @throws ClassNotFoundException If the class cannot be found
+     */
+    public static Class<?> classForName(String name) throws ClassNotFoundException {
+        return Class.forName(name, true, Thread.currentThread().getContextClassLoader());
+    }
+    
+    /**
 	 * Builds a <code>String[]</code> from a <code>String</code> with a
 	 * given character separating values. Example "val1|val2|val3".
 	 * @param string String containing values.

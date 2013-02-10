@@ -17,6 +17,8 @@
 
 package com.ail.core.factory;
 
+import static com.ail.core.Functions.classForName;
+
 import com.ail.annotation.Builder;
 
 /**
@@ -50,7 +52,7 @@ public class ClassFactory extends AbstractFactory {
 		String className=typeSpec.getKey();
 
 		try {
-	        Class<?> clazz=Class.forName(className);
+	        Class<?> clazz=classForName(className);
 	        Object instance=clazz.newInstance();
 	        return instance;
 		}

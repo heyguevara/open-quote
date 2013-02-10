@@ -44,8 +44,7 @@ public class TestUrlHandlers {
     }
 
     /**
-     * Test raw access to the alfresco repository. This test uses the same method of access
-     * as the alfresco content URL handler uses.
+     * Test raw access to the product repository. 
      * @throws Exception
      */
     @Test
@@ -123,7 +122,7 @@ public class TestUrlHandlers {
     }
 
     /**
-     * Test product access to the alfresco repository with and without defining the language.
+     * Test product access to the product repository with and without defining the language.
      * @throws Exception
      */
     @Test

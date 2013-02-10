@@ -26,36 +26,44 @@
     <parameter name="QuoteNumberBlockSize">100</parameter>
     
     <group name="ProductURLHandler">
-        <parameter name="BaseURL">http://localhost:8080/api/secure/webdav/guest/document_library/Product</parameter>
+        <parameter name="Protocol">http</parameter>
+        <parameter name="Host">localhost</parameter>
+        <parameter name="Port">8080</parameter>
+        <parameter name="Path">/api/secure/webdav/guest/document_library/Product</parameter>
         <parameter name="Username">productreader@openquote.local</parameter>
         <parameter name="Password">productreader</parameter>
     </group>
     
     <group name="JEEAccessorContext">
+        <!--
+        In most deployments these settings are picked up from the server's environment, but in some
+        circumstances it can be useful to override them - particularly if your client is accessing 
+        remote EJBs.
+        
         <parameter name="java.naming.factory.url.pkgs">org.jboss.ejb.client.naming</parameter>
         <parameter name="java.naming.factory.initial">org.jboss.naming.remote.client.InitialContextFactory</parameter>
         <parameter name="java.naming.provider.url">remote://localhost:4447</parameter>
         <parameter name="jboss.naming.client.ejb.context">true</parameter>
         <parameter name="java.naming.security.principal">openquote</parameter>
         <parameter name="java.naming.security.credentials">password</parameter>
+        -->
     </group>
 
     <types>
-
         <service name='AcceptanceServicesEJB' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
-            <parameter name='JndiName'>Acceptance</parameter>
+            <parameter name='JndiName'>ejb:/acceptance-ejb//AcceptanceBean!com.ail.insurance.acceptance.Acceptance</parameter>
         </service>
 
         <service name="GenerateQuotationDocumentService" key="com.ail.core.command.EJBAccessor">
-            <parameter name="JndiName">Quotation</parameter>
+            <parameter name="JndiName">ejb:/quotation-ejb//QuotationBean!com.ail.insurance.quotation.QuotationLocal</parameter>
         </service>
 
         <service name="OnRiskEJB" key="com.ail.core.command.EJBAccessor">
-            <parameter name="JndiName">OnRisk</parameter>
+            <parameter name="JndiName">ejb:/onrisk-ejb//OnRiskBean!com.ail.insurance.onrisk.OnRiskLocal</parameter>
         </service>
 
         <service name='PersistenceService' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
-            <parameter name='JndiName'>PersistenceServer</parameter>
+            <parameter name='JndiName'>ejb:/persistence-server-ejb//PersistenceServerBean!com.ail.core.persistence.PersistenceServerLocal</parameter>
         </service>
 
         <service name="JMSQueueService" key="com.ail.core.command.JMSAccessor">

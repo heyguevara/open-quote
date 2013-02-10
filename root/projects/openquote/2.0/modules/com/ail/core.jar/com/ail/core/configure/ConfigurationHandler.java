@@ -461,7 +461,7 @@ public class ConfigurationHandler {
     
     /**
      * Return the namespace(s) of the configuration(s) which are the parent, grandparent, etc of this
-     * namespae As configurations optionally have "parent" configuration that they inherit from, this 
+     * namespace As configurations optionally have "parent" configuration that they inherit from, this 
      * method returns a collection of namespaces with one element for each configuration in the hierarchy.
      * @param owner The configuration's owner
      * @param user The user asking for the source

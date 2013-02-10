@@ -17,6 +17,8 @@
 
 package com.ail.core;
 
+import static com.ail.core.Functions.classForName;
+
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -369,7 +371,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     public boolean resetConfiguration(String configOwnerClassName) {
 		try {
 			// get hold of the config owners class
-            Class<?> configOwner=Class.forName(configOwnerClassName);
+            Class<?> configOwner=classForName(configOwnerClassName);
 
 			// Create an instance of the owner class
 			ConfigurationOwner co=(ConfigurationOwner)configOwner.newInstance();

@@ -52,28 +52,29 @@ import com.ail.insurance.policy.Policy;
  */
 public class QuotationPortlet extends GenericPortlet {
     private String editJSP = null;
+    private String configureJSP = null;
 
     @Override
     public void init() throws PortletException {
         editJSP = getInitParameter("edit-jsp");
+        configureJSP = getInitParameter("configure-jsp");
     }
 
     @Override
     protected Collection<PortletMode> getNextPossiblePortletModes(RenderRequest request) {
-        if (request.getPreferences().getValue("product", null)==null) {
+        if (request.getPreferences().getValue("product", null) == null) {
             return Arrays.asList(PortletMode.EDIT);
-        }
-        else {
+        } else {
             return Arrays.asList(PortletMode.EDIT, PortletMode.VIEW);
         }
     }
-        
+
     @Override
     public void processAction(ActionRequest request, ActionResponse response) throws ReadOnlyException, ValidatorException, IOException, PortletModeException {
         if (PortletMode.EDIT.equals(request.getPortletMode())) {
             processEditAction(request, response);
         }
-        
+
         if (PortletMode.VIEW.equals(request.getPortletMode())) {
             processViewAction(request, response);
         }
@@ -81,19 +82,19 @@ public class QuotationPortlet extends GenericPortlet {
 
     private void processViewAction(ActionRequest request, ActionResponse response) {
         QuotationContext.initialise(request);
-   
+
         try {
             QuotationCommon.processAction(request, response);
         } catch (Throwable t) {
             Policy policy = QuotationContext.getPolicy();
-   
+
             if (policy == null) {
                 t.printStackTrace();
             } else {
                 policy.addException(new ExceptionRecord(t));
                 QuotationCommon.persistQuotation(policy);
             }
-   
+
             // TODO Forward to an error page
         }
     }
@@ -107,6 +108,7 @@ public class QuotationPortlet extends GenericPortlet {
 
     @Override
     public void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        QuotationContext.initialise(request);
         response.setContentType("text/html");
         PortletURL addNameURL = response.createActionURL();
         addNameURL.setParameter("productName", "productName");
@@ -117,7 +119,19 @@ public class QuotationPortlet extends GenericPortlet {
 
     @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        if (request.getPreferences().getValue("product", null) == null) {
+            doDisplayConfigureView(request, response);
+        } else {
+            doDisplayQuotationView(request, response);
+        }
+    }
 
+    private void doDisplayConfigureView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(configureJSP);
+        portletRequestDispatcher.include(request, response);
+    }
+
+    private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
         QuotationContext.initialise(request);
 
         try {
@@ -134,5 +148,6 @@ public class QuotationPortlet extends GenericPortlet {
 
             // TODO Forward to an error page
         }
+
     }
 }

@@ -15,6 +15,8 @@
  */
 package com.ail.core;
 
+import static com.ail.core.Functions.classForName;
+
 import org.apache.commons.jxpath.ClassFunctions;
 import org.apache.commons.jxpath.FunctionLibrary;
 
@@ -89,7 +91,7 @@ public final class TypeXPathFunctionRegister {
                         if (functionGroup!=null) {
                             for(Parameter p:functionGroup.getParameter()) {
                                 try {
-                                    clazz = Class.forName(p.getValue());
+                                    clazz = classForName(p.getValue());
                                     fl.addFunctions(new ClassFunctions(clazz, p.getName()));
                                     cp.logInfo("Loaded JXPath function class: '"+p.getValue()+"' into namespace:"+p.getName());
                                 }

@@ -17,6 +17,8 @@
 
 package com.ail.core.configure.finder;
 
+import static com.ail.core.Functions.classForName;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,7 +131,7 @@ public class GetClassListService extends Service<GetClassListService.GetClassLis
 
         // Get the Class we're searching for
         try {
-            classToCheck = Class.forName(args.getSearchClassArg());
+            classToCheck = classForName(args.getSearchClassArg());
         }
         catch(ClassNotFoundException e) {
             return;

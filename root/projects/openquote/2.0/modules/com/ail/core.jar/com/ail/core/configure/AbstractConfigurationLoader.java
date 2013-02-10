@@ -17,6 +17,8 @@
 
 package com.ail.core.configure;
 
+import static com.ail.core.Functions.classForName;
+
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.Functions;
 
@@ -223,7 +225,7 @@ public abstract class AbstractConfigurationLoader {
                 }
 
                 // get hold of the loader class itself
-                Class<?> loaderClass = Class.forName(loaderClassName);
+                Class<?> loaderClass = classForName(loaderClassName);
 
                 addDefaultProperties();
 

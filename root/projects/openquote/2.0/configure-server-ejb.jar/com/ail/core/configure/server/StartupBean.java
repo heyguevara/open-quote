@@ -30,7 +30,7 @@ import com.ail.core.configure.AbstractConfigurationLoader;
 
 @Singleton
 @Startup
-public class StartupBean  {
+public class StartupBean {
     /**
      * This method will sleep the thread until the product repository is
      * available.
@@ -40,8 +40,15 @@ public class StartupBean  {
         InputStream testStream = null;
 
         try {
-            String baseURL = new CoreProxy().getParameter("ProductURLHandler.BaseURL").getValue();
-            repoTestURL=new URL(baseURL);
+            // Build the URL which points into the product repo
+            CoreProxy cp = new CoreProxy();
+
+            String protocol = cp.getParameterValue("ProductURLHandler.Protocol");
+            String host = cp.getParameterValue("ProductURLHandler.Host");
+            Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
+            String path = cp.getParameterValue("ProductURLHandler.Path");
+
+            repoTestURL = new URL(protocol, host, port, path);
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
         }

@@ -33,18 +33,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.ail.core.Core;
-import com.ail.core.CoreProxy;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.Timer;
 import com.ail.core.Version;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.server.ServerBean;
+import com.ail.core.dummyservice.DummyService;
 import com.ail.core.dummyservice.DummyService.DummyArgument;
 import com.ail.core.dummyservice.DummyService.DummyCommand;
-import com.ail.core.dummyservice.DummyService;
-import com.ail.core.logging.Severity;
 import com.ail.core.logging.LoggingService.LoggingCommand;
+import com.ail.core.logging.Severity;
 import com.ail.core.product.ListProductsService.ListProductsCommand;
 
 /**
@@ -72,7 +71,6 @@ public class TestServiceInvocation extends CoreUserBaseCase {
             System.setProperty("java.naming.provider.url","remote://localhost:4447");
             System.setProperty("jboss.naming.client.ejb.context", "true");
 
-    
             tidyUpTestData();
     
             ConfigurationHandler.resetCache();
@@ -413,7 +411,7 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         LoggingCommand loggingCommand = getCore().newCommand("TestJMSCommand", LoggingCommand.class);
         loggingCommand.setMessage(testMessage);
         loggingCommand.setSeverity(Severity.INFO);
-        loggingCommand.setCallersCore(new CoreProxy());
+        loggingCommand.setCallersCore(this);
         loggingCommand.setDate(new Date());
         loggingCommand.invoke();
         

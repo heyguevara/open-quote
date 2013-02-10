@@ -120,7 +120,7 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
      */
     private Class<?> loadClass(String name, String source) throws Exception {
         SimpleCompiler sc=new SimpleCompiler();
-        sc.setParentClassLoader(this.getClass().getClassLoader());
+        sc.setParentClassLoader(Thread.currentThread().getContextClassLoader());
         sc.cook(name, new StringReader(source));
         return sc.getClassLoader().loadClass(name);
     }

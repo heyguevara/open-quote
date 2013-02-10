@@ -312,7 +312,7 @@ public class Functions {
      * @throws MalformedURLException 
      */
     public static URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
-    	return new URL("http", productUrl.getHost(), productUrl.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+productUrl.getPath()); 
+    	return new URL("http", productUrl.getHost(), productUrl.getPort(), "/api/secure/webdav/guest/document_library/Product"+productUrl.getPath()); 
     }
     
     /**

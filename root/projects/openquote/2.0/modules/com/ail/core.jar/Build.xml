@@ -20,7 +20,7 @@
 			</javac-classpath>
 		</compile-exploded-jar-macro>
 
-		<generate-module-descriptor-macro dependencies="com.liferay.portal, javax.xml.rpc.api, javax.ejb.api, org.apache.httpcomponents" />
+		<generate-module-descriptor-macro dependencies="com.liferay.portal, javax.xml.rpc.api, javax.ejb.api, org.apache.xalan, org.apache.httpcomponents" />
 
 	</target>
 

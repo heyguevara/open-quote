@@ -61,7 +61,12 @@ public class Handler extends URLStreamHandler {
 
         String username = cp.getParameterValue("ProductURLHandler.Username");
         String password = cp.getParameterValue("ProductURLHandler.Password");
-        String baseURL = cp.getParameterValue("ProductURLHandler.BaseURL");
+        String protocol = cp.getParameterValue("ProductURLHandler.Protocol");
+        String host = cp.getParameterValue("ProductURLHandler.Host");
+        Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
+        String path = cp.getParameterValue("ProductURLHandler.Path");
+        
+        String baseURL=new URL(protocol, host, port, path).toExternalForm();
 
         String credentials = username + ":" + password;
         String authToken = "Basic " + DatatypeConverter.printBase64Binary(credentials.getBytes());

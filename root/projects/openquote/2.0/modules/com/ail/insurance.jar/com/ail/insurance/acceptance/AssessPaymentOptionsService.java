@@ -127,7 +127,7 @@ public class AssessPaymentOptionsService extends com.ail.core.Service<AssessPaym
         args.getOptionsRet().add(new PaymentSchedule(payments, "A single payment by direct debit"));
         
         if (premium.greaterThan(200, Currency.GBP)) {
-            // second option: 10 payments. 9 rounded to the nearest £10, 1 (the first) containing the balance. Payment by direct debit.
+            // second option: 10 payments. 9 rounded to the nearest (pounds)10, 1 (the first) containing the balance. Payment by direct debit.
             CurrencyAmount pmnt=new CurrencyAmount(premium.getAmount().divide(new BigDecimal(100)).intValue()*10, Currency.GBP);
             CurrencyAmount fstPmnt=new CurrencyAmount(pmnt.getAmount().add(premium.getAmount().remainder(new BigDecimal(100))), Currency.GBP);
             payments=new ArrayList<MoneyProvision>();

@@ -45,6 +45,7 @@ import com.ail.insurance.pageflow.portlet.QuotationPortlet;
 import com.ail.insurance.pageflow.render.RenderArgumentImpl;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.ErrorText;
+import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.HelpText;
 import com.ail.insurance.pageflow.util.I18N;
 import com.ail.insurance.pageflow.util.QuotationCommon;
@@ -757,7 +758,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @throws MalformedURLException 
      */
     public URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
-        return new URL("http", productUrl.getHost(), productUrl.getPort(), "/alfresco/download/direct?path=/Company%20Home/Product"+productUrl.getPath()); 
+        return Functions.convertProductUrlToExternalForm(productUrl);
     }
     
     /**

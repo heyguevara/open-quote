@@ -17,6 +17,8 @@
 
 package com.ail.core.configure.server;
 
+import static com.ail.core.Functions.classForName;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Local;
@@ -70,7 +72,7 @@ public class ServerBean extends StatelessComponent implements CoreUser {
     private void resetConfig(String name) {
         try {
             getCore().logDebug("Requesting reset for:"+name);
-            Class<?> clazz=Class.forName(name);
+            Class<?> clazz=classForName(name);
             ConfigurationOwner owner=(ConfigurationOwner)clazz.newInstance();
             owner.resetConfiguration();
             getCore().logInfo("Reset successful for:"+name);

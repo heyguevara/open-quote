@@ -66,10 +66,15 @@ public class JMSAccessor extends Accessor {
             session = conn.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
             conn.start();
 
-            msg = session.createTextMessage(new CoreProxy().toXML(args).toString());
-            msg.setStringProperty("ArgType", args.getClass().getName());
-            msg.setLongProperty("VersionEffectiveDate", args.getCallersCore().getVersionEffectiveDate().getTime());
-            msg.setStringProperty("ConfigurationNamespace", args.getCallersCore().getConfigurationNamespace());
+            // Strip unnecessary stuff from the args
+            Argument strippedArgs=(Argument)((ArgumentImpl)args).clone();
+            strippedArgs.setCallersCore(new CoreProxy(args.getCallersCore()));
+            
+            // Create the message
+            msg = session.createTextMessage(new CoreProxy().toXML(strippedArgs).toString());
+            msg.setStringProperty("ArgType", strippedArgs.getClass().getName());
+            msg.setLongProperty("VersionEffectiveDate", strippedArgs.getCallersCore().getVersionEffectiveDate().getTime());
+            msg.setStringProperty("ConfigurationNamespace", strippedArgs.getCallersCore().getConfigurationNamespace());
 
             sender = session.createSender(getQueueInstance());
             sender.send(msg);

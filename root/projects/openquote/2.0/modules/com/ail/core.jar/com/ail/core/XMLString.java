@@ -16,6 +16,8 @@
  */
 package com.ail.core; 
 
+import static com.ail.core.Functions.classForName;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -483,7 +485,7 @@ public class XMLString implements Cloneable, Serializable {
             throw new ClassNotFoundException("Class not found, xsi type was not present on root element.");
         }
         else {
-            return Class.forName(type);
+            return classForName(type);
         }
     }
 

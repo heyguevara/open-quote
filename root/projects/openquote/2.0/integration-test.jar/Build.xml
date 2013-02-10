@@ -24,6 +24,7 @@
         <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
         <fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
         <fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
+        <fileset dir="${module.dir}/org/jboss/ws/api/main" includes="jbossws-api-1.0.0.GA.jar" />
       </javac-classpath>
     </compile-exploded-jar-macro>
   </target>

@@ -6,15 +6,19 @@
 		<portlet-name>quotation</portlet-name>
 		<display-name>quotation</display-name>
 		<portlet-class>com.ail.insurance.pageflow.portlet.QuotationPortlet</portlet-class>
-		<init-param>
-			<name>edit-jsp</name>
-			<value>/edit.jsp</value>
-		</init-param>
+        <init-param>
+            <name>edit-jsp</name>
+            <value>/edit.jsp</value>
+        </init-param>
+        <init-param>
+            <name>configure-jsp</name>
+            <value>/configure.jsp</value>
+        </init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
             <portlet-mode>edit</portlet-mode>
-			<portlet-mode>view</portlet-mode>
+            <portlet-mode>view</portlet-mode>
 		</supports>
 		<resource-bundle>Resources</resource-bundle>
 		<portlet-info>
@@ -22,12 +26,12 @@
 			<short-title>quotation</short-title>
 			<keywords>quotation</keywords>
 		</portlet-info>
-		<portlet-preferences>
+		<!--portlet-preferences>
 			<preference>
 				<name>product</name>
 				<value>undefined</value>
 			</preference>
-		</portlet-preferences>
+		</portlet-preferences-->
 		<security-role-ref>
 			<role-name>administrator</role-name>
 		</security-role-ref>

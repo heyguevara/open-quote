@@ -281,7 +281,12 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
         XMLString factoryConfigXML=new XMLString(in);
 
         // marshal the config XML into an instance of Configuration
-        return fromXML(Configuration.class, factoryConfigXML);
+        Configuration ret=fromXML(Configuration.class, factoryConfigXML);
+        
+        // Set the source indicating where the config was loaded from
+        ret.setSource(this.getClass().getResource("CoreDefaultConfig.xml").toString());
+        
+        return ret;
     }
 
     /**
@@ -322,7 +327,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * and the version effective date. The namespace is taken either from the
      * core user if they implement ConfigurationOwner, or from the core itself.
      * The versionEffectiveDate comes from the core user.<p>
-     * The parameter's name may be dot seperated indicating
+     * The parameter's name may be dot separated indicating
      * that the parameter is nested within one of more groups.
      * @param name The name of the parameter to be returned.
      * @return The parameter, or null if one is not defined for this namespace and version effective date.

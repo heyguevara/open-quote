@@ -17,9 +17,8 @@
 
 package com.ail.core.configuration;
 
-import static org.junit.Assert.*;
-
-import javax.naming.Context;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;

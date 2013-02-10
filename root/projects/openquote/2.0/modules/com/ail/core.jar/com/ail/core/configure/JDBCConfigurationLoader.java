@@ -16,6 +16,8 @@
  */
 package com.ail.core.configure;
 
+import static com.ail.core.Functions.classForName;
+
 import com.ail.core.VersionEffectiveDate;
 import com.ail.core.Functions;
 
@@ -75,7 +77,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
     public Connection openConnection() {
         // load the JDBC driver
         try {
-            Class.forName(getLoaderParams().getProperty("driver"));
+            classForName(getLoaderParams().getProperty("driver"));
 
             return DriverManager.getConnection(getLoaderParams().getProperty("url"), getLoaderParams());
         }
