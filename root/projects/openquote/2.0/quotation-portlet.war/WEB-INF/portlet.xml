@@ -26,12 +26,6 @@
 			<short-title>quotation</short-title>
 			<keywords>quotation</keywords>
 		</portlet-info>
-		<!--portlet-preferences>
-			<preference>
-				<name>product</name>
-				<value>undefined</value>
-			</preference>
-		</portlet-preferences-->
 		<security-role-ref>
 			<role-name>administrator</role-name>
 		</security-role-ref>

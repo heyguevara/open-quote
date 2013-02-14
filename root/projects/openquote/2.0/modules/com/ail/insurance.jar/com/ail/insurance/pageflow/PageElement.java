@@ -712,7 +712,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
     
     /**
      * return true if the specified object has a specific error marker associated with it.
-     * @see #hasErrorMarkers(Type)
+     * @see #hasErrorMarker(Type)
      * @param id Name of error marker to look for
      * @param model Object to check for the error marker
      * @return true if the error marker is found, false otherwise (including if model==null).
@@ -737,7 +737,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @param model Object to check for error markers
      * @return true if error markers are found, false otherwise (including if model==null).
      */
-    public boolean hasErrorMarkers(Type model) {
+    public boolean hasErrorMarker(Type model) {
         if (model!=null) {
             for(Attribute a: model.getAttribute()) {
                 if(a.getId().startsWith("error.")) {
