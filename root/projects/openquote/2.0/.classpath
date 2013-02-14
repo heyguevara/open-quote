@@ -15,8 +15,8 @@
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/subrogation-ejb.jar" path="subrogation-ejb.jar"/>
 	<classpathentry excluding="Build.xml|WEB-INF/src/|WEB-INF/src/|images/|pages/" kind="src" path="configure.war"/>
 	<classpathentry kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/configure.war/WEB-INF/classes" path="configure.war/WEB-INF/src"/>
-	<classpathentry excluding="WEB-INF/src/" kind="src" path="product-manager.war"/>
-	<classpathentry kind="src" path="product-manager.war/WEB-INF/src"/>
+	<classpathentry excluding="WEB-INF/src/" kind="src" path="sandpit-portlet.war"/>
+	<classpathentry kind="src" path="sandpit-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/|js/tiny_mce/" kind="src" path="quotation-portlet.war"/>
 	<classpathentry kind="src" path="quotation-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openquote-theme.war"/>

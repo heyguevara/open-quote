@@ -783,6 +783,10 @@
         </field>
     </class>
 
+    <class name="com.ail.insurance.pageflow.AssessmentSheetDetails" extends="com.ail.insurance.pageflow.PageElement">
+        <map-to xml="assessmentSheetDetails" />
+    </class>
+    
     <class name="com.ail.insurance.pageflow.AttributeField" extends="com.ail.insurance.pageflow.PageElement">
         <map-to xml="attributeField" />
         <field name="title" type="string">

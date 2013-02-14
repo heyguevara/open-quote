@@ -22,14 +22,6 @@
     <content-download-export-macro />
   </target>
 
-  <target name="liferay: mount product space" description="Mount Product space in Liferay as a file system">
-    <mount-product-space-macro/>
-  </target>
-
-  <target name="liferay: unmount product space" description="Unmount Product space from local filesystem">
-    <unmount-product-space-macro/>
-  </target>
-    
   <target name="openquote: clear server cache" description="Clear the config cache in liferay">
     <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
   </target>

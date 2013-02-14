@@ -59,6 +59,19 @@
     <listener>
         <listener-class>com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener</listener-class>
     </listener>
+	<servlet>
+		<servlet-name>sandpit Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>com.liferay.util.bridges.mvc.MVCPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>sandpit Servlet</servlet-name>
+		<url-pattern>/sandpit/*</url-pattern>
+	</servlet-mapping>
     <jsp-config>
         <taglib>
             <taglib-uri>http://liferay.com/tld/aui</taglib-uri>
