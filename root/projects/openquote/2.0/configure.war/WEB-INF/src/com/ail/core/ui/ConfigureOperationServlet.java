@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.CoreProxy;
-import com.ail.core.configure.server.Server;
+import com.ail.core.configure.server.ServerRemote;
 
 /**
  * This servlet performs common operations on the core configure system in response to user requests.
@@ -44,7 +44,7 @@ import com.ail.core.configure.server.Server;
  * @since 2.0
  */
 public class ConfigureOperationServlet extends HttpServlet {
-    @EJB Server server;
+    @EJB ServerRemote server;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String op=request.getParameter("op");

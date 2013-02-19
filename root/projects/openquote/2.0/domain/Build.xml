@@ -20,14 +20,9 @@
 
     <install-liferay-macro version="${liferay.version}" />
 
-    <!-- copy comain files without variable expansion -->
-    <copy todir="${liferay.dir}">
-      <fileset dir="liferay" includes="data" />
-    </copy>
-    
     <!-- copy domain files with variables expanded -->    
     <copy todir="${liferay.dir}">
-      <fileset dir="liferay" excludes="data" />
+      <fileset dir="liferay" />
       <filterset>
         <filter token="major.version" value="${major.version}" />
         <filter token="minor.version" value="${minor.version}" />

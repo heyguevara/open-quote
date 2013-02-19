@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Locale;
 
 import org.junit.Before;
@@ -143,5 +144,14 @@ public class TestUrlHandlers {
         com.ail.core.ThreadLocale.setThreadLocale(Locale.KOREAN);
         url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
         assertTrue(Functions.loadUrlContentAsString(url).contains("Thank you"));
+    }
+    
+    @Test
+    public void testProductURLCompatibilityWithFOP() throws Exception {
+        URL url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
+        URLConnection connection=url.openConnection();
+        connection.setAllowUserInteraction(false);
+        connection.setDoInput(true);
+        connection.connect();
     }
 }

@@ -42,7 +42,7 @@ import com.ail.core.configure.finder.GetClassListCommandImpl;
 
 @Configurable
 @Stateless
-@Remote(Server.class)
+@Remote(ServerRemote.class)
 @Local(ServerLocal.class)
 @WebService
 @WebContext(contextRoot="configure", urlPattern="server", authMethod = "BASIC")
@@ -61,7 +61,7 @@ public class ServerBean extends StatelessComponent implements CoreUser {
     @RolesAllowed({"Administrator"})
     public void resetCoreConfiguration() {
         getCore().resetConfiguration();
-        clearConfigurationCache();
+        clearAllConfigurationCaches();
         setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
@@ -99,7 +99,7 @@ public class ServerBean extends StatelessComponent implements CoreUser {
     @RolesAllowed({"Administrator"})
     public void resetNamedConfiguration(String name) throws EJBException  {
         resetConfig(name);
-        clearConfigurationCache();
+        clearAllConfigurationCaches();
         setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
@@ -127,7 +127,7 @@ public class ServerBean extends StatelessComponent implements CoreUser {
             }
         }
         
-        clearConfigurationCache();
+        clearAllConfigurationCaches();
         setVersionEffectiveDate(new VersionEffectiveDate());
     }
 
@@ -136,7 +136,7 @@ public class ServerBean extends StatelessComponent implements CoreUser {
      */
     @WebMethod
     @RolesAllowed({"Administrator"})
-    public void clearConfigurationCache() throws EJBException  {
+    public void clearAllConfigurationCaches() throws EJBException  {
         ConfigurationHandler.resetCache();
     }
 

@@ -20,10 +20,10 @@ import java.lang.reflect.Method;
 
 import javax.ejb.EJB;
 
-import com.ail.core.configure.server.Server;
+import com.ail.core.configure.server.ServerRemote;
 
 public class Main {
-    @EJB private Server server;
+    @EJB private ServerRemote server;
     private String username;
     private String password;
     private String operation;

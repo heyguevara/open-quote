@@ -13,8 +13,10 @@
       <module name="org.apache.xalan" />
       <module name="com.liferay.portal" />
       <module name="javax.mail.api" />
+      <module name="javax.jms.api" />
       <module name="org.jboss.modules" />
       <module name="deployment.persistence-server-ejb.jar" />
+      <module name="deployment.acceptance-ejb.jar" />
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

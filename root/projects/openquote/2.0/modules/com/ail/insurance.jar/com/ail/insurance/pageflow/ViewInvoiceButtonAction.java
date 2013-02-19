@@ -69,7 +69,7 @@ public class ViewInvoiceButtonAction extends CommandButtonAction {
 	                QuotationContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
-                response.sendRedirect("/quotation/DisplayInvoiceServlet?policyNumber="+policyNumber);
+                response.sendRedirect("/quotation-portlet/DisplayInvoiceServlet?policyNumber="+policyNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display invoice", e);

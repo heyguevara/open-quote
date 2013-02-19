@@ -19,10 +19,15 @@ package com.ail.core.urlhandler.product;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+
+import javassist.util.proxy.MethodHandler;
+import javassist.util.proxy.ProxyFactory;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -121,9 +126,48 @@ public class Handler extends URLStreamHandler {
 
         urlConnection.getInputStream();
 
-        return urlConnection;
+        try {
+            return createProxy(urlConnection);
+        } catch (Exception e) {
+            throw new IOException("Failed to create proxy to read '"+actualURL+"', encountered:"+e.toString(), e);
+        }
     }
 
+    /** 
+     * Create a dynamic proxy around the URLConnection to the content. We need to do this
+     * because in order for us, here in the handler, to detect if content really exists 
+     * (which we have to do in order to pick up the right localisation) we have to open
+     * the connection. However, some 3rd party libs (e.g. Apache FOP) assume that the 
+     * connection has not been opened and thus they are safe to call methods like 
+     * setAllowUserInteraction() on the connection. However, if the connection is already
+     * open calling these methods will result in an IllegalStateExeption. 
+     * So, we use a dynamic proxy here to mask out those methods calls.
+     * @param connection
+     * @return A Proxy URL connection.
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     * @throws NoSuchMethodException 
+     * @throws IllegalArgumentException 
+     */
+    private URLConnection createProxy(final URLConnection connection) throws IOException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        ProxyFactory factory = new ProxyFactory();
+        factory.setSuperclass(URLConnection.class);
+
+        MethodHandler handler = new MethodHandler() {
+            @Override
+            public Object invoke(Object obj, Method method, Method proceed, Object[] args) throws Throwable {
+                if ("setAllowUserInteraction".equals(method.getName()) || "setDoInput".equals(method.getName())) {
+                    return null;
+                } else {
+                    return method.invoke(connection, args);
+                }
+            }
+        };
+
+        return (URLConnection) factory.create(new Class<?>[]{URL.class}, new Object[]{null}, handler);
+    }
+    
     /**
      * Add a language code to a content path. The convention is to include the
      * language (ISO code) before the last '.' in the URL. For example, the URL

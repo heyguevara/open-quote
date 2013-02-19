@@ -57,6 +57,7 @@ public class Rate extends Type {
      * <li>"nPercent" where 0 &lt;= n &lt;= 100, "Percent" can be in any case. e.g. "10Percent", "5PERCENT", "25.5Percent"</li>
      * <li>"nPermil" where 0 &lt;= n &lt;= 1000, "Permil" can be in any case. e.g. "423Permil" , "874PERMIL", "223.4Permil"</li>
      * <li>"n/d" where 0 &lt;= n &lt;= d, and 0 &lt;= d. e.g. "3/20", "9.2/80"</li>
+     * <li>A sting representing a value between 0 and 1 inclusive, e.g. "0.25" (25%)</li>
      * </ul>
      * @param rate The representation of a rate.
      * @throws IllegalArgumentException if a value is out of range, e.g. "102%".
@@ -103,7 +104,18 @@ public class Rate extends Type {
             }
         }
         else {
-            throw new NumberFormatException("Rate format not recognised:"+rate);
+            // Check that rate is a number
+            if (new Double(rate).isNaN()) {
+                throw new NumberFormatException("Rate format not recognised:"+rate);
+            }
+            
+            nominator=new BigDecimal(rate);
+            denominator=new BigDecimal(1);
+            
+            // Check that rate is >=0 and <=1
+            if (BigDecimal.ZERO.compareTo(nominator) > 0 || BigDecimal.ONE.compareTo(nominator) < 0) {
+                throw new NumberFormatException("Rate format not recognised:"+rate);
+            }
         }
 
         this.rate=rate;

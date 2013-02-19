@@ -68,8 +68,8 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
 	                SavedPolicy savedPolicy=(SavedPolicy)proxy.queryUnique("get.savedPolicy.by.quotationNumber", quoteNumber);
 	                QuotationContext.setPolicy(savedPolicy.getPolicy());
                 }
-                
-                response.sendRedirect("/quotation/DisplayQuotationServlet?quoteNumber="+quoteNumber);
+
+                response.sendRedirect("/quotation-portlet/DisplayQuotationServlet?quoteNumber="+quoteNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display quote", e);

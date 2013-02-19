@@ -69,7 +69,7 @@ public class ViewCertificateButtonAction extends CommandButtonAction {
 	                QuotationContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
-                response.sendRedirect("/quotation/DisplayCertificateServlet?policyNumber="+policyNumber);
+                response.sendRedirect("/quotation-portlet/DisplayCertificateServlet?policyNumber="+policyNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display certificate", e);

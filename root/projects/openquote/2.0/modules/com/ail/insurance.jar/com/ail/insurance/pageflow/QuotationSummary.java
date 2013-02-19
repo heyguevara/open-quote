@@ -303,7 +303,7 @@ public class QuotationSummary extends PageContainer {
             navigationSection.getPageElement().add(confirmAndPay);
 
             CommandButtonAction view=new ViewQuotationButtonAction();
-            view.setLabel(i18n("i18n_view_quotation_document_button_label"));
+            view.setLabel("i18n_view_quotation_document_button_label");
             view.setId(this.id+".quote");
             navigationSection.getPageElement().add(view);
         }

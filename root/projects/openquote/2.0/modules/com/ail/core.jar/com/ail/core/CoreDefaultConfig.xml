@@ -51,7 +51,7 @@
 
     <types>
         <service name='AcceptanceServicesEJB' builder='ClassBuilder' key='com.ail.core.command.EJBAccessor'>
-            <parameter name='JndiName'>ejb:/acceptance-ejb//AcceptanceBean!com.ail.insurance.acceptance.Acceptance</parameter>
+            <parameter name='JndiName'>ejb:/acceptance-ejb//AcceptanceBean!com.ail.insurance.acceptance.AcceptanceLocal</parameter>
         </service>
 
         <service name="GenerateQuotationDocumentService" key="com.ail.core.command.EJBAccessor">

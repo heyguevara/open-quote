@@ -39,7 +39,7 @@ import com.ail.core.configure.server.CatalogCarService.CatalogCarCommand;
 import com.ail.core.configure.server.GetConfigurationService.GetConfigurationCommand;
 import com.ail.core.configure.server.GetNamespacesHistoryService.GetNamespacesHistoryCommand;
 import com.ail.core.configure.server.PackageCarService.PackageCarCommand;
-import com.ail.core.configure.server.Server;
+import com.ail.core.configure.server.ServerRemote;
 import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCommand;
 
 /**
@@ -47,7 +47,7 @@ import com.ail.core.configure.server.SetConfigurationService.SetConfigurationCom
  */
 public class ConfigureManager {
     @EJB
-    private Server server=null;
+    private ServerRemote server=null;
     private CoreProxy core;
     
     public ConfigureManager() throws Exception {
@@ -71,7 +71,7 @@ public class ConfigureManager {
     
     public String clearCacheAction() {
         try {
-            server.clearConfigurationCache();
+            server.clearAllConfigurationCaches();
             core.setVersionEffectiveDateToNow();
             return "clearCacheAction.success";
         }

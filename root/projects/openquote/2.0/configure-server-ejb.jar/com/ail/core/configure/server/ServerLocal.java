@@ -41,7 +41,9 @@ public interface ServerLocal {
     
     void resetAllConfigurations();
 
-    void clearConfigurationCache();
+    void clearNamedConfigurationCache(String name);
+
+    void clearAllConfigurationCaches();
 
     GetNamespacesCommandImpl getNamespaces(GetNamespacesCommandImpl arg);
 
