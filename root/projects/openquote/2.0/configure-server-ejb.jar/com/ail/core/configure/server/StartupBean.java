@@ -43,12 +43,11 @@ public class StartupBean {
             // Build the URL which points into the product repo
             CoreProxy cp = new CoreProxy();
 
-            String protocol = cp.getParameterValue("ProductURLHandler.Protocol");
             String host = cp.getParameterValue("ProductURLHandler.Host");
             Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
-            String path = cp.getParameterValue("ProductURLHandler.Path");
 
-            repoTestURL = new URL(protocol, host, port, path);
+            repoTestURL = new URL("product", host, port, "/AIL/Base/Registry.xml");
+            
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
         }
@@ -58,10 +57,6 @@ public class StartupBean {
                 testStream = repoTestURL.openStream();
                 testStream.close();
                 return;
-            } catch (IOException e) {
-                if (e.toString().indexOf("401") > 0) {
-                    return;
-                }
             } catch (Throwable e) {
                 // ignore
             }

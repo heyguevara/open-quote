@@ -17,11 +17,17 @@
 
 package com.ail.core.configure;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Properties;
+
 import com.ail.core.Core;
 import com.ail.core.CoreUser;
 import com.ail.core.VersionEffectiveDate;
-
-import java.util.*;
 
 public class ConfigurationHandler {
     /** The actual handler this class will delegate to. */
@@ -80,24 +86,58 @@ public class ConfigurationHandler {
 
     /**
      * This method removes a specific namespace from the ConfigurationHandlers's
-     * internal cache. This may be useful especially when dealing with undefined namespaces: If
-     * the configuration handler is asked to load a namespace but cannot find it, it caches the
-     * fact that the namespace is unknown - this prevents it from hitting the database every time
-     * the namespace is requested only to find it sill isn't there. However, there are times when
-     * when the caller needs to force a reload - for example when a namespace is first create.<p>
-     * Removing a namespace from the cache only has a very small performance hit.
-     * @param namespace The namespace to remove from the cache.
+     * internal cache and also remove any other namespace that depend on it.
+     * This may be useful especially when dealing with undefined namespaces: If
+     * the configuration handler is asked to load a namespace but cannot find
+     * it, it caches the fact that the namespace is unknown - this prevents it
+     * from hitting the database every time the namespace is requested only to
+     * find it sill isn't there. However, there are times when when the caller
+     * needs to force a reload - for example when a namespace is first create.
+     * <p>
+     * Removing a namespace from the cache only has a very small performance
+     * hit.
+     * @param namespace
+     *            The namespace to remove from the cache.
+     * @return  A list of the namespaces that were removed.
      */
-    public static void reset(String namespace) {
+    public static List<String> reset(final String namespace) {
+        // list of namespaces that were reset
+        List<String> reset=new ArrayList<String>();
+        Boolean searchAgain=null;
+        
         if (instance==null) {
 			ConfigurationHandler.resetCache();
         }
 
         if (namespaces!=null) {
+            // add the namespace we've been passed to the list to be reset
+            reset.add(namespace);
+
+            // search through all other namespaces in the cache and add any that depend on 
+            // the one we're reseting or other that depend on them.
+            while(searchAgain==null || searchAgain) {
+                searchAgain=false;
+                for(Enumeration<ArrayList<Configuration>> configs=namespaces.elements() ; configs.hasMoreElements() ;) {
+                    for(Configuration config: configs.nextElement()) {
+                        if (!reset.contains(config.getNamespace())) {
+                            if (reset.contains(config.getParentNamespace()) || (config.getParentNamespace()==null && reset.contains("com.ail.core.Core"))) {
+                                reset.add(config.getNamespace());
+                                searchAgain=true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // reset all of the caches in the list
             synchronized(namespaces) {
-                namespaces.remove(namespace);
+                for(String n: reset) {
+                    namespaces.remove(n);
+                }
             }
         }
+        
+        return reset;
     }
 
     /**

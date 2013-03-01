@@ -68,7 +68,7 @@
 
         <service name="JMSQueueService" key="com.ail.core.command.JMSAccessor">
             <parameter name="Factory">ConnectionFactory</parameter>
-            <parameter name="Queue">queue/AilCommandQueue</parameter>
+            <parameter name="Queue">queue/OpenQuoteCommandQueue</parameter>
         </service>
 
         <!-- Map all of the logger commands to the stdio logger -->
@@ -132,22 +132,11 @@
             <parameter name="Service">AcceptanceServicesEJB</parameter>
         </command>
 
-        <!-- TODO Remove for 2.0 -->
-        <command name="RenderBrokerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.insurance.pageflow.render.RenderCommandImpl">
-            <parameter name="Service">com.ail.insurance.pageflow.render.html.BrokerQuotationSummaryService</parameter>
+        <command name="QueuedClearProductCacheCommand" builder="ClassBuilder" key="com.ail.core.product.ClearProductCacheCommandImpl">
+            <parameter name="Service">JMSQueueService</parameter>
         </command>
-
-        <command name="RenderBrokerQuotationSummaryCommand/text/xml" builder="ClassBuilder" key="com.ail.insurance.pageflow.render.RenderCommandImpl">
-            <parameter name="Service">com.ail.core.NullService</parameter>
-        </command>
-
-        <command name="RenderProposerQuotationSummary/text/html" builder="ClassBuilder" key="com.ail.insurance.pageflow.render.RenderCommandImpl">
-            <parameter name="Service">com.ail.insurance.pageflow.render.html.ProposerQuotationSummaryService</parameter>
-        </command>
-
-        <command name="RenderProposerQuotationSummaryCommand/text/xml" builder="ClassBuilder"
-            key="com.ail.insurance.pageflow.render.RenderCommandImpl">
-            <parameter name="Service">com.ail.core.NullService</parameter>
+        <command name="QueuedResetProductCommand" builder="ClassBuilder" key="com.ail.core.product.ResetProductCommandImpl">
+            <parameter name="Service">JMSQueueService</parameter>
         </command>
     </types>
 </configuration>

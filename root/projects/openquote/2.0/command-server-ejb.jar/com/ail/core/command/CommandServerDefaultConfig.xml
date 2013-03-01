@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- This file defines the default (factory) configuration for the Rainbow
- component. This configuration is used by the component's resetConfiguration()
- method.
--->
-<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <name>CommandServerBean configuration</name>
-    <timeout>-1</timeout>
-    <who>factory</who>
-    <version>$Revision$</version>
+<!-- This file defines the default (factory) configuration for the Rainbow component. This configuration is used by the component's resetConfiguration() 
+  method. -->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <name>CommandServerBean configuration</name>
+  <timeout>-1</timeout>
+  <who>factory</who>
+  <version>$Revision$</version>
 
-    <types>
-        <service name="NotifyBrokerByEmailService" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.quotation.NotifyBrokerByEmailService</parameter>
-        </service>
+  <types>
+    <service name="NotifyBrokerByEmailService" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.insurance.quotation.NotifyBrokerByEmailService</parameter>
+    </service>
 
-        <service name="NotifyProposerByEmailService" key="com.ail.core.command.ClassAccessor">
-            <parameter name="ServiceClass">com.ail.insurance.quotation.NotifyProposerByEmailService</parameter>
-        </service>
+    <service name="NotifyProposerByEmailService" key="com.ail.core.command.ClassAccessor">
+      <parameter name="ServiceClass">com.ail.insurance.quotation.NotifyProposerByEmailService</parameter>
+    </service>
 
-        <command name="NotifyBrokerByEmailArgumentImpl" key="com.ail.insurance.quotation.NotifyBrokerByEmailCommandImpl">
-            <parameter name="Service">NotifyBrokerByEmailService</parameter>
-        </command>
+    <command name="NotifyBrokerByEmailArgumentImpl" key="com.ail.insurance.quotation.NotifyBrokerByEmailCommandImpl">
+      <parameter name="Service">NotifyBrokerByEmailService</parameter>
+    </command>
 
-        <command name="NotifyProposerByEmailArgumentImpl" key="com.ail.insurance.quotation.NotifyProposerByEmailCommandImpl">
-            <parameter name="Service">NotifyProposerByEmailService</parameter>
-        </command>
+    <command name="NotifyProposerByEmailArgumentImpl" key="com.ail.insurance.quotation.NotifyProposerByEmailCommandImpl">
+      <parameter name="Service">NotifyProposerByEmailService</parameter>
+    </command>
 
-        <command name="LoggingArgumentImpl" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
-        </command>
+    <command name="LoggingArgumentImpl" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
+      <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+    </command>
 
-        <!--=======================================================================-->
-        <!-- Bind the command server's commands directly to an implementation;     -->
-        <!-- hibernate by default. This ensures that the command server won't      -->
-        <!-- invoke the core's bindings - which may point at some wrapper (like    -->
-        <!-- the command server itself!).                                          -->
-        <!--=======================================================================-->
-        <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
-        </command>
-        
-        <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
-        </command>
-        
-        <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
-        </command>
-        
-        <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
-        </command>
-        
-        <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
-        </command>
+    <command name="ClearProductCacheArgumentImpl" builder="ClassBuilder" key="com.ail.core.product.ClearProductCacheCommandImpl">
+      <parameter name="Service">com.ail.core.product.ClearProductCacheService</parameter>
+    </command>
 
-        <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
-        </command>
-        
-        <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
-            <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
-        </command>
-    </types>
+    <command name="ResetProductArgumentImpl" builder="ClassBuilder" key="com.ail.core.product.ResetProductCommandImpl">
+      <parameter name="Service">com.ail.core.product.ResetProductService</parameter>
+    </command>
+
+    <!--======================================================================= -->
+    <!-- Bind the command server's commands directly to an implementation; -->
+    <!-- hibernate by default. This ensures that the command server won't -->
+    <!-- invoke the core's bindings - which may point at some wrapper (like -->
+    <!-- the command server itself!). -->
+    <!--======================================================================= -->
+    <command name="Update" builder="ClassBuilder" key="com.ail.core.persistence.UpdateCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateUpdateService</parameter>
+    </command>
+
+    <command name="Query" builder="ClassBuilder" key="com.ail.core.persistence.QueryCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateQueryService</parameter>
+    </command>
+
+    <command name="Load" builder="ClassBuilder" key="com.ail.core.persistence.LoadCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateLoadService</parameter>
+    </command>
+
+    <command name="Create" builder="ClassBuilder" key="com.ail.core.persistence.CreateCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCreateService</parameter>
+    </command>
+
+    <command name="Delete" builder="ClassBuilder" key="com.ail.core.persistence.DeleteCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateDeleteService</parameter>
+    </command>
+
+    <command name="OpenPersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.OpenSessionCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateOpenSessionService</parameter>
+    </command>
+
+    <command name="ClosePersistenceSession" builder="ClassBuilder" key="com.ail.core.persistence.CloseSessionCommandImpl">
+      <parameter name="Service">com.ail.core.persistence.hibernate.HibernateCloseSessionService</parameter>
+    </command>
+  </types>
 </configuration>

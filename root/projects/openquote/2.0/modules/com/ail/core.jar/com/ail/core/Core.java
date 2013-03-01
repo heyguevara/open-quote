@@ -908,11 +908,12 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Clear the configure cache associated with a product. 
      * @param productName Product to clear the cache for.
+     * @return list of the namespaces for which the cache was cleared 
 	 * @since 2.0
      */
-    public void clearProductCache(String productName) {
+    public List<String> clearProductCache(String productName) {
         String configurationNamespace=Functions.productNameToConfigurationNamespace(productName);
-        clearConfigurationCache(configurationNamespace);
+        return clearConfigurationCache(configurationNamespace);
     }
     
     /**
@@ -1114,8 +1115,9 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Reset the server side cache used to hold configuration information.
      * @param namespace The namespace to be cleared from the cache.
+     * @return list of the namespaces for which the cache was cleared 
      */
-    public void clearConfigurationCache(String namespace) {
-        ConfigurationHandler.reset(namespace);
+    public List<String> clearConfigurationCache(String namespace) {
+        return ConfigurationHandler.reset(namespace);
     }
 }

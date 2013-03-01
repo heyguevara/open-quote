@@ -1133,4 +1133,14 @@
         <field name="commandScriptArg" type="com.ail.core.CommandScript" />
     </class>
 
+    <class name="com.ail.core.product.ClearProductCacheArgumentImpl">
+        <map-to xml="clearProductCacheArgumentImpl" />
+        <field name="productNameArg" type="string" />
+        <!--field name="namespacesRet" collection="arraylist" type="string" /-->
+    </class>
+
+    <class name="com.ail.core.product.ResetProductArgumentImpl">
+        <map-to xml="resetProductArgumentImpl" />
+        <field name="productNameArg" type="string" />
+    </class>
 </mapping>

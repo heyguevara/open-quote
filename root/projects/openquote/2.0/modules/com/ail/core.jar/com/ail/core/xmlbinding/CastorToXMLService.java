@@ -113,7 +113,7 @@ public class CastorToXMLService extends Service<ToXMLService.ToXMLArgument> {
             // Have the marshaller include 'xsi:type' attributes in the output
             m.setMarshalExtendedType(true);
 
-            // Turn validaation off to avoid URL hits
+            // Turn validation off to avoid URL hits
             m.setValidation(false);
 
             // Stop the conversion of < to &lt; etc.

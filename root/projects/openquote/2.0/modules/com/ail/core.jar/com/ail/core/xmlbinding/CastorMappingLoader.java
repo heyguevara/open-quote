@@ -77,7 +77,7 @@ public class CastorMappingLoader {
             }
 
             MappingUnmarshaller mum = new MappingUnmarshaller();
-
+            
             MappingLoader loader = mum.getMappingLoader(mapping, BindingType.XML);
             
             resolver = (XMLClassDescriptorResolver) ClassDescriptorResolverFactory.createClassDescriptorResolver(BindingType.XML);

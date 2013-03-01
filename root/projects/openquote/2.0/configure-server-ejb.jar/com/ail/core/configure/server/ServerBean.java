@@ -19,6 +19,8 @@ package com.ail.core.configure.server;
 
 import static com.ail.core.Functions.classForName;
 
+import java.util.List;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Local;
@@ -143,11 +145,12 @@ public class ServerBean extends StatelessComponent implements CoreUser {
     /**
      * Reset the server side cache used to hold configuration information.
      * @param namespace The namespace to be cleared from the cache.
+     * @return list of the namespaces for which the cache was cleared 
      */
     @WebMethod
     @RolesAllowed({"Administrator"})
-    public void clearNamedConfigurationCache(String namespace) throws EJBException  {
-        ConfigurationHandler.reset(namespace);
+    public List<String> clearNamedConfigurationCache(String namespace) throws EJBException  {
+        return ConfigurationHandler.reset(namespace);
     }
 
     @WebMethod(exclude=true)

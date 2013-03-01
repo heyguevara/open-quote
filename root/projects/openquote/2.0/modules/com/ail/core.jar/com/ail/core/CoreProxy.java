@@ -715,9 +715,10 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     /**
      * Clear the configure cache associated with a product. 
      * @param productName Product to clear the cache for.
+     * @return list of the namespaces for which the cache was cleared 
      */
-    public void clearProductCache(String productName) {
-        core.clearProductCache(productName);
+    public List<String> clearProductCache(String productName) {
+        return core.clearProductCache(productName);
     }
     
     /**
@@ -730,8 +731,9 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     /**
      * Reset the server side cache used to hold configuration information.
      * @param namespace The namespace to be cleared from the cache.
+     * @return list of the namespaces for which the cache was cleared 
      */
-    public void clearConfigurationCache(String namespace) {
-        core.clearConfigurationCache(namespace);
+    public List<String> clearConfigurationCache(String namespace) {
+        return core.clearConfigurationCache(namespace);
     }
 }

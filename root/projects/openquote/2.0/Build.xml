@@ -22,6 +22,7 @@
     <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./configure-hook.war" antfile="Build.xml" target="_build" />
     <!--ant dir="./configure.war" antfile="Build.xml" target="_build" /-->
     <ant dir="./quotation-portlet.war" antfile="Build.xml" target="_build" />
     <ant dir="./sandpit-portlet.war" antfile="Build.xml" target="_build" />
