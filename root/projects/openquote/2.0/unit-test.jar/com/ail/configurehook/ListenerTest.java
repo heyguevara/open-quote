@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.ail.core.CoreProxy;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -17,10 +18,12 @@ public class ListenerTest {
     private static final String TEST_FILE = "TestFile";
     private Listener sut;
     private DLFileEntry fileEntry;
+    private CoreProxy mockCoreProxy;
 
     @Before
     public void setupSUT() {
-        sut = new Listener();
+        mockCoreProxy = mock(CoreProxy.class);
+        sut = new Listener(mockCoreProxy);
     }
 
     @Before
@@ -36,8 +39,7 @@ public class ListenerTest {
             DLFolder newFolder = mock(DLFolder.class);
             if (folder == null) {
                 when(fileEntry.getFolder()).thenReturn(newFolder);
-            }
-            else {
+            } else {
                 when(folder.getParentFolder()).thenReturn(newFolder);
             }
 
@@ -51,9 +53,9 @@ public class ListenerTest {
     public void testFileEntry2FullPath() throws Exception {
         assertNull(sut.fileEntry2FullPath(null));
         assertNotNull(sut.fileEntry2FullPath(fileEntry));
-        assertEquals(TEST_FOLDER+"/"+TEST_FILE, sut.fileEntry2FullPath(fileEntry));
+        assertEquals(TEST_FOLDER + "/" + TEST_FILE, sut.fileEntry2FullPath(fileEntry));
     }
-    
+
     @Test
     public void testFullPath2ProductName() {
         assertNull(sut.fullPath2ProductName(null));

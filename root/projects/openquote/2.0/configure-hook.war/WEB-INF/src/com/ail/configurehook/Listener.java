@@ -39,12 +39,16 @@ public class Listener extends BaseModelListener<DLFileEntry> {
     static ChangeDetector changeDetector = new ChangeDetector();
     private ResetProductCommand queuedResetProduct;
     private ClearProductCacheCommand queuedClearProductCache;
-    private CoreProxy coreProxy;
+    private CoreProxy core;
+
+    public Listener(CoreProxy proxy) {
+        core = proxy;
+        queuedResetProduct = core.newCommand("QueuedResetProductCommand", ResetProductCommand.class);
+        queuedClearProductCache = core.newCommand("QueuedClearProductCacheCommand", ClearProductCacheCommand.class);
+    }
 
     public Listener() {
-        coreProxy = new CoreProxy();
-        queuedResetProduct = coreProxy.newCommand("QueuedResetProductCommand", ResetProductCommand.class);
-        queuedClearProductCache = coreProxy.newCommand("QueuedClearProductCacheCommand", ClearProductCacheCommand.class);
+        this(new CoreProxy());
     }
 
     @Override
@@ -55,24 +59,23 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         if (fullPath.startsWith("/Product/")) {
             if (changeDetector.isChanged(fileEntry)) {
                 try {
-                    coreProxy.setVersionEffectiveDateToNow();
-        
-                    coreProxy.logInfo("Product file creation detected for " + fullPath);
-        
+                    core.setVersionEffectiveDateToNow();
+
+                    core.logInfo("Product file creation detected for " + fullPath);
+
                     String productName = fullPath2ProductName(fullPath);
-        
+
                     if (fullPath.endsWith("/Registry.xml")) {
-                        queuedResetProduct.setCallersCore(coreProxy);
+                        queuedResetProduct.setCallersCore(core);
                         queuedResetProduct.setProductNameArg(productName);
                         queuedResetProduct.invoke();
                     }
-        
-                    queuedClearProductCache.setCallersCore(coreProxy);
+
+                    queuedClearProductCache.setCallersCore(core);
                     queuedClearProductCache.setProductNameArg(productName);
                     queuedClearProductCache.invoke();
-    
-                }
-                catch (BaseException e) {
+
+                } catch (BaseException e) {
                     throw new ModelListenerException("Failed to handle product file update.", e);
                 }
             }
@@ -87,21 +90,20 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         if (fullPath.startsWith("/Product/")) {
             if (changeDetector.isChanged(fileEntry)) {
                 try {
-                    coreProxy.setVersionEffectiveDateToNow();
-        
-                    coreProxy.logInfo("File removal detected for " + fullPath);
-        
+                    core.setVersionEffectiveDateToNow();
+
+                    core.logInfo("File removal detected for " + fullPath);
+
                     String productName = fullPath2ProductName(fullPath);
 
-                    queuedClearProductCache.setCallersCore(coreProxy);
+                    queuedClearProductCache.setCallersCore(core);
                     queuedClearProductCache.setProductNameArg(productName);
                     queuedClearProductCache.invoke();
 
-                    for(String namespace: queuedClearProductCache.getNamespacesRet() ) {
-                        coreProxy.logInfo("Cleared cache for namespace: "+namespace);
+                    for (String namespace : queuedClearProductCache.getNamespacesRet()) {
+                        core.logInfo("Cleared cache for namespace: " + namespace);
                     }
-                }
-                catch (BaseException e) {
+                } catch (BaseException e) {
                     throw new ModelListenerException("Failed to handle product file update.", e);
                 }
             }
@@ -125,19 +127,19 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         if (fullPath.startsWith("/Product/")) {
             if (changeDetector.isChanged(fileEntry)) {
                 try {
-                    coreProxy.setVersionEffectiveDateToNow();
+                    core.setVersionEffectiveDateToNow();
 
-                    coreProxy.logInfo("File update detected for : " + fullPath + ", version=" + fileEntry.getVersion());
-                    
+                    core.logInfo("File update detected for : " + fullPath + ", version=" + fileEntry.getVersion());
+
                     String productName = fullPath2ProductName(fullPath);
-    
+
                     if (fullPath.endsWith("/Registry.xml")) {
-                        queuedResetProduct.setCallersCore(coreProxy);
+                        queuedResetProduct.setCallersCore(core);
                         queuedResetProduct.setProductNameArg(productName);
                         queuedResetProduct.invoke();
                     }
-    
-                    queuedClearProductCache.setCallersCore(coreProxy);
+
+                    queuedClearProductCache.setCallersCore(core);
                     queuedClearProductCache.setProductNameArg(productName);
                     queuedClearProductCache.invoke();
                 } catch (BaseException e) {
