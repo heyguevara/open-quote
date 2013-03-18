@@ -41,6 +41,7 @@
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
         <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
         <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <dirset dir="${deploy.dir}/configure-hook.war" includes="WEB-INF/classes" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
