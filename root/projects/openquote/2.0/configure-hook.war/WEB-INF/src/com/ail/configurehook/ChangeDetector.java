@@ -40,7 +40,9 @@ class ChangeDetector {
         for (int i = 0; i < HISTORY_MAX_SIZE; i++) {
             DLFileEntry element = history.get(i);
             if (element.hashCode() == fileEntry.hashCode()) {
-                if (element.getVersion().equals(fileEntry.getVersion())) {
+                Double heldVersion=new Double(element.getVersion());
+                Double newVersion=new Double(fileEntry.getVersion());
+                if (newVersion <= heldVersion) {
                     return false;
                 } else {
                     history.set(i, fileEntry);

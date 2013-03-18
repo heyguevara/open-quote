@@ -53,17 +53,29 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         String fullPath = fileEntry2FullPath(fileEntry);
 
         if (fullPath.startsWith("/Product/")) {
-            coreProxy.setVersionEffectiveDateToNow();
-
-            coreProxy.logInfo("Product file creation detected for " + fullPath);
-
-            String productName = fullPath2ProductName(fullPath);
-
-            if (fullPath.endsWith("/Registry.xml")) {
-                // coreProxy.resetProduct(productName);
+            if (changeDetector.isChanged(fileEntry)) {
+                try {
+                    coreProxy.setVersionEffectiveDateToNow();
+        
+                    coreProxy.logInfo("Product file creation detected for " + fullPath);
+        
+                    String productName = fullPath2ProductName(fullPath);
+        
+                    if (fullPath.endsWith("/Registry.xml")) {
+                        queuedResetProduct.setCallersCore(coreProxy);
+                        queuedResetProduct.setProductNameArg(productName);
+                        queuedResetProduct.invoke();
+                    }
+        
+                    queuedClearProductCache.setCallersCore(coreProxy);
+                    queuedClearProductCache.setProductNameArg(productName);
+                    queuedClearProductCache.invoke();
+    
+                }
+                catch (BaseException e) {
+                    throw new ModelListenerException("Failed to handle product file update.", e);
+                }
             }
-
-            // coreProxy.clearProductCache(productName);
         }
     }
 
@@ -73,13 +85,26 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         String fullPath = fileEntry2FullPath(fileEntry);
 
         if (fullPath.startsWith("/Product/")) {
-            coreProxy.setVersionEffectiveDateToNow();
+            if (changeDetector.isChanged(fileEntry)) {
+                try {
+                    coreProxy.setVersionEffectiveDateToNow();
+        
+                    coreProxy.logInfo("File removal detected for " + fullPath);
+        
+                    String productName = fullPath2ProductName(fullPath);
 
-            coreProxy.logInfo("File removal detected for " + fullPath);
+                    queuedClearProductCache.setCallersCore(coreProxy);
+                    queuedClearProductCache.setProductNameArg(productName);
+                    queuedClearProductCache.invoke();
 
-            String productName = fullPath2ProductName(fullPath);
-
-            // coreProxy.clearProductCache(productName);
+                    for(String namespace: queuedClearProductCache.getNamespacesRet() ) {
+                        coreProxy.logInfo("Cleared cache for namespace: "+namespace);
+                    }
+                }
+                catch (BaseException e) {
+                    throw new ModelListenerException("Failed to handle product file update.", e);
+                }
+            }
         }
     }
 
