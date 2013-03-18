@@ -16,8 +16,10 @@
  */
 package com.ail.core.command;
 
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.ejb.MessageDrivenContext;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
@@ -38,6 +40,11 @@ public class CommandServerBean extends MessagingComponent implements MessageList
 
     public CommandServerBean() {
         initialise("com.ail.core.command.CommandServerBean");
+    }
+
+    @Resource
+    public void setSessionContext(MessageDrivenContext context) {
+        super.setSessionContext(context);
     }
 
     @Override

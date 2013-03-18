@@ -18,7 +18,7 @@
 package com.ail.core;
 
 import java.security.Principal;
-import javax.annotation.Resource;
+
 import javax.ejb.MessageDrivenContext;
 
 /**
@@ -27,7 +27,6 @@ import javax.ejb.MessageDrivenContext;
 public abstract class MessagingComponent extends EJBComponent {
     private MessageDrivenContext ctx;
     
-    @Resource
     public void setSessionContext(MessageDrivenContext context) {
         ctx = context;
     }

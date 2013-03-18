@@ -19,7 +19,6 @@ package com.ail.configurehook;
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.product.ClearProductCacheService.ClearProductCacheCommand;
-import com.ail.core.product.ResetProductService;
 import com.ail.core.product.ResetProductService.ResetProductCommand;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
@@ -54,6 +53,8 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         String fullPath = fileEntry2FullPath(fileEntry);
 
         if (fullPath.startsWith("/Product/")) {
+            coreProxy.setVersionEffectiveDateToNow();
+
             coreProxy.logInfo("Product file creation detected for " + fullPath);
 
             String productName = fullPath2ProductName(fullPath);
@@ -72,6 +73,8 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         String fullPath = fileEntry2FullPath(fileEntry);
 
         if (fullPath.startsWith("/Product/")) {
+            coreProxy.setVersionEffectiveDateToNow();
+
             coreProxy.logInfo("File removal detected for " + fullPath);
 
             String productName = fullPath2ProductName(fullPath);
@@ -97,15 +100,19 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         if (fullPath.startsWith("/Product/")) {
             if (changeDetector.isChanged(fileEntry)) {
                 try {
+                    coreProxy.setVersionEffectiveDateToNow();
+
                     coreProxy.logInfo("File update detected for : " + fullPath + ", version=" + fileEntry.getVersion());
-    
+                    
                     String productName = fullPath2ProductName(fullPath);
     
                     if (fullPath.endsWith("/Registry.xml")) {
+                        queuedResetProduct.setCallersCore(coreProxy);
                         queuedResetProduct.setProductNameArg(productName);
                         queuedResetProduct.invoke();
                     }
     
+                    queuedClearProductCache.setCallersCore(coreProxy);
                     queuedClearProductCache.setProductNameArg(productName);
                     queuedClearProductCache.invoke();
                 } catch (BaseException e) {
