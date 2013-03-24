@@ -74,7 +74,7 @@ public class ResetProductService extends Service<ResetProductService.ResetProduc
         try {
             namespace=productNameToConfigurationNamespace(args.getProductNameArg());
             resetConfiguration();
-            core.logInfo("Product reset:"+namespace);
+            core.logInfo("Product sucessfully reset: "+namespace);
         }
         catch(ConfigurationResetError e) {
             e.printStackTrace();

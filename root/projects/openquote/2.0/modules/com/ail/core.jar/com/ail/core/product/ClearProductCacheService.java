@@ -95,6 +95,10 @@ public class ClearProductCacheService extends Service<ClearProductCacheService.C
 
         args.setNamespacesRet(res);
 
+        for(String space: res) {
+            core.logInfo("Cache successfuly cleared for namespace: "+space);
+        }
+        
         if (args.getNamespacesRet() == null) {
             throw new PostconditionException("args.getNamespacesRet()==null");
         }

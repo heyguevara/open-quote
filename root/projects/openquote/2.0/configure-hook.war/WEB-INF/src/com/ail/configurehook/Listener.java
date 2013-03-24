@@ -16,14 +16,17 @@
  */
 package com.ail.configurehook;
 
-import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.product.ClearProductCacheService.ClearProductCacheCommand;
 import com.ail.core.product.ResetProductService.ResetProductCommand;
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 
 /**
  * This listener is called by Liferay in response to changes in the document
@@ -41,7 +44,7 @@ public class Listener extends BaseModelListener<DLFileEntry> {
     private ClearProductCacheCommand queuedClearProductCache;
     private CoreProxy core;
 
-    public Listener(CoreProxy proxy) {
+    Listener(CoreProxy proxy) {
         core = proxy;
         queuedResetProduct = core.newCommand("QueuedResetProductCommand", ResetProductCommand.class);
         queuedClearProductCache = core.newCommand("QueuedClearProductCacheCommand", ClearProductCacheCommand.class);
@@ -51,101 +54,99 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         this(new CoreProxy());
     }
 
-    @Override
-    public void onAfterCreate(DLFileEntry fileEntry) throws ModelListenerException {
-
-        String fullPath = fileEntry2FullPath(fileEntry);
-
-        if (fullPath.startsWith("/Product/")) {
-            if (changeDetector.isChanged(fileEntry)) {
-                try {
-                    core.setVersionEffectiveDateToNow();
-
-                    core.logInfo("Product file creation detected for " + fullPath);
-
-                    String productName = fullPath2ProductName(fullPath);
-
-                    if (fullPath.endsWith("/Registry.xml")) {
-                        queuedResetProduct.setCallersCore(core);
-                        queuedResetProduct.setProductNameArg(productName);
-                        queuedResetProduct.invoke();
-                    }
-
-                    queuedClearProductCache.setCallersCore(core);
-                    queuedClearProductCache.setProductNameArg(productName);
-                    queuedClearProductCache.invoke();
-
-                } catch (BaseException e) {
-                    throw new ModelListenerException("Failed to handle product file update.", e);
-                }
-            }
-        }
+    // Wrapper for static method call to aid testing
+    void recordChange(DLFileEntry fileEntry) {
+        changeDetector.record(fileEntry);
     }
 
-    @Override
-    public void onAfterRemove(DLFileEntry fileEntry) throws ModelListenerException {
-
-        String fullPath = fileEntry2FullPath(fileEntry);
-
-        if (fullPath.startsWith("/Product/")) {
-            if (changeDetector.isChanged(fileEntry)) {
-                try {
-                    core.setVersionEffectiveDateToNow();
-
-                    core.logInfo("File removal detected for " + fullPath);
-
-                    String productName = fullPath2ProductName(fullPath);
-
-                    queuedClearProductCache.setCallersCore(core);
-                    queuedClearProductCache.setProductNameArg(productName);
-                    queuedClearProductCache.invoke();
-
-                    for (String namespace : queuedClearProductCache.getNamespacesRet()) {
-                        core.logInfo("Cleared cache for namespace: " + namespace);
-                    }
-                } catch (BaseException e) {
-                    throw new ModelListenerException("Failed to handle product file update.", e);
-                }
-            }
-        }
+    // Wrapper for static method call to aid testing
+    boolean isChanged(DLFileEntry fileEntry) {
+        return changeDetector.isChanged(fileEntry);
     }
 
+    // Wrapper for static method call to aid testing
+    DLFileEntry getFileEntry(long groupId, long folderId, String title) throws PortalException, SystemException {
+        return DLFileEntryServiceUtil.getFileEntry(groupId, folderId, title);
+    }
+
+    void resetProductForFileEntry(DLFileEntry fileEntry) throws Exception {
+        core.setVersionEffectiveDateToNow();
+        String productName = fileEntry2ProductName(fileEntry.getFolder());
+        queuedResetProduct.setCallersCore(core);
+        queuedResetProduct.setProductNameArg(productName);
+        queuedResetProduct.invoke();
+    }
+
+    void clearProductCacheForFileEntry(DLFileEntry fileEntry) throws Exception {
+        core.setVersionEffectiveDateToNow();
+        String productName = fileEntry2ProductName(fileEntry.getFolder());
+        queuedClearProductCache.setCallersCore(core);
+        queuedClearProductCache.setProductNameArg(productName);
+        queuedClearProductCache.invoke();
+    }
+
+    void handleOnAfterEvent(DLFileEntry fileEntry, boolean allowResetProduct) throws ModelListenerException {
+        String fullPath = fileEntry2FullPath(fileEntry);
+
+        try {
+            if (fullPath.startsWith("/Product/")) {
+                if (isChanged(fileEntry)) {
+                    if (allowResetProduct && fullPath.endsWith("/Registry.xml")) {
+                        resetProductForFileEntry(fileEntry);
+                    }
+
+                    clearProductCacheForFileEntry(fileEntry);
+                }
+            }
+        } catch (Exception e) {
+            throw new ModelListenerException("Failed to handle product file update.", e);
+        }
+    }
+    
     @Override
     public void onBeforeUpdate(DLFileEntry fileEntry) throws ModelListenerException {
         String fullPath = fileEntry2FullPath(fileEntry);
 
         if (fullPath.startsWith("/Product/")) {
-            changeDetector.record(fileEntry);
+            recordChange(fileEntry);
         }
     }
 
     @Override
+    public void onAfterRemove(DLFileEntry fileEntry) throws ModelListenerException {
+        handleOnAfterEvent(fileEntry, false);
+    }
+
+    @Override
+    public void onAfterCreate(DLFileEntry fileEntry) throws ModelListenerException {
+        handleOnAfterEvent(fileEntry, true);
+    }
+
+    @Override
     public void onAfterUpdate(DLFileEntry fileEntry) throws ModelListenerException {
+        handleOnAfterEvent(fileEntry, true);
+    }
 
-        String fullPath = fileEntry2FullPath(fileEntry);
+    /**
+     * Determine if a folder is the root of a product. If the folder contains a
+     * Registry.xml file it is assumed to be a product root.
+     * 
+     * @param folderEntry
+     *            folder to check.
+     * @return true if the folder is a product root; false otherwise.
+     * @throws Exception
+     */
+    boolean isFolderAProductRoot(DLFolder folderEntry) throws Exception {
+        try {
+            // try to get the Registry from the current folder - this will throw
+            // a NoSuchFileEntryException if the file doesn't exit.
+            getFileEntry(folderEntry.getGroupId(), folderEntry.getFolderId(), "Registry.xml");
 
-        if (fullPath.startsWith("/Product/")) {
-            if (changeDetector.isChanged(fileEntry)) {
-                try {
-                    core.setVersionEffectiveDateToNow();
+            // a Registry.xml exists, so this is a product folder
+            return true;
 
-                    core.logInfo("File update detected for : " + fullPath + ", version=" + fileEntry.getVersion());
-
-                    String productName = fullPath2ProductName(fullPath);
-
-                    if (fullPath.endsWith("/Registry.xml")) {
-                        queuedResetProduct.setCallersCore(core);
-                        queuedResetProduct.setProductNameArg(productName);
-                        queuedResetProduct.invoke();
-                    }
-
-                    queuedClearProductCache.setCallersCore(core);
-                    queuedClearProductCache.setProductNameArg(productName);
-                    queuedClearProductCache.invoke();
-                } catch (BaseException e) {
-                    throw new ModelListenerException("Failed to handle product file update.", e);
-                }
-            }
+        } catch (NoSuchFileEntryException e) {
+            return false;
         }
     }
 
@@ -156,30 +157,37 @@ public class Listener extends BaseModelListener<DLFileEntry> {
      * @param fullPath
      * @return Product name.
      */
-    String fullPath2ProductName(String fullPath) {
-        if (fullPath == null) {
+    String fileEntry2ProductName(DLFolder folderEntry) throws Exception {
+        if (folderEntry == null) {
             return null;
         }
 
-        StringBuilder path = new StringBuilder(fullPath);
+        if (isFolderAProductRoot(folderEntry)) {
 
-        // delete the "/Product/" from the front of the name
-        path.delete(0, 9);
+            // if we get here, Registry.xml must exist which means that this is
+            // the product folder
+            StringBuffer productName = new StringBuffer(folderEntry.getPath());
 
-        // delete the file name from the end of the path
-        int indx = path.lastIndexOf("/");
-        if (indx != -1) {
-            path.setLength(indx);
-        }
+            // delete the "/Product/" from the front of the name
+            productName.delete(0, 9);
 
-        // replace all '/' chars with '.'
-        for (int i = 0; i < path.length(); i++) {
-            if (path.charAt(i) == '/') {
-                path.setCharAt(i, '.');
+            // replace all '/' chars with '.'
+            for (int i = 0; i < productName.length(); i++) {
+                if (productName.charAt(i) == '/') {
+                    productName.setCharAt(i, '.');
+                }
+            }
+
+            return productName.toString();
+        } else {
+            // stop now if we've reached the root folder, otherwise iterate into
+            // the parent folder.
+            if (folderEntry.isRoot()) {
+                throw new IllegalStateException("Cannot determin the product name for a folder. The folder does not appear to be in the product hierarchy.");
+            } else {
+                return fileEntry2ProductName(folderEntry.getParentFolder());
             }
         }
-
-        return path.toString();
     }
 
     /**
@@ -196,16 +204,8 @@ public class Listener extends BaseModelListener<DLFileEntry> {
                 return null;
             }
 
-            StringBuilder path = new StringBuilder();
+            return fileEntry.getFolder().getPath() + "/" + fileEntry.getTitle();
 
-            path.append('/').append(fileEntry.getTitle());
-
-            for (DLFolder folder = fileEntry.getFolder(); folder != null; folder = folder.getParentFolder()) {
-                path.insert(0, folder.getName());
-                path.insert(0, '/');
-            }
-
-            return path.toString();
         } catch (Exception e) {
             throw new ModelListenerException("Failed to derive full path for: " + fileEntry);
         }
