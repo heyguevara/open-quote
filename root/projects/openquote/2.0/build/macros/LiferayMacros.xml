@@ -48,6 +48,7 @@
       <waitfor maxwait="20" maxwaitunit="minute" checkevery="250">
         <http url="http://localhost:8080" />
       </waitfor>
+      <sleep minutes="30"/>
     </sequential>
   </macrodef>
 
