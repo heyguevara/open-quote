@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!--
- Build file for the unit test jar project
--->
-
 <project default="build" name="openquote:build/annotation.jar">
   <import file="../../BuildSettings.xml" />
 

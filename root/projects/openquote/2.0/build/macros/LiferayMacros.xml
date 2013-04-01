@@ -45,10 +45,10 @@
 
   <macrodef name="wait-for-liferay-to-start-macro">
     <sequential>
-      <waitfor maxwait="20" maxwaitunit="minute" checkevery="250">
+      <waitfor maxwait="30" maxwaitunit="minute" checkevery="250" timeoutproperty="liferay-startup-failed">
         <http url="http://localhost:8080" />
       </waitfor>
-      <sleep minutes="40"/>
+      <fail if="liferay-startup-failed" message="Liferay failed to start"/>
     </sequential>
   </macrodef>
 
@@ -204,8 +204,48 @@
       USE $${dbname};
       </echo>
 
+      <!-- List of tables that should not be included in the backup. This list  -->
+      <!-- should correspond to the tables created in the OpenQuote-Table-Setup -->
+      <!-- script.                                                              -->
+      <property name="ignoreTableList">
+          --ignore-table ${dbname}.config
+          --ignore-table ${dbname}.saved_policy
+          --ignore-table ${dbname}.saved_policy_summary          
+          --ignore-table ${dbname}.commercial_address
+          --ignore-table ${dbname}.commercial_addressbook
+          --ignore-table ${dbname}.commercial_company
+          --ignore-table ${dbname}.commercial_organisation
+          --ignore-table ${dbname}.commercial_party
+          --ignore-table ${dbname}.commercial_person
+          --ignore-table ${dbname}.core_Attribute
+          --ignore-table ${dbname}.core_Type
+          --ignore-table ${dbname}.core_configure_Component
+          --ignore-table ${dbname}.core_configure_Group
+          --ignore-table ${dbname}.core_configure_Parameter
+          --ignore-table ${dbname}.insurance_AssessmentLine
+          --ignore-table ${dbname}.insurance_AssessmentSheet
+          --ignore-table ${dbname}.insurance_Asset
+          --ignore-table ${dbname}.insurance_Coverage
+          --ignore-table ${dbname}.insurance_Policy
+          --ignore-table ${dbname}.insurance_Section
+          --ignore-table ${dbname}.party_Address
+          --ignore-table ${dbname}.party_Party
+          --ignore-table ${dbname}.party_Person
+      </property>
+      
+      <!-- reorganise ${ignoreTableList} list into a single line -->
+      <loadresource property="oneLineIgnoreTableList">
+        <propertyresource name="ignoreTableList"/>
+        <filterchain>
+          <tokenfilter>
+            <filetokenizer/>
+            <replaceregex pattern="\n" replace="" flags="g"/>
+          </tokenfilter>
+        </filterchain>
+      </loadresource>
+      
       <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">
-        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} --ignore-table ${dbname}.config --ignore-table ${dbname}.saved_policy --ignore-table ${dbname}.saved_policy_summary --opt ${dbname} >> ${mysql.setup.file}"' />
+        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} ${oneLineIgnoreTableList} --opt ${dbname} >> ${mysql.setup.file}"' />
       </exec>
 
       <zip file="${content.setup.file}">
