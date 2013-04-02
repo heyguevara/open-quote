@@ -38,10 +38,10 @@ public class StartupBean {
         URL repoTestURL = null;
         InputStream testStream = null;
 
+        CoreProxy cp = new CoreProxy();
+
         try {
             // Build the URL which points into the product repo
-            CoreProxy cp = new CoreProxy();
-
             String host = cp.getParameterValue("ProductURLHandler.Host");
             Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
 
@@ -61,6 +61,7 @@ public class StartupBean {
             }
 
             try {
+                cp.logInfo("Content repository not available. Retrying in 5 seconds.");
                 Thread.sleep(5000);
             } catch (InterruptedException e1) {
                 // ignore

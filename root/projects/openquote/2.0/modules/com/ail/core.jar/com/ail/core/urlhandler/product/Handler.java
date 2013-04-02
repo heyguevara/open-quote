@@ -120,7 +120,6 @@ public class Handler extends URLStreamHandler {
         String canonicalPath = baseURL + productURL.getPath();
 
         URL actualURL = new URL(addLanguageToURL(canonicalPath, language));
-        System.out.println("Fetching product content from: " + actualURL.toString());
         URLConnection urlConnection = actualURL.openConnection();
 
         urlConnection.setRequestProperty("Authorization", authToken);
