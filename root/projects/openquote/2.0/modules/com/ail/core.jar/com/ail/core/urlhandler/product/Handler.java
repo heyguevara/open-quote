@@ -70,8 +70,8 @@ public class Handler extends URLStreamHandler {
         String host = cp.getParameterValue("ProductURLHandler.Host");
         Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
         String path = cp.getParameterValue("ProductURLHandler.Path");
-        
-        String baseURL=new URL(protocol, host, port, path).toExternalForm();
+
+        String baseURL = new URL(protocol, host, port, path).toExternalForm();
 
         String credentials = username + ":" + password;
         String authToken = "Basic " + DatatypeConverter.printBase64Binary(credentials.getBytes());
@@ -79,7 +79,8 @@ public class Handler extends URLStreamHandler {
         String language = ThreadLocale.getThreadLocale().getLanguage();
 
         // 1) First try to fetch the content with the thread's locale.
-        // 2) If that yields a FileNotFound or a 412, try to fetch it without the locale.
+        // 2) If that yields a FileNotFound or a 412, try to fetch it without
+        // the locale.
         // 3) If that fails with a FileNotFound or a 412, throw a FileNotFound
         // 4) Any other exceptions are passed on as they are.
         try {
@@ -105,7 +106,8 @@ public class Handler extends URLStreamHandler {
     /**
      * Attempt to connect to a specified piece of content using specified
      * authentication and language. The actual URL is built from the URL,
-     * baseURL and language passed in. 
+     * baseURL and language passed in.
+     * 
      * @param productURL
      * @param baseURL
      * @param authToken
@@ -118,7 +120,7 @@ public class Handler extends URLStreamHandler {
         String canonicalPath = baseURL + productURL.getPath();
 
         URL actualURL = new URL(addLanguageToURL(canonicalPath, language));
-
+        System.out.println("Fetching product content from: " + actualURL.toString());
         URLConnection urlConnection = actualURL.openConnection();
 
         urlConnection.setRequestProperty("Authorization", authToken);
@@ -129,28 +131,31 @@ public class Handler extends URLStreamHandler {
         try {
             return createProxy(urlConnection);
         } catch (Exception e) {
-            throw new IOException("Failed to create proxy to read '"+actualURL+"', encountered:"+e.toString(), e);
+            throw new IOException("Failed to create proxy to read '" + actualURL + "', encountered:" + e.toString(), e);
         }
     }
 
-    /** 
-     * Create a dynamic proxy around the URLConnection to the content. We need to do this
-     * because in order for us, here in the handler, to detect if content really exists 
-     * (which we have to do in order to pick up the right localisation) we have to open
-     * the connection. However, some 3rd party libs (e.g. Apache FOP) assume that the 
-     * connection has not been opened and thus they are safe to call methods like 
-     * setAllowUserInteraction() on the connection. However, if the connection is already
-     * open calling these methods will result in an IllegalStateExeption. 
-     * So, we use a dynamic proxy here to mask out those methods calls.
+    /**
+     * Create a dynamic proxy around the URLConnection to the content. We need
+     * to do this because in order for us, here in the handler, to detect if
+     * content really exists (which we have to do in order to pick up the right
+     * localisation) we have to open the connection. However, some 3rd party
+     * libs (e.g. Apache FOP) assume that the connection has not been opened and
+     * thus they are safe to call methods like setAllowUserInteraction() on the
+     * connection. However, if the connection is already open calling these
+     * methods will result in an IllegalStateExeption. So, we use a dynamic
+     * proxy here to mask out those methods calls.
+     * 
      * @param connection
      * @return A Proxy URL connection.
-     * @throws InvocationTargetException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
-     * @throws NoSuchMethodException 
-     * @throws IllegalArgumentException 
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws NoSuchMethodException
+     * @throws IllegalArgumentException
      */
-    private URLConnection createProxy(final URLConnection connection) throws IOException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private URLConnection createProxy(final URLConnection connection) throws IOException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException,
+            InvocationTargetException {
         ProxyFactory factory = new ProxyFactory();
         factory.setSuperclass(URLConnection.class);
 
@@ -165,9 +170,9 @@ public class Handler extends URLStreamHandler {
             }
         };
 
-        return (URLConnection) factory.create(new Class<?>[]{URL.class}, new Object[]{null}, handler);
+        return (URLConnection) factory.create(new Class<?>[] { URL.class }, new Object[] { null }, handler);
     }
-    
+
     /**
      * Add a language code to a content path. The convention is to include the
      * language (ISO code) before the last '.' in the URL. For example, the URL
