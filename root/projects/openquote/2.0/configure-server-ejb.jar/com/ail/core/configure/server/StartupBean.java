@@ -61,7 +61,7 @@ public class StartupBean {
             }
 
             try {
-                Thread.sleep(250);
+                Thread.sleep(5000);
             } catch (InterruptedException e1) {
                 // ignore
             }
