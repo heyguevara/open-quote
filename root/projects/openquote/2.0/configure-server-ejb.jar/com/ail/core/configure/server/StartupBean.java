@@ -57,14 +57,12 @@ public class StartupBean {
                 testStream.close();
                 return;
             } catch (Throwable e) {
-                // ignore
-            }
-
-            try {
-                cp.logInfo("Content repository not available. Retrying in 5 seconds.");
-                Thread.sleep(5000);
-            } catch (InterruptedException e1) {
-                // ignore
+                try {
+                    cp.logInfo("Content repository not available ("+e.toString()+"). Retrying in 10 seconds.");
+                    Thread.sleep(10000);
+                } catch (InterruptedException e1) {
+                    // ignore
+                }
             }
         } while (true);
     }
