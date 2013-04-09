@@ -84,7 +84,7 @@ public class ConfigurationAggregate {
         
         Queue<File> folderList=new LinkedList<File>();
         
-        for(String rootFolderName: searchPath.split(":")) {
+        for(String rootFolderName: searchPath.split(File.pathSeparator)) {
             File rootFolder=new File(rootFolderName);
             if (!rootFolder.isDirectory()) {
                 System.err.println("config.search.path element '"+rootFolderName+"' is not a folder.");

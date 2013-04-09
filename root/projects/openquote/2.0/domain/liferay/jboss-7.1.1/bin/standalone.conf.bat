@@ -70,10 +70,9 @@ rem set "JAVA_OPTS=%JAVA_OPTS% -Xrunjdwp:transport=dt_shmem,address=jboss,server
 rem # Use JBoss Modules lockless mode
 rem set "JAVA_OPTS=%JAVA_OPTS% -Djboss.modules.lockless=true"
 
-
+:JAVA_OPTS_SET
 				
 set "JAVA_OPTS=%JAVA_OPTS% -Djboss.protocol.handler.modules=com.ail.core -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
-:JAVA_OPTS_SET
 				
 			

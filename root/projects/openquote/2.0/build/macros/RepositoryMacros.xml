@@ -63,7 +63,7 @@
         
           moduleOutputDir=project.getProperty("module.output.dir");
           modulePath = new File(moduleOutputDir).getCanonicalFile().getParent();
-          moduleName = modulePath.replaceAll(".*modules/(.*)", "$1").replace('/', '.');
+          moduleName = modulePath.replaceAll(".*modules.(.*)", "$1").replace(File.separator.charAt(0), '.');
           mos = new PrintStream(new FileOutputStream(moduleOutputDir+"/module.xml"));
             
           mos.println("&lt;module xmlns='urn:jboss:module:1.1' name='"+moduleName+"'&gt;");
