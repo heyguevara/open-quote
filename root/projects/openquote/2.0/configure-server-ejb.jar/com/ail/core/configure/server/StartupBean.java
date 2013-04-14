@@ -21,8 +21,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Timeout;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.AbstractConfigurationLoader;
@@ -30,11 +34,48 @@ import com.ail.core.configure.AbstractConfigurationLoader;
 @Singleton
 @Startup
 public class StartupBean {
-    /**
-     * This method will sleep the thread until the product repository is
-     * available.
-     */
-    private void waitForProductRepoToStart() {
+    private final static int RETRY_TIMEOUT_MS = 10000;
+    @Resource
+    private TimerService timerService;
+
+    @PostConstruct
+    public void onStartup() {
+        if (configurationsHaveNotBeenReset()) {
+
+            new ServerBean().resetCoreConfiguration();
+
+            if (configurationResetFails()) {
+                setRetryTimer(RETRY_TIMEOUT_MS);
+            }
+        }
+    }
+
+    @Timeout
+    public void onTimeout() {
+        if (configurationResetFails()) {
+            setRetryTimer(RETRY_TIMEOUT_MS);
+        }
+    }
+
+    private boolean configurationResetFails() {
+        if (isProductRepoAvailable()) {
+            new ServerBean().resetAllConfigurations();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean configurationsHaveNotBeenReset() {
+        return !AbstractConfigurationLoader.loadLoader().isConfigurationRepositoryCreated();
+    }
+
+    private void setRetryTimer(long intervalDuration) {
+        new CoreProxy().logInfo("Retrying configuration reset in " + RETRY_TIMEOUT_MS / 1000 + " seconds.");
+        timerService.createSingleActionTimer(intervalDuration, new TimerConfig());
+    }
+
+    private boolean isProductRepoAvailable() {
         URL repoTestURL = null;
         InputStream testStream = null;
 
@@ -44,43 +85,20 @@ public class StartupBean {
             // Build the URL which points into the product repo
             String host = cp.getParameterValue("ProductURLHandler.Host");
             Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
-
             repoTestURL = new URL("product", host, port, "/AIL/Base/Registry.xml");
-            
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
+        } catch (MalformedURLException e) {
+            cp.logError("ProductURLHandler.Host and/or ProductURLHandler.Port are not configured correctly in CoreDefaultConfig.xml");
         }
 
-        do {
-            try {
-                testStream = repoTestURL.openStream();
-                testStream.close();
-                return;
-            } catch (Throwable e) {
-                try {
-                    cp.logInfo("Content repository not available ("+e.toString()+"). Retrying in 10 seconds.");
-                    Thread.sleep(10000);
-                } catch (InterruptedException e1) {
-                    // ignore
-                }
-            }
-        } while (true);
-    }
-
-    @PostConstruct
-    public void resetConfigurations() {
-        // If we detect that the configuration repository does not exist, use
-        // the
-        // configuration server's reset methods to create it and populate it.
-        if (!AbstractConfigurationLoader.loadLoader().isConfigurationRepositoryCreated()) {
-            // This really should be an @EJB, but a bug in JBoss 7 prevents
-            // Singleton's from accessing EJBs within a @PostConstruct method.
-            ServerBean server = new ServerBean();
-            server.resetCoreConfiguration();
-
-            waitForProductRepoToStart();
-
-            server.resetAllConfigurations();
+        // If we can open the stream then return true - the repo is available.
+        // Otherwise return false.
+        try {
+            testStream = repoTestURL.openStream();
+            testStream.close();
+            return true;
+        } catch (Throwable e) {
+            cp.logInfo("Content repository not available (" + e.toString() + ").");
+            return false;
         }
     }
 }
