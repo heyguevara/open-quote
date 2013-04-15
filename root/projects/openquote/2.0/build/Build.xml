@@ -26,7 +26,6 @@
   <target name="teardown" description="clear out the jars downloaded by 'setup'">
     <delete dir="${target.dir}" />
     <delete dir="${cache.dir}" />
-    <delete dir="build/lib" />
   </target>
 
   <target name="release" description="build and promote releasable artifacts">

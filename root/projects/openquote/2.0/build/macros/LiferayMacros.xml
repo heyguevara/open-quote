@@ -10,8 +10,8 @@
   <target name="_install.base" unless="base">
     <!-- Get the Liferay zip into the cache -->
     <fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" />
-    <property name="liferay.zip" refid="liferay.zip.pathid"/>
-    
+    <property name="liferay.zip" refid="liferay.zip.pathid" />
+
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
     <unzip overwrite="yes" dest="${target.dir}" src="${liferay.zip}" />
@@ -48,7 +48,7 @@
       <waitfor maxwait="30" maxwaitunit="minute" checkevery="250" timeoutproperty="liferay-startup-failed">
         <http url="http://localhost:8080" />
       </waitfor>
-      <fail if="liferay-startup-failed" message="Liferay failed to start"/>
+      <fail if="liferay-startup-failed" message="Liferay failed to start" />
     </sequential>
   </macrodef>
 
@@ -59,7 +59,7 @@
           <http url="http://localhost:8080" />
         </not>
       </waitfor>
-      <sleep seconds="5"/>
+      <sleep seconds="5" />
     </sequential>
   </macrodef>
 
@@ -90,7 +90,7 @@
       <_initialise-ant-contribs-macro />
 
       <set-liferay-running-property-macro />
-      
+
       <if>
         <istrue value="${liferay-running}" />
         <then>
@@ -181,8 +181,8 @@
 
   <macrodef name="_content-download-export-macro-database">
     <sequential>
-      <stop-liferay-macro/>
-      
+      <stop-liferay-macro />
+
       <echo file="${mysql.setup.file}">
       -- OpenQuote Community database setup script.
       --
@@ -232,18 +232,18 @@
           --ignore-table ${dbname}.party_Party
           --ignore-table ${dbname}.party_Person
       </property>
-      
+
       <!-- reorganise ${ignoreTableList} list into a single line -->
       <loadresource property="oneLineIgnoreTableList">
-        <propertyresource name="ignoreTableList"/>
+        <propertyresource name="ignoreTableList" />
         <filterchain>
           <tokenfilter>
-            <filetokenizer/>
-            <replaceregex pattern="\n" replace="" flags="g"/>
+            <filetokenizer />
+            <replaceregex pattern="\n" replace="" flags="g" />
           </tokenfilter>
         </filterchain>
       </loadresource>
-      
+
       <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">
         <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} ${oneLineIgnoreTableList} --opt ${dbname} >> ${mysql.setup.file}"' />
       </exec>
@@ -261,4 +261,45 @@
       <_content-download-export-macro-database />
     </sequential>
   </macrodef>
+
+  <!-- Macro to compile a liferay theme war project into an exploded war deployment folder -->
+  <macrodef name="compile-exploded-theme-war-macro">
+    <sequential>
+
+      <!-- this will set ${deploy.unit} based on the current project's name -->
+      <_set-output-dir-property-macro />
+
+      <mkdir dir="${output.dir}/WEB-INF/classes" />
+
+      <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
+      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_unstyled" destdir="${output.dir}" />
+      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_styled" destdir="${output.dir}" />
+      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/classic" destdir="${output.dir}" />
+      <_copy-resources-macro srcdir="." destdir="${output.dir}" />
+
+      <mkdir dir="${output.dir}/.sass-cache" />
+      <compile-css-macro target="${output.dir}/" />
+
+      <touch file="${output.dir}.dodeploy" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="compile-css-macro">
+    <attribute name="target" />
+    <sequential>
+
+      <path id="sass2css.classpath">
+        <pathelement location="${deploy.dir}/ROOT.war/WEB-INF/classes" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="*.jar" />
+        <fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="*.jar" />
+        <fileset dir="${buildlib.dir}" includes="*.jar" />
+      </path>
+
+      <java classname="com.liferay.portal.tools.SassToCssBuilder" classpathref="sass2css.classpath" >
+        <arg value="sass.dir=@{target}" />
+      </java>
+
+    </sequential>
+  </macrodef>
+
 </project>

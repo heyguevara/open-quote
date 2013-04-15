@@ -52,20 +52,11 @@
   </target>
 
   <target name="release" description="build this project's releasable outputs">
-
     <!-- Do a setup in build to make sure we have the jars that the build itself needs -->
     <subant-macro target="setup" includes="build/Build.xml" />
-
-    <!-- Do a clean build and test before we release -->
     <antcall target="teardown" />
-
-    <!-- Run as much setup as we can without the server starting -->
     <antcall target="setup" />
-
-    <!-- Run the unit and integration tests. This fails the build on error. -->
     <antcall target="test" />
-
-    <!-- The only release the core makes is a zip'ed up domain archive (.dar). -->
     <release-liferay-domain-macro />
   </target>
 
