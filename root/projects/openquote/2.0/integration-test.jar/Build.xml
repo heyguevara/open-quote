@@ -9,7 +9,7 @@
   </target>
 
   <target name="_build">
-    <compile-jar-macro>
+    <compile-jar-macro packagable="no">
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
@@ -44,18 +44,11 @@
     <run-integration-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="command-server-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="persistence-server-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="product-manager-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="acceptance-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="onrisk-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
+        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
+        <fileset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
         <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />

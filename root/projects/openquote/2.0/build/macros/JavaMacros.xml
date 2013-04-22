@@ -66,6 +66,7 @@
     <attribute name="merge-configs" default="true" />
     <attribute name="module" default="no" />
     <attribute name="dependencies" default="" />
+    <attribute name="packagable" default="yes" />
     <element name="javac-classpath" optional="no" />
     <sequential>
 
@@ -102,7 +103,10 @@
       </if>
 
       <if>
-        <equals arg1="${build.type}" arg2="integration" />
+        <and>
+          <equals arg1="@{packagable}" arg2="yes" />
+          <equals arg1="${build.type}" arg2="integration" />
+        </and>
         <then>
           <package-exploded-jar-macro />
         </then>

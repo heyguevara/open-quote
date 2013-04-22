@@ -9,7 +9,7 @@
   </target>
 
   <target name="_build">
-    <compile-jar-macro>
+    <compile-jar-macro packagable="no">
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
