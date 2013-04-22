@@ -21,6 +21,9 @@
     <dependency name="activation" org="javax.activation" rev="1.1" />
     <dependency name="qdox" org="qdox" rev="1.6"/>
     <dependency name="jargs" org="gnu" rev="1.0"/>
+    <dependency name="truezip-file" org="de.schlichtherle.truezip" rev="7.7.1" />
+    <dependency name="truezip-driver-zip" org="de.schlichtherle.truezip" rev="7.7.1" />
+    <dependency name="truezip-kernel" org="de.schlichtherle.truezip" rev="7.7.1" />
     <exclude module="nexus-staging-client" org="com.sonatype.nexus.staging" />
   </dependencies>
 </ivy-module>

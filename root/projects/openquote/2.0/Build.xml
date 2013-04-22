@@ -51,12 +51,22 @@
     <delete dir="${target.dir}" failonerror="false" />
   </target>
 
+  <target name="package" description="perform packaging opertaions before release - like jar'ing up exploded folders">
+  </target>
+  
   <target name="release" description="build this project's releasable outputs">
     <!-- Do a setup in build to make sure we have the jars that the build itself needs -->
     <subant-macro target="setup" includes="build/Build.xml" />
+
+    <!-- Teardown, setup and test. The test step will kill the build if it fails. -->
     <antcall target="teardown" />
     <antcall target="setup" />
     <antcall target="test" />
+
+    <!-- Teardown, setup and release. Teardown is a must as test may have left a mess. -->
+    <antcall target="teardown" />
+    <antcall target="setup" />
+    <antcall target="package" />
     <release-liferay-domain-macro />
   </target>
 

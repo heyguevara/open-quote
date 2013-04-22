@@ -37,7 +37,6 @@
 	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/liferay/portal/main/portlet.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/mail/api/main/mail-1.4.4.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/configure.war/WEB-INF/lib/myfaces-api-2.1.9.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/jboss/as/web/main/jbossweb-7.0.13.Final.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/xalan/main/serializer-2.7.1.jbossorg-1.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/xalan/main/xalan-2.7.1.jbossorg-1.jar"/>
@@ -149,5 +148,10 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/bin/client/jboss-client.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/javassist-3.17.1-GA.jar" sourcepath="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/javassist-3.17.1-GA-sources.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/liferay/portal/main/portal-service.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-driver-file-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-driver-zip-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-file-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-kernel-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/commons-compress-1.4.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

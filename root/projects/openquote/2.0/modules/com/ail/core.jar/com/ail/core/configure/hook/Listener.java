@@ -14,7 +14,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package com.ail.configurehook;
+package com.ail.core.configure.hook;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.product.ClearProductCacheService.ClearProductCacheCommand;

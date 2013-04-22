@@ -229,35 +229,30 @@
   <macrodef name="aggregate-annotated-configurations-macro">
     <sequential>
 
-      <!-- convert the path into a property so it can be passed into ConfiurationReset -->
-      <!-- as a command line param. -->
+      <!-- Define a path to be passed into the configuration aggregator to search for -->
+      <!-- annotation config files.                                                   -->
       <path id="path.expansion">
         <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
-        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
+        <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
-        <dirset dir="${deploy.dir}" includes="*.war/WEB-INF/classes" />
+        <fileset dir="${deploy.dir}" includes="*-ejb.jar" />
       </path>
       <property name="config.search.path" refid="path.expansion" />
 
+      <!-- Classpath for running the configuration aggregator -->
       <path id="aggregate.classpath">
         <dirset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${buildlib.dir}" includes="*.jar" />
       </path>
 
-      <java classname="com.ail.core.configure.ConfigurationAggregate" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
-        <arg line="-s ${config.search.path} -o ${module.dir}/com/ail/core/main/core.jar/com/ail/core/AnnotatedTypeConfig.xml" />
+      <java classname="com.ail.core.configure.ConfigurationAggregator" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
+        <jvmarg value="-Djava.awt.headless=true"/>
+        <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y" /-->
+        <arg line="-s ${config.search.path} -o ${module.dir}/com/ail/core/main/core.jar!com/ail/core/AnnotatedTypeConfig.xml" />
       </java>
-    </sequential>
-  </macrodef>
-
-  <!-- replace an exploded jar folder with a jar file -->
-  <macrodef name="unexplode-jar-macro">
-    <attribute name="jar" />
-    <sequential>
-      <jar basedir="@{jar}" destfile="@{jar}.tmp" />
-      <delete dir="@{jar}" />
-      <move file="@{jar}.tmp" tofile="@{jar}" />
     </sequential>
   </macrodef>
 

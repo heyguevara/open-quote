@@ -5,20 +5,21 @@
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <delete-exploded-jar-macro />
+    <delete-jar-macro />
   </target>
 
   <target name="_build">
-    <compile-exploded-jar-macro>
+    <compile-jar-macro>
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <dirset dir="${deploy.dir}/configure-hook.war" includes="WEB-INF/classes" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
       </javac-classpath>
-    </compile-exploded-jar-macro>
+    </compile-jar-macro>
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">

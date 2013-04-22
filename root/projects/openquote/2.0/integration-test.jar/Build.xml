@@ -5,19 +5,24 @@
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <delete-exploded-jar-macro />
+    <delete-jar-macro />
   </target>
 
   <target name="_build">
-    <compile-exploded-jar-macro>
+    <compile-jar-macro>
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
+        <fileset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
+        <fileset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
+        <fileset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
         <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
         <fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
@@ -26,7 +31,7 @@
         <fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
         <fileset dir="${module.dir}/org/jboss/ws/api/main" includes="jbossws-api-1.0.0.GA.jar" />
       </javac-classpath>
-    </compile-exploded-jar-macro>
+    </compile-jar-macro>
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">

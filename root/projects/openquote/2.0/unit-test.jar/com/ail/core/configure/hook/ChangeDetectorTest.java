@@ -1,4 +1,4 @@
-package com.ail.configurehook;
+package com.ail.core.configure.hook;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.ail.core.configure.hook.ChangeDetector;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 public class ChangeDetectorTest {

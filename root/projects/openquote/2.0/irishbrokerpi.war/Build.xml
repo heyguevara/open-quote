@@ -4,25 +4,25 @@
 -->
 
 <project default="build" name="openquote:irishbrokerpi.war">
-  <import file="../BuildSettings.xml"/>
+  <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <delete-exploded-war-macro overlay="true"/>
+    <delete-war-macro overlay="true" />
   </target>
-  
+
   <target name="_build">
-    <compile-exploded-war-macro overlay="true">
-      <javac-classpath/>
-    </compile-exploded-war-macro>
+    <compile-war-macro overlay="true">
+      <javac-classpath />
+    </compile-war-macro>
   </target>
-  
+
   <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <antcall target="_build"/>
-    <kick-liferay-macro/>
+    <antcall target="_build" />
+    <kick-liferay-macro />
   </target>
-  
+
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <delete-exploded-war-macro overlay="true"/>
+    <delete-war-macro />
   </target>
 
   <target name="teardown" description="undo whatever setup did">

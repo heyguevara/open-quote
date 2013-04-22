@@ -51,7 +51,8 @@ import javax.tools.StandardLocation;
 							"com.ail.annotation.XPathFunctionDefinition"})
 public class Processor extends AbstractProcessor {
 
-	private Filer filer;
+	public static final String JAR_LOCAL_ANNOTATED_TYPES_FILENAME = "AnnotatedTypes.xml";
+    private Filer filer;
 	private Messager messager;
 
 	@Override
@@ -124,7 +125,7 @@ public class Processor extends AbstractProcessor {
 	}
 
 	private void generateCoreDefaultConfigTypes() throws IOException {
-		OutputStream os = filer.createResource(StandardLocation.CLASS_OUTPUT, "com.ail.core", "AnnotatedTypes.xml", (Element[]) null).openOutputStream();
+		OutputStream os = filer.createResource(StandardLocation.CLASS_OUTPUT, "com.ail.core", JAR_LOCAL_ANNOTATED_TYPES_FILENAME, (Element[]) null).openOutputStream();
 		PrintWriter pw = new PrintWriter(os);
 
 		pw.printf("<!-- This is a generated file. The TYPES defined here are automatically create -->\n");

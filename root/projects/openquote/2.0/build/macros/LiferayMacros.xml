@@ -263,7 +263,7 @@
   </macrodef>
 
   <!-- Macro to compile a liferay theme war project into an exploded war deployment folder -->
-  <macrodef name="compile-exploded-theme-war-macro">
+  <macrodef name="compile-theme-war-macro">
     <sequential>
 
       <!-- this will set ${deploy.unit} based on the current project's name -->

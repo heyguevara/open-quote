@@ -5,24 +5,22 @@
 	<import file="../../../../BuildSettings.xml" />
 
 	<target name="clean" description="delete everything that the build can generate">
-		<delete-exploded-jar-macro />
+		<delete-jar-macro />
 	</target>
 
 	<target name="_build">
-		<compile-exploded-jar-macro>
+		<compile-jar-macro module="yes" dependencies="com.liferay.portal, com.ail.core, com.ail.commercial">
 			<javac-classpath>
 				<dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-				<dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-                <fileset dir="${module.dir}/com/ail/core/main/" includes="*.jar" />
+			    <fileset dir="${module.dir}/com/ail/core/main/" includes="*.jar" />
+			    <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+                <fileset dir="${module.dir}/com/ail/commercial/main/" includes="*.jar" /> 
 				<fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
 				<fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
 				<fileset dir="${module.dir}/javax/mail/api/main" includes="mail-1.4.4.jar" />
 				<fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
 			</javac-classpath>
-		</compile-exploded-jar-macro>
-
-		<generate-module-descriptor-macro dependencies="com.liferay.portal, com.ail.core, com.ail.commercial" />
-
+		</compile-jar-macro>
 	</target>
 
 	<target name="build" description="compile (generate, copy, etc) all build outputs">

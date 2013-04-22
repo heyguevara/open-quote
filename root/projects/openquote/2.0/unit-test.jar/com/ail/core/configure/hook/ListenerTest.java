@@ -1,4 +1,4 @@
-package com.ail.configurehook;
+package com.ail.core.configure.hook;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.ail.core.CoreProxy;
+import com.ail.core.configure.hook.Listener;
 import com.ail.core.product.ClearProductCacheService.ClearProductCacheCommand;
 import com.ail.core.product.ResetProductService.ResetProductCommand;
 import com.liferay.portal.ModelListenerException;

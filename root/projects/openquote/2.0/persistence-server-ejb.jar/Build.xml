@@ -7,20 +7,22 @@
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <delete-exploded-ejb-jar-macro />
+    <delete-ejb-jar-macro />
   </target>
 
   <target name="_build">
-    <compile-exploded-ejb-jar-macro>
+    <compile-ejb-jar-macro>
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
         <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
+        <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
         <fileset dir="${module.dir}/javax/jms/api/main" includes="jboss-jms-api_1.1_spec-1.0.0.Final.jar" />
       </javac-classpath>
-    </compile-exploded-ejb-jar-macro>
+    </compile-ejb-jar-macro>
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">

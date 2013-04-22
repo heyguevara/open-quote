@@ -5,11 +5,11 @@
 	<import file="../../../../BuildSettings.xml" />
 
 	<target name="clean" description="delete everything that the build can generate">
-		<delete-exploded-jar-macro />
+		<delete-jar-macro />
 	</target>
 
 	<target name="_build">
-		<compile-exploded-jar-macro>
+		<compile-jar-macro module="yes" dependencies="com.liferay.portal, javax.jms.api, javax.xml.rpc.api, javax.ejb.api, org.apache.xalan, org.apache.httpcomponents">
 			<javac-classpath>
 				<fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
 				<fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
@@ -17,11 +17,10 @@
 				<fileset dir="${module.dir}/org/apache/httpcomponents/main" includes="httpcore-4.1.4.jar" />
 				<fileset dir="${module.dir}/org/apache/httpcomponents/main" includes="httpclient-4.1.2.jar" />
 				<fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
+			    <fileset dir="${buildlib.dir}" includes="truezip*.jar" />
+		        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
 			</javac-classpath>
-		</compile-exploded-jar-macro>
-
-		<generate-module-descriptor-macro dependencies="com.liferay.portal, javax.jms.api, javax.xml.rpc.api, javax.ejb.api, org.apache.xalan, org.apache.httpcomponents" />
-
+		</compile-jar-macro>
 	</target>
 
 	<target name="build" description="compile (generate, copy, etc) all build outputs">
