@@ -11,18 +11,11 @@
   <target name="_build">
     <compile-jar-macro>
       <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
-        <fileset dir="${jboss.dir}/standalone/deployments" includes="subrogation-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
-        <fileset dir="${jboss.dir}/standalone/deployments" includes="quotation-ejb.jar" />
-        <dirset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
-        <fileset dir="${jboss.dir}/standalone/deployments" includes="configure-server-ejb.jar" />
+        <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
+        <fileset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
         <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
         <fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />

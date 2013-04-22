@@ -39,10 +39,8 @@
     <run-unit-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <dirset dir="${deploy.dir}/configure-hook.war" includes="WEB-INF/classes" />
+        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
