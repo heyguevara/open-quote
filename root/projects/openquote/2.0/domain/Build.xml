@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!--
- Ant build file to deploy the jboss domain
--->
-
 <project default="build" name="openquote:domain">
   <import file="../BuildSettings.xml" />
 
@@ -18,81 +14,72 @@
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
 
+    <_initialise-ant-contribs-macro />
+
     <install-liferay-macro version="${liferay.version}" />
 
-    <!-- copy domain files with variables expanded -->    
+    <!-- copy domain files with variables expanded -->
     <copy todir="${liferay.dir}">
+      <filterset refid="copy.filterset" />
       <fileset dir="liferay" />
-      <filterset>
-        <filter token="major.version" value="${major.version}" />
-        <filter token="minor.version" value="${minor.version}" />
-        <filter token="dbusername" value="${dbusername}" />
-        <filter token="dbpassword" value="${dbpassword}" />
-        <filter token="dbname" value="${dbname}" />
-      </filterset>
     </copy>
 
-    <update-dependencies-macro todir="${jboss.dir}" pattern="[artifact](-[classifier]).[ext]"/>
-    
-    <set-mysql-running-property-macro/>
-    
-	<antcall target="setup-db-if"/>
-	<antcall target="setup-db-unless"/>
+    <!-- copy package files with variables expanded -->
+    <mkdir dir="${package.dir}/lib" />
+    <copy todir="${package.dir}/lib">
+      <filterset refid="copy.filterset.sql" />
+      <fileset dir="." includes="*.sql" />
+    </copy>
+
+    <update-dependencies-macro todir="${jboss.dir}" pattern="[artifact](-[classifier]).[ext]" />
+
+    <set-mysql-running-property-macro />
+
+    <if>
+      <isset property="mysql-running" />
+      <then>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
+          <classpath>
+            <fileset dir="${buildlib.dir}" includes="*.jar" />
+          </classpath>
+          <transaction src="${package.dir}/lib/OpenQuote-MySql-Setup.sql" />
+          <transaction src="${package.dir}/lib/OpenQuote-Table-Setup.sql" />
+        </sql>
+      </then>
+      <else>
+        <echo message="Database has not been initialised - mysql doesn't appear to be running" />
+      </else>
+    </if>
   </target>
 
   <target name="teardown" description="undo whatever setup did">
-    <set-mysql-running-property-macro/>
-    
-    <antcall target="teardown-db-if"/>
-    <antcall target="teardown-db-unless"/>
+    <_initialise-ant-contribs-macro />
+    <set-mysql-running-property-macro />
+
+    <if>
+      <isset property="mysql-running" />
+      <then>
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
+          <classpath>
+            <fileset dir="${buildlib.dir}" includes="*.jar" />
+          </classpath>
+          
+          -- Make sure the database and users are there before we try to delete them!
+          create database if not exists ${dbname} character set utf8;
+          grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
+          grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
+          
+          -- Now do the actual tidy up 
+          drop database if exists ${dbname};
+          revoke all privileges, grant option from '${dbusername}'@'localhost';
+        </sql>
+      </then>
+      <else>
+        <echo message="Database has not been cleared - mysql doesn't appear to be running" />
+      </else>
+    </if>
 
     <!-- delete the deployed directory -->
     <delete dir="${liferay.dir}" />
   </target>
-
-  <target name="teardown-db-if" if="mysql-running">
-    <!-- drop all the databases -->
-    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
-      <classpath>
-        <fileset dir="${buildlib.dir}" includes="*.jar"/>
-      </classpath>
-      
-  	  -- Make sure the database and users are there before we try to delete them!
-      create database if not exists ${dbname} character set utf8;
-      grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
-      grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
-  	  
-      -- Now do the actual tidy up 
-  	  drop database if exists ${dbname};
-      revoke all privileges, grant option from '${dbusername}'@'localhost';
-  	</sql>
-  </target>  
-  
-  <target name="teardown-db-unless" unless="mysql-running">
-    <!-- drop all the databases -->
-    <echo message="Database has not been cleared - mysql doesn't appear to be running"/>
-  </target>  
-
-  <target name="setup-db-if" if="mysql-running">
-    <!-- create the databases and tables for liferay and populate them -->
-    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" src="${mysql.setup.file}">
-      <classpath>
-        <fileset dir="${buildlib.dir}" includes="*.jar"/>
-      </classpath>
-    </sql>
-
-    <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}" src="OpenQuote-Table-Setup.sql">
-      <classpath>
-        <fileset dir="${buildlib.dir}" includes="*.jar"/>
-      </classpath>
-    </sql>
-</target>
-
-  <target name="setup-db-unless" unless="mysql-running">
-    <!-- drop all the databases -->
-    <echo message="Database has not been initialised - mysql doesn't appear to be running"/>
-  </target>  
 </project>
-<!--
-
--->

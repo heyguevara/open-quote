@@ -33,6 +33,6 @@ public class HibernateOpenSessionService extends Service<OpenSessionArgument> {
     @Override
     public void invoke() throws PreconditionException, UpdateException {
         Session session=HibernateFunctions.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        session.getTransaction().begin();
     }
 }

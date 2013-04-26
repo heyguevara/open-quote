@@ -3,36 +3,46 @@
 set OPENQUOTE_HOME=%CD%\..
 set TMP=%OPENQUOTE_HOME%\tmp
 set LIB=%OPENQUOTE_HOME%\lib
-set JBOSS_HOME=%OPENQUOTE_HOME%\jboss
+set JBOSS_HOME=%OPENQUOTE_HOME%\liferay-portal-@liferay.version@/jboss-@jboss.version@
 set PROGNAME=run.bat
+set DB_USERNAME=
+set DB_PASSWORD=
 
-if exist "%TMP%\setup" goto SETUP_DONE
+if exist "%TMP%\setup" goto setupdone
 
-echo Running OpenQuote setup...
+echo.
+echo OpenQuote Database Setup
+echo ========================
+echo The first time that you run OpenQuote, this script will create a database in 
+echo MySQL and populate it with content, it will also create an openquote database
+echo user. To do this successfully the script will need the username and password 
+echo of a user who has the necessary permissions to create database and users.
+echo This user will only be used to run the scripts. The OpenQuote server itself
+echo will use the less privileged user created by the scripts.
+echo. 
+echo You will not be prompted for these user details again.
+echo. 
 
-if "%JAVA_HOME%" == "" set JAR="jar"
-if not "%JAVA_HOME%" == "" set JAR=%JAVA_HOME%\bin\jar
+set /p DB_USERNAME="Please enter you MySQL username (default: root):"
+set /p DB_PASSWORD="Please enter your MySQL password (leave blank for no password):"
+    
+if "x%DB_USERNAME%" == "x" (set DB_USERNAME="root") 
+if "x%DB_PASSWORD%" == "x" (set PW_OPTION="") else (set PW_OPTION=--password=%DB_PASSWORD%) 
 
-echo Extracting jars for product development...
+echo.
+echo Running database scripts...
 
-if exist "%TMP%" rmdir /S /Q "%TMP%"
-mkdir "%TMP%"
-mkdir "%TMP%\lib"
-cd "%TMP%\lib"
-"%JAR%" -xf "%JBOSS_HOME%\server\default\deploy\openquote.ear"
-move "lib\*.jar" "%LIB%"
-copy "%JBOSS_HOME%\server\default\deploy\jboss-portal.sar\lib\portal-portlet-jsr168api-lib.jar" "%LIB%"
-copy "%JBOSS_HOME%\server\default\deploy\jboss-portal.sar\lib\portal-identity-lib.jar" "%LIB%"
-	
-echo Database setup...
-
-mysql -u root -p < "%LIB%\MySql-Dump.sql"
-
-echo > "%TMP%\setup"
-
+mysql -u %DB_USERNAME% %PW_OPTION% < "%LIB%\OpenQuote-MySql-Setup.sql"
+if "%ERRORLEVEL%" == "1" (echo "Failed to execute the MySQL database setup script." & goto:eof)
+mysql -u %DB_USERNAME% %PW_OPTION% < "%LIB%\OpenQuote-Table-Setup.sql"
+if "%ERRORLEVEL%" == "1" (echo "Failed to execute the MySQL OpenQuote table setup script." & goto:eof)
+    
+mkdir %TMP%
+echo > %TMP%\setup
+    
 echo OpenQuote setup complete. Starting JBoss...
 
-:SETUP_DONE
+:setupdone
 
 cd "%JBOSS_HOME%\bin"
-.\run.bat
+.\standalone.bat

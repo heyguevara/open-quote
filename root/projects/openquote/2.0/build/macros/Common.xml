@@ -17,6 +17,8 @@
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
   <property name="serverBaseUrl" value="localhost:8080" />
+  <!-- bamboo overrides this with values like EA1, RC4, SP2 etc. -->
+  <property name="increment.version" value="dev" />
   <property name="java.naming.factory.initial" value="org.jboss.naming.remote.client.InitialContextFactory" />
   <property name="java.naming.provider.url" value="remote://localhost:4447" />
   <property name="grinder.properties" value="${basedir}/grinder.properties" />
@@ -27,73 +29,94 @@
   <property name="mysql.root.password" value="" />
   <property name="mysql.setup.file" value="${project.dir}/domain/OpenQuote-MySql-Setup.sql" />
   <property name="content.setup.file" value="${project.dir}/domain/OpenQuote-Content-Setup.zip" />
-  <property name="module.dir" value="${jboss.dir}/modules/"/>
-  <!-- configure ivy to put dependencies in the core module by default -->
+  <property name="module.dir" value="${jboss.dir}/modules/" />
+  <property name="package.dir" value="${target.dir}/openquote-community-${major.version}.${minor.version}${increment.version}" />
+  <property name="package.file" value="${package.dir}.zip" />
 
-  <filterset id="copy.filterset" >
-    <filter token="dbname" value="${dbname}"/>
-    <filter token="dbusername" value="${dbusername}"/>
-    <filter token="dbpassword" value="${dbpassword}"/>
-    <filter token="major.version" value="${major.version}"/>
-    <filter token="minor.version" value="${minor.version}"/>
+  <filterset id="copy.filterset">
+    <filter token="dbname" value="${dbname}" />
+    <filter token="dbusername" value="${dbusername}" />
+    <filter token="dbpassword" value="${dbpassword}" />
+    <filter token="major.version" value="${major.version}" />
+    <filter token="minor.version" value="${minor.version}" />
+    <filter token="liferay.version" value="${liferay.version}" />
+    <filter token="jboss.version" value="${jboss.version}" />
+    <filter token="increment.version" value="${increment.version}" />
+  </filterset>
+
+  <filterset id="copy.filterset.sql" begintoken="##" endtoken="##">
+    <filter token="dbname" value="${dbname}" />
+    <filter token="dbusername" value="${dbusername}" />
+    <filter token="dbpassword" value="${dbpassword}" />
+    <filter token="major.version" value="${major.version}" />
+    <filter token="minor.version" value="${minor.version}" />
+    <filter token="liferay.version" value="${liferay.version}" />
+    <filter token="jboss.version" value="${jboss.version}" />
+    <filter token="increment.version" value="${increment.version}" />
   </filterset>
 
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />
-  
+
   <macrodef name="_initialise-ant-contribs-macro">
     <sequential>
-      <taskdef resource="net/sf/antcontrib/antlib.xml" >
+      <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
           <pathelement location="${bootlib.dir}/ant-contrib-1.0b3.jar" />
         </classpath>
       </taskdef>
     </sequential>
   </macrodef>
-  
-  <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE     -->
+
+  <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE -->
   <!-- projects have names like core:something.war. This Beanshell script creates a new -->
-  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war")    -->
+  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war") -->
   <macrodef name="_set-output-dir-property-macro">
     <sequential>
       <script language="beanshell">
         <classpath>
-          <fileset dir="${bootlib.dir}" includes="*.jar"/>
+          <fileset dir="${bootlib.dir}" includes="*.jar" />
         </classpath>
-          projectName = project.getName();
-          deployUnit = projectName.replaceAll("^.*:", "");
-          project.setProperty("generated.source.dir", project.getProperty("target.dir") + "/generated/" + deployUnit);
-          project.setProperty("deploy.unit", deployUnit);
-          if (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
-              deployDir = project.getProperty("deploy.dir");
-              outputDir = deployDir + "/" + deployUnit;
-          }
-          else if (projectName.contains(":modules")) {
-              deploy.dir = project.getProperty("jboss.dir");
-              if (deployUnit.endsWith(".jar")) {
-                  rootPath = deployUnit.replaceAll("/[^/]*$","");
-                  name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
-                  outputDir = deploy.dir + "/" + rootPath + "/" + name + "/main/" + name + ".jar";
-              }
-              else {
-                  outputDir = deploy.dir + "/" + deployUnit;
-              }
-          }
-          else if (projectName.contains(":unit-test.jar")) {
-              outputDir=project.getProperty("test.dir") + "/unit-test.jar";
-          }
-          else if (projectName.contains(":integration-test.jar")) {
-              outputDir = project.getProperty("test.dir") + "/integration-test.jar";
-          }
-          else if (projectName.contains(":test.jar")) {
-              outputDir = project.getProperty("test.dir") + "/test.jar";
-          }
-          else {
-              outputDir = project.getProperty("target.dir") + "/"+deployUnit;
-          }
-          project.setProperty("output.dir", outputDir);
-        </script>
+        projectName = project.getName();
+        deployUnit = projectName.replaceAll("^.*:", "");
+        project.setProperty("generated.source.dir",
+        project.getProperty("target.dir") + "/generated/" + deployUnit);
+        project.setProperty("deploy.unit", deployUnit);
+        if
+        (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
+        deployDir = project.getProperty("deploy.dir");
+        outputDir = deployDir + "/"
+        + deployUnit;
+        }
+        else if (projectName.contains(":modules")) {
+        deploy.dir = project.getProperty("jboss.dir");
+        if (deployUnit.endsWith(".jar")) {
+        rootPath = deployUnit.replaceAll("/[^/]*$","");
+        name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
+        outputDir = deploy.dir + "/" + rootPath +
+        "/" + name + "/main/" + name + ".jar";
+        }
+        else {
+        outputDir = deploy.dir + "/" + deployUnit;
+        }
+        }
+        else if (projectName.contains(":unit-test.jar")) {
+        outputDir=project.getProperty("test.dir") + "/unit-test.jar";
+        }
+        else if (projectName.contains(":integration-test.jar")) {
+        outputDir =
+        project.getProperty("test.dir") + "/integration-test.jar";
+        }
+        else if (projectName.contains(":test.jar")) {
+        outputDir =
+        project.getProperty("test.dir") + "/test.jar";
+        }
+        else {
+        outputDir = project.getProperty("target.dir") + "/"+deployUnit;
+        }
+        project.setProperty("output.dir", outputDir);
+      </script>
     </sequential>
   </macrodef>
 
@@ -101,15 +124,15 @@
   <!-- e.g. "my.package.name" -> "my/package/name" -->
   <macrodef name="pathify-package-name-macro">
     <attribute name="property" />
-    <attribute name="value"  />
+    <attribute name="value" />
     <sequential>
       <script language="beanshell">
         <classpath>
           <fileset dir="${bootlib.dir}" includes="*.jar" />
         </classpath>
-        
+
         project.setProperty("@{property}", "@{value}".replaceAll("[.]", "/"));
-        
+
       </script>
     </sequential>
   </macrodef>
@@ -123,11 +146,11 @@
         <classpath>
           <fileset dir="${bootlib.dir}" includes="*.jar" />
         </classpath>
-        
+
         val=project.getProperty("@{property}");
         project.setProperty("@{property}",
         val.replaceAll("\\\\","/"));
-        
+
       </script>
     </sequential>
   </macrodef>
@@ -142,34 +165,35 @@
     <classpath>
       <fileset dir="${buildlib.dir}" includes="*.jar" />
     </classpath>
-        property=attributes.get("property");
-        condition=attributes.get("condition"); 
-        arg1=attributes.get("arg1");
-        arg1=arg1.replaceAll("\\\\","/");
-        arg2=attributes.get("arg2");
-    
-        project.setProperty(property,"false");
+    property=attributes.get("property");
+    condition=attributes.get("condition");
+    arg1=attributes.get("arg1");
+    arg1=arg1.replaceAll("\\\\","/");
+    arg2=attributes.get("arg2");
 
-        if (condition.equals("equals")) {
-          if (arg1.equals(arg2)) {
-	          project.setProperty(property,"true");
-          }
-        }
-        else if (condition.equals("exists")) {
-          if (new File(arg1).exists()) {
-            project.setProperty(property,"true");
-          }
-        }
-        else if (condition.equals("defined")) {
-          if (arg1.length()!=0) {
-            project.setProperty(property,"true");
-          }
-        }
-        else {
-          print("Condition "+condition+" is not understood");
-          throw new Exception("Condition "+condition+" is not understood");
-        }
-    </scriptdef>
+    project.setProperty(property,"false");
+
+    if (condition.equals("equals")) {
+    if (arg1.equals(arg2)) {
+    project.setProperty(property,"true");
+    }
+    }
+    else if (condition.equals("exists")) {
+    if (new File(arg1).exists()) {
+    project.setProperty(property,"true");
+    }
+    }
+    else if (condition.equals("defined")) {
+    if (arg1.length()!=0) {
+    project.setProperty(property,"true");
+    }
+    }
+    else {
+    print("Condition "+condition+" is not
+    understood");
+    throw new Exception("Condition "+condition+" is not understood");
+    }
+  </scriptdef>
 
   <!-- Run a specified target in all the ant files one level down in the directory structure -->
   <macrodef name="subant-macro">
@@ -230,10 +254,10 @@
     <sequential>
 
       <!-- Define a path to be passed into the configuration aggregator to search for -->
-      <!-- annotation config files.                                                   -->
+      <!-- annotation config files. -->
       <path id="path.expansion">
-        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
-        <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar"/>
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
+        <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
         <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
         <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
@@ -249,8 +273,8 @@
       </path>
 
       <java classname="com.ail.core.configure.ConfigurationAggregator" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
-        <jvmarg value="-Djava.awt.headless=true"/>
-        <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y" /-->
+        <jvmarg value="-Djava.awt.headless=true" />
+        <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y" / -->
         <arg line="-s ${config.search.path} -o ${module.dir}/com/ail/core/main/core.jar!com/ail/core/AnnotatedTypeConfig.xml" />
       </java>
     </sequential>

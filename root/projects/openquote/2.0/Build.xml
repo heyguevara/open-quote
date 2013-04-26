@@ -28,7 +28,7 @@
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <subant-macro target="_build" excludes="build/*" />
+    <subant-macro target="_build" excludes="build/*, package/*" />
     <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
     <kick-liferay-macro />
   </target>
@@ -47,9 +47,6 @@
     <delete dir="${target.dir}" failonerror="false" />
   </target>
 
-  <target name="package" description="perform packaging opertaions before release - like jar'ing up exploded folders">
-  </target>
-  
   <target name="release" description="build this project's releasable outputs">
     <!-- Do a setup in build to make sure we have the jars that the build itself needs -->
     <subant-macro target="setup" includes="build/Build.xml" />
@@ -62,7 +59,7 @@
     <!-- Teardown, setup and release. Teardown is a must as test may have left a mess. -->
     <antcall target="teardown" />
     <antcall target="setup" />
-    <antcall target="package" />
+    <subant-macro target="build" includes="package/Build.xml"/>
     <release-liferay-domain-macro />
   </target>
 

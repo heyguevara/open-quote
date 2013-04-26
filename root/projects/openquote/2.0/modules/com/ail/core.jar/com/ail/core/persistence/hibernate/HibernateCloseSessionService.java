@@ -42,6 +42,7 @@ public class HibernateCloseSessionService extends Service<CloseSessionArgument> 
         try {
             session=HibernateFunctions.getSessionFactory().getCurrentSession();
             session.flush();
+            session.getTransaction().commit();
         }
         catch (StaleObjectStateException e) {
             throw new UpdateException(e.toString(), e);
@@ -50,7 +51,14 @@ public class HibernateCloseSessionService extends Service<CloseSessionArgument> 
             throw new UpdateException(e.toString(), e);
         }
         finally {
-            session.close();
+            if (session.isOpen()) {
+                if (session.getTransaction().isActive()) {
+                    session.getTransaction().rollback();
+                }
+                if (session.isOpen()) {
+                    session.close();
+                }
+            }
         }
     }
 }

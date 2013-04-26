@@ -91,7 +91,7 @@ public class TestCoreHibernatePersistence extends CoreUserBaseCase {
             con.close();
         }
         catch (Exception e) {
-            System.err.println("Failed to create test tables.");
+            System.err.println("Failed to clear down data from test tables.");
             e.printStackTrace(System.err);
             System.exit(0);
         }

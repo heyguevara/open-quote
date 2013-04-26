@@ -1,22 +1,20 @@
 
       -- OpenQuote Community database setup script.
       --
-      -- This script will create a database suitable for use with 2.0${increment.version}. The
-      -- script is totally specific to that version and should not be expected to work with any other version; this is
-      -- largely due to the way in which Liferay content indexes are defined in this database, while the actual content
-      -- is held within the file system.
+      -- This script will create a database suitable for use with openquote-##major.version##.##minor.version####increment.version##. The
+      -- script is totally specific to that version and should not be expected to work with any other version.
       --
 
       --
       -- Create the OpenQuote database, users and rights.
       --
-      CREATE DATABASE IF NOT EXISTS ${dbname} character set utf8;
-      GRANT ALL ON ${dbname}.* TO '${dbusername}'@'localhost' IDENTIFIED BY '${dbpassword}' WITH GRANT OPTION;
-      GRANT ALL ON ${dbname}.* TO '${dbusername}'@'localhost.localdomain' IDENTIFIED BY '${dbpassword}' WITH GRANT OPTION;
+      CREATE DATABASE IF NOT EXISTS ##dbname## character set utf8;
+      GRANT ALL ON ##dbname##.* TO '##dbusername##'@'localhost' IDENTIFIED BY '##dbpassword##' WITH GRANT OPTION;
+      GRANT ALL ON ##dbname##.* TO '##dbusername##'@'localhost.localdomain' IDENTIFIED BY '##dbpassword##' WITH GRANT OPTION;
 
       SET FOREIGN_KEY_CHECKS=0;
 
-      USE ${dbname};
+      USE ##dbname##;
       -- MySQL dump 10.13  Distrib 5.1.59, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: openquote_2_0

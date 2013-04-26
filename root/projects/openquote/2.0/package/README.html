@@ -1,0 +1,131 @@
+<html>
+<head>
+<style type='text/css'>
+body {
+	font-size: 15px;
+	font-family: 'Open Sans', arial, sans-serif;
+	color: rgb(102, 102, 102);
+}
+
+h1 {
+	font-size: 1.5em;
+	font-weight: normal;
+	color: rgb(0, 0, 0);
+}
+
+h2 {
+	font-size: 1.2em;
+	font-weight: normal;
+	color: rgb(0, 0, 0);
+}
+
+#banner {
+	background: none no-repeat scroll 0px center transparent;
+	height: auto;
+	margin-top: 1.4em;
+	position: relative;
+	border-bottom: 3px dotted rgb(204, 204, 204);
+	min-height: 4em;
+}
+</style>
+</head>
+<body>
+	<div id="banner">
+		<img alt=""
+			src="http://openquote.appliedindustriallogic.com/images/openquote/openquotelogo.png">
+	</div>
+	<h1>OpenQuote 2.0 Early Access 1 - Installation Notes</h1>
+	<p>Welcome to OpenQuote 2.0 EA1, and thank you for your interest in
+		this project.</p>
+	<p>The notes included here are intended to get you up and running
+		with OpenQuote in the shortest possible time; around 10 minutes if you
+		already have the prerequisites installed.</p>
+	<p>Beyond this basic configuration there are a host of other more
+		detailed customizations that are possible; some of which would be
+		considered necessary before you think about using OpenQuote in a
+		production environment. These will be covered later and elsewhere, for
+		now this will be enough to get you off the ground.</p>
+	<p>
+		Note: You will need to be happy working from a command line to
+		complete the installation. If you're not, consider taking a look at
+		our <a
+			href="http://ec2-46-137-2-77.eu-west-1.compute.amazonaws.com/portal">online
+			demo</a> instead.
+	</p>
+
+	<h2>Prerequisites</h2>
+	<ul>
+		<li>Java 6 Development Kit (aka Java SE) available from Oracle
+			or other sources depending on your platform.</li>
+		<li>MySql Database server.</li>
+	</ul>
+	<h2>Installing the Java Development Kit</h2>
+	<ul>
+		<li>Browse to <a
+			href="http://www.oracle.com/technetwork/java/javase/downloads/jdk6downloads-1902814.html">Java
+				6 downloads</a>.
+		</li>
+		<li>Select the appropriate Java SE download for your environment,
+			making sure it is Java SE 6.0, OpenQuote is not currently compatible
+			with 7.0.</li>
+		<li>Once downloaded, follow the installation wizard.</li>
+	</ul>
+	<h2>Installing MySql</h2>
+	<ul>
+		<li>Browse to <a href="http://dev.mysql.com/downloads">http://dev.mysql.com/downloads</a>.
+		</li>
+		<li>Select the appropriate download for your environment. You
+			will need version 5.1 or later.</li>
+		<li>Once downloaded, follow the installation wizard - as part of
+			this you will be prompted to select a password. You will need this
+			later on.</li>
+	</ul>
+	<h2>Installing OpenQuote</h2>
+	<p>OpenQuote community is supplied as a zip file. Simply unpack
+		this zip file and follow the instructions below (described under
+		Starting the OpenQuote server).</p>
+	<p>If you are installing on Windows, we recommend that you don't
+		use Window's built-in zip file viewer. A number of issues have been
+		reported on the forums which seem to point at file corruption caused
+		by the build-in tool. We recommend that you use winzip, unrar, or jar
+		to unpack the .zip.</p>
+
+	<h2>Starting the OpenQuote server</h2>
+	<p>Command scripts are supplied which should be suitable for MS
+		Windows, and Unix users. From the command prompt, cd into
+		openquote/bin, then either execute run.sh on Unix, or run.bat on MS
+		Windows.</p>
+	<p>The first time you run OpenQuote it will automatically setup
+		your environment for you. Most importantly, it will create and
+		populate a database in MySQL. During the setup process, you will be
+		prompted for the database password. At that prompt enter the MySql
+		root password (the password supplied during MySql installation.)</p>
+	<p>Depending on the spec. of your machine the server may take one
+		or two minutes to start up. It will output progress messages as it
+		starts. Start up is complete when a browser window opens showing the
+		OpenQuote home page.</p>
+	<h2>Accessing OpenQuote</h2>
+	<p>
+		Once the server is running, you can access OpenQuote by pointing your
+		browser at <a href="http://localhost:8080">http://localhost:8080</a>
+	</p>
+	<h2>Stopping the OpenQuote server</h2>
+	<p>Either closing the command prompt window, or hitting CTRL-C will
+		close the server down cleanly.</p>
+	<h2>Trouble shooting</h2>
+	<p>
+		If you have any issues during installation, or while you are using
+		OpenQuote, the best place to start looking for information is in our
+		project forum <a
+			href="http://openquote.opensourceinsurance.org/index.php/support/support-forum">project
+			forum</a>, and feel free to post a question if you can't find the answer
+		you need.
+	</p>
+	<p>
+		If you believe you have found a bug please check our <a
+			href="http://openquotecommunity.org/jira">bug tracker</a>. However,
+		do please search carefully first, and only look at raising a new bug
+		if you are sure your particular problem is not already covered.
+	</p>
+</body>
+</html>

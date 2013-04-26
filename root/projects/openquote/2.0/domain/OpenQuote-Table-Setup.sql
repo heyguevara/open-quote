@@ -1,9 +1,9 @@
-  create table if not exists ${dbname}.core_Type(
+  create table if not exists ##dbname##.core_Type(
       systemId int auto_increment primary key,
       versionId int
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.core_Attribute (
+  create table if not exists ##dbname##.core_Attribute (
       systemId int primary key,
       parentSystemId int,
       id varchar(255),
@@ -13,54 +13,54 @@
       rank int
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.core_configure_Component (
+  create table if not exists ##dbname##.core_configure_Component (
       systemId int primary key,
       name varchar(255)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.core_configure_Parameter (
+  create table if not exists ##dbname##.core_configure_Parameter (
       systemId int primary key,
       parentSystemId int,
       rank int,
       value varchar(255)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.core_configure_Group (
+  create table if not exists ##dbname##.core_configure_Group (
       systemId int primary key,
       parentSystemId int,
       rank int
   ) ENGINE=InnoDB;
         
-  create table if not exists ${dbname}.commercial_party (
+  create table if not exists ##dbname##.commercial_party (
       systemId int primary key,
       addressId int,
       parentSystemId int,
       rank int
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.commercial_person (
+  create table if not exists ##dbname##.commercial_person (
       systemId int primary key,
       firstname varchar(80),
       surname varchar(80)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.commercial_organisation (
+  create table if not exists ##dbname##.commercial_organisation (
       systemId int primary key,
       name varchar(80)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.commercial_company (
+  create table if not exists ##dbname##.commercial_company (
       systemId int primary key,
       companyNumber varchar(20)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.commercial_addressbook (
+  create table if not exists ##dbname##.commercial_addressbook (
       systemId int primary key,
       mePartyType char(3),
       mePartyId int
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.commercial_address (
+  create table if not exists ##dbname##.commercial_address (
       systemId int primary key,
       line1 varchar(20),
       line2 varchar(20),
@@ -70,13 +70,13 @@
       postcode varchar(10)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.core_Type (
+  create table if not exists ##dbname##.core_Type (
       systemId int auto_increment primary key,
       versionId int,
       type varchar(20)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.core_Attribute (
+  create table if not exists ##dbname##.core_Attribute (
       systemId int primary key,
       parentSystemId int,
       id varchar(255),
@@ -86,7 +86,7 @@
       rank int
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.insurance_Policy (
+  create table if not exists ##dbname##.insurance_Policy (
       systemId int primary key,
       id varchar(20),
       productTypeId varchar(80),
@@ -100,14 +100,14 @@
       assessmentSheetId long
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.party_Party (
+  create table if not exists ##dbname##.party_Party (
       systemId int primary key,
       type varchar(20),
       legalName varchar(80),
       addressId long
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.party_Person (
+  create table if not exists ##dbname##.party_Person (
       systemId int primary key,
       title varchar(20),
       otherTitle varchar(20),
@@ -116,7 +116,7 @@
       dateOfBirth date
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.party_Address (
+  create table if not exists ##dbname##.party_Address (
       systemId int primary key,
       line1 varchar(80),
       line2 varchar(80),
@@ -129,7 +129,7 @@
       postcode varchar(80)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.insurance_Asset (
+  create table if not exists ##dbname##.insurance_Asset (
       systemId int primary key,
       parentSystemId int,
       rank int,
@@ -137,7 +137,7 @@
       assetTypeId varchar(80)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.insurance_Section (
+  create table if not exists ##dbname##.insurance_Section (
       systemId int primary key,
       parentSystemId int,
       rank int,
@@ -147,7 +147,7 @@
       excluded varchar(9)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.insurance_Coverage (
+  create table if not exists ##dbname##.insurance_Coverage (
       systemId int primary key,
       parentSystemId int,
       rank int,
@@ -161,12 +161,12 @@
       deductibleCurrency char(4)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.insurance_AssessmentSheet (
+  create table if not exists ##dbname##.insurance_AssessmentSheet (
       systemId int primary key,
       lockingActor varchar(20)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.insurance_AssessmentLine (
+  create table if not exists ##dbname##.insurance_AssessmentLine (
       systemId int auto_increment primary key,
       versionId int,
       parentSystemId int,
@@ -194,7 +194,7 @@
       rate varchar(20)
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.saved_policy_summary (
+  create table if not exists ##dbname##.saved_policy_summary (
       id bigint(20) auto_increment primary key,
       version bigint(20),
       quote_number varchar(255),
@@ -211,7 +211,7 @@
       test_case bit
   ) ENGINE=InnoDB;
   
-  create table if not exists ${dbname}.saved_policy (
+  create table if not exists ##dbname##.saved_policy (
       id bigint(20) primary key,
       policy text,
       quotation_document longblob,
