@@ -24,6 +24,10 @@
     <dependency name="truezip-file" org="de.schlichtherle.truezip" rev="7.7.1" />
     <dependency name="truezip-driver-zip" org="de.schlichtherle.truezip" rev="7.7.1" />
     <dependency name="truezip-kernel" org="de.schlichtherle.truezip" rev="7.7.1" />
+    <dependency org="xerces" name="xercesImpl" rev="2.11.0" />
+    <dependency org="xerces" name="xml-apis" rev="2.11.0" />
     <exclude module="nexus-staging-client" org="com.sonatype.nexus.staging" />
+    <exclude org="xml-apis"  />
+    <exclude org="xerces" module="xerces" />
   </dependencies>
 </ivy-module>
