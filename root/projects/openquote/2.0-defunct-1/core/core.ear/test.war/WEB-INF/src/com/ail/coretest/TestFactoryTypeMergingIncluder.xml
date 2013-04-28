@@ -1,8 +1,0 @@
-<history xsi:type="java:com.ail.core.History" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <version>
-      <author>Jimbo Clucknasty</author>
-      <source>apple</source>
-      <comment>Damned fine</comment>
-    </version>
-	<xi:include href="classpath://com.ail.coretest/TestFactoryTypeMergingIncluded.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-</history>

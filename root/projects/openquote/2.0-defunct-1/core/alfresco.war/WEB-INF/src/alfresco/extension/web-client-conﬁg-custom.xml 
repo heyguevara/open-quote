@@ -1,8 +1,0 @@
-<config evaluator="string-compare" condition="Action Wizards"> 
-   <property-sheet> 
-      <show-property name="reset-product:reset-product" /> 
-   </property-sheet> 
-   <action-handlers> 
-      <handler name="reset-product" class="org.ail.alfresco.ResetProductActionHandler" /> 
-   </action-handlers> 
-</config> 
