@@ -47,7 +47,12 @@
     <delete dir="${target.dir}" failonerror="false" />
   </target>
 
-  <target name="release" description="build this project's releasable outputs">
+  <target name="test" description="run unit tests and integration tests">
+    <ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
+    <ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
+  </target>
+
+  <target name="bamboo-build">
     <!-- Do a setup in build to make sure we have the jars that the build itself needs -->
     <subant-macro target="setup" includes="build/Build.xml" />
 
@@ -55,16 +60,14 @@
     <antcall target="teardown" />
     <antcall target="setup" />
     <antcall target="test" />
+  </target>
 
-    <!-- Teardown, setup and release. Teardown is a must as test may have left a mess. -->
+  <target name="bamboo-release">
+    <!-- Teardown, setup and release. Teardown is a must as bamboo-build may have left a mess. -->
     <antcall target="teardown" />
     <antcall target="setup" />
-    <subant-macro target="build" includes="package/Build.xml"/>
+    <subant-macro target="build" includes="package/Build.xml" />
     <release-liferay-domain-macro />
   </target>
 
-  <target name="test" description="run unit tests and integration tests">
-    <ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
-    <ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
-  </target>
 </project>
