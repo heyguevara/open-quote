@@ -53,17 +53,14 @@
   </target>
 
   <target name="bamboo-build">
-    <!-- Do a setup in build to make sure we have the jars that the build itself needs -->
     <subant-macro target="setup" includes="build/Build.xml" />
-
-    <!-- Teardown, setup and test. The test step will kill the build if it fails. -->
     <antcall target="teardown" />
     <antcall target="setup" />
     <antcall target="test" />
   </target>
 
   <target name="bamboo-release">
-    <!-- Teardown, setup and release. Teardown is a must as bamboo-build may have left a mess. -->
+    <subant-macro target="setup" includes="build/Build.xml" />
     <antcall target="teardown" />
     <antcall target="setup" />
     <subant-macro target="build" includes="package/Build.xml" />
