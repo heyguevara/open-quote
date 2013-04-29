@@ -26,7 +26,7 @@ import com.ail.core.persistence.QueryService.QueryArgument;
 import com.ail.core.persistence.UpdateService.UpdateArgument;
 
 @Remote
-public interface PersistenceServer {
+public interface PersistenceServerRemote {
     CreateArgument createCommand(CreateArgument arg);
 
 	UpdateArgument updateCommand(UpdateArgument arg);

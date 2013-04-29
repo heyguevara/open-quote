@@ -32,7 +32,7 @@
     <exclude org="javax.jms" />
     <exclude org="javax.security" />
     <exclude org="org.apache.ant" />
-    <exclude org="xml-apis" />
+    <exclude org="xml-apis"  />
     <exclude org="xerces" module="xerces" />
   </dependencies>
 </ivy-module>

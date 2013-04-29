@@ -27,7 +27,7 @@ import com.ail.core.VersionEffectiveDate;
  * Remote interface for the EJBLoader bean.
  */
 @Remote
-public interface EJBLoader {
+public interface EJBLoaderRemote {
     public Configuration loadConfiguration(String namespace, VersionEffectiveDate date) throws EJBConfigurationException;
 
     public void saveConfiguration(String namespace, Configuration config) throws EJBConfigurationException;

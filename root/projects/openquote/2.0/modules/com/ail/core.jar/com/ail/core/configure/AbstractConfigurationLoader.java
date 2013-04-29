@@ -19,17 +19,13 @@ package com.ail.core.configure;
 
 import static com.ail.core.Functions.classForName;
 
-import com.ail.core.VersionEffectiveDate;
-import com.ail.core.Functions;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Properties;
+
+import com.ail.core.VersionEffectiveDate;
 
 /**
  * This class is extended by classes capable of loading and saving configurations
@@ -135,37 +131,6 @@ public abstract class AbstractConfigurationLoader {
     }
 
     /**
-     * Try to load properties from JNDI's comp/env area
-     * @return loaderClassName, or null if not found.
-     */
-    private static String loadFromJndiCompEnv() {
-        String loaderClassName;
-
-        try {
-            Context ctx = new InitialContext();
-            loaderClassName = (String) ctx.lookup("java:comp/env/ConfigurationLoader.classname");
-            if (loaderClassName != null) {
-                String paramList = (String) ctx.lookup("java:comp/env/ConfigurationLoader.params");
-                if (paramList != null) {
-                    String[] a = Functions.getStringArrayFromString(paramList, ";");
-                    for(int i = 0; i < a.length; i++) {
-                        int eq = a[i].indexOf('=');
-                        if (eq == -1) {
-                            throw new BootstrapConfigurationError("Bad ConfigurationLoader.params '" + paramList + "'. Form should be 'name=value[;name=value]...");
-                        }
-                        params.put(a[i].substring(0, eq), a[i].substring(eq + 1));
-                    }
-                }
-            }
-        } catch(NamingException e) {
-            // we'll take this to mean there's no configuration in comp/env
-            loaderClassName = null;
-        }
-
-        return loaderClassName;
-    }
-
-    /**
      * Try to load properties from the class resource.
      * @return loaderClassName, or null if not found.
      * @throws IOException
@@ -214,10 +179,6 @@ public abstract class AbstractConfigurationLoader {
 
                 if (loaderClassName == null) {
                     loaderClassName = loadFromPropertiesFile();
-                }
-
-                if (loaderClassName == null) {
-                    loaderClassName = loadFromJndiCompEnv();
                 }
 
                 if (loaderClassName == null) {

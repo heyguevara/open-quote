@@ -26,7 +26,7 @@ import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Configurable
 @Stateless
-@Remote(Subrogation.class)
+@Remote(SubrogationRemote.class)
 public class SubrogationBean extends StatelessComponent implements SubrogationLocal {
     private static final long serialVersionUID = 6506879017396687519L;
 

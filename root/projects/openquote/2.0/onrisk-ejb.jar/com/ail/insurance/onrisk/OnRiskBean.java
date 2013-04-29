@@ -29,7 +29,7 @@ import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
 @Configurable
 @Stateless
-@Remote(OnRisk.class)
+@Remote(OnRiskRemote.class)
 public class OnRiskBean extends StatelessComponent implements OnRiskLocal {
 
     public OnRiskBean() {

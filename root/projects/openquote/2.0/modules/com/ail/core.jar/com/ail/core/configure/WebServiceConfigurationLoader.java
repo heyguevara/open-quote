@@ -59,7 +59,7 @@ public class WebServiceConfigurationLoader extends AbstractConfigurationLoader {
             call.setTargetEndpointAddress(new URL(url));
             call.setOperationName("loadConfigurationAsByteArray");
 
-            QName vedQn = new QName( "urn:EJBLoader", "VersionEffectiveDate" );
+            QName vedQn = new QName( "urn:EJBLoaderRemote", "VersionEffectiveDate" );
             call.registerTypeMapping(VersionEffectiveDate.class, vedQn,
                           new org.apache.axis.encoding.ser.BeanSerializerFactory(VersionEffectiveDate.class, vedQn),
                           new org.apache.axis.encoding.ser.BeanDeserializerFactory(VersionEffectiveDate.class, vedQn));

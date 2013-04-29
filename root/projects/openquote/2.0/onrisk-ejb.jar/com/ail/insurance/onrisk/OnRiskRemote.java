@@ -25,7 +25,7 @@ import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
 import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
 
 @Remote
-public interface OnRisk {
+public interface OnRiskRemote {
     /**
      * Service wrapper business method for the GenerateCertificateCommand service.
      * @param arg The command to pass to the service.

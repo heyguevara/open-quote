@@ -41,7 +41,7 @@ import com.ail.core.VersionEffectiveDate;
  * which need to access the server's configuration information.
  */
 @Stateless
-@Remote(EJBLoader.class)
+@Remote(EJBLoaderRemote.class)
 @Local(EJBLoaderLocal.class)
 public class EJBLoaderBean implements EJBLoaderLocal {
     SessionContext ctx=null;

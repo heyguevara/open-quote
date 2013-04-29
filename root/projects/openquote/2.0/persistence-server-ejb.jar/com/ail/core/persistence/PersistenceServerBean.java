@@ -33,7 +33,7 @@ import com.ail.core.persistence.UpdateService.UpdateArgument;
  */
 @Configurable
 @Stateless
-@Remote(PersistenceServer.class)
+@Remote(PersistenceServerRemote.class)
 public class PersistenceServerBean extends StatelessComponent implements PersistenceServerLocal {
 
     public PersistenceServerBean() {

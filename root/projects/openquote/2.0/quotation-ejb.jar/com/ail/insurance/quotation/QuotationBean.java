@@ -36,7 +36,7 @@ import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument
 
 @Configurable
 @Stateless
-@Remote(Quotation.class)
+@Remote(QuotationRemote.class)
 public class QuotationBean extends StatelessComponent implements QuotationLocal {
 
     public QuotationBean() {

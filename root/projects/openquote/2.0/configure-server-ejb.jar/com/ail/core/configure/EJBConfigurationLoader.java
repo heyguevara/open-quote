@@ -31,7 +31,7 @@ import com.ail.core.VersionEffectiveDate;
  */
 public class EJBConfigurationLoader extends AbstractConfigurationLoader {
     @EJB
-    static EJBLoader loader;
+    static EJBLoaderRemote loader;
     
     private void handleException(EJBConfigurationException e) {
         throw e.getBaseErrorCause();

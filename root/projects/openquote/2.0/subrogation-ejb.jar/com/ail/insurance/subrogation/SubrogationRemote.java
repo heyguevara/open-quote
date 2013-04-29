@@ -22,6 +22,6 @@ import javax.ejb.Remote;
 import com.ail.insurance.subrogation.MakeARecoveryService.MakeARecoveryArgument;
 
 @Remote
-public interface Subrogation {
+public interface SubrogationRemote {
     MakeARecoveryArgument makeARecovery(MakeARecoveryArgument command);
 }

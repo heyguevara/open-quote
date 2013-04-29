@@ -32,7 +32,7 @@ import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceArg
 import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument;
 
 @Remote
-public interface Quotation {
+public interface QuotationRemote {
     /**
      * Service wrapper business method for the AssessRisk service.
      * @param arg The argument to pass to the service.
