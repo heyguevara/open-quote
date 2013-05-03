@@ -10,6 +10,7 @@
     <ant dir="./modules/com/ail/core.jar" antfile="Build.xml" target="_build" />
     <ant dir="./modules/com/ail/commercial.jar" antfile="Build.xml" target="_build" />
     <ant dir="./modules/com/ail/insurance.jar" antfile="Build.xml" target="_build" />
+    <ant dir="./modules/com/ail/pageflow.jar" antfile="Build.xml" target="_build" />
     <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />

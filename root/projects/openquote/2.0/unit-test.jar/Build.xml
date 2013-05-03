@@ -17,6 +17,8 @@
         <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
         <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
         <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail/pageflow/main" includes="pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail/pageflow/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
       </javac-classpath>
     </compile-jar-macro>
@@ -39,8 +41,8 @@
     <run-unit-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />

@@ -10,7 +10,7 @@
 
 body {
 	background: #FFFFFF;
-	font-size: 15px;
+	font-size: 13px;
 }
 
 a {
@@ -48,6 +48,7 @@ hr, .separator {
 	position: relative;
 	border-bottom: 3px dotted #CCC;
     min-height: 6em;
+    font-size: 1.2em;
 }
 
 #banner > div {

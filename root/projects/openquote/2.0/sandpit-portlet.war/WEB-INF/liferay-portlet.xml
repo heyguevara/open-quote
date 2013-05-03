@@ -6,6 +6,7 @@
 		<portlet-name>sandpit</portlet-name>
 		<icon>/icon.png</icon>
 		<instanceable>false</instanceable>
+        <header-portlet-css>/css/sandpit.css</header-portlet-css>
 		<header-portlet-css>/quotation-portlet/css/main.css</header-portlet-css>
         <header-portal-javascript>/quotation-portlet/js/main.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/numberformat.js</header-portal-javascript>

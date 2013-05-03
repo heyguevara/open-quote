@@ -17,6 +17,8 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.hook.Listener;
@@ -29,17 +31,18 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 public class ListenerTest {
     private Listener sut;
+    @Mock
     private CoreProxy mockCoreProxy;
+    @Mock
     private ResetProductCommand mockQueuedResetProduct = null;
+    @Mock
     private ClearProductCacheCommand mockClearProductCacheCommand = null;
 
     @SuppressWarnings("unchecked")
     @Before
     public void setupSUT() {
-        mockQueuedResetProduct = mock(ResetProductCommand.class);
-        mockClearProductCacheCommand = mock(ClearProductCacheCommand.class);
+        MockitoAnnotations.initMocks(this);
 
-        mockCoreProxy = mock(CoreProxy.class);
         doReturn(mockQueuedResetProduct).when(mockCoreProxy).newCommand(eq("QueuedResetProductCommand"), any(Class.class));
         doReturn(mockClearProductCacheCommand).when(mockCoreProxy).newCommand(eq("QueuedClearProductCacheCommand"), any(Class.class));
 
@@ -188,7 +191,7 @@ public class ListenerTest {
     @Test
     public void testOnAfterUpdateForNonProductFilesDoesNothing() throws Exception {
         DLFileEntry mockFileEntry = mock(DLFileEntry.class);
-        DLFolder mockDLFolder=mock(DLFolder.class);
+        DLFolder mockDLFolder = mock(DLFolder.class);
         doReturn(mockDLFolder).when(mockFileEntry).getFolder();
         doReturn("My/Folder/Path").when(mockDLFolder).getPath();
         sut.onAfterUpdate(mockFileEntry);
@@ -251,7 +254,7 @@ public class ListenerTest {
     @Test
     public void testFolderIsAProductFolder() throws Exception {
         DLFolder mockFolderEntry = mock(DLFolder.class);
-        DLFileEntry mockFileEntry=mock(DLFileEntry.class);
+        DLFileEntry mockFileEntry = mock(DLFileEntry.class);
 
         doReturn(1234L).when(mockFolderEntry).getGroupId();
         doReturn(2345L).when(mockFolderEntry).getFolderId();
@@ -295,4 +298,11 @@ public class ListenerTest {
         sut.fileEntry2ProductName(folder1);
     }
 
+    @Test
+    public void testCreateHasNoHistoryDependency() throws Exception {
+        DLFileEntry fileEntry = createMockStructure_Product_AIL_TestProduct_TestFile();
+        doReturn("1.0").when(fileEntry).getVersion();
+        sut.onBeforeCreate(fileEntry);
+        sut.onAfterCreate(fileEntry);
+    }
 }

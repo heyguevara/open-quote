@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Created-By: 1.6.0_37
 Built-By: Applied Industrial Logic
-Dependencies: com.liferay.portal, com.ail.core, com.ail.commercial, com.ail.insurance
+Dependencies: com.liferay.portal, com.ail.core, com.ail.commercial, com.ail.insurance, com.ail.pageflow

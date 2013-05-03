@@ -24,3 +24,8 @@ textarea {
     font-family: tahoma,verdana,arial,helvetica,sans-serif;
     font-size: 12px;
 }
+
+.sandpit_debug_panel {
+    background-color: #E4E4E4;
+    font-size: 0.9em;
+}
