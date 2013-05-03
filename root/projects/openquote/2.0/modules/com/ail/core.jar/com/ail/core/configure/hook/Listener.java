@@ -54,6 +54,36 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         this(new CoreProxy());
     }
 
+
+    @Override
+    public void onBeforeCreate(DLFileEntry fileEntry) throws ModelListenerException {
+        if (isFileAProductFile(fileEntry)) {
+            recordChange(fileEntry);
+        }
+    }
+
+    @Override
+    public void onBeforeUpdate(DLFileEntry fileEntry) throws ModelListenerException {
+        if (isFileAProductFile(fileEntry)) {
+            recordChange(fileEntry);
+        }
+    }
+    
+    @Override
+    public void onAfterRemove(DLFileEntry fileEntry) throws ModelListenerException {
+        handleOnAfterEvent(fileEntry, false);
+    }
+
+    @Override
+    public void onAfterCreate(DLFileEntry fileEntry) throws ModelListenerException {
+        handleOnAfterEvent(fileEntry, true);
+    }
+
+    @Override
+    public void onAfterUpdate(DLFileEntry fileEntry) throws ModelListenerException {
+        handleOnAfterEvent(fileEntry, true);
+    }
+    
     // Wrapper for static method call to aid testing
     void recordChange(DLFileEntry fileEntry) {
         changeDetector.record(fileEntry);
@@ -104,27 +134,10 @@ public class Listener extends BaseModelListener<DLFileEntry> {
     }
     
     @Override
-    public void onBeforeUpdate(DLFileEntry fileEntry) throws ModelListenerException {
-        String fullPath = fileEntry2FullPath(fileEntry);
-
-        if (fullPath.startsWith("/Product/")) {
+    public void onBeforeRemove(DLFileEntry fileEntry) throws ModelListenerException {
+        if (isFileAProductFile(fileEntry)) {
             recordChange(fileEntry);
         }
-    }
-
-    @Override
-    public void onAfterRemove(DLFileEntry fileEntry) throws ModelListenerException {
-        handleOnAfterEvent(fileEntry, false);
-    }
-
-    @Override
-    public void onAfterCreate(DLFileEntry fileEntry) throws ModelListenerException {
-        handleOnAfterEvent(fileEntry, true);
-    }
-
-    @Override
-    public void onAfterUpdate(DLFileEntry fileEntry) throws ModelListenerException {
-        handleOnAfterEvent(fileEntry, true);
     }
 
     /**
@@ -148,6 +161,10 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         } catch (NoSuchFileEntryException e) {
             return false;
         }
+    }
+
+    boolean isFileAProductFile(DLFileEntry fileEntry) throws ModelListenerException {
+        return fileEntry2FullPath(fileEntry).startsWith("/Product/");
     }
 
     /**

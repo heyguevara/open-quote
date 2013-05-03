@@ -99,6 +99,6 @@ class ChangeDetector {
         // Theoretically, we should never reach this point because record() is
         // always called before isChanged() for any events on a given
         // DLFileEntry.
-        throw new IllegalStateException("History element not found: " + fileEntry.getTitle());
+        throw new IllegalStateException("DLFileElement '"+fileEntry.getTitle()+"' not found in history cache.");
     }
 }
