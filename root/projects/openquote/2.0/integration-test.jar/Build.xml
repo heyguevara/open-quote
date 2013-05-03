@@ -11,8 +11,8 @@
   <target name="_build">
     <compile-jar-macro packagable="no">
       <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
         <fileset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
@@ -44,8 +44,8 @@
     <run-integration-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
         <fileset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />

@@ -9,11 +9,11 @@
 
   <types>
     <service name="NotifyBrokerByEmailService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.quotation.NotifyBrokerByEmailService</parameter>
+      <parameter name="ServiceClass">com.ail.insurance.pageflow.render.NotifyBrokerByEmailService</parameter>
     </service>
 
     <service name="NotifyProposerByEmailService" key="com.ail.core.command.ClassAccessor">
-      <parameter name="ServiceClass">com.ail.insurance.quotation.NotifyProposerByEmailService</parameter>
+      <parameter name="ServiceClass">com.ail.insurance.pageflow.render.NotifyProposerByEmailService</parameter>
     </service>
 
     <command name="NotifyBrokerByEmailArgumentImpl" key="com.ail.insurance.quotation.NotifyBrokerByEmailCommandImpl">

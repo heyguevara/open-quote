@@ -241,7 +241,7 @@
     </sequential>
   </macrodef>
 
-  <!-- Fork a new any process with a classpath that includes all of the jars in the -->
+  <!-- Fork a new ant process with a classpath that includes all of the jars in the -->
   <!-- ${buildlib.dir} folder.                                                      -->
   <!-- @param dir Directory to execute ant in.                                      -->
   <!-- @param antfile The build file to pass to ant.                                -->

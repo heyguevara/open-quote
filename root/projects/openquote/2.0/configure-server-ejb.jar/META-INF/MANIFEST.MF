@@ -4,6 +4,7 @@ Built-By: Applied Industrial Logic
 Dependencies: com.ail.core, 
  com.ail.commercial, 
  com.ail.insurance, 
+ com.ail.pageflow,
  org.apache.log4j, 
  com.liferay.portal,  
  deployment.acceptance-ejb.jar, 

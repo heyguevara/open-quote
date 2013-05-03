@@ -33,28 +33,6 @@
   <property name="package.dir" value="${target.dir}/openquote-community-${major.version}.${minor.version}${increment.version}" />
   <property name="package.file" value="${package.dir}.zip" />
 
-  <filterset id="copy.filterset">
-    <filter token="dbname" value="${dbname}" />
-    <filter token="dbusername" value="${dbusername}" />
-    <filter token="dbpassword" value="${dbpassword}" />
-    <filter token="major.version" value="${major.version}" />
-    <filter token="minor.version" value="${minor.version}" />
-    <filter token="liferay.version" value="${liferay.version}" />
-    <filter token="jboss.version" value="${jboss.version}" />
-    <filter token="increment.version" value="${increment.version}" />
-  </filterset>
-
-  <filterset id="copy.filterset.sql" begintoken="##" endtoken="##">
-    <filter token="dbname" value="${dbname}" />
-    <filter token="dbusername" value="${dbusername}" />
-    <filter token="dbpassword" value="${dbpassword}" />
-    <filter token="major.version" value="${major.version}" />
-    <filter token="minor.version" value="${minor.version}" />
-    <filter token="liferay.version" value="${liferay.version}" />
-    <filter token="jboss.version" value="${jboss.version}" />
-    <filter token="increment.version" value="${increment.version}" />
-  </filterset>
-
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />
@@ -66,6 +44,18 @@
           <pathelement location="${bootlib.dir}/ant-contrib-1.0b3.jar" />
         </classpath>
       </taskdef>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="_intialise-filtersets-macro">
+    <element name="filters" />
+    <sequential>
+      <filterset id="copy.filterset">
+        <filters />
+      </filterset>
+      <filterset id="copy.filterset.sql" begintoken="##" endtoken="##">
+        <filters />
+      </filterset>
     </sequential>
   </macrodef>
 
@@ -83,37 +73,32 @@
         project.setProperty("generated.source.dir",
         project.getProperty("target.dir") + "/generated/" + deployUnit);
         project.setProperty("deploy.unit", deployUnit);
-        if
-        (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
-        deployDir = project.getProperty("deploy.dir");
-        outputDir = deployDir + "/"
-        + deployUnit;
+        if (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
+            deployDir = project.getProperty("deploy.dir");
+            outputDir = deployDir + "/" + deployUnit;
         }
         else if (projectName.contains(":modules")) {
-        deploy.dir = project.getProperty("jboss.dir");
-        if (deployUnit.endsWith(".jar")) {
-        rootPath = deployUnit.replaceAll("/[^/]*$","");
-        name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
-        outputDir = deploy.dir + "/" + rootPath +
-        "/" + name + "/main/" + name + ".jar";
-        }
-        else {
-        outputDir = deploy.dir + "/" + deployUnit;
-        }
+            deploy.dir = project.getProperty("jboss.dir");
+            if (deployUnit.endsWith(".jar")) {
+                rootPath = deployUnit.replaceAll("/[^/]*$","");
+                name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
+                outputDir = deploy.dir + "/" + rootPath + "/" + name + "/main/" + name + ".jar";
+            }
+            else {
+                    outputDir = deploy.dir + "/" + deployUnit;
+            }
         }
         else if (projectName.contains(":unit-test.jar")) {
-        outputDir=project.getProperty("test.dir") + "/unit-test.jar";
+            outputDir = project.getProperty("test.dir") + "/unit-test.jar";
         }
         else if (projectName.contains(":integration-test.jar")) {
-        outputDir =
-        project.getProperty("test.dir") + "/integration-test.jar";
+            outputDir = project.getProperty("test.dir") + "/integration-test.jar";
         }
         else if (projectName.contains(":test.jar")) {
-        outputDir =
-        project.getProperty("test.dir") + "/test.jar";
+            outputDir = project.getProperty("test.dir") + "/test.jar";
         }
         else {
-        outputDir = project.getProperty("target.dir") + "/"+deployUnit;
+            outputDir = project.getProperty("target.dir") + "/"+deployUnit;
         }
         project.setProperty("output.dir", outputDir);
       </script>
@@ -258,8 +243,8 @@
       <path id="path.expansion">
         <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
         <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
-        <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
-        <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
         <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
         <fileset dir="${deploy.dir}" includes="*-ejb.jar" />
       </path>
@@ -280,18 +265,18 @@
     </sequential>
   </macrodef>
 
-  <macrodef name="build-product-development-lib-macro">
-    <sequential>
-      <mkdir dir="${target.dir}/lib" />
-      <jar destfile="${target.dir}/lib/core.jar" basedir="${ear.lib}/core.jar" />
-      <jar destfile="${target.dir}/lib/commercial.jar" basedir="${ear.lib}/commercial.jar" />
-      <jar destfile="${target.dir}/lib/insurance.jar" basedir="${ear.lib}/insurance.jar" />
-      <copy todir="${target.dir}/lib">
-        <fileset dir="${ear.lib}" includes="*.jar" />
-        <fileset dir="${deploy.dir}/deploy/jboss-portal.sar/lib" includes="portal-portlet-jsr168api-lib.jar, portal-identity-lib.jar" />
-      </copy>
-    </sequential>
-  </macrodef>
+  <_intialise-filtersets-macro>
+    <filters>
+        <filter token="dbname" value="${dbname}" />
+        <filter token="dbusername" value="${dbusername}" />
+        <filter token="dbpassword" value="${dbpassword}" />
+        <filter token="major.version" value="${major.version}" />
+        <filter token="minor.version" value="${minor.version}" />
+        <filter token="liferay.version" value="${liferay.version}" />
+        <filter token="jboss.version" value="${jboss.version}" />
+        <filter token="increment.version" value="${increment.version}" />
+      </filters>
+  </_intialise-filtersets-macro>
 
   <import file="JavaMacros.xml" />
   <import file="LiferayMacros.xml" />

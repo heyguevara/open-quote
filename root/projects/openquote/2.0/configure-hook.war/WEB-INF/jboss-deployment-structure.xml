@@ -10,6 +10,7 @@
             <module name="com.ail.core" />
             <module name="com.ail.commercial" />
             <module name="com.ail.insurance" />
+            <module name="com.ail.pageflow" />
 			<module name="com.liferay.portal" />
             <module name="javax.ejb.api" />
 			<module name="org.jboss.modules" />
