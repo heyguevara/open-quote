@@ -14,15 +14,11 @@
     <compile-war-macro>
       <javac-classpath>
         <fileset dir="${output.dir}/WEB-INF/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
-        <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
-        <fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/servlet/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/jboss/as/web" includes="**/*.jar" />
       </javac-classpath>
     </compile-war-macro>
   </target>

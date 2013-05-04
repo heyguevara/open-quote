@@ -11,15 +11,9 @@
   <target name="_build">
     <compile-jar-macro packagable="no">
       <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <fileset dir="${module.dir}/com/ail/commercial/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/pageflow/main" includes="pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/pageflow/main" includes="*.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
       </javac-classpath>
     </compile-jar-macro>
   </target>
@@ -41,12 +35,10 @@
     <run-unit-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
-        <fileset dir="${module.dir}/org/apache/xalan/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/apache/xalan" includes="**/*.jar" />
       </junit-classpath>
     </run-unit-tests-macro>
   </target>

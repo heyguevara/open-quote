@@ -13,7 +13,6 @@
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <!-- call the internal build target -->
     <antcall target="_build" />
   </target>
 

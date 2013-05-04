@@ -12,13 +12,12 @@
 		<compile-jar-macro module="yes" dependencies="com.liferay.portal, javax.jms.api, javax.xml.rpc.api, javax.ejb.api, org.apache.xalan, org.apache.httpcomponents">
 			<javac-classpath>
 				<fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-				<fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
-				<fileset dir="${module.dir}/javax/xml/rpc/api/main" includes="jboss-jaxrpc-api_1.1_spec-1.0.0.Final.jar" />
-				<fileset dir="${module.dir}/org/apache/httpcomponents/main" includes="httpcore-4.1.4.jar" />
-				<fileset dir="${module.dir}/org/apache/httpcomponents/main" includes="httpclient-4.1.2.jar" />
-				<fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
+				<fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+				<fileset dir="${module.dir}/javax/xml/rpc/api" includes="**/*.jar" />
+				<fileset dir="${module.dir}/org/apache/httpcomponents" includes="**/*.jar" />
+				<fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
 			    <fileset dir="${buildlib.dir}" includes="truezip*.jar" />
-		        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar" />
+		        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
 			</javac-classpath>
 		</compile-jar-macro>
 	</target>

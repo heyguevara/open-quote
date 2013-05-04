@@ -13,10 +13,8 @@
   <target name="_build">
     <compile-jar-macro module="yes" dependencies="com.ail.core">
       <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-        <fileset dir="${java.home}/lib" includes="plugin.jar" />
-        <fileset dir="${jboss.dir}/bin/client/" includes="jboss-client.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
       </javac-classpath>
     </compile-jar-macro>
   </target>

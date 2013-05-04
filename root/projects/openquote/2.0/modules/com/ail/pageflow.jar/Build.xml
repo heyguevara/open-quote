@@ -11,16 +11,11 @@
   <target name="_build">
     <compile-jar-macro module="yes" dependencies="com.liferay.portal, com.ail.core, com.ail.commercial, com.ail.insurance">
       <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main/" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/commercial/main" includes="commercial.jar" />
-        <fileset dir="${module.dir}/com/ail/commercial/main/" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
-        <fileset dir="${module.dir}/com/ail/insurance/main/" includes="*.jar" />
-        <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
-        <fileset dir="${module.dir}/javax/mail/api/main" includes="mail-1.4.4.jar" />
-        <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/mail/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/servlet/api" includes="**/*.jar" />
       </javac-classpath>
     </compile-jar-macro>
   </target>

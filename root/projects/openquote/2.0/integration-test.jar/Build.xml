@@ -11,18 +11,17 @@
   <target name="_build">
     <compile-jar-macro packagable="no">
       <javac-classpath>
-        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
         <fileset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
-        <fileset dir="${module.dir}/javax/servlet/api/main" includes="jboss-servlet-api_3.0_spec-1.0.0.Final.jar" />
-        <fileset dir="${module.dir}/org/jboss/as/web/main" includes="jbossweb-7.0.13.Final.jar" />
-        <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
-        <fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
-        <fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
-        <fileset dir="${module.dir}/org/jboss/ws/api/main" includes="jbossws-api-1.0.0.GA.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/servlet/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/jboss/as/web" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/annotation/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/jboss/ejb3" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/jboss/ws/api" includes="**/*.jar" />
       </javac-classpath>
     </compile-jar-macro>
   </target>
@@ -44,18 +43,16 @@
     <run-integration-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" />
-        <dirset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
         <fileset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
-        <fileset dir="${module.dir}/com/liferay/portal/main" includes="portlet.jar" />
-        <fileset dir="${jboss.dir}/bin/client" includes="jboss-client.jar" />
-        <fileset dir="${module.dir}/org/apache/xalan/main" includes="*.jar" />
-        <fileset dir="${module.dir}/javax/ejb/api/main" includes="jboss-ejb-api_3.1_spec-1.0.1.Final.jar" />
-        <fileset dir="${module.dir}/javax/annotation/api/main" includes="jboss-annotations-api_1.1_spec-1.0.0.Final.jar" />
-        <fileset dir="${module.dir}/org/jboss/ejb3/main" includes="jboss-ejb3-ext-api-2.0.0.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/apache/xalan" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/annotation/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/jboss/ejb3" includes="**/*.jar" />
       </junit-classpath>
     </run-integration-tests-macro>
   </target>
