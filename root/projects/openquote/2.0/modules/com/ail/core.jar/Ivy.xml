@@ -30,7 +30,6 @@
     <dependency org="xerces" name="xml-apis" rev="2.11.0" />
     <exclude org="ant" />
     <exclude org="javax.jms" />
-    <exclude org="javax.mail" />
     <exclude org="javax.security" />
     <exclude org="org.apache.ant" />
     <exclude org="xerces" module="xerces" />
