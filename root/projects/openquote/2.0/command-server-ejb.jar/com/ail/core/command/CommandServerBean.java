@@ -33,9 +33,15 @@ import com.ail.core.XMLString;
  * Message Driven Bean which listens on a queue for commands to execute.
  */
 @Configurable
-@MessageDriven(name = "CommandServerBean", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/OpenQuoteCommandQueue"),
-        @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "AUTO_ACKNOWLEDGE") })
+@MessageDriven(
+        name = "CommandServerBean", activationConfig = { 
+            @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+            @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/OpenQuoteCommandQueue"),
+            @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "AUTO_ACKNOWLEDGE"), 
+            @ActivationConfigProperty(propertyName = "minSessions", propertyValue = "25"),
+            @ActivationConfigProperty(propertyName = "maxSessions", propertyValue = "50")
+        }
+)
 public class CommandServerBean extends MessagingComponent implements MessageListener {
 
     public CommandServerBean() {
