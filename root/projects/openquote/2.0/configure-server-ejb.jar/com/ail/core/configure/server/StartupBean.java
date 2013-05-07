@@ -34,6 +34,7 @@ import com.ail.core.configure.AbstractConfigurationLoader;
 @Singleton
 @Startup
 public class StartupBean {
+    private boolean resetRequired = false;
     private final static int RETRY_TIMEOUT_MS = 10000;
     @Resource
     private TimerService timerService;
@@ -44,22 +45,33 @@ public class StartupBean {
 
             new ServerBean().resetCoreConfiguration();
 
-            if (configurationResetFails()) {
-                setRetryTimer(RETRY_TIMEOUT_MS);
-            }
+            resetRequired = true;
         }
+
+        setRetryTimer(RETRY_TIMEOUT_MS);
     }
 
     @Timeout
     public void onTimeout() {
-        if (configurationResetFails()) {
-            setRetryTimer(RETRY_TIMEOUT_MS);
+        if (resetRequired) {
+            if (configurationResetFails()) {
+                setRetryTimer(RETRY_TIMEOUT_MS);
+            }
+        }
+        else {
+            if (!isProductRepoAvailable()) {
+                setRetryTimer(RETRY_TIMEOUT_MS);
+            }
+            else {
+                new CoreProxy().logInfo("OpenQuote product repository started.");
+            }
         }
     }
 
     private boolean configurationResetFails() {
         if (isProductRepoAvailable()) {
             new ServerBean().resetAllConfigurations();
+            new CoreProxy().logInfo("OpenQuote product repository started.");
             return false;
         } else {
             return true;
@@ -71,7 +83,7 @@ public class StartupBean {
     }
 
     private void setRetryTimer(long intervalDuration) {
-        new CoreProxy().logInfo("Retrying configuration reset in " + RETRY_TIMEOUT_MS / 1000 + " seconds.");
+        new CoreProxy().logInfo("Product content not yet available, retrying configuration reset in " + RETRY_TIMEOUT_MS / 1000 + " seconds.");
         timerService.createSingleActionTimer(intervalDuration, new TimerConfig());
     }
 
@@ -97,7 +109,6 @@ public class StartupBean {
             testStream.close();
             return true;
         } catch (Throwable e) {
-            cp.logInfo("Content repository not available (" + e.toString() + ").");
             return false;
         }
     }
