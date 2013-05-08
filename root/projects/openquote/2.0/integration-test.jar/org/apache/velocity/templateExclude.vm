@@ -1,10 +1,9 @@
 
-Assigning the Drive in Velocity via the accessor.
+Assigning the Drive in Velocity via the setter accessor.
 $car.setDrive( $driver)
 Here comes $car.DriverName
 
-
-Attempting to assign the driver via the constructor.
+Attempting to assign the driver via the getter accessor.
 Here comes $car.getDriverName($driver)
 
 Attempting to assign the driver via the constructor. NOTICE with this one we are NOT using the accessor in the VM
