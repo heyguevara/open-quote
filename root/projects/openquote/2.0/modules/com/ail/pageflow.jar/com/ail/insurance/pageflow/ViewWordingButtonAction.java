@@ -29,7 +29,7 @@ import com.ail.insurance.onrisk.FetchWordingService.FetchWordingCommand;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * <p>Adds a "view wording" button to a page. When selected this button will open a new window containing
@@ -66,7 +66,7 @@ public class ViewWordingButtonAction extends CommandButtonAction {
                 if (model instanceof Policy) {
                 	// ...assume that we have just updated the persisted quote and keep the session in step
 	                SavedPolicy savedPolicy=(SavedPolicy)proxy.queryUnique("get.savedPolicy.by.policyNumber", policyNumber);
-	                QuotationContext.setPolicy(savedPolicy.getPolicy());
+	                PageflowContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
                 response.sendRedirect("/quotation-portlet/DisplayWordingServlet?policyNumber="+policyNumber);

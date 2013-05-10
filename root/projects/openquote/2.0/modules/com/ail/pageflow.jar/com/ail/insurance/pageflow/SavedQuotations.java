@@ -28,7 +28,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.SavedPolicy;
@@ -160,14 +160,14 @@ public class SavedQuotations extends PageElement {
 	        
 	                if ("confirm".equals(op)) {
 	                    quote.setPage(confirmAndPayDestinationPageId);
-	                    QuotationContext.setPolicy(quote);
+	                    PageflowContext.setPolicy(quote);
 	                }
 	                else if ("requote".equals(op)) {
 	                    quote.setPage(requoteDestinationPageId);
 	                    quote.setStatus(PolicyStatus.APPLICATION);
 	                    quote.setQuotationNumber(null);
 	                    quote.markAsNotPersisted();
-	                    QuotationContext.setPolicy(quote);
+	                    PageflowContext.setPolicy(quote);
 	                }
 	            }
 	        }
@@ -207,7 +207,7 @@ public class SavedQuotations extends PageElement {
             // If the user has saved quotes...
             if (quotes.size()!=0) {
                 // copy the quotations summaries into a SavedPolicySummary instance
-                SavedPolicySummaries sas=QuotationContext.getCore().newType(SavedPolicySummaries.class);
+                SavedPolicySummaries sas=PageflowContext.getCore().newType(SavedPolicySummaries.class);
                 for(Object o: quotes) {
                     sas.getPolicySummary().add((SavedPolicySummary)o);
                 }

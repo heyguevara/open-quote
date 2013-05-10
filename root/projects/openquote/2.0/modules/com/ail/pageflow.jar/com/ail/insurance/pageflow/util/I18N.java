@@ -56,7 +56,7 @@ public class I18N {
 	public static String i18n(String message, String alternative) {
 		if (message!=null) {
 	    	try {
-	    		String product=QuotationContext.getPolicy().getProductTypeId();
+	    		String product=PageflowContext.getPolicy().getProductTypeId();
 	    		Translations trans=(Translations)new CoreProxy().newProductType(product, "Translations");
 	    		return trans.translate(message, alternative);
 	    	}

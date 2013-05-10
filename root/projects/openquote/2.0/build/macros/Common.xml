@@ -13,7 +13,7 @@
   <property name="test.dir" value="${target.dir}/test" />
   <property name="buildlib.dir" value="${project.dir}/build/lib" />
   <property name="bootlib.dir" value="${project.dir}/build/boot" />
-  <property name="tmp" value="${build.dir}/tmp" />
+  <property name="tmp.dir" value="${target.dir}/tmp" />
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
   <property name="serverBaseUrl" value="localhost:8080" />
@@ -250,7 +250,7 @@
       </path>
       <property name="config.search.path" refid="path.expansion" />
 
-      <!-- Classpath for running the configuration aggregator -->
+      <!-- Classpath for running the ConfigurationAggregator -->
       <path id="aggregate.classpath">
         <dirset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />

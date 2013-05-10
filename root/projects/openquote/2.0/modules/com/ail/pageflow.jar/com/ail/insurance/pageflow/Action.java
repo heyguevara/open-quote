@@ -33,7 +33,7 @@ import com.ail.core.Type;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.pageflow.ExecutePageActionService.ExecutePageActionCommand;
 import com.ail.insurance.pageflow.util.QuotationCommon;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -156,7 +156,7 @@ public class Action extends PageElement {
     		// Always persist the quote after running an action - the next
     		// action/command may need to read the persisted state.
     		policy = QuotationCommon.persistQuotation(policy);
-    		QuotationContext.setPolicy(policy);
+    		PageflowContext.setPolicy(policy);
 
             return policy;
 	    }

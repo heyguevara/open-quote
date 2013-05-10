@@ -42,7 +42,7 @@ import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
 import com.ail.insurance.quotation.NotifyBrokerByEmailService.NotifyBrokerByEmailArgument;
@@ -116,7 +116,7 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailArgum
         MimeMultipart multipart=null;
         Authenticator authenticator=null;
 
-    	QuotationContext.setPolicy(savedPolicy.getPolicy());
+    	PageflowContext.setPolicy(savedPolicy.getPolicy());
 
         String toAddress = savedPolicy.getPolicy().getBroker().getQuoteEmailAddress();
         String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");

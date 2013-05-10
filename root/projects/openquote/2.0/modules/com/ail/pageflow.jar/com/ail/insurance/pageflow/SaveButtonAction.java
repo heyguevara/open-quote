@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
 
@@ -59,7 +59,7 @@ public class SaveButtonAction extends CommandButtonAction {
             quote.setSystemId(sq.getSystemId());
             quote.setSerialVersion(sq.getSerialVersion());
             model=super.processActions(request, response, quote);
-            QuotationContext.setPolicy(null);
+            PageflowContext.setPolicy(null);
         }
         return model;
     }

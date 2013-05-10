@@ -28,7 +28,7 @@ import com.ail.core.Type;
 import com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceCommand;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * PageFlow action to generate the invoice document for the current quotation.
@@ -70,7 +70,7 @@ public class GenerateInvoiceDocumentAction extends Action {
                 if (model instanceof Policy) {
                 	// ...assume that we have just updated the persisted quote and keep the session in step
 	                SavedPolicy savedPolicy=(SavedPolicy)proxy.queryUnique("get.savedPolicy.by.quotationNumber", quote.getQuotationNumber());
-	                QuotationContext.setPolicy(savedPolicy.getPolicy());
+	                PageflowContext.setPolicy(savedPolicy.getPolicy());
                 }
             }
             catch(Exception e) {

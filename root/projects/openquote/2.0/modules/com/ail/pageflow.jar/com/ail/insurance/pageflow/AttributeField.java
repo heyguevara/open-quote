@@ -27,10 +27,10 @@ import com.ail.core.Attribute;
 import com.ail.core.PostconditionException;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * <p>An AttributeField represents an individual column within a {@link RowScroller}. The RowScroller itself
@@ -104,14 +104,14 @@ public class AttributeField extends PageElement {
      * Get the sub title with all variable references expanded. References are expanded with 
      * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
      * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * the current quotation (from {@link QuotationContext}).
+     * the current quotation (from {@link PageflowContext}).
      * @param local Model to expand local references (xpaths starting ./) with respect to.
      * @return Title with embedded references expanded
      * @since 1.1
      */
-    public String formattedSubTitle(RenderArgumentImpl args) {
+    public String formattedSubTitle(RenderArgument args) {
     	if (getTitle()!=null) {
-    		return i18n(expand(getSubTitle(), QuotationContext.getPolicy(), args.getModelArgRet()));
+    		return i18n(expand(getSubTitle(), PageflowContext.getPolicy(), args.getModelArgRet()));
     	}
     	else {
     		return null;

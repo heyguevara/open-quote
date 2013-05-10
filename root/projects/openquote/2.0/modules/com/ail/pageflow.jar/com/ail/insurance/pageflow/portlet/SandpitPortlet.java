@@ -37,7 +37,7 @@ import com.ail.insurance.pageflow.AssessmentSheetDetails;
 import com.ail.insurance.pageflow.Page;
 import com.ail.insurance.pageflow.PageFlow;
 import com.ail.insurance.pageflow.util.QuotationCommon;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
 
@@ -69,11 +69,11 @@ public class SandpitPortlet extends GenericPortlet {
         statusMessage = null;
 
         try {
-            QuotationContext.initialise(request);
-            CoreProxy core=QuotationContext.getCore();
+            PageflowContext.initialise(request);
+            CoreProxy core=PageflowContext.getCore();
 
             if (request.getParameter("saveAsTestcase") != null) {
-                SavedPolicy q = new SavedPolicy(QuotationContext.getPolicy());
+                SavedPolicy q = new SavedPolicy(PageflowContext.getPolicy());
                 q.setTestCase(true);
                 core.update(q);
                 statusMessage = "Policy '" + q.getQuotationNumber() + "' saved as a testcase";
@@ -81,8 +81,8 @@ public class SandpitPortlet extends GenericPortlet {
             }
             
             if (request.getParameter("resetQuote") !=null) {
-                String selectedProduct=QuotationContext.getPolicy().getProductTypeId();
-                QuotationContext.setPolicy(null);
+                String selectedProduct=PageflowContext.getPolicy().getProductTypeId();
+                PageflowContext.setPolicy(null);
                 session.setAttribute("product", selectedProduct);
                 session.setAttribute("view", WIZARD_MODE);
                 processingComplete = true;
@@ -92,7 +92,7 @@ public class SandpitPortlet extends GenericPortlet {
                 String selectedQuote = request.getParameter("selectedQuote");
                 SavedPolicy q = (SavedPolicy) core.queryUnique("get.savedPolicy.by.quotationNumber", selectedQuote);
                 if (q != null) {
-                    QuotationContext.setPolicy(q.getPolicy());
+                    PageflowContext.setPolicy(q.getPolicy());
                     session.setAttribute("product", q.getProduct());
                     session.setAttribute("view", WIZARD_MODE);
                     processingComplete = true;
@@ -101,11 +101,11 @@ public class SandpitPortlet extends GenericPortlet {
                 }
             }
             
-            if (!processingComplete && request.getParameter("selectedPage") != null && QuotationContext.getPolicy() !=null ) {
+            if (!processingComplete && request.getParameter("selectedPage") != null && PageflowContext.getPolicy() !=null ) {
                 String selectedPage = request.getParameter("selectedPage");
-                String currentPage = QuotationContext.getPolicy().getPage();
+                String currentPage = PageflowContext.getPolicy().getPage();
                 if (!"?".equals(selectedPage) && !selectedPage.equals(currentPage)) {
-                    QuotationContext.getPolicy().setPage(selectedPage);
+                    PageflowContext.getPolicy().setPage(selectedPage);
                     processingComplete = true;
                 }
             } 
@@ -116,7 +116,7 @@ public class SandpitPortlet extends GenericPortlet {
                 
                 if (!"?".equals(selectedProduct)) {
                     if (!selectedProduct.equals(QuotationCommon.productName(request))) {
-                        QuotationContext.setPolicy(null);
+                        PageflowContext.setPolicy(null);
                         session.setAttribute("product", selectedProduct);
                         selectedView = WIZARD_MODE;
                         processingComplete = true;
@@ -125,13 +125,13 @@ public class SandpitPortlet extends GenericPortlet {
 
                 if (!"XML".equals(getCurrentView(request)) && "XML".equals(selectedView)) {
                     if (session.getAttribute("quoteXml") == null) {
-                        session.setAttribute("quoteXml", core.toXML(QuotationContext.getPolicy()));
+                        session.setAttribute("quoteXml", core.toXML(PageflowContext.getPolicy()));
                     }
                 } else if ("XML".equals(getCurrentView(request)) && !"XML".equals(selectedView)) {
                     XMLString quoteXml = new XMLString(request.getParameter("quoteXml"));
                     session.setAttribute("quoteXml", quoteXml);
                     Policy quote = (Policy) core.fromXML(Policy.class, quoteXml);
-                    QuotationContext.setPolicy(quote);
+                    PageflowContext.setPolicy(quote);
                     session.removeAttribute("quoteXml");
                 }
 
@@ -139,13 +139,13 @@ public class SandpitPortlet extends GenericPortlet {
             }
             
             if (!processingComplete && processingQuotation(request)) {
-                Policy quote = QuotationContext.getPolicy();
+                Policy quote = PageflowContext.getPolicy();
                 int exceptionCount = (quote != null) ? quote.getException().size() : 0;
 
                 QuotationCommon.processAction(request, response);
 
                 try {
-                    if (QuotationContext.getPolicy() != null && QuotationContext.getPolicy().getException().size() != exceptionCount) {
+                    if (PageflowContext.getPolicy() != null && PageflowContext.getPolicy().getException().size() != exceptionCount) {
                         session.setAttribute("view", EXCEPTION_MODE);
                     }
                 } catch (IllegalStateException e) {
@@ -161,11 +161,11 @@ public class SandpitPortlet extends GenericPortlet {
                 }
             }
         } catch (Throwable t) {
-            Policy quote = QuotationContext.getPolicy();
+            Policy quote = PageflowContext.getPolicy();
 
             if (quote == null) {
                 quote = new Policy();
-                QuotationContext.setPolicy(quote);
+                PageflowContext.setPolicy(quote);
             }
 
             quote.addException(new ExceptionRecord(t));
@@ -181,7 +181,7 @@ public class SandpitPortlet extends GenericPortlet {
         PortletSession session = request.getPortletSession();
 
         try {
-            QuotationContext.initialise(request);
+            PageflowContext.initialise(request);
             
             renderProductDebugPanel(request, response);
 
@@ -190,31 +190,31 @@ public class SandpitPortlet extends GenericPortlet {
                 out.printf("<table width='100%%'><tr><td align='center'>%s</td></tr></table>", statusMessage);
             } else if (processingQuotation(request)) {
                 if (WIZARD_MODE.equals(getCurrentView(request))) {
-                    Policy quote = QuotationContext.getPolicy();
+                    Policy quote = PageflowContext.getPolicy();
 
                     int exceptionCount = (quote != null) ? quote.getException().size() : 0;
 
                     QuotationCommon.doView(request, response);
 
-                    if (QuotationContext.getPolicy().getException().size() != exceptionCount) {
+                    if (PageflowContext.getPolicy().getException().size() != exceptionCount) {
                         session.setAttribute("view", EXCEPTION_MODE);
                         doView(request, response);
                     }
                 } else if (ASSESSMENT_SHEET_MODE.equals(getCurrentView(request))) {
-                    if (QuotationContext.getPolicy().getAssessmentSheet() != null) {
-                        assessmentSheetDetails.renderResponse(request, response, QuotationContext.getPolicy());
+                    if (PageflowContext.getPolicy().getAssessmentSheet() != null) {
+                        assessmentSheetDetails.renderResponse(request, response, PageflowContext.getPolicy());
                     } else {
                         response.getWriter().print("<table width='100%'><tr><td align='center'>No assessment sheet attached to the quotation</td></tr></table>");
                     }
                 } else if (EXCEPTION_MODE.equals(getCurrentView(request))) {
-                    renderQuoteExceptions(request, response, QuotationContext.getPolicy());
+                    renderQuoteExceptions(request, response, PageflowContext.getPolicy());
                 }
             } else {
                 PrintWriter out = response.getWriter();
                 out.print("<table width='100%'><tr><td align='center'>No product selected</td></tr></table>");
             }
         } catch (Throwable t) {
-            Policy quote = QuotationContext.getPolicy();
+            Policy quote = PageflowContext.getPolicy();
 
             // All exceptions are associated with a quotation. However, if the
             // quote itself could not be initialised (which is quite likely if 
@@ -222,7 +222,7 @@ public class SandpitPortlet extends GenericPortlet {
             // here so that the sandpit's exception view can work normally.
             if (quote == null) {
                 quote = new Policy();
-                QuotationContext.setPolicy(quote);
+                PageflowContext.setPolicy(quote);
             }
 
             quote.addException(new ExceptionRecord(t));
@@ -244,7 +244,7 @@ public class SandpitPortlet extends GenericPortlet {
 
             renderProductDebugPanel(request, response);
 
-            renderQuoteExceptions(request, response, QuotationContext.getPolicy());
+            renderQuoteExceptions(request, response, PageflowContext.getPolicy());
         }
     }
 
@@ -329,8 +329,8 @@ public class SandpitPortlet extends GenericPortlet {
         if (processingQuotation(request)) {
 
             product = (String) request.getPortletSession().getAttribute("product");
-            policy = QuotationContext.getPolicy();
-            pageFlow = QuotationContext.getPageFlow();
+            policy = PageflowContext.getPolicy();
+            pageFlow = PageflowContext.getPageFlow();
             
             // we're processing a quote and we've actually quoted - so allow a
             // save as testcase.

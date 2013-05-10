@@ -30,7 +30,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 
 /**
@@ -122,7 +122,7 @@ public class QuestionWithSubSection extends Question {
      * @return Title with embedded references expanded, or null if there is no title
      * @since 1.1
      */
-    public String formattedTitle(RenderArgumentImpl args) {
+    public String formattedTitle(RenderArgument args) {
         if (getTitle()!=null) {
             return i18n(expand(getTitle(), args.getPolicyArg(), args.getModelArgRet()));
         }

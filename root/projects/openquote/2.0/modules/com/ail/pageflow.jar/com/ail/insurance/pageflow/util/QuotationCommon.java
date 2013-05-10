@@ -42,8 +42,8 @@ import com.ail.insurance.policy.Policy;
 public class QuotationCommon {
     
     public static void processAction(ActionRequest request, ActionResponse response) throws XMLException {
-    	PageFlow pageFlow=QuotationContext.getPageFlow();
-    	Policy policy=QuotationContext.getPolicy();
+    	PageFlow pageFlow=PageflowContext.getPageFlow();
+    	Policy policy=PageflowContext.getPolicy();
         
         // apply values from the request back into the model
         pageFlow.applyRequestValues(request, response, policy);
@@ -59,8 +59,8 @@ public class QuotationCommon {
     }
 
     public static void doView(RenderRequest request, RenderResponse response) throws IOException {
-    	PageFlow pageFlow=QuotationContext.getPageFlow();
-    	Policy policy=QuotationContext.getPolicy();
+    	PageFlow pageFlow=PageflowContext.getPageFlow();
+    	Policy policy=PageflowContext.getPolicy();
         
         pageFlow.renderResponse(request, response, policy);
     }
@@ -91,8 +91,8 @@ public class QuotationCommon {
      * @return ProductTypeId of the policy being processed, or "" if none is being processed.
      */
     public static String currentProduct() {
-        if (QuotationContext.getPolicy()!=null && QuotationContext.getPolicy().getProductTypeId()!=null) {
-            return QuotationContext.getPolicy().getProductTypeId();
+        if (PageflowContext.getPolicy()!=null && PageflowContext.getPolicy().getProductTypeId()!=null) {
+            return PageflowContext.getPolicy().getProductTypeId();
         }
         else {
             return "";
@@ -123,11 +123,11 @@ public class QuotationCommon {
      * @throws XMLException
      */
     private static void persistQuote() throws XMLException {
-        Policy policy=QuotationContext.getPolicy();
+        Policy policy=PageflowContext.getPolicy();
 
         if (policy!=null) {
         	policy=persistQuotation(policy);
-        	QuotationContext.setPolicy(policy);
+        	PageflowContext.setPolicy(policy);
         }
     }
 
@@ -162,7 +162,7 @@ public class QuotationCommon {
      */
     public static String buildProductSelectOptions(String product) {
         try {
-            ListProductsCommand lpods = QuotationContext.getCore().newCommand(ListProductsCommand.class);
+            ListProductsCommand lpods = PageflowContext.getCore().newCommand(ListProductsCommand.class);
 
             lpods.invoke();
 

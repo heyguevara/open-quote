@@ -40,7 +40,7 @@ import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Broker;
 import com.ail.insurance.policy.Proposer;
 import com.ail.insurance.policy.SavedPolicy;
@@ -116,7 +116,7 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
         MimeMultipart multipart=null;
         Authenticator authenticator=null;
 
-    	QuotationContext.setPolicy(savedPolicy.getPolicy());
+    	PageflowContext.setPolicy(savedPolicy.getPolicy());
 
         Proposer proposer = (Proposer) savedPolicy.getPolicy().getProposer();
         Broker broker = savedPolicy.getPolicy().getBroker();

@@ -85,6 +85,10 @@ ul ul {
 	list-style-type: circle;
 }
 
+ul.show-arrow {
+    overflow: hidden;
+}
+
 ol ol {
 	list-style-type: upper-roman;
 }

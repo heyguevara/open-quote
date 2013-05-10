@@ -7,6 +7,7 @@
     <dependency org="commons-jxpath" name="commons-jxpath" rev="1.2" />
     <dependency org="commons-logging" name="commons-logging" rev="1.1.1" />
     <dependency org="commons-validator" name="commons-validator" rev="1.1.4" />
+    <dependency org="javax.mail" name="mail" rev="1.4.4" />
     <dependency org="net.sf.saxon" name="saxon" rev="8.7" />
     <dependency org="net.sf.saxon" name="saxon-dom" rev="8.7" />
     <dependency org="org.apache.velocity" name="velocity" rev="1.7" />

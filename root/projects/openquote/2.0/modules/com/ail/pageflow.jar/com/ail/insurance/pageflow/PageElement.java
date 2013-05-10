@@ -42,14 +42,14 @@ import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.core.command.VelocityServiceError;
 import com.ail.insurance.pageflow.portlet.QuotationPortlet;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.ErrorText;
 import com.ail.insurance.pageflow.util.Functions;
 import com.ail.insurance.pageflow.util.HelpText;
 import com.ail.insurance.pageflow.util.I18N;
 import com.ail.insurance.pageflow.util.QuotationCommon;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -151,9 +151,9 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @return Title with embedded references expanded or null if no title is defined
      * @since 1.1
      */
-    public String formattedTitle(RenderArgumentImpl args) {
+    public String formattedTitle(RenderArgument args) {
         if (getTitle()!=null) {
-            return i18n(expand(getTitle(), QuotationContext.getPolicy(), args.getModelArgRet()));
+            return i18n(expand(getTitle(), PageflowContext.getPolicy(), args.getModelArgRet()));
         }
         else {
             return null;
@@ -634,17 +634,17 @@ public abstract class PageElement extends Type implements Identified, Comparable
     protected RenderCommand buildRenderCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         RenderCommand command=null;
 
-        command=QuotationContext.getCore().newCommand(commandName, request.getResponseContentType(), RenderCommand.class);
+        command=PageflowContext.getCore().newCommand(commandName, request.getResponseContentType(), RenderCommand.class);
         
         command.setRequestArg(request);
         command.setResponseArgRet(response);
         command.setModelArgRet(model);
-        command.setPolicyArg(QuotationContext.getPolicy());
+        command.setPolicyArg(PageflowContext.getPolicy());
         command.setPageElementArg(this);
         command.setWriterArg(response.getWriter());
         command.setStyleClassArg(getStyleClass());
         command.setRefArg(getRef());
-        command.setCoreArg(QuotationContext.getCore().getCore());
+        command.setCoreArg(PageflowContext.getCore().getCore());
         command.setRenderHintArg(getRenderHint());
         
         return command;

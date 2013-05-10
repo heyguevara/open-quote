@@ -17,7 +17,6 @@
 				<fileset dir="${module.dir}/org/apache/httpcomponents" includes="**/*.jar" />
 				<fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
 			    <fileset dir="${buildlib.dir}" includes="truezip*.jar" />
-		        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
 			</javac-classpath>
 		</compile-jar-macro>
 	</target>

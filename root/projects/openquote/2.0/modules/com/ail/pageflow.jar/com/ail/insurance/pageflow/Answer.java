@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Attribute;
 import com.ail.core.Type;
 import com.ail.financial.CurrencyAmount;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 
 /**
  * <p>An Answer simply displays the answer given to a previous asked question. An {@link AnswerSection} is used to 
@@ -48,7 +48,7 @@ public class Answer extends PageElement {
     public Answer() {
     }
     
-    public String formattedAnswer(RenderArgumentImpl args) {
+    public String formattedAnswer(RenderArgument args) {
         Object answer=args.getModelArgRet().xpathGet(getBinding());
         
         if (answer instanceof String) {

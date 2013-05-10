@@ -24,9 +24,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * <p>This page element renders itself as a button, typically within a {@link NavigationSection}. When clicked the
@@ -74,7 +74,7 @@ public class CommandButtonAction extends PageElement {
         this.label = label;
     }
     
-    public String formattedLabel(RenderArgumentImpl args) {
+    public String formattedLabel(RenderArgument args) {
         if (getLabel()!=null) {
             return i18n(expand(getLabel(), args.getPolicyArg(), args.getModelArgRet()));
         }
@@ -121,7 +121,7 @@ public class CommandButtonAction extends PageElement {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(label)) {
-            QuotationContext.getPolicy().setPage(destinationPageId);
+            PageflowContext.getPolicy().setPage(destinationPageId);
             model=super.processActions(request, response, model);
         }
         return model;

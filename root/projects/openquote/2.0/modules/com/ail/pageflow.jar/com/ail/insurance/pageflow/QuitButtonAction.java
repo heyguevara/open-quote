@@ -25,7 +25,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * <p>Adds a quit button to a page. By default this button will close the current quote
@@ -49,7 +49,7 @@ public class QuitButtonAction extends CommandButtonAction {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && "quit".equals(op)) {
             model=super.processActions(request, response, model);
-            QuotationContext.setPolicy(null);
+            PageflowContext.setPolicy(null);
         }
         return model;
     }

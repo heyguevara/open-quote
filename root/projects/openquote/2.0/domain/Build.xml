@@ -31,8 +31,10 @@
       <fileset dir="." includes="*.sql" />
     </copy>
 
-    <update-dependencies-macro todir="${jboss.dir}" pattern="[artifact](-[classifier]).[ext]" />
-
+    <update-dependencies-macro todir="${tmp.dir}" pattern="[artifact](-[classifier]).[ext]" />
+    <move file="${tmp.dir}/jboss-modules.jar" todir="${jboss.dir}" overwrite="yes"/>
+    <move file="${tmp.dir}/mysql-connector-java.jar" tofile="${jboss.dir}/modules/com/liferay/portal/main/mysql.jar" overwrite="yes"/>
+    
     <set-mysql-running-property-macro />
 
     <if>

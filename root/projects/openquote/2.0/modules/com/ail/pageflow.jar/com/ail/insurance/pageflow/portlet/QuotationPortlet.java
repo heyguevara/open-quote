@@ -36,7 +36,7 @@ import javax.portlet.ValidatorException;
 
 import com.ail.core.ExceptionRecord;
 import com.ail.insurance.pageflow.util.QuotationCommon;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -81,12 +81,12 @@ public class QuotationPortlet extends GenericPortlet {
     }
 
     private void processViewAction(ActionRequest request, ActionResponse response) {
-        QuotationContext.initialise(request);
+        PageflowContext.initialise(request);
 
         try {
             QuotationCommon.processAction(request, response);
         } catch (Throwable t) {
-            Policy policy = QuotationContext.getPolicy();
+            Policy policy = PageflowContext.getPolicy();
 
             if (policy == null) {
                 t.printStackTrace();
@@ -108,7 +108,7 @@ public class QuotationPortlet extends GenericPortlet {
 
     @Override
     public void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        QuotationContext.initialise(request);
+        PageflowContext.initialise(request);
         response.setContentType("text/html");
         PortletURL addNameURL = response.createActionURL();
         addNameURL.setParameter("productName", "productName");
@@ -132,12 +132,12 @@ public class QuotationPortlet extends GenericPortlet {
     }
 
     private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
-        QuotationContext.initialise(request);
+        PageflowContext.initialise(request);
 
         try {
             QuotationCommon.doView(request, response);
         } catch (Throwable t) {
-            Policy policy = QuotationContext.getPolicy();
+            Policy policy = PageflowContext.getPolicy();
 
             if (policy == null) {
                 t.printStackTrace();

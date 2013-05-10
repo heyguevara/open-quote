@@ -32,10 +32,10 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Attribute;
 import com.ail.core.Type;
 import com.ail.core.TypeXPathException;
-import com.ail.insurance.pageflow.render.RenderArgumentImpl;
+import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.Functions;
-import com.ail.insurance.pageflow.util.QuotationContext;
+import com.ail.insurance.pageflow.util.PageflowContext;
 
 /**
  * <p>This element handles the common situation where selecting 'yes' in answer to a question
@@ -137,7 +137,7 @@ public class QuestionWithDetails extends Question {
      * @since 1.1
      */
     public String getExpandedDetailsTitle(Type local) {
-		return expand(getDetailsTitle(), QuotationContext.getPolicy(), local);
+		return expand(getDetailsTitle(), PageflowContext.getPolicy(), local);
     }
     
     /**
@@ -150,7 +150,7 @@ public class QuestionWithDetails extends Question {
      * @return Title with embedded references expanded, or null if there is no title
      * @since 1.1
      */
-    public String formattedDetailsTitle(RenderArgumentImpl args) {
+    public String formattedDetailsTitle(RenderArgument args) {
         if (getTitle()!=null) {
             return i18n(expand(getDetailsTitle(), args.getPolicyArg(), args.getModelArgRet()));
         }
