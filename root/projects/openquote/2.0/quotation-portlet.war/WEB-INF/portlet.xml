@@ -4,7 +4,7 @@
   <portlet>
     <portlet-name>quotation</portlet-name>
     <display-name>quotation</display-name>
-    <portlet-class>com.ail.insurance.pageflow.portlet.QuotationPortlet</portlet-class>
+    <portlet-class>com.ail.insurance.pageflow.portlet.PageFlowPortlet</portlet-class>
     <init-param>
       <name>edit-jsp</name>
       <value>/edit.jsp</value>

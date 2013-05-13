@@ -41,7 +41,7 @@ import com.ail.core.CoreProxy;
 import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.core.command.VelocityServiceError;
-import com.ail.insurance.pageflow.portlet.QuotationPortlet;
+import com.ail.insurance.pageflow.portlet.PageFlowPortlet;
 import com.ail.insurance.pageflow.render.RenderService.RenderArgument;
 import com.ail.insurance.pageflow.render.RenderService.RenderCommand;
 import com.ail.insurance.pageflow.util.ErrorText;
@@ -404,7 +404,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
     /**
      * Life-cycle method invoked following {@link #applyRequestValues(ActionRequest, ActionResponse, Type)}. 
      * Components use this as an opportunity to validate their model state.
-     * Note: This step is skipped if the request is marked as {@link QuotationPortlet#immediate(ActionRequest) immediate}
+     * Note: This step is skipped if the request is marked as {@link PageFlowPortlet#immediate(ActionRequest) immediate}
      * @param request
      * @param response
      * @param model

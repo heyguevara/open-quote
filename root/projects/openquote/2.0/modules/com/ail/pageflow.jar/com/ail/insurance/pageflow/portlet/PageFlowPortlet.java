@@ -50,7 +50,7 @@ import com.ail.insurance.policy.Policy;
  * being that the PageFlow type is marked 'singleInstance' in the product's
  * configuration.
  */
-public class QuotationPortlet extends GenericPortlet {
+public class PageFlowPortlet extends GenericPortlet {
     private String editJSP = null;
     private String configureJSP = null;
 

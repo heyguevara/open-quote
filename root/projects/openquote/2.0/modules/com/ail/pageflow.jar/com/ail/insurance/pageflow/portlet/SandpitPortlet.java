@@ -42,7 +42,7 @@ import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
 
 /**
- * This Portlet performs a similar function to the {@link QuotationPortlet}, but
+ * This Portlet performs a similar function to the {@link PageFlowPortlet}, but
  * is slightly specialized to better fit into a product development environment.
  * Specializations include:
  * <ul>

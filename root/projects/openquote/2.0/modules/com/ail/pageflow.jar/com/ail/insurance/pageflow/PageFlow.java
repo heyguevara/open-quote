@@ -34,9 +34,9 @@ import com.ail.insurance.policy.Policy;
  * In all cases the page flow assumes that the model it is processing is a {@link com.ail.openquote.Policy Policy}.
  * The name of the "current" page is indicated by the Policy's {@link com.ail.openquote.Policy#getPage() page} 
  * property.
- * @see com.ail.openquote.Policy
- * @see com.ail.openquote.portlet.QuotationPortlet
- * @see com.ail.openquote.portlet.SandpitPortlet
+ * @see com.ail.insurance.Policy
+ * @see com.ail.insurance.pageflow.portlet.PageFlowPortlet
+ * @see com.ail.insurance.pageflow.portlet.SandpitPortlet
  */
 public class PageFlow extends PageElement {
 	private static final long serialVersionUID = -3699440857377974385L;
