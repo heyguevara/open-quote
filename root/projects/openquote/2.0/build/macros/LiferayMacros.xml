@@ -68,10 +68,8 @@
     <sequential>
       <_initialise-ant-contribs-macro />
 
-      <set-liferay-running-property-macro />
-
       <if>
-        <isfalse value="${liferay-running}" />
+        <not><socket server="localhost" port="8080" /></not>
         <then>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.sh" os="Linux,Mac OS X,Solaris,Sun OS">
             <env key="JAVA_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
@@ -89,10 +87,8 @@
     <sequential>
       <_initialise-ant-contribs-macro />
 
-      <set-liferay-running-property-macro />
-
       <if>
-        <istrue value="${liferay-running}" />
+        <socket server="localhost" port="8080" />
         <then>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.sh" os="Linux,Mac OS X,Solaris,Sun OS">
             <arg line="--connect :shutdown" />
