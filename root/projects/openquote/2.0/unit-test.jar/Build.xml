@@ -14,6 +14,7 @@
         <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
       </javac-classpath>
     </compile-jar-macro>
   </target>
@@ -39,6 +40,7 @@
         <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
         <fileset dir="${module.dir}/org/apache/xalan" includes="**/*.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
       </junit-classpath>
     </run-unit-tests-macro>
   </target>
