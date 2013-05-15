@@ -277,8 +277,17 @@
                         <address-full-policy>BLOCK</address-full-policy>
                         <message-counter-history-day-limit>10</message-counter-history-day-limit>
                     </address-setting>
-                    <address-setting match="jms.queue.OpenQuoteCommandQueue">
+                    <address-setting match="jms.queue.OpenQuoteLastChanceCommandQueue">
                         <dead-letter-address>jms.queue.OpenQuoteDeadLetterQueue</dead-letter-address>
+                        <redelivery-delay>60000</redelivery-delay>
+                        <max-delivery-attempts>1</max-delivery-attempts>
+                        <max-size-bytes>10485760</max-size-bytes>
+                        <page-size-bytes>1048576</page-size-bytes>
+                        <address-full-policy>BLOCK</address-full-policy>
+                        <message-counter-history-day-limit>10</message-counter-history-day-limit>
+                    </address-setting>
+                    <address-setting match="jms.queue.OpenQuoteCommandQueue">
+                        <dead-letter-address>jms.queue.OpenQuoteLastChanceCommandQueue</dead-letter-address>
                         <redelivery-delay>60000</redelivery-delay>
                         <max-delivery-attempts>20</max-delivery-attempts>
                         <max-size-bytes>10485760</max-size-bytes>
@@ -319,6 +328,10 @@
                     <jms-queue name="OpenQuoteCommandQueue">
                         <entry name="queue/OpenQuoteCommandQueue"/>
                         <entry name="java:jboss/exported/jms/queue/OpenQuoteCommandQueue"/>
+                    </jms-queue>
+                    <jms-queue name="OpenQuoteLastChanceCommandQueue">
+                        <entry name="queue/OpenQuoteLastChanceCommandQueue"/>
+                        <entry name="java:jboss/exported/jms/queue/OpenQuoteLastChanceCommandQueue"/>
                     </jms-queue>
                     <jms-queue name="OpenQuoteDeadLetterQueue">
                         <entry name="queue/OpenQuoteDeadLetterQueue"/>

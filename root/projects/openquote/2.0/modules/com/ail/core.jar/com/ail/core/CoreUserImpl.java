@@ -44,6 +44,18 @@ public class CoreUserImpl implements CoreUser {
     }
     
     /**
+     * Constructor
+     * @param ved VersionEffectiveDate to use when selecting configurations.
+     * @param configurationNamespace Namespace to associate with this core user.
+     * @param securityPrincipal Principal to associate with this Core User, this may be null.
+     */
+    public CoreUserImpl(VersionEffectiveDate ved, String configurationNamespace, Principal securityPrincipal) {
+        this.ved=ved;
+        this.configurationNamespace=configurationNamespace;
+        this.securityPrincipal=securityPrincipal;
+    }
+
+    /**
      * Create a new instance based on an existing CoreUser. The core uses this
      * constructor to build stripped down instance of client's CoreUser to reduce
      * RMI traffic. A client's CoreUser is always passed into the services they
@@ -55,29 +67,7 @@ public class CoreUserImpl implements CoreUser {
      * @param user The CoreUser to copy properties from.
      */
     public CoreUserImpl(CoreUser user) {
-        ved = user.getVersionEffectiveDate();
-        securityPrincipal = user.getSecurityPrincipal();
-        configurationNamespace = user.getConfigurationNamespace();
-    }
-
-    /**
-     * Constructor.
-     * @deprecated Use {@link #CoreUserImpl(int, Principal)} instead.
-     * @param configSelectionFlag Either {@link #SELECT_CONSISTENT_CONFIGURATIONS SELECT_CONSISTENT_CONFIGURATIONS} or {@link #SELECT_LATEST_CONFIGURATIONS SELECT_LATEST_CONFIGURATIONS}
-     */
-    public CoreUserImpl(int configSelectionFlag) {
-        switch(configSelectionFlag) {
-            case SELECT_CONSISTENT_CONFIGURATIONS:
-                ved=new VersionEffectiveDate();
-                break;
-            case SELECT_LATEST_CONFIGURATIONS:
-                ved=null;
-                break;
-            default:
-                throw new IllegalArgumentException("ConfigSelectionFlag is invalid");
-        }
-
-        securityPrincipal=null;
+        this(user.getVersionEffectiveDate(), user.getConfigurationNamespace(), user.getSecurityPrincipal());
     }
 
     /**
@@ -103,7 +93,7 @@ public class CoreUserImpl implements CoreUser {
     }
 
     /**
-     * The Core uses this callback to determin which versions of artefacts it
+     * The Core uses this callback to determine which versions of artifacts it
      * should use on the CoreUser's behalf.
      * @return The version date that the CoreUser is working at.
      */

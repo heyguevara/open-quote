@@ -37,6 +37,9 @@ import com.ail.insurance.policy.SavedPolicy;
  */
 @ServiceImplementation
 public class NotifyPartyService extends Service<NotifyPartyService.NotifyPartyArgument> {
+    private static final long serialVersionUID = -4915889686192216902L;
+    private String configurationNamespace = null;
+    
 
     @ServiceArgument
     public interface NotifyPartyArgument extends Argument {
@@ -53,9 +56,6 @@ public class NotifyPartyService extends Service<NotifyPartyService.NotifyPartyAr
     public interface NotifyPartyCommand extends Command, NotifyPartyArgument {
     }
 
-    private static final long serialVersionUID = -4915889686192216902L;
-    private String configurationNamespace = null;
-    
     /**
      * Return the product type id of the policy we're assessing the risk for as the
      * configuration namespace. The has the effect of selecting the product's configuration.

@@ -152,7 +152,7 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
      * then its configuration (the configuration associated with the owner) is
      * returned. Otherwise the core system's configuration is returned. The
      * configuration returned is version dependent - the callers getVersionEffectiveDate()
-     * method will be invoked to determin which version of configuration to return.
+     * method will be invoked to determine which version of configuration to return.
      * @return The configuration associated with the current namespace.
      * @see com.ail.core.configure.ConfigurationOwner
      * @see com.ail.core.CoreUser#getVersionEffectiveDate

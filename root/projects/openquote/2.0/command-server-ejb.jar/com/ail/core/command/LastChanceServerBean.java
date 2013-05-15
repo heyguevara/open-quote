@@ -25,20 +25,19 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.ail.core.MessagingComponent;
-import com.ail.core.PostconditionException;
 import com.ail.core.command.OnMessageService.OnMessageCommand;
 
 /**
  * Message Driven Bean which listens on a queue for commands to execute.
  */
-@MessageDriven(name = "CommandServerBean", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/OpenQuoteCommandQueue"),
+@MessageDriven(name = "LastChanceCommandServerBean", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/OpenQuoteLastChanceCommandQueue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "AUTO_ACKNOWLEDGE"), @ActivationConfigProperty(propertyName = "minSessions", propertyValue = "25"),
         @ActivationConfigProperty(propertyName = "maxSessions", propertyValue = "50") })
-public class CommandServerBean extends MessagingComponent implements MessageListener {
+public class LastChanceServerBean extends MessagingComponent implements MessageListener {
 
-    public CommandServerBean() {
-        initialise("com.ail.core.command.CommandServerBean");
+    public LastChanceServerBean() {
+        initialise("com.ail.core.command.LastChanceServerBean");
     }
 
     @Resource
@@ -49,7 +48,7 @@ public class CommandServerBean extends MessagingComponent implements MessageList
     @Override
     public void onMessage(final Message msg) {
         String messageId = null;
-
+        
         try {
             messageId = msg.getJMSMessageID();
 
@@ -58,11 +57,9 @@ public class CommandServerBean extends MessagingComponent implements MessageList
             command.invoke();
 
             getCore().logInfo("Message (id=" + messageId + ") processed successfully.");
-        } catch(PostconditionException e) {
-            getCore().logInfo("Message (id=" + messageId + ") requeued due to exception: " + e.getTarget());
-            getSessionContext().setRollbackOnly();
         } catch (Throwable t) {
-            getCore().logInfo("Message (id=" + messageId + ") requeued due to exception: " + t);
+            getCore().logInfo("Message (id=" + messageId + ") failed to process after the maximum number of retries.");
+            t.printStackTrace(System.err);
             getSessionContext().setRollbackOnly();
         }
     }
