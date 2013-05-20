@@ -16,44 +16,32 @@
  */
 package com.ail.core.xmlbinding;
 
+import java.lang.reflect.Method;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 import org.exolab.castor.mapping.FieldDescriptor;
 
-/**
- * Castor data field handler which wraps a fields value with CDATA tags.
- * CDATA tags have never been very well supported by castor (i.e. not at all!), but castor
- * does provide support for specifying "handlers" on a per field basis in the mapping file.
- * If defined, castor uses the handler to marshal objects to XML.<p>
- * To use this handler, set the field up as follows in the mapping file:<p>
- * &lt;field name="value" type="string" required="false"<p>
- * &nbsp;&nbsp;direct="false" transient="false" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler"&gt;<p>
- * &nbsp;&nbsp;&nbsp;&nbsp;&lt;bind-xml node="text" reference="false"/&gt;<p>
- * &nbsp;&nbsp;&lt;/field&gt;<p>
- * @version $Revision: 1.3 $
- */
-public class CastorCDataFieldHandler extends AbstractFieldHandler {
+import com.ail.core.TypeEnum;
 
-    /**
-     * uses reflection to retrieve the value then wraps
-     * it in a CDATA section
-     */
+public class CastorEnumFieldHandler extends AbstractFieldHandler {
+
     public Object getValue(Object object) throws IllegalStateException {
         FieldDescriptor f = getFieldDescriptor();
         String fieldName = f.getFieldName();
-        String value = null;
-        
+        TypeEnum value = null;
+
         try {
-            value = (String)PropertyUtils.getProperty(object, fieldName);
+            value = (TypeEnum) PropertyUtils.getProperty(object, fieldName);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        
-        if (value==null || value.length()==0) {
-            return value;
+
+        if (value == null) {
+            return "";
         }
-        
-        return "<![CDATA[" + value.toString() + "]]>";
+
+        return value.toString();
     }
 
     public Object newInstance(Object arg0) throws IllegalStateException {
@@ -65,17 +53,21 @@ public class CastorCDataFieldHandler extends AbstractFieldHandler {
     }
 
     public void resetValue(Object object) throws IllegalStateException, IllegalArgumentException {
-        setValue(object, "");     
+        setValue(object, "");
     }
 
+    @SuppressWarnings("unchecked")
     public void setValue(Object object, Object value) throws IllegalStateException, IllegalArgumentException {
         FieldDescriptor f = getFieldDescriptor();
         String fieldName = f.getFieldName();
+        Class<? extends TypeEnum> fieldType = f.getFieldType();
 
         try {
-            PropertyUtils.setProperty(object, fieldName, value);
+            Method method = fieldType.getMethod("forName", String.class);
+            Object stringValue = method.invoke(object, value);
+            PropertyUtils.setProperty(object, fieldName, stringValue);
         } catch (Exception e) {
             e.printStackTrace();
-        }     
+        }
     }
 }

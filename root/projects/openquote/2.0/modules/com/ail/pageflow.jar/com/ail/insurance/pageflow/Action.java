@@ -35,6 +35,7 @@ import com.ail.insurance.pageflow.ExecutePageActionService.ExecutePageActionComm
 import com.ail.insurance.pageflow.util.QuotationCommon;
 import com.ail.insurance.pageflow.util.PageflowContext;
 import com.ail.insurance.policy.Policy;
+import static com.ail.insurance.pageflow.ActionType.*;
 
 /**
  * Actions allow arbitrary commands to be invoked during a page flow. A number
@@ -49,14 +50,7 @@ import com.ail.insurance.policy.Policy;
  */
 public class Action extends PageElement {
 	private static final long serialVersionUID = -1320299722728499324L;
-	/**
-	 * The point during the page processing cycle when the action be fired. Must
-	 * be one of: "onApplyRequestValues", "onProcessActions",
-	 * "onProcessValidations", "onRenderResponse"
-	 * 
-	 * @see PageElement for details of the page processing cycle.
-	 */
-	private String when = "onProcessActions";
+	private ActionType when = ON_PROCESS_ACTIONS;
 
 	/**
 	 * The name of the command to be invoked. This command must be a service
@@ -70,7 +64,7 @@ public class Action extends PageElement {
 		super();
 	}
 
-	public Action(String when, String commandName, String condition) {
+	public Action(ActionType when, String commandName, String condition) {
 		super(condition);
 		this.when = when;
 		this.commandName = commandName;
@@ -79,7 +73,7 @@ public class Action extends PageElement {
 	@Override
 	public Type processActions(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, "onProcessActions");
+			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_PROCESS_ACTIONS);
 		}
 		
 		return model;
@@ -88,7 +82,7 @@ public class Action extends PageElement {
 	@Override
 	public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, "onApplyRequestValues");
+			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_APPLY_REQUEST_VALUES);
 		}
 
 		return model;
@@ -96,8 +90,8 @@ public class Action extends PageElement {
 
 	@Override
 	public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
-		if ("onProcessValidations".equals(when) && conditionIsMet(model)) {
-			return executeValidation(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model);
+		if (conditionIsMet(model)) {
+			return executeValidation(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_PROCESS_VALIDATIONS);
 		} else {
 			return false;
 		}
@@ -105,7 +99,7 @@ public class Action extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    return executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, "onRenderResponse");
+	    return executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_RENDER_RESPONSE);
 	}
 
 	/**
@@ -134,7 +128,7 @@ public class Action extends PageElement {
 	 * @see #when
 	 * @return The action's when value
 	 */
-	public String getWhen() {
+	public ActionType getWhen() {
 		return when;
 	}
 
@@ -145,11 +139,11 @@ public class Action extends PageElement {
 	 * @param when
 	 *            When value
 	 */
-	public void setWhen(String when) {
+	public void setWhen(ActionType when) {
 		this.when = when;
 	}
 
-	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model, String currentPhase) {
+	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model, ActionType currentPhase) {
 	    if (when.equals(currentPhase)) {
     	    Policy policy = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
     
@@ -165,13 +159,16 @@ public class Action extends PageElement {
 	    }
 	}
 
-	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
-		return execute(portletSession, principal, parameters, model).getValidationFailedRet();
+	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model, ActionType currentPhase) {
+        if (when.equals(currentPhase)) {
+            return execute(portletSession, principal, parameters, model).getValidationFailedRet();
+        }
+        else {
+            return false;
+        }
 	}
 
 	private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
-//		TransactionManager tm = null;
-//		Transaction tx = null;
 		Policy quote = (Policy) model;
 
 		VersionEffectiveDate ved = (quote.getQuotationDate() != null) ? new VersionEffectiveDate(quote.getQuotationDate()) : new VersionEffectiveDate();
@@ -185,18 +182,10 @@ public class Action extends PageElement {
 		c.setProductTypeIdArg(quote.getProductTypeId());
 		
 		try {
-			// tm = TransactionManagerProvider.JBOSS_PROVIDER.getTransactionManager();
-			// tx = Transactions.applyBefore(Transactions.TYPE_REQUIRED, tm);
 			c.invoke();
 		} catch (Throwable e) {
 			throw new RenderingError("Failed to execute action command: " + getCommandName(), e);
-		} finally {
-//			try {
-//				Transactions.applyAfter(Transactions.TYPE_REQUIRED, tm, tx);
-//			} catch (TransactionException e) {
-//				throw new RenderingError("Transaction exception while executing command:" + getCommandName(), e);
-//			}
-		}
+		} 
 
 		return c;
 	}

@@ -775,7 +775,7 @@
 
     <class name="com.ail.insurance.pageflow.Action" extends="com.ail.insurance.pageflow.PageElement">
         <map-to xml="action" />
-        <field name="when" type="string">
+        <field name="when" type="com.ail.insurance.pageflow.ActionType" handler="com.ail.core.xmlbinding.CastorEnumFieldHandler">
             <bind-xml node="attribute" />
         </field>
         <field name="commandName" type="string">

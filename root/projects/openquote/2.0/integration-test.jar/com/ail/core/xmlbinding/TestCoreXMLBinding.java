@@ -42,6 +42,8 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.Type;
 import com.ail.core.configure.Types;
+import com.ail.insurance.pageflow.Action;
+import com.ail.insurance.pageflow.ActionType;
 
 /**
  * The tests defined here exercise the Core system's factory. They use the Core
@@ -375,5 +377,25 @@ public class TestCoreXMLBinding implements CoreUser, ConfigurationOwner {
         Version version = core.fromXML(Version.class, new XMLString(versionString));
         assertEquals("black", version.xpathGet("attribute[id='car']/attribute[id='colour']/value"));
         assertEquals("ford", version.xpathGet("attribute[id='car']/attribute[id='make']/object"));
+    }
+
+    
+    @Test 
+    public void testHandlingOfEnums() throws Exception {
+        Action action=new Action(ActionType.ON_ERROR, "errorCommand", "1==1");
+        String string=core.toXML(action).toString();
+        System.out.println(string);
+        assertTrue("!string.indexOf('onError')>0", string.indexOf("onError")>0);
+        assertTrue("!string.indexOf(\"1==1\")>0", string.indexOf("1==1")>0);
+        assertTrue("!string.indexOf(\"errorCommand\")>0", string.indexOf("errorCommand")>0);
+    }
+    
+    @Test
+    public void testHandingOfEnumsFromXML() throws Exception {
+        XMLString xml=new XMLString("<?xml version='1.0' encoding='UTF-8'?><action condition='1==1' when='onError' commandName='errorCommand' xsi:type='java:com.ail.insurance.pageflow.Action' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>");
+        Action action=core.fromXML(Action.class, xml);
+        assertEquals(ActionType.ON_ERROR, action.getWhen());
+        assertEquals("errorCommand", action.getCommandName());
+        assertEquals("1==1", action.getCondition());
     }
 }

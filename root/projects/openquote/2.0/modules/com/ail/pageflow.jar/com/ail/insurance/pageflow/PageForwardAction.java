@@ -25,7 +25,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
-
+import static com.ail.insurance.pageflow.ActionType.ON_PROCESS_ACTIONS;
 /**
  * A page action than conditionally moves the context to a specified page. PageForwardActions may be nested inside
  * {@link CommandButtonAction CommandButtonActions} in order to override the CommandButtonAction's default
@@ -65,7 +65,7 @@ public class PageForwardAction extends Action {
 
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
-        if ("onProcessActions".equals(getWhen()) && conditionIsMet(model)) {
+        if (ON_PROCESS_ACTIONS.equals(getWhen()) && conditionIsMet(model)) {
             ((Policy)model).setPage(getDestinationPageId());
         }
         return model;
