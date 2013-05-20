@@ -7,7 +7,27 @@
 
   <target name="dummy" />
 
-  
+  <macrodef name="run-product-tests-macro">
+    <attribute name="product" />
+    <attribute name="url" default="${server.base.url}" />
+    <attribute name="product.dir" default="${product.mountpoint}" />
+    <attribute name="suite" default="./Suite.html" />
+    <attribute name="selenium.htmlSuite" default="${selenium.htmlSuite}" />
+    <sequential>
+      <_set-product.mountpoint-property-macro />
+
+      <mkdir dir="${test.dir}/reports" />
+
+      <pathify-product-name-macro property="product.subdir" value="@{product}/Test Suite" />
+      
+      <echo message="Selenium options: -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{product}.html"/>
+      
+      <java fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.32.0.jar" dir="@{product.dir}/${product.subdir}">
+        <arg line="-htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{product}.html" />
+      </java>
+    </sequential>
+  </macrodef>
+
   <!-- Run the unit tests associated with a project. Reports are written to -->
   <!-- ${test.dir}/reports.                                                 -->
   <macrodef name="run-unit-tests-macro">
@@ -33,7 +53,7 @@
           <fileset dir="${test.dir}/unit-test.jar" includes="**/*Test*.class" />
         </batchtest>
       </junit>
-      
+
       <if>
         <or>
           <istrue value="${errored}"/>
@@ -61,9 +81,9 @@
 
         <sequential>
           <wait-for-liferay-to-start-macro/>
-          
+
           <sleep minutes="1"/>
-          
+
           <junit showoutput="yes" printsummary="yes" fork="yes" errorproperty="errored" failureproperty="failed">
             <!--jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" /-->
             <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
@@ -83,7 +103,7 @@
           </junit>
 
           <stop-liferay-macro/>
-          
+
           <if>
             <or>
               <istrue value="${errored}"/>

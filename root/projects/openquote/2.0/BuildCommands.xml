@@ -24,8 +24,16 @@
   </target>
 
   <target name="liferay: export repository" description="Export the content repository into the source tree">
-    <content-download-export-macro />
-  </target>
+     <content-download-export-macro />
+   </target>
+
+  <target name="liferay: webdav mount" description="Mount the products folds over WEBDAV">
+     <mount-product-space-macro />
+   </target>
+
+  <target name="liferay: webdav unmount" description="Unmount the product folder">
+     <unmount-product-space-macro />
+   </target>
 
   <target name="openquote: clear server cache" description="Clear the config cache in liferay">
     <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />

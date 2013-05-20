@@ -16,7 +16,7 @@
   <property name="tmp.dir" value="${target.dir}/tmp" />
   <property name="copyfilter.dir" value="${deploy.dir}/lib" />
   <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
-  <property name="serverBaseUrl" value="localhost:8080" />
+  <property name="server.base.url" value="localhost:8080" />
   <!-- bamboo overrides this with values like EA1, RC4, SP2 etc. -->
   <property name="increment.version" value="dev" />
   <property name="java.naming.factory.initial" value="org.jboss.naming.remote.client.InitialContextFactory" />
@@ -32,6 +32,7 @@
   <property name="module.dir" value="${jboss.dir}/modules/" />
   <property name="package.dir" value="${target.dir}/openquote-community-${major.version}.${minor.version}${increment.version}" />
   <property name="package.file" value="${package.dir}.zip" />
+  <property name="selenium.htmlSuite" value="*firefox" />
 
   <target name="dummy" />
 
@@ -59,9 +60,29 @@
     </sequential>
   </macrodef>
 
+  <!-- Macro to setup the 'product.mountpoint' property which defines where the product -->
+  <!-- WEBDAV file system will be mounted for any give os.                              -->
+  <macrodef name="_set-product.mountpoint-property-macro">
+    <sequential>
+      <_initialise-ant-contribs-macro />
+      <if>
+        <os family="windows" />
+        <then>
+          <property name="product.mountpoint" value="P:/" />
+        </then>
+        <elseif>
+          <os family="unix" />
+          <then>
+            <property name="product.mountpoint" value="${project.dir}/../product" />
+          </then>
+        </elseif>
+      </if>
+    </sequential>
+  </macrodef>
+
   <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE -->
-  <!-- projects have names like core:something.war. This Beanshell script creates a new -->
-  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war") -->
+  <!-- projects have names like core:something.war. This Beanshell script creates a new      -->
+  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war")         -->
   <macrodef name="_set-output-dir-property-macro">
     <sequential>
       <script language="beanshell">
@@ -105,9 +126,9 @@
     </sequential>
   </macrodef>
 
-  <!-- Convert a package name into a path name -->
+  <!-- Convert a product name into a path name -->
   <!-- e.g. "my.package.name" -> "my/package/name" -->
-  <macrodef name="pathify-package-name-macro">
+  <macrodef name="pathify-product-name-macro">
     <attribute name="property" />
     <attribute name="value" />
     <sequential>
@@ -267,15 +288,15 @@
 
   <_intialise-filtersets-macro>
     <filters>
-        <filter token="dbname" value="${dbname}" />
-        <filter token="dbusername" value="${dbusername}" />
-        <filter token="dbpassword" value="${dbpassword}" />
-        <filter token="major.version" value="${major.version}" />
-        <filter token="minor.version" value="${minor.version}" />
-        <filter token="liferay.version" value="${liferay.version}" />
-        <filter token="jboss.version" value="${jboss.version}" />
-        <filter token="increment.version" value="${increment.version}" />
-      </filters>
+      <filter token="dbname" value="${dbname}" />
+      <filter token="dbusername" value="${dbusername}" />
+      <filter token="dbpassword" value="${dbpassword}" />
+      <filter token="major.version" value="${major.version}" />
+      <filter token="minor.version" value="${minor.version}" />
+      <filter token="liferay.version" value="${liferay.version}" />
+      <filter token="jboss.version" value="${jboss.version}" />
+      <filter token="increment.version" value="${increment.version}" />
+    </filters>
   </_intialise-filtersets-macro>
 
   <import file="JavaMacros.xml" />

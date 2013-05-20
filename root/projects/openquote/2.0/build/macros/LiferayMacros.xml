@@ -69,7 +69,9 @@
       <_initialise-ant-contribs-macro />
 
       <if>
-        <not><socket server="localhost" port="8080" /></not>
+        <not>
+          <socket server="localhost" port="8080" />
+        </not>
         <then>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.sh" os="Linux,Mac OS X,Solaris,Sun OS">
             <env key="JAVA_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
@@ -142,25 +144,23 @@
     </sequential>
   </macrodef>
 
-  <target name="_mount-product-space-properties">
-    <property name="unix.mountpoint" value="../openquote-product" />
-  </target>
-
-  <target name="_mount-product-space-Mac OS X" depends="_mount-product-space-properties">
-    <mkdir dir="${unix.mountpoint}" />
-    <exec os="Mac OS X" executable="mount_smbfs" failonerror="yes">
-      <arg value="//admin@openquote.local:admin@localhost:8080/api/secure/webdav/guest/document_library/Product" />
-      <arg value="${unix.mountpoint}" />
+  <target name="_mount-product-space-Mac OS X" >
+    <_set-product.mountpoint-property-macro />
+    <mkdir dir="${product.mountpoint}" />
+    <exec os="Mac OS X" executable="mount_webdav" failonerror="yes">
+      <arg value="http://${server.base.url}/api/secure/webdav/guest/document_library/Product" />
+      <arg value="${product.mountpoint}" />
     </exec>
-    <echo message="Product space mounted on ${unix.mountpoint}" />
+    <echo message="Product space mounted on ${product.mountpoint}" />
   </target>
 
-  <target name="_unmount-product-space-Mac OS X" depends="_mount-product-space-properties">
+  <target name="_unmount-product-space-Mac OS X" >
+    <_set-product.mountpoint-property-macro />
     <exec os="Mac OS X" executable="umount" failonerror="yes">
-      <arg value="${unix.mountpoint}" />
+      <arg value="${product.mountpoint}" />
     </exec>
-    <delete dir="${unix.mountpoint}" />
-    <echo message="Product space unmounted from ${unix.mountpoint}" />
+    <delete dir="${product.mountpoint}" />
+    <echo message="Product space unmounted from ${product.mountpoint}" />
   </target>
 
   <macrodef name="mount-product-space-macro">
