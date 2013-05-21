@@ -6,6 +6,8 @@
 
   <target name="build" description="compile (generate, copy, etc) all build outputs" />
 
+  <target name="_build" />
+  
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
     <update-dependencies-macro todir="${test.dir}/lib" />
   </target>

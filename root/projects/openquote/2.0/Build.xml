@@ -25,6 +25,7 @@
     <ant dir="./openquote-theme.war" antfile="Build.xml" target="_build" />
     <!--ant dir="./lifeplus.war" antfile="Build.xml" target="_build" /-->
     <!--ant dir="./irishbrokerpi.war" antfile="Build.xml" target="_build" /-->
+    <subant-macro target="_build" includes="*-test.jar/Build.xml" />
   </target>
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
@@ -45,6 +46,7 @@
     <uninstall-liferay-macro version="${liferay.version}" />
     <subant-macro target="teardown" />
     <delete dir="${target.dir}" failonerror="false" />
+    <delete dir="./.apt_generated" />
   </target>
 
   <target name="test" description="run unit tests and integration tests">
