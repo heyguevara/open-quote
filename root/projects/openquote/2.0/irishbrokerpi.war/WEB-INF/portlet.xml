@@ -8,7 +8,7 @@
         <description>OpenQuote portlet for quoting the IrishBrokerPI product</description>
         <portlet-name>IrishBrokerPIQuotationPortlet</portlet-name>
         <display-name>Irish Broker PI Quotation</display-name>
-        <portlet-class>com.ail.insurance.pageflow.portlet.PageFlowPortlet</portlet-class>
+        <portlet-class>com.ail.pageflow.portlet.PageFlowPortlet</portlet-class>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>

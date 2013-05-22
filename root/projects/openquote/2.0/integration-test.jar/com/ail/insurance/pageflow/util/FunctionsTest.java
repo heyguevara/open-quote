@@ -9,6 +9,8 @@ import java.net.URL;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.ail.pageflow.util.Functions;
+
 public class FunctionsTest {
 
     @Before

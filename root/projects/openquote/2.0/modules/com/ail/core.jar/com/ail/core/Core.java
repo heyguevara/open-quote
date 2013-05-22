@@ -383,23 +383,6 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
     /**
      * Create an instance of the specified command, and invoke it with the
      * argument provided. The results returned by the command are returned.
-     * @param commandName The name of the command to invoke.
-     * @param arguments The arguments to pass to the service.
-     * @return The arguments as returned from the service.
-     * @throws BaseException Any exception thrown by the service.
-     * @deprecated Use {@link #invokeService(Class, LoggingArgument)} instead
-     */
-    public Argument invokeService(String commandName, Argument arguments) throws BaseException {
-        Command command=newCommand(commandName, Command.class);
-        arguments.setCallersCore(new CoreUserImpl(getCoreUser()));
-        command.setArgs(arguments);
-        command.invoke();
-        return command.getArgs();
-    }
-
-    /**
-     * Create an instance of the specified command, and invoke it with the
-     * argument provided. The results returned by the command are returned.
      * @param commandClass The command class to invoke.
      * @param arguments The arguments to pass to the service.
      * @return The arguments as returned from the service.

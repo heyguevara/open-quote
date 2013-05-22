@@ -78,25 +78,25 @@
   <servlet>
     <description>Servlet which streams quotation documents to the client</description>
     <servlet-name>DisplayQuotationServlet</servlet-name>
-    <servlet-class>com.ail.insurance.pageflow.servlet.DisplayQuotationServlet</servlet-class>
+    <servlet-class>com.ail.pageflow.servlet.DisplayQuotationServlet</servlet-class>
   </servlet>
 
   <servlet>
     <description>Servlet which streams wording documents to the client</description>
     <servlet-name>DisplayWordingServlet</servlet-name>
-    <servlet-class>com.ail.insurance.pageflow.servlet.DisplayWordingServlet</servlet-class>
+    <servlet-class>com.ail.pageflow.servlet.DisplayWordingServlet</servlet-class>
   </servlet>
 
   <servlet>
     <description>Servlet which streams invoice documents to the client</description>
     <servlet-name>DisplayInvoiceServlet</servlet-name>
-    <servlet-class>com.ail.insurance.pageflow.servlet.DisplayInvoiceServlet</servlet-class>
+    <servlet-class>com.ail.pageflow.servlet.DisplayInvoiceServlet</servlet-class>
   </servlet>
 
   <servlet>
     <description>Servlet which streams certificate documents to the client</description>
     <servlet-name>DisplayCertificateServlet</servlet-name>
-    <servlet-class>com.ail.insurance.pageflow.servlet.DisplayCertificateServlet</servlet-class>
+    <servlet-class>com.ail.pageflow.servlet.DisplayCertificateServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

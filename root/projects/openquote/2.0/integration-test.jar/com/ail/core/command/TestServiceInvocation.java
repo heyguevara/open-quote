@@ -137,7 +137,7 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         for(int i=0 ; i<50 ; i++) {
             command = getCore().newCommand("TestBeanShellService", DummyCommand.class);
             command.setX(101);
-            command.setY(10);
+            command.setY(10); 
             command.invoke();
             assertEquals(212, command.getR());
         }

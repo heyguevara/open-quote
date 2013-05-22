@@ -42,8 +42,8 @@ import com.ail.core.configure.ConfigurationOwner;
 import com.ail.core.configure.Parameter;
 import com.ail.core.configure.Type;
 import com.ail.core.configure.Types;
-import com.ail.insurance.pageflow.Action;
-import com.ail.insurance.pageflow.ActionType;
+import com.ail.pageflow.Action;
+import com.ail.pageflow.ActionType;
 
 /**
  * The tests defined here exercise the Core system's factory. They use the Core
@@ -392,7 +392,7 @@ public class TestCoreXMLBinding implements CoreUser, ConfigurationOwner {
     
     @Test
     public void testHandingOfEnumsFromXML() throws Exception {
-        XMLString xml=new XMLString("<?xml version='1.0' encoding='UTF-8'?><action condition='1==1' when='onError' commandName='errorCommand' xsi:type='java:com.ail.insurance.pageflow.Action' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>");
+        XMLString xml=new XMLString("<?xml version='1.0' encoding='UTF-8'?><action condition='1==1' when='onError' commandName='errorCommand' xsi:type='java:com.ail.pageflow.Action' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>");
         Action action=core.fromXML(Action.class, xml);
         assertEquals(ActionType.ON_ERROR, action.getWhen());
         assertEquals("errorCommand", action.getCommandName());

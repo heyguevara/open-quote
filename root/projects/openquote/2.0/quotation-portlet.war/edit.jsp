@@ -1,4 +1,4 @@
-<%@page import="com.ail.insurance.pageflow.util.QuotationCommon"%>
+<%@page import="com.ail.pageflow.util.QuotationCommon"%>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
 <jsp:useBean class="java.lang.String" id="productNameURL" scope="request" />
 <jsp:useBean class="java.lang.String" id="productName" scope="request" />

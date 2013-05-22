@@ -42,7 +42,7 @@
   <target name="test" description="run tests defined in this project">
     <run-integration-tests-macro>
       <junit-classpath>
-        <fileset dir="${test.dir}/lib" includes="*.jar" />
+        <fileset dir="${test.dir}/lib" includes="*.jar" excludes="selenium*.jar"/>
         <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />

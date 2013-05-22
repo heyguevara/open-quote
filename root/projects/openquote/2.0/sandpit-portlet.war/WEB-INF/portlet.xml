@@ -4,7 +4,7 @@
   <portlet>
     <portlet-name>sandpit</portlet-name>
     <display-name>sandpit</display-name>
-    <portlet-class>com.ail.insurance.pageflow.portlet.SandpitPortlet</portlet-class>
+    <portlet-class>com.ail.pageflow.portlet.SandpitPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>

@@ -26,11 +26,6 @@
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/lifeplus.war" path="lifeplus.war"/>
 	<classpathentry kind="src" path="build/annotation.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path=".apt_generated">
-		<attributes>
-			<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="build/lib/annotation-3.0.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/ejb/api/main/jboss-ejb-api_3.1_spec-1.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/jms/api/main/jboss-jms-api_1.1_spec-1.0.0.Final.jar"/>
@@ -155,5 +150,10 @@
 	<classpathentry kind="lib" path="build/lib/truezip-file-7.7.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/truezip-kernel-7.7.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-compress-1.4.1.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

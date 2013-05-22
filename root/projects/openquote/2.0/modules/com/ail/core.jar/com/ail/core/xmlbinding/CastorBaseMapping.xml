@@ -695,7 +695,7 @@
     </class>
 
     <!-- Mappings for page flow related UI types -->
-    <class name="com.ail.insurance.pageflow.util.Choice" extends="com.ail.core.Type">
+    <class name="com.ail.pageflow.util.Choice" extends="com.ail.core.Type">
         <map-to xml="choice" />
         <field name="name" type="string">
             <bind-xml node="attribute" />
@@ -706,10 +706,10 @@
         <field name="undefinedName" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="choice" type="com.ail.insurance.pageflow.util.Choice" collection="arraylist" />
+        <field name="choice" type="com.ail.pageflow.util.Choice" collection="arraylist" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.util.HelpText">
+    <class name="com.ail.pageflow.util.HelpText">
         <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
             <bind-xml node="text" />
         </field>
@@ -718,7 +718,7 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.util.ErrorText">
+    <class name="com.ail.pageflow.util.ErrorText">
         <field name="text" type="string" handler="com.ail.core.xmlbinding.CastorCDataFieldHandler">
             <bind-xml node="text" />
         </field>
@@ -730,12 +730,12 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.PageElement" extends="com.ail.core.Type">
+    <class name="com.ail.pageflow.PageElement" extends="com.ail.core.Type">
         <map-to xml="pageElement" />
-        <field name="action" type="com.ail.insurance.pageflow.Action" collection="arraylist" />
-        <field name="helpText" type="com.ail.insurance.pageflow.util.HelpText" />
-        <field name="hintText" type="com.ail.insurance.pageflow.util.HelpText" />
-        <field name="errorText" type="com.ail.insurance.pageflow.util.ErrorText" collection="arraylist" />
+        <field name="action" type="com.ail.pageflow.Action" collection="arraylist" />
+        <field name="helpText" type="com.ail.pageflow.util.HelpText" />
+        <field name="hintText" type="com.ail.pageflow.util.HelpText" />
+        <field name="errorText" type="com.ail.pageflow.util.ErrorText" collection="arraylist" />
         <field name="id" type="string">
             <bind-xml node="attribute" />
         </field>
@@ -756,26 +756,26 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.PageContainer" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.PageContainer" extends="com.ail.pageflow.PageElement">
         <map-to xml="page" />
         <field name="title" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="pageElement" type="com.ail.insurance.pageflow.PageElement" collection="collection" get-method="getPageElementCollection"
+        <field name="pageElement" type="com.ail.pageflow.PageElement" collection="collection" get-method="getPageElementCollection"
             set-method="setPageElementCollection" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ProposerQuotationSummary" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.ProposerQuotationSummary" extends="com.ail.pageflow.PageContainer">
         <map-to xml="proposerQuotationSummary" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.BrokerQuotationSummary" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.BrokerQuotationSummary" extends="com.ail.pageflow.PageContainer">
         <map-to xml="brokerQuotationSummary" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.Action" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.Action" extends="com.ail.pageflow.PageElement">
         <map-to xml="action" />
-        <field name="when" type="com.ail.insurance.pageflow.ActionType" handler="com.ail.core.xmlbinding.CastorEnumFieldHandler">
+        <field name="when" type="com.ail.pageflow.ActionType" handler="com.ail.core.xmlbinding.CastorEnumFieldHandler">
             <bind-xml node="attribute" />
         </field>
         <field name="commandName" type="string">
@@ -783,11 +783,11 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.AssessmentSheetDetails" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.AssessmentSheetDetails" extends="com.ail.pageflow.PageElement">
         <map-to xml="assessmentSheetDetails" />
     </class>
     
-    <class name="com.ail.insurance.pageflow.AttributeField" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.AttributeField" extends="com.ail.pageflow.PageElement">
         <map-to xml="attributeField" />
         <field name="title" type="string">
             <bind-xml node="attribute" />
@@ -806,18 +806,18 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.Blank" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.Blank" extends="com.ail.pageflow.PageElement">
         <map-to xml="blank" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.util.Binding" extends="com.ail.core.Type">
+    <class name="com.ail.pageflow.util.Binding" extends="com.ail.core.Type">
         <map-to xml="binding" />
         <field name="xpath" type="string">
             <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.PageScript" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.PageScript" extends="com.ail.pageflow.PageElement">
         <map-to xml="pageScript" />
         <field name="url" type="string">
             <bind-xml node="attribute" />
@@ -830,11 +830,11 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.ProposerDetails" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.ProposerDetails" extends="com.ail.pageflow.PageElement">
         <map-to xml="proposerDetails" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.SavedQuotations" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.SavedQuotations" extends="com.ail.pageflow.PageElement">
         <map-to xml="savedQuotations" />
         <field name="requoteDestinationPageId" type="string">
             <bind-xml node="attribute" />
@@ -850,22 +850,22 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.PaymentOptionSelector" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.PaymentOptionSelector" extends="com.ail.pageflow.PageElement">
         <map-to xml="paymentOptionSelector" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.PaymentDetails" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.PaymentDetails" extends="com.ail.pageflow.PageElement">
         <map-to xml="paymentDetails" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ParsedUrlContent" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.ParsedUrlContent" extends="com.ail.pageflow.PageElement">
         <map-to xml="parsedUrlContent" />
         <field name="url" type="string">
             <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.ReferralSummary" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.ReferralSummary" extends="com.ail.pageflow.PageContainer">
         <map-to xml="referralSummary" />
         <field name="referralNotificationUrl" type="string">
             <bind-xml node="attribute" />
@@ -878,7 +878,7 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.CommandButtonAction" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.CommandButtonAction" extends="com.ail.pageflow.PageElement">
         <map-to xml="commandButtonAction" />
         <field name="label" type="string">
             <bind-xml node="attribute" />
@@ -891,61 +891,61 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuitButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.QuitButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="quitButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.SaveButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.SaveButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="saveButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ViewQuotationButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.ViewQuotationButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="viewQuotationButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ViewCertificateButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.ViewCertificateButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="viewCertificateButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ViewWordingButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.ViewWordingButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="viewWordingButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ViewInvoiceButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.ViewInvoiceButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="viewInvoiceButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.RequoteButtonAction" extends="com.ail.insurance.pageflow.CommandButtonAction">
+    <class name="com.ail.pageflow.RequoteButtonAction" extends="com.ail.pageflow.CommandButtonAction">
         <map-to xml="requoteButtonAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.PageForwardAction" extends="com.ail.insurance.pageflow.Action">
+    <class name="com.ail.pageflow.PageForwardAction" extends="com.ail.pageflow.Action">
         <map-to xml="pageForwardAction" />
         <field name="destinationPageId" type="string">
             <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.GenerateQuotationDocumentAction" extends="com.ail.insurance.pageflow.Action">
+    <class name="com.ail.pageflow.GenerateQuotationDocumentAction" extends="com.ail.pageflow.Action">
         <map-to xml="generateQuotationDocumentAction" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.NavigationSection" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.NavigationSection" extends="com.ail.pageflow.PageContainer">
         <map-to xml="navigationSection" />
         <field name="quitDisabled" type="boolean">
             <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.Question" extends="com.ail.insurance.pageflow.AttributeField">
+    <class name="com.ail.pageflow.Question" extends="com.ail.pageflow.AttributeField">
         <map-to xml="question" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuestionSeparator" extends="com.ail.insurance.pageflow.Question">
+    <class name="com.ail.pageflow.QuestionSeparator" extends="com.ail.pageflow.Question">
         <map-to xml="questionSeparator" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuestionWithDetails" extends="com.ail.insurance.pageflow.Question">
+    <class name="com.ail.pageflow.QuestionWithDetails" extends="com.ail.pageflow.Question">
         <map-to xml="questionWithDetails" />
         <field name="detailsEnabledFor" type="string">
             <bind-xml node="attribute" />
@@ -958,7 +958,7 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.Repeater" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.Repeater" extends="com.ail.pageflow.PageElement">
         <map-to xml="repeater" />
         <field name="type" type="string">
             <bind-xml node="attribute" />
@@ -978,39 +978,39 @@
         <field name="addAndDeleteEnabled" type="boolean">
             <bind-xml node="attribute" />
         </field>
-        <field name="item" type="com.ail.insurance.pageflow.AttributeField" collection="collection" set-method="setItemCollection"
+        <field name="item" type="com.ail.pageflow.AttributeField" collection="collection" set-method="setItemCollection"
             get-method="getItemCollection" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.RowScroller" extends="com.ail.insurance.pageflow.Repeater">
+    <class name="com.ail.pageflow.RowScroller" extends="com.ail.pageflow.Repeater">
         <map-to xml="rowScroller" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.SectionScroller" extends="com.ail.insurance.pageflow.Repeater">
+    <class name="com.ail.pageflow.SectionScroller" extends="com.ail.pageflow.Repeater">
         <map-to xml="sectionScroller" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.PageSection" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.PageSection" extends="com.ail.pageflow.PageContainer">
         <map-to xml="pageSection" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuestionWithSubSection" extends="com.ail.insurance.pageflow.Question">
+    <class name="com.ail.pageflow.QuestionWithSubSection" extends="com.ail.pageflow.Question">
         <map-to xml="questionWithSubSection" />
         <field name="detailsEnabledFor" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="subSection" type="com.ail.insurance.pageflow.PageElement" collection="arraylist" />
+        <field name="subSection" type="com.ail.pageflow.PageElement" collection="arraylist" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuestionSection" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.QuestionSection" extends="com.ail.pageflow.PageElement">
         <map-to xml="questionSection" />
         <field name="title" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="question" type="com.ail.insurance.pageflow.Question" collection="arraylist" />
+        <field name="question" type="com.ail.pageflow.Question" collection="arraylist" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.ClauseDetails" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.ClauseDetails" extends="com.ail.pageflow.PageElement">
         <map-to xml="clauseDetails" />
         <field name="title" type="string">
             <bind-xml node="attribute" />
@@ -1020,7 +1020,7 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuotationSummary" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.QuotationSummary" extends="com.ail.pageflow.PageContainer">
         <map-to xml="quotationSummary" />
         <field name="termsAndConditionsUrl" type="string">
             <bind-xml node="attribute" />
@@ -1037,31 +1037,31 @@
         <field name="confirmAndPayDestinationPageId" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="navigationSection" type="com.ail.insurance.pageflow.NavigationSection" />
-        <field name="premiumSummaryFooter" type="com.ail.insurance.pageflow.PageSection" />
+        <field name="navigationSection" type="com.ail.pageflow.NavigationSection" />
+        <field name="premiumSummaryFooter" type="com.ail.pageflow.PageSection" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.Answer" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.Answer" extends="com.ail.pageflow.PageElement">
         <map-to xml="answer" />
         <field name="title" type="string">
             <bind-xml node="attribute" />
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.AnswerScroller" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.AnswerScroller" extends="com.ail.pageflow.PageElement">
         <map-to xml="answerScroller" />
-        <field name="answer" type="com.ail.insurance.pageflow.Answer" collection="arraylist" />
+        <field name="answer" type="com.ail.pageflow.Answer" collection="arraylist" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.AnswerSection" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.AnswerSection" extends="com.ail.pageflow.PageElement">
         <map-to xml="answerSection" />
         <field name="title" type="string">
             <bind-xml node="attribute" />
         </field>
-        <field name="answer" type="com.ail.insurance.pageflow.Answer" collection="arraylist" />
+        <field name="answer" type="com.ail.pageflow.Answer" collection="arraylist" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.LoginSection" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.LoginSection" extends="com.ail.pageflow.PageElement">
         <map-to xml="loginSection" />
         <field name="loginButtonLabel" type="string">
             <bind-xml node="attribute" />
@@ -1077,21 +1077,21 @@
         </field>
     </class>
 
-    <class name="com.ail.insurance.pageflow.Page" extends="com.ail.insurance.pageflow.PageContainer">
+    <class name="com.ail.pageflow.Page" extends="com.ail.pageflow.PageContainer">
         <map-to xml="uipage" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.QuestionPage" extends="com.ail.insurance.pageflow.Page">
+    <class name="com.ail.pageflow.QuestionPage" extends="com.ail.pageflow.Page">
         <map-to xml="questionPage" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.InformationPage" extends="com.ail.insurance.pageflow.Page">
+    <class name="com.ail.pageflow.InformationPage" extends="com.ail.pageflow.Page">
         <map-to xml="informationPage" />
     </class>
 
-    <class name="com.ail.insurance.pageflow.PageFlow" extends="com.ail.insurance.pageflow.PageElement">
+    <class name="com.ail.pageflow.PageFlow" extends="com.ail.pageflow.PageElement">
         <map-to xml="pageFlow" />
-        <field name="page" type="com.ail.insurance.pageflow.Page" collection="collection" />
+        <field name="page" type="com.ail.pageflow.Page" collection="collection" />
         <field name="startPage" type="string">
             <bind-xml node="attribute" />
         </field>

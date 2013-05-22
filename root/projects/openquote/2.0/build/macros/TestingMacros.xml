@@ -16,12 +16,19 @@
     <sequential>
       <_set-product.mountpoint-property-macro />
 
+      <property name="check.file" value="@{product.dir}/AIL/Base/Registry.xml"/>
+      
+      <if>
+        <not><available file="${check.file}" /></not>
+        <then>
+          <fail message="Cannot find product file system ('${check.file}' not found). Please mount product webdav before running these tests" />
+        </then>
+      </if>
+
       <mkdir dir="${test.dir}/reports" />
 
       <pathify-product-name-macro property="product.subdir" value="@{product}/Test Suite" />
-      
-      <echo message="Selenium options: -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{product}.html"/>
-      
+
       <java fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.32.0.jar" dir="@{product.dir}/${product.subdir}">
         <arg line="-htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{product}.html" />
       </java>
