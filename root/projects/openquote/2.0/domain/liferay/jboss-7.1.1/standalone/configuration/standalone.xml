@@ -404,15 +404,18 @@
             </core-environment>
             <recovery-environment socket-binding="txn-recovery-environment" status-socket-binding="txn-status-manager"/>
             <coordinator-environment default-timeout="300"/>
-        </subsystem>
+            </subsystem>
         <subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
             <configuration>
-                <jsp-configuration development="true"/>
+                <jsp-configuration development="true" />
             </configuration>
-            <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
+            <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http" redirect-port="8443"/>
+            <connector name="https" scheme="https" protocol="HTTP/1.1" socket-binding="https" enable-lookups="false" secure="true">
+                <ssl name="openquote-ssl" password="openquote" protocol="TLSv1" key-alias="openquote" certificate-key-file="../standalone/configuration/openquote.keystore" />
+            </connector>
             <virtual-server name="default-host" enable-welcome-root="false">
-                <alias name="localhost"/>
-                <alias name="example.com"/>
+                <alias name="localhost" />
+                <alias name="example.com" />
             </virtual-server>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:1.1">
