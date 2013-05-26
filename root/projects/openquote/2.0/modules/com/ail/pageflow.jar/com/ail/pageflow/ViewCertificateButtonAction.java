@@ -53,7 +53,7 @@ public class ViewCertificateButtonAction extends CommandButtonAction {
 
         if ("view-certificate".equals(op)) {
             try {
-                CoreProxy proxy=new CoreProxy();
+                CoreProxy proxy=PageflowContext.getCore();
 
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 

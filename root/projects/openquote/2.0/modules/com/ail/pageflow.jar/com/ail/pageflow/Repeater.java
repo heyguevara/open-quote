@@ -223,7 +223,7 @@ public abstract class Repeater extends PageElement {
 
             if ("add".equals(op) && (id==null || id.equals(opId))) {
                 // Create the object we'll be adding.
-                CoreProxy cp=new CoreProxy();
+                CoreProxy cp=PageflowContext.getCore();
                 Type t=cp.newProductType(((Policy)model).getProductTypeId(), type);
                 
                 // Build the xpath that'll get us the collection we need to add to.

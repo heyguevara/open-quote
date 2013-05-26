@@ -139,7 +139,7 @@ public class SavedQuotations extends PageElement {
 
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
-        CoreProxy core=new CoreProxy();
+        CoreProxy core=PageflowContext.getCore();
         Properties opParams=Functions.getOperationParameters(request);
         String op=opParams.getProperty("op");
         String quoteNumber=opParams.getProperty("id");
@@ -202,7 +202,7 @@ public class SavedQuotations extends PageElement {
         // If the user is logged in...
         if (request.getRemoteUser()!=null) {
             // get a list of the user's saved quotes.
-            List<?> quotes=new CoreProxy().query("get.savedPolicySummary.by.username.and.product", request.getRemoteUser(), quote.getProductTypeId());
+            List<?> quotes=PageflowContext.getCore().query("get.savedPolicySummary.by.username.and.product", request.getRemoteUser(), quote.getProductTypeId());
             
             // If the user has saved quotes...
             if (quotes.size()!=0) {

@@ -23,7 +23,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
@@ -55,7 +54,7 @@ public class SaveButtonAction extends CommandButtonAction {
             quote.setUserSaved(true);
             quote.setUsername(request.getRemoteUser());
             SavedPolicy sq=new SavedPolicy(quote);
-            sq=new CoreProxy().update(sq);
+            sq=PageflowContext.getCore().update(sq);
             quote.setSystemId(sq.getSystemId());
             quote.setSerialVersion(sq.getSerialVersion());
             model=super.processActions(request, response, quote);

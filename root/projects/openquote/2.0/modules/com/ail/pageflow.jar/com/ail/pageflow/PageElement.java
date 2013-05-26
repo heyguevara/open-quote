@@ -37,7 +37,6 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Attribute;
 import com.ail.core.BaseException;
-import com.ail.core.CoreProxy;
 import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.core.command.VelocityServiceError;
@@ -859,13 +858,13 @@ public abstract class PageElement extends Type implements Identified, Comparable
             }
         }
         catch(Exception e) {
-            new CoreProxy().logError("Failed to read input stream.", e);
+            PageflowContext.getCore().logError("Failed to read input stream.", e);
         }
         finally {
             try {
                 reader.close();
             } catch (IOException e) {
-                new CoreProxy().logError("Failed to read input stream.", e);
+                PageflowContext.getCore().logError("Failed to read input stream.", e);
             }
         }
         

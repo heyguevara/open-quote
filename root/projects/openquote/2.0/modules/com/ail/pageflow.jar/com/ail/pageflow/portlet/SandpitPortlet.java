@@ -115,7 +115,7 @@ public class SandpitPortlet extends GenericPortlet {
                 String selectedView = request.getParameter("selectedView");
                 
                 if (!"?".equals(selectedProduct)) {
-                    if (!selectedProduct.equals(QuotationCommon.productName(request))) {
+                    if (!selectedProduct.equals(PageflowContext.getProductName())) {
                         PageflowContext.setPolicy(null);
                         session.setAttribute("product", selectedProduct);
                         selectedView = WIZARD_MODE;
@@ -258,7 +258,7 @@ public class SandpitPortlet extends GenericPortlet {
      *         otherwise.
      */
     private boolean processingQuotation(PortletRequest request) {
-        return QuotationCommon.productName(request) != null;
+        return PageflowContext.getProductName() != null;
     }
 
     private void renderQuoteExceptions(RenderRequest request, RenderResponse response, Policy quote) {

@@ -27,30 +27,29 @@ import com.ail.core.CoreProxy;
 import com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateCommand;
 
 public class DisplayCertificateServlet extends HttpServlet {
-    
+
     private static final long serialVersionUID = 6984589565187737714L;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String policyNumber=request.getParameter("policyNumber");
-        
+        String policyNumber = request.getParameter("policyNumber");
+
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment;filename=\"Certificate"+policyNumber+".pdf\"");
+        response.setHeader("Content-Disposition", "attachment;filename=\"Certificate" + policyNumber + ".pdf\"");
         response.setHeader("Pragma", "private");
         response.setHeader("Cache-Control", "private");
 
-        CoreProxy proxy=new CoreProxy();
-        FetchCertificateCommand cmd=proxy.newCommand(FetchCertificateCommand.class);
+        CoreProxy proxy = new CoreProxy();
+        FetchCertificateCommand cmd = proxy.newCommand(FetchCertificateCommand.class);
         cmd.setPolicyNumberArg(policyNumber);
 
         try {
             cmd.invoke();
-        }
-        catch(BaseException e) {
+        } catch (BaseException e) {
             e.printStackTrace();
-            throw new ServletException("Failed to fetch certificate (number:"+policyNumber+") for display.");
+            throw new ServletException("Failed to fetch certificate (number:" + policyNumber + ") for display.");
         }
-                        
-        byte[] doc=cmd.getDocumentRet();
+
+        byte[] doc = cmd.getDocumentRet();
         response.getOutputStream().write(doc);
         response.getOutputStream().flush();
     }

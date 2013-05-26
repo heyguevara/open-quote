@@ -16,7 +16,6 @@
  */
 package com.ail.pageflow.util;
 
-import com.ail.core.CoreProxy;
 import com.ail.core.language.Translations;
 
 /**
@@ -57,7 +56,7 @@ public class I18N {
 		if (message!=null) {
 	    	try {
 	    		String product=PageflowContext.getPolicy().getProductTypeId();
-	    		Translations trans=(Translations)new CoreProxy().newProductType(product, "Translations");
+	    		Translations trans=(Translations)PageflowContext.getCore().newProductType(product, "Translations");
 	    		return trans.translate(message, alternative);
 	    	}
 	    	catch(Throwable e) {

@@ -53,7 +53,7 @@ public class ViewInvoiceButtonAction extends CommandButtonAction {
 
         if ("view-invoice".equals(op)) {
             try {
-                CoreProxy proxy=new CoreProxy();
+                CoreProxy proxy=PageflowContext.getCore();
 
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 

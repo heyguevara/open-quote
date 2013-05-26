@@ -57,7 +57,7 @@ public class GenerateCertificateDocumentAction extends Action {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if (conditionIsMet(model)) {
             try {
-                CoreProxy proxy=new CoreProxy();
+                CoreProxy proxy=PageflowContext.getCore();
                 
                 Policy quote=(Policy)model;
                 

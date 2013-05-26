@@ -18,7 +18,6 @@ package com.ail.pageflow;
 
 import static com.ail.core.Functions.configurationNamespaceToProductName;
 import static com.ail.core.Functions.loadUrlContentAsString;
-import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +32,7 @@ import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.render.RenderService.RenderCommand;
+import com.ail.pageflow.util.PageflowContext;
 
 /**
  * A PageElement which contains content read from an arbitrary URL. The content is parsed
@@ -93,7 +93,7 @@ public class ParsedUrlContent extends PageElement {
     	if (conditionIsMet(model)) {
         	Policy quote=(com.ail.insurance.policy.Policy)model;
     
-            CoreProxy cp=new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()));
+            CoreProxy cp=PageflowContext.getCore();
             Collection<String> namespaces=cp.getConfigurationNamespaceParent();
             
             for(String namespace: namespaces) {

@@ -53,7 +53,7 @@ public class ViewWordingButtonAction extends CommandButtonAction {
 
         if ("view-wording".equals(op)) {
             try {
-                CoreProxy proxy=new CoreProxy();
+                CoreProxy proxy=PageflowContext.getCore();
 
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 

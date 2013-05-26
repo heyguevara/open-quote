@@ -53,7 +53,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
 
         if ("view-quotation".equals(op)) {
             try {
-                CoreProxy proxy=new CoreProxy();
+                CoreProxy proxy=PageflowContext.getCore();
 
                 String quoteNumber=Functions.getOperationParameters(request).getProperty("id");
 

@@ -28,6 +28,8 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.PageFlow;
 import com.ail.pageflow.RenderingError;
+import com.ail.pageflow.util.AddPageflowNameToPageflowContextService.AddPageflowNameToPageflowContextCommand;
+import com.ail.pageflow.util.AddProductNameToPageflowContextService.AddProductNameToPageflowContextCommand;
 
 /**
  * This class wraps a number of ThreadLocal objects which are initialised at the beginning of each Portal request/response 
@@ -38,46 +40,55 @@ public class PageflowContext {
 	private static ThreadLocal<PageFlow> pageFlow = new ThreadLocal<PageFlow>();	
 	private static ThreadLocal<PortletRequest> request = new ThreadLocal<PortletRequest>();	
 	private static ThreadLocal<CoreProxy> core = new ThreadLocal<CoreProxy>();
+	private static ThreadLocal<String> pageflowName = new ThreadLocal<String>();
+    private static ThreadLocal<String> productName = new ThreadLocal<String>();
 	
-	/**
+    /**
 	 * Initialize the PageFlowContext for the current thread. 
 	 * @param request Initialise the context with respect to this request
 	 */
     public static void initialise(PortletRequest request) {
         boolean newPolicy = false;
         Policy policy = null;
-    	PageFlow pageFlow = null;
-    	PortletSession session=request.getPortletSession();
+        PageFlow pageFlow = null;
+        PortletSession session = request.getPortletSession();
 
         CoreProxy core = null;
 
         try {
-        	// get the name of the product we're quoting for. In the sandpit this may be null.
-        	String productName=QuotationCommon.productName(request);
-        	
-        	// if we have a product name, make sure we pick up the product's config
-        	core = (productName!=null) ? new CoreProxy(productNameToConfigurationNamespace(productName)) 
-        						       : new CoreProxy();
-        	
+            core = new CoreProxy();
+
+            AddProductNameToPageflowContextCommand apntpcc = core.newCommand(AddProductNameToPageflowContextCommand.class);
+            apntpcc.setPortletRequestArg(request);
+            apntpcc.invoke();
+
+            AddPageflowNameToPageflowContextCommand apfntpcc = core.newCommand(AddPageflowNameToPageflowContextCommand.class);
+            apfntpcc.setPortletRequestArg(request);
+            apfntpcc.invoke();
+
+            if (getProductName() != null) {
+                core = new CoreProxy(productNameToConfigurationNamespace(getProductName()));
+            }
+
             setCore(core);
 
             // if there's no policy in the session, create one.
-            policy = (Policy)session.getAttribute("policy");
-            if (policy == null && productName != null) {
-                policy=(Policy)core.newProductType(productName, "Policy");
-                policy.setProductTypeId(productName);
-                newPolicy=true;
+            policy = (Policy) session.getAttribute("policy");
+            if (policy == null && getProductName() != null) {
+                policy = (Policy) core.newProductType(getProductName(), "Policy");
+                policy.setProductTypeId(getProductName());
+                newPolicy = true;
             }
-    
+
             // The request's ThreadLocale could change from one request to the
             // next, if the user switches their browser settings for example, so
             // always use the current settings.
-        	if (policy != null) {
-        		policy.setLocale(new ThreadLocale(request.getLocale()));
-        	}
-        	
-    		// Set the thread's locale 
-        	ThreadLocale.setThreadLocale(request.getLocale());
+            if (policy != null) {
+                policy.setLocale(new ThreadLocale(request.getLocale()));
+            }
+
+            // Set the thread's locale
+            ThreadLocale.setThreadLocale(request.getLocale());
 
             // Fetch the appropriate PageFlow object for this session. The
             // 'appropriate' pageflow is the one associated with the product
@@ -86,56 +97,44 @@ public class PageflowContext {
             // If the quote already has a version effective date then use it; if
             // it has a quote date, use that as the VED; if it doesn't have
             // either (as in the case of a new quote), use the date now.
-        	if (productName!=null) {
-        	    if (policy.getVersionEffectiveDate() != null) {
-        	        core.setVersionEffectiveDate(policy.getVersionEffectiveDate());
-        	    }
-        	    else if (policy.getQuotationDate() != null) {
-        	        core.setVersionEffectiveDate(new VersionEffectiveDate(policy.getQuotationDate()));
-        	    }
-        	    else {
-        	        core.setVersionEffectiveDateToNow();
-        	    }
+            if (getProductName() != null) {
+                if (policy.getVersionEffectiveDate() != null) {
+                    core.setVersionEffectiveDate(policy.getVersionEffectiveDate());
+                } else if (policy.getQuotationDate() != null) {
+                    core.setVersionEffectiveDate(new VersionEffectiveDate(policy.getQuotationDate()));
+                } else {
+                    core.setVersionEffectiveDateToNow();
+                }
 
-        	    pageFlow=(PageFlow)core.newProductType(productName, "QuotationPageFlow");
+                pageFlow = (PageFlow) core.newProductType(getProductName(), "QuotationPageFlow");
 
-	            pageFlow.applyElementId("OQ0");
-        	}
-        	
+                pageFlow.applyElementId("OQ0");
+            }
+
             // if the policy was just create and the PageFlow defines the page
             // to start on, use it. Otherwise we rely on the setting defined in
             // the policy in the product definition.
-        	if (newPolicy &&  pageFlow.getStartPage()!=null) {
+            if (newPolicy && pageFlow.getStartPage() != null) {
                 policy.setPage(pageFlow.getStartPage());
-        	}
+            }
+        } catch (Exception e) {
+            if (policy != null) {
+                policy.addException(new ExceptionRecord(e));
+            } else {
+                throw new RenderingError("Failed to initialise policy instance for product: '" + getProductName() + "'", e);
+            }
         }
-        catch(Error e) {
-        	if (policy!=null) {
-        		policy.addException(new ExceptionRecord(e));
-        	}
-        	else {
-        		throw new RenderingError("Failed to initialise policy instance for product: '"+QuotationCommon.productName(request)+"'", e);
-        	}
-        }
-        
+
         // initialize the thread context
-		setRequest(request);
-		setPolicy(policy);
-		setPageFlow(pageFlow);
+        setRequest(request);
+        setPolicy(policy);
+        setPageFlow(pageFlow);
     }
     
-	/**
-	 * Fetch the policy currently being processed but this thread.
-	 * @return current quote, or null if none is defined
-	 */
 	public static Policy getPolicy() {
 		return policy.get();
 	}
 	
-	/**
-	 * Set the policy currently being processed.
-	 * @param policyArg
-	 */
 	public static void setPolicy(Policy policyArg) {
 		policy.set(policyArg);
 		if (request!=null && request.get()!=null) {
@@ -151,35 +150,57 @@ public class PageflowContext {
 		core.set(coreArg);
 	}
 	
-	/**
-	 * Fetch the request which is currently being processed.
-	 * @return Current request.
-	 */
 	public static PortletRequest getRequest() {
 		return request.get();
 	}
 	
-	/**
-	 * Set the portlet request currently being processed.
-	 * @param requestArg
-	 */
 	public static void setRequest(PortletRequest requestArg) {
 		request.set(requestArg);
 	}
 
-	/**
-	 * Fetch the request which is currently being processed.
-	 * @return Current request.
-	 */
 	public static PageFlow getPageFlow() {
 		return pageFlow.get();
 	}
 	
-	/**
-	 * Set the portlet request currently being processed.
-	 * @param requestArg
-	 */
 	public static void setPageFlow(PageFlow pageFlowArg) {
 		pageFlow.set(pageFlowArg);
 	}
+
+    /**
+     * Get the pageflow name (if any) associated with this pageflow. In the
+     * course of a normal pageflow (i.e. one started from the PageflowPortlet),
+     * this will always return a name, but the for pageflow running in the
+     * SandpitPortlet it may return null.
+     * @return pageflow name, or null.
+     */
+	public static String getPageflowName() {
+        return pageflowName.get();
+    }
+
+	/**
+	 * @see #getPageflowName()
+	 * @param pageflowName
+	 */
+	public static void setPageflowName(String pageflowNameArg) {
+        pageflowName.set(pageflowNameArg);
+    }
+
+    /**
+     * Get the product name (if any) associated with this pageflow. In the
+     * course of a normal pageflow (i.e. one started from the PageflowPortlet),
+     * this will always return a name, but the for pageflow running in the
+     * SandpitPortlet it may return null.
+     * @return product name, or null.
+     */
+    public static String getProductName() {
+        return productName.get();
+    }
+
+    /**
+     * @see #getProductName()
+     * @param productName
+     */
+    public static void setProductName(String productNameArg) {
+       productName.set(productNameArg);
+    }
 }

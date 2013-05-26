@@ -16,7 +16,10 @@
  */
 package com.ail.pageflow;
 
-import static com.ail.core.Functions.productNameToConfigurationNamespace;
+import static com.ail.pageflow.ActionType.ON_APPLY_REQUEST_VALUES;
+import static com.ail.pageflow.ActionType.ON_PROCESS_ACTIONS;
+import static com.ail.pageflow.ActionType.ON_PROCESS_VALIDATIONS;
+import static com.ail.pageflow.ActionType.ON_RENDER_RESPONSE;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -28,15 +31,11 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.ExecutePageActionService.ExecutePageActionCommand;
 import com.ail.pageflow.util.PageflowContext;
 import com.ail.pageflow.util.QuotationCommon;
-
-import static com.ail.pageflow.ActionType.*;
 
 /**
  * Actions allow arbitrary commands to be invoked during a page flow. A number
@@ -171,10 +170,9 @@ public class Action extends PageElement {
 
 	private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
 		Policy quote = (Policy) model;
+		
+		ExecutePageActionCommand c = PageflowContext.getCore().newCommand(ExecutePageActionCommand.class);
 
-		VersionEffectiveDate ved = (quote.getQuotationDate() != null) ? new VersionEffectiveDate(quote.getQuotationDate()) : new VersionEffectiveDate();
-		CoreProxy cp = new CoreProxy(productNameToConfigurationNamespace(quote.getProductTypeId()),	ved, principal);
-		ExecutePageActionCommand c = cp.newCommand(ExecutePageActionCommand.class);
 		c.setModelArgRet(quote);
 		c.setPortletSessionArg(portletSession);
 		c.setServiceNameArg(commandName);
