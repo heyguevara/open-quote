@@ -31,7 +31,6 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/jms/api/main/jboss-jms-api_1.1_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
-	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/liferay/portal/main/portlet.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/mail/api/main/mail-1.4.4.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/jboss/as/web/main/jbossweb-7.0.13.Final.jar"/>
@@ -155,5 +154,12 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-core-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-module-junit4-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-module-junit4-common-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-api-mockito-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-api-support-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-reflect-1.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

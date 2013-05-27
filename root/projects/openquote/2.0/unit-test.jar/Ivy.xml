@@ -2,6 +2,8 @@
     <info organisation="com.ail" module="unit-test" />
     <dependencies>
         <dependency org="junit" name="junit" rev="4.10" />
-        <dependency org="org.mockito" name="mockito-all" rev="1.8.5" />
+        <dependency org="org.mockito" name="mockito-all" rev="1.9.5" />
+        <dependency org="org.powermock" name="powermock-module-junit4" rev="1.5"/>
+        <dependency org="org.powermock" name="powermock-api-mockito" rev="1.5"/>
     </dependencies>
 </ivy-module>
