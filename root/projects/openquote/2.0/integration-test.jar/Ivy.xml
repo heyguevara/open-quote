@@ -2,6 +2,6 @@
     <info organisation="com.openquote" module="integration-test" />
     <dependencies>
         <dependency org="junit" name="junit" rev="4.10" />
-        <dependency org="org.mockito" name="mockito-all" rev="1.8.5" />
+        <dependency org="org.mockito" name="mockito-all" rev="1.9.5" />
     </dependencies>
 </ivy-module>
