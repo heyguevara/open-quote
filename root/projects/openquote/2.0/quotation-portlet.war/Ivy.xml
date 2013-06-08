@@ -9,5 +9,7 @@
         <dependency org="com.liferay.portal" name="util-java" rev="6.1.1"/>
         <dependency org="com.liferay.portal" name="util-bridges" rev="6.1.1"/>
         <dependency org="com.liferay.portal" name="util-taglib" rev="6.1.1"/>
+        <exclude org="org.apache.geronimo.specs" />
+        <exclude org="javax.servlet" />
     </dependencies>
 </ivy-module>

@@ -9,7 +9,7 @@
   </target>
 
   <target name="_build">
-    <compile-jar-macro module="yes" dependencies="com.liferay.portal, com.ail.core, com.ail.commercial, com.ail.insurance">
+    <compile-jar-macro module="yes" dependencies="com.liferay.portal, com.ail.core, com.ail.commercial, com.ail.insurance, javax.servlet.api">
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />

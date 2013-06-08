@@ -35,5 +35,6 @@
     <exclude org="org.apache.ant" />
     <exclude org="xerces" module="xerces" />
     <exclude org="xml-apis" />
+    <exclude org="javax.servlet" />
   </dependencies>
 </ivy-module>

@@ -20,19 +20,21 @@
     <attribute name="name" />
     <attribute name="rev" />
     <attribute name="pathid" />
+    <attribute name="log" default="download-only" /> <!-- "default" for full details -->
     <sequential>
       <_initialise_ivy_macro/>
-      <ivy:cachepath log="download-only" organisation="@{org}" module="@{name}" revision="@{rev}" inline="true" pathid="@{pathid}" />
+      <ivy:cachepath log="@{log}" organisation="@{org}" module="@{name}" revision="@{rev}" inline="true" pathid="@{pathid}" />
     </sequential>
   </macrodef>
 
   <macrodef name="update-dependencies-macro">
     <attribute name="todir" />
     <attribute name="pattern" default="[artifact]-[revision](-[classifier]).[ext]" />
+    <attribute name="log" default="download-only" /> <!-- "default" for full details -->
     <sequential>
       <_set-output-dir-property-macro />
       <_initialise_ivy_macro/>
-      <ivy:retrieve file="Ivy.xml" log="download-only" pattern="@{todir}/@{pattern}"/>
+      <ivy:retrieve file="Ivy.xml" log="@{log}" pattern="@{todir}/@{pattern}"/>
     </sequential>
   </macrodef>
 
@@ -106,6 +108,7 @@
   </macrodef>
 
   <macrodef name="update-module-dependencies-macro">
+    <attribute name="log" default="download-only" /> <!-- "default" for full details -->
     <sequential>
       <_initialise_ivy_macro/>
       <_initialise-ant-contribs-macro />
@@ -128,7 +131,7 @@
       </if>
       
       <!-- fetch all the dependencies to the module folder (in addition to whatever might already be there) -->
-      <ivy:retrieve file="Ivy.xml" log="download-only" pattern="${module.output.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
+      <ivy:retrieve file="Ivy.xml" log="@{log}" pattern="${module.output.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
 
       <!-- (re)generate the module descriptor -->
       <generate-module-descriptor-macro />
