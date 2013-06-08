@@ -29,7 +29,10 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.hornetq.api.core.Message;
+
 import com.ail.core.CoreProxy;
+import com.ail.core.CoreUser;
 import com.ail.core.configure.Configuration;
 
 /**
@@ -67,14 +70,23 @@ public class JMSAccessor extends Accessor {
             conn.start();
 
             // Strip unnecessary stuff from the args
-            Argument strippedArgs=(Argument)((ArgumentImpl)args).clone();
-            strippedArgs.setCallersCore(new CoreProxy(args.getCallersCore()));
-            
+            Argument strippedArgs = (Argument) ((ArgumentImpl) args).clone();
+            CoreProxy coreProxy = createCoreProxy(args.getCallersCore());
+
+            strippedArgs.setCallersCore(coreProxy);
+
             // Create the message
-            msg = session.createTextMessage(new CoreProxy().toXML(strippedArgs).toString());
+            msg = session.createTextMessage(coreProxy.toXML(strippedArgs).toString());
+
+            // The command server user ArgType to figure out how to 'fromXML' the body of the message
             msg.setStringProperty("ArgType", strippedArgs.getClass().getName());
+
             msg.setLongProperty("VersionEffectiveDate", strippedArgs.getCallersCore().getVersionEffectiveDate().getTime());
+            
             msg.setStringProperty("ConfigurationNamespace", strippedArgs.getCallersCore().getConfigurationNamespace());
+
+            // All messages have to wait 2 seconds before delivery is attempted.
+            msg.setLongProperty(Message.HDR_SCHEDULED_DELIVERY_TIME.toString(), deliveryDelay());
 
             sender = session.createSender(getQueueInstance());
             sender.send(msg);
@@ -94,6 +106,14 @@ public class JMSAccessor extends Accessor {
                 throw new JMSServiceException(e);
             }
         }
+    }
+
+    CoreProxy createCoreProxy(CoreUser callersCore) {
+        return new CoreProxy(callersCore);
+    }
+
+    long deliveryDelay() {
+        return System.currentTimeMillis() + 2000;
     }
 
     public void setArgs(Argument args) {
@@ -128,7 +148,7 @@ public class JMSAccessor extends Accessor {
         return queue;
     }
 
-    private QueueConnection getQueueConnection() throws NamingException, JMSException {
+    QueueConnection getQueueConnection() throws NamingException, JMSException {
         CoreProxy cp = new CoreProxy(args.getCallersCore());
 
         if (connectionFactoryInstance == null) {
@@ -142,7 +162,7 @@ public class JMSAccessor extends Accessor {
         return connectionFactoryInstance.createQueueConnection(queueConnectionPrincipal, queueConnectionPassword);
     }
 
-    private Queue getQueueInstance() throws NamingException {
+    Queue getQueueInstance() throws NamingException {
         CoreProxy cp = new CoreProxy(args.getCallersCore());
 
         if (queueInstance == null) {
