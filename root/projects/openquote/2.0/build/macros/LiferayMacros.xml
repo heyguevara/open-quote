@@ -291,7 +291,7 @@
         <fileset dir="${buildlib.dir}" includes="*.jar" />
       </path>
 
-      <java classname="com.liferay.portal.tools.SassToCssBuilder" classpathref="sass2css.classpath" >
+      <java fork="yes" classname="com.liferay.portal.tools.SassToCssBuilder" classpathref="sass2css.classpath" >
         <arg value="sass.dir=@{target}" />
       </java>
 
