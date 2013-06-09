@@ -778,7 +778,7 @@ body.portlet {
 }
 
 /* ---------- Login portlet ---------- */
-.portlet-login-content {
+.portlet-login {
 	background: none repeat scroll 0 0 #FAFAFA;
 	border: 1px solid #1D8412;
     margin-bottom: 10px;
@@ -786,4 +786,8 @@ body.portlet {
     margin-right: auto;
     padding: 10px;
     width: 400px;
+}
+
+.portlet-login .navigation {
+    border: 1px solid #BFBFBF;
 }
