@@ -28,7 +28,7 @@ import com.ail.core.Type;
 import com.ail.insurance.onrisk.FetchWordingService.FetchWordingCommand;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * PageFlow action to generate the wording document for the current quotation.
@@ -57,7 +57,7 @@ public class GenerateWordingDocumentAction extends Action {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if (conditionIsMet(model)) {
             try {
-                CoreProxy proxy=PageflowContext.getCore();
+                CoreProxy proxy=PageFlowContext.getCoreProxy();
                 
                 Policy quote=(Policy)model;
                 
@@ -70,7 +70,7 @@ public class GenerateWordingDocumentAction extends Action {
                 if (model instanceof Policy) {
                 	// ...assume that we have just updated the persisted quote and keep the session in step
 	                SavedPolicy savedPolicy=(SavedPolicy)proxy.queryUnique("get.savedPolicy.by.quotationNumber", quote.getQuotationNumber());
-	                PageflowContext.setPolicy(savedPolicy.getPolicy());
+	                PageFlowContext.setPolicy(savedPolicy.getPolicy());
                 }
             }
             catch(Exception e) {

@@ -1,31 +1,52 @@
 .iconbar {
-	padding:0;
+	padding: 0;
 	text-align: center;
 }
 
 .texteditor {
-    width: 100%;
+	width: 100%;
 }
 
 .property-narrow-column {
-		width: 17%;
+	width: 17%;
 }
 
 .property-wide-column {
-		width: 83%;
+	width: 83%;
 }
 
 input {
-    font-family: tahoma,verdana,arial,helvetica,sans-serif;
-    font-size: 12px;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
 }
 
 textarea {
-    font-family: tahoma,verdana,arial,helvetica,sans-serif;
-    font-size: 12px;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
 }
 
 .sandpit_debug_panel {
-    background-color: #E4E4E4;
-    font-size: 0.9em;
+    background: none repeat scroll 0 0 #F0F0F0;
+	border: 1px solid #1D8412;
+	border-radius: 3px 3px 3px 3px;
+	font-size: 0.9em;
+	min-height: 30px;
+	padding-left: 5px;
+}
+
+#selectedProduct {
+	min-width: 200px;
+}
+
+#selectedPageFlow {
+	min-width: 200px;
+}
+
+#selectedPage {
+	min-width: 200px;
+}
+
+.sandpit_debug_panel > span {
+	padding-right: 15px;
+	white-space: nowrap;
 }

@@ -3,6 +3,7 @@
   <dependencies>
     <dependency org="axis" name="axis" rev="1.4" />
     <dependency org="com.itextpdf" name="itextpdf" rev="5.1.2" />
+    <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3.3"/>
     <dependency org="commons-digester" name="commons-digester" rev="1.5" />
     <dependency org="commons-jxpath" name="commons-jxpath" rev="1.2" />
     <dependency org="commons-logging" name="commons-logging" rev="1.1.1" />

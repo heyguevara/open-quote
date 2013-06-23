@@ -28,6 +28,7 @@ import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.insurance.policy.Section;
 import com.ail.pageflow.util.Functions;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Adds a requote button to a page. By default this button will redirect the user
@@ -55,16 +56,22 @@ public class RequoteButtonAction extends CommandButtonAction {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if ("requote".equals(op)) {
-            Policy quote=(Policy)model;
-            quote.setPage(getDestinationPageId());
-            quote.setStatus(PolicyStatus.APPLICATION);
-            quote.setQuotationNumber(null);
-            quote.getAssessmentSheet().getAssessmentLine().clear();
-            for(Section section: quote.getSection()) {
+            PageFlowContext.getPageFlow().setNextPage(getDestinationPageId());
+
+            Policy policy=(Policy)model;
+            
+            policy.setStatus(PolicyStatus.APPLICATION);
+            policy.setQuotationNumber(null);
+            policy.getAssessmentSheet().getAssessmentLine().clear();
+            
+            for(Section section: policy.getSection()) {
             	section.getAssessmentSheet().getAssessmentLine().clear();
             }
-            quote.setUserSaved(false);
-            quote.markAsNotPersisted();
+            
+            policy.setUserSaved(false);
+            
+            policy.markAsNotPersisted();
+            
             super.processActions(request, response, model);
         }
         return model;

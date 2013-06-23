@@ -27,6 +27,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletURL;
 import javax.portlet.ReadOnlyException;
@@ -34,10 +35,13 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ValidatorException;
 
+import com.ail.core.BaseException;
 import com.ail.core.ExceptionRecord;
 import com.ail.insurance.policy.Policy;
-import com.ail.pageflow.util.PageflowContext;
-import com.ail.pageflow.util.QuotationCommon;
+import com.ail.pageflow.util.PageFlowContext;
+
+import static com.ail.pageflow.service.AddPageFlowNameToPageFlowContextService.PAGEFLOW_PORTLET_PREFERENCE_NAME;
+import static com.ail.pageflow.service.AddProductNameToPageFlowContextService.PRODUCT_PORTLET_PREFERENCE_NAME;
 
 /**
  * This Portlet acts as the controller (in MVC terms) for the quotation process.
@@ -53,7 +57,12 @@ import com.ail.pageflow.util.QuotationCommon;
 public class PageFlowPortlet extends GenericPortlet {
     private String editJSP = null;
     private String configureJSP = null;
+    private QuotationCommon quotationCommon = null;
 
+    public PageFlowPortlet() {
+        quotationCommon=new QuotationCommon();
+    }
+    
     @Override
     public void init() throws PortletException {
         editJSP = getInitParameter("edit-jsp");
@@ -62,7 +71,7 @@ public class PageFlowPortlet extends GenericPortlet {
 
     @Override
     protected Collection<PortletMode> getNextPossiblePortletModes(RenderRequest request) {
-        if (request.getPreferences().getValue("product", null) == null) {
+        if (isProductSelected(request)) {
             return Arrays.asList(PortletMode.EDIT);
         } else {
             return Arrays.asList(PortletMode.EDIT, PortletMode.VIEW);
@@ -72,57 +81,62 @@ public class PageFlowPortlet extends GenericPortlet {
     @Override
     public void processAction(ActionRequest request, ActionResponse response) throws ReadOnlyException, ValidatorException, IOException, PortletModeException {
         if (PortletMode.EDIT.equals(request.getPortletMode())) {
-            processEditAction(request, response);
+            doProcessEditAction(request, response);
         }
 
         if (PortletMode.VIEW.equals(request.getPortletMode())) {
-            processViewAction(request, response);
+            doProcessQuotationAction(request, response);
         }
-    }
-
-    private void processViewAction(ActionRequest request, ActionResponse response) {
-        PageflowContext.initialise(request);
-
-        try {
-            QuotationCommon.processAction(request, response);
-        } catch (Throwable t) {
-            Policy policy = PageflowContext.getPolicy();
-
-            if (policy == null) {
-                t.printStackTrace();
-            } else {
-                policy.addException(new ExceptionRecord(t));
-                QuotationCommon.persistQuotation(policy);
-            }
-
-            // TODO Forward to an error page
-        }
-    }
-
-    private void processEditAction(ActionRequest request, ActionResponse response) throws ReadOnlyException, IOException, ValidatorException, PortletModeException {
-        PortletPreferences prefs = request.getPreferences();
-        prefs.setValue("product", request.getParameter("productName"));
-        prefs.store();
-        response.setPortletMode(PortletMode.VIEW);
     }
 
     @Override
     public void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        PageflowContext.initialise(request);
+        PageFlowContext.initialise(request);
         response.setContentType("text/html");
+
         PortletURL addNameURL = response.createActionURL();
-        addNameURL.setParameter("productName", "productName");
+        
+        String selectedProduct = request.getPreferences().getValue(PRODUCT_PORTLET_PREFERENCE_NAME, null);
+        String selectedPageFlow = request.getPreferences().getValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, null);        
+
+        request.setAttribute("productName", selectedProduct);
+        request.setAttribute("pageFlowName", selectedPageFlow);
         request.setAttribute("productNameURL", addNameURL.toString());
+        
         PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(editJSP);
+        
         portletRequestDispatcher.include(request, response);
     }
 
     @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        if (request.getPreferences().getValue("product", null) == null) {
-            doDisplayConfigureView(request, response);
-        } else {
+        if (isProductSelected(request)) {
             doDisplayQuotationView(request, response);
+        } else {
+            doDisplayConfigureView(request, response);
+        }
+    }
+
+    private void doProcessEditAction(ActionRequest request, ActionResponse response) throws ReadOnlyException, IOException, ValidatorException, PortletModeException {
+        PortletPreferences prefs = request.getPreferences();
+        
+        if (!"?".equals(request.getParameter("pageFlowName"))) {
+            prefs.setValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, request.getParameter("pageFlowName"));
+        }
+        
+        if (!"?".equals(request.getParameter("productName"))) {
+            String oldValue = prefs.getValue(PRODUCT_PORTLET_PREFERENCE_NAME, "?");
+            String newValue = request.getParameter("productName");
+            if (!oldValue.equals(newValue)) {
+                prefs.setValue(PRODUCT_PORTLET_PREFERENCE_NAME, newValue);
+                prefs.setValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, null);
+            }
+        }
+        
+        prefs.store();
+        
+        if (isProductSelected(request)) {
+            response.setPortletMode(PortletMode.VIEW);
         }
     }
 
@@ -131,23 +145,63 @@ public class PageFlowPortlet extends GenericPortlet {
         portletRequestDispatcher.include(request, response);
     }
 
-    private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
-        PageflowContext.initialise(request);
+    private void doProcessQuotationAction(ActionRequest request, ActionResponse response) {
+        PageFlowContext.initialise(request);
 
         try {
-            QuotationCommon.doView(request, response);
+            quotationCommon.processAction(request, response);
         } catch (Throwable t) {
-            Policy policy = PageflowContext.getPolicy();
+            Policy policy = PageFlowContext.getPolicy();
 
             if (policy == null) {
                 t.printStackTrace();
             } else {
                 policy.addException(new ExceptionRecord(t));
-                QuotationCommon.persistQuotation(policy);
+                try {
+                    quotationCommon.persistQuotation(policy);
+                } catch (BaseException e) {
+                    // TODO Forward to an error page
+                    e.printStackTrace();
+                }
             }
 
             // TODO Forward to an error page
         }
+    }
 
+    private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
+        PageFlowContext.initialise(request);
+
+        try {
+            quotationCommon.doView(request, response);
+        } catch (Throwable t) {
+            Policy policy = PageFlowContext.getPolicy();
+
+            if (policy == null) {
+                t.printStackTrace();
+            } else {
+                policy.addException(new ExceptionRecord(t));
+                try {
+                    quotationCommon.persistQuotation(policy);
+                } catch (BaseException e) {
+                    // TODO Forward to an error page
+                    e.printStackTrace();
+                }
+            }
+
+            // TODO Forward to an error page
+        }
+    }
+
+    private boolean isProductSelected(PortletRequest request) {
+        String selectedProduct = request.getPreferences().getValue(PRODUCT_PORTLET_PREFERENCE_NAME, null);
+        String selectedPageFlow = request.getPreferences().getValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, null);
+
+        if (selectedProduct == null || "".equals(selectedProduct) || "?".equals(selectedProduct) 
+        ||  selectedPageFlow == null || "".equals(selectedPageFlow) || "?".equals(selectedPageFlow)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

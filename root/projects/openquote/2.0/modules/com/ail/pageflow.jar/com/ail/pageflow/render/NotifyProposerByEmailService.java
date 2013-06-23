@@ -45,7 +45,7 @@ import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
 import com.ail.insurance.quotation.NotifyProposerByEmailService.NotifyProposerByEmailArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
  */
@@ -116,7 +116,7 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
         MimeMultipart multipart=null;
         Authenticator authenticator=null;
 
-    	PageflowContext.setPolicy(savedPolicy.getPolicy());
+    	PageFlowContext.setPolicy(savedPolicy.getPolicy());
 
         Proposer proposer = (Proposer) savedPolicy.getPolicy().getProposer();
         Broker broker = savedPolicy.getPolicy().getBroker();

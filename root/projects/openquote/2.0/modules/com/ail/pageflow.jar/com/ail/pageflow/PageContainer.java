@@ -24,6 +24,7 @@ import javax.portlet.ActionResponse;
 
 import com.ail.core.Type;
 import com.ail.pageflow.util.OrderedLinkedList;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * An abstract UI element which provides support for any concrete page element which itself contains other page
@@ -100,6 +101,12 @@ public abstract class PageContainer extends PageElement {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         for (PageElement e : getPageElement()) {
             model=e.processActions(request, response, model);
+        }
+        
+        if (PageFlowContext.getPageFlow().isAdvancingPage()) {
+            for(Action a: getAction()) {
+                model=a.executeAction(request, model, ActionType.ON_PAGE_EXIT);
+            }
         }
         
         return model;

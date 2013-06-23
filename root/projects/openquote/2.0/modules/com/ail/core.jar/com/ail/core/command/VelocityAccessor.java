@@ -29,6 +29,8 @@ import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.VelocityException;
 import org.apache.velocity.runtime.resource.loader.StringResourceLoader;
 import org.apache.velocity.runtime.resource.util.StringResourceRepository;
+
+import com.ail.core.BaseError;
 import com.ail.core.BaseException;
 import com.ail.core.Core;
 import com.ail.core.Functions;
@@ -173,11 +175,17 @@ public class VelocityAccessor extends Accessor implements ConfigurationOwner {
             if (e.getWrappedThrowable() instanceof VelocityServiceError) {
                 throw (VelocityServiceError)e.getWrappedThrowable();
             }
+            else if (e.getWrappedThrowable() instanceof BaseError) {
+                throw (BaseError)e.getWrappedThrowable();
+            }
+            else if (e.getWrappedThrowable() instanceof BaseException) {
+                throw (BaseException)e.getWrappedThrowable();
+            }
             else {
-                throw new VelocityServiceError(e.getMessage());
+                throw new VelocityServiceError(e.getMessage(), e);
             }
         } catch(VelocityException e) {
-            throw new VelocityServiceError(e.getMessage());
+            throw new VelocityServiceError(e.getMessage(), e);
         } catch (Exception e) {
             throw new VelocityServiceError(e);
         }

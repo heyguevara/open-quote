@@ -15,20 +15,17 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package com.ail.pageflow.util;
+package com.ail.pageflow.service;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 
-import com.ail.annotation.ServiceArgument;
-import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.command.Argument;
-import com.ail.core.command.Command;
+import com.ail.pageflow.ExecutePageActionService;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * Get the name of the pageflow we're working for. This comes from one of three
@@ -37,57 +34,55 @@ import com.ail.core.command.Command;
  * mode (i.e. in the sandpit) it is picked up from the session.
  */
 @ServiceImplementation
-public class AddPageflowNameToPageflowContextService extends Service<AddPageflowNameToPageflowContextService.AddPageflowNameToPageflowContextArgument> {
+public class AddPageFlowNameToPageFlowContextService extends Service<ExecutePageActionService.ExecutePageActionArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
-    public static final String PAGEFLOW_SESSION_ATTRIBUTE_NAME = "pageflow";
     public static final String PAGEFLOW_PORTLET_PREFERENCE_NAME = "pageflow";
     public static final String PAGEFLOW_PORTLET_REQUEST_PARAMETER_NAME = "openquote.pageflow";
 
-    @ServiceArgument
-    public interface AddPageflowNameToPageflowContextArgument extends Argument {
-        PortletRequest getPortletRequestArg();
-
-        void setPortletRequestArg(PortletRequest arg);
-    }
-
-    @ServiceCommand(defaultServiceClass = AddPageflowNameToPageflowContextService.class)
-    public interface AddPageflowNameToPageflowContextCommand extends Command, AddPageflowNameToPageflowContextArgument {
-    }
-
     @Override
     public void invoke() throws BaseException {
+        if (args.getPortletSessionArg() == null) {
+            throw new PreconditionException("args.getPortletSessionArg() == null");
+        }
+
+        if (args.getPortletPreferencesArg() == null) {
+            throw new PreconditionException("args.getPortletPreferencesArg() == null");
+        }
+
         if (args.getPortletRequestArg() == null) {
-            throw new PreconditionException("args.getPortletRequestArg()==null");
+            throw new PreconditionException("args.getPortletRequestArg() == null");
         }
 
-        if (args.getPortletRequestArg().getPortletSession() == null) {
-            throw new PreconditionException("args.getPortletRequestArg().getPortletSession()==null");
-        }
+        PortletPreferences preferences = args.getPortletPreferencesArg();
+        PortletRequest request = args.getPortletRequestArg();
 
-        if (args.getPortletRequestArg().getPreferences() == null) {
-            throw new PreconditionException("args.getPortletRequestArg().getPreferences()==null");
-        }
-
-        String pageflowName;
-
-        PortletSession session = args.getPortletRequestArg().getPortletSession();
-        PortletPreferences prefs = args.getPortletRequestArg().getPreferences();
+        String pageFlowName;
 
         // The request property takes precedence over everything
-        pageflowName = args.getPortletRequestArg().getProperty(PAGEFLOW_PORTLET_REQUEST_PARAMETER_NAME);
+        pageFlowName = request.getProperty(PAGEFLOW_PORTLET_REQUEST_PARAMETER_NAME);
 
         // If the request property is null, try the portlet preference
-        if (pageflowName == null) {
-            pageflowName = prefs.getValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, null);
+        if (pageFlowName == null) {
+            pageFlowName = preferences.getValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, null);
         }
 
         // If the portlet reference was also null, try the session attribute
-        if (pageflowName == null) {
-            pageflowName = (String) session.getAttribute(PAGEFLOW_SESSION_ATTRIBUTE_NAME);
+        if (pageFlowName == null) {
+            pageFlowName = getPageFlowNameFromPageFlowContext();
         }
 
         // Regardless of what pageflow name we have, even if it is null, pass it
         // into the context.
-        PageflowContext.setPageflowName(pageflowName);
+        setPageFlowNameToPageFlowContext(pageFlowName);
+    }
+    
+    // Wrap call to PageFlowContext static to help testability.
+    protected String getPageFlowNameFromPageFlowContext() {
+        return PageFlowContext.getPageFlowName();
+    }
+    
+    // Wrap call to PageFlowContext static to help testability.
+    protected void setPageFlowNameToPageFlowContext(String pageFlowNameArg) {
+        PageFlowContext.setPageFlowName(pageFlowNameArg);
     }
 }

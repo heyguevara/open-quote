@@ -29,7 +29,7 @@ import com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateCommand;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Adds a "view certificate" button to a page. When selected this button will open a new window containing
@@ -53,7 +53,7 @@ public class ViewCertificateButtonAction extends CommandButtonAction {
 
         if ("view-certificate".equals(op)) {
             try {
-                CoreProxy proxy=PageflowContext.getCore();
+                CoreProxy proxy=PageFlowContext.getCoreProxy();
 
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 
@@ -66,7 +66,7 @@ public class ViewCertificateButtonAction extends CommandButtonAction {
                 if (model instanceof Policy) {
                 	// ...assume that we have just updated the persisted quote and keep the session in step
 	                SavedPolicy savedPolicy=(SavedPolicy)proxy.queryUnique("get.savedPolicy.by.policyNumber", policyNumber);
-	                PageflowContext.setPolicy(savedPolicy.getPolicy());
+	                PageFlowContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
                 response.sendRedirect("/quotation-portlet/DisplayCertificateServlet?policyNumber="+policyNumber);

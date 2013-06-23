@@ -24,10 +24,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.janino.CompileException;
 import org.codehaus.janino.SimpleCompiler;
-import org.codehaus.janino.Parser.ParseException;
-import org.codehaus.janino.Scanner.ScanException;
 
 import com.ail.core.BaseException;
 import com.ail.core.Core;
@@ -46,7 +43,7 @@ import com.ail.core.configure.ConfigurationOwner;
  * As used by this accessor, Janino scripts adopt a simple contract: they must define an invoke method which accepts
  * only one argument of a type which is suitable for the command being serviced.<p/>
  * 
- * In the following example the command called 'MyTestCommand' had been bound to the Janino based 'DummyService'. The convension
+ * In the following example the command called 'MyTestCommand' had been bound to the Janino based 'DummyService'. The conversion
  * within the core is to have a the command class (MyTestCommand) paired with an argument implementation (MyTestArgImp); therefore, 
  * the invoke method accepts an argument of that type.
  * <pre>
@@ -102,6 +99,7 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
     private String extend=null;
     private transient List<Class<?>> clazz=null;
     private String name=null;
+    private transient Throwable activationException;
     
     public void setArgs(Argument args) {
         this.args=args;
@@ -155,6 +153,8 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
     public void activate(Core core, com.ail.core.configure.Type typeSpec) {
         if (clazz==null) {
             try {
+                activationException = null;
+
                 name=typeSpec.getName();
                 
                 clazz=new ArrayList<Class<?>>();
@@ -169,17 +169,8 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
 
                 core.logInfo("Compilation for service: "+name+" successful");
             }
-            catch (CompileException e) {
-                core.logError("Janino compilation failure: \n"+e.getMessage());
-            }
-            catch (ParseException e) {
-                core.logError("Janino parse failure: \n"+e.getMessage());
-            }
-            catch (ScanException e) {
-                core.logError("Janino scan failure: \n"+e.getMessage());
-            }
             catch(Throwable t) {
-                t.printStackTrace();
+                activationException = t;
             }
             finally {
                 this.core=null;
@@ -190,6 +181,10 @@ public class JaninoAccessor extends Accessor implements ConfigurationOwner {
     public void invoke() throws BaseException {
         super.logEntry();
 
+        if (activationException!=null) {
+            throw new JaninoServiceException("Janino activation error", activationException);
+        }
+        
         if (clazz==null) {
             throw new IllegalStateException("Janino class not loaded for service: "+name+". Was there an error during compilation?");
         }

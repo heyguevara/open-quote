@@ -33,7 +33,7 @@ import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.SavedPolicySummaries;
 import com.ail.insurance.policy.SavedPolicySummary;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Display a list of a user's saved quotations. If the user is logged in, a list of their saved
@@ -139,7 +139,7 @@ public class SavedQuotations extends PageElement {
 
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
-        CoreProxy core=PageflowContext.getCore();
+        CoreProxy core=PageFlowContext.getCoreProxy();
         Properties opParams=Functions.getOperationParameters(request);
         String op=opParams.getProperty("op");
         String quoteNumber=opParams.getProperty("id");
@@ -159,15 +159,15 @@ public class SavedQuotations extends PageElement {
 	                quote=savedPolicy.getPolicy();
 	        
 	                if ("confirm".equals(op)) {
-	                    quote.setPage(confirmAndPayDestinationPageId);
-	                    PageflowContext.setPolicy(quote);
+	                    PageFlowContext.getPageFlow().setNextPage(confirmAndPayDestinationPageId);
+	                    PageFlowContext.setPolicy(quote);
 	                }
 	                else if ("requote".equals(op)) {
-	                    quote.setPage(requoteDestinationPageId);
 	                    quote.setStatus(PolicyStatus.APPLICATION);
 	                    quote.setQuotationNumber(null);
 	                    quote.markAsNotPersisted();
-	                    PageflowContext.setPolicy(quote);
+                        PageFlowContext.getPageFlow().setNextPage(requoteDestinationPageId);
+	                    PageFlowContext.setPolicy(quote);
 	                }
 	            }
 	        }
@@ -197,19 +197,20 @@ public class SavedQuotations extends PageElement {
 
     @Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        Policy quote=(Policy)model;
 
         // If the user is logged in...
         if (request.getRemoteUser()!=null) {
             // get a list of the user's saved quotes.
-            List<?> quotes=PageflowContext.getCore().query("get.savedPolicySummary.by.username.and.product", request.getRemoteUser(), quote.getProductTypeId());
+            String user = request.getRemoteUser();
+            String product = PageFlowContext.getProductName();
+            List<?> policies = PageFlowContext.getCoreProxy().query("get.savedPolicySummary.by.username.and.product", user, product);
             
             // If the user has saved quotes...
-            if (quotes.size()!=0) {
+            if (policies.size()!=0) {
                 // copy the quotations summaries into a SavedPolicySummary instance
-                SavedPolicySummaries sas=PageflowContext.getCore().newType(SavedPolicySummaries.class);
-                for(Object o: quotes) {
-                    sas.getPolicySummary().add((SavedPolicySummary)o);
+                SavedPolicySummaries sas=PageFlowContext.getCoreProxy().newType(SavedPolicySummaries.class);
+                for(Object policy: policies) {
+                    sas.getPolicySummary().add((SavedPolicySummary)policy);
                 }
                 
                 executeTemplateCommand("SavedQuotations", request, response, sas);
@@ -222,7 +223,7 @@ public class SavedQuotations extends PageElement {
     @Override
     public Type renderPageFooter(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         if (request.getRemoteUser()==null) {
-        	executeTemplateCommand("SavedQuotationss", request, response, model);
+        	executeTemplateCommand("SavedQuotations", request, response, model);
         }
 
         return model;

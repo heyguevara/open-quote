@@ -35,7 +35,7 @@ import com.ail.core.TypeXPathException;
 import com.ail.pageflow.render.RenderService.RenderArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>This element handles the common situation where selecting 'yes' in answer to a question
@@ -137,7 +137,7 @@ public class QuestionWithDetails extends Question {
      * @since 1.1
      */
     public String getExpandedDetailsTitle(Type local) {
-		return expand(getDetailsTitle(), PageflowContext.getPolicy(), local);
+		return expand(getDetailsTitle(), PageFlowContext.getPolicy(), local);
     }
     
     /**

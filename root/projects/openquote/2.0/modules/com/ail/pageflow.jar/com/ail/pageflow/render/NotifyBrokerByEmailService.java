@@ -45,7 +45,7 @@ import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
 import com.ail.insurance.quotation.NotifyBrokerByEmailService.NotifyBrokerByEmailArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
  */
@@ -116,7 +116,7 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailArgum
         MimeMultipart multipart=null;
         Authenticator authenticator=null;
 
-    	PageflowContext.setPolicy(savedPolicy.getPolicy());
+    	PageFlowContext.setPolicy(savedPolicy.getPolicy());
 
         String toAddress = savedPolicy.getPolicy().getBroker().getQuoteEmailAddress();
         String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");

@@ -22,20 +22,18 @@ import static com.ail.pageflow.ActionType.ON_PROCESS_VALIDATIONS;
 import static com.ail.pageflow.ActionType.ON_RENDER_RESPONSE;
 
 import java.io.IOException;
-import java.security.Principal;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletSession;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.ExecutePageActionService.ExecutePageActionCommand;
-import com.ail.pageflow.util.PageflowContext;
-import com.ail.pageflow.util.QuotationCommon;
+import com.ail.pageflow.service.PersistPolicyService.PersistPolicyCommand;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * Actions allow arbitrary commands to be invoked during a page flow. A number
@@ -69,11 +67,11 @@ public class Action extends PageElement {
 		this.when = when;
 		this.commandName = commandName;
 	}
-
+    
 	@Override
 	public Type processActions(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_PROCESS_ACTIONS);
+			model = executeAction(request, model, ON_PROCESS_ACTIONS);
 		}
 		
 		return model;
@@ -82,7 +80,7 @@ public class Action extends PageElement {
 	@Override
 	public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			model = executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_APPLY_REQUEST_VALUES);
+			model = executeAction(request, model, ON_APPLY_REQUEST_VALUES);
 		}
 
 		return model;
@@ -91,7 +89,7 @@ public class Action extends PageElement {
 	@Override
 	public boolean processValidations(ActionRequest request, ActionResponse response, Type model) {
 		if (conditionIsMet(model)) {
-			return executeValidation(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_PROCESS_VALIDATIONS);
+			return executeValidation(request, model, ON_PROCESS_VALIDATIONS);
 		} else {
 			return false;
 		}
@@ -99,7 +97,7 @@ public class Action extends PageElement {
 
 	@Override
 	public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-	    return executeAction(request.getPortletSession(), request.getUserPrincipal(), request.getPublicParameterMap(), model, ON_RENDER_RESPONSE);
+	    return executeAction(request, model, ON_RENDER_RESPONSE);
 	}
 
 	/**
@@ -143,42 +141,49 @@ public class Action extends PageElement {
 		this.when = when;
 	}
 
-	private Type executeAction(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model, ActionType currentPhase) {
+	public Type executeAction(PortletRequest portletRequest, Type model, ActionType currentPhase) {
 	    if (when.equals(currentPhase)) {
-    	    Policy policy = (Policy)execute(portletSession, principal, parameters, model).getModelArgRet();
+    	    Policy policy = (Policy)execute(portletRequest, model).getModelArgRet();
     
     		// Always persist the quote after running an action - the next
     		// action/command may need to read the persisted state.
-    		policy = QuotationCommon.persistQuotation(policy);
-    		PageflowContext.setPolicy(policy);
+    	    PersistPolicyCommand persistPolicy=PageFlowContext.getCoreProxy().newCommand(PersistPolicyCommand.class);
+    	    persistPolicy.setPolicyArgRet(policy);
 
-            return policy;
+    	    try {
+    	        persistPolicy.invoke();
+            } catch (Throwable e) {
+                throw new RenderingError("Failed to updated persisted model: " + getCommandName(), e);
+            } 
+
+    	    return persistPolicy.getPolicyArgRet();
 	    }
 	    else {
 	        return model;
 	    }
 	}
 
-	private boolean executeValidation(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model, ActionType currentPhase) {
+	private boolean executeValidation(PortletRequest portletRequest, Type model, ActionType currentPhase) {
         if (when.equals(currentPhase)) {
-            return execute(portletSession, principal, parameters, model).getValidationFailedRet();
+            return execute(portletRequest, model).getValidationFailedRet();
         }
         else {
             return false;
         }
 	}
 
-	private ExecutePageActionCommand execute(PortletSession portletSession, Principal principal, Map<String, String[]> parameters, Type model) {
+    private ExecutePageActionCommand execute(PortletRequest portletRequest, Type model) {
 		Policy quote = (Policy) model;
 		
-		ExecutePageActionCommand c = PageflowContext.getCore().newCommand(ExecutePageActionCommand.class);
+		ExecutePageActionCommand c = PageFlowContext.getCoreProxy().newCommand(ExecutePageActionCommand.class);
 
+        c.setActionArg(this);
+        c.setServiceNameArg(commandName);
 		c.setModelArgRet(quote);
-		c.setPortletSessionArg(portletSession);
-		c.setServiceNameArg(commandName);
-		c.setActionArg(this);
-		c.setRequestParameterArg(parameters);
-		c.setProductTypeIdArg(quote.getProductTypeId());
+        c.setPortletRequestArg(portletRequest);
+		c.setPortletSessionArg(portletRequest.getPortletSession());
+		c.setPortletPreferencesArg(portletRequest.getPreferences());
+		c.setRequestParameterArg(portletRequest.getParameterMap());
 		
 		try {
 			c.invoke();

@@ -74,10 +74,10 @@
         </not>
         <then>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.sh" os="Linux,Mac OS X,Solaris,Sun OS">
-            <env key="JAVA_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+            <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
           </exec>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.bat" os="Windows 2000,Windows XP,Windows 7">
-            <env key="JAVA_OPTS" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+            <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
           </exec>
         </then>
       </if>

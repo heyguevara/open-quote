@@ -21,6 +21,8 @@ import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
 import com.ail.annotation.ServiceArgument;
@@ -34,7 +36,13 @@ import com.ail.core.Type;
 import com.ail.core.command.Argument;
 import com.ail.core.command.BeanShellServiceException;
 import com.ail.core.command.Command;
+import com.ail.pageflow.util.PageFlowContext;
 
+/**
+ * TODO Move this service into util
+ * @author richarda
+ *
+ */
 @ServiceImplementation
 public class ExecutePageActionService extends Service<ExecutePageActionService.ExecutePageActionArgument> {
     private static final long serialVersionUID = 8055804041790420800L;
@@ -42,18 +50,6 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
     @ServiceArgument
     public interface ExecutePageActionArgument extends Argument {
 
-        /**
-         * The product for which the page action is to be executed.
-         * @return product type id
-         */
-        String getProductTypeIdArg();
-        
-        /**
-         * @see #getProductTypeIdArg()
-         * @param productTypeId
-         */
-        void setProductTypeIdArg(String productTypeId);
-        
         /**
          * The model property holds the type which will be passed
          * into the service.
@@ -66,17 +62,6 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
          */
         void setModelArgRet(Type modelArgRet);
 
-        /**
-         * The portlet session associated with the action.
-         * @return Action's portlet session
-         */
-        PortletSession getPortletSessionArg();
-        
-        /**
-         * @see #getPortletSessionArg()
-         */
-        void setPortletSessionArg(PortletSession portletSession);
-        
         /** 
          * The service name property specifies the name of the product service to
          * be executed.
@@ -116,17 +101,21 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
          */
         void setActionArg(Action action);
 
-        /**
-         * Get the request parameters.
-         * @return
-         */
         Map<String, String[]> getRequestParameterArg();
 
-        /**
-         * @see #getRequestParameterArg()
-         * @param parameters
-         */
         void setRequestParameterArg(Map<String, String[]> parameters);
+
+        PortletSession getPortletSessionArg();
+        
+        void setPortletSessionArg(PortletSession portletSession);
+        
+        PortletPreferences getPortletPreferencesArg();
+        
+        void setPortletPreferencesArg(PortletPreferences portletPreferencesArg);
+        
+        PortletRequest getPortletRequestArg();
+        
+        void setPortletRequestArg(PortletRequest portletRequestArg);
     }
 
     @ServiceCommand(defaultServiceClass=ExecutePageActionService.class)
@@ -138,20 +127,12 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
      * @return The classes namespace
      */
     public String getConfigurationNamespace() {
-        return productNameToConfigurationNamespace(args.getProductTypeIdArg());
+        return productNameToConfigurationNamespace(PageFlowContext.getProductName());
     }
 
     /** The 'business logic' of the entry point. */
     public void invoke() throws BaseException {
         super.setCore(new Core(args.getCallersCore()));
-        
-        if (args.getModelArgRet()==null) {
-            throw new PreconditionException("args.getModelArgRet()==null");
-        }
-        
-        if (args.getProductTypeIdArg()==null || args.getProductTypeIdArg().length()==0) {
-            throw new PreconditionException("args.getProductTypeIdArg()==null || args.getProductTypeIdArg().length()==0");
-        }
         
         if (args.getServiceNameArg()==null || args.getServiceNameArg().length()==0) {
             throw new PreconditionException("args.getServiceNameArg()==null || args.getServiceNameArg().length()==0");
@@ -159,13 +140,17 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
         
         try {
             ExecutePageActionCommand c=(ExecutePageActionCommand)getCore().newCommand(args.getServiceNameArg(), ExecutePageActionCommand.class);
+
             c.setModelArgRet(args.getModelArgRet());
             c.setServiceNameArg(args.getServiceNameArg());
+            c.setPortletRequestArg(args.getPortletRequestArg());
             c.setPortletSessionArg(args.getPortletSessionArg());
             c.setRequestParameterArg(args.getRequestParameterArg());
-            c.setProductTypeIdArg(args.getProductTypeIdArg());
+            c.setPortletPreferencesArg(args.getPortletPreferencesArg());
             c.setActionArg(args.getActionArg());
+            
             c.invoke();
+            
             args.setModelArgRet(c.getModelArgRet());
             args.setValidationFailedRet(c.getValidationFailedRet());
         }

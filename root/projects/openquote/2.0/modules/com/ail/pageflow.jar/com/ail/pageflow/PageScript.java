@@ -29,7 +29,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * The PageScript element inserts JavaSript in the generated page. The JavaSript to be inserted can be referenced by
@@ -190,7 +190,7 @@ public class PageScript extends PageElement {
 				String productName=null;
 		        boolean success=false;
 		
-		        CoreProxy cp=PageflowContext.getCore();
+		        CoreProxy cp=PageFlowContext.getCoreProxy();
 		        Collection<String> namespaces=cp.getConfigurationNamespaceParent();
 		        
 		        for(String namespace: namespaces) {

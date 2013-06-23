@@ -56,7 +56,7 @@
 
         <formatter type="xml" />
 
-        <batchtest fork="yes" todir="${test.dir}/reports" filtertrace="no">
+        <batchtest fork="no" todir="${test.dir}/reports" filtertrace="no">
           <fileset dir="${test.dir}/unit-test.jar" includes="**/*Test*.class" />
         </batchtest>
       </junit>

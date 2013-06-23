@@ -22,6 +22,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * An abstract UI element providing default handler methods common to its concrete sub-classes.
@@ -32,9 +33,15 @@ public abstract class Page extends PageContainer {
     public Page() {
         super();
     }
-
+    
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
+        if (PageFlowContext.getPageFlow().isAdvancingPage()) {
+            for(Action a: getAction()) {
+                a.executeAction(request, model, ActionType.ON_PAGE_ENTRY);
+            }
+        }
+        
         response.setContentType(request.getResponseContentType());
 
         return executeTemplateCommand("Page", request, response, model);

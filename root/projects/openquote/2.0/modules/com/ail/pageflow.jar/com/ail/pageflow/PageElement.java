@@ -41,14 +41,14 @@ import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.core.command.VelocityServiceError;
 import com.ail.pageflow.portlet.PageFlowPortlet;
+import com.ail.pageflow.portlet.QuotationCommon;
 import com.ail.pageflow.render.RenderService.RenderArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 import com.ail.pageflow.util.ErrorText;
 import com.ail.pageflow.util.Functions;
 import com.ail.pageflow.util.HelpText;
 import com.ail.pageflow.util.I18N;
-import com.ail.pageflow.util.PageflowContext;
-import com.ail.pageflow.util.QuotationCommon;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along
@@ -152,7 +152,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
      */
     public String formattedTitle(RenderArgument args) {
         if (getTitle()!=null) {
-            return i18n(expand(getTitle(), PageflowContext.getPolicy(), args.getModelArgRet()));
+            return i18n(expand(getTitle(), PageFlowContext.getPolicy(), args.getModelArgRet()));
         }
         else {
             return null;
@@ -633,17 +633,17 @@ public abstract class PageElement extends Type implements Identified, Comparable
     protected RenderCommand buildRenderCommand(String commandName, RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
         RenderCommand command=null;
 
-        command=PageflowContext.getCore().newCommand(commandName, request.getResponseContentType(), RenderCommand.class);
+        command=PageFlowContext.getCoreProxy().newCommand(commandName, request.getResponseContentType(), RenderCommand.class);
         
         command.setRequestArg(request);
         command.setResponseArgRet(response);
         command.setModelArgRet(model);
-        command.setPolicyArg(PageflowContext.getPolicy());
+        command.setPolicyArg(PageFlowContext.getPolicy());
         command.setPageElementArg(this);
         command.setWriterArg(response.getWriter());
         command.setStyleClassArg(getStyleClass());
         command.setRefArg(getRef());
-        command.setCoreArg(PageflowContext.getCore().getCore());
+        command.setCoreArg(PageFlowContext.getCoreProxy().getCore());
         command.setRenderHintArg(getRenderHint());
         
         return command;
@@ -858,13 +858,13 @@ public abstract class PageElement extends Type implements Identified, Comparable
             }
         }
         catch(Exception e) {
-            PageflowContext.getCore().logError("Failed to read input stream.", e);
+            PageFlowContext.getCoreProxy().logError("Failed to read input stream.", e);
         }
         finally {
             try {
                 reader.close();
             } catch (IOException e) {
-                PageflowContext.getCore().logError("Failed to read input stream.", e);
+                PageFlowContext.getCoreProxy().logError("Failed to read input stream.", e);
             }
         }
         

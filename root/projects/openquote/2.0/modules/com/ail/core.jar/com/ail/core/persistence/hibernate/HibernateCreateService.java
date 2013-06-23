@@ -52,7 +52,6 @@ public class HibernateCreateService extends Service<CreateArgument> {
             session.save(args.getObjectArg());
 		} 
         catch (HibernateException e) {
-            e.printStackTrace();
 			throw new CreateException("Hibernate could not save the object to the database",e);
 		}
         catch(Throwable t) {

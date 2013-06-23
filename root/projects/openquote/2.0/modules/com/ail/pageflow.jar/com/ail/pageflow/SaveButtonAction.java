@@ -27,7 +27,7 @@ import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Adds a save button to a page. By default this button saves the quote and returns
@@ -54,11 +54,11 @@ public class SaveButtonAction extends CommandButtonAction {
             quote.setUserSaved(true);
             quote.setUsername(request.getRemoteUser());
             SavedPolicy sq=new SavedPolicy(quote);
-            sq=PageflowContext.getCore().update(sq);
+            sq=PageFlowContext.getCoreProxy().update(sq);
             quote.setSystemId(sq.getSystemId());
             quote.setSerialVersion(sq.getSerialVersion());
             model=super.processActions(request, response, quote);
-            PageflowContext.setPolicy(null);
+            PageFlowContext.restart();
         }
         return model;
     }

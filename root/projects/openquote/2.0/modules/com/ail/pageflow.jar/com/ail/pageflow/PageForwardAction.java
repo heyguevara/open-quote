@@ -16,6 +16,8 @@
  */
 package com.ail.pageflow;
 
+import static com.ail.pageflow.ActionType.ON_PROCESS_ACTIONS;
+
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
@@ -24,14 +26,12 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.insurance.policy.Policy;
-
-import static com.ail.pageflow.ActionType.ON_PROCESS_ACTIONS;
+import com.ail.pageflow.util.PageFlowContext;
 /**
  * A page action than conditionally moves the context to a specified page. PageForwardActions may be nested inside
  * {@link CommandButtonAction CommandButtonActions} in order to override the CommandButtonAction's default
  * page destination if some condition is met.</br>
- * For exampled, it is common for the last page in a quotation page flow (immediately before the quote or
+ * For example, it is common for the last page in a quotation page flow (immediately before the quote or
  * referral summary is shown) to include a CommandButtonAction directing the pageflow to the referral page, but
  * nest a PageForwardAction which will forward to the quote summary page if the quote is successful.
  * @see CommandButtonAction
@@ -67,7 +67,7 @@ public class PageForwardAction extends Action {
     @Override
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         if (ON_PROCESS_ACTIONS.equals(getWhen()) && conditionIsMet(model)) {
-            ((Policy)model).setPage(getDestinationPageId());
+            PageFlowContext.getPageFlow().setNextPage(getDestinationPageId());
         }
         return model;
     }

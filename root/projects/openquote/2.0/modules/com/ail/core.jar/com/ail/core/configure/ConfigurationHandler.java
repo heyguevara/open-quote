@@ -29,6 +29,19 @@ import com.ail.core.Core;
 import com.ail.core.CoreUser;
 import com.ail.core.VersionEffectiveDate;
 
+/**
+ * The configuration handler manages the loading, saving, caching and querying
+ * of configurations. A configuration is a collection of properties and groups
+ * of properties and other settings which a component uses to hold it's
+ * configuration settings. Configurations are time sensitive and are always
+ * loaded, saved and queried with respect to a 'version effective date'.
+ * Configurations are typically loaded from an external source (class resource,
+ * cms store, etc) by the component which owns them and stored into the
+ * configuration store. It is this store that holds the whole history of the
+ * configuration. The configuration handler delegates to an instance of
+ * AbstractConfiruationLoader to handler the actual persistence of
+ * configurations.
+ */
 public class ConfigurationHandler {
     /** The actual handler this class will delegate to. */
     private static ConfigurationHandler instance = null;

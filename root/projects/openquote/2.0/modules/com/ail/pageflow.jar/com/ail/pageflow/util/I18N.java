@@ -55,8 +55,14 @@ public class I18N {
 	public static String i18n(String message, String alternative) {
 		if (message!=null) {
 	    	try {
-	    		String product=PageflowContext.getPolicy().getProductTypeId();
-	    		Translations trans=(Translations)PageflowContext.getCore().newProductType(product, "Translations");
+	    		String product=PageFlowContext.getProductName();
+	    		
+	    		if (product==null) {
+	    		    product="AIL.Base";
+	    		}
+	    		
+	    		Translations trans=(Translations)PageFlowContext.getCoreProxy().newProductType(product, "Translations");
+	    		
 	    		return trans.translate(message, alternative);
 	    	}
 	    	catch(Throwable e) {

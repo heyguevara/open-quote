@@ -11,10 +11,10 @@
 	<short-description></short-description>
 	<long-description></long-description>
 	<change-log></change-log>
-	<page-url>http://www.liferay.com</page-url>
-	<author>Liferay, Inc.</author>
+	<page-url>http://www.appliedindustriallogic.com</page-url>
+	<author>Applied Industrial Logic</author>
 	<licenses>
-		<license osi-approved="true">LGPL</license>
+		<license osi-approved="true">GPL</license>
 	</licenses>
 	<liferay-versions>
 		<liferay-version>6.1.1</liferay-version>

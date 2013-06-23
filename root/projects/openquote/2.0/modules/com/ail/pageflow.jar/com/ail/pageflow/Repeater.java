@@ -32,7 +32,7 @@ import com.ail.core.Type;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
 import com.ail.pageflow.util.OrderedLinkedList;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * A Repeater represents Collections of data on the UI. Subclasses of this type define how the
@@ -104,14 +104,14 @@ public abstract class Repeater extends PageElement {
      * Get the repeated title with all variable references expanded. References are expanded with 
      * reference to the models passed in. Relative xpaths (i.e. those starting ./) are
      * expanded with respect to <i>local</i>, all others are expanded with respect to
-     * the current quotation (from {@link PageflowContext}).
+     * the current quotation (from {@link PageFlowContext}).
      * @param root Model to expand references with respect to.
      * @param local Model to expand local references (xpaths starting ./) with respect to.
      * @return Title with embedded references expanded
      * @since 1.1
      */
 	public String formattedRepeatedTitle(Type local) {
-		return i18n(expand(getRepeatedTitle(), PageflowContext.getPolicy(), local));
+		return i18n(expand(getRepeatedTitle(), PageFlowContext.getPolicy(), local));
 	}
 
 	/**
@@ -223,7 +223,7 @@ public abstract class Repeater extends PageElement {
 
             if ("add".equals(op) && (id==null || id.equals(opId))) {
                 // Create the object we'll be adding.
-                CoreProxy cp=PageflowContext.getCore();
+                CoreProxy cp=PageFlowContext.getCoreProxy();
                 Type t=cp.newProductType(((Policy)model).getProductTypeId(), type);
                 
                 // Build the xpath that'll get us the collection we need to add to.

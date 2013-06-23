@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Type;
 import com.ail.pageflow.render.RenderService.RenderArgument;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageflowContext;
+import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>This page element renders itself as a button, typically within a {@link NavigationSection}. When clicked the
@@ -121,7 +121,7 @@ public class CommandButtonAction extends PageElement {
     public Type processActions(ActionRequest request, ActionResponse response, Type model) {
         String op=Functions.getOperationParameters(request).getProperty("op");
         if (op!=null && op.equals(label)) {
-            PageflowContext.getPolicy().setPage(destinationPageId);
+            PageFlowContext.getPageFlow().setNextPage(destinationPageId);
             model=super.processActions(request, response, model);
         }
         return model;
