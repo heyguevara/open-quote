@@ -17,6 +17,7 @@
 
 package com.ail.pageflow.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.ail.annotation.ServiceArgument;
@@ -56,6 +57,10 @@ public class ListToOptionService extends Service<ListToOptionService.ListToOptio
         void setUnknownOptionArg(String unknownOptionArg);
         
         String getUnknownOptionArg();
+        
+        void setDisabledOptionsArg(Collection<?> disabledOptionsArg);
+        
+        Collection<?> getDisabledOptionsArg();
     }
 
     @ServiceCommand(defaultServiceClass = ListToOptionService.class)
@@ -69,8 +74,14 @@ public class ListToOptionService extends Service<ListToOptionService.ListToOptio
             throw new PreconditionException("args.getListArg()==null");
         }
 
+        Collection<?> disabledOptions = args.getDisabledOptionsArg()!=null 
+                ? args.getDisabledOptionsArg() 
+                : new ArrayList<Object>();
+
         String option;
         String selected;
+        String disabled;
+        
         StringBuffer markup = new StringBuffer();
 
         if (!args.getExcludeUnknownArg() || args.getUnknownOptionArg() != null) {
@@ -81,9 +92,10 @@ public class ListToOptionService extends Service<ListToOptionService.ListToOptio
         for (Object p : args.getOptionsArg()) {
             option = p.toString();
 
-            selected = option.equals(args.getSelectedArg()) ? " selected='yes'" : "";
-            
-            markup.append("<option value='").append(option).append("'").append(selected).append('>').append(i18n(option)).append("</option>");
+            selected = option.equals(args.getSelectedArg()) ? " selected='yes' " : "";
+            disabled = disabledOptions.contains(option) ? " disabled='yes' " : "";
+
+            markup.append("<option value='").append(option).append("'").append(selected).append(disabled).append('>').append(i18n(option)).append("</option>");
         }
 
         args.setOptionMarkupRet(markup.toString());

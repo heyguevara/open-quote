@@ -153,18 +153,28 @@ function formatnumber(obj, decimalSeparator, thousandsSeparator, places) {
 	obj.value = num.toFormatted();
 }
 
-tinyMCE.init({
-	// General options
-	mode : "textareas",
-	//elements : "elm2",
-	theme : "advanced",
-	skin : "o2k7",
-	plugins : "safari,style,iespell",
+function initialiseTinyMCE() {
+	var themeName = Liferay.ThemeDisplay.getPathThemeRoot();
+	var themeCssHref;
 
-	// Theme options
-	theme_advanced_buttons1 : "bold,italic,underline,strikethrough",
-	theme_advanced_buttons2 : "",
-	theme_advanced_buttons3 : "",
-	theme_advanced_toolbar_location : "external",
-	theme_advanced_resizing_min_height : 50
-});
+	for ( var i = 0; i < document.styleSheets.length && themeCssHref == null; i++) {
+		var href = document.styleSheets[i].href;
+		if (href.indexOf(themeName) != -1 && href.indexOf('themeId') != -1 && href.indexOf('main.css') != -1) {
+			themeCssHref = href;
+		}
+	}
+
+	tinymce.init({
+	    mode : "specific_textareas",
+	    editor_selector : "pageflow-note",
+	    plugins : "contextmenu",
+	    contextmenu : "undo redo | bold italic underline",
+	    content_css : themeCssHref,
+	    body_class : "textarea-tinymce",
+	    menubar : false,
+	    toolbar: false,
+	    statusbar : false,
+	    //resize : "both",
+	    browser_spellcheck : true 
+	});
+}

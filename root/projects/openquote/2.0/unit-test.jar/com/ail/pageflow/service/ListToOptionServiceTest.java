@@ -40,14 +40,14 @@ public class ListToOptionServiceTest {
     @Test
     public void shouldReturnOptionListForHappyPath() throws BaseException {
         sut.invoke();
-        verify(args).setOptionMarkupRet(eq("<option value='?'>i18n_?</option><option value='one'>one</option><option value='two' selected='yes'>two</option><option value='three'>three</option>"));
+        verify(args).setOptionMarkupRet(eq("<option value='?'>i18n_?</option><option value='one'>one</option><option value='two' selected='yes' >two</option><option value='three'>three</option>"));
     }
 
     @Test
     public void shouldNotIncludeUnknownArg() throws BaseException {
         doReturn(true).when(args).getExcludeUnknownArg();
         sut.invoke();
-        verify(args).setOptionMarkupRet(eq("<option value='one'>one</option><option value='two' selected='yes'>two</option><option value='three'>three</option>"));
+        verify(args).setOptionMarkupRet(eq("<option value='one'>one</option><option value='two' selected='yes' >two</option><option value='three'>three</option>"));
     }
 }
 

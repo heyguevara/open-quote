@@ -18,6 +18,7 @@
 package com.ail.pageflow.service;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
@@ -38,7 +39,11 @@ public class InitialisePageFlowContextService extends Service<InitialisePageFlow
         void setPortletRequestArg(PortletRequest portletRequestArg);
 
         PortletRequest getPortletRequestArg();
-    }
+
+        void setPortletResponseArg(PortletResponse portletResponseArg);
+
+        PortletResponse getPortletResponseArg();
+}
 
     @ServiceCommand(defaultServiceClass = InitialisePageFlowContextService.class)
     public interface InitialisePageFlowContextCommand extends Command, InitialisePageFlowContextArgument {
@@ -66,8 +71,9 @@ public class InitialisePageFlowContextService extends Service<InitialisePageFlow
         for(Parameter p: getCore().getConfiguration().findGroup("PageFlowInitialisationActions").getParameter()) {
             ExecutePageActionCommand command = getCore().newCommand(p.getName(), ExecutePageActionCommand.class);
             command.setModelArgRet(null);
-            command.setPortletPreferencesArg(args.getPortletRequestArg().getPreferences());
             command.setPortletRequestArg(args.getPortletRequestArg());
+            command.setPortletResponseArg(args.getPortletResponseArg());
+            command.setPortletPreferencesArg(args.getPortletRequestArg().getPreferences());
             command.setPortletSessionArg(args.getPortletRequestArg().getPortletSession());
             command.setRequestParameterArg(args.getPortletRequestArg().getParameterMap());
             command.setServiceNameArg(p.getName());

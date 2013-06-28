@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 
 import com.ail.annotation.ServiceArgument;
@@ -116,6 +117,10 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
         PortletRequest getPortletRequestArg();
         
         void setPortletRequestArg(PortletRequest portletRequestArg);
+
+        PortletResponse getPortletResponseArg();
+        
+        void setPortletResponseArg(PortletResponse portletResponseArg);
     }
 
     @ServiceCommand(defaultServiceClass=ExecutePageActionService.class)
@@ -144,6 +149,7 @@ public class ExecutePageActionService extends Service<ExecutePageActionService.E
             c.setModelArgRet(args.getModelArgRet());
             c.setServiceNameArg(args.getServiceNameArg());
             c.setPortletRequestArg(args.getPortletRequestArg());
+            c.setPortletResponseArg(args.getPortletResponseArg());
             c.setPortletSessionArg(args.getPortletSessionArg());
             c.setRequestParameterArg(args.getRequestParameterArg());
             c.setPortletPreferencesArg(args.getPortletPreferencesArg());

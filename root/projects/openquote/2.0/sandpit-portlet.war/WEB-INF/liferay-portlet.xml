@@ -6,12 +6,15 @@
 		<portlet-name>sandpit</portlet-name>
 		<icon>/icon.png</icon>
 		<instanceable>false</instanceable>
+        <header-portal-css>/quotation-portlet/css/main.css</header-portal-css>
         <header-portlet-css>/css/sandpit.css</header-portlet-css>
-		<header-portlet-css>/quotation-portlet/css/main.css</header-portlet-css>
+        <header-portlet-css>/css/codemirror.css</header-portlet-css>
         <header-portal-javascript>/quotation-portlet/js/main.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/numberformat.js</header-portal-javascript>
-        <header-portal-javascript>/quotation-portlet/js/tiny_mce/tiny_mce.js</header-portal-javascript>
+        <header-portal-javascript>/quotation-portlet/js/tinymce/tinymce.min.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/openquote.js</header-portal-javascript>
+        <header-portlet-javascript>/js/codemirror/lib/codemirror.js</header-portlet-javascript>
+        <header-portlet-javascript>/js/codemirror/mode/xml/xml.js</header-portlet-javascript>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

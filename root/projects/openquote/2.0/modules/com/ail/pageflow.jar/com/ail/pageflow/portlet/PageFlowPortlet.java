@@ -91,7 +91,7 @@ public class PageFlowPortlet extends GenericPortlet {
 
     @Override
     public void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        PageFlowContext.initialise(request);
+        PageFlowContext.initialise(request, response);
         response.setContentType("text/html");
 
         PortletURL addNameURL = response.createActionURL();
@@ -146,7 +146,7 @@ public class PageFlowPortlet extends GenericPortlet {
     }
 
     private void doProcessQuotationAction(ActionRequest request, ActionResponse response) {
-        PageFlowContext.initialise(request);
+        PageFlowContext.initialise(request, response);
 
         try {
             quotationCommon.processAction(request, response);
@@ -170,7 +170,7 @@ public class PageFlowPortlet extends GenericPortlet {
     }
 
     private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
-        PageFlowContext.initialise(request);
+        PageFlowContext.initialise(request, response);
 
         try {
             quotationCommon.doView(request, response);

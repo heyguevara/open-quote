@@ -20,7 +20,7 @@
 
       <!-- copy binary files with the filter turned off -->
       <copy todir="@{destdir}" overwrite="true">
-        <fileset dir="@{srcdir}" includes="**/*.Processor, **/*.pdf, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls" />
+        <fileset dir="@{srcdir}" includes="**/*.Processor, **/*.pdf, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls, **/*.svg, **/*.swf, **/*.txt, **/*.md, **/*.woff, **/*.ttf, **/*.eot" />
       </copy>
 
     </sequential>

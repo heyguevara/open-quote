@@ -17,6 +17,7 @@
 package com.ail.pageflow.util;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
@@ -34,6 +35,7 @@ import com.ail.pageflow.service.InitialisePageFlowContextService.InitialisePageF
  */
 public class PageFlowContext {
     private static ThreadLocal<PortletRequest> request = new ThreadLocal<PortletRequest>();
+    private static ThreadLocal<PortletResponse> response = new ThreadLocal<PortletResponse>();
     private static ThreadLocal<CoreProxy> coreProxy = new ThreadLocal<CoreProxy>();
 
     /**
@@ -43,11 +45,12 @@ public class PageFlowContext {
      *            Initialise the context with respect to this request
      * @throws BaseException
      */
-    public static void initialise(PortletRequest request) {
+    public static void initialise(PortletRequest request, PortletResponse response) {
         try {
             CoreProxy coreProxy = new CoreProxy();
             InitialisePageFlowContextCommand command = coreProxy.newCommand(InitialisePageFlowContextCommand.class);
             command.setPortletRequestArg(request);
+            command.setPortletResponseArg(response);
             command.invoke();
         } catch (Exception e) {
             if (getPolicy() != null) {
@@ -80,6 +83,14 @@ public class PageFlowContext {
 
     public static void setRequest(PortletRequest requestArg) {
         request.set(requestArg);
+    }
+
+    public static PortletResponse getResponse() {
+        return response.get();
+    }
+
+    public static void setResponse(PortletResponse responseArg) {
+        response.set(responseArg);
     }
 
     public static PageFlow getPageFlow() {

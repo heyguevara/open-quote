@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import static java.util.Arrays.asList;
 
@@ -84,12 +85,13 @@ public class SandpitPortlet extends GenericPortlet {
     @Override
     public void processAction(ActionRequest request, ActionResponse response) {
         boolean processingComplete = false;
-
         PortletSession session = request.getPortletSession();
         statusMessage = null;
 
         try {
-            PageFlowContext.initialise(request);
+            coreProxy.setVersionEffectiveDateToNow();
+
+            PageFlowContext.initialise(request, response);
 
             if (request.getParameter("saveAsTestcase") != null) {
                 SavedPolicy q = new SavedPolicy(PageFlowContext.getPolicy());
@@ -144,15 +146,15 @@ public class SandpitPortlet extends GenericPortlet {
                 }
 
                 if (!"XML".equals(getCurrentView(request)) && "XML".equals(selectedView)) {
-                    if (session.getAttribute("quoteXml") == null) {
-                        session.setAttribute("quoteXml", coreProxy.toXML(PageFlowContext.getPolicy()));
-                    }
+                    session.setAttribute("policyXml", coreProxy.toXML(PageFlowContext.getPolicy()));
+                    processingComplete = true;
                 } else if ("XML".equals(getCurrentView(request)) && !"XML".equals(selectedView)) {
-                    XMLString quoteXml = new XMLString(request.getParameter("quoteXml"));
-                    session.setAttribute("quoteXml", quoteXml);
-                    Policy quote = coreProxy.fromXML(Policy.class, quoteXml);
+                    XMLString policyXml = new XMLString(request.getParameter("policyXml"));
+                    session.setAttribute("policyXml", policyXml);
+                    Policy quote = coreProxy.fromXML(Policy.class, policyXml);
                     PageFlowContext.setPolicy(quote);
-                    session.removeAttribute("quoteXml");
+                    session.removeAttribute("policyXml");
+                    processingComplete = true;
                 }
 
                 session.setAttribute("view", selectedView);
@@ -195,7 +197,7 @@ public class SandpitPortlet extends GenericPortlet {
             // This is bad! We won't even be able to redirect to the exception page, so give up.
             throw e;
         }
-        catch (Throwable t) {
+        catch (Throwable cause) {
             Policy quote = PageFlowContext.getPolicy();
 
             if (quote == null) {
@@ -203,12 +205,18 @@ public class SandpitPortlet extends GenericPortlet {
                 PageFlowContext.setPolicy(quote);
             }
 
-            quote.addException(new ExceptionRecord(t));
+            quote.addException(new ExceptionRecord(cause));
 
             try {
                 quotationCommon.persistQuotation(quote);
             } catch (Throwable th) {
-                session.setAttribute("exception", new ExceptionRecord(th));
+                // Switch to the exception view for 'cause' - not th. The user is probably
+                // more interested in what error cause us to be handling exceptions in the
+                // first place rather than any exception we encountered while handling them.
+                session.setAttribute("exception", new ExceptionRecord(cause));
+
+                // Dump th to the console just for information.
+                th.printStackTrace();
             }
 
             session.setAttribute("view", EXCEPTION_MODE);
@@ -219,38 +227,23 @@ public class SandpitPortlet extends GenericPortlet {
     public void doView(RenderRequest request, RenderResponse response) throws IOException {
         response.setContentType("text/html");
 
-        PortletSession session = request.getPortletSession();
-
         try {
-            PageFlowContext.initialise(request);
+            PageFlowContext.initialise(request, response);
 
             renderDebugPanel(request, response);
 
             if (statusMessage != null) {
-                PrintWriter out = response.getWriter();
-                out.printf("<table width='100%%'><tr><td align='center'>%s</td></tr></table>", statusMessage);
+                renderSandpitMessage(response, statusMessage, "");
             } else if (processingQuotation(request)) {
                 if (WIZARD_MODE.equals(getCurrentView(request))) {
-                    int exceptionCount = (PageFlowContext.getPolicy() != null) ? PageFlowContext.getPolicy().getException().size() : 0;
-
-                    quotationCommon.doView(request, response);
-
-                    if (PageFlowContext.getPolicy() != null && PageFlowContext.getPolicy().getException().size() != exceptionCount) {
-                        session.setAttribute("view", EXCEPTION_MODE);
-                        doView(request, response);
-                    }
+                    renderPageFlowView(request, response);
                 } else if (ASSESSMENT_SHEET_MODE.equals(getCurrentView(request))) {
-                    if (PageFlowContext.getPolicy().getAssessmentSheet() != null) {
-                        assessmentSheetDetails.renderResponse(request, response, PageFlowContext.getPolicy());
-                    } else {
-                        response.getWriter().print("<table width='100%'><tr><td align='center'>No assessment sheet attached to the quotation</td></tr></table>");
-                    }
+                    renderAssessmentSheetView(request, response);
                 } else if (EXCEPTION_MODE.equals(getCurrentView(request))) {
-                    renderQuoteExceptions(request, response, PageFlowContext.getPolicy());
+                    renderExceptionsView(request, response);
                 }
             } else {
-                PrintWriter out = response.getWriter();
-                out.print("<table width='100%'><tr><td align='center'>No product selected</td></tr></table>");
+                renderSandpitMessage(response, "No product selected.", "Please select a Product and a PageFlow in the debug panel above.");
             }
         }
         catch (PageFlowContextError e) {
@@ -258,8 +251,56 @@ public class SandpitPortlet extends GenericPortlet {
             throw e;
         }
         catch (Throwable t) {
-            Policy policy = PageFlowContext.getPolicy();
+            handleSandpitException(request, response, t);
+        }
+    }
 
+    private void renderSandpitMessage(RenderResponse response, String message, String help) throws IOException {
+        PrintWriter out=response.getWriter();
+        out.write("<div class='sandpit-pageflow-panel'>");
+        out.write("<div class='sandpit-message'>");
+        out.write("<div class='sandpit-message'>"+message+"</div>");
+        out.write("<div class='sandpit-message-help'>"+help+"</div>");
+        out.write("</div>");
+        out.write("</div>");
+    }
+
+    private void renderAssessmentSheetView(RenderRequest request, RenderResponse response) throws IOException {
+        PrintWriter out = response.getWriter();
+
+        if (PageFlowContext.getPolicy() != null && PageFlowContext.getPolicy().getAssessmentSheet() != null) {
+            out.write("<div class='sandpit-pageflow-panel'>");
+            assessmentSheetDetails.renderResponse(request, response, PageFlowContext.getPolicy());
+            out.write("</div>");
+        } else {
+            renderSandpitMessage(response, "No assessment sheet available", "The assessment sheet can only be displayed once the policy being processed has been rated.");
+        }
+    }
+
+    private void renderPageFlowView(RenderRequest request, RenderResponse response) throws IOException {
+        PortletSession session = PageFlowContext.getRequest().getPortletSession();
+        PrintWriter outs = response.getWriter();
+
+        outs.write("<div class='sandpit-pageflow-panel'>");
+
+        int exceptionCount = (PageFlowContext.getPolicy() != null) ? PageFlowContext.getPolicy().getException().size() : 0;
+
+        quotationCommon.doView(request, response);
+
+        if (PageFlowContext.getPolicy() != null && PageFlowContext.getPolicy().getException().size() != exceptionCount) {
+            session.setAttribute("view", EXCEPTION_MODE);
+            doView(request, response);
+        }
+
+        outs.write("</div>");
+    }
+
+    private void handleSandpitException(RenderRequest request, RenderResponse response, Throwable cause) throws IOException {
+        try {
+            PortletSession session=PageFlowContext.getRequest().getPortletSession();
+            
+            Policy policy = PageFlowContext.getPolicy();
+    
             // All exceptions are associated with a quotation. However, if the
             // quote itself could not be initialised (which is quite likely if
             // the product's Policy.xml has errors) then create a dummy quote
@@ -268,9 +309,9 @@ public class SandpitPortlet extends GenericPortlet {
                 policy = new Policy();
                 PageFlowContext.setPolicy(policy);
             }
-
-            policy.addException(new ExceptionRecord(t));
-
+    
+            policy.addException(new ExceptionRecord(cause));
+    
             // If we fail to persist the quote now then things must be very
             // broken. Add the details of this exception to the quote too.
             try {
@@ -280,23 +321,26 @@ public class SandpitPortlet extends GenericPortlet {
                 // capturing
                 // the details of errors during error handling isn't useful.
             }
-
+    
             session.setAttribute("view", EXCEPTION_MODE);
-
+    
             // we've probably already written something - half formed - to the
             // output stream before the exception was thrown. Reset the buffer
             // so we can display the debug pane and exception cleanly.
             response.resetBuffer();
-
+    
             try {
                 renderDebugPanel(request, response);
             } catch (BaseException e) {
                 // ignore this, we're in the sandpit handling an error anyway,
-                // capturing
-                // the details of errors during error handling isn't useful.
+                // capturing the details of errors during error handling isn't useful.
             }
-
-            renderQuoteExceptions(request, response, PageFlowContext.getPolicy());
+    
+            renderExceptionsView(request, response);
+        }
+        catch(Throwable t) {
+            // If all else fails, dump details to the log
+            cause.printStackTrace();
         }
     }
 
@@ -311,35 +355,39 @@ public class SandpitPortlet extends GenericPortlet {
         return PageFlowContext.getProductName() != null && PageFlowContext.getPageFlowName() != null;
     }
 
-    private void renderQuoteExceptions(RenderRequest request, RenderResponse response, Policy quote) {
-        boolean recordsOutput = false;
-
+    private void renderExceptionsView(RenderRequest request, RenderResponse response) throws IOException {
+        Policy policy=PageFlowContext.getPolicy();
+        
+        if ((policy.getException()==null || policy.getException().size()==0) && request.getPortletSession().getAttribute("exception") == null) {
+            renderSandpitMessage(response, "No Exceptions available", "");
+            return;
+        }
+        
         try {
-            PrintWriter w = response.getWriter();
+            PrintWriter out=response.getWriter();
 
-            w.printf("<table width='100%%'>");
+            out.write("<div class='sandpit-pageflow-panel'>");
 
-            if (quote != null && quote.getException() != null && quote.getException().size() != 0) {
+            out.printf("<table width='100%%'>");
+
+            if (policy != null && policy.getException() != null && policy.getException().size() != 0) {
                 // Sort exceptions into date order
-                for (ExceptionRecord er : quote.getException()) {
-                    renderExceptionRecord(w, er);
+                for (ExceptionRecord er : policy.getException()) {
+                    renderExceptionRecord(out, er);
                 }
             }
 
             if (request.getPortletSession().getAttribute("exception") != null) {
                 ExceptionRecord er = (ExceptionRecord) request.getPortletSession().getAttribute("exception");
-                renderExceptionRecord(w, er);
+                renderExceptionRecord(out, er);
             }
 
-            if (recordsOutput) {
-                response.getWriter().print("<tr><td align='center'>There is no current exception</td></tr>");
-            }
-
-            w.printf("</table>");
+            out.write("</table>");
+            out.write("</div>");
         } catch (Exception e) {
             // okay, if we couldn't even render the exception to the user then
-            // we really
-            // are stuck. The best we can do is dump something to the log.
+            // we really are stuck. The best we can do is dump something to the
+            // log.
             e.printStackTrace();
         }
     }
@@ -400,14 +448,12 @@ public class SandpitPortlet extends GenericPortlet {
         PrintWriter w = response.getWriter();
 
         w.printf("<form name='productDebug' action='%s' method='post'>", response.createActionURL());
-        w.printf("<div class='sandpit_debug_panel'>");
+        w.printf("<div class='sandpit-debug-panel'>");
         w.printf("<span id='navigator'>");
         w.printf("<select id='selectedProduct' name='selectedProduct' onChange='submit()' class='portlet-form-input-field'>%s</select>", quotationCommon.buildProductSelectOptions(product));
         w.printf("<select id='selectedPageFlow' name='selectedPageFlow' %s onChange='submit()' class='portlet-form-input-field'>%s</select>", disabledPageFlowList ? "disabled=disabled" : "", quotationCommon.buildPageFlowSelectOptions(product, pageFlowName));
         w.printf("<select id='selectedPage' name='selectedPage' %s onChange='submit()' class='portlet-form-input-field'>%s</select>", disablePageList ? "disabled=disabled" : "", buildPageSelectOptioon());
         w.printf("</span>");
-
-        w.printf("<span id='reset'><input type='submit' name='resetQuote' %s value='Reset quote' class='portlet-form-input-field'/></span>", disableResetButton ? "disabled=disabled" : "");
 
         w.printf("<span id='load'>");
         w.printf(" <input placeholder='quote number' type='text' name='selectedQuote' class='pn-normal'/>");
@@ -422,23 +468,36 @@ public class SandpitPortlet extends GenericPortlet {
         w.printf("<span id='save'><input type='checkbox' name='saveAsTestcase' %s value='saveAsTestCase' class='portlet-form-input-field'/> Test case</span>", disableSaveAsTestCaseButton ? "disabled=disabled"
                 : "");
 
+        w.printf("<span id='reset'><input id='resetQuote' type='submit' name='resetQuote' %s value='' class='portlet-form-input-field'/></span>", disableResetButton ? "disabled=disabled" : "");
+
         w.printf("</div>");
 
         // The XML editor textarea is handled as a part of the debug panel. It
-        // might be nice if it were a separate
-        // UI component, but a) it's so simple it isn't worth the effort; and b)
-        // it needs to be included in the debug
-        // panel's form so that switching modes also submits the XML content.
+        // might be nice if it were a separate UI component, but
+        // a) it's so simple it isn't worth the effort; and,
+        // b) it needs to be included in the debug panel's form so that
+        //    switching modes also submits the XML content.
         if ("XML".equals(getCurrentView(request))) {
-            XMLString quoteXml = (XMLString) request.getPortletSession().getAttribute("quoteXml");
-            if (quoteXml != null) {
-                w.printf("<table width='100%%'><tr><td>");
-                w.printf("<textarea name='quoteXml' rows='20' style='width:100%%'>%s</textarea>", quoteXml.toString());
-                w.printf("</td></tr></table>");
-            }
+            renderXmlView(request, w);
         }
 
         w.printf("</form>");
+    }
+
+    private void renderXmlView(RenderRequest request, PrintWriter w) {
+        XMLString policyXml = (XMLString) request.getPortletSession().getAttribute("policyXml");
+        if (policyXml != null) {
+            w.write("<div class='sandpit-pageflow-panel'>");
+            w.write("<textarea id='policyXml' name='policyXml'>"+policyXml.toString()+"</textarea>");
+            w.write("</div>");
+
+            w.write("<script type='text/javascript'>");
+            w.write("  var editor = CodeMirror.fromTextArea(document.getElementById('policyXml'), {");
+            w.write("     mode: {name: 'xml', alignCDATA: true},");
+            w.write("     lineNumbers: true");
+            w.write("  });");
+            w.write("</script>");
+        }
     }
 
     /**
@@ -450,7 +509,28 @@ public class SandpitPortlet extends GenericPortlet {
      * @throws BaseException
      */
     private String getViewSelectOptions(String view) throws BaseException {
+        Collection<String> disabled=new ArrayList<String>();
+        Policy policy = PageFlowContext.getPolicy();
+        
+        if (policy==null) {
+            disabled.add(XML_MODE);
+        }
+        
+        if (policy==null || policy.getAssessmentSheet()==null || policy.getAssessmentSheet().getLineCount()==0) {
+            disabled.add(ASSESSMENT_SHEET_MODE);
+        }
+        
+        // Disable Exception View unless we have a policy and that policy has
+        // exceptions in it, or there is an exception attribute in the session.
+        if (!(policy!=null && 
+              policy.getException()!=null && 
+              policy.getException().size()!=0) &&
+            !(PageFlowContext.getRequest().getPortletSession().getAttribute("exception")!=null)) {
+            disabled.add(EXCEPTION_MODE);
+        }
+        
         listToOptionCommand.setOptionsArg(VIEW_MODES);
+        listToOptionCommand.setDisabledOptionsArg(disabled);
         listToOptionCommand.setExcludeUnknownArg(true);
         listToOptionCommand.setUnknownOptionArg(null);
         listToOptionCommand.setSelectedArg(view);
