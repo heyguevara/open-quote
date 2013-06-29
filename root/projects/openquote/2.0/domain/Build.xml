@@ -18,10 +18,15 @@
 
     <install-liferay-macro version="${liferay.version}" />
 
-    <!-- copy domain files with variables expanded -->
+    <!-- copy text based domain files with variables expanded -->
     <copy todir="${liferay.dir}">
       <filterset refid="copy.filterset" />
-      <fileset dir="liferay" />
+      <fileset dir="liferay" includes="${text.filetypes}" />
+    </copy>
+
+    <!-- copy binary domain files without variables expanded -->
+    <copy todir="${liferay.dir}">
+      <fileset dir="liferay" includes="${binary.filetypes}" />
     </copy>
 
     <!-- copy package files with variables expanded -->
@@ -34,7 +39,7 @@
     <update-dependencies-macro todir="${tmp.dir}" pattern="[artifact](-[classifier]).[ext]" />
     <move file="${tmp.dir}/jboss-modules.jar" todir="${jboss.dir}" overwrite="yes"/>
     <move file="${tmp.dir}/mysql-connector-java.jar" tofile="${jboss.dir}/modules/com/liferay/portal/main/mysql.jar" overwrite="yes"/>
-    
+
     <set-mysql-running-property-macro />
 
     <if>

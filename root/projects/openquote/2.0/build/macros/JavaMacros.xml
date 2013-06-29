@@ -14,13 +14,13 @@
       <!-- install text files (properties, xml, etc) with the filter turned on -->
       <copy todir="@{destdir}" overwrite="true">
         <filterset refid="copy.filterset" />
-        <fileset dir="@{srcdir}" includes="**/*.jsp, **/*.tld, **/*.js, **/*.properties, **/*.xml, **/*.wsdl, **/*.jnlp, **/*.html, **/*.MF, **/*.bs, **/*.xsl, **/*.xslt, **/*.drl, **/*.rule, **/*.dsl, **/*.janino, **/*.vm, **/*.css, **/*.ftl" excludes="Build.xml, Ivy.xml, */src/**, */.sass-cache/**" />
+        <fileset dir="@{srcdir}" includes="${text.filetypes}" excludes="Build.xml, Ivy.xml, */src/**, */.sass-cache/**" />
         <fileset dir="@{srcdir}" includes="META-INF/**/*" />
       </copy>
 
       <!-- copy binary files with the filter turned off -->
       <copy todir="@{destdir}" overwrite="true">
-        <fileset dir="@{srcdir}" includes="**/*.Processor, **/*.pdf, **/*.gif, **/*.png, **/*.ico, **/*.jpg, **/*.xls, **/*.svg, **/*.swf, **/*.txt, **/*.md, **/*.woff, **/*.ttf, **/*.eot" />
+        <fileset dir="@{srcdir}" includes="${binary.filetypes}" />
       </copy>
 
     </sequential>
