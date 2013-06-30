@@ -25,7 +25,7 @@
     <move todir="${package.dir}" file="${liferay.dir}" />
 
     <zip destfile="${package.file}">
-      <fileset dir="${target.dir}" includes="openquote-community*/**" excludes="**/*.sh" />
+      <fileset dir="${target.dir}" includes="openquote-community*/**" excludes="**/*.sh, **/*-sources.jar, **/*-javadoc.jar" />
       <zipfileset dir="${target.dir}" includes="openquote-community*/**/*.sh" filemode="755"/>
     </zip>
   </target>
