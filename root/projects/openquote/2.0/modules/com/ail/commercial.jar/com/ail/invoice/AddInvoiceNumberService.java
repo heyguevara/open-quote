@@ -95,7 +95,7 @@ public class AddInvoiceNumberService extends Service<AddInvoiceNumberService.Add
         String invoiceNumber=command.getInvoiceNumberRet();
         args.getInvoiceArgRet().setInvoiceNumber(invoiceNumber);
         
-        core.logDebug("Invoice number: "+invoiceNumber+" generated");
+        core.logInfo("Invoice number: "+invoiceNumber+" generated");
 
         if (args.getInvoiceArgRet().getInvoiceNumber()==null || args.getInvoiceArgRet().getInvoiceNumber().length()==0) {
             throw new PostconditionException("args.getInvoiceArgRet().getInvoiceNumber()==null || args.getInvoiceArgRet().getInvoiceNumber().length()==0");

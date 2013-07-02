@@ -101,6 +101,9 @@
             <logger category="org.quartz.simpl">
                 <level name="ERROR"/>
             </logger>
+            <logger category="com.ail">
+                <level name="DEBUG"/>
+            </logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>

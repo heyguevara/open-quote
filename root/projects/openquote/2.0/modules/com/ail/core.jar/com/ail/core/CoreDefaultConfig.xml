@@ -73,19 +73,19 @@
 
         <!-- Map all of the logger commands to the stdio logger -->
         <command name="InfoLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+            <parameter name="Service">com.ail.core.logging.JavaLoggerService</parameter>
         </command>
         <command name="DebugLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.NullService</parameter>
+            <parameter name="Service">com.ail.core.logging.JavaLoggerService</parameter>
         </command>
         <command name="WarningLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+            <parameter name="Service">com.ail.core.logging.JavaLoggerService</parameter>
         </command>
         <command name="ErrorLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+            <parameter name="Service">com.ail.core.logging.JavaLoggerService</parameter>
         </command>
         <command name="FatalLogger" builder="ClassBuilder" key="com.ail.core.logging.LoggingCommandImpl">
-            <parameter name="Service">com.ail.core.logging.SystemOutLoggerService</parameter>
+            <parameter name="Service">com.ail.core.logging.JavaLoggerService</parameter>
         </command>
 
         <!-- Map all of the persistence commands to the persistence server -->

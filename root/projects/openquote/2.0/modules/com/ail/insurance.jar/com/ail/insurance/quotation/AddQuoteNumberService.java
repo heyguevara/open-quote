@@ -105,7 +105,7 @@ public class AddQuoteNumberService extends Service<AddQuoteNumberService.AddQuot
         command.setUniqueNumberArg(gukc.getKeyRet());
         command.invoke();
         String quoteNumber=command.getQuoteNumberRet();
-        core.logDebug("Quote number: "+quoteNumber+" generated");
+        core.logInfo("Quote number: "+quoteNumber+" generated");
         args.getPolicyArgRet().setQuotationNumber(quoteNumber);
     }
 }

@@ -128,7 +128,7 @@ public class AddPolicyNumberService extends Service<AddPolicyNumberService.AddPo
         command.setUniqueNumberArg(gukc.getKeyRet());
         command.invoke();
         String policyNumber=command.getPolicyNumberRet();
-        core.logDebug("Policy number: "+policyNumber+" generated");
+        core.logInfo("Policy number: "+policyNumber+" generated");
         policy.setPolicyNumber(policyNumber);
         
         if (policy.getPolicyNumber()==null || policy.getPolicyNumber().length()==0) {
