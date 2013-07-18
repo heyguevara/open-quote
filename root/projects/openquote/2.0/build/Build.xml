@@ -24,8 +24,11 @@
   </target>
 
   <target name="teardown" description="clear out the jars downloaded by 'setup'">
-    <delete dir="${target.dir}" />
-    <delete dir="${cache.dir}" />
+    <delete failonerror="no">
+      <fileset dir="${target.dir}" />
+      <fileset dir="${cache.dir}" />
+      <fileset dir="${buildlib.dir}" includes="**/*.jar" />
+    </delete>
   </target>
 
   <target name="release" description="build and promote releasable artifacts">

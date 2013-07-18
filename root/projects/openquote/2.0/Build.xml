@@ -42,7 +42,8 @@
   <target name="teardown" description="undo whatever setup did">
     <stop-liferay-macro />
     <uninstall-liferay-macro version="${liferay.version}" />
-    <subant-macro target="teardown" />
+    <subant-macro target="teardown" excludes="build/Build.xml"/>
+    <subant-macro target="teardown" includes="build/Build.xml"/>
     <delete dir="${target.dir}" failonerror="false" />
     <delete dir="./.apt_generated" />
   </target>

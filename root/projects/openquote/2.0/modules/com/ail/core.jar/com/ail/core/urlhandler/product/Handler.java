@@ -25,11 +25,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+import java.util.ArrayList;
+import java.util.List;
 
 import javassist.util.proxy.MethodHandler;
 import javassist.util.proxy.ProxyFactory;
 
-import javax.xml.bind.DatatypeConverter;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthPolicy;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.util.HttpURLConnection;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.ThreadLocale;
@@ -58,7 +65,6 @@ import com.ail.core.ThreadLocale;
  * <p/>
  */
 public class Handler extends URLStreamHandler {
-    private static final String HTTP_ERROR_412_STRING = "HTTP response code: 412";
 
     protected URLConnection openConnection(URL productURL) throws IOException {
         URLConnection urlConnection = null;
@@ -67,30 +73,30 @@ public class Handler extends URLStreamHandler {
         String username = cp.getParameterValue("ProductURLHandler.Username");
         String password = cp.getParameterValue("ProductURLHandler.Password");
         String protocol = cp.getParameterValue("ProductURLHandler.Protocol");
+        String realm = cp.getParameterValue("ProductURLHandler.Realm");
         String host = cp.getParameterValue("ProductURLHandler.Host");
         Integer port = new Integer(cp.getParameterValue("ProductURLHandler.Port"));
         String path = cp.getParameterValue("ProductURLHandler.Path");
 
         String baseURL = new URL(protocol, host, port, path).toExternalForm();
 
-        String credentials = username + ":" + password;
-        String authToken = "Basic " + DatatypeConverter.printBase64Binary(credentials.getBytes());
-
         String language = ThreadLocale.getThreadLocale().getLanguage();
 
+        HttpClient httpClient = createHttpClient(host, port, realm, username, password);
+
         // 1) First try to fetch the content with the thread's locale.
-        // 2) If that yields a FileNotFound or a 412, try to fetch it without
+        // 2) If that yields a FileNotFound, try to fetch it without
         // the locale.
-        // 3) If that fails with a FileNotFound or a 412, throw a FileNotFound
+        // 3) If that fails with a FileNotFound, throw a FileNotFound
         // 4) Any other exceptions are passed on as they are.
         try {
-            urlConnection = connectUsingLanguage(productURL, baseURL, authToken, language);
+            urlConnection = connectUsingLanguage(productURL, baseURL, httpClient, language);
         } catch (IOException e1) {
-            if (e1 instanceof FileNotFoundException || e1.getMessage().contains(HTTP_ERROR_412_STRING)) {
+            if (e1 instanceof FileNotFoundException) {
                 try {
-                    urlConnection = connectUsingLanguage(productURL, baseURL, authToken, "");
+                    urlConnection = connectUsingLanguage(productURL, baseURL, httpClient, "");
                 } catch (IOException e2) {
-                    if (e1 instanceof FileNotFoundException || e2.getMessage().contains(HTTP_ERROR_412_STRING)) {
+                    if (e1 instanceof FileNotFoundException) {
                         throw new FileNotFoundException(productURL.toString());
                     }
                     throw e2;
@@ -116,19 +122,22 @@ public class Handler extends URLStreamHandler {
      * @throws MalformedURLException
      * @throws IOException
      */
-    URLConnection connectUsingLanguage(URL productURL, String baseURL, String authToken, String language) throws MalformedURLException, IOException {
+    URLConnection connectUsingLanguage(URL productURL, String baseURL, HttpClient httpClient, String language) throws MalformedURLException, IOException {
         String canonicalPath = baseURL + productURL.getPath();
 
         URL actualURL = new URL(addLanguageToURL(canonicalPath, language));
-        URLConnection urlConnection = actualURL.openConnection();
 
-        urlConnection.setRequestProperty("Authorization", authToken);
-        urlConnection.setRequestProperty("Content-Language", language);
+        GetMethod httpGetMethod = new GetMethod(actualURL.toExternalForm());
 
-        urlConnection.getInputStream();
+        int status = httpClient.executeMethod(httpGetMethod);
 
+        if (status==404 || status==412) {
+            httpGetMethod.releaseConnection();
+            throw new FileNotFoundException();
+        }
+        
         try {
-            return createProxy(urlConnection);
+            return createProxy(new HttpURLConnection(httpGetMethod, actualURL));
         } catch (Exception e) {
             throw new IOException("Failed to create proxy to read '" + actualURL + "', encountered:" + e.toString(), e);
         }
@@ -161,7 +170,7 @@ public class Handler extends URLStreamHandler {
         MethodHandler handler = new MethodHandler() {
             @Override
             public Object invoke(Object obj, Method method, Method proceed, Object[] args) throws Throwable {
-                if ("setAllowUserInteraction".equals(method.getName()) || "setDoInput".equals(method.getName())) {
+                if ("setAllowUserInteraction".equals(method.getName()) || "setDoInput".equals(method.getName()) || "connect".equals(method.getName())) {
                     return null;
                 } else {
                     return method.invoke(connection, args);
@@ -203,5 +212,22 @@ public class Handler extends URLStreamHandler {
         }
 
         return modifiedPath;
+    }
+
+    /**
+     * Create an instance of HttpClient matching the parameters passed.
+     */
+    private HttpClient createHttpClient(String host, int port, String realm, String username, String password) {
+        HttpClient client = new HttpClient();
+        client.getState().setCredentials(new AuthScope(host, port, realm), new UsernamePasswordCredentials(username, password));
+
+        List<String> authPrefs = new ArrayList<String>();
+        authPrefs.add(AuthPolicy.BASIC);
+        authPrefs.add(AuthPolicy.NTLM);
+        authPrefs.add(AuthPolicy.DIGEST);
+        
+        client.getParams().setParameter(AuthPolicy.AUTH_SCHEME_PRIORITY, authPrefs);
+
+        return client;
     }
 }

@@ -143,7 +143,10 @@ public class DroolsDecisionTableAccessor extends Accessor implements Configurati
 
         // first we compile the decision table into a whole lot of rules.
         SpreadsheetCompiler compiler = new SpreadsheetCompiler();
-        String drl = compiler.compile((InputStream)drlUrl.getContent(), InputType.XLS);
+        
+        InputStream drlInputStream = drlUrl.openStream();
+        String drl = compiler.compile(drlInputStream, InputType.XLS);
+        drlInputStream.close();
 
         if (AccessorLoggingIndicator.FULL.equals(getLoggingIndicator())) {
             core.logInfo("Rules derived from "+getUrl()+"\n"+drl);
