@@ -443,3 +443,127 @@ hr, .separator {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
+
+/* ------- OpenQuote theme specific overrides -------- */
+
+/* Start of application.css overrides */
+
+.aui-state-default {
+    background: #D4D4D4 url(../images/portlet/header_bg.png) 1 0 repeat-x;
+}
+
+.aui-menu-content, .lfr-menu-list ul {
+    background-color: #FFFFFF;
+}
+
+.aui-menugroup-content .aui-menu-label {
+    background: none repeat scroll 0 0 #F0F0F0;
+    border-bottom: 1px solid #1D8412;
+    color: #000000;
+    font-weight: normal;
+}
+
+.aui-menu-content a, .lfr-menu-list li .taglib-icon, .aui-menu-content .disabled, .lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger strong {
+    font-weight: normal;
+    text-shadow: none;
+}
+
+/* Start of base.css overrides */
+
+body {
+    font-size: 13px;
+    font-family: 'Open Sans', arial, sans-serif;
+}
+
+ul.show-arrow {
+    overflow: hidden;
+}
+
+p {
+    color: rgb(102, 102, 102);
+}
+
+/* Start of custom_common.css overrides */
+
+.lfr-title-scope-selector {
+     -moz-border-radius-bottomleft: none; 
+     -webkit-border-bottom-left-radius: none; 
+     border-bottom-left-radius: none; 
+}
+
+.lfr-title-scope-selector {
+     -moz-border-radius-bottomright: none;
+     -webkit-border-bottom-right-radius: none; 
+     border-bottom-right-radius: none; 
+}
+
+.logo .current-site, #navigation, #navigation a, .portlet, .portlet-topper, .site-breadcrumbs ul, .aui-form-validator-message {
+     -moz-border-radius: none; 
+     -webkit-border-radius: none; 
+     border-radius: none; 
+}
+
+/* Start of dockbar.css overrides */
+
+.portlet-dockbar {
+    border-bottom-color: #1D8412;
+}
+
+.dockbar {
+    background-color: #F0F0F0;
+    background-image: none;
+    border-bottom-color: #1D8412; 
+    font-size: 12px;
+}
+
+.dockbar a {
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.pin-dockbar img {
+    height: 19px;
+    width: 16px;
+}
+
+.dockbar .add-content .menu-button span {
+    background-image: url(../images/dockbar/add.png);
+}
+
+/* Start of extras.css overrides */
+
+.journal-content-article {
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+
+/* Start of forms.css overrides */
+
+.textarea-tinymce {
+    background-image: url(../images/forms/input_shadow.png);
+    background-repeat: no-repeat;
+    padding: 5px 1px;
+    font: 13px Arial, Helvetica, Verdana, sans-serif;
+    border-style: none;
+}
+
+.mce-tinymce {
+    min-width: 250px;
+}
+
+/** Start of portlet.css overrides */
+
+.portlet-login {
+    background: none repeat scroll 0 0 #F0F0F0;
+    border: 1px solid #1D8412;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    width: 400px;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.portlet-login .navigation {
+    border: 1px solid #BFBFBF;
+}

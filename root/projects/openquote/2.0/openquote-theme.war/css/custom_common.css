@@ -64,10 +64,19 @@
 /* ---------- Extras ---------- */
 
 .lfr-title-scope-selector {
+	-moz-border-radius-bottomleft: none;
+	-webkit-border-bottom-left-radius: none;
+	border-bottom-left-radius: none;
 }
 
 .lfr-title-scope-selector {
+	-moz-border-radius-bottomright: none;
+	-webkit-border-bottom-right-radius: none;
+	border-bottom-right-radius: none;
 }
 
 .logo .current-site, #navigation, #navigation a, .portlet, .portlet-topper, .site-breadcrumbs ul, .aui-form-validator-message {
+	-moz-border-radius: none;
+	-webkit-border-radius: none;
+	border-radius: none;
 }
