@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Standard="http:///schemas/Standard/_4cXVAPrLEeKSmoja3zp41Q/2" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xsi:schemaLocation="http:///schemas/Standard/_4cXVAPrLEeKSmoja3zp41Q/2 Standard.profile.uml#_4cXVAfrLEeKSmoja3zp41Q">
+  <uml:Model xmi:id="_oiC_oPrGEeKSmoja3zp41Q" name="OpenActuary">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_-vW90AKyEeOAL8Vg64hdFw" annotatedElement="_bj80sPrKEeKSmoja3zp41Q">
+      <body>An actor who authors and executes ETL jobs on behalf of an insurance company and may well be employed by them. 
+
+The actor has access to the insurance company's internal &lt;Data Sources> as well as access to &lt;Data Sources> and &lt;Shared Folders> within OpenActuary.</body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_GW1FgAKzEeOAL8Vg64hdFw" annotatedElement="_onHWEP5ZEeKAL8Vg64hdFw">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_OFZMUAK2EeOAL8Vg64hdFw"/>
+      <body>Like an ETL Developer but working within OpenActuary, rather than for an insurance company, and with additional responsibilities to maintain the quality of OpenActuary's &lt;Data Sources>.</body>
+    </ownedComment>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_X3VZAPrKEeKSmoja3zp41Q" clientDependency="_sfLUMP2SEeKQ6ptfy22OzQ _uUNjMP2SEeKQ6ptfy22OzQ _vhfOoP2SEeKQ6ptfy22OzQ _weQY4P2SEeKQ6ptfy22OzQ _xWGm4P2SEeKQ6ptfy22OzQ _F1LTIP2TEeKQ6ptfy22OzQ" name="Actuary"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_bj80sPrKEeKSmoja3zp41Q" clientDependency="_nhCJwP2TEeKQ6ptfy22OzQ _1Ea2QP2TEeKQ6ptfy22OzQ _584aAP2TEeKQ6ptfy22OzQ _G7JAMP2UEeKQ6ptfy22OzQ _MJnQMP2UEeKQ6ptfy22OzQ _3feNgP3BEeKQ6ptfy22OzQ _CtSpcP3FEeKQ6ptfy22OzQ _jRU8YP3FEeKQ6ptfy22OzQ" name="ETL Developer"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_e2-EoPrKEeKSmoja3zp41Q" clientDependency="_dk2pIP3CEeKQ6ptfy22OzQ _e_pzMP3CEeKQ6ptfy22OzQ _gdb_0P3CEeKQ6ptfy22OzQ _huO5UP3CEeKQ6ptfy22OzQ _i-9hYP3CEeKQ6ptfy22OzQ _uwCQ0P3EEeKQ6ptfy22OzQ _vvrI4P3EEeKQ6ptfy22OzQ" name="Report Developer"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_rira4PrNEeKSmoja3zp41Q" name="Administrator"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_DK4bQPrOEeKSmoja3zp41Q" name="Organisation Administrator"/>
+    <packagedElement xmi:type="uml:Device" xmi:id="_3g1uoPrQEeKSmoja3zp41Q" name="Cloud Application Server">
+      <ownedComment xmi:type="uml:Comment" xmi:id="__XTpsPrSEeKSmoja3zp41Q" annotatedElement="_HgUNoPrSEeKSmoja3zp41Q _6X8h0PrUEeKSmoja3zp41Q">
+        <body>One exists for each user and each organisation. This includes OpenActuary itself (as an organisation).</body>
+      </ownedComment>
+      <ownedComment xmi:type="uml:Comment" xmi:id="_eck4kPrTEeKSmoja3zp41Q" annotatedElement="_L64w8PrREeKSmoja3zp41Q">
+        <body>Holds all portal content, portal configurations, user configuration, etc. 
+
+Also holds (as content):
+- Generated reports
+- User's Talend projects
+- User's Bert projects
+- The Actuarial DB registry</body>
+      </ownedComment>
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_4kY2UPrQEeKSmoja3zp41Q" clientDependency="_tTb0kPrSEeKSmoja3zp41Q" name="Apache"/>
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_Gd_DYPrREeKSmoja3zp41Q" clientDependency="_aRw6cPrSEeKSmoja3zp41Q _uCD1IPrSEeKSmoja3zp41Q _Gj_tUProEeKSmoja3zp41Q" name="OpenUnderwriter"/>
+      <nestedNode xmi:type="uml:Node" xmi:id="_L64w8PrREeKSmoja3zp41Q" name="OpenUnderwriter DB" visibility="package"/>
+      <nestedNode xmi:type="uml:Node" xmi:id="_HgUNoPrSEeKSmoja3zp41Q" name="Actuarial DBs"/>
+      <nestedNode xmi:type="uml:Node" xmi:id="_6X8h0PrUEeKSmoja3zp41Q" name="Shared Folders"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_aRw6cPrSEeKSmoja3zp41Q" name="&lt;&lt;manages>>" client="_Gd_DYPrREeKSmoja3zp41Q" supplier="_HgUNoPrSEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_tTb0kPrSEeKSmoja3zp41Q" name="" client="_4kY2UPrQEeKSmoja3zp41Q" supplier="_Gd_DYPrREeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_uCD1IPrSEeKSmoja3zp41Q" name="" client="_Gd_DYPrREeKSmoja3zp41Q" supplier="_L64w8PrREeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_SqxpAPrUEeKSmoja3zp41Q" name="HTTPS" supplier="_4kY2UPrQEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_RHjtUPrVEeKSmoja3zp41Q" name="HTTPS" supplier="_4kY2UPrQEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_TPpbMPrVEeKSmoja3zp41Q" name="HTTPS (WebDav)" supplier="_6X8h0PrUEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_WogNYPrVEeKSmoja3zp41Q" name="SSL" supplier="_HgUNoPrSEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_Gj_tUProEeKSmoja3zp41Q" name="&lt;&lt;exposes>>" client="_Gd_DYPrREeKSmoja3zp41Q" supplier="_6X8h0PrUEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Device" xmi:id="_1lH78ProEeKSmoja3zp41Q" name="Actuary's Desktop">
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_TGkAkPrpEeKSmoja3zp41Q" clientDependency="_of4ukPrpEeKSmoja3zp41Q" name="Browser"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_4SpSIProEeKSmoja3zp41Q" name="ETL Developer's Desktop">
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_VSEO0PrpEeKSmoja3zp41Q" clientDependency="_VhtX4PrqEeKSmoja3zp41Q" name="Browser"/>
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_YEAK8PrpEeKSmoja3zp41Q" clientDependency="_Zf8IAPrqEeKSmoja3zp41Q _aW-dsPrqEeKSmoja3zp41Q" name="Talend"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_7wEbQProEeKSmoja3zp41Q" name="Report Developer's Desktop">
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_We_U8PrpEeKSmoja3zp41Q" clientDependency="_XjnlQPrqEeKSmoja3zp41Q" name="Browser"/>
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_bE5wIPrpEeKSmoja3zp41Q" clientDependency="_cSBOEPrqEeKSmoja3zp41Q _hQrgcPrqEeKSmoja3zp41Q" name="Birt"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_of4ukPrpEeKSmoja3zp41Q" name="HTTPS" client="_TGkAkPrpEeKSmoja3zp41Q" supplier="_4kY2UPrQEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_VhtX4PrqEeKSmoja3zp41Q" name="HTTPS" client="_VSEO0PrpEeKSmoja3zp41Q" supplier="_4kY2UPrQEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_XjnlQPrqEeKSmoja3zp41Q" name="HTTPS" client="_We_U8PrpEeKSmoja3zp41Q" supplier="_4kY2UPrQEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_Zf8IAPrqEeKSmoja3zp41Q" name="SSL" client="_YEAK8PrpEeKSmoja3zp41Q" supplier="_6X8h0PrUEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_aW-dsPrqEeKSmoja3zp41Q" name="SSL" client="_YEAK8PrpEeKSmoja3zp41Q" supplier="_HgUNoPrSEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_cSBOEPrqEeKSmoja3zp41Q" name="SSL" client="_bE5wIPrpEeKSmoja3zp41Q" supplier="_6X8h0PrUEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_hQrgcPrqEeKSmoja3zp41Q" name="SSL" client="_bE5wIPrpEeKSmoja3zp41Q" supplier="_HgUNoPrSEeKSmoja3zp41Q"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_Zk8e0P2SEeKQ6ptfy22OzQ" name="Login" subject="_3ia3wP5ZEeKAL8Vg64hdFw">
+      <include xmi:type="uml:Include" xmi:id="_595jIP2SEeKQ6ptfy22OzQ" addition="_27MAEP2SEeKQ6ptfy22OzQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_jlNp4P2SEeKQ6ptfy22OzQ" name="Logout" subject="_3ia3wP5ZEeKAL8Vg64hdFw"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_kqYiMP2SEeKQ6ptfy22OzQ" name="Manage Profile">
+      <include xmi:type="uml:Include" xmi:id="__ZY7cP2SEeKQ6ptfy22OzQ" addition="_7vJeUP2SEeKQ6ptfy22OzQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_mAjD4P2SEeKQ6ptfy22OzQ" name="Discover Reports"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_oNqbsP2SEeKQ6ptfy22OzQ" name="Discover Data Sources" subject="_3ia3wP5ZEeKAL8Vg64hdFw">
+      <include xmi:type="uml:Include" xmi:id="_7xM2gP3DEeKQ6ptfy22OzQ" addition="_zLSJkP3DEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_ZA2nkP3EEeKQ6ptfy22OzQ" addition="_DVHT4P3EEeKQ6ptfy22OzQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_sfLUMP2SEeKQ6ptfy22OzQ" name="" client="_X3VZAPrKEeKSmoja3zp41Q" supplier="_Zk8e0P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_uUNjMP2SEeKQ6ptfy22OzQ" name="" client="_X3VZAPrKEeKSmoja3zp41Q" supplier="_jlNp4P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_vhfOoP2SEeKQ6ptfy22OzQ" name="" client="_X3VZAPrKEeKSmoja3zp41Q" supplier="_kqYiMP2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_weQY4P2SEeKQ6ptfy22OzQ" name="" client="_X3VZAPrKEeKSmoja3zp41Q" supplier="_mAjD4P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_xWGm4P2SEeKQ6ptfy22OzQ" name="" client="_X3VZAPrKEeKSmoja3zp41Q" supplier="_oNqbsP2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_27MAEP2SEeKQ6ptfy22OzQ" name="Password Reminder"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_7vJeUP2SEeKQ6ptfy22OzQ" name="Change Password"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_DP4r4P2TEeKQ6ptfy22OzQ" name="View Reports"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_F1LTIP2TEeKQ6ptfy22OzQ" name="" client="_X3VZAPrKEeKSmoja3zp41Q" supplier="_DP4r4P2TEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_nhCJwP2TEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_Zk8e0P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_1Ea2QP2TEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_jlNp4P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_584aAP2TEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_kqYiMP2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_G7JAMP2UEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_oNqbsP2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_KU5xUP2UEeKQ6ptfy22OzQ" name="Manage Data Source">
+      <include xmi:type="uml:Include" xmi:id="_cSSj8P2UEeKQ6ptfy22OzQ" addition="_PHjoAP2UEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_eA0iUP2UEeKQ6ptfy22OzQ" addition="_RJ56QP2UEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_kUFQIP2UEeKQ6ptfy22OzQ" addition="_hOW1UP2UEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_E9XPcP2VEeKQ6ptfy22OzQ" addition="_AXYi0P2VEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_FylnQP2VEeKQ6ptfy22OzQ" addition="_-oexAP2UEeKQ6ptfy22OzQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_MJnQMP2UEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_KU5xUP2UEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_PHjoAP2UEeKQ6ptfy22OzQ" name="Create Data Source"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_RJ56QP2UEeKQ6ptfy22OzQ" name="Delete Data Source"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_hOW1UP2UEeKQ6ptfy22OzQ" name="Promote Data Source" subject="_3ia3wP5ZEeKAL8Vg64hdFw"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_nrURsP2UEeKQ6ptfy22OzQ" name="Author ETL Jobs" subject="_3ia3wP5ZEeKAL8Vg64hdFw"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_-oexAP2UEeKQ6ptfy22OzQ" name="Share Data Source"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_AXYi0P2VEeKQ6ptfy22OzQ" name="Unshare Data Source"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_ei2b4P2VEeKQ6ptfy22OzQ" name="Execute ETL Jobs" subject="_3ia3wP5ZEeKAL8Vg64hdFw"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_g2U6YP2VEeKQ6ptfy22OzQ" name="Schedule ETL Jobs"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_pM11YP3BEeKQ6ptfy22OzQ" name="Manage ETL Jobs">
+      <include xmi:type="uml:Include" xmi:id="_5M5_sP3BEeKQ6ptfy22OzQ" addition="_nrURsP2UEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_6bvxYP3BEeKQ6ptfy22OzQ" addition="_ei2b4P2VEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_7Wm3IP3BEeKQ6ptfy22OzQ" addition="_g2U6YP2VEeKQ6ptfy22OzQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_3feNgP3BEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_pM11YP3BEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_Eq330P3CEeKQ6ptfy22OzQ" name="Manage Reports">
+      <include xmi:type="uml:Include" xmi:id="_lvLmQP3CEeKQ6ptfy22OzQ" addition="_GjDhcP3CEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_mlMBMP3CEeKQ6ptfy22OzQ" addition="_K5UXEP3CEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_nYlNAP3CEeKQ6ptfy22OzQ" addition="_MR5TkP3CEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_oYfx4P3CEeKQ6ptfy22OzQ" addition="_U9xekP3CEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_pOSKYP3CEeKQ6ptfy22OzQ" addition="_Yg-fkP3CEeKQ6ptfy22OzQ"/>
+      <include xmi:type="uml:Include" xmi:id="_dq4jMP3DEeKQ6ptfy22OzQ" addition="_U9QEsP3DEeKQ6ptfy22OzQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_GjDhcP3CEeKQ6ptfy22OzQ" name="Author Reports"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_K5UXEP3CEeKQ6ptfy22OzQ" name="Execute Reports"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_MR5TkP3CEeKQ6ptfy22OzQ" name="Share Reports"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_U9xekP3CEeKQ6ptfy22OzQ" name="Unshare Reports"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_Yg-fkP3CEeKQ6ptfy22OzQ" name="Delete Reports"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_dk2pIP3CEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_Eq330P3CEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_e_pzMP3CEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_oNqbsP2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_gdb_0P3CEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_kqYiMP2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_huO5UP3CEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_jlNp4P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_i-9hYP3CEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_Zk8e0P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_U9QEsP3DEeKQ6ptfy22OzQ" name="Discover Report Projects"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_zLSJkP3DEeKQ6ptfy22OzQ" name="Export Data Source To Report Designer"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_DVHT4P3EEeKQ6ptfy22OzQ" name="Export Data Source To ETL Designer"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_uwCQ0P3EEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_mAjD4P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_vvrI4P3EEeKQ6ptfy22OzQ" name="" client="_e2-EoPrKEeKSmoja3zp41Q" supplier="_DP4r4P2TEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_CtSpcP3FEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_mAjD4P2SEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_jRU8YP3FEeKQ6ptfy22OzQ" name="" client="_bj80sPrKEeKSmoja3zp41Q" supplier="_DP4r4P2TEeKQ6ptfy22OzQ"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_juSbYP5YEeKAL8Vg64hdFw" name="Content Author"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_onHWEP5ZEeKAL8Vg64hdFw" name="ETL Administrator">
+      <generalization xmi:type="uml:Generalization" xmi:id="_jrMwwAKuEeOAL8Vg64hdFw" general="_bj80sPrKEeKSmoja3zp41Q"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="_3ia3wP5ZEeKAL8Vg64hdFw" name="&lt;ETL Developer> Imports Data" useCase="_Zk8e0P2SEeKQ6ptfy22OzQ _jlNp4P2SEeKQ6ptfy22OzQ _oNqbsP2SEeKQ6ptfy22OzQ _hOW1UP2UEeKQ6ptfy22OzQ _nrURsP2UEeKQ6ptfy22OzQ _ei2b4P2VEeKQ6ptfy22OzQ" node="_PqCYAP5aEeKAL8Vg64hdFw _pAlwkP5aEeKAL8Vg64hdFw _soJGEP5aEeKAL8Vg64hdFw _vwYCUP5aEeKAL8Vg64hdFw _1sbxEP5aEeKAL8Vg64hdFw _GO_kcP5bEeKAL8Vg64hdFw _UeeFcP5cEeKAL8Vg64hdFw _n43MIP5dEeKAL8Vg64hdFw">
+      <edge xmi:type="uml:ControlFlow" xmi:id="_Lj1iMP5bEeKAL8Vg64hdFw" name="ControlFlow1" source="_PqCYAP5aEeKAL8Vg64hdFw" target="_pAlwkP5aEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_MYocMP5bEeKAL8Vg64hdFw" name="ControlFlow2" source="_pAlwkP5aEeKAL8Vg64hdFw" target="_soJGEP5aEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_NSte0P5bEeKAL8Vg64hdFw" name="ControlFlow3" source="_soJGEP5aEeKAL8Vg64hdFw" target="_vwYCUP5aEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_N-aHMP5bEeKAL8Vg64hdFw" name="ControlFlow4" source="_vwYCUP5aEeKAL8Vg64hdFw" target="_1sbxEP5aEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_PHICwP5bEeKAL8Vg64hdFw" name="ControlFlow5" source="_1sbxEP5aEeKAL8Vg64hdFw" target="_GO_kcP5bEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ObjectFlow" xmi:id="_xjOOEP5cEeKAL8Vg64hdFw" name="ObjectFlow1" source="_qPdskP5cEeKAL8Vg64hdFw" target="_UeeFcP5cEeKAL8Vg64hdFw">
+        <guard xmi:type="uml:LiteralBoolean" xmi:id="_xjf64P5cEeKAL8Vg64hdFw" value="true"/>
+        <weight xmi:type="uml:LiteralInteger" xmi:id="_xjiXIP5cEeKAL8Vg64hdFw" value="1"/>
+      </edge>
+      <edge xmi:type="uml:ObjectFlow" xmi:id="_12asIP5dEeKAL8Vg64hdFw" name="ObjectFlow2" source="_n43MIP5dEeKAL8Vg64hdFw" target="_yrPwoP5dEeKAL8Vg64hdFw">
+        <guard xmi:type="uml:LiteralBoolean" xmi:id="_12sY8P5dEeKAL8Vg64hdFw" value="true"/>
+        <weight xmi:type="uml:LiteralInteger" xmi:id="_12vcQP5dEeKAL8Vg64hdFw" value="1"/>
+      </edge>
+      <node xmi:type="uml:InitialNode" xmi:id="_PqCYAP5aEeKAL8Vg64hdFw" name="InitialNode1" outgoing="_Lj1iMP5bEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_pAlwkP5aEeKAL8Vg64hdFw" name="Select OpenActuary Data Source" outgoing="_MYocMP5bEeKAL8Vg64hdFw" incoming="_Lj1iMP5bEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_soJGEP5aEeKAL8Vg64hdFw" name="Define ETL Job" outgoing="_NSte0P5bEeKAL8Vg64hdFw" incoming="_MYocMP5bEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_vwYCUP5aEeKAL8Vg64hdFw" name="Run ETL Job" outgoing="_N-aHMP5bEeKAL8Vg64hdFw" incoming="_NSte0P5bEeKAL8Vg64hdFw">
+        <inputValue xmi:type="uml:InputPin" xmi:id="_yrPwoP5dEeKAL8Vg64hdFw" name="" incoming="_12asIP5dEeKAL8Vg64hdFw">
+          <upperBound xmi:type="uml:LiteralInteger" xmi:id="_yrUCEP5dEeKAL8Vg64hdFw" value="1"/>
+        </inputValue>
+        <outputValue xmi:type="uml:OutputPin" xmi:id="_qPdskP5cEeKAL8Vg64hdFw" name="" outgoing="_xjOOEP5cEeKAL8Vg64hdFw">
+          <upperBound xmi:type="uml:LiteralInteger" xmi:id="_qPhW8P5cEeKAL8Vg64hdFw" value="1"/>
+        </outputValue>
+      </node>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_1sbxEP5aEeKAL8Vg64hdFw" name="Promote OpenActuary Data Source To &lt;ETL Administrator>" outgoing="_PHICwP5bEeKAL8Vg64hdFw" incoming="_N-aHMP5bEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:ActivityFinalNode" xmi:id="_GO_kcP5bEeKAL8Vg64hdFw" name="ActivityFinalNode1" incoming="_PHICwP5bEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:DataStoreNode" xmi:id="_UeeFcP5cEeKAL8Vg64hdFw" name="OpenActuary Data Source" incoming="_xjOOEP5cEeKAL8Vg64hdFw">
+        <upperBound xmi:type="uml:LiteralInteger" xmi:id="_Uehv0P5cEeKAL8Vg64hdFw" value="1"/>
+      </node>
+      <node xmi:type="uml:DataStoreNode" xmi:id="_n43MIP5dEeKAL8Vg64hdFw" name="Local Private Data Store" outgoing="_12asIP5dEeKAL8Vg64hdFw">
+        <upperBound xmi:type="uml:LiteralInteger" xmi:id="_n462gP5dEeKAL8Vg64hdFw" value="1"/>
+      </node>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="_L8tbsP9MEeKAL8Vg64hdFw" name="Pilot Process Overview" node="_Qcgn0P9MEeKAL8Vg64hdFw _Ia990P9NEeKAL8Vg64hdFw _X8-BMP9PEeKAL8Vg64hdFw _eQ75oP9PEeKAL8Vg64hdFw">
+      <edge xmi:type="uml:ControlFlow" xmi:id="_JnqacP9NEeKAL8Vg64hdFw" name="ControlFlow1" source="_Ia990P9NEeKAL8Vg64hdFw" target="_Qcgn0P9MEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_gkQAEP9PEeKAL8Vg64hdFw" name="ControlFlow2" source="_Qcgn0P9MEeKAL8Vg64hdFw" target="_X8-BMP9PEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_hUz6UP9PEeKAL8Vg64hdFw" name="ControlFlow3" source="_X8-BMP9PEeKAL8Vg64hdFw" target="_eQ75oP9PEeKAL8Vg64hdFw"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_i8oMsP9PEeKAL8Vg64hdFw" name="Data Issues Found" source="_eQ75oP9PEeKAL8Vg64hdFw" target="_Qcgn0P9MEeKAL8Vg64hdFw">
+        <guard xmi:type="uml:StringExpression" xmi:id="_wWhmAP9PEeKAL8Vg64hdFw" name="werwer"/>
+      </edge>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_Qcgn0P9MEeKAL8Vg64hdFw" name="&lt;ETL Developer> Imports Data" outgoing="_gkQAEP9PEeKAL8Vg64hdFw" incoming="_JnqacP9NEeKAL8Vg64hdFw _i8oMsP9PEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:InitialNode" xmi:id="_Ia990P9NEeKAL8Vg64hdFw" name="InitialNode1" outgoing="_JnqacP9NEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_X8-BMP9PEeKAL8Vg64hdFw" name="&lt;ETL Administrator> Verifies Data" outgoing="_hUz6UP9PEeKAL8Vg64hdFw" incoming="_gkQAEP9PEeKAL8Vg64hdFw"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_eQ75oP9PEeKAL8Vg64hdFw" name="DecisionNode1" outgoing="_i8oMsP9PEeKAL8Vg64hdFw" incoming="_hUz6UP9PEeKAL8Vg64hdFw"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_9BRIYP9REeKAL8Vg64hdFw" name="Report Administrator">
+      <generalization xmi:type="uml:Generalization" xmi:id="_4nzUQAKzEeOAL8Vg64hdFw" general="_e2-EoPrKEeKSmoja3zp41Q"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_oinAUPrGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_oinAUfrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_TZ_nULU5EduiKqCzJMWbGw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omezsPrGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omezsfrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//modelelements"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_Gx8MgLX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omezsvrGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omfawPrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_fSw28LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omfawfrGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omfawvrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//portandflows"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_rpx28LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omfaw_rGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omfaxPrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//constraints"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_5WYJ0LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omfaxfrGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omgB0PrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//activities"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_C2zXMLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omgB0frGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omgB0vrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//allocations"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_NxdG4LX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omgB0_rGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omgB1PrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_OOJC4LX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omgB1frGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omgo4PrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//interactions"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_meOioLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omgo4frGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omgo4vrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//statemachines"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_nAF5kLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_omgo4_rGEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_omgo5PrGEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//usecases"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_neZmMLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_tW-U8PrLEeKSmoja3zp41Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_tXIF8PrLEeKSmoja3zp41Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="Standard.profile.uml#_4cXVAfrLEeKSmoja3zp41Q"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="Standard.profile.uml#_AO2MIPrHEeKSmoja3zp41Q"/>
+    </profileApplication>
+  </uml:Model>
+  <Standard:manages xmi:id="_dIR0kPrSEeKSmoja3zp41Q" base_Dependency="_aRw6cPrSEeKSmoja3zp41Q"/>
+</xmi:XMI>
