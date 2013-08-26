@@ -6,7 +6,7 @@
    isDerived='false'
    isFinalSpecialization='false'
    isLeaf='false'
-   name='Association2'
+   name='dataSet'
    visibility='public'>
   <memberEnd href='urn:uuid:07c0ace4-c716-4d78-b607-576d48313f39'/>
   <memberEnd href='urn:uuid:8a15fc1b-2297-4773-991a-9b3f08bd4e6a'/>

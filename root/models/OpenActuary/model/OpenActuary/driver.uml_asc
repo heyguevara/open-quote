@@ -6,7 +6,7 @@
    isDerived='false'
    isFinalSpecialization='false'
    isLeaf='false'
-   name='Association2'
+   name='driver'
    visibility='public'>
   <memberEnd href='urn:uuid:b31dfc59-6101-469a-8a49-841a1ce86ccf'/>
   <memberEnd href='urn:uuid:ad65d044-b251-4c96-bb4d-f01070fb96b9'/>

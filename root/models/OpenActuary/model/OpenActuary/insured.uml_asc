@@ -6,7 +6,7 @@
    isDerived='false'
    isFinalSpecialization='false'
    isLeaf='false'
-   name='Association2'
+   name='insured'
    visibility='public'>
   <memberEnd href='urn:uuid:8231624d-6f7f-4554-ad11-c9b2b392904b'/>
   <memberEnd href='urn:uuid:9dec2003-0069-4d52-b1a7-f16ebc2dee89'/>
