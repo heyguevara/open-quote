@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:UseCase xmi:type='uml:UseCase' xmi:uuid='urn:uuid:9f6c1e94-8652-42ce-9d6f-99d01a5a7a51'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Discover Report Projects'
+   visibility='public'/>
+</xmi:XMI>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:UseCase xmi:type='uml:UseCase' xmi:uuid='urn:uuid:bca64ded-79e7-4a80-8b4d-d4b8eec5ce48'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Discover Data Sources'
+   visibility='public'>
+  <include xmi:type='uml:Include' xmi:uuid='urn:uuid:9b343da2-e1cc-4061-a2d6-515990d9c95e'>
+   <addition href='urn:uuid:923224b7-e647-4a11-a9fc-6b639ec16eac'/>
+  </include>
+ </uml:UseCase>
+</xmi:XMI>
