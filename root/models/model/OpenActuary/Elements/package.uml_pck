@@ -7,4 +7,7 @@
  <uml:Package xmi:type='uml:Package' xmi:uuid='urn:uuid:d06a3b6e-f4da-4e1a-9296-0c1b78cafadf'
    name='OpenActuary'
    visibility='public'/>
+ <uml:Package xmi:type='uml:Package' xmi:uuid='urn:uuid:c53cd254-20ba-49ed-9bd1-e66a56b33a1a'
+   name='Elements'
+   visibility='public'/>
 </xmi:XMI>
