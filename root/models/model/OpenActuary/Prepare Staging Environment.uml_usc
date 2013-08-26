@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:UseCase xmi:type='uml:UseCase' xmi:uuid='urn:uuid:e9139a37-abb3-4f9a-bfe4-e270a3e0e7dd'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Prepare Staging Environment'
+   visibility='public'>
+  <include xmi:type='uml:Include' xmi:uuid='urn:uuid:f21ec1c9-3354-4ea6-818a-2d223e8e41e0'>
+   <addition href='urn:uuid:8742f300-cfe8-489f-b564-2a4dee17f511'/>
+  </include>
+  <include xmi:type='uml:Include' xmi:uuid='urn:uuid:674fceee-a377-4977-a401-421e30460ab3'>
+   <addition href='urn:uuid:3e7303d8-1007-496f-829f-1a56f82cac24'/>
+  </include>
+ </uml:UseCase>
+</xmi:XMI>

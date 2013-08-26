@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:UseCase xmi:type='uml:UseCase' xmi:uuid='urn:uuid:66c86f67-9f8d-4777-8aa6-80e0576d7967'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Schedule ETL Job'
+   visibility='public'/>
+</xmi:XMI>

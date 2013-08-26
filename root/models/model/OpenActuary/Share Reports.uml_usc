@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:UseCase xmi:type='uml:UseCase' xmi:uuid='urn:uuid:31af5594-e508-4d89-9338-4f8c90d4ee1c'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Share Reports'
+   visibility='public'/>
+</xmi:XMI>
