@@ -191,7 +191,7 @@ public interface RenderService {
         void setCoreArg(Core core);
         
         /**
-         * Unique ID within the page for us in the identification of page elements
+         * Unique ID within the page for use in the identification of page elements
          * @return
          */
         String getRenderIdArg();

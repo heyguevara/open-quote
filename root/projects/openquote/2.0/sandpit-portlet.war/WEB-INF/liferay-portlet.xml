@@ -8,6 +8,7 @@
 		<instanceable>false</instanceable>
         <header-portal-css>/quotation-portlet/css/main.css</header-portal-css>
         <header-portlet-css>/css/sandpit.css</header-portlet-css>
+        <header-portlet-css>/css/pageflow.css</header-portlet-css>
         <header-portlet-css>/css/codemirror.css</header-portlet-css>
         <header-portal-javascript>/quotation-portlet/js/main.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/numberformat.js</header-portal-javascript>

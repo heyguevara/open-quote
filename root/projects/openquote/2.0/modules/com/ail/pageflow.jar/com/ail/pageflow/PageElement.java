@@ -645,6 +645,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
         command.setRefArg(getRef());
         command.setCoreArg(PageFlowContext.getCoreProxy().getCore());
         command.setRenderHintArg(getRenderHint());
+        command.setRenderIdArg(getId());
         
         return command;
     }

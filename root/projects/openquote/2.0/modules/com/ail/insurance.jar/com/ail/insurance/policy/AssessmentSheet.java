@@ -16,7 +16,8 @@
  */
 
 package com.ail.insurance.policy;
-
+import static ch.lambdaj.Lambda.sort;
+import static ch.lambdaj.Lambda.on;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -93,35 +94,39 @@ public class AssessmentSheet extends Type {
     }
     
     /**
-     * Return a list of the assessment notes associated with this sheet.
+     * Return a list of the assessment notes associated with this sheet. The resulting list is ordered by line.priority.
      * @return List of note lines, this list may be empty but it will not be null.
      */
     public List<AssessmentNote> noteLines() {
-        return new ArrayList<AssessmentNote>(getLinesOfType(AssessmentNote.class).values());
+        List<AssessmentNote> list=new ArrayList<AssessmentNote>(getLinesOfType(AssessmentNote.class).values());
+        return sort(list, on(AssessmentNote.class).getPriority());
     }
     
     /**
-     * Return a list of the calculation lines associated with this sheet.
+     * Return a list of the calculation lines associated with this sheet. The resulting list is ordered by line.priority.
      * @return List of calculation lines, this list may be empty but it will not be null.
      */
     public List<CalculationLine> calculationLines() {
-        return new ArrayList<CalculationLine>(getLinesOfType(CalculationLine.class).values());
+        List<CalculationLine> list=new ArrayList<CalculationLine>(getLinesOfType(CalculationLine.class).values());
+        return sort(list, on(CalculationLine.class).getPriority());
     }
     
     /**
-     * Return a list of the calculation lines associated with this sheet.
-     * @return List of calculation lines, this list may be empty but it will not be null.
+     * Return a list of the marker lines associated with this sheet. The resulting list is ordered by line.priority.
+     * @return List of marker lines, this list may be empty but it will not be null.
      */
     public List<Marker> markerLines() {
-        return new ArrayList<Marker>(getLinesOfType(Marker.class).values());
+        List<Marker> list=new ArrayList<Marker>(getLinesOfType(Marker.class).values());
+        return sort(list, on(Marker.class).getPriority());
     }
     
     /**
-     * Return a list of the behaviour lines associated with this sheet.
+     * Return a list of the behaviour lines associated with this sheet. The resulting list is ordered by line.priority.
      * @return List of behaviour lines, this list may be empty but it will not be null.
      */
     public List<Behaviour> behaviourLines() {
-        return new ArrayList<Behaviour>(getLinesOfType(Behaviour.class).values());
+        List<Behaviour> list=new ArrayList<Behaviour>(getLinesOfType(Behaviour.class).values());
+        return sort(list, on(Behaviour.class).getPriority());
     }
     
     /**

@@ -73,5 +73,14 @@ public class AnswerScroller extends Answer {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
    	    return executeTemplateCommand("AnswerScroller", request, response, model);
     }
+    
+    @Override
+    public void applyElementId(String basedId) {
+        int idx=0;
+        for(PageElement e: answer) {
+            e.applyElementId(basedId+ID_SEPARATOR+(idx++));
+        }
+        super.applyElementId(basedId);
+    }
 }
 

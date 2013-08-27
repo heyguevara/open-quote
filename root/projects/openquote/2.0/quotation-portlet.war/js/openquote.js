@@ -67,6 +67,15 @@ function hideDivDisplay(id)
    mydiv.style.display="none";
 }
 
+function showDivDisplayIf(condition, id) {
+	if (condition) {
+		showDivDisplay(id);
+	}
+	else {
+		hideDivDisplay(id);
+	}
+}
+
 function showHideDivDisplay(showCondition, hideCondition, id) {
     if (showCondition) {
        showDivDisplay(id);

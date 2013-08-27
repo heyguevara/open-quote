@@ -1,0 +1,409 @@
+/*
+ * Copyright Applied Industrial Logic Limited 2013. All rights Reserved 
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later 
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51 
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+ 
+ /* 
+  * General styles 
+  */
+  
+.pf-page-title {
+	font-size: 1.3em;
+}
+
+.pf-answer {
+	display: table-row;
+	width: auto;
+	clear: both;
+}
+
+.pf-answer-section {
+    display: inline-block;
+    width: auto;
+}
+
+.pf-header {
+	border: 1px solid #1D8412;
+	border-radius: 5px 5px 5px 5px;
+	height: 56px;
+	margin: 10px;
+	padding: 5px;
+}
+
+.pf-header-title {
+	float: left;
+	font-size: 1.3em;
+}
+
+.pf-header-summary {
+	float: right;
+	margin-right: 5px;
+}
+
+.pf-body {
+	border: 1px solid #1D8412;
+	border-radius: 5px 5px 5px 5px;
+	margin: 10px;
+	padding: 5px;
+}
+
+.pf-header-summary-title {
+	display: inline-block;
+	width: 86px;
+}
+
+.pf-header-summary-value {
+	display: inline;
+	margin-left: 5px;
+}
+
+.pf-section-title {
+	font-size: 1.2em;
+	margin-bottom: 5px;
+}
+	
+.pf-system-id {
+    display: none;
+}
+
+.pf-section {
+    display: inline-block;
+    margin: 10px 5px 0;
+    padding: 5px;
+}
+
+.pf-two-part-section .pf-input-section {
+	display: inline-block;
+	margin: 0px;
+}
+
+.pf-section-body {
+    border: #1D8412 1px solid;
+}
+
+.pf-item {
+	display:table-row;
+    width: auto;
+    clear: both;
+}
+
+.pf-item-label, 
+.pf-item-value {
+    display: table-cell;
+    min-width: 150px;
+    padding: 0px 5px 0px 5px;
+}
+
+.pf-item-label { 
+    background-color: #e8f8e8;
+    width: 150px;
+}
+
+.pf-item-value {
+    background-color: #efffef;
+}
+
+.pf-input-section {
+	margin: 5px 0px 5px 0px;
+}
+
+.pf-input-field {
+	display: inline-block;
+}
+
+.pf-input-label-description {
+	color: #555555;
+}
+
+.pf-input-error, pf-error-field {
+	display: inline-block;
+	color: #ff0000;
+    padding: 0 5px;
+}
+
+.pf-input-optional,
+.pf-input-required {
+    min-height: 9px;
+    min-width: 10px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.pf-input-required {
+    background-image: url("../images/required-field-indicator.png");
+}
+
+.pf-input-optional {
+}
+
+.pf-page-error {
+	color: #ff0000;
+	text-align: centre;
+}
+
+/*
+ * Styles specific to the BrokerQuotationSummary widget
+ */
+.pf-broker-quotation-summary-proposer-section {
+    float: right;
+}
+
+.pf-broker-quotation-summary-payment-section {
+    display: inline-block;
+}
+
+.pf-broker-quotation-summary-payment-section > .pf-section-description {
+    max-width: 312px; 
+}
+
+.pf-broker-quotation-summary-premium-section {
+	display: block;
+}
+
+.pf-broker-quotation-summary-premium-section .pf-section-body {
+    display: inline-block;
+}
+
+/*
+ * Styles specific to the AssessmentSheetDetails widget
+ */
+.pf-assessment-sheet-details-calculation-contributes, 
+.pf-assessment-sheet-details-calculation-depends {
+    color: #AABBAA;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+.pf-assessment-sheet-details-calculation-lines-body, 
+.pf-assessment-sheet-details-marker-lines-body, 
+.pf-assessment-sheet-details-notes-body {
+    display: inline-block;
+    margin: 10px 5px 0;
+    min-width: 45%;
+}
+
+.pf-assessment-sheet-details th, 
+.pf-assessment-sheet-details td  {
+    padding: 0px 5px 0px 5px;   
+}
+
+.pf-assessment-sheet-details td:nth-child(odd) {
+    background-color: #e8f8e8;
+    border-bottom: 1px dotted;
+}
+
+.pf-assessment-sheet-details td:nth-child(even) {
+    background-color: #efffef;
+    border-bottom: 1px dotted;
+}
+
+.pf-assessment-sheet-details th {
+    background-color: #efefef;
+    border-bottom: #1D8412 1px solid;
+}
+
+.pf-assessment-sheet-details td:nth-child(1) {
+    width: 100px;
+}
+
+.pf-assessment-sheet-details td:nth-child(2) {
+    width: 500px;
+}
+
+.pf-assessment-sheet-details td:nth-child(4) {
+    width: 150px;
+}
+
+.pf-assessment-sheet-details td:nth-child(5), 
+.pf-assessment-sheet-details td:nth-child(6) {
+    text-align: right;
+}
+
+.pf-assessment-sheet-details table {
+    border: #1D8412 1px solid;
+}
+
+/*
+ * Styles specific to the AnswerSection widget
+ */
+.pf-answer-section > .pf-section-body > .pf-answer-scroller > .pf-section-body {
+    border: none;
+    border-bottom: 1px solid #1D8412;
+}
+
+.pf-answer-section > .pf-section-body > .pf-answer-scroller {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+/*
+ * Styles specific to the ClauseDetails widget
+ */
+.pf-clause-details > .pf-section > .pf-section {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.pf-clause-details > .pf-section {
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Styles specific to the LoginSection widget
+ */
+.pf-login-section.pf-body {
+    display: inline-block;
+}
+
+/*
+ * Styles specific to the NavigationSection widget
+ */
+.pf-navigation-section-quit,
+.pf-navigation-section-buttons {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.pf-navigation-section-buttons {
+    width: 90%;
+}
+
+.pf-navigation-section-quit {
+    float: right;
+}
+
+
+.pf-navigation-section-quit > .pf-section,
+.pf-navigation-section-buttons > .pf-section {
+    display: table;
+	margin: auto;
+}
+
+/*
+ * Styles specific to the PaymentDetails widget
+ */
+.pf-payment-details-contact > .pf-section-body {
+    display: inline-block;
+ }
+ 
+ .pf-payment-details-direct-debit > .pf-section {
+    display: block;
+    margin: 5px 5px 5px 0;
+}
+
+/*
+ * Styles specific to the PaymentOptionsSelector widget
+ */
+.pf-payment-option-selector .pf-input-label {
+    display: table-cell;
+    padding: 5px;
+}
+
+.pf-payment-option-selector .pf-input-field {
+    display: table-cell;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.pf-payment-option-selector .pf-section-description {
+    display: inline;
+}
+
+/*
+ * Styles specific to the ProposerDetails widget
+ */
+ .pf-proposer-details-proposer-name, 
+ .pf-proposer-details-address,
+ .pf-proposer-details-email-and-phone {
+    display: block;
+    padding: 0 0 20px;
+}
+
+.pf-proposer-details .pf-input-label,
+.pf-proposer-details .pf-input-field,
+.pf-proposer-details .pf-input-error,
+.pf-proposer-details-address > .pf-input-section-title,
+.pf-proposer-details-address > .pf-section {
+    display: table-cell;
+}
+
+.pf-proposer-details .pf-input-section {
+    min-width: 385px;
+}
+
+.pf-proposer-details .pf-input-label {
+    min-width: 125px;
+}
+
+.pf-proposer-details-address .pf-section {
+    padding: 0;
+}
+
+/*
+ * Styles specific to the ProposerQuotationSummary widget
+ */
+.pf-proposer-quotation-summary-proposer-section, .pf-proposer-quotation-summary-section {
+    float: right;
+}
+
+.pf-proposer-quotation-summary > .pf-body {
+    min-height: 370px;
+}
+
+.pf-proposer-quotation-summary-introduction {
+    min-height: 200px;
+}
+
+/*
+ * Styles specific to Question related widgets
+ */
+.pf-question {
+	display: table-row;
+}
+
+.pf-question .pf-input-label,
+.pf-question .pf-input-field {
+	display: table-cell;
+	padding: 10px;
+}
+
+/*
+ * Styles specific to QuestionSection widgets
+ */
+.pf-question-section .pf-section-body {
+	display:table;
+	border: none;
+}
+
+.pf-attribute-field-prefix {
+	min-width: 40px;
+	text-align: right;
+	display: inline-block;
+}
+
+.pf-attribute-field-suffix {
+	display: inline-block;
+}
+
+.pf-attribute-field-input {
+	display: inline-block;
+}
+
+.pf-attribute-field-input input[type="radio"] {
+    margin: 0 4px 0 0;
+}
