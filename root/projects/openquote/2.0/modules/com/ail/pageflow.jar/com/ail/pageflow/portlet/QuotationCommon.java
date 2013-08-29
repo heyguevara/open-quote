@@ -54,7 +54,7 @@ public class QuotationCommon {
     private ListPageFlowsForProductCommand listPageFlowsForProductCommand;
     private PersistPolicyCommand persistPolicyCommand;
 
-    QuotationCommon() {
+    public QuotationCommon() {
         CoreProxy coreProxy = new CoreProxy();
 
         listProductsCommand = coreProxy.newCommand(ListProductsCommand.class);
@@ -152,7 +152,7 @@ public class QuotationCommon {
      * @return String of products in option format.
      * @throws BaseException 
      */
-    String buildProductSelectOptions(String product) throws BaseException {
+    public String buildProductSelectOptions(String product) throws BaseException {
         listProductsCommand.invoke();
 
         List<String> productNames=extract(listProductsCommand.getProductsRet(), on(ProductDetails.class).getName());
@@ -176,7 +176,7 @@ public class QuotationCommon {
      * @return String of page flow names in option format.
      * @throws BaseException 
      */
-    String buildPageFlowSelectOptions(String product, String pageFlowName) throws BaseException {
+    public String buildPageFlowSelectOptions(String product, String pageFlowName) throws BaseException {
         List<String> pageFlowNames=new ArrayList<String>();
 
         if (product!=null && product.length()!=0) {

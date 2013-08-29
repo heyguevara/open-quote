@@ -21,7 +21,7 @@
 							<span class="aui-field-content"> 
 								<label class="aui-field-label" for="productName"> Product </label> 
 								<span class="aui-field-element"> 
-									<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="productName" onchange="this.form.submit()"><%=QuotationCommon.buildProductSelectOptions(productName)%></select>
+									<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="productName" onchange="this.form.submit()"><%=new QuotationCommon().buildProductSelectOptions(productName)%></select>
 								</span>
 							</span>
 						</span> 
@@ -29,7 +29,7 @@
 							<span class="aui-field-content"> 
 								<label class="aui-field-label" for="type"> Page Flow </label> 
 								<span class="aui-field-element">
-						    		<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="pageFlowName"><%=QuotationCommon.buildPageFlowSelectOptions(productName, pageFlowName)%></select>
+						    		<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="pageFlowName"><%=new QuotationCommon().buildPageFlowSelectOptions(productName, pageFlowName)%></select>
 								</span>
 							</span>
 						</span> 
