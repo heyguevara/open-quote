@@ -57,7 +57,6 @@
     <subant-macro target="setup" includes="build/Build.xml" />
     <antcall target="teardown" />
     <antcall target="setup" />
-    <antcall target="test" />
   </target>
 
   <target name="bamboo-release">
