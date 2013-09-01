@@ -1,0 +1,7 @@
+<ivy-module version="2.0">
+    <info organisation="com.ail" module="domain" />
+    <dependencies>
+        <dependency org="org.jboss.modules" name="jboss-modules" rev="1.1.2.GA" />
+        <dependency org="mysql" name="mysql-connector-java" rev="5.1.24"/>
+    </dependencies>
+</ivy-module>

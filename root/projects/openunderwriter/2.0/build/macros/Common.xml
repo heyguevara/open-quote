@@ -1,0 +1,309 @@
+<!-- This file defines the common section used in all build files Ant build file for the core project. -->
+
+<project name="Common.xml" default="dummy">
+  <!-- Set global properties for this build -->
+  <property environment="env" />
+
+  <!-- Figure out where everything is - everything's relative to project.dir -->
+  <dirname property="project.dir" file="${ant.file.BuildSettings}" />
+  <property name="target.dir" value="${project.dir}/target" />
+  <property name="liferay.dir" value="${target.dir}/liferay-portal-${liferay.version}" />
+  <property name="jboss.dir" value="${liferay.dir}/jboss-${jboss.version}" />
+  <property name="deploy.dir" value="${jboss.dir}/standalone/deployments" />
+  <property name="test.dir" value="${target.dir}/test" />
+  <property name="buildlib.dir" value="${project.dir}/build/lib" />
+  <property name="bootlib.dir" value="${project.dir}/build/boot" />
+  <property name="tmp.dir" value="${target.dir}/tmp" />
+  <property name="copyfilter.dir" value="${deploy.dir}/lib" />
+  <property name="copyfilter.file" value="${copyfilter.dir}/filter" />
+  <property name="server.base.url" value="localhost:8080" />
+  <!-- bamboo overrides this with values like EA1, RC4, SP2 etc. -->
+  <property name="increment.version" value="dev" />
+  <property name="java.naming.factory.initial" value="org.jboss.naming.remote.client.InitialContextFactory" />
+  <property name="java.naming.provider.url" value="remote://localhost:4447" />
+  <property name="grinder.properties" value="${basedir}/grinder.properties" />
+  <property name="connectionpoolloader.params" value="jndiname=java:/ConfigureDS;table=config" />
+  <!-- default build.type is developer, bamboo overrides this with a -D on the command line -->
+  <property name="build.type" value="developer" />
+  <!-- password to use when creating DB's etc. Bamboo overrides this on the build server -->
+  <property name="mysql.root.password" value="" />
+  <property name="mysql.setup.file" value="${project.dir}/domain/OpenQuote-MySql-Setup.sql" />
+  <property name="content.setup.file" value="${project.dir}/domain/OpenQuote-Content-Setup.zip" />
+  <property name="module.dir" value="${jboss.dir}/modules/" />
+  <property name="package.dir" value="${target.dir}/openquote-community-${major.version}.${minor.version}${increment.version}" />
+  <property name="package.file" value="${package.dir}.zip" />
+  <property name="selenium.htmlSuite" value="*firefox" />
+  <property name="text.filetypes" value="**/*.MF, **/*.bat, **/*.bs, **/*.conf, **/*.css, **/*.drl, **/*.dsl, **/*.ftl, **/*.html, **/*.janino, **/*.jnlp, **/*.js, **/*.jsp, **/*.properties, **/*.rule, **/*.sh, **/*.tld, **/*.txt, **/*.vm, **/*.wsdl, **/*.xml, **/*.xsl, **/*.xslt"/>
+  <property name="binary.filetypes" value="**/*.Processor, **/*.eot, **/*.gif, **/*.ico, **/*.jpg, **/*.keystore, **/*.md, **/*.pdf, **/*.png, **/*.svg, **/*.swf, **/*.ttf, **/*.woff, **/*.xls" />
+  
+  <target name="dummy" />
+
+  <classfileset includes="${buildlib.dir}/*.jar" />
+
+  <macrodef name="_initialise-ant-contribs-macro">
+    <sequential>
+      <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+          <pathelement location="${bootlib.dir}/ant-contrib-1.0b3.jar" />
+        </classpath>
+      </taskdef>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="_intialise-filtersets-macro">
+    <element name="filters" />
+    <sequential>
+      <filterset id="copy.filterset">
+        <filters />
+      </filterset>
+      <filterset id="copy.filterset.sql" begintoken="##" endtoken="##">
+        <filters />
+      </filterset>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to setup the 'product.mountpoint' property which defines where the product -->
+  <!-- WEBDAV file system will be mounted for any give os.                              -->
+  <macrodef name="_set-product.mountpoint-property-macro">
+    <sequential>
+      <_initialise-ant-contribs-macro />
+      <if>
+        <os family="windows" />
+        <then>
+          <property name="product.mountpoint" value="P:/" />
+        </then>
+        <elseif>
+          <os family="unix" />
+          <then>
+            <property name="product.mountpoint" value="${project.dir}/../product" />
+          </then>
+        </elseif>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to figure out the deploy path from the ant project name. By convention ant J2EE -->
+  <!-- projects have names like core:something.war. This Beanshell script creates a new      -->
+  <!-- ant property "deploy.unit" trimming off the "core:" bit (e.g."something.war")         -->
+  <macrodef name="_set-output-dir-property-macro">
+    <sequential>
+      <script language="beanshell">
+        <classpath>
+          <fileset dir="${bootlib.dir}" includes="*.jar" />
+        </classpath>
+        projectName = project.getName();
+        deployUnit = projectName.replaceAll("^.*:", "");
+        project.setProperty("generated.source.dir",
+        project.getProperty("target.dir") + "/generated/" + deployUnit);
+        project.setProperty("deploy.unit", deployUnit);
+        if (projectName.contains(".war") || projectName.contains("-ejb.jar")) {
+            deployDir = project.getProperty("deploy.dir");
+            outputDir = deployDir + "/" + deployUnit;
+        }
+        else if (projectName.contains(":modules")) {
+            deploy.dir = project.getProperty("jboss.dir");
+            if (deployUnit.endsWith(".jar")) {
+                rootPath = deployUnit.replaceAll("/[^/]*$","");
+                name = deployUnit.replaceAll(".*/([^.]*)[.]jar","$1");
+                outputDir = deploy.dir + "/" + rootPath + "/" + name + "/main/" + name + ".jar";
+            }
+            else {
+                    outputDir = deploy.dir + "/" + deployUnit;
+            }
+        }
+        else if (projectName.contains(":unit-test.jar")) {
+            outputDir = project.getProperty("test.dir") + "/unit-test.jar";
+        }
+        else if (projectName.contains(":integration-test.jar")) {
+            outputDir = project.getProperty("test.dir") + "/integration-test.jar";
+        }
+        else if (projectName.contains(":test.jar")) {
+            outputDir = project.getProperty("test.dir") + "/test.jar";
+        }
+        else {
+            outputDir = project.getProperty("target.dir") + "/"+deployUnit;
+        }
+        project.setProperty("output.dir", outputDir);
+      </script>
+    </sequential>
+  </macrodef>
+
+  <!-- Convert a product name into a path name -->
+  <!-- e.g. "my.package.name" -> "my/package/name" -->
+  <macrodef name="pathify-product-name-macro">
+    <attribute name="property" />
+    <attribute name="value" />
+    <sequential>
+      <script language="beanshell">
+        <classpath>
+          <fileset dir="${bootlib.dir}" includes="*.jar" />
+        </classpath>
+
+        project.setProperty("@{property}", "@{value}".replaceAll("[.]", "/"));
+
+      </script>
+    </sequential>
+  </macrodef>
+
+  <!-- Convert the named property from a windows style path to a unix style -->
+  <!-- e.g. "c:\my\folder\file.txt" -> "c:/my/folder/file.txt" -->
+  <macrodef name="unixify-path-macro">
+    <attribute name="property" />
+    <sequential>
+      <script language="beanshell">
+        <classpath>
+          <fileset dir="${bootlib.dir}" includes="*.jar" />
+        </classpath>
+
+        val=project.getProperty("@{property}");
+        project.setProperty("@{property}",
+        val.replaceAll("\\\\","/"));
+
+      </script>
+    </sequential>
+  </macrodef>
+
+  <!-- The if-macro sets the named property to "true" if the specified condition evaluates to true. The -->
+  <!-- property is "forced" to change breaking ant's normal immutable property rule. -->
+  <scriptdef name="if-macro" language="beanshell">
+    <attribute name="property" />
+    <attribute name="condition" />
+    <attribute name="arg1" />
+    <attribute name="arg2" />
+    <classpath>
+      <fileset dir="${buildlib.dir}" includes="*.jar" />
+    </classpath>
+    property=attributes.get("property");
+    condition=attributes.get("condition");
+    arg1=attributes.get("arg1");
+    arg1=arg1.replaceAll("\\\\","/");
+    arg2=attributes.get("arg2");
+
+    project.setProperty(property,"false");
+
+    if (condition.equals("equals")) {
+    if (arg1.equals(arg2)) {
+    project.setProperty(property,"true");
+    }
+    }
+    else if (condition.equals("exists")) {
+    if (new File(arg1).exists()) {
+    project.setProperty(property,"true");
+    }
+    }
+    else if (condition.equals("defined")) {
+    if (arg1.length()!=0) {
+    project.setProperty(property,"true");
+    }
+    }
+    else {
+    print("Condition "+condition+" is not
+    understood");
+    throw new Exception("Condition "+condition+" is not understood");
+    }
+  </scriptdef>
+
+  <!-- Run a specified target in all the ant files one level down in the directory structure -->
+  <macrodef name="subant-macro">
+    <attribute name="target" />
+    <attribute name="excludes" default="classes/**" />
+    <attribute name="includes" default="*/**/Build.xml" />
+    <sequential>
+      <subant target="@{target}" failonerror="yes">
+        <fileset dir="." includes="@{includes}" excludes="@{excludes}" />
+      </subant>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to truncate the file copy filter -->
+  <macrodef name="truncate-filter-macro">
+    <sequential>
+      <echo file="${copyfilter.file}" append="no" message="# Build generated file - do not edit!${line.separator}" />
+    </sequential>
+  </macrodef>
+
+  <!-- Macro which sets the ${mysql-running} to true if mysql is running -->
+  <macrodef name="set-mysql-running-property-macro">
+    <sequential>
+      <condition property="mysql-running">
+        <socket server="localhost" port="3306" />
+      </condition>
+    </sequential>
+  </macrodef>
+
+  <!-- This macro provides access to the operations supported by the configuration server. -->
+  <macrodef name="configuration-macro">
+    <attribute name="username" />
+    <attribute name="password" />
+    <attribute name="operation" />
+    <attribute name="factory" default="${java.naming.factory.initial}" />
+    <attribute name="provider" default="${java.naming.provider.url}" />
+    <sequential>
+
+      <java fork="yes" classname="com.ail.core.configure.Main">
+        <classpath>
+          <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
+          <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+          <dirset dir="${deploy.dir}" includes="configure-server-ejb.jar" />
+        </classpath>
+        <arg value="username=@{username}" />
+        <arg value="password=@{password}" />
+        <arg value="operation=@{operation}" />
+        <arg value="provider=@{provider}" />
+        <arg value="factory=@{factory}" />
+      </java>
+    </sequential>
+  </macrodef>
+
+  <!-- The annotation processor (in development/annotations.jar) generates fragments of config based on -->
+  <!-- the annotations encountered during compilation. This macro aggregates these fragments and outputs -->
+  <!-- a single file. -->
+  <macrodef name="aggregate-annotated-configurations-macro">
+    <sequential>
+
+      <!-- Define a path to be passed into the configuration aggregator to search for -->
+      <!-- annotation config files. -->
+      <path id="path.expansion">
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
+        <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
+        <fileset dir="${deploy.dir}" includes="*-ejb.jar" />
+      </path>
+      <property name="config.search.path" refid="path.expansion" />
+
+      <!-- Classpath for running the ConfigurationAggregator -->
+      <path id="aggregate.classpath">
+        <dirset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${buildlib.dir}" includes="*.jar" />
+      </path>
+
+      <java classname="com.ail.core.configure.ConfigurationAggregator" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
+        <jvmarg value="-Djava.awt.headless=true" />
+        <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y" / -->
+        <arg line="-s ${config.search.path} -o ${module.dir}/com/ail/core/main/core.jar!com/ail/core/AnnotatedTypeConfig.xml" />
+      </java>
+    </sequential>
+  </macrodef>
+
+  <_intialise-filtersets-macro>
+    <filters>
+      <filter token="dbname" value="${dbname}" />
+      <filter token="dbusername" value="${dbusername}" />
+      <filter token="dbpassword" value="${dbpassword}" />
+      <filter token="major.version" value="${major.version}" />
+      <filter token="minor.version" value="${minor.version}" />
+      <filter token="liferay.version" value="${liferay.version}" />
+      <filter token="jboss.version" value="${jboss.version}" />
+      <filter token="increment.version" value="${increment.version}" />
+    </filters>
+  </_intialise-filtersets-macro>
+
+  <import file="JavaMacros.xml" />
+  <import file="LiferayMacros.xml" />
+  <import file="RepositoryMacros.xml" />
+  <import file="TestingMacros.xml" />
+</project>
+

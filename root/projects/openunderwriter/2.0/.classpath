@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="Build.xml" kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
+	<classpathentry excluding="Build.xml|com/ail/core/persistence/hibernate/HibernateConfiguration.xml" kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
+	<classpathentry excluding="Build.xml|Ivy.xml" kind="src" path="product-test.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/core.jar" path="modules/com/ail/core.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/commercial/main/commercial.jar" path="modules/com/ail/commercial.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/insurance/main/insurance.jar" path="modules/com/ail/insurance.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/pageflow/main/pageflow.jar" path="modules/com/ail/pageflow.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/acceptance-ejb.jar" path="acceptance-ejb.jar"/>
+	<classpathentry kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/command-server-ejb.jar" path="command-server-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/configure-server-ejb.jar" path="configure-server-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/onrisk-ejb.jar" path="onrisk-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/persistence-server-ejb.jar" path="persistence-server-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/product-manager-ejb.jar" path="product-manager-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/quotation-ejb.jar" path="quotation-ejb.jar"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/subrogation-ejb.jar" path="subrogation-ejb.jar"/>
+	<classpathentry excluding="WEB-INF/src/" kind="src" path="configure-hook.war"/>
+	<classpathentry kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/configure-hook.war/WEB-INF/classes" path="configure-hook.war/WEB-INF/src"/>
+	<classpathentry excluding="WEB-INF/src/" kind="src" path="sandpit-portlet.war"/>
+	<classpathentry kind="src" path="sandpit-portlet.war/WEB-INF/src"/>
+	<classpathentry excluding="WEB-INF/src/|js/tiny_mce/" kind="src" path="quotation-portlet.war"/>
+	<classpathentry kind="src" path="quotation-portlet.war/WEB-INF/src"/>
+	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openquote-theme.war"/>
+	<classpathentry kind="src" path="build/annotation.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="build/lib/annotation-3.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/ejb/api/main/jboss-ejb-api_3.1_spec-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/jms/api/main/jboss-jms-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/liferay/portal/main/portlet.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/mail/api/main/mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/jboss/as/web/main/jbossweb-7.0.13.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/xalan/main/serializer-2.7.1.jbossorg-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/xalan/main/xalan-2.7.1.jbossorg-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/liferay/portal/main/mysql.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/avalon-framework-4.1.3.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/avalon-framework-api-4.3.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/avalon-framework-impl-4.3.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/axis-1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/axis-jaxrpc-1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/axis-saaj-1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/axis-wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-awt-util-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-bridge-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-css-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-dom-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-ext-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-extension-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-gui-util-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-gvt-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-parser-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-script-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-svg-dom-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-transcoder-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-util-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/batik-xml-1.6-1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bcmail-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bcmail-jdk16-1.46.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bcprov-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bcprov-jdk16-1.46.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bctsp-jdk15-1.46.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bctsp-jdk16-1.46.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/bsh-2.0b5.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-io-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-jxpath-1.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-validator-1.1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/fop-0.93.jar" sourcepath="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/fop-0.93-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/openquote/target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/fop-0.93-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/hibernate-core-3.3.2.GA.jar" sourcepath="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/hibernate-core-3.3.2.GA-sources.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/itextpdf-5.1.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/janino-2.5.16.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/js-1.5R4.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/junit-3.8.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/logkit-2.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/oro-2.0.8.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/werken-xpath-0.9.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/xmlgraphics-commons-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/servlet/api/main/jboss-servlet-api_3.0_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/reflections-0.9.8.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/gson-1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/guava-11.0.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/javassist-3.12.1.GA.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jsr305-1.3.9.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/saxon-8.7.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/saxon-dom-8.7.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/httpcomponents/main/httpclient-4.1.2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/apache/httpcomponents/main/httpcore-4.1.4.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/javax/annotation/api/main/jboss-annotations-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.0.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/org/jboss/ws/api/main/jbossws-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-beanutils-1.6.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-digester-1.5.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/antlr-3.3.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/antlr-runtime-3.3.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/castor-xml-ail-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/drools-compiler-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/drools-core-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/drools-decisiontables-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/drools-jsr94-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/drools-templates-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/ecj-3.5.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jaxb-api-2.2.5.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jaxb-impl-2.2.5.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jaxb-xjc-2.2.5.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jsr94-1.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/jxl-2.6.10.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/mvel2-2.1.0.drools16.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/org.osgi.compendium-1.4.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/org.osgi.core-1.4.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/protobuf-java-2.4.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/quartz-1.6.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/stax-api-1.0-2.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/stringtemplate-3.2.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/xstream-1.4.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/knowledge-api-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/knowledge-internal-api-5.4.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/xercesImpl-2.11.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/xml-apis-2.11.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/bin/client/jboss-client.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/javassist-3.17.1-GA.jar" sourcepath="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/javassist-3.17.1-GA-sources.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/liferay/portal/main/portal-service.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-driver-file-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-driver-zip-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-file-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/truezip-kernel-7.7.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/commons-compress-1.4.1.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="target/test/lib/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-core-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-module-junit4-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-module-junit4-common-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-api-mockito-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-api-support-1.5.jar"/>
+	<classpathentry kind="lib" path="target/test/lib/powermock-reflect-1.5.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/lambdaj-2.3.3.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/modules/com/ail/core/main/commons-codec-1.2.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

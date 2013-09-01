@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Macro file defining a collection of ant macros concerned with managing Liferay
+-->
+
+<project default="dummy" name="BuildLiferayMacros.xml" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <target name="dummy" />
+
+  <target name="_install.base" unless="base">
+    <!-- Get the Liferay zip into the cache -->
+    <fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" />
+    <property name="liferay.zip" refid="liferay.zip.pathid" />
+
+    <!-- Unpack the cached zip into the dev tree -->
+    <mkdir dir="${target.dir}" />
+    <unzip overwrite="yes" dest="${target.dir}" src="${liferay.zip}" />
+    <unzip overwrite="yes" dest="${liferay.dir}" src="${content.setup.file}" />
+    <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${jboss.dir}/bin">
+      <arg line="-c 'chmod 755 *.sh'" />
+    </exec>
+  </target>
+
+  <!-- Macro to install Liferay in a development tree.   -->
+  <!-- @param version The version of Liferay to install. -->
+  <macrodef name="install-liferay-macro">
+    <attribute name="version" />
+    <sequential>
+      <available file="${liferay.dir}/readme.html" property="base" />
+      <antcall target="_install.base">
+        <param name="version" value="@{version}" />
+      </antcall>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to uninstall liferay in a development tree.   -->
+  <!-- @param version The version of liferay to uninstall. -->
+  <macrodef name="uninstall-liferay-macro">
+    <attribute name="version" />
+    <sequential>
+      <!-- Delete the installed tree -->
+      <delete dir="${liferay.dir}" failonerror="no" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="wait-for-liferay-to-start-macro">
+    <sequential>
+      <waitfor maxwait="30" maxwaitunit="minute" checkevery="250" timeoutproperty="liferay-startup-failed">
+        <http url="http://localhost:8080" />
+      </waitfor>
+      <fail if="liferay-startup-failed" message="Liferay failed to start" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="wait-for-liferay-to-stop-macro">
+    <sequential>
+      <waitfor maxwait="5" maxwaitunit="minute" checkevery="250">
+        <not>
+          <http url="http://localhost:8080" />
+        </not>
+      </waitfor>
+      <sleep seconds="5" />
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to start the liferay server if it isn't running already. -->
+  <macrodef name="start-liferay-macro">
+    <sequential>
+      <_initialise-ant-contribs-macro />
+
+      <if>
+        <not>
+          <socket server="localhost" port="8080" />
+        </not>
+        <then>
+          <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.sh" os="Linux,Mac OS X,Solaris,Sun OS">
+            <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+          </exec>
+          <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.bat" os="Windows 2000,Windows XP,Windows 7">
+            <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+          </exec>
+        </then>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to stop liferay if it is running. -->
+  <macrodef name="stop-liferay-macro">
+    <sequential>
+      <_initialise-ant-contribs-macro />
+
+      <if>
+        <socket server="localhost" port="8080" />
+        <then>
+          <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.sh" os="Linux,Mac OS X,Solaris,Sun OS">
+            <arg line="--connect :shutdown" />
+          </exec>
+          <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/jboss-cli.bat" os="Windows 2000,Windows XP,Windows 7">
+            <arg line="--connect :shutdown" />
+          </exec>
+          <wait-for-liferay-to-stop-macro />
+          <echo level="info" message="Liferay stopped." />
+        </then>
+      </if>
+
+    </sequential>
+  </macrodef>
+
+  <macrodef name="kick-liferay-macro">
+    <sequential>
+      <!--touch file="${deploy.dir}/${ear.name}.dodeploy" /-->
+    </sequential>
+  </macrodef>
+
+  <!-- Under an integration build we upload the results of the relese to the project wide repository -->
+  <target name="_release-liferay-domain-type=integration" depends="_release-liferay-domain-type=developer">
+    <!-- Todo: Release to nexus -->
+    <!--mkdir dir="${release.repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}" />
+    <copy file="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot.dar" tofile="${release.repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}-build.${build.number}/${ant.project.name}-${major.version}.${minor.version}-build.${build.number}.dar" /-->
+  </target>
+
+  <!-- For a local 'developer' build, we simply put a SNAPSHOT copy of the .dar in the local cache dir for other projects to use -->
+  <target name="_release-liferay-domain-type=developer">
+    <!-- Todo: Release to nexus -->
+    <!--mkdir dir="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}" />
+    <zip basedir="${deploy.dir}" destfile="${repo.dir}/ail/${ant.project.name}/${major.version}.${minor.version}/${ant.project.name}-${major.version}.${minor.version}-snapshot.dar" /-->
+  </target>
+
+  <!-- Macro to "release" the current project's liferay domain. -->
+  <macrodef name="release-liferay-domain-macro">
+    <sequential>
+      <antcall target="_release-liferay-domain-type=${build.type}" />
+    </sequential>
+  </macrodef>
+
+  <!-- Macro which sets the ${liferay-running} to true if liferay is running -->
+  <macrodef name="set-liferay-running-property-macro">
+    <sequential>
+      <condition property="liferay-running">
+        <and>
+          <socket server="localhost" port="8080" />
+        </and>
+      </condition>
+    </sequential>
+  </macrodef>
+
+  <target name="_mount-product-space-Mac OS X" >
+    <_set-product.mountpoint-property-macro />
+    <mkdir dir="${product.mountpoint}" />
+    <exec os="Mac OS X" executable="mount_webdav" failonerror="yes">
+      <arg value="http://${server.base.url}/api/secure/webdav/guest/document_library/Product" />
+      <arg value="${product.mountpoint}" />
+    </exec>
+    <echo message="Product space mounted on ${product.mountpoint}" />
+  </target>
+
+  <target name="_unmount-product-space-Mac OS X" >
+    <_set-product.mountpoint-property-macro />
+    <exec os="Mac OS X" executable="umount" failonerror="yes">
+      <arg value="${product.mountpoint}" />
+    </exec>
+    <delete dir="${product.mountpoint}" />
+    <echo message="Product space unmounted from ${product.mountpoint}" />
+  </target>
+
+  <macrodef name="mount-product-space-macro">
+    <sequential>
+      <antcall target="_mount-product-space-${os.name}" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="unmount-product-space-macro">
+    <sequential>
+      <antcall target="_unmount-product-space-${os.name}" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="_content-download-export-macro-database">
+    <sequential>
+      <stop-liferay-macro />
+
+      <echo file="${mysql.setup.file}">
+      -- OpenQuote Community database setup script.
+      --
+      -- This script will create a database suitable for use with openquote-##major.version##.##minor.version####increment.version##. The
+      -- script is totally specific to that version and should not be expected to work with any other version; this is
+      -- largely due to the way in which Liferay content indexes are defined in this database, while the actual content
+      -- is held within the file system.
+      --
+
+      --
+      -- Create the OpenQuote database, users and rights.
+      --
+      CREATE DATABASE IF NOT EXISTS ##dbname## character set utf8;
+      GRANT ALL ON ##dbname##.* TO '##dbusername##'@'localhost' IDENTIFIED BY '##dbpassword##' WITH GRANT OPTION;
+      GRANT ALL ON ##dbname##.* TO '##dbusername##'@'localhost.localdomain' IDENTIFIED BY '##dbpassword##' WITH GRANT OPTION;
+
+      SET FOREIGN_KEY_CHECKS=0;
+
+      USE ##dbname##;
+      </echo>
+
+      <!-- List of tables that should not be included in the backup. This list  -->
+      <!-- should correspond to the tables created in the OpenQuote-Table-Setup -->
+      <!-- script.                                                              -->
+      <property name="ignoreTableList">
+          --ignore-table ${dbname}.config
+          --ignore-table ${dbname}.saved_policy
+          --ignore-table ${dbname}.saved_policy_summary          
+          --ignore-table ${dbname}.commercial_address
+          --ignore-table ${dbname}.commercial_addressbook
+          --ignore-table ${dbname}.commercial_company
+          --ignore-table ${dbname}.commercial_organisation
+          --ignore-table ${dbname}.commercial_party
+          --ignore-table ${dbname}.commercial_person
+          --ignore-table ${dbname}.core_Attribute
+          --ignore-table ${dbname}.core_Type
+          --ignore-table ${dbname}.core_configure_Component
+          --ignore-table ${dbname}.core_configure_Group
+          --ignore-table ${dbname}.core_configure_Parameter
+          --ignore-table ${dbname}.insurance_AssessmentLine
+          --ignore-table ${dbname}.insurance_AssessmentSheet
+          --ignore-table ${dbname}.insurance_Asset
+          --ignore-table ${dbname}.insurance_Coverage
+          --ignore-table ${dbname}.insurance_Policy
+          --ignore-table ${dbname}.insurance_Section
+          --ignore-table ${dbname}.party_Address
+          --ignore-table ${dbname}.party_Party
+          --ignore-table ${dbname}.party_Person
+      </property>
+
+      <!-- reorganise ${ignoreTableList} list into a single line -->
+      <loadresource property="oneLineIgnoreTableList">
+        <propertyresource name="ignoreTableList" />
+        <filterchain>
+          <tokenfilter>
+            <filetokenizer />
+            <replaceregex pattern="\n" replace="" flags="g" />
+          </tokenfilter>
+        </filterchain>
+      </loadresource>
+
+      <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">
+        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} ${oneLineIgnoreTableList} --opt ${dbname} >> ${mysql.setup.file}"' />
+      </exec>
+
+      <zip file="${content.setup.file}">
+        <fileset dir="${liferay.dir}" includes="data/document_library/**, data/lucene/**, data/jackrabbit/**" />
+      </zip>
+
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to export content from the liferay repository into the source tree. -->
+  <macrodef name="content-download-export-macro">
+    <sequential>
+      <_content-download-export-macro-database />
+    </sequential>
+  </macrodef>
+
+  <!-- Macro to compile a liferay theme war project into an exploded war deployment folder -->
+  <macrodef name="compile-theme-war-macro">
+    <sequential>
+
+      <!-- this will set ${deploy.unit} based on the current project's name -->
+      <_set-output-dir-property-macro />
+
+      <mkdir dir="${output.dir}/WEB-INF/classes" />
+
+      <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
+      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_unstyled" destdir="${output.dir}" />
+      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_styled" destdir="${output.dir}" />
+      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/classic" destdir="${output.dir}" />
+      <_copy-resources-macro srcdir="." destdir="${output.dir}" />
+
+      <mkdir dir="${output.dir}/.sass-cache" />
+      <compile-css-macro target="${output.dir}/" />
+
+      <touch file="${output.dir}.dodeploy" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="compile-css-macro">
+    <attribute name="target" />
+    <sequential>
+
+      <path id="sass2css.classpath">
+        <pathelement location="${deploy.dir}/ROOT.war/WEB-INF/classes" />
+        <fileset dir="${module.dir}/com/liferay/portal/main" includes="*.jar" />
+        <fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="*.jar" />
+        <fileset dir="${buildlib.dir}" includes="*.jar" />
+      </path>
+
+      <java fork="yes" classname="com.liferay.portal.tools.SassToCssBuilder" classpathref="sass2css.classpath" >
+        <arg value="sass.dir=@{target}" />
+      </java>
+
+    </sequential>
+  </macrodef>
+
+</project>

@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+    <info organisation="com.openquote" module="integration-test" />
+    <dependencies>
+        <dependency org="seleniumhq.org" name="selenium-server-standalone" rev="2.33.0" />
+    </dependencies>
+</ivy-module>

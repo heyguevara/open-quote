@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ This file defines the default (factory) configuration for the Product
+ Manager component.
+-->
+<configuration xsi:noNamespaceSchemaLocation="http://www.appliedindustriallogic.com/schemas/Configuration.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>Product Manager component configuration</name>
+    <timeout>-1</timeout>
+    <who>factory</who>
+    <version>1.7</version>
+
+    <types>
+        <command name="ListProducts" builder="ClassBuilder" key="com.ail.core.product.ListProductsCommandImpl">
+          <parameter name="Service">com.ail.core.product.ListProductsService</parameter>
+        </command>
+    
+        <command name="NewProductType" builder="ClassBuilder" key="com.ail.core.productNewProductTypeCommandImpl">
+          <parameter name="Service">com.ail.core.product.NewProductTypeService</parameter>
+        </command>
+    
+        <command name="ResetProduct" builder="ClassBuilder" key="com.ail.core.product.ResetProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.ResetProductService</parameter>
+        </command>
+    
+        <command name="ResetAllProducts" builder="ClassBuilder" key="com.ail.core.product.ResetAllProductsCommandImpl">
+          <parameter name="Service">com.ail.core.product.ResetAllProductsService</parameter>
+        </command>
+    
+        <command name="RegisterProduct" builder="ClassBuilder" key="com.ail.core.product.RegisterProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.RegisterProductService</parameter>
+        </command>
+    
+        <command name="RemoveProduct" builder="ClassBuilder" key="com.ail.core.product.RemoveProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.RemoveProductService</parameter>
+        </command>
+    
+        <command name="UpdateProduct" builder="ClassBuilder" key="com.ail.core.product.UpdateProductCommandImpl">
+          <parameter name="Service">com.ail.core.product.UpdateProductService</parameter>
+        </command>
+    
+    </types>
+</configuration>

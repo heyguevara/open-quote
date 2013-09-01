@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Build file for the product manager EJB jar
+-->
+
+<project default="build" name="openquote:product-manager-ejb.jar">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-ejb-jar-macro />
+  </target>
+
+  <target name="_build">
+    <compile-ejb-jar-macro>
+      <javac-classpath>
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/ejb/api" includes="**/*.jar" />
+        <fileset dir="${module.dir}/javax/jms/api" includes="**/*.jar" />
+      </javac-classpath>
+    </compile-ejb-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+  </target>
+</project>

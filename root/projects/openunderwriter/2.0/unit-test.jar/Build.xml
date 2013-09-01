@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Build file for the unit test jar project -->
+
+<project default="build" name="openquote:unit-test.jar">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+    <delete-jar-macro />
+  </target>
+
+  <target name="_build">
+    <compile-jar-macro packagable="no">
+      <javac-classpath>
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
+      </javac-classpath>
+    </compile-jar-macro>
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <!-- call the internal build target -->
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <update-dependencies-macro todir="${test.dir}/lib" />
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <delete dir="${test.dir}" failonerror="no" />
+  </target>
+
+  <target name="test" description="run tests defined in this project">
+    <run-unit-tests-macro>
+      <junit-classpath>
+        <fileset dir="${test.dir}/lib" includes="*.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
+        <fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
+        <fileset dir="${module.dir}/org/apache/xalan" includes="**/*.jar" />
+        <fileset dir="${jboss.dir}/bin/client" includes="**/*.jar" />
+      </junit-classpath>
+    </run-unit-tests-macro>
+  </target>
+
+</project>

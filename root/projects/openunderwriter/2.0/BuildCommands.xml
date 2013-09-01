@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Ant build file for starting utilities & servers etc..
+-->
+
+<project default="" name="openquote:commands">
+  <import file="./BuildSettings.xml" />
+
+  <target name="liferay: start server" description="start the liferay server">
+    <start-liferay-macro />
+  </target>
+
+  <target name="liferay: stop server" description="start the liferay server">
+    <stop-liferay-macro />
+  </target>
+
+  <target name="liferay: restart server" description="restart the liferay server">
+    <stop-liferay-macro />
+    <start-liferay-macro />
+  </target>
+
+  <target name="liferay: force deployment scan" description="force liferay to scan 'deploy/' for changes">
+    <kick-liferay-macro />
+  </target>
+
+  <target name="liferay: export repository" description="Export the content repository into the source tree">
+     <content-download-export-macro />
+   </target>
+
+  <target name="liferay: webdav mount" description="Mount the products folds over WEBDAV">
+     <mount-product-space-macro />
+   </target>
+
+  <target name="liferay: webdav unmount" description="Unmount the product folder">
+     <unmount-product-space-macro />
+   </target>
+
+  <target name="openquote: clear server cache" description="Clear the config cache in liferay">
+    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
+  </target>
+
+  <target name="openquote: reset configurations" description="reset all the ail configurations">
+    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="resetAllConfigurations" />
+    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
+  </target>
+</project>

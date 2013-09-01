@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Macro file defining ant macros to support unit and system testing
+-->
+
+<project default="dummy" name="BuildTestingMacros.xml">
+
+  <target name="dummy" />
+
+  <macrodef name="run-product-tests-macro">
+    <attribute name="product" />
+    <attribute name="url" default="${server.base.url}" />
+    <attribute name="product.dir" default="${product.mountpoint}" />
+    <attribute name="suite" default="./Suite.html" />
+    <attribute name="selenium.htmlSuite" default="${selenium.htmlSuite}" />
+    <sequential>
+      <_set-product.mountpoint-property-macro />
+
+      <property name="check.file" value="@{product.dir}/AIL/Base/Registry.xml"/>
+      
+      <if>
+        <not><available file="${check.file}" /></not>
+        <then>
+          <fail message="Cannot find product file system ('${check.file}' not found). Please mount product webdav before running these tests" />
+        </then>
+      </if>
+
+      <mkdir dir="${test.dir}/reports" />
+
+      <pathify-product-name-macro property="product.subdir" value="@{product}/Test Suite" />
+
+      <java fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.33.0.jar" dir="@{product.dir}/${product.subdir}">
+        <arg line="-singleWindow -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{product}.html" />
+      </java>
+    </sequential>
+  </macrodef>
+
+  <!-- Run the unit tests associated with a project. Reports are written to -->
+  <!-- ${test.dir}/reports.                                                 -->
+  <macrodef name="run-unit-tests-macro">
+    <element name="junit-classpath" optional="no" />
+    <sequential>
+      <_initialise-ant-contribs-macro />
+
+      <mkdir dir="${test.dir}/reports" />
+
+      <junit showoutput="yes" printsummary="yes" fork="yes" errorproperty="errored" failureproperty="failed">
+        <jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" />
+        <!-- To enable the debugger on the unit test process:                              -->
+        <!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
+
+        <classpath>
+          <dirset dir="${test.dir}" includes="unit-test.jar" />
+          <junit-classpath />
+        </classpath>
+
+        <formatter type="xml" />
+
+        <batchtest fork="no" todir="${test.dir}/reports" filtertrace="no">
+          <fileset dir="${test.dir}/unit-test.jar" includes="**/*Test*.class" />
+        </batchtest>
+      </junit>
+
+      <if>
+        <or>
+          <istrue value="${errored}"/>
+          <istrue value="${failed}"/>
+        </or>
+        <then>
+          <fail message="Unit test errors/failures"/>
+        </then>
+      </if>
+
+    </sequential>
+  </macrodef>
+
+  <!-- Run the integration tests associated with a project. Reports are written to -->
+  <!-- ${test.dir}/reports.                                                 -->
+  <macrodef name="run-integration-tests-macro">
+    <element name="junit-classpath" optional="no" />
+    <sequential>
+      <_initialise-ant-contribs-macro />
+
+      <mkdir dir="${test.dir}/reports" />
+
+      <parallel>
+        <start-liferay-macro />
+
+        <sequential>
+          <wait-for-liferay-to-start-macro/>
+
+          <sleep minutes="1"/>
+
+          <junit showoutput="yes" printsummary="yes" fork="yes" errorproperty="errored" failureproperty="failed">
+            <!--jvmarg value="-Djava.protocol.handler.pkgs=com.ail.core.urlhandler" /-->
+            <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8786,server=y,suspend=y" /-->
+            <!--jvmarg value="-Duser.language=en" /-->
+            <!--jvmarg value="-Duser.country=US" /-->
+
+            <classpath>
+              <dirset dir="${test.dir}" includes="integration-test.jar" />
+              <junit-classpath />
+            </classpath>
+
+            <formatter type="xml" />
+
+            <batchtest fork="yes" todir="${test.dir}/reports" filtertrace="no">
+              <fileset dir="${test.dir}/integration-test.jar" includes="**/*Test*.class" excludes="**/*$*" />
+            </batchtest>
+          </junit>
+
+          <stop-liferay-macro/>
+
+          <if>
+            <or>
+              <istrue value="${errored}"/>
+              <istrue value="${failed}"/>
+            </or>
+            <then>
+              <fail message="Unit test errors/failures"/>
+            </then>
+          </if>
+
+        </sequential>
+      </parallel>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="start-grinder-console-macro">
+    <sequential>
+      <java classname="net.grinder.Console" fork="true">
+        <classpath>
+          <fileset dir="${test.dir}/lib" includes="*.jar" />
+        </classpath>
+      </java>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="start-grinder-agent-macro">
+    <sequential>
+
+      <jar file="${test.dir}/jar.jar" basedir="${test.dir}/test.jar" includes="com/ail/**/*" />
+
+      <java classname="net.grinder.Grinder" fork="true" dir="test.jar/grinder">
+        <classpath>
+          <fileset dir="${test.dir}" includes="jar.jar" />
+          <fileset dir="${test.dir}/lib" includes="*.jar" />
+          <fileset dir="${jboss.dir}">
+            <include name="client/jbossall-client.jar" />
+            <include name="server/default/deploy/jboss-portal.sar/lib/*.jar" />
+            <exclude name="server/default/deploy/jboss-portal.sar/lib/portal-samples-lib.jar" />
+            <include name="server/default/lib/saxon*.jar" />
+            <include name="lib/endorsed/xalan.jar" />
+          </fileset>
+        </classpath>
+        <env key="DYLD_LIBRARY_PATH" value="/Applications/jprofiler4/bin/macos:$DYLD_LIBRARY_PATH" />
+        <arg value="./grinder.properties" />
+      </java>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="start-grinder-proxy-macro">
+    <sequential>
+      <echo message="starting The Grinder's TCPProxy on port 8001. Script will be written to: ./test.jar/grinder/scratch.py" />
+      <java output="./test.jar/grinder/scratch.py" classname="net.grinder.TCPProxy" fork="true">
+        <classpath>
+          <fileset dir="${test.dir}/lib" includes="*.jar" />
+        </classpath>
+        <arg value="-http" />
+        <arg value="-console" />
+      </java>
+    </sequential>
+  </macrodef>
+</project>

@@ -1,0 +1,101 @@
+.iconbar {
+	padding: 0;
+	text-align: center;
+}
+
+.texteditor {
+	width: 100%;
+}
+
+.property-narrow-column {
+	width: 17%;
+}
+
+.property-wide-column {
+	width: 83%;
+}
+
+input {
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+}
+
+textarea {
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.sandpit-debug-panel {
+    background: none repeat scroll 0 0 #F0F0F0;
+	border: 1px solid #1D8412;
+	border-radius: 3px 3px 3px 3px;
+	font-size: 0.9em;
+    min-width: 1106px;
+    min-height: 30px;
+	padding-left: 5px;
+}
+
+.sandpit-pageflow-panel {
+    background: none repeat scroll 0 0;
+    border: 1px solid #1D8412;
+    border-radius: 3px 3px 3px 3px;
+    min-width: 1106px;
+    padding-left: 5px;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+#selectedProduct {
+	min-width: 200px;
+}
+
+#selectedPageFlow {
+	min-width: 200px;
+}
+
+#selectedPage {
+	min-width: 200px;
+}
+
+.sandpit-debug-panel > span {
+	padding: 1px 15px 0 0;
+	float: left;
+	margin-top: 3px;
+}
+
+.sandpit-debug-panel #load {
+    margin-top: 0px;
+}
+
+.sandpit-debug-panel #reset {
+	float: right;
+    margin-top: 4px;
+    padding-right: 4px;
+}
+
+.sandpit-pageflow-panel #policyXml {
+	min-width: 100%;
+	min-height: 400px;
+}
+
+.sandpit-message {
+    display: table;
+    margin: 40px auto;
+    padding: 50px;
+}
+
+#resetQuote {
+    background-color: transparent;
+    background-image: url("../images/pageflow-reset.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    border: medium none;
+    cursor: pointer;
+    height: 22px;
+    width: 22px;
+}
+
+#resetQuote:disabled {
+    background-image: url("../images/pageflow-reset-disabled.png");
+    cursor: default;
+}

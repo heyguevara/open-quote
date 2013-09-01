@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project default="build" name="openquote:product-test.jar">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate" />
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs" />
+
+  <target name="_build" />
+  
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+    <update-dependencies-macro todir="${test.dir}/lib" />
+  </target>
+
+  <target name="teardown" description="undo whatever setup did" />
+
+  <target name="test" description="run tests defined in this project">
+    <run-product-tests-macro product="AIL.Demo.MotorPlus" />
+    <run-product-tests-macro product="AIL.Demo.LifePlus" />
+    <run-product-tests-macro product="AIL.Demo.FreightPlus" />
+    <run-product-tests-macro product="AIL.Demo.EquinePlus" />
+    <run-product-tests-macro product="AIL.Demo.IrishBrokerPI" />
+    <run-product-tests-macro product="AIL.Demo.WidgetShowcase" />
+  </target>
+
+</project>
