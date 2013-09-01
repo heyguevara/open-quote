@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
- Build file for the openquote openquote-theme.war project
+ Build file for the openunderwriter openunderwriter-theme.war project
 -->
 
-<project default="build" name="openquote:openquote-theme.war">
+<project default="build" name="openquote:openunderwriter-theme.war">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

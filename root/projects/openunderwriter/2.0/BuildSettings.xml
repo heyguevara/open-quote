@@ -13,7 +13,7 @@
   <property name="jboss.version" value="7.1.1" />
 	
   <!-- Define which database we're working with -->
-  <property name="dbname" value="openquote_${major.version}_${minor.version}" />
+  <property name="dbname" value="openunderwriter_${major.version}_${minor.version}" />
   <property name="dbusername" value="openquote" />
   <property name="dbpassword" value="password" />
 

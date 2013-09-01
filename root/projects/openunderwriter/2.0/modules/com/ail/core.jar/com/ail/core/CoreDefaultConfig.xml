@@ -29,8 +29,8 @@
         <parameter name="Protocol">http</parameter>
         <parameter name="Host">localhost</parameter>
         <parameter name="Port">8080</parameter>
-        <parameter name="Realm">PortalRealm</parameter>
         <parameter name="Path">/api/secure/webdav/guest/document_library/Product</parameter>
+        <parameter name="Realm">PortalRealm</parameter>
         <parameter name="Username">productreader@openquote.local</parameter>
         <parameter name="Password">productreader</parameter>
     </group>

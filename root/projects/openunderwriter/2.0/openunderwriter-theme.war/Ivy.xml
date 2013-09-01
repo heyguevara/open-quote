@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-    <info organisation="com.openquote" module="product-manager.war" />
+    <info organisation="com.openunderwriter" module="openunderwriter-theme.war" />
     <dependencies>
         <dependency name="jakarta-standard-taglib" org="jakarta" rev="1.1.2"  />
         <dependency name="commons-fileupload" org="commons-fileupload" rev="1.0" />

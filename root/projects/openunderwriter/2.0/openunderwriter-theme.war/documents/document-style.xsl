@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0" xmlns:java="java">
-    <xsl:import href="http://localhost:8080/openquote-theme/documents/generic-layouts-fo.xsl"/>
+    <xsl:import href="http://localhost:8080/openunderwriter-theme/documents/generic-layouts-fo.xsl"/>
     <!--<xsl:import href="generic-insurance-objects-fo.xsl"/>-->
     <!-- imported styles-->
     <xsl:param name="style-doc" select="'styles.xml'"/>
-    <xsl:variable name="styles" select="document('http://localhost:8080/openquote-theme/documents/styles.xml')"/>
+    <xsl:variable name="styles" select="document('http://localhost:8080/openunderwriter-theme/documents/styles.xml')"/>
     <!-- imported styles-->
     <xsl:template match="/">
         <fo:root xsl:use-attribute-sets="normal-font">

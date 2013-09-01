@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
-    <xsl:import href="http://localhost:8080/openquote-theme/documents/generic-layouts-fo.xsl"/>
+    <xsl:import href="http://localhost:8080/openunderwriter-theme/documents/generic-layouts-fo.xsl"/>
     <!--<xsl:import href="ail-gen.xslt"/>-->
     <xsl:template match="/">
         <fo:root>

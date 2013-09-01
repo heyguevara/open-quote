@@ -2,8 +2,8 @@
 <!DOCTYPE plugin-package PUBLIC "-//Liferay//DTD Plugin Package 6.1.0//EN" "http://www.liferay.com/dtd/liferay-plugin-package_6_1_0.dtd">
 
 <plugin-package>
-	<name>OpenQuote Theme</name>
-	<module-id>liferay/openquote-theme/theme-6.1.1.1/war</module-id>
+	<name>OpenUnderwriter Theme</name>
+	<module-id>liferay/openunderwriter-theme/theme-6.1.1.1/war</module-id>
 	<types>
 		<type>theme</type>
 	</types>
