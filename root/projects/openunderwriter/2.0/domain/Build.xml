@@ -49,8 +49,8 @@
           <classpath>
             <fileset dir="${buildlib.dir}" includes="*.jar" />
           </classpath>
-          <transaction src="${package.dir}/lib/OpenQuote-MySql-Setup.sql" />
-          <transaction src="${package.dir}/lib/OpenQuote-Table-Setup.sql" />
+          <transaction src="${package.dir}/lib/OpenUnderwriter-MySql-Setup.sql" />
+          <transaction src="${package.dir}/lib/OpenUnderwriter-Table-Setup.sql" />
         </sql>
       </then>
       <else>

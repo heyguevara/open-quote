@@ -27,10 +27,10 @@
   <property name="build.type" value="developer" />
   <!-- password to use when creating DB's etc. Bamboo overrides this on the build server -->
   <property name="mysql.root.password" value="" />
-  <property name="mysql.setup.file" value="${project.dir}/domain/OpenQuote-MySql-Setup.sql" />
-  <property name="content.setup.file" value="${project.dir}/domain/OpenQuote-Content-Setup.zip" />
+  <property name="mysql.setup.file" value="${project.dir}/domain/OpenUnderwriter-MySql-Setup.sql" />
+  <property name="content.setup.file" value="${project.dir}/domain/OpenUnderwriter-Content-Setup.zip" />
   <property name="module.dir" value="${jboss.dir}/modules/" />
-  <property name="package.dir" value="${target.dir}/openquote-community-${major.version}.${minor.version}${increment.version}" />
+  <property name="package.dir" value="${target.dir}/openunderwriter-community-${major.version}.${minor.version}${increment.version}" />
   <property name="package.file" value="${package.dir}.zip" />
   <property name="selenium.htmlSuite" value="*firefox" />
   <property name="text.filetypes" value="**/*.MF, **/*.bat, **/*.bs, **/*.conf, **/*.css, **/*.drl, **/*.dsl, **/*.ftl, **/*.html, **/*.janino, **/*.jnlp, **/*.js, **/*.jsp, **/*.properties, **/*.rule, **/*.sh, **/*.tld, **/*.txt, **/*.vm, **/*.wsdl, **/*.xml, **/*.xsl, **/*.xslt"/>

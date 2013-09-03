@@ -1,7 +1,7 @@
 @echo off
 
-set OPENQUOTE_HOME=%CD%\..
-set JBOSS_HOME=%OPENQUOTE_HOME%\jboss
+set OPENUNDERWRITER_HOME=%CD%\..
+set JBOSS_HOME=%OPENUNDERWRITER_HOME%\jboss
 
 cd %JBOSS_HOME%\bin
 .\shutdown.bat

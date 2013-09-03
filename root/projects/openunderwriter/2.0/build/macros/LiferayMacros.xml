@@ -148,7 +148,7 @@
     <_set-product.mountpoint-property-macro />
     <mkdir dir="${product.mountpoint}" />
     <exec os="Mac OS X" executable="mount_webdav" failonerror="yes">
-      <arg value="http://${server.base.url}/api/secure/webdav/guest/document_library/Product" />
+      <arg value="http://${server.base.url}/api/secure/webdav/null/document_library" />
       <arg value="${product.mountpoint}" />
     </exec>
     <echo message="Product space mounted on ${product.mountpoint}" />
