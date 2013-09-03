@@ -29,10 +29,10 @@
         <parameter name="Protocol">http</parameter>
         <parameter name="Host">localhost</parameter>
         <parameter name="Port">8080</parameter>
-        <parameter name="Path">/api/secure/webdav/guest/document_library/Product</parameter>
+        <parameter name="Path">/api/secure/webdav/null/document_library/Product</parameter>
         <parameter name="Realm">PortalRealm</parameter>
-        <parameter name="Username">productreader@openquote.local</parameter>
-        <parameter name="Password">productreader</parameter>
+        <parameter name="Username">producthandler@openunderwriter.org</parameter>
+        <parameter name="Password">handler</parameter>
     </group>
     
     <group name="JEEAccessorContext">
