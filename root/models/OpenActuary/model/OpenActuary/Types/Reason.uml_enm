@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:9ccbc63b-99ae-451b-a87c-0b6ceae78c57'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Reason'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:ea0f5870-d737-46bb-9bec-2301e76cd6ab'
+    name='NEW_BUSINESS'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:566eb04d-958f-40d4-b64e-d692f3ac09a5'
+    name='MID_TERM_ADJUSTMENT'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:c98ab43c-a863-4668-8f8c-33fe4c1d83e3'
+    name='RENEWAL'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:5ea919dd-7743-43e3-8b05-6ad309f35f62'
+    name='CANCELLATION'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

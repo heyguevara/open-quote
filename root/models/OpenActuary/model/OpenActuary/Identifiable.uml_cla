@@ -48,5 +48,29 @@
      value='1'
      visibility='public'/>
   </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:7cbe4f2d-3cce-45ba-8293-d40e828d5689'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='recordID'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:15c60c06-8901-4552-a295-d77d5fbc94a3'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:e3a48b48-55d6-4c37-814e-174223d3fc02'
+     value='1'
+     visibility='public'/>
+   <ownedComment xmi:type='uml:Comment' xmi:uuid='urn:uuid:7931f77e-74ce-43da-b0bb-fe1a5261aede'
+     body='Used for unique id for identifying the insurer.'>
+    <annotatedElement href='urn:uuid:15c60c06-8901-4552-a295-d77d5fbc94a3'/>
+   </ownedComment>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:7ea7fbda-38f5-4863-8262-838647aaf744'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
  </uml:Class>
 </xmi:XMI>

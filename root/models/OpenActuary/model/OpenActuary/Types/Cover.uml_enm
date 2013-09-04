@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:c5821e85-0445-4504-8b0b-85f9546e83ad'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Cover'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:995fd3d2-1986-4edb-8704-a68cb20490c3'
+    name='THIRD_PARTY'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:d5bbd24d-9ed6-4f89-8bd6-19813e2425c1'
+    name='THIRD_PARTY_FIRE_AND_THEFT'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:a8030420-45bc-4932-94a8-80ad6a6b094e'
+    name='COMPREHENSIVE'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

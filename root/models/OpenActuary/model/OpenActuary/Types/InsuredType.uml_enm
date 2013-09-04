@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:96b8d91f-f741-442c-813a-e64ca3c92f17'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='InsuredType'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:bb56be29-f7fd-473a-a720-4b1d7580a756'
+    name='PERSONAL'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:459a810c-4ad1-49f0-83e2-e1c9f3be51d6'
+    name='CORPORATE'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

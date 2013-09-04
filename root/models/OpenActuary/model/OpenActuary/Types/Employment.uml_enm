@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:ac5d69bf-5957-4acd-98a9-b44ab191b4e3'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Employment'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:2108ff60-b0da-47d3-9813-b10cc911af53'
+    name='FULL_TIME'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:0e2bf5ff-bd22-4855-8a67-540092f61f2a'
+    name='PART_TIME'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:2223984d-7eb5-4ae0-a788-b6a155c4254d'
+    name='OCCASIONAL'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:cf91d543-d85b-48e6-a356-2849f27a8b71'
+    name='UNEMPLOYED'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
  <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
- <uml:Class xmi:type='uml:Class' xmi:uuid='urn:uuid:6f658dc2-f6a5-4f77-9ca9-6088added867'
+ <uml:Class xmi:type='uml:Class' xmi:uuid='urn:uuid:eabefcd6-968f-41a6-90c0-dbc49f03feab'
    isAbstract='false'
    isActive='false'
    isFinalSpecialization='false'
    isLeaf='false'
-   name='Driver'
+   name='Insured'
    visibility='public'/>
 </xmi:XMI>
