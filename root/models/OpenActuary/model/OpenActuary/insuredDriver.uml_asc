@@ -43,7 +43,6 @@
     name='endInsured'
     aggregation='composite'>
    <association href='urn:uuid:68c4c8d6-42ae-4df8-ac38-36cc81c28b41'/>
-   <type href='urn:uuid:eabefcd6-968f-41a6-90c0-dbc49f03feab'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8b65a918-a1b7-4825-ac9a-14b8eed38769'
      value='0'
      visibility='public'/>
