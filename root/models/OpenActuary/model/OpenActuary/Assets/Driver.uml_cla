@@ -8,6 +8,10 @@
    isLeaf='false'
    name='Driver'
    visibility='public'>
+  <generalization xmi:type='uml:Generalization' xmi:uuid='urn:uuid:3992b851-73c0-4c33-aafc-40f557e62a28'
+    isSubstitutable='true'>
+   <general href='urn:uuid:442e934b-bd93-4b2f-a01e-46e60de52b96'/>
+  </generalization>
   <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:1c6f9f9f-0ac9-44d0-9632-878cf5af3027'
     isDerived='false'
     isDerivedUnion='false'

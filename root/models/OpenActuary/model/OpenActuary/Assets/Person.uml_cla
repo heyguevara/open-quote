@@ -9,10 +9,6 @@
    name='Person'
    visibility='public'>
   <clientDependency href='urn:uuid:4689e76b-d839-465d-810f-01e6de2a8728'/>
-  <generalization xmi:type='uml:Generalization' xmi:uuid='urn:uuid:1caa1300-12d6-4a0f-91c6-2d973e24eb22'
-    isSubstitutable='true'>
-   <general href='urn:uuid:6f658dc2-f6a5-4f77-9ca9-6088added867'/>
-  </generalization>
   <interfaceRealization xmi:type='uml:InterfaceRealization' xmi:uuid='urn:uuid:4689e76b-d839-465d-810f-01e6de2a8728'
     visibility='public'>
    <contract href='urn:uuid:af477563-8ccf-4450-afe9-ae66fc249e8a'/>
