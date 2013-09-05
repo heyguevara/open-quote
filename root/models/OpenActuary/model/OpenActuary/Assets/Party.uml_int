@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Interface xmi:type='uml:Interface' xmi:uuid='urn:uuid:af477563-8ccf-4450-afe9-ae66fc249e8a'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Party'
+   visibility='public'>
+  <nestedClassifier xmi:type='uml:Association' xmi:uuid='urn:uuid:c1571c23-78ed-4fd1-9796-4f9dee71d9c6'
+    isAbstract='false'
+    isDerived='false'
+    isFinalSpecialization='false'
+    isLeaf='false'
+    name='insured'
+    visibility='public'>
+   <memberEnd href='urn:uuid:20030388-e648-4a4a-a0e4-1d3c9c2e37bb'/>
+   <memberEnd href='urn:uuid:3b09c9aa-8c60-4e5e-81b4-d1307f1ad8d7'/>
+   <navigableOwnedEnd href='urn:uuid:3b09c9aa-8c60-4e5e-81b4-d1307f1ad8d7'/>
+   <ownedEnd xmi:type='uml:Property' xmi:uuid='urn:uuid:20030388-e648-4a4a-a0e4-1d3c9c2e37bb'
+     isDerived='false'
+     isDerivedUnion='false'
+     isID='false'
+     isLeaf='false'
+     isOrdered='false'
+     isReadOnly='false'
+     isStatic='false'
+     isUnique='true'
+     name='endPolicy'
+     aggregation='none'>
+    <association href='urn:uuid:c1571c23-78ed-4fd1-9796-4f9dee71d9c6'/>
+    <type href='urn:uuid:6e4d1ab5-8fed-4789-82cd-93aaf49b75cd'/>
+    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:760aaec1-a2ff-454e-a4f4-5af20c02d38a'
+      value='1'
+      visibility='public'/>
+    <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:57ef651f-2d10-4f51-8bde-d4a8f6c66358'
+      value='1'
+      visibility='public'/>
+   </ownedEnd>
+   <ownedEnd xmi:type='uml:Property' xmi:uuid='urn:uuid:3b09c9aa-8c60-4e5e-81b4-d1307f1ad8d7'
+     isDerived='false'
+     isDerivedUnion='false'
+     isID='false'
+     isLeaf='false'
+     isOrdered='false'
+     isReadOnly='false'
+     isStatic='false'
+     isUnique='true'
+     name='endParty'
+     aggregation='none'>
+    <association href='urn:uuid:c1571c23-78ed-4fd1-9796-4f9dee71d9c6'/>
+    <type href='urn:uuid:af477563-8ccf-4450-afe9-ae66fc249e8a'/>
+    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:3e192354-cc91-429e-b33d-156eaae1e57a'
+      value='1'
+      visibility='public'/>
+    <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:9529d3d2-48b6-4a80-994a-7154f8c33bd9'
+      value='1'
+      visibility='public'/>
+   </ownedEnd>
+  </nestedClassifier>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:7e68c3e4-cee4-44ba-96b5-60be39c11cd9'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='insured'
+    aggregation='none'
+    visibility='public'>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:0e9642f6-1a50-49d5-b81b-c77fb2213015'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:dd608987-4a3c-4a03-bdf1-11e0bac33b3d'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+ </uml:Interface>
+</xmi:XMI>
