@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:402a5956-9bb2-44c3-906a-2c414f9fc862'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='VehicleParked'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:2fa83874-ee8c-42e2-8634-7a6197310885'
+    name='keptOvernight'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:3d148f0a-81d3-49fe-b08f-e536df89df2a'
+    name='DRIVE'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:59e9b419-1d5d-4711-8a60-1646fbcee71c'
+    name='ROADSIDE'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

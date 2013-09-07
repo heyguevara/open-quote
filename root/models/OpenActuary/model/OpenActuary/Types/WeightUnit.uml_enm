@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:93f50f1e-473d-449a-b21e-2158bf6d55e1'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='WeightUnit'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:09cde3cd-11c7-4a60-8d39-62a15d1d087a'
+    name='KG'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:5465bd9b-201d-4e3a-9857-b9fed8df9be6'
+    name='LBS'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

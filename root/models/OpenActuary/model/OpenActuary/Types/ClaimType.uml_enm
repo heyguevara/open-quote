@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:c49db6db-d3b8-4249-b1f6-e0324f5b2b52'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='ClaimType'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:10acc8d6-138d-4c2d-921f-68101e3c3499'
+    name='FIRE'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:150b5f14-b6c5-415c-a5e9-b55491e02bb1'
+    name='THEFT'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:88f4c640-73f8-41e1-8868-0e37b48ff356'
+    name='ACCIDENT'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>
