@@ -368,5 +368,245 @@
      value='1'
      visibility='public'/>
   </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:8b41081c-fc53-4734-9ef1-9a18644bbedd'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='companyVehicle'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:baaa4b16-00b6-4168-8473-a8fa756483ee'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:73804aef-8547-44ef-89f8-18cb25c81af2'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:ad8b6f55-053b-4fb6-a70e-84471eb32020'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='seatBeltsUsed'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:0414e09d-b992-4269-9a49-35a83c1892ce'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:edca11d8-6ded-47f3-a56a-c5fa845e80de'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:dd596bec-7a4e-426d-9e12-6334233dfefb'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='driverAirbagFitted'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:5ee8f99d-234a-4182-b912-3af833824ead'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:6ee8da3c-d82c-47a7-9a41-2063319c44d2'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:91812f73-f607-4bad-8bd6-cd901384cb0a'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='passengerAirbagFitted'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:55d80046-06a9-4017-bbd7-9bfb7af204b3'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:3433ecad-1745-4533-aefb-a02a8f0c47e4'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:7c21780d-1727-4338-b9a5-db7f83aa2c61'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='usageSocialHome'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:4d7da947-b1a9-4fa1-b163-7652ce71ebd6'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:684fb1c2-1246-4f53-af21-b3bd26800220'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:d2777f00-b95d-4d65-a851-f02d8f188bac'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='usageBusiness'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:ff9f7444-a55c-4c81-a961-d4dadacca133'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:eea962d6-7382-46e7-a785-cf8871fa6a9e'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c7d23dc3-dc03-4f52-82b9-a9327c4ec313'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='usageCarriageOfGoods'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:ee8b1e36-4103-4e3c-949f-569917f6e893'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:d45875e0-c4ae-46a0-ab0c-0643c123ec7f'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c366817d-b234-4926-b9d1-9394ed2f4fce'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='commercialVehicle'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:b0219f04-44d2-429a-8e83-79ecf5ec1d58'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:1b86989a-aabe-46c0-9c7d-4ebaaf8439bd'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:3fd2bb68-6f4e-4df7-843b-d704daa0d7af'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='commercialVehicleLicence'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:c8e0ecc7-71fd-4d25-890b-357666647838'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:25479e68-f8e8-42c1-b986-dcd1f174ea3c'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:e27e1dbc-0638-4b11-85ca-0bfc681781e7'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='capacityVolume'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Real'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8090d609-b135-4ec4-9d1f-9f11726cc084'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:dbd35947-69ea-417c-8763-5cd1f6c1fd2f'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:a0c52e6c-def7-48f2-8989-76b81145ee35'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='toolsStoredDaytime'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:176637af-22c9-4bde-af32-49331dea5033'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:fcbbb86d-2e4d-48bb-a41d-e2f68326c05e'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:42091220-0575-452f-bf2c-af269e686c8d'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='toolsStoredNighttime'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:f8314344-1629-4327-9e9c-e029e774d260'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:eba10d5c-7c36-422c-987c-834efe894ddb'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
  </uml:Class>
 </xmi:XMI>

@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endCurrency_2'
+    name='endCurrencyAmount'
     aggregation='none'>
    <association href='urn:uuid:5f6ea7df-3531-452f-adb7-ea3419d30de0'/>
-   <type href='urn:uuid:e44b3530-112d-4971-8efd-2f51e56579b5'/>
+   <type href='urn:uuid:e0e86eda-bf1e-446f-97a7-e32fd814230f'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:baa94ca3-a57c-40a8-8eaf-3c9979b0e51e'
      value='1'
      visibility='public'/>
