@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:e44b3530-112d-4971-8efd-2f51e56579b5'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Currency'
+   visibility='public'>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:d26d5345-8b30-46fc-8225-fc57b3211f56'
+    name='+locaAmount:BigDecimal'
+    visibility='public'/>
+  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:ac4fde00-2d2b-40f0-b8c2-3ce2298ded04'
+    name='+exchangeRate:BigDecimal'
+    visibility='public'/>
+ </uml:Enumeration>
+</xmi:XMI>

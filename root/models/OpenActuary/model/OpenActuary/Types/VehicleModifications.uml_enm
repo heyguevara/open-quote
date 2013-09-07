@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Enumeration xmi:type='uml:Enumeration' xmi:uuid='urn:uuid:3e7191a9-3b62-4dc0-8769-57e6647379f2'
+   isAbstract='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='VehicleModifications'
+   visibility='public'/>
+</xmi:XMI>
