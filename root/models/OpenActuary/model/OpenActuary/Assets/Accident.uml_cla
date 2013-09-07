@@ -1,0 +1,592 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Class xmi:type='uml:Class' xmi:uuid='urn:uuid:92de133c-6aee-4c85-9bcd-7c433094a04e'
+   isAbstract='false'
+   isActive='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='Accident'
+   visibility='public'>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c556b916-9abf-4c08-a109-d48221dfb1a0'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='insuredDriving'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:609865b4-a079-45ce-9ec5-8e7b744e4dd2'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:31593c78-37a0-4625-b126-3d4e3c9091b7'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:0dd3d73c-84df-489a-add0-430b2f20ff3c'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='vehicleUsage'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:0a2313e2-a48b-4189-a4d2-20afde134b9c'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:bebcd7a4-b18e-4380-8bb4-75aa346ab4f8'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c3afd439-dcf8-47e3-b974-86cba7f6dec5'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='carryingGoods'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:df582969-0cde-4ffb-a22a-4e2e5ac5d502'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:218d6ffd-f9b0-479c-9fb1-f19de89f20cc'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:383c3646-b67a-4550-a068-b36b9fbff5c3'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='weightOfTransportedGoods'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:0b9cceb1-043e-4182-ba85-e6eee4a74370'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:a23433e6-cc84-4a12-81b9-2338cb84a22e'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:4dda0d4e-b32c-474e-abf7-492959778801'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:8fd4e618-a6e6-47e5-b5dc-b09d42289b42'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='lightsOn'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:42fd5eb4-1684-4364-9d15-e506dc52f0f6'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:b3d51c95-7fe7-49c7-80f5-7e3a96ccc21c'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:cc835639-535d-4bda-8a0b-ccb21b670c39'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='soundHorn'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:6ea20b43-426c-474e-bc60-4d2c1511f38f'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:8f54e478-098d-4b97-b737-69493a9a2fb6'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:09651003-9066-48fa-82c7-fe89265d132c'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='sppedAtTimeOfAccident'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:7a49090f-0d1c-47c6-b43f-9514e1308d89'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:db4b8f1e-468d-4e4b-806e-645c68bd11e8'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:21264bc3-2660-4087-9fc9-e32506ce1d01'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='locationInRoad'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:fb89e733-73c5-457d-b5ed-cf80804aec7a'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:68c49e60-1e35-43e9-855c-361f466fa917'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:97bfc0bf-7003-4ab6-9675-76517e400e9a'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='repairCosts'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:e0e86eda-bf1e-446f-97a7-e32fd814230f'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:ab0b0504-3e60-44aa-b1c3-21cf30aba830'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:50d43bb2-9ee9-4563-8318-505d7605436e'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:ada43516-35a4-4146-ad9a-d8fc31f96254'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='damageToThirdParty'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:16b988c3-0c16-4cec-b4ce-3e336b830344'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:736736b9-e287-4b03-beb6-a3ee57a30d70'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:db2da6c7-eaec-48c7-a9ae-f284bea22334'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='causeOfAccident'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:6e5f88de-b112-42dd-8eb8-4334a5a8b7ca'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:0a008468-df00-4de5-b8e6-6fd300b33533'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:1206a142-4cd5-4f0d-924d-21ae3d6c17c4'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='typeOfRoad'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:83135ade-844e-4ad2-84f5-8f4a8bc0036b'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:ca2c9bb6-7009-4938-86e1-23d17eec3fc3'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:d42654fd-76ba-4792-95dd-34b3f2c11ff2'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='namedDriverFromListOfInsureds'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:38681ddb-bd0f-4b27-b7d8-1e5f25c720b8'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:ff764282-82fd-423a-bb93-7df16186a3fb'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:ad599fa2-4305-46d2-b2ca-bd0664ea3b5e'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='numberOfVehiclesInvolved'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:03a68376-8f7a-4138-8a66-d96fbfa72a3d'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:59911edd-df88-49ba-b50c-0baff2c32ee9'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:497a23b2-6e1a-479e-b5a9-aa76b9c93a36'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='driverLiable'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:0c3e7cb9-cd9a-4d0e-a249-3536f898da14'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:98ae2a26-0aba-4ef3-a1a5-75493cf9a78a'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:5a76b122-8482-4bcf-94c3-931cd6977d08'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='seatBeltWorn'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:9f87a136-6b21-482a-ae7a-4cdf15b33655'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:1ea4a907-3b72-4ac0-8d2f-0cc807f5261d'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:f7d5db56-d258-4a55-8a4e-cf15514a5af7'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='driverAirbagDeployed'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:7eaabeef-aa91-476d-ac93-5853a5bed2d3'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:5da011fb-2fab-43b3-a0e7-14eefef26d17'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:247d8a17-ba29-40ba-b507-98517b91d055'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='passengerAirbagDeployed'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:c96fe8f4-06da-4882-8342-7c2491ff6613'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:6f298d37-64e4-4f92-9cfe-f453637841d6'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:bf1f3c3c-7b52-4dc1-b58e-8f99f0741e89'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='injuryToOthers'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:aa61b1c8-16a2-47ad-88ca-8eb412ead595'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:ceb84903-cf5f-48a4-9a6b-1def3432b16b'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:0ff1ec5e-2136-4311-8135-c79899597392'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='injuryToDriver'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:e5cdcfc0-e48c-4478-b454-d5da42e32913'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:cc8b97a4-9d06-47c9-af33-7727af64cb6f'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:cca4e9d6-ac51-4e32-9baf-e76583e4f96b'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='injuryToPassengers'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:139ef7a0-6ddc-482e-9494-3ac6c3593e07'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:eca1e9dd-ff2b-46d8-bd10-8e40c9a5fe2a'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c5b08140-3ff4-45bc-ac54-e6d0c74af165'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='injuryToOtherVehicleDrivers'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:36fc6cf2-0610-40b4-ba84-aa1ec37c5f11'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:89ee4323-d5ed-4bca-9012-64575abf90d7'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:b51f21cb-1676-422d-98be-51b2e9a6217d'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='injuryToOtherVehiclePassengers'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:45aa70b0-e8e2-4403-b22b-0dc91791d8a5'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:39e6bca0-6fc0-498f-9b5e-2ed04b8b2aba'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:bd45b3e1-1a30-4887-b709-f5f36f323f06'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='injuryToThirdParties'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:1b2237e1-595f-46ce-be38-7e6017afa1ca'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:85b3925c-af6f-4112-adc4-087b9960fc46'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:6f40c7a9-15a2-4aa6-b8f1-fe1861bd2568'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='weatherConditions'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:919de5ea-4a52-4a99-a77f-bc2560088907'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:439fdea1-8edc-4b2c-829a-cbe33d0b16ed'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:82f3c1a9-70b6-47e7-9750-facb59897d35'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='visibilityMetres'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:fd04baab-a616-4f13-b665-205988ad2df0'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:26ce6f54-67d6-4ea6-9e23-1a85a6428172'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:36a05b90-e3fb-48e6-a2c6-1e6a4db7e04a'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='policeWitness'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:cf6d4336-3400-46fc-9196-7b6a131000a3'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:51caa3d2-0e27-433a-b502-a878735c5822'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:1ac0133b-f3b9-4eaf-97e3-b630153ec942'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='policeRecorded'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:0b0e89f6-0675-4053-8c8e-d64efc690637'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:c4a05275-2b02-4915-a4a4-4882df5f933d'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:87dcff9f-7acf-4882-91cc-d12529e9fd80'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='policeProsecutingDriver'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:283339dc-de18-41ef-9a09-fcf960c1edc1'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:728aadc4-645f-4795-a269-f643c45940fc'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+ </uml:Class>
+</xmi:XMI>
