@@ -10,6 +10,7 @@
    visibility='public'>
   <memberEnd href='urn:uuid:cc3f688c-dea0-423e-b0c3-53ad880892b2'/>
   <memberEnd href='urn:uuid:a770bcfb-581b-4151-90e8-e75947195d1a'/>
+  <navigableOwnedEnd href='urn:uuid:a770bcfb-581b-4151-90e8-e75947195d1a'/>
   <ownedEnd xmi:type='uml:Property' xmi:uuid='urn:uuid:cc3f688c-dea0-423e-b0c3-53ad880892b2'
     isDerived='false'
     isDerivedUnion='false'

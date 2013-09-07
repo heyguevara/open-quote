@@ -236,24 +236,5 @@
      value='1'
      visibility='public'/>
   </ownedAttribute>
-  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:f7dd7250-dbf6-4d89-9c3f-b1d2b6e26079'
-    isDerived='false'
-    isDerivedUnion='false'
-    isID='false'
-    isLeaf='false'
-    isOrdered='false'
-    isReadOnly='false'
-    isStatic='false'
-    isUnique='true'
-    name=''
-    aggregation='none'
-    visibility='public'>
-   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:18a37e90-cc0d-46d3-b0fd-c63f52e3d5bd'
-     value='1'
-     visibility='public'/>
-   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:b34a051b-3eeb-45ef-99c3-c39786f5c879'
-     value='1'
-     visibility='public'/>
-  </ownedAttribute>
  </uml:Class>
 </xmi:XMI>

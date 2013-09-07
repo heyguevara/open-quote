@@ -6,7 +6,7 @@
    isDerived='false'
    isFinalSpecialization='false'
    isLeaf='false'
-   name='vehicleLocation'
+   name='daytimeLocation'
    visibility='public'>
   <memberEnd href='urn:uuid:1e5fdda4-6117-4f72-848c-cd552c6abec4'/>
   <memberEnd href='urn:uuid:865009ef-12a6-4108-a940-3bd5c62229e1'/>

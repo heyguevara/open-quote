@@ -7,5 +7,146 @@
    isFinalSpecialization='false'
    isLeaf='false'
    name='Claim'
-   visibility='public'/>
+   visibility='public'>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:8f3da546-0fc4-46d2-84ed-d29d59b73243'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='incidentOccured'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:97996fb2-9d14-4fef-876e-1e509dfe0120'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:e1d70551-a5c3-45f1-ad14-7e26de9e75e8'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:94e8e755-c041-4edd-a41c-7425d724baf3'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:56482637-aa90-4d8a-84a6-6ed23350df6d'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='incidentMileageAtTimeOf'
+    aggregation='none'
+    visibility='public'>
+   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:d52171b1-ef17-4792-8c55-465845ae65c4'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:e33a0b6c-606b-4f96-aa67-d0ca1a610018'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:96fce650-2a03-45a5-879b-bb21caaaf3c8'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='incidentAddress'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:c57779c3-90a6-4631-9ddf-25af55bb407c'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:3d0e4fc2-fffd-4eaf-a0e4-c224a6d9b479'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:bc5fd47b-8dfc-4e34-989a-3ba949eb3c29'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:6db22ee6-49c0-4ad6-8738-24fd0b99206d'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='amountPaid'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:7f303a61-364e-437b-88d7-2ff391ddea4c'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:249c5447-e70a-42f5-b1e6-e1924f9eb91e'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:71c6c967-587e-4e43-acbe-9539efae83a8'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:13298fba-ac8e-49df-8dca-7a359f9180f5'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='legelFees'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:7f303a61-364e-437b-88d7-2ff391ddea4c'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:d0090dd9-12f9-411c-9781-17ba68c845be'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:a03a4279-7880-4a15-b583-03302402f9f2'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c012d99c-5618-408c-acbd-369113377b2d'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='totalLossIncurred'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:7f303a61-364e-437b-88d7-2ff391ddea4c'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:22133437-818d-496e-828a-05804ac295e5'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:5f1db8a8-0143-4125-b782-c434153953ab'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:3e92b7e5-b61b-40b7-a06a-c3369a0db4dd'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='recoveries'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:e0e86eda-bf1e-446f-97a7-e32fd814230f'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:ed611c5f-bb20-44f3-87de-661c8214c3fb'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:30c04bc6-4e09-476c-98b4-17c51b0d93e7'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+ </uml:Class>
 </xmi:XMI>
