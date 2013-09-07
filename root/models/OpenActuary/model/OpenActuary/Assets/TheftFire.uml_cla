@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xmi:XMI xmlns:xmi='http://www.omg.org/spec/XMI/20110701' xmlns:uml='http://www.omg.org/spec/UML/20110701'>
+ <documentation exporter='Oracle JDeveloper' exporterVersion='12.1.2.0.0'/>
+ <uml:Class xmi:type='uml:Class' xmi:uuid='urn:uuid:2d749235-04b2-4ee6-b582-f371058cda45'
+   isAbstract='false'
+   isActive='false'
+   isFinalSpecialization='false'
+   isLeaf='false'
+   name='TheftFire'
+   visibility='public'>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:0cf43961-f025-433e-ba97-3c1fe4d81982'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='theftLockedInGarage'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:32790d00-0cf2-44a5-8f7b-c7f28dd5415b'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:9664e9ba-bb5e-49aa-9dac-99e202a1c6a8'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:339e3fbe-121b-4267-9a72-237e26424cf8'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='theftAllWindowsAndDoorsSecured'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:1977f684-ef25-4645-8341-9fa4764da82e'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:c5fdea9c-8a15-474f-a694-50cad2393444'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:ec10c276-3297-4a1b-9eeb-a1e5b921768f'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='theftKeysInVehicle'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8c820e32-e8a6-40d4-b6fb-23954e0f6689'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:da553ec3-4c9b-493d-8038-7841f7d0edc1'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:98698a95-8c1d-4438-955e-d9bf1cfda3e7'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='theftKeysStolenWithVehicle'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:ad4a2f91-3f1f-4b27-a4a7-c9991f4323af'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:d72dda04-ebed-46d1-b20f-2c9072b0fc3d'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:90a2972a-d2e7-4d94-b9f6-700e2a787951'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='theftAlarmOnAtTimeOfIncident'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8f673128-d86c-4e48-a7f2-920301e1a860'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:5c4b5b51-e1ca-48d3-89ae-623c96a10e51'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:c51814a2-bd2c-4b08-ada2-798bed2e0e66'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='theftAnyToolsInVehicleAtTimeOfIncident'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:72b8182e-1bcc-4dfc-8bd7-86b6a28939d6'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:e9663938-82ac-4785-a4e7-a5eb10eb0036'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
+ </uml:Class>
+</xmi:XMI>

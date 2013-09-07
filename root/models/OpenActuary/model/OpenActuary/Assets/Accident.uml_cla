@@ -588,5 +588,25 @@
      value='1'
      visibility='public'/>
   </ownedAttribute>
+  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:48517efd-ff1f-47b6-a293-9b42a5f250a8'
+    isDerived='false'
+    isDerivedUnion='false'
+    isID='false'
+    isLeaf='false'
+    isOrdered='false'
+    isReadOnly='false'
+    isStatic='false'
+    isUnique='true'
+    name='driverAtTimeOfAccident'
+    aggregation='none'
+    visibility='public'>
+   <type href='urn:uuid:6f658dc2-f6a5-4f77-9ca9-6088added867'/>
+   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:b8145c9c-9586-4c0a-8022-2b3a8e1a4213'
+     value='1'
+     visibility='public'/>
+   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:0c9e6529-91f9-4597-90ff-86795d21856d'
+     value='1'
+     visibility='public'/>
+  </ownedAttribute>
  </uml:Class>
 </xmi:XMI>
