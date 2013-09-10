@@ -565,3 +565,7 @@ p {
 .portlet-login .navigation {
     border: 1px solid #BFBFBF;
 }
+
+.wiki-body {
+	font-size: 1.2em;
+}
