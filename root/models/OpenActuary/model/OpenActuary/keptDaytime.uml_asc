@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicleParked_1'
+    name='endVehicle_1'
     aggregation='none'>
    <association href='urn:uuid:6728e291-1976-4ece-acbe-239d681556a7'/>
-   <type href='urn:uuid:402a5956-9bb2-44c3-906a-2c414f9fc862'/>
+   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:959da394-331e-4a46-bac5-8fe49b85e3f3'
      value='1'
      visibility='public'/>
@@ -40,10 +40,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicle_1'
+    name='endVehicleParked'
     aggregation='none'>
    <association href='urn:uuid:6728e291-1976-4ece-acbe-239d681556a7'/>
-   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
+   <type href='urn:uuid:402a5956-9bb2-44c3-906a-2c414f9fc862'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8b7a607e-6d92-4819-9dd6-3bdec26123b5'
      value='1'
      visibility='public'/>

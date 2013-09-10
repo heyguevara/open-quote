@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicleRiskCode'
+    name='endVehicle'
     aggregation='none'>
    <association href='urn:uuid:cd26e825-cf51-4fb7-bfaf-a628a5c47ea0'/>
-   <type href='urn:uuid:18ae581e-38b0-497e-bebe-2108726d4a34'/>
+   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:12f0afce-a6e9-4fa4-9da1-824898e78bb7'
      value='1'
      visibility='public'/>
@@ -40,10 +40,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicle'
+    name='endVehicleRiskCode_1'
     aggregation='none'>
    <association href='urn:uuid:cd26e825-cf51-4fb7-bfaf-a628a5c47ea0'/>
-   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
+   <type href='urn:uuid:18ae581e-38b0-497e-bebe-2108726d4a34'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:af885285-d560-4228-b321-4eb142bbc1f7'
      value='1'
      visibility='public'/>

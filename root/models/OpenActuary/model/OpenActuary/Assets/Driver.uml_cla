@@ -73,7 +73,7 @@
      visibility='public'/>
   </ownedAttribute>
   <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:eb16ee7e-a035-4213-a587-d7445ed1db89'
-    isDerived='true'
+    isDerived='false'
     isDerivedUnion='false'
     isID='false'
     isLeaf='false'

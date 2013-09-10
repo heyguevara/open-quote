@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endWeightUnit'
+    name='endWeightAmount'
     aggregation='none'>
    <association href='urn:uuid:f9d5d332-8ebf-42e4-ab4d-9d5a75ee3106'/>
-   <type href='urn:uuid:93f50f1e-473d-449a-b21e-2158bf6d55e1'/>
+   <type href='urn:uuid:0b9cceb1-043e-4182-ba85-e6eee4a74370'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:d00e48ca-32dc-4a47-9c4c-cae2df972c4f'
      value='1'
      visibility='public'/>
@@ -40,10 +40,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endWeightAmount'
+    name='endWeightUnit_1'
     aggregation='none'>
    <association href='urn:uuid:f9d5d332-8ebf-42e4-ab4d-9d5a75ee3106'/>
-   <type href='urn:uuid:0b9cceb1-043e-4182-ba85-e6eee4a74370'/>
+   <type href='urn:uuid:93f50f1e-473d-449a-b21e-2158bf6d55e1'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:3deb558e-eeb9-499d-be2a-a9b2b8867004'
      value='1'
      visibility='public'/>

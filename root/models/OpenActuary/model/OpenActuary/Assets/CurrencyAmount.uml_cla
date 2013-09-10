@@ -8,26 +8,6 @@
    isLeaf='false'
    name='CurrencyAmount'
    visibility='public'>
-  <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:107c1c29-7c65-4d3d-9adb-84bec1e4d5e6'
-    isDerived='false'
-    isDerivedUnion='false'
-    isID='false'
-    isLeaf='false'
-    isOrdered='false'
-    isReadOnly='false'
-    isStatic='false'
-    isUnique='true'
-    name='localAmount'
-    aggregation='none'
-    visibility='public'>
-   <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Real'/>
-   <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:3096ee26-8b54-49e9-9477-345cd4060f54'
-     value='1'
-     visibility='public'/>
-   <upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:uuid='urn:uuid:2b685765-33e9-4d45-8c88-f81605bff0f7'
-     value='1'
-     visibility='public'/>
-  </ownedAttribute>
   <ownedAttribute xmi:type='uml:Property' xmi:uuid='urn:uuid:5d8c064e-8154-4ea8-b454-5d05656f2d1c'
     isDerived='false'
     isDerivedUnion='false'
@@ -37,7 +17,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='ExchangeRate'
+    name='Amount'
     aggregation='none'
     visibility='public'>
    <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Real'/>

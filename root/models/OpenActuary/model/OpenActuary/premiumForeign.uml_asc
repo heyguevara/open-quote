@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endCurrencyAmount_4'
+    name='endVehicle_1'
     aggregation='none'>
    <association href='urn:uuid:8e1335be-e2f2-407e-822c-6e66cad4ce31'/>
-   <type href='urn:uuid:e0e86eda-bf1e-446f-97a7-e32fd814230f'/>
+   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8a2bb0c6-d7ab-4ecd-9a59-3b430dfd1427'
      value='1'
      visibility='public'/>
@@ -40,10 +40,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicle_3'
+    name='endCurrencyAmount'
     aggregation='none'>
    <association href='urn:uuid:8e1335be-e2f2-407e-822c-6e66cad4ce31'/>
-   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
+   <type href='urn:uuid:e0e86eda-bf1e-446f-97a7-e32fd814230f'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:39b82388-d374-4616-807d-b379f8f1edbe'
      value='1'
      visibility='public'/>

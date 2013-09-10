@@ -6,12 +6,5 @@
    isFinalSpecialization='false'
    isLeaf='false'
    name='Currency'
-   visibility='public'>
-  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:d26d5345-8b30-46fc-8225-fc57b3211f56'
-    name='+locaAmount:BigDecimal'
-    visibility='public'/>
-  <ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:uuid='urn:uuid:ac4fde00-2d2b-40f0-b8c2-3ce2298ded04'
-    name='+exchangeRate:BigDecimal'
-    visibility='public'/>
- </uml:Enumeration>
+   visibility='public'/>
 </xmi:XMI>

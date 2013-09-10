@@ -6,7 +6,7 @@
    isDerived='false'
    isFinalSpecialization='false'
    isLeaf='false'
-   name='foreign'
+   name='currency'
    visibility='public'>
   <memberEnd href='urn:uuid:c4486df8-e829-4986-bed7-37d14e4e4864'/>
   <memberEnd href='urn:uuid:ef8cf82b-feab-4e08-b322-4e694ef890b4'/>

@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicleSoundSystem'
+    name='endVehicle'
     aggregation='none'>
    <association href='urn:uuid:9f26d86b-3ba0-40bf-92f7-3518996f5e17'/>
-   <type href='urn:uuid:c7557992-155f-4469-8625-1fb5c3ac14e8'/>
+   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:8f88d7b8-3615-42fa-aac0-0a277590b786'
      value='1'
      visibility='public'/>
@@ -40,10 +40,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicle'
+    name='endVehicleSoundSystem_1'
     aggregation='none'>
    <association href='urn:uuid:9f26d86b-3ba0-40bf-92f7-3518996f5e17'/>
-   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
+   <type href='urn:uuid:c7557992-155f-4469-8625-1fb5c3ac14e8'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:c88b7942-f95e-48eb-9c7e-2cf5eb43f4c8'
      value='1'
      visibility='public'/>

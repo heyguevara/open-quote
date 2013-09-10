@@ -20,10 +20,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endWeightAmount_1'
+    name='endVehicle_1'
     aggregation='none'>
    <association href='urn:uuid:7c8e0ac7-5bbc-4291-a7c9-3cf362f079c2'/>
-   <type href='urn:uuid:0b9cceb1-043e-4182-ba85-e6eee4a74370'/>
+   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:b7d2ec87-acdc-4a48-986a-057aa4b89abc'
      value='1'
      visibility='public'/>
@@ -40,10 +40,10 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='endVehicle_1'
+    name='endWeightAmount'
     aggregation='none'>
    <association href='urn:uuid:7c8e0ac7-5bbc-4291-a7c9-3cf362f079c2'/>
-   <type href='urn:uuid:3b1e6b3f-e7ed-4327-a1ab-e460d56422b2'/>
+   <type href='urn:uuid:0b9cceb1-043e-4182-ba85-e6eee4a74370'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:88f524af-9a78-47cc-b61f-7836f63d0afb'
      value='1'
      visibility='public'/>
