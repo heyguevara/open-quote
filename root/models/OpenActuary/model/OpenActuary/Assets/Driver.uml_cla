@@ -21,7 +21,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='licence'
+    name='licenceNumber'
     aggregation='none'
     visibility='public'>
    <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String'/>

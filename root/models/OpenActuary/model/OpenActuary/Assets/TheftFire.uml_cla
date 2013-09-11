@@ -17,7 +17,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='theftLockedInGarage'
+    name='lockedInGarage'
     aggregation='none'
     visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
@@ -37,7 +37,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='theftAllWindowsAndDoorsSecured'
+    name='allWindowsAndDoorsSecured'
     aggregation='none'
     visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
@@ -57,7 +57,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='theftKeysInVehicle'
+    name='keysInVehicle'
     aggregation='none'
     visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
@@ -77,7 +77,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='theftKeysStolenWithVehicle'
+    name='keysStolenWithVehicle'
     aggregation='none'
     visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
@@ -97,7 +97,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='theftAlarmOnAtTimeOfIncident'
+    name='alarmOnAtTimeOfIncident'
     aggregation='none'
     visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
@@ -117,7 +117,7 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='theftAnyToolsInVehicleAtTimeOfIncident'
+    name='toolsInVehicleAtTimeOfIncident'
     aggregation='none'
     visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>

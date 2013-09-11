@@ -384,9 +384,9 @@
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='motorInsRefusedOnRenewal'
+    name='motorInsuranceRefusedOnRenewal'
     aggregation='none'
-    visibility='package'>
+    visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:bf7f9f17-9836-479d-88cb-2c42e39e7045'
      value='1'
@@ -406,7 +406,7 @@
     isUnique='true'
     name='motorInsuranceCancelledByInsurer'
     aggregation='none'
-    visibility='package'>
+    visibility='public'>
    <type href='urn:uuid:1192df42-a376-4dc3-aef2-6924520db0e2'/>
    <lowerValue xmi:type='uml:LiteralInteger' xmi:uuid='urn:uuid:3f3672d6-c9f5-4e99-89b8-52e2a3a517e0'
      value='1'

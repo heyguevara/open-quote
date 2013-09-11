@@ -32,12 +32,12 @@
     isDerived='false'
     isDerivedUnion='false'
     isID='false'
-    isLeaf='false'
+    isLeaf='true'
     isOrdered='false'
     isReadOnly='false'
     isStatic='false'
     isUnique='true'
-    name='incidentMileageAtTimeOf'
+    name='mileageAtTimeOfIncident'
     aggregation='none'
     visibility='public'>
    <type href='http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer'/>
