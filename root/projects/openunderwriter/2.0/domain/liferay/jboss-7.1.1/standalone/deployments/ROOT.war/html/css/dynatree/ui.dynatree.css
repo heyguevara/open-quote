@@ -296,7 +296,7 @@ span.dynatree-node a
 }
 span.dynatree-folder a
 {
-	font-weight: bold;
+	font-weight: normal; /* AIL */
 }
 
 ul.dynatree-container a:focus,
