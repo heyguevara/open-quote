@@ -31,6 +31,7 @@ import java.util.Queue;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.commons.io.FileUtils;
 import org.xml.sax.SAXException;
 
 import com.ail.core.XMLString;
@@ -109,7 +110,7 @@ public class ConfigurationAggregator {
             if ("-o".equals(args[i])) {
                 annotationTypeConfig = args[++i];
             } else if ("-s".equals(args[i])) {
-                searchPath = args[++i];
+                searchPath = FileUtils.readFileToString(new File(args[++i]), null);
             }
         }
 

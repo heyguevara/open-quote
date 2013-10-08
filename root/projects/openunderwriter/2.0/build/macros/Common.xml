@@ -35,7 +35,7 @@
   <property name="selenium.htmlSuite" value="*firefox" />
   <property name="text.filetypes" value="**/*.MF, **/*.bat, **/*.bs, **/*.conf, **/*.css, **/*.drl, **/*.dsl, **/*.ftl, **/*.html, **/*.janino, **/*.jnlp, **/*.js, **/*.jsp, **/*.properties, **/*.rule, **/*.sh, **/*.tld, **/*.txt, **/*.vm, **/*.wsdl, **/*.xml, **/*.xsl, **/*.xslt"/>
   <property name="binary.filetypes" value="**/*.Processor, **/*.eot, **/*.gif, **/*.ico, **/*.jpg, **/*.keystore, **/*.md, **/*.pdf, **/*.png, **/*.svg, **/*.swf, **/*.ttf, **/*.woff, **/*.war, **/*.dodeploy, **/*.xls" />
-  
+
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />
@@ -261,18 +261,6 @@
   <macrodef name="aggregate-annotated-configurations-macro">
     <sequential>
 
-      <!-- Define a path to be passed into the configuration aggregator to search for -->
-      <!-- annotation config files. -->
-      <path id="path.expansion">
-        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
-        <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
-        <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
-        <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
-        <fileset dir="${deploy.dir}" includes="*-ejb.jar" />
-      </path>
-      <property name="config.search.path" refid="path.expansion" />
-
       <!-- Classpath for running the ConfigurationAggregator -->
       <path id="aggregate.classpath">
         <dirset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
@@ -280,11 +268,29 @@
         <fileset dir="${buildlib.dir}" includes="*.jar" />
       </path>
 
+      <!-- Define a path to be passed into the configuration aggregator to search for -->
+      <!-- annotation config files. -->
+      <path id="config.search.path">
+        <dirset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
+        <fileset dir="${test.dir}" includes="unit-test.jar, integration-test.jar" />
+        <dirset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <fileset dir="${module.dir}/com/ail" includes="**/core.jar, **/commercial.jar, **/insurance.jar, **/pageflow.jar" />
+        <dirset dir="${deploy.dir}" includes="*-ejb.jar" />
+        <fileset dir="${deploy.dir}" includes="*-ejb.jar" />
+      </path>
+      <property name="config.search.list" refid="config.search.path" />
+      <tempfile property="config.search.file" />
+      <echo message="${config.search.list}" file="${config.search.file}" />
+
       <java classname="com.ail.core.configure.ConfigurationAggregator" fork="yes" failonerror="yes" classpathref="aggregate.classpath">
         <jvmarg value="-Djava.awt.headless=true" />
         <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y" / -->
-        <arg line="-s ${config.search.path} -o ${module.dir}/com/ail/core/main/core.jar!com/ail/core/AnnotatedTypeConfig.xml" />
+        <arg line="-s ${config.search.file} -o ${module.dir}/com/ail/core/main/core.jar!com/ail/core/AnnotatedTypeConfig.xml" />
       </java>
+      
+      <!-- tidy up the temp file -->
+      <delete file="${config.search.file}" />
+      
     </sequential>
   </macrodef>
 
