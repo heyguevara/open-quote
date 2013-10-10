@@ -21,7 +21,8 @@
 	<classpathentry kind="src" path="sandpit-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/|js/tiny_mce/" kind="src" path="quotation-portlet.war"/>
 	<classpathentry kind="src" path="quotation-portlet.war/WEB-INF/src"/>
-	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openunderwriter-theme.war"/>
+	<classpathentry excluding="Build.xml|Ivy.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openunderwriter-theme.war"/>
+	<classpathentry excluding="Build.xml|Ivy.xml" kind="src" output="target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/deployments/ghana-theme.war" path="ghana-theme.war"/>
 	<classpathentry kind="src" path="build/annotation.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="build/lib/annotation-3.0.jar"/>

@@ -239,7 +239,11 @@
 
   <!-- Macro to compile a liferay theme war project into an exploded war deployment folder -->
   <macrodef name="compile-theme-war-macro">
+    <attribute name="extend" default=""/>
     <sequential>
+
+      <!-- make sure 'if' is avaialble -->
+      <_initialise-ant-contribs-macro />
 
       <!-- this will set ${deploy.unit} based on the current project's name -->
       <_set-output-dir-property-macro />
@@ -247,9 +251,18 @@
       <mkdir dir="${output.dir}/WEB-INF/classes" />
 
       <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
+      
       <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_unstyled" destdir="${output.dir}" />
       <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_styled" destdir="${output.dir}" />
       <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/classic" destdir="${output.dir}" />
+      
+      <if>
+        <not><length string="@{extend}" length="0"/></not> 
+        <then>
+          <_copy-resources-macro srcdir="${deploy.dir}/@{extend}" destdir="${output.dir}" />
+        </then>
+      </if>
+      
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
 
       <mkdir dir="${output.dir}/.sass-cache" />
