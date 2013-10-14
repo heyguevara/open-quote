@@ -66,6 +66,10 @@ hr, .separator {
     position: relative;
 }
 
+.ie .portlet-borderless-container {
+    border: 1px solid #C8C9CA;
+}
+
 .site-title .site-name {
     background: #555 url(../images/common/site_icon.png) no-repeat 15px 50%;
     color: #FFF;
