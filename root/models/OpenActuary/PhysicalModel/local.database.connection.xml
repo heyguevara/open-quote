@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Database>
+  <Setting type="2">
+    <Driver>MySQL5 (Connector/J Driver)</Driver>
+    <DriverFiles>C:\Programs\maven\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar</DriverFiles>
+    <Dialect>org.hibernate.dialect.MySQL5Dialect</Dialect>
+    <DriverClass>com.mysql.jdbc.Driver</DriverClass>
+    <URL>jdbc:mysql://localhost:3306/ghana.motor</URL>
+    <UserName>root</UserName>
+    <Password>bombay2000</Password>
+    <HostName>localhost</HostName>
+    <PortNO>3306</PortNO>
+    <DBName>ghana.motor</DBName>
+    <ServiceName></ServiceName>
+    <ServerName></ServerName>
+    <SelectedForm>false</SelectedForm>
+  </Setting>
+</Database>
