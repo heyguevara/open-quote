@@ -1,4 +1,4 @@
-insert into risENRiskCode (name, validFrom, validTo) values('X.1', null, null)
+insert into risENRiskCode (name, validFrom, validTo) values('X.1', null, null);
 insert into risENRiskCode (name, validFrom, validTo) values('X.4', null, null);
 insert into risENRiskCode (name, validFrom, validTo) values('TAXI-Z405', null, null);
 insert into risENRiskCode (name, validFrom, validTo) values('HIRING CARS-Z405', null, null);
