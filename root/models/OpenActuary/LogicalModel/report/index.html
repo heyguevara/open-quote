@@ -483,8 +483,8 @@
   </head>
   <body>
     <p>
-      <font color="#000000" face="Arial">Vehicle Risk Code e.g. </font><span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">X.1 
-      , X.4, TAXI-Z405, HIRING CARS Z405, MINIBUS,MAXIBUS, Y3 etc.</font></span>
+      <font color="#000000" face="Arial">Vehicle Risk Code e.g. </font><font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">X.1 
+      , X.4, TAXI-Z405, HIRING CARS Z405, MINIBUS,MAXIBUS, Y3 etc.</span></font>
     </p>
   </body>
 </html>
@@ -733,7 +733,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">verSchema</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -755,7 +755,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">verAlteration</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -778,7 +778,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">verStaticData</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1009,7 +1009,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -1031,7 +1031,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehPolicyIDpol</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#tQwTsIKFYEDUmQNX"><span style="" class="TableContentText">polPolicy.polID</span>
@@ -1059,7 +1059,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehIDmod</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#MlWPsIKFYEDUmQY5"><span style="" class="TableContentText">modENModel.modID</span>
@@ -1157,7 +1157,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehAlarmFitted</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1179,7 +1179,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehBoughtFromNew</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1201,7 +1201,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehYearOfManufacture</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(4)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(4)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1245,7 +1245,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehCommercialVehicle</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1267,7 +1267,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehCompanyVehicle</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1333,7 +1333,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehDriverAirBagFitted</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1356,7 +1356,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehEngineSizeCC</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(5)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(5)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1378,7 +1378,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehMilage</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(7)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(7)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1400,7 +1400,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehPassengerAirbagFitted</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1423,7 +1423,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehRentalVehicle</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1445,7 +1445,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehRighthandDrive</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1467,7 +1467,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehRoadWorthyCertificate</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1513,7 +1513,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehSeatingCapacity</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(3)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(3)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1535,7 +1535,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehSubjectToLoan</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1558,7 +1558,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehToolsStroredDayTime</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1581,7 +1581,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehToolsStroredNightTime</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1604,7 +1604,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehTrackingSystemFitted</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1627,7 +1627,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehTrailer</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1650,7 +1650,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehUsageBusiness</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1672,7 +1672,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehUsageCarriageOfGoods</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -1695,7 +1695,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehUsageSocialHome</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -2068,7 +2068,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehNightTimeLocationIDadd</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#sTYVAoKGAqAEFgiE"><span style="" class="TableContentText">addAddress.addID</span>
@@ -2082,7 +2082,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">vehDayTimeLocationIDadd</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#sTYVAoKGAqAEFgiE"><span style="" class="TableContentText">addAddress.addID</span>
@@ -2133,7 +2133,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">makID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -2170,7 +2170,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">makID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#UyGzcIKFYEDUmQiG"><span style="" class="TableContentText">makENMake.makID</span>
@@ -2184,7 +2184,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">modlID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#MlWPsIKFYEDUmQY5"><span style="" class="TableContentText">modENModel.modID</span>
@@ -2259,7 +2259,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">modID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -2369,7 +2369,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">description</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -2442,7 +2442,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">polID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -2517,9 +2517,9 @@
   </head>
   <body>
     <p class="MsoNormal">
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Business 
-      Source e.g.</font></span><font color="#000000" face="Arial">&nbsp;</font><span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Direct, 
-      Marketing, Broker, Agent, Reinsurance, Banc assurance)<o color="#000000" color="#000000" p="#DEFAULT" style="font-family:Arial,sans-serif;"></font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Business 
+      Source e.g.</span></font><font color="#000000" face="Arial">&nbsp;</font><font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Direct, 
+      Marketing, Broker, Agent, Reinsurance, Banc assurance)<o color="#000000" color="#000000" p="#DEFAULT" style="font-family:Arial,sans-serif;"></span></font>
     </p>
   </body>
 </html>
@@ -2649,7 +2649,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">polLeadInsurer</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -2759,7 +2759,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">polUWYear</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(4)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(4)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -2817,7 +2817,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">polDriverIDdri</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#L0xjAoKGAqAEFgmq"><span style="" class="TableContentText">driDriver.driID</span>
@@ -3161,11 +3161,11 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">clmID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Yes</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">No</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3173,7 +3173,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">clmlPolicyIDpol</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#tQwTsIKFYEDUmQNX"><span style="" class="TableContentText">polPolicy.polID</span>
@@ -3187,7 +3187,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">clmIDveh</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#wuIzsIKFYEDUmQOT"><span style="" class="TableContentText">vehVehicle.vehID</span>
@@ -3360,7 +3360,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">clmIncidentAddressIDadd</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#sTYVAoKGAqAEFgiE"><span style="" class="TableContentText">addAddress.addID</span>
@@ -3384,7 +3384,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">clmIncidentMileageAtTime</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3576,7 +3576,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -3588,7 +3588,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driAverageAnnualMilage</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3632,7 +3632,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driMainDriver</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3676,7 +3676,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driVehicleOwner</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3698,7 +3698,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driYearsLicenceHeld</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(2)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(2)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3743,7 +3743,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driDefectiveHearing</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3765,7 +3765,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driDefectiveVision</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3787,7 +3787,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driMale</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3897,7 +3897,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driMotorInsuranceCancelledByInsurer</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3920,7 +3920,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driMotorInsuranceConditionsAdded</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3943,7 +3943,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driMotorInsuranceRefusedOnRenewal</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3966,7 +3966,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driNumberOfCriminalOffences</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(2)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(2)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -3988,7 +3988,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driNumberOfDrivingOffenceConvictions</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(2)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(2)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4010,7 +4010,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driNumberOfMotorRelatedAccidents</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(2)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(2)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4030,7 +4030,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driNumberOfMotorRelatedClaims</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(2)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(2)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4052,7 +4052,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driPreviouslyDeclineMotorInsurance</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4075,7 +4075,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driPreviousNCD</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4097,7 +4097,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driRequiredIncreasePremium</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4120,7 +4120,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driSufferedFits</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4142,7 +4142,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">driCurrentLicenceHeld</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4286,11 +4286,11 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Yes</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">No</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4298,7 +4298,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accCarryingGoods</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4321,7 +4321,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accDamageToThirdParty</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4343,7 +4343,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accDriverAirbagDeployed</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4365,7 +4365,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">addDriverAtTimeOfAccidentIDdri</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(10)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(10)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#L0xjAoKGAqAEFgmq"><span style="" class="TableContentText">driDriver.driID</span>
@@ -4390,7 +4390,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accDriverLiable</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4412,7 +4412,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accInjuryToDriver</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4434,7 +4434,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accInjuryOtherVehicleDrivers</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4457,7 +4457,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accInjuryToOtherVehiclePassengers</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4480,7 +4480,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accInjuryToPassengers</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4503,7 +4503,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accInjuryToThirdParties</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4526,7 +4526,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accInsuredDriving</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4549,7 +4549,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accLightsOn</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4571,7 +4571,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accNumberOfVehiclesInvolved</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(3)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(3)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4594,7 +4594,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accPassengerAirbagDeployed</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4616,7 +4616,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accPoliceProsecutingDriver</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4639,7 +4639,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accPoliceRecorded</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4662,7 +4662,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accPoliceWitness</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4684,7 +4684,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accSeatBeltsUsed</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4707,7 +4707,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">accIDclm</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#ICDpAoKGAqAEFgdn"><span style="" class="TableContentText">clmClaim.clmID</span>
@@ -4746,7 +4746,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">addID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -4817,7 +4817,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theID</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">Unique</span>
 					</td>
@@ -4829,7 +4829,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theAlarmOn</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4841,8 +4841,8 @@
   </head>
   <body>
     <p>
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Was 
-      an alarm on at time of theft</font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Was 
+      an alarm on at time of theft</span></font>
     </p>
   </body>
 </html>
@@ -4852,7 +4852,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theAllWindowsAndDoorsSecured</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4864,8 +4864,8 @@
   </head>
   <body>
     <p>
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Were 
-      all windows and doors in the vehicle secured</font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Were 
+      all windows and doors in the vehicle secured</span></font>
     </p>
   </body>
 </html>
@@ -4875,7 +4875,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theAnyToolsInVehicle</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4887,8 +4887,8 @@
   </head>
   <body>
     <p>
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Were 
-      any tools or equipment in vehicle at time of theft</font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Were 
+      any tools or equipment in vehicle at time of theft</span></font>
     </p>
   </body>
 </html>
@@ -4898,7 +4898,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theKeysInVehicle</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4910,8 +4910,8 @@
   </head>
   <body>
     <p>
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Were 
-      ignition keys in vehicle</font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Were 
+      ignition keys in vehicle</span></font>
     </p>
   </body>
 </html>
@@ -4921,7 +4921,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theKeysStolenWithVehicle</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4933,8 +4933,8 @@
   </head>
   <body>
     <p>
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Were 
-      ignition keys stolen with vehicle</font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Were 
+      ignition keys stolen with vehicle</span></font>
     </p>
   </body>
 </html>
@@ -4944,7 +4944,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theLockedInGarage</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">bit</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">tinyint</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4956,8 +4956,8 @@
   </head>
   <body>
     <p>
-      <span style="font-size:9.0pt;font-family:Arial,sans-serif;"><font color="#000000" face="Arial,sans-serif">Was 
-      vehicle in a locked garaged prior to theft</font></span>
+      <font color="#000000" face="Arial,sans-serif"><span style="font-size:9.0pt;font-family:Arial,sans-serif;">Was 
+      vehicle in a locked garaged prior to theft</span></font>
     </p>
   </body>
 </html>
@@ -4967,7 +4967,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theClaimIDclm</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span>
 					</td>
@@ -4979,7 +4979,7 @@
 				<tr>
 					<td width="30%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">theIDclm</span>
 					</td>
-					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">integer(11)</span>
+					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">int(11)</span>
 					</td>
 					<td width="17%" class="TableCell"><span style="" class="TableContentText"></span><span style="" class="TableContentText">FK (</span>
 						<a target="_self" class="ItemLink" href="#ICDpAoKGAqAEFgdn"><span style="" class="TableContentText">clmClaim.clmID</span>

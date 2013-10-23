@@ -53,7 +53,7 @@ CREATE TABLE driDriver (
   driOccuptationIDocc                  varchar(32) comment 'Driver occupatioin', 
   driEmploymentStatusIDemp             varchar(32) comment 'Drivers employment status') comment='Driver Table';
 CREATE TABLE accAccident (
-  accID                             int(11) UNIQUE, 
+  accID                             int(11) NOT NULL UNIQUE, 
   accCarryingGoods                  tinyint(1) comment 'Were good being carried at time of accident', 
   accDamageToThirdParty             tinyint(1) comment 'Was there damage to a third party', 
   accDriverAirbagDeployed           tinyint(1) comment 'Did the driver airbags deploy', 
@@ -72,7 +72,8 @@ CREATE TABLE accAccident (
   accPoliceRecorded                 tinyint(1) comment 'Was this accident recorded by the police', 
   accPoliceWitness                  tinyint(1) comment 'Did the police witness the accident', 
   accSeatBeltsUsed                  tinyint(1) comment 'Were the seatbelts in use at the time of the accident.', 
-  accIDclm                          int(11)) comment='Accident details';
+  accIDclm                          int(11), 
+  `Column`                          int(10)) comment='Accident details';
 CREATE TABLE theTheftFire (
   theID                        int(11) NOT NULL UNIQUE, 
   theAlarmOn                   tinyint(1) comment 'Was an alarm on at time of theft', 
@@ -92,7 +93,7 @@ CREATE TABLE claENClaimType (
   validFrom date, 
   validTo   date) comment='Claim Type';
 CREATE TABLE clmClaim (
-  clmID                     int(11) UNIQUE, 
+  clmID                     int(11) NOT NULL UNIQUE, 
   clmlPolicyIDpol           int(11), 
   clmIDveh                  int(11), 
   clmIDcla                  varchar(32), 
@@ -240,6 +241,8 @@ CREATE TABLE polPolicy (
   polGrossPremiumAmount decimal(9, 2) DEFAULT 0 comment 'gross premium amount', 
   polGrossPremiumIDccy  varchar(3), 
   polDriverIDdri        int(10)) comment='Main Policy Document';
+ALTER TABLE accAccident ADD INDEX FKaccAcciden945564 (accIDclm), ADD CONSTRAINT FKaccAcciden945564 FOREIGN KEY (accIDclm) REFERENCES clmClaim (clmID);
+ALTER TABLE theTheftFire ADD INDEX FKtheTheftFi656947 (theIDclm), ADD CONSTRAINT FKtheTheftFi656947 FOREIGN KEY (theIDclm) REFERENCES clmClaim (clmID);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle805580 (vehUnladedWeightIDwei), ADD CONSTRAINT FKvehVehicle805580 FOREIGN KEY (vehUnladedWeightIDwei) REFERENCES weiENWeightType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle434686 (vehMaxLoadWeightIDwei), ADD CONSTRAINT FKvehVehicle434686 FOREIGN KEY (vehMaxLoadWeightIDwei) REFERENCES weiENWeightType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle513882 (vehNightTimeLocationIDadd), ADD CONSTRAINT FKvehVehicle513882 FOREIGN KEY (vehNightTimeLocationIDadd) REFERENCES addAddress (addID);
@@ -280,6 +283,4 @@ ALTER TABLE vehVehicle ADD INDEX FKvehVehicle769412 (vehIDmod), ADD CONSTRAINT F
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle764335 (vehIDmak), ADD CONSTRAINT FKvehVehicle764335 FOREIGN KEY (vehIDmak) REFERENCES makENMake (name);
 ALTER TABLE cascadeMakeModel ADD INDEX FKcascadeMak336466 (makID), ADD CONSTRAINT FKcascadeMak336466 FOREIGN KEY (makID) REFERENCES makENMake (makID);
 ALTER TABLE cascadeMakeModel ADD INDEX FKcascadeMak936409 (modlID), ADD CONSTRAINT FKcascadeMak936409 FOREIGN KEY (modlID) REFERENCES modENModel (modID);
-ALTER TABLE accAccident ADD INDEX FKaccAcciden945564 (accIDclm), ADD CONSTRAINT FKaccAcciden945564 FOREIGN KEY (accIDclm) REFERENCES clmClaim (clmID);
-ALTER TABLE theTheftFire ADD INDEX FKtheTheftFi656947 (theIDclm), ADD CONSTRAINT FKtheTheftFi656947 FOREIGN KEY (theIDclm) REFERENCES clmClaim (clmID);
 
