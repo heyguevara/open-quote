@@ -2,26 +2,26 @@ CREATE TABLE verVersion (
   verOverall    varchar(16) DEFAULT '0.0.0' comment 'Overall version of the published schema', 
   verSchema     int(10) DEFAULT 0 NOT NULL comment 'this is the schema version', 
   verAlteration int(10) DEFAULT 0 NOT NULL comment 'this is the most resent alteration that have been applied to the Schema', 
-  verStaticData int(10) DEFAULT 0 NOT NULL comment 'This is the most recent version that applies the schema/alteration') comment='With this table we will track versions of Schema, alterations and static data';
+  verStaticData int(10) DEFAULT 0 NOT NULL comment 'This is the most recent version that applies the schema/alteration') comment='With this table we will track versions of Schema, alterations and static data' CHARACTER SET UTF8;
 CREATE TABLE occENOccupation (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Occupation Type';
+  validTo   date) comment='Occupation Type' CHARACTER SET UTF8;
 CREATE TABLE natENNationality (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Nationality Type';
+  validTo   date) comment='Nationality Type' CHARACTER SET UTF8;
 CREATE TABLE empENEmploymentType (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Employment Type';
+  validTo   date) comment='Employment Type' CHARACTER SET UTF8;
 CREATE TABLE couENCountry (
   name      varchar(3) NOT NULL UNIQUE comment 'ISO 3 character name', 
   country   varchar(32) UNIQUE comment 'Full Country name', 
   validFrom date, 
-  validTo   date) comment='Country Type';
+  validTo   date) comment='Country Type' CHARACTER SET UTF8;
 CREATE TABLE driDriver (
-  driID                                int(10) NOT NULL UNIQUE, 
+  driID                                int(11) NOT NULL AUTO_INCREMENT, 
   driAverageAnnualMilage               int(10) DEFAULT 0 comment 'Average annual mileage', 
   driLicenceFirstIssued                date comment 'Date licence first issued', 
   driMainDriver                        tinyint(1) comment 'Is this the main driver', 
@@ -51,13 +51,14 @@ CREATE TABLE driDriver (
   driLicencedIssuedIDcou               varchar(32) comment 'Country licence issued', 
   driNatioinalityIDnat                 varchar(32) comment 'Driver nationality', 
   driOccuptationIDocc                  varchar(32) comment 'Driver occupatioin', 
-  driEmploymentStatusIDemp             varchar(32) comment 'Drivers employment status') comment='Driver Table';
+  driEmploymentStatusIDemp             varchar(32) comment 'Drivers employment status', 
+  PRIMARY KEY (driID)) comment='Driver Table' CHARACTER SET UTF8;
 CREATE TABLE accAccident (
-  accID                             int(11) NOT NULL UNIQUE, 
+  accID                             int(11) NOT NULL AUTO_INCREMENT, 
   accCarryingGoods                  tinyint(1) comment 'Were good being carried at time of accident', 
   accDamageToThirdParty             tinyint(1) comment 'Was there damage to a third party', 
   accDriverAirbagDeployed           tinyint(1) comment 'Did the driver airbags deploy', 
-  addDriverAtTimeOfAccidentIDdri    int(10) comment 'Who was the driver at the time of the accident', 
+  addDriverAtTimeOfAccidentIDdri    int(11) comment 'Who was the driver at the time of the accident', 
   accDriverLiable                   tinyint(1) comment 'Is the driver liable for the accident', 
   accInjuryToDriver                 tinyint(1) comment 'Was there injury to the driver', 
   accInjuryOtherVehicleDrivers      tinyint(1) comment 'Was there injury sustained by any other vehicles driver', 
@@ -73,9 +74,10 @@ CREATE TABLE accAccident (
   accPoliceWitness                  tinyint(1) comment 'Did the police witness the accident', 
   accSeatBeltsUsed                  tinyint(1) comment 'Were the seatbelts in use at the time of the accident.', 
   accIDclm                          int(11), 
-  `Column`                          int(10)) comment='Accident details';
+  accDriverIDdri                    int(11), 
+  PRIMARY KEY (accID)) comment='Accident details' CHARACTER SET UTF8;
 CREATE TABLE theTheftFire (
-  theID                        int(11) NOT NULL UNIQUE, 
+  theID                        int(11) NOT NULL AUTO_INCREMENT, 
   theAlarmOn                   tinyint(1) comment 'Was an alarm on at time of theft', 
   theAllWindowsAndDoorsSecured tinyint(1) comment 'Were all windows and doors in the vehicle secured', 
   theAnyToolsInVehicle         tinyint(1) comment 'Were any tools or equipment in vehicle at time of theft', 
@@ -83,17 +85,18 @@ CREATE TABLE theTheftFire (
   theKeysStolenWithVehicle     tinyint(1) comment 'Were ignition keys stolen with vehicle', 
   theLockedInGarage            tinyint(1) comment 'Was vehicle in a locked garaged prior to theft', 
   theClaimIDclm                int(11), 
-  theIDclm                     int(11)) comment='Third party fire and theft information';
+  PRIMARY KEY (theID)) comment='Third party fire and theft information' CHARACTER SET UTF8;
 CREATE TABLE addAddress (
-  addID       int(11) NOT NULL UNIQUE, 
+  addID       int(11) NOT NULL AUTO_INCREMENT, 
   addRoad     varchar(100), 
-  addAreaCode varchar(50) comment 'Either Postal code or area') comment='Address information';
+  addAreaCode varchar(50) comment 'Either Postal code or area', 
+  PRIMARY KEY (addID)) comment='Address information' CHARACTER SET UTF8;
 CREATE TABLE claENClaimType (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Claim Type';
+  validTo   date) comment='Claim Type' CHARACTER SET UTF8;
 CREATE TABLE clmClaim (
-  clmID                     int(11) NOT NULL UNIQUE, 
+  clmID                     int(11) NOT NULL AUTO_INCREMENT, 
   clmlPolicyIDpol           int(11), 
   clmIDveh                  int(11), 
   clmIDcla                  varchar(32), 
@@ -107,62 +110,63 @@ CREATE TABLE clmClaim (
   clmTotalLossIncurredIDccy varchar(3), 
   clmIncidentAddressIDadd   int(11) comment 'where incident occurred', 
   clmIncidentMileageAtTime  int(10) comment 'main vehicle''s mileage at the time of the incident', 
-  clmIncidentOccured        date comment 'when incident occurred') comment='Claim Details';
+  clmIncidentOccured        date comment 'when incident occurred', 
+  PRIMARY KEY (clmID)) comment='Claim Details' CHARACTER SET UTF8;
 CREATE TABLE weiENWeightType (
   name      varchar(3) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Unit of Weight';
+  validTo   date) comment='Unit of Weight' CHARACTER SET UTF8;
 CREATE TABLE risENRiskCode (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Vehicle Risk Code e.g. X.1 , X.4, TAXI-Z405, HIRING CARS Z405, MINIBUS,MAXIBUS, Y3 etc.';
+  validTo   date) comment='Vehicle Risk Code e.g. X.1 , X.4, TAXI-Z405, HIRING CARS Z405, MINIBUS,MAXIBUS, Y3 etc.' CHARACTER SET UTF8;
 CREATE TABLE mdfENModifications (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Vehicle Modifications Type';
+  validTo   date) comment='Vehicle Modifications Type' CHARACTER SET UTF8;
 CREATE TABLE accENAccessories (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Vehicle Accessories Type';
+  validTo   date) comment='Vehicle Accessories Type' CHARACTER SET UTF8;
 CREATE TABLE parENParked (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Where Vehicle Parked Type';
+  validTo   date) comment='Where Vehicle Parked Type' CHARACTER SET UTF8;
 CREATE TABLE souENSoundSystem (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Vehicle Sound System Type';
+  validTo   date) comment='Vehicle Sound System Type' CHARACTER SET UTF8;
 CREATE TABLE ccyENCurrency (
   name        varchar(3) NOT NULL UNIQUE, 
   description int(11), 
   symbol      char(3), 
   validFrom   date, 
-  validTo     date) comment='Currency Type';
+  validTo     date) comment='Currency Type' CHARACTER SET UTF8;
 CREATE TABLE reaENReason (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Reason for uploading Policy Data';
+  validTo   date) comment='Reason for uploading Policy Data' CHARACTER SET UTF8;
 CREATE TABLE insENInsuredType (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Insured Type';
+  validTo   date) comment='Insured Type' CHARACTER SET UTF8;
 CREATE TABLE modENModel (
   name  varchar(32) NOT NULL, 
-  modID int(11) NOT NULL UNIQUE) comment='Vehicle Model Type';
+  modID int(11) NOT NULL UNIQUE) comment='Vehicle Model Type' CHARACTER SET UTF8;
 CREATE TABLE cascadeMakeModel (
   makID     int(11) NOT NULL, 
   modlID    int(11) NOT NULL, 
   validFrom date, 
-  validTo   date) comment='Relationship between Vehicle Make and Model';
+  validTo   date) comment='Relationship between Vehicle Make and Model' CHARACTER SET UTF8;
 CREATE TABLE makENMake (
   name  varchar(32) NOT NULL UNIQUE, 
-  makID int(11) NOT NULL UNIQUE) comment='Vehicle Make Type';
+  makID int(11) NOT NULL UNIQUE) comment='Vehicle Make Type' CHARACTER SET UTF8;
 CREATE TABLE bodENBodyType (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Vehicle Body Type';
+  validTo   date) comment='Vehicle Body Type' CHARACTER SET UTF8;
 CREATE TABLE vehVehicle (
-  vehID                           int(11) NOT NULL UNIQUE comment 'Unique Identifier', 
+  vehID                           int(11) NOT NULL AUTO_INCREMENT comment 'Unique Identifier', 
   vehPolicyIDpol                  int(11), 
   vehIDmak                        varchar(32), 
   vehIDmod                        int(11), 
@@ -217,13 +221,14 @@ CREATE TABLE vehVehicle (
   vehMaxLoadWeightAmount          decimal(10, 2) comment 'vehicle''s maximum loading amount', 
   vehMaxLoadWeightIDwei           varchar(3), 
   vehNightTimeLocationIDadd       int(11), 
-  vehDayTimeLocationIDadd         int(11)) comment='Vehicle Details';
+  vehDayTimeLocationIDadd         int(11), 
+  PRIMARY KEY (vehID)) comment='Vehicle Details' CHARACTER SET UTF8;
 CREATE TABLE covENCover (
   name      varchar(32) NOT NULL UNIQUE, 
   validFrom date, 
-  validTo   date) comment='Cover type';
+  validTo   date) comment='Cover type' CHARACTER SET UTF8;
 CREATE TABLE polPolicy (
-  polID                 int(11) NOT NULL UNIQUE, 
+  polID                 int(11) NOT NULL AUTO_INCREMENT, 
   polCoverTypeIDcov     varchar(32) comment 'Policy cover type e.g Comprehensive', 
   poInsuredTypeIDins    varchar(32) comment 'Policy Insured Type e.g. Company, Private', 
   polReasonIDrea        varchar(32) comment 'Business Source e.g. Direct, Marketing, Broker, Agent, Reinsurance, Banc assurance) ', 
@@ -240,9 +245,10 @@ CREATE TABLE polPolicy (
   polUWYear             int(4) comment 'underwriting year or year of account', 
   polGrossPremiumAmount decimal(9, 2) DEFAULT 0 comment 'gross premium amount', 
   polGrossPremiumIDccy  varchar(3), 
-  polDriverIDdri        int(10)) comment='Main Policy Document';
+  polDriverIDdri        int(11), 
+  PRIMARY KEY (polID)) comment='Main Policy Document' CHARACTER SET UTF8;
+ALTER TABLE theTheftFire ADD INDEX FKtheTheftFi708736 (theClaimIDclm), ADD CONSTRAINT FKtheTheftFi708736 FOREIGN KEY (theClaimIDclm) REFERENCES clmClaim (clmID);
 ALTER TABLE accAccident ADD INDEX FKaccAcciden945564 (accIDclm), ADD CONSTRAINT FKaccAcciden945564 FOREIGN KEY (accIDclm) REFERENCES clmClaim (clmID);
-ALTER TABLE theTheftFire ADD INDEX FKtheTheftFi656947 (theIDclm), ADD CONSTRAINT FKtheTheftFi656947 FOREIGN KEY (theIDclm) REFERENCES clmClaim (clmID);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle805580 (vehUnladedWeightIDwei), ADD CONSTRAINT FKvehVehicle805580 FOREIGN KEY (vehUnladedWeightIDwei) REFERENCES weiENWeightType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle434686 (vehMaxLoadWeightIDwei), ADD CONSTRAINT FKvehVehicle434686 FOREIGN KEY (vehMaxLoadWeightIDwei) REFERENCES weiENWeightType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle513882 (vehNightTimeLocationIDadd), ADD CONSTRAINT FKvehVehicle513882 FOREIGN KEY (vehNightTimeLocationIDadd) REFERENCES addAddress (addID);
@@ -257,7 +263,7 @@ ALTER TABLE clmClaim ADD INDEX FKclmClaim659378 (clmTotalLossIncurredIDccy), ADD
 ALTER TABLE clmClaim ADD INDEX FKclmClaim289057 (clmIncidentAddressIDadd), ADD CONSTRAINT FKclmClaim289057 FOREIGN KEY (clmIncidentAddressIDadd) REFERENCES addAddress (addID);
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy716061 (polDriverIDdri), ADD CONSTRAINT FKpolPolicy716061 FOREIGN KEY (polDriverIDdri) REFERENCES driDriver (driID);
 ALTER TABLE driDriver ADD INDEX FKdriDriver500451 (driLicencedIssuedIDcou), ADD CONSTRAINT FKdriDriver500451 FOREIGN KEY (driLicencedIssuedIDcou) REFERENCES couENCountry (country);
-ALTER TABLE accAccident ADD INDEX FKaccAcciden279153 (addDriverAtTimeOfAccidentIDdri), ADD CONSTRAINT FKaccAcciden279153 FOREIGN KEY (addDriverAtTimeOfAccidentIDdri) REFERENCES driDriver (driID);
+ALTER TABLE accAccident ADD INDEX FKaccAcciden528634 (accDriverIDdri), ADD CONSTRAINT FKaccAcciden528634 FOREIGN KEY (accDriverIDdri) REFERENCES driDriver (driID);
 ALTER TABLE driDriver ADD INDEX FKdriDriver381963 (driEmploymentStatusIDemp), ADD CONSTRAINT FKdriDriver381963 FOREIGN KEY (driEmploymentStatusIDemp) REFERENCES empENEmploymentType (name);
 ALTER TABLE driDriver ADD INDEX FKdriDriver213188 (driNatioinalityIDnat), ADD CONSTRAINT FKdriDriver213188 FOREIGN KEY (driNatioinalityIDnat) REFERENCES natENNationality (name);
 ALTER TABLE driDriver ADD INDEX FKdriDriver657757 (driOccuptationIDocc), ADD CONSTRAINT FKdriDriver657757 FOREIGN KEY (driOccuptationIDocc) REFERENCES occENOccupation (name);
