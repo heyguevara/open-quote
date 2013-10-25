@@ -58,7 +58,7 @@ CREATE TABLE accAccident (
   accCarryingGoods                  tinyint(1) comment 'Were good being carried at time of accident', 
   accDamageToThirdParty             tinyint(1) comment 'Was there damage to a third party', 
   accDriverAirbagDeployed           tinyint(1) comment 'Did the driver airbags deploy', 
-  addDriverAtTimeOfAccidentIDdri    varchar(37) comment 'Who was the driver at the time of the accident', 
+  accDriverAtTimeOfAccidentIDdri    varchar(37) comment 'Who was the driver at the time of the accident', 
   accDriverLiable                   tinyint(1) comment 'Is the driver liable for the accident', 
   accInjuryToDriver                 tinyint(1) comment 'Was there injury to the driver', 
   accInjuryOtherVehicleDrivers      tinyint(1) comment 'Was there injury sustained by any other vehicles driver', 
@@ -73,7 +73,7 @@ CREATE TABLE accAccident (
   accPoliceRecorded                 tinyint(1) comment 'Was this accident recorded by the police', 
   accPoliceWitness                  tinyint(1) comment 'Did the police witness the accident', 
   accSeatBeltsUsed                  tinyint(1) comment 'Were the seatbelts in use at the time of the accident.', 
-  accIDclm                          varchar(37), 
+  accClaimIDclm                     varchar(37), 
   accDriverIDdri                    varchar(37), 
   PRIMARY KEY (accID)) comment='Accident details' CHARACTER SET UTF8;
 CREATE TABLE theTheftFire (
@@ -167,14 +167,14 @@ CREATE TABLE bodENBodyType (
   validTo   date) comment='Vehicle Body Type' CHARACTER SET UTF8;
 CREATE TABLE vehVehicle (
   vehID                           varchar(37) NOT NULL comment 'Unique Identifier', 
-  vehIDmak                        varchar(32), 
-  vehIDmod                        int(11), 
-  vehIDbod                        varchar(32), 
-  vehIDsou                        varchar(32), 
-  vehIDpar                        varchar(32), 
-  vehIDacc                        varchar(32), 
-  vehIDmdf                        varchar(32), 
-  vehIDrsk                        varchar(32), 
+  vehMakeIDmak                    varchar(32), 
+  vehModelIDmod                   int(11), 
+  vehBodyIDbod                    varchar(32), 
+  vehSoundSystemIDsou             varchar(32), 
+  vehParkedIDpar                  varchar(32), 
+  vehAccidentIDacc                varchar(32), 
+  vehModifiedIDmdf                varchar(32), 
+  vehRiskCodeIDrsk                varchar(32), 
   vehAlarmFitted                  tinyint(1) comment 'Does vehicle have a car alarm fitted', 
   vehBoughtFromNew                tinyint(1) comment 'Was vehicle bought from new', 
   vehYearOfManufacture            int(4) comment 'Year of vehicle''s manufacture', 
@@ -248,7 +248,7 @@ CREATE TABLE polPolicy (
   polDriverIDdri        varchar(37), 
   PRIMARY KEY (polID)) comment='Main Policy Document' CHARACTER SET UTF8;
 ALTER TABLE theTheftFire ADD INDEX FKtheTheftFi708736 (theClaimIDclm), ADD CONSTRAINT FKtheTheftFi708736 FOREIGN KEY (theClaimIDclm) REFERENCES clmClaim (clmID);
-ALTER TABLE accAccident ADD INDEX FKaccAcciden945564 (accIDclm), ADD CONSTRAINT FKaccAcciden945564 FOREIGN KEY (accIDclm) REFERENCES clmClaim (clmID);
+ALTER TABLE accAccident ADD INDEX FKaccAcciden675312 (accClaimIDclm), ADD CONSTRAINT FKaccAcciden675312 FOREIGN KEY (accClaimIDclm) REFERENCES clmClaim (clmID);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle805580 (vehUnladedWeightIDwei), ADD CONSTRAINT FKvehVehicle805580 FOREIGN KEY (vehUnladedWeightIDwei) REFERENCES weiENWeightType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle434686 (vehMaxLoadWeightIDwei), ADD CONSTRAINT FKvehVehicle434686 FOREIGN KEY (vehMaxLoadWeightIDwei) REFERENCES weiENWeightType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle513882 (vehNightTimeLocationIDadd), ADD CONSTRAINT FKvehVehicle513882 FOREIGN KEY (vehNightTimeLocationIDadd) REFERENCES addAddress (addID);
@@ -267,11 +267,11 @@ ALTER TABLE accAccident ADD INDEX FKaccAcciden528634 (accDriverIDdri), ADD CONST
 ALTER TABLE driDriver ADD INDEX FKdriDriver381963 (driEmploymentStatusIDemp), ADD CONSTRAINT FKdriDriver381963 FOREIGN KEY (driEmploymentStatusIDemp) REFERENCES empENEmploymentType (name);
 ALTER TABLE driDriver ADD INDEX FKdriDriver213188 (driNatioinalityIDnat), ADD CONSTRAINT FKdriDriver213188 FOREIGN KEY (driNatioinalityIDnat) REFERENCES natENNationality (name);
 ALTER TABLE driDriver ADD INDEX FKdriDriver657757 (driOccuptationIDocc), ADD CONSTRAINT FKdriDriver657757 FOREIGN KEY (driOccuptationIDocc) REFERENCES occENOccupation (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle975646 (vehIDsou), ADD CONSTRAINT FKvehVehicle975646 FOREIGN KEY (vehIDsou) REFERENCES souENSoundSystem (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle876353 (vehIDpar), ADD CONSTRAINT FKvehVehicle876353 FOREIGN KEY (vehIDpar) REFERENCES parENParked (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle886475 (vehIDacc), ADD CONSTRAINT FKvehVehicle886475 FOREIGN KEY (vehIDacc) REFERENCES accENAccessories (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle962787 (vehIDmdf), ADD CONSTRAINT FKvehVehicle962787 FOREIGN KEY (vehIDmdf) REFERENCES mdfENModifications (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle435925 (vehIDrsk), ADD CONSTRAINT FKvehVehicle435925 FOREIGN KEY (vehIDrsk) REFERENCES risENRiskCode (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle154161 (vehSoundSystemIDsou), ADD CONSTRAINT FKvehVehicle154161 FOREIGN KEY (vehSoundSystemIDsou) REFERENCES souENSoundSystem (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle585004 (vehParkedIDpar), ADD CONSTRAINT FKvehVehicle585004 FOREIGN KEY (vehParkedIDpar) REFERENCES parENParked (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle657851 (vehAccidentIDacc), ADD CONSTRAINT FKvehVehicle657851 FOREIGN KEY (vehAccidentIDacc) REFERENCES accENAccessories (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle546082 (vehModifiedIDmdf), ADD CONSTRAINT FKvehVehicle546082 FOREIGN KEY (vehModifiedIDmdf) REFERENCES mdfENModifications (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle706658 (vehRiskCodeIDrsk), ADD CONSTRAINT FKvehVehicle706658 FOREIGN KEY (vehRiskCodeIDrsk) REFERENCES risENRiskCode (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle822388 (vehSumInsuredLocalIDccy), ADD CONSTRAINT FKvehVehicle822388 FOREIGN KEY (vehSumInsuredLocalIDccy) REFERENCES ccyENCurrency (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle964444 (vehSumInsuredForeignIDccy), ADD CONSTRAINT FKvehVehicle964444 FOREIGN KEY (vehSumInsuredForeignIDccy) REFERENCES ccyENCurrency (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle358880 (vehRiskCurrencyIDccy), ADD CONSTRAINT FKvehVehicle358880 FOREIGN KEY (vehRiskCurrencyIDccy) REFERENCES ccyENCurrency (name);
@@ -284,9 +284,9 @@ ALTER TABLE polPolicy ADD INDEX FKpolPolicy389109 (polReasonIDrea), ADD CONSTRAI
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy254915 (polGrossPremiumIDccy), ADD CONSTRAINT FKpolPolicy254915 FOREIGN KEY (polGrossPremiumIDccy) REFERENCES ccyENCurrency (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle338565 (vehPolicyIDpol), ADD CONSTRAINT FKvehVehicle338565 FOREIGN KEY (vehPolicyIDpol) REFERENCES polPolicy (polID);
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy72147 (polCoverTypeIDcov), ADD CONSTRAINT FKpolPolicy72147 FOREIGN KEY (polCoverTypeIDcov) REFERENCES covENCover (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle766678 (vehIDbod), ADD CONSTRAINT FKvehVehicle766678 FOREIGN KEY (vehIDbod) REFERENCES bodENBodyType (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle769412 (vehIDmod), ADD CONSTRAINT FKvehVehicle769412 FOREIGN KEY (vehIDmod) REFERENCES modENModel (modID);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle764335 (vehIDmak), ADD CONSTRAINT FKvehVehicle764335 FOREIGN KEY (vehIDmak) REFERENCES makENMake (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle139866 (vehBodyIDbod), ADD CONSTRAINT FKvehVehicle139866 FOREIGN KEY (vehBodyIDbod) REFERENCES bodENBodyType (name);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle432499 (vehModelIDmod), ADD CONSTRAINT FKvehVehicle432499 FOREIGN KEY (vehModelIDmod) REFERENCES modENModel (modID);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle442164 (vehMakeIDmak), ADD CONSTRAINT FKvehVehicle442164 FOREIGN KEY (vehMakeIDmak) REFERENCES makENMake (name);
 ALTER TABLE cascadeMakeModel ADD INDEX FKcascadeMak336466 (makID), ADD CONSTRAINT FKcascadeMak336466 FOREIGN KEY (makID) REFERENCES makENMake (makID);
 ALTER TABLE cascadeMakeModel ADD INDEX FKcascadeMak936409 (modlID), ADD CONSTRAINT FKcascadeMak936409 FOREIGN KEY (modlID) REFERENCES modENModel (modID);
 
