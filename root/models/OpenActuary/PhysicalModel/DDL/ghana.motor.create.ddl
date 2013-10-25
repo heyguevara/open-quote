@@ -104,7 +104,8 @@ CREATE TABLE clmClaim (
   clmIncidentMileageAtTime  int(10) comment 'main vehicle''s mileage at the time of the incident', 
   clmIncidentOccured        date comment 'when incident occurred', 
   clmPolicyIDpol            varchar(37), 
-  clmIncidentAddressIDadd   varchar(37)) comment='Claim Details' CHARACTER SET UTF8;
+  clmIncidentAddressIDadd   varchar(37), 
+  clmVehicleIDveh           varchar(37)) comment='Claim Details' CHARACTER SET UTF8;
 CREATE TABLE weiENWeightType (
   name      varchar(3) NOT NULL UNIQUE, 
   validFrom date, 
@@ -279,4 +280,5 @@ ALTER TABLE vehVehicle ADD INDEX FKvehVehicle432499 (vehModelIDmod), ADD CONSTRA
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle442164 (vehMakeIDmak), ADD CONSTRAINT FKvehVehicle442164 FOREIGN KEY (vehMakeIDmak) REFERENCES makENMake (name);
 ALTER TABLE cascadeMakeModel ADD INDEX FKcascadeMak336466 (makID), ADD CONSTRAINT FKcascadeMak336466 FOREIGN KEY (makID) REFERENCES makENMake (makID);
 ALTER TABLE cascadeMakeModel ADD INDEX FKcascadeMak936409 (modlID), ADD CONSTRAINT FKcascadeMak936409 FOREIGN KEY (modlID) REFERENCES modENModel (modID);
+ALTER TABLE clmClaim ADD INDEX FKclmClaim513054 (clmVehicleIDveh), ADD CONSTRAINT FKclmClaim513054 FOREIGN KEY (clmVehicleIDveh) REFERENCES vehVehicle (vehID);
 
