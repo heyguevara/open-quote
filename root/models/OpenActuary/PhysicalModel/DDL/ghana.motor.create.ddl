@@ -212,7 +212,7 @@ CREATE TABLE vehVehicle (
   vehUnladedWeightIDwei           varchar(3), 
   vehMaxLoadWeightAmount          decimal(10, 2) comment 'vehicle''s maximum loading amount', 
   vehMaxLoadWeightIDwei           varchar(3), 
-  vehVehicleIDpol                 varchar(37), 
+  vehPolicyIDpol                  varchar(37), 
   vehDayTimeLocationIDadd         varchar(37), 
   vehNightTimeLocationIDadd       varchar(37)) comment='Vehicle Details' CHARACTER SET UTF8;
 CREATE TABLE covENCover (
@@ -272,7 +272,7 @@ ALTER TABLE vehVehicle ADD INDEX FKvehVehicle86368 (vehValueWhenNewIDccy), ADD C
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy482946 (poInsuredTypeIDins), ADD CONSTRAINT FKpolPolicy482946 FOREIGN KEY (poInsuredTypeIDins) REFERENCES insENInsuredType (name);
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy389109 (polReasonIDrea), ADD CONSTRAINT FKpolPolicy389109 FOREIGN KEY (polReasonIDrea) REFERENCES reaENReason (name);
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy254915 (polGrossPremiumIDccy), ADD CONSTRAINT FKpolPolicy254915 FOREIGN KEY (polGrossPremiumIDccy) REFERENCES ccyENCurrency (name);
-ALTER TABLE vehVehicle ADD INDEX FKvehVehicle215339 (vehVehicleIDpol), ADD CONSTRAINT FKvehVehicle215339 FOREIGN KEY (vehVehicleIDpol) REFERENCES polPolicy (polID);
+ALTER TABLE vehVehicle ADD INDEX FKvehVehicle338565 (vehPolicyIDpol), ADD CONSTRAINT FKvehVehicle338565 FOREIGN KEY (vehPolicyIDpol) REFERENCES polPolicy (polID);
 ALTER TABLE polPolicy ADD INDEX FKpolPolicy72147 (polCoverTypeIDcov), ADD CONSTRAINT FKpolPolicy72147 FOREIGN KEY (polCoverTypeIDcov) REFERENCES covENCover (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle139866 (vehBodyIDbod), ADD CONSTRAINT FKvehVehicle139866 FOREIGN KEY (vehBodyIDbod) REFERENCES bodENBodyType (name);
 ALTER TABLE vehVehicle ADD INDEX FKvehVehicle432499 (vehModelIDmod), ADD CONSTRAINT FKvehVehicle432499 FOREIGN KEY (vehModelIDmod) REFERENCES modENModel (modID);
