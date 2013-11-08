@@ -28,12 +28,10 @@ if [ ! -f "$TMP/setup" ]; then
     [ "x$DB_PASSWORD" != "x" ] && PW_OPTION="--password=$DB_PASSWORD"
     
     echo
-    echo "Running database script..."
+    echo "Running database scripts..."
 
-   	mysql -u $DB_USERNAME $PW_OPTION < $LIB/OpenUnderwriter-MySql-Setup.sql
+   	mysql -u $DB_USERNAME $PW_OPTION < $LIB/Master-Setup.sql
     [ "$?" = "1" ] && echo "Failed to execute the MySQL database setup script."  && exit 1
-    mysql -u $DB_USERNAME $PW_OPTION < $LIB/OpenUnderwriter-Table-Setup.sql
-    [ "$?" = "1" ] && echo "Failed to execute the MySQL OpenUnderwriter table setup script." && exit 1 
 
 	mkdir $TMP 2>/dev/null
 	touch $TMP/setup

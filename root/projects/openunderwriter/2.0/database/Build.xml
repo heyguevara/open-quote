@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project default="build" name="openquote:database">
+  <import file="../BuildSettings.xml" />
+
+  <target name="clean" description="delete everything that the build can generate">
+  </target>
+
+  <target name="_build">
+  </target>
+
+  <target name="build" description="compile (generate, copy, etc) all build outputs">
+    <antcall target="_build" />
+  </target>
+
+  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+
+    <_initialise-ant-contribs-macro />
+
+    <set-mysql-running-property-macro />
+
+    <!-- copy package files with variables expanded -->
+    <mkdir dir="${package.dir}/lib" />
+    <copy todir="${package.dir}/lib">
+      <filterset refid="copy.filterset.sql" />
+      <fileset dir="." includes="**/*.sql" />
+    </copy>
+
+    <if>
+      <isset property="mysql-running" />
+      <then>
+        <exec dir="${package.dir}/lib" executable="bash" os="Linux,Mac OS X,Solaris,Sun OS" >
+          <arg line="-l -c 'cat Master-Setup.sql|mysql -u root --password=${mysql.root.password}'"/>
+        </exec>
+        <exec dir="${package.dir}/lib" executable="cmd" os="Windows 2000,Windows XP,Windows 7">
+          <arg line='/c "type Master-Setup.sql|mysql -u root --password=${mysql.root.password}"'/>
+        </exec>
+      </then>
+      <else>
+        <echo level="info" message="Database has not been initialised - mysql doesn't appear to be running" />
+      </else>
+    </if>
+  </target>
+
+  <target name="teardown" description="undo whatever setup did">
+    <_initialise-ant-contribs-macro />
+    <set-mysql-running-property-macro />
+
+    <if>
+      <isset property="mysql-running" />
+      <then>
+        <exec dir="${package.dir}/lib" executable="bash" os="Linux,Mac OS X,Solaris,Sun OS" >
+          <arg line="-l -c 'cat Master-Teardown.sql|mysql -u root --password=${mysql.root.password}'"/>
+        </exec>
+        <exec dir="${package.dir}/lib" executable="cmd" os="Windows 2000,Windows XP,Windows 7">
+          <arg line='/c "type Master-Teardown.sql|mysql -u root --password=${mysql.root.password}"'/>
+        </exec>
+      </then>
+      <else>
+        <echo level="info" message="Database has not been cleared - mysql doesn't appear to be running" />
+      </else>
+    </if>
+
+    <!-- delete the deployed directory -->
+    <delete dir="${liferay.dir}" />
+  </target>
+</project>

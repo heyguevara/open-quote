@@ -39,54 +39,9 @@
     <update-dependencies-macro todir="${tmp.dir}" pattern="[artifact](-[classifier]).[ext]" />
     <move file="${tmp.dir}/jboss-modules.jar" todir="${jboss.dir}" overwrite="yes"/>
     <move file="${tmp.dir}/mysql-connector-java.jar" tofile="${jboss.dir}/modules/com/liferay/portal/main/mysql.jar" overwrite="yes"/>
-
-    <set-mysql-running-property-macro />
-
-    <if>
-      <isset property="mysql-running" />
-      <then>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
-          <classpath>
-            <fileset dir="${buildlib.dir}" includes="*.jar" />
-          </classpath>
-          <transaction src="${package.dir}/lib/OpenUnderwriter-MySql-Setup.sql" />
-          <transaction src="${package.dir}/lib/OpenUnderwriter-Table-Setup.sql" />
-        </sql>
-      </then>
-      <else>
-        <echo message="Database has not been initialised - mysql doesn't appear to be running" />
-      </else>
-    </if>
   </target>
 
   <target name="teardown" description="undo whatever setup did">
-    <_initialise-ant-contribs-macro />
-    <set-mysql-running-property-macro />
-
-    <if>
-      <isset property="mysql-running" />
-      <then>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" userid="root" password="${mysql.root.password}">
-          <classpath>
-            <fileset dir="${buildlib.dir}" includes="*.jar" />
-          </classpath>
-          
-          -- Make sure the database and users are there before we try to delete them!
-          create database if not exists ${dbname} character set utf8;
-          grant all on ${dbname}.* to '${dbusername}'@'localhost' identified by '${dbpassword}' with grant option;
-          grant all on ${dbname}.* to '${dbusername}'@'localhost.localdomain' identified by '${dbpassword}' with grant option;
-          
-          -- Now do the actual tidy up 
-          drop database if exists ${dbname};
-          revoke all privileges, grant option from '${dbusername}'@'localhost';
-        </sql>
-      </then>
-      <else>
-        <echo message="Database has not been cleared - mysql doesn't appear to be running" />
-      </else>
-    </if>
-
-    <!-- delete the deployed directory -->
-    <delete dir="${liferay.dir}" />
+    <uninstall-liferay-macro version="${liferay.version}" />
   </target>
 </project>

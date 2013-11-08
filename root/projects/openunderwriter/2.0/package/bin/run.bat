@@ -32,10 +32,8 @@ if "x%DB_PASSWORD%" == "x" (set PW_OPTION="") else (set PW_OPTION=--password=%DB
 echo.
 echo Running database scripts...
 
-mysql -u %DB_USERNAME% %PW_OPTION% < "%LIB%\OpenUnderwriter-MySql-Setup.sql"
+mysql -u %DB_USERNAME% %PW_OPTION% < "%LIB%\Master-Setup.sql"
 if "%ERRORLEVEL%" == "1" (echo "Failed to execute the MySQL database setup script." & goto:eof)
-mysql -u %DB_USERNAME% %PW_OPTION% < "%LIB%\OpenUnderwriter-Table-Setup.sql"
-if "%ERRORLEVEL%" == "1" (echo "Failed to execute the MySQL OpenUnderwriter table setup script." & goto:eof)
     
 mkdir %TMP%
 echo > %TMP%\setup

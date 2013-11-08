@@ -34,18 +34,16 @@
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <subant-macro target="setup" includes="build/Build.xml, domain/Build.xml" />
-    <subant-macro target="setup" excludes="build/Build.xml, domain/Build.xml" />
+    <subant-macro target="setup" includes="build/Build.xml, database/Build.xml, domain/Build.xml" />
+    <subant-macro target="setup" excludes="build/Build.xml, database/Build.xml, domain/Build.xml" />
     <antcall target="_build" />
-    <kick-liferay-macro />
   </target>
 
   <target name="teardown" description="undo whatever setup did">
     <stop-liferay-macro />
-    <uninstall-liferay-macro version="${liferay.version}" />
     <subant-macro target="teardown" excludes="build/Build.xml"/>
     <subant-macro target="teardown" includes="build/Build.xml"/>
-    <delete dir="${target.dir}" failonerror="false" />
+    <!--delete dir="${target.dir}" failonerror="false" /-->
     <delete dir="./.apt_generated" />
   </target>
 

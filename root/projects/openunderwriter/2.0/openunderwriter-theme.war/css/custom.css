@@ -32,8 +32,8 @@ hr, .separator {
 #wrapper {
 	background: none;
 	margin: 0 auto;
-	max-width: 90%;
-	min-width: 960px;
+    max-width: 1180px;
+    min-width: 1180px;
 	position: relative;
 }
 
@@ -418,7 +418,22 @@ hr, .separator {
 	box-shadow: inset 0 1px 3px #000;
 }
 
-.portlet-topper {
+.portlet-borderless-container {
+    background-color: #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 1px 1px 4px 0 #103010;
+    -webkit-box-shadow: 1px 1px 4px 0 #103010;
+    margin: 0 3px 13px 0;
+    min-height: 2.5em;
+    padding: 10px;
+    position: relative;
+}
+
+.ie .portlet-borderless-container {
+    border: 1px solid #C8C9CA;
+}
+
+SC.portlet-topper {
 	-moz-box-shadow: 1px 1px 0 #FFF;
 	-webkit-box-shadow: 1px 1px 0 #FFF;
 	box-shadow: 1px 1px 0 #FFF;
@@ -549,21 +564,6 @@ p {
 
 .mce-tinymce {
     min-width: 250px;
-}
-
-/** Start of portlet.css overrides */
-
-.portlet-login {
-    background: none repeat scroll 0 0 #F0F0F0;
-    border: 1px solid #1D8412;
-    margin: 40px auto 10px auto;
-    padding: 10px;
-    width: 400px;
-    border-radius: 3px 3px 3px 3px;
-}
-
-.portlet-login .navigation {
-    border: 1px solid #BFBFBF;
 }
 
 .wiki-body {
