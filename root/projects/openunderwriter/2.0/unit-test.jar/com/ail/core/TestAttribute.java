@@ -23,6 +23,8 @@ import static java.util.Locale.UK;
 import static java.util.Locale.US;
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import org.junit.After;
@@ -404,5 +406,36 @@ public class TestAttribute {
         attr=new Attribute("id", "-", "string,required=no");
         assertFalse(attr.isRequired());
     }
+    
+    @Test
+    public void testSpecificallyDefinedPlaceholder() {
+        Attribute attr=new Attribute("thing", "", "string,placeholder=My Name");
+        assertEquals("My Name", attr.getFormatOption("placeholder"));
+        assertEquals("My Name", attr.getPlaceholder());
+    }
+
+    @Test
+    public void testUndefinedPlaceholder() {
+        Attribute attr=new Attribute("thing", "", "string");
+        assertEquals("", attr.getPlaceholder());
+    }
+
+    @Test
+    public void testDateDefinedPlaceholder() {
+        Attribute attr;
+        String defaultPattern=((SimpleDateFormat)DateFormat.getDateInstance(DateFormat.DEFAULT)).toPattern().toLowerCase();
+
+        // No pattern or placeholder, should return the system date format as a placeholder
+        attr=new Attribute("thing", "", "date");
+        assertEquals(defaultPattern, attr.getPlaceholder());
+
+        // No placeholder, should return the pattern as a placeholder
+        attr=new Attribute("thing", "", "date;pattern=my.pattern");
+        assertEquals("my.pattern", attr.getPlaceholder());
+
+        // Placeholder should trump the other options when it is present.
+        attr=new Attribute("thing", "", "date;pattern=my.pattern;placeholder=my.placeholder");
+        assertEquals("my.placeholder", attr.getPlaceholder());
+}
 }
 

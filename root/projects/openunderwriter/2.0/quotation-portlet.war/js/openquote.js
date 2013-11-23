@@ -118,10 +118,11 @@ function loadChoiceOptions(select, selected, array) {
  * selected.
  */
 function loadSlaveChoiceOptions(select, selected, array, master, slave) {
-    masterSelectName=new String(select.name);
-    masterSelectName=masterSelectName.replace('#'+slave+'#', '#'+master+'#');
-    masterSelect=findElementsByName(masterSelectName)[0];
-    masterSelectValue=masterSelect.options[masterSelect.selectedIndex].text;
+    var masterSelectName = new String(select.name);
+    var masterSelectName = masterSelectName.replace('#'+slave+'#', '#'+master+'#');
+    var masterSelect = findElementsByName(masterSelectName)[0];
+    var masterSelectValue = masterSelect.options[masterSelect.selectedIndex].text;
+    var maxLength = 0;
     select.options.length=0;
     for(var m=1 ; m<array.length ; m++) {
         if (array[m][0]==masterSelectValue) {
@@ -130,7 +131,13 @@ function loadSlaveChoiceOptions(select, selected, array, master, slave) {
                 _addOption(select, array[m][i], array[m][i]==selected);
             }
         }
+        for(var i=1 ; i<array[m].length ; i++) {
+           if(array[m][i].length > maxLength) {
+        	   maxLength=array[m][i].length;
+           }
+        }
     }
+    select.style.width=maxLength+"em";
 }
 
 /* This is called from the onChange event from a 'master' dropdown in a 

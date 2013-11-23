@@ -19,7 +19,11 @@
  /* 
   * General styles 
   */
-  
+.pf-number,
+.pf-currency {
+	text-align: right;
+}  
+
 .pf-page-title {
 	font-size: 1.3em;
 }
@@ -100,8 +104,7 @@
     clear: both;
 }
 
-.pf-item-label, 
-.pf-item-value {
+.pf-item-label, .pf-item-value {
     display: table-cell;
     min-width: 150px;
     padding: 0px 5px 0px 5px;
@@ -372,14 +375,25 @@
 /*
  * Styles specific to Question related widgets
  */
-.pf-question {
+.pf-question,
+.pf-question-with-details,
+.pf-question-with-subsection,
+.pf-question-subsection {
 	display: table-row;
 }
 
 .pf-question .pf-input-label,
-.pf-question .pf-input-field {
+.pf-question .pf-input-field,
+.pf-question-with-details .pf-input-label,
+.pf-question-with-details .pf-input-field,
+.pf-question-with-subsection .pf-input-label,
+.pf-question-with-subsection .pf-input-field {
 	display: table-cell;
 	padding: 10px;
+}
+
+.pf-input-label {
+	vertical-align: middle;
 }
 
 /*
@@ -406,4 +420,122 @@
 
 .pf-attribute-field-input input[type="radio"] {
     margin: 0 4px 0 0;
+}
+
+/*
+ * Styles specific to the QuotationSummary widget
+ */
+.pf-quotation-summary-navigation-section {
+    max-width: 50%;
+}
+
+.pf-quotation-summary-cover-section {
+    float: right;
+}
+
+.pf-quotation-summary-cover-section .pf-answer-section {
+	display: block;
+}
+
+/*
+ * Styles specific to the ReferralSummary widget
+ */
+.pf-referral-summary-navigation-section {
+    max-width: 50%;
+}
+
+.pf-referral-summary-cover-section {
+    float: right;
+}
+
+.pf-referral-summary-cover-section .pf-answer-section {
+    display: block;
+}
+
+/*
+ * Styles specific to the RowScroller widget
+ */
+.pf-row-scroller-table {
+	display: table;
+	margin: 10px 0px;
+} 
+
+.pf-row-scroller-table-header-row,
+.pf-row-scroller-table-data-row {
+	display: table-row;
+}
+
+.pf-row-scroller-table-header-cell,
+.pf-row-scroller-table-data-cell {
+	display: table-cell;
+    text-align: center;
+    padding: 5px;
+    vertical-align: top;
+    border: 2px solid white;
+}
+
+.pf-row-scroller-table-header-cell {
+    background-color: #DFFFDF;
+}
+
+.pf-row-scroller-table-data-cell {
+    background-color: #EFFFEF;
+}
+
+.pf-row-scroller-header-sub-title {
+	font-size: 0.85em;
+}
+
+.pf-row-scroller .pf-attribute-field-prefix {
+    min-width: 0;
+}
+
+.pf-row-scroller .pf-input-error, 
+.pf-row-scroller .pf-error-field {
+	display: block;
+}
+
+/*
+ * Styles specific to the SavedQuotations widget
+ */
+.pf-saved-quotations-table {
+	display: table;
+}
+
+.pf-saved-quotations-header-row,
+.pf-saved-quotations-data-row {
+	display: table-row;
+}
+
+.pf-saved-quotations-header-cell,
+.pf-saved-quotations-data-cell {
+	display: table-cell;
+    text-align: center;
+    padding: 5px;
+    vertical-align: top;
+    border: 2px solid white;
+}
+
+.pf-saved-quotations-header-cell {
+    background-color: #DFFFDF;
+}
+
+.pf-saved-quotations-data-cell {
+    background-color: #EFFFEF;
+}
+
+/*
+ * Styles specific to the SectionScroller widget
+ */
+.pf-section-scroller > .pf-section-body {
+    border: medium none;
+} 
+
+.pf-section-scroller > .pf-section-body > .pf-section {
+    display: block;
+}
+
+.pf-section-scroller-heading,
+.pf-section-scroller .pf-delete {
+    display: inline-block;
 }

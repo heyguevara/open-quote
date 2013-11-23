@@ -75,7 +75,7 @@
         <elseif>
           <os family="unix" />
           <then>
-            <property name="product.mountpoint" value="${project.dir}/../product" />
+            <property name="product.mountpoint" value="/Volumes/Product" />
           </then>
         </elseif>
       </if>

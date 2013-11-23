@@ -61,7 +61,6 @@ public class QuestionWithSubSection extends Question {
     
     public QuestionWithSubSection() {
         super();
-        subSection.add(new PageSection());
     	detailsEnabledFor=new ArrayList<String>();
     	detailsEnabledFor.add("Yes");
     }

@@ -19,12 +19,14 @@ package com.ail.core;
 
 import static com.ail.core.Functions.hideNull;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.Format;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.HashMap;
@@ -61,7 +63,7 @@ import com.ail.annotation.TypeDefinition;
  * or document renderers may choose to display them differently, but the implementation within this class is
  * identical.
  * <p>
- * The Attribute class offers four ways to access an attribute's value: {@link #getValue() getValue()}, 
+ * The Attribute class offers three ways to access an attribute's value: {@link #getValue() getValue()}, 
  * {@link #getObject() getObject()} and {@link #getFormattedValue() getFormattedValue()}. The following
  * table outlines the differences between these methods based on the attributes listed above:
  * <small><table>
@@ -98,13 +100,14 @@ public class Attribute extends Type implements Identified {
     private static final Pattern formatOptionsPattern=Pattern.compile("(size=([0-9]*))|"+
                                                                       "(min=[0-9.]*)|"+
                                                                       "(max=[0-9.]*)|"+
-                                                                      "(options=.*)|" +
-                                                                      "(pattern=.*)|"+
+                                                                      "(options=[^;]*)|" +
+                                                                      "(pattern=[^;]*)|"+
                                                                       "(type=[A-Za-z0-9_.]*)|"+
                                                                       "(master=[A-Za-z0-9_.]*)|"+
                                                                       "(required=(no|yes))|"+
                                                                       "(slave=[A-Za-z0-9_.]*)|" +
                                                                       "(ref=[/A-Za-z0-9_():]*)|"+
+                                                                      "(placeholder=[/A-Za-z0-9_().: ]*)|"+
                                                                       "(percent)");
     
     private static Map<Thread,Type> referenceContext=Collections.synchronizedMap(new HashMap<Thread,Type>());
@@ -916,5 +919,29 @@ public class Attribute extends Type implements Identified {
     
     public static Type getReferenceContext() {
         return referenceContext.get(Thread.currentThread());
+    }
+    
+    /**
+     * Return the placeholder text for this attribute. If the attribute's format defines a placeholder 
+     * as part of the format, then it will be returned. If not and a placeholder can be derived for the
+     * attribute (for example, if it is a data attribute) then the derived placeholder will be returned.
+     * Otherwise, an empty string is returned.
+     * @return placeholder text, or an empty string if none is available.
+     */
+    public String getPlaceholder() {
+        String placeholder=getFormatOption("placeholder");
+        
+        if (isDateType()) {
+            if (placeholder==null) {
+                placeholder=getFormatOption("pattern");
+                if (placeholder==null) {
+                    SimpleDateFormat fmt=(SimpleDateFormat)DateFormat.getDateInstance(DateFormat.DEFAULT);
+                    placeholder=fmt.toPattern();
+                }
+            }
+            placeholder=placeholder.toLowerCase();
+        }
+        
+        return placeholder!=null ? placeholder : "";
     }
 }

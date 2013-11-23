@@ -22,6 +22,6 @@ public class FunctionsTest {
     public void test() throws MalformedURLException {
         URL result=Functions.convertProductUrlToExternalForm(new URL("product://localhost:8080/MyProduct/MyResource.html"));
         assertNotNull(result);
-        assertEquals("http://localhost:8080/api/secure/webdav/guest/document_library/Product/MyProduct/MyResource.html", result.toString());
+        assertEquals("http://localhost:8080/api/secure/webdav/null/document_library/Product/MyProduct/MyResource.html", result.toString());
     }
 }

@@ -30,7 +30,6 @@
   <target name="build" description="compile (generate, copy, etc) all build outputs">
     <subant-macro target="_build" excludes="build/*, package/*" />
     <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
-    <kick-liferay-macro />
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">

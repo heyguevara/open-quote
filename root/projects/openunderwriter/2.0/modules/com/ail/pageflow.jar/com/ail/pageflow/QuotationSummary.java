@@ -270,6 +270,7 @@ public class QuotationSummary extends PageContainer {
         if (loginSection==null) {
             Policy q=(Policy)model;
             loginSection=new LoginSection();
+            loginSection.setId(this.id+".loginSection");
             loginSection.setInvitationMessageText(i18n("i18n_quotation_summary_existing_account_message"));
             loginSection.setInvitationLinkText(i18n("i18n_quotation_summary_create_message"));
             // The page we're forwarding to is just the last part of the product ID, 

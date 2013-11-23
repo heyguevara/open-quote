@@ -134,4 +134,15 @@ public class ReferralSummary extends PageContainer {
         
         return referralNotification;
     }
+
+    @Override
+    public void applyElementId(String basedId) {
+        if (getNavigationSection()!=null) {
+            getNavigationSection().applyElementId(basedId+ID_SEPARATOR+"nav");
+        }
+        if (getReferralNotificationSection()!=null) {
+            getReferralNotificationSection().applyElementId(basedId+ID_SEPARATOR+"not");
+        }
+        super.applyElementId(basedId);
+    }
 }

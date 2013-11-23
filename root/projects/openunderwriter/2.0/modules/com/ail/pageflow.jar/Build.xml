@@ -22,7 +22,6 @@
 
   <target name="build" description="compile (generate, copy, etc) all build outputs">
     <antcall target="_build" />
-    <kick-liferay-macro />
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
