@@ -22,7 +22,7 @@
     <mkdir dir="${package.dir}/lib" />
     <copy todir="${package.dir}/lib">
       <filterset refid="copy.filterset.sql" />
-      <fileset dir="." includes="**/*.sql" />
+      <fileset dir="." includes="**/*.sql, **/*.sh" />
     </copy>
 
     <if>
