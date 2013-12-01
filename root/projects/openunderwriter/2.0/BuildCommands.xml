@@ -19,10 +19,6 @@
     <start-liferay-macro />
   </target>
 
-  <target name="liferay: force deployment scan" description="force liferay to scan 'deploy/' for changes">
-    <kick-liferay-macro />
-  </target>
-
   <target name="liferay: export repository" description="Export the content repository into the source tree">
      <content-download-export-macro />
    </target>
@@ -34,13 +30,4 @@
   <target name="liferay: webdav unmount" description="Unmount the product folder">
      <unmount-product-space-macro />
    </target>
-
-  <target name="openquote: clear server cache" description="Clear the config cache in liferay">
-    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
-  </target>
-
-  <target name="openquote: reset configurations" description="reset all the ail configurations">
-    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="resetAllConfigurations" />
-    <configuration-macro username="${dbusername}" password="${dbpassword}" operation="clearConfigurationCache" />
-  </target>
 </project>

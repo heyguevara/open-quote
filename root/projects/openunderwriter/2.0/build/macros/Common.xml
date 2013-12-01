@@ -231,30 +231,6 @@
     </sequential>
   </macrodef>
 
-  <!-- This macro provides access to the operations supported by the configuration server. -->
-  <macrodef name="configuration-macro">
-    <attribute name="username" />
-    <attribute name="password" />
-    <attribute name="operation" />
-    <attribute name="factory" default="${java.naming.factory.initial}" />
-    <attribute name="provider" default="${java.naming.provider.url}" />
-    <sequential>
-
-      <java fork="yes" classname="com.ail.core.configure.Main">
-        <classpath>
-          <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
-          <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
-          <dirset dir="${deploy.dir}" includes="configure-server-ejb.jar" />
-        </classpath>
-        <arg value="username=@{username}" />
-        <arg value="password=@{password}" />
-        <arg value="operation=@{operation}" />
-        <arg value="provider=@{provider}" />
-        <arg value="factory=@{factory}" />
-      </java>
-    </sequential>
-  </macrodef>
-
   <!-- The annotation processor (in development/annotations.jar) generates fragments of config based on -->
   <!-- the annotations encountered during compilation. This macro aggregates these fragments and outputs -->
   <!-- a single file. -->
