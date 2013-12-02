@@ -5,4 +5,5 @@ grant all on ##dbname##.* to '##dbusername##'@'localhost.localdomain' identified
   
 -- Now do the actual tidy up 
 drop database if exists ##dbname##;
-revoke all privileges, grant option from '##dbusername##'@'localhost';
+revoke all on ##dbname##.* from '##dbusername##'@'localhost';
+revoke all on ##dbname##.* from '##dbusername##'@'localhost.localdomain';
