@@ -65,6 +65,5 @@ public class SelectPageFlowService extends Service<ExecutePageActionService.Exec
 
         // Set the thread's locale. This may change from request to request.
         ThreadLocale.setThreadLocale(args.getPortletRequestArg().getLocale());
-
     }
 }

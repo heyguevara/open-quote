@@ -312,7 +312,7 @@ public class Functions {
      * @throws MalformedURLException 
      */
     public static URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
-    	return new URL("http", productUrl.getHost(), productUrl.getPort(), "/api/secure/webdav/null/document_library/Product"+productUrl.getPath()); 
+    	return new URL("http", productUrl.getHost(), productUrl.getPort(), "/webdav/global/document_library/Product"+productUrl.getPath()); 
     }
     
     /**

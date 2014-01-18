@@ -19,7 +19,7 @@
     <install-liferay-macro version="${liferay.version}" />
 
     <!-- copy text based domain files with variables expanded -->
-    <copy todir="${liferay.dir}">
+    <copy todir="${liferay.dir}" overwrite="true">
       <filterset refid="copy.filterset" />
       <fileset dir="liferay" includes="${text.filetypes}" />
     </copy>

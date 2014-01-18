@@ -25,14 +25,14 @@
     <parameter name="PolicyNumberBlockSize">100</parameter>
     <parameter name="QuoteNumberBlockSize">100</parameter>
     
-    <group name="ProductURLHandler">
-        <parameter name="Protocol">http</parameter>
+    <group name="ProductReader">
+        <parameter name="CompanyID">10157</parameter>
+        <parameter name="RepositoryID">10197</parameter>
+        <parameter name="Root">Product</parameter>
         <parameter name="Host">localhost</parameter>
         <parameter name="Port">8080</parameter>
-        <parameter name="Path">/api/secure/webdav/null/document_library/Product</parameter>
-        <parameter name="Realm">PortalRealm</parameter>
-        <parameter name="Username">producthandler@openunderwriter.org</parameter>
-        <parameter name="Password">handler</parameter>
+        <parameter name="Username">producthandler</parameter>
+        <parameter name="TestPath">http://localhost:8080/documents/10197/14308/ProductCatalog.xml/ef76f483-7214-465b-98a1-a82a94dce56d</parameter>
     </group>
     
     <group name="JEEAccessorContext">

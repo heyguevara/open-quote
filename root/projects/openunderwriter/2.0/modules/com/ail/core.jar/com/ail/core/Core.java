@@ -260,7 +260,9 @@ public class Core implements ConfigurationOwner, Configure, Factory, Logging, Pe
             factoryConfigXML = new XMLString(in);
         }
         finally {
-            in.close();
+            if (in!=null) {
+                in.close();
+            }
         }
 
         // marshal the config XML into an instance of Configuration.

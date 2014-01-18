@@ -132,7 +132,7 @@ public class Section extends Type {
      * Remove the specified coverage from the list associated with this section.
      * @param coverage Coverage to be removed
      */
-    public void removeCoverage(List<Coverage> coverage) {
+    public void removeCoverage(Coverage coverage) {
         this.coverage.remove(coverage);
     }
 

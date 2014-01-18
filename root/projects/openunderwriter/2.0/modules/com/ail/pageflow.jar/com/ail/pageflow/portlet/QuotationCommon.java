@@ -157,6 +157,8 @@ public class QuotationCommon {
 
         List<String> productNames=extract(listProductsCommand.getProductsRet(), on(ProductDetails.class).getName());
         
+        productNames.remove("AIL.Base");
+        
         listToOptionCommand.setOptionsArg(productNames);
         listToOptionCommand.setSelectedArg(product);
         listToOptionCommand.setUnknownOptionArg("Product?");

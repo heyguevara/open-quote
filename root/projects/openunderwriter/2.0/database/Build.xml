@@ -36,7 +36,10 @@
         </exec>
       </then>
       <else>
-        <echo level="info" message="Database has not been initialised - mysql doesn't appear to be running" />
+        <echo level="info">
+          Database could not be initialised. Either ${package.dir}/lib doesn't exit (try running setup), or
+          mysql is not running.
+        </echo>
       </else>
     </if>
   </target>
@@ -59,7 +62,10 @@
         </exec>
       </then>
       <else>
-        <echo level="info" message="Database has not been cleared - mysql doesn't appear to be running" />
+        <echo level="info">
+          Database could not been cleared down. Either ${package.dir}/lib doesn't exit (try running setup), or
+          mysql is not running.
+        </echo>
       </else>
     </if>
 

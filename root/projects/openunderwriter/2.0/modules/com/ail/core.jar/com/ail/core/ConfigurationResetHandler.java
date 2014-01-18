@@ -17,6 +17,7 @@
 package com.ail.core;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -40,28 +41,95 @@ class ConfigurationResetHandler {
             return;
         }
 
-        String resourcePath = null;
-        String productPath = null;
+        if (!resetFromClassResource() && !resetFromProductResource()) {
+            throw new ConfigurationResetError("Configuration could not be found as a class resource or a product resource for '"+name+"'.");
+        }
+    }
+
+    /**
+     * Attempt to reset the configuration from a product resource. Typically this will mean reading
+     * a "Registry.xml" file from the product definition's CMS folder.
+     * @return true if the resource exists; or, false if it does not exist.
+     * @throws ConfigurationResetError If any errors are encountered during the processing for the resource.
+     */
+    boolean resetFromProductResource() {
+
+        StringBuffer result=new StringBuffer();
 
         try {
-            // load the <name>DefaultConfig resource into an XMLString
+            new RunAsProductReader() {
+                StringBuffer result;
+                
+                RunAsProductReader writeResultTo(StringBuffer result) {
+                    this.result=result;
+                    return this;
+                }
+                
+                @Override
+                protected void doRun() {
+                    String productPath = null;
+    
+                    try {
+                        String host = core.getParameterValue("ProductReader.Host");
+                        String port = core.getParameterValue("ProductReader.Port");
+                        productPath = "product://" + host + ":" + port + "/" + name.replace('.', '/') + ".xml";
+    
+                        resetFromURL(new URL(productPath));
+                        
+                        result.append('S'); // Success
+                    } catch (FileNotFoundException e) {
+                        result.append('F'); // Failed - product resource does not exist
+                    } catch (XMLException e) {
+                        throw new ConfigurationResetError("Configuration found in product resource for '" + name + "' contains sax error(s).", e);
+                    } catch (Exception e) {
+                        throw new ConfigurationResetError("Configuration found in product resource for '" + name + "' could not be read.", e);
+                    }
+                }
+            }.writeResultTo(result).run();
+        }
+        catch(Exception e) {
+            throw new ConfigurationResetError("Configuration reset encountered exception.", e);
+        }
+        
+        return 'S' == result.charAt(0);
+    }
+    
+    /**
+     * Attempt to reset the configuration from a class resource. If a class resource is found which follows the 
+     * naming convention &lt;name&gt;DefaultConfig.xml then its contents will be read and used to reset the
+     * configuration. If it does not exist, false is returned.
+     * @return true if the resource is found, false otherwise.
+     * @throws ConfigurationResetError if any problems are encountered while processing the resource.
+     */
+    boolean resetFromClassResource() {
+        String resourcePath = null;
+
+        try {
+            // Actual resource's name will be <name>DefaultConfig.xml
             resourcePath = name + "DefaultConfig.xml";
+
             URL inputUrl = owner.getClass().getResource(resourcePath);
 
-            // if it didn't load as a class resource, try it as a product URL
+            // Null url means the resource does not exist.
             if (inputUrl == null) {
-                String host = core.getParameterValue("ProductURLHandler.Host");
-                String port = core.getParameterValue("ProductURLHandler.Port");
-                productPath = "product://" + host + ":" + port + "/" + name.replace('.', '/') + ".xml";
-                inputUrl = new URL(productPath);
+                return false;
             }
 
-            InputStream inStream = inputUrl.openStream();
+            resetFromURL(inputUrl);
 
-            if (inStream == null) {
-                throw new ConfigurationResetError("Couldn't find class resource (name='" + name + "DefaultConfig.xml')");
-            }
+            return true;
 
+        } catch (XMLException e) {
+            throw new ConfigurationResetError("Configuration found in class resource for '" + name + "' contains sax error(s).", e);
+        } catch (Exception e) {
+            throw new ConfigurationResetError("Configuration found in class resource for '" + name + "' could not be read.", e);
+        }
+    }
+
+    void resetFromURL(URL inputURL) throws XMLException, IOException {
+        InputStream inStream = inputURL.openStream();
+
+        try {
             XMLString factoryConfigXML = new XMLString(inStream);
 
             // marshal the config XML into an instance of Configuration
@@ -70,16 +138,14 @@ class ConfigurationResetHandler {
             // Add details of where we loaded the config from back into the
             // config so that anyone who uses this configuration in future can
             // see where it came from.
-            factoryConfig.setSource(inputUrl.toExternalForm());
+            factoryConfig.setSource(inputURL.toExternalForm());
 
             // reset the configuration
             owner.setConfiguration(factoryConfig);
-        } catch (FileNotFoundException e) {
-            throw new ConfigurationResetError("Could not load configuration from either class resource: " + resourcePath + ", or url: " + productPath);
-        } catch (XMLException e) {
-            throw new ConfigurationResetError("Default Configuration XML error for '" + name + "' sax error", e);
-        } catch (Exception e) {
-            throw new ConfigurationResetError("Failed to reset " + name + " configuration.", e);
+        } finally {
+            if (inStream != null) {
+                inStream.close();
+            }
         }
     }
 }

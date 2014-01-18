@@ -77,7 +77,7 @@
       <mkdir dir="${generated.source.dir}" />
 
       <!-- compile the java source -->
-      <javac destdir="${output.dir}" verbose="no" debug="yes" target="1.6" includeantruntime="false">
+      <javac destdir="${output.dir}" verbose="no" debug="yes" includeantruntime="false">
         <compilerarg line="-s ${generated.source.dir}" />
         <src path="." />
         <classpath>
@@ -115,7 +115,7 @@
     </sequential>
   </macrodef>
 
-  <!-- Macro to build an exploded ejb jar file.                                 -->
+  <!-- Macro to build an exploded ejb jar file. -->
   <macrodef name="compile-ejb-jar-macro">
     <attribute name="merge-configs" default="true" />
     <element name="javac-classpath" optional="no" />
@@ -127,7 +127,7 @@
       <mkdir dir="${output.dir}" />
 
       <!-- compile the java source -->
-      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes" target="1.6" includeantruntime="false">
+      <javac destdir="${output.dir}" srcdir="." verbose="no" debug="yes" includeantruntime="false">
         <classpath>
           <fileset dir="${buildlib.dir}" includes="*.jar" />
           <javac-classpath />
@@ -173,7 +173,7 @@
         <available file="${basedir}/WEB-INF/src" type="dir" />
         <then>
 
-          <javac destdir="${output.dir}/WEB-INF/classes" verbose="no" debug="yes" target="1.6" includeantruntime="false">
+          <javac destdir="${output.dir}/WEB-INF/classes" verbose="no" debug="yes" includeantruntime="false">
             <compilerarg line="-s ${generated.source.dir}" />
             <src path="./WEB-INF/src" />
             <classpath>

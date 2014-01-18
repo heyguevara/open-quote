@@ -862,10 +862,12 @@ public abstract class PageElement extends Type implements Identified, Comparable
             PageFlowContext.getCoreProxy().logError("Failed to read input stream.", e);
         }
         finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                PageFlowContext.getCoreProxy().logError("Failed to read input stream.", e);
+            if (reader!=null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    PageFlowContext.getCoreProxy().logError("Failed to read input stream.", e);
+                }
             }
         }
         

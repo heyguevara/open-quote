@@ -446,7 +446,7 @@ public class JDBCConfigurationLoader extends AbstractConfigurationLoader {
 
     /**
      * When the configuration handler is asked to "reset", it passes that request onto
-     * the loader currently in user. The loader should reset any internal state in this
+     * the loader currently in use. The loader should reset any internal state in this
      * method.
      */
     public void reset() {

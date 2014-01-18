@@ -71,6 +71,10 @@ public abstract class BaseError extends Error {
 		return this.description;
     }
     
+    public String getMessage() {
+        return this.description;
+    }
+    
     /**
      * Return a string representing this error.
      * @return String representation of the error.

@@ -205,19 +205,45 @@ public class Functions {
      * @return Content
      * @throws IOException
      */
-    public static String loadUrlContentAsString(URL url) throws IOException {
-        char[] buf=new char[2048];
-        StringBuffer ret=new StringBuffer();
+    public static String loadUrlContentAsString(final URL url) throws IOException {
+        StringBuffer content=new StringBuffer();
 
-        BufferedReader reader=new BufferedReader(new InputStreamReader(url.openStream()));
-
-        for(int chars=reader.read(buf) ; chars!=-1 ; chars=reader.read(buf)) {
-            ret.append(buf, 0, chars);
+        try {
+            new RunAsProductReader() {
+                StringBuffer content;
+                
+                public RunAsProductReader addContent(StringBuffer content) {
+                    this.content=content;
+                    return this;
+                }
+                
+                protected void doRun() throws Exception {
+                    BufferedReader reader = null;
+                    try {
+                        char[] buf = new char[2048];
+    
+                        reader = new BufferedReader(new InputStreamReader(url.openStream()));
+    
+                        for (int chars = reader.read(buf); chars != -1; chars = reader.read(buf)) {
+                            content.append(buf, 0, chars);
+                        }
+                    }
+                    finally {
+                        if (reader!=null) {
+                            reader.close();
+                        }
+                    }
+                }
+            }.addContent(content).run();
+            
+            return content.toString();
         }
-        
-        reader.close();
-
-        return ret.toString();
+        catch (IOException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new IOException(e);
+        }
     }
 
     /**

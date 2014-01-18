@@ -9,8 +9,9 @@
 
   <target name="_install.base" unless="base">
     <!-- Get the Liferay zip into the cache -->
-    <fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" />
-    <property name="liferay.zip" refid="liferay.zip.pathid" />
+    <!--fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" /-->
+    <!--property name="liferay.zip" refid="liferay.zip.pathid" /-->
+    <property name="liferay.zip" value="/Users/richarda/Downloads/liferay-portal-6.2.0-ce-ga1.zip" />
 
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
@@ -117,7 +118,7 @@
     </sequential>
   </macrodef>
 
-  <target name="_mount-product-space-Mac OS X" >
+  <target name="_mount-product-space-Mac OS X">
     <_set-product.mountpoint-property-macro />
     <mkdir dir="${product.mountpoint}" />
     <exec os="Mac OS X" executable="mount_webdav" failonerror="yes">
@@ -127,7 +128,7 @@
     <echo message="Product space mounted on ${product.mountpoint}" />
   </target>
 
-  <target name="_unmount-product-space-Mac OS X" >
+  <target name="_unmount-product-space-Mac OS X">
     <_set-product.mountpoint-property-macro />
     <exec os="Mac OS X" executable="umount" failonerror="yes">
       <arg value="${product.mountpoint}" />
@@ -212,7 +213,7 @@
 
   <!-- Macro to compile a liferay theme war project into an exploded war deployment folder -->
   <macrodef name="compile-theme-war-macro">
-    <attribute name="extend" default=""/>
+    <attribute name="extend" default="" />
     <sequential>
 
       <!-- make sure 'if' is avaialble -->
@@ -223,22 +224,22 @@
 
       <mkdir dir="${output.dir}/WEB-INF/classes" />
 
+      <copy todir="${output.dir}" overwrite="true" preservelastmodified="true">
+        <fileset dir="${deploy.dir}/ROOT.war/html/themes/_unstyled" excludes="templates/**" />
+      </copy>
+
+      <copy todir="${output.dir}/templates" overwrite="true" preservelastmodified="true">
+        <fileset dir="${deploy.dir}/ROOT.war/html/themes/_unstyled/templates" excludes="init.vm" includes="*.vm" />
+      </copy>
+
+      <copy todir="${output.dir}" overwrite="true" preservelastmodified="true">
+        <fileset dir="${deploy.dir}/ROOT.war/html/themes/_styled" />
+      </copy>
+
       <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
-      
-      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_unstyled" destdir="${output.dir}" />
-      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/_styled" destdir="${output.dir}" />
-      <_copy-resources-macro srcdir="${deploy.dir}/ROOT.war/html/themes/classic" destdir="${output.dir}" />
-      
-      <if>
-        <not><length string="@{extend}" length="0"/></not> 
-        <then>
-          <_copy-resources-macro srcdir="${deploy.dir}/@{extend}" destdir="${output.dir}" />
-        </then>
-      </if>
-      
+
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
 
-      <mkdir dir="${output.dir}/.sass-cache" />
       <compile-css-macro target="${output.dir}/" />
 
       <touch file="${output.dir}.dodeploy" />
@@ -253,11 +254,15 @@
         <pathelement location="${deploy.dir}/ROOT.war/WEB-INF/classes" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="*.jar" />
         <fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="*.jar" />
-        <fileset dir="${buildlib.dir}" includes="*.jar" />
+        <fileset dir="${buildlib.dir}" includes="activation-1.1.jar,jargs-1.0.jar,servlet-api-2.4-20040521.jar,jsp-api-2.0-20040521.jarqdox-1.6.jar" />
       </path>
 
-      <java fork="yes" classname="com.liferay.portal.tools.SassToCssBuilder" classpathref="sass2css.classpath" >
-        <arg value="sass.dir=@{target}" />
+      <java fork="yes" newenvironment="true" classname="com.liferay.portal.tools.SassToCssBuilder" classpathref="sass2css.classpath">
+        <jvmarg value="-Xmx128m"/>
+        <jvmarg value="-Dliferay.lib.portal.dir=${deploy.dir}/ROOT.war/WEB-INF/lib" />
+        <arg value="sass.dir=/" />
+        <arg value="sass.docroot.dir=@{target}" />
+        <arg value="sass.portal.common.dir=${deploy.dir}/ROOT.war/html/css/common" />
       </java>
 
     </sequential>

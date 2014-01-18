@@ -30,16 +30,46 @@ textarea {
 	border: 1px solid #1D8412;
 	border-radius: 3px 3px 3px 3px;
 	font-size: 0.9em;
-    min-width: 1106px;
-    min-height: 30px;
 	padding-left: 5px;
+	padding-bottom: 5px;
+	overflow: auto;
+}
+
+.sandpit-debug-panel input[type="text"] {
+    width: 91px;
+}
+
+.sandpit-debug-panel select,
+.sandpit-debug-panel input[type="text"], 
+.sandpit-debug-panel input[type="checkbox"], 
+.sandpit-debug-panel input[type="submit"] {
+    margin-bottom: 0;
+}
+
+#view select {
+    width: 145px;
+}
+
+.sandpit-debug-panel > span {
+	padding: 1px 15px 0 0;
+	float: left;
+	margin-top: 3px;
+}
+
+.sandpit-debug-panel #reset {
+   position: absolute;
+    right: 4px;
+    top: 10px;
+}
+
+.sandpit-debug-panel #save {
+    margin-top: 6px;
 }
 
 .sandpit-pageflow-panel {
     background: none repeat scroll 0 0;
     border: 1px solid #1D8412;
     border-radius: 3px 3px 3px 3px;
-    min-width: 1106px;
     padding-left: 5px;
     min-height: 400px;
     overflow: hidden;
@@ -55,22 +85,6 @@ textarea {
 
 #selectedPage {
 	min-width: 200px;
-}
-
-.sandpit-debug-panel > span {
-	padding: 1px 15px 0 0;
-	float: left;
-	margin-top: 3px;
-}
-
-.sandpit-debug-panel #load {
-    margin-top: 0px;
-}
-
-.sandpit-debug-panel #reset {
-	float: right;
-    margin-top: 4px;
-    padding-right: 4px;
 }
 
 .sandpit-pageflow-panel #policyXml {
@@ -93,6 +107,7 @@ textarea {
     cursor: pointer;
     height: 22px;
     width: 22px;
+    margin-top: 5px;
 }
 
 #resetQuote:disabled {

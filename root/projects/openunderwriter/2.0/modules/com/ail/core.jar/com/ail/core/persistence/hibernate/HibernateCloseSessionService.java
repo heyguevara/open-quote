@@ -51,7 +51,7 @@ public class HibernateCloseSessionService extends Service<CloseSessionArgument> 
             throw new UpdateException(e.toString(), e);
         }
         finally {
-            if (session.isOpen()) {
+            if (session!=null && session.isOpen()) {
                 if (session.getTransaction().isActive()) {
                     session.getTransaction().rollback();
                 }

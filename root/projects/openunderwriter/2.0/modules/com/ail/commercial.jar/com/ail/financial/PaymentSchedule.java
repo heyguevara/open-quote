@@ -87,7 +87,7 @@ public class PaymentSchedule extends Type {
      */
     public void setMoneyProvision(ArrayList<MoneyProvision> moneyProvision) {
         if (moneyProvision==null) {
-            moneyProvision=new ArrayList<MoneyProvision>();
+            this.moneyProvision=new ArrayList<MoneyProvision>();
         }
         else {
             this.moneyProvision = moneyProvision;

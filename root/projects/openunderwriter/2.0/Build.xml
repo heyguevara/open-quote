@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project default="build" name="openquote">
-  <import file="./BuildSettings.xml" />
+	<import file="./BuildSettings.xml" />
 
-  <target name="clean" description="delete everything that the build can generate">
-    <subant-macro target="clean" />
-  </target>
+	<target name="clean" description="delete everything that the build can generate">
+		<subant-macro target="clean" />
+	</target>
 
-  <target name="_build">
-    <ant dir="./modules/com/ail/core.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./modules/com/ail/commercial.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./modules/com/ail/insurance.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./modules/com/ail/pageflow.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./acceptance-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
-    <ant dir="./configure-hook.war" antfile="Build.xml" target="_build" />
-    <ant dir="./quotation-portlet.war" antfile="Build.xml" target="_build" />
-    <ant dir="./sandpit-portlet.war" antfile="Build.xml" target="_build" />
-    <ant dir="./openunderwriter-theme.war" antfile="Build.xml" target="_build" />
-    <ant dir="./ghana-theme.war" antfile="Build.xml" target="_build" />
-    <subant-macro target="_build" includes="*-test.jar/Build.xml" />
-  </target>
+	<target name="_build">
+		<ant dir="./modules/com/ail/core.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./modules/com/ail/commercial.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./modules/com/ail/insurance.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./modules/com/ail/pageflow.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./configure-server-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./persistence-server-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./acceptance-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./quotation-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./product-manager-ejb.jar" antfile="Build.xml" target="_build" />
+		<ant dir="./configure-hook.war" antfile="Build.xml" target="_build" />
+		<ant dir="./quotation-portlet.war" antfile="Build.xml" target="_build" />
+		<ant dir="./sandpit-portlet.war" antfile="Build.xml" target="_build" />
+		<ant dir="./openunderwriter-theme.war" antfile="Build.xml" target="_build" />
+		<!--ant dir="./ghana-theme.war" antfile="Build.xml" target="_build" /-->
+		<subant-macro target="_build" includes="*-test.jar/Build.xml" />
+	</target>
 
-  <target name="build" description="compile (generate, copy, etc) all build outputs">
-    <subant-macro target="_build" excludes="build/*, package/*" />
-    <ant antfile="BuildCommands.xml" target="ail: reset configurations" />
-  </target>
+	<target name="build" description="compile (generate, copy, etc) all build outputs">
+		<subant-macro target="_build" excludes="build/*, package/*" />
+		<ant antfile="BuildCommands.xml" target="ail: reset configurations" />
+	</target>
 
-  <target name="setup" description="run all the one-time-only steps - like copying libs into place">
-    <subant-macro target="setup" includes="build/Build.xml, database/Build.xml, domain/Build.xml" />
-    <subant-macro target="setup" excludes="build/Build.xml, database/Build.xml, domain/Build.xml" />
-    <antcall target="_build" />
-  </target>
+	<target name="setup" description="run all the one-time-only steps - like copying libs into place">
+		<subant-macro target="setup" includes="build/Build.xml, database/Build.xml, domain/Build.xml" />
+		<subant-macro target="setup" excludes="build/Build.xml, database/Build.xml, domain/Build.xml" />
+		<antcall target="_build" />
+	</target>
 
-  <target name="teardown" description="undo whatever setup did">
-    <stop-liferay-macro />
-    <subant-macro target="teardown" excludes="build/Build.xml"/>
-    <subant-macro target="teardown" includes="build/Build.xml"/>
-    <!--delete dir="${target.dir}" failonerror="false" /-->
-    <delete dir="./.apt_generated" />
-  </target>
+	<target name="teardown" description="undo whatever setup did">
+		<stop-liferay-macro />
+		<subant-macro target="teardown" excludes="build/Build.xml" />
+		<subant-macro target="teardown" includes="build/Build.xml" />
+		<delete dir="./.apt_generated" />
+		<delete dir="${target.dir}" />
+	</target>
 
-  <target name="test" description="run unit tests and integration tests">
-    <ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
-    <ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
-  </target>
+	<target name="test" description="run unit tests and integration tests">
+		<ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
+		<ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
+	</target>
 
-  <target name="bamboo-build">
-    <subant-macro target="setup" includes="build/Build.xml" />
-    <antcall target="teardown" />
-    <antcall target="setup" />
-  </target>
+	<target name="bamboo-build">
+		<subant-macro target="setup" includes="build/Build.xml" />
+		<antcall target="teardown" />
+		<antcall target="setup" />
+	</target>
 
-  <target name="release">
-    <subant-macro target="build" includes="package/Build.xml" />
-  </target>
+	<target name="release">
+		<subant-macro target="build" includes="package/Build.xml" />
+	</target>
 
 </project>
