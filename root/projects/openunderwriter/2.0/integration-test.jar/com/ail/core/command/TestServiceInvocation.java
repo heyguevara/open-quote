@@ -419,7 +419,7 @@ public class TestServiceInvocation extends CoreUserBaseCase {
         // have output as a response to being sent a TestJMSCommand
         Thread.sleep(1000*10);
         
-        File logFile=new File("./target/liferay-portal-6.1.1-ce-ga2/jboss-7.1.1/standalone/log/server.log");
+        File logFile=new File("./target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/log/server.log");
         BufferedReader logReader=new BufferedReader(new InputStreamReader(new FileInputStream(logFile)));
         boolean foundLogEntry=false;
         for(String line=logReader.readLine() ; line!=null ; line=logReader.readLine()) {

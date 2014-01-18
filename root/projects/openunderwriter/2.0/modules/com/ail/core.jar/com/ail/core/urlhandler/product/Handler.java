@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import com.ail.core.CoreProxy;
+import com.ail.core.RunAsProductReader;
 import com.ail.core.ThreadLocale;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -51,13 +52,31 @@ public class Handler extends URLStreamHandler {
     }
 
     protected URLConnection openConnection(URL productURL) throws IOException {
+        DocumentLibraryURLConnection connection = new DocumentLibraryURLConnection(productURL);
+        
         try {
-            FileEntry fileEntry = locateFileEntry(productURL.getPath());
+            new RunAsProductReader() {
+                DocumentLibraryURLConnection connection;
+                URL url;
+                
+                RunAsProductReader with(URL url, DocumentLibraryURLConnection connection) {
+                    this.connection = connection;
+                    this.url=url;
+                    return this;
+                }
+                
+                @Override
+                protected void doRun() throws Exception {
+                    FileEntry fileEntry = locateFileEntry(url.getPath());
 
-            return new DocumentLibraryURLConnection(productURL, fileEntry);
+                    connection.setFileEntry(fileEntry);
+                }
+            }.with(productURL, connection).run();
         } catch (Throwable e) {
             throw new FileNotFoundException(productURL.toString());
         }
+        
+        return connection;
     }
 
     FileEntry locateFileEntry(String urlPath) throws PortalException, SystemException {

@@ -28,11 +28,14 @@ public class DocumentLibraryURLConnection extends URLConnection {
 
     private FileEntry fileEntry;
 
-    public DocumentLibraryURLConnection(URL url, FileEntry fileEntry) {
+    public DocumentLibraryURLConnection(URL url) {
         super(url);
-        this.fileEntry = fileEntry;
     }
 
+    public void setFileEntry(FileEntry fileEntry) {
+        this.fileEntry=fileEntry;
+    }
+    
     @Override
     public void connect() throws IOException {
     }

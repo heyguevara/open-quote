@@ -45,32 +45,6 @@ public class TestUrlHandlers {
     }
 
     /**
-     * Test raw access to the product repository. 
-     * @throws Exception
-     */
-    @Test
-    public void testProdctUrlAccess() throws Exception {
-        URL url=null;
-
-        // try to access the content that does not exist
-        try {
-            url=new URL("product://localhost:8080/Demo/Demo/ContentThatDoesNotExist.html");
-            Functions.loadUrlContentAsString(url);
-            fail("got content which doesn't exist!");
-        }
-        catch(FileNotFoundException e) {
-            // expected
-        }
-        catch(Throwable t) {
-            fail("Caught unexpected "+t.getClass().getName());
-        }
-
-        // try to access the content that does exist
-        url=new URL("product://localhost:8080/AIL/Base/HTML/ReferralNotification.html");
-        Functions.loadUrlContentAsString(url);
-    }
-
-    /**
      * This test checks that a URL pointing at an existing resource correctly opens that
      * resource.
      * <ul>
@@ -120,38 +94,5 @@ public class TestUrlHandlers {
         catch(FileNotFoundException e) {
             // This is what we want
         }
-    }
-
-    /**
-     * Test product access to the product repository with and without defining the language.
-     * @throws Exception
-     */
-    @Test
-    public void testProductUrlAccessWithLocale() throws Exception {
-        URL url=null;
-
-         // get content without specifying a local
-        com.ail.core.ThreadLocale.setThreadLocale(Locale.ENGLISH);
-        url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
-        assertTrue(Functions.loadUrlContentAsString(url).contains("Thank you"));
-
-        // get content with a locale for which content is defined
-        com.ail.core.ThreadLocale.setThreadLocale(Locale.GERMAN);
-        url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
-        assertTrue(Functions.loadUrlContentAsString(url).contains("Danke"));
-
-        // get content with a locale for which content is not defined
-        com.ail.core.ThreadLocale.setThreadLocale(Locale.KOREAN);
-        url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
-        assertTrue(Functions.loadUrlContentAsString(url).contains("Thank you"));
-    }
-    
-    @Test
-    public void testProductURLCompatibilityWithFOP() throws Exception {
-        URL url=new URL("product://localhost:8080/AIL/Base/HTML/ThankYou.html");
-        URLConnection connection=url.openConnection();
-        connection.setAllowUserInteraction(false);
-        connection.setDoInput(true);
-        connection.connect();
     }
 }

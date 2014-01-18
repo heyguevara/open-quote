@@ -37,10 +37,6 @@ class ConfigurationResetHandler {
     }
 
     void invoke() {
-        if (core == null) {
-            return;
-        }
-
         if (!resetFromClassResource() && !resetFromProductResource()) {
             throw new ConfigurationResetError("Configuration could not be found as a class resource or a product resource for '"+name+"'.");
         }
@@ -54,44 +50,23 @@ class ConfigurationResetHandler {
      */
     boolean resetFromProductResource() {
 
-        StringBuffer result=new StringBuffer();
-
         try {
-            new RunAsProductReader() {
-                StringBuffer result;
-                
-                RunAsProductReader writeResultTo(StringBuffer result) {
-                    this.result=result;
-                    return this;
-                }
-                
-                @Override
-                protected void doRun() {
-                    String productPath = null;
-    
-                    try {
-                        String host = core.getParameterValue("ProductReader.Host");
-                        String port = core.getParameterValue("ProductReader.Port");
-                        productPath = "product://" + host + ":" + port + "/" + name.replace('.', '/') + ".xml";
-    
-                        resetFromURL(new URL(productPath));
-                        
-                        result.append('S'); // Success
-                    } catch (FileNotFoundException e) {
-                        result.append('F'); // Failed - product resource does not exist
-                    } catch (XMLException e) {
-                        throw new ConfigurationResetError("Configuration found in product resource for '" + name + "' contains sax error(s).", e);
-                    } catch (Exception e) {
-                        throw new ConfigurationResetError("Configuration found in product resource for '" + name + "' could not be read.", e);
-                    }
-                }
-            }.writeResultTo(result).run();
-        }
-        catch(Exception e) {
-            throw new ConfigurationResetError("Configuration reset encountered exception.", e);
-        }
-        
-        return 'S' == result.charAt(0);
+            String host = core.getParameterValue("ProductReader.Host");
+            String port = core.getParameterValue("ProductReader.Port");
+
+            String productPath = "product://" + host + ":" + port + "/" + name.replace('.', '/') + ".xml";
+
+            resetFromURL(new URL(productPath));
+            
+            return true;
+
+        } catch (FileNotFoundException e) {
+            return false;
+        } catch (XMLException e) {
+            throw new ConfigurationResetError("Configuration found in product resource for '" + name + "' contains sax error(s).", e);
+        } catch (Exception e) {
+            throw new ConfigurationResetError("Configuration found in product resource for '" + name + "' could not be read.", e);
+        }        
     }
     
     /**
@@ -102,11 +77,10 @@ class ConfigurationResetHandler {
      * @throws ConfigurationResetError if any problems are encountered while processing the resource.
      */
     boolean resetFromClassResource() {
-        String resourcePath = null;
 
         try {
             // Actual resource's name will be <name>DefaultConfig.xml
-            resourcePath = name + "DefaultConfig.xml";
+            String resourcePath = name + "DefaultConfig.xml";
 
             URL inputUrl = owner.getClass().getResource(resourcePath);
 
