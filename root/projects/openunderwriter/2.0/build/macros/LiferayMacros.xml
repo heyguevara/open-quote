@@ -9,8 +9,9 @@
 
   <target name="_install.base" unless="base">
     <!-- Get the Liferay zip into the cache -->
-    <fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" />
-    <property name="liferay.zip" refid="liferay.zip.pathid" />
+    <!--fetch-dependency-path-macro org="liferay" name="liferay-portal" rev="${version}" pathid="liferay.zip.pathid" /-->
+    <!--property name="liferay.zip" refid="liferay.zip.pathid" /-->
+    <property name="liferay.zip" value="/Users/richarda/Downloads/liferay-portal-6.2.0-ce-ga1.zip" />
 
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
