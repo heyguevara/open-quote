@@ -511,8 +511,8 @@ public class SandpitPortlet extends GenericPortlet {
     private String getViewSelectOptions(String view) throws BaseException {
         Collection<String> disabled=new ArrayList<String>();
         Policy policy = PageFlowContext.getPolicy();
-        
-        if (policy==null) {
+         
+        if (PageFlowContext.getProductName()==null || PageFlowContext.getPageFlowName()==null) {
             disabled.add(XML_MODE);
         }
         
