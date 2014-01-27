@@ -25,7 +25,7 @@
 		<ant dir="./openunderwriter-theme.war" antfile="Build.xml" target="_build" />
 		<ant dir="./greentree-theme.war" antfile="Build.xml" target="_build" />
 		<ant dir="./bluestone-theme.war" antfile="Build.xml" target="_build" />
-		<!--ant dir="./ghana-theme.war" antfile="Build.xml" target="_build" /-->
+		<ant dir="./ghana-theme.war" antfile="Build.xml" target="_build" />
 		<subant-macro target="_build" includes="*-test.jar/Build.xml" />
 	</target>
 
