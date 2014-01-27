@@ -4,7 +4,7 @@
 <plugin-package>
 	<name>OpenUnderwriter Theme</name>
 	<module-id>liferay/openunderwriter-theme/theme-6.2.0.1/war</module-id>
-	<recommended-deployment-context>hello-theme</recommended-deployment-context>
+	<recommended-deployment-context>openunderwriter-theme</recommended-deployment-context>
 	<required-deployment-contexts></required-deployment-contexts>
 	<types>
 		<type>theme</type>

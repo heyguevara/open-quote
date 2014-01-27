@@ -570,10 +570,6 @@ p {
     min-width: 250px;
 }
 
-.wiki-body {
-	font-size: 1.2em;
-}
-
 .dockbar-user-notifications .user-notifications-count {
     background-color: transparent;
     border: 1px solid #555555;
@@ -661,4 +657,52 @@ p {
     background-color: rgba(0,0,0,0.00);
     color: #444444;
     font-size: 1.14em;
+}
+
+/* Start of wiki cusomisations */
+
+.wiki-body {
+	font-size: 1.2em;
+}
+
+.wiki-body img {
+	box-shadow: 4px 4px 5px 2px #CCCCCC;
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+
+.wiki-body p {
+	margin-top: 20px;
+}
+
+.wiki-body > h1 {
+	margin-top: 30px;
+}
+
+.wiki-body img {
+	box-shadow: 4px 4px 5px 2px #CCCCCC;
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+
+.wiki-body p {
+	margin-top: 20px;
+}
+
+.wiki-body > h1 {
+	margin-top: 30px;
+}
+
+.wiki-body .tip {
+	margin: 20px 160px 0 50px;
+}
+
+.wiki-body .tip td {
+	background-color: #FFFFAA;
+	background-image: url("../images/wiki/bulb.png");
+	background-position: 5px 5px;
+	background-repeat: no-repeat;
+	height: 90px;
+	margin-left: 50px;
+	padding: 10px 10px 10px 76px;
 }
