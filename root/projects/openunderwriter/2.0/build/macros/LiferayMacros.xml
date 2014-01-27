@@ -74,7 +74,7 @@
         </not>
         <then>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.sh" os="Linux,Mac OS X,Solaris,Sun OS">
-            <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
+            <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n -Djava.awt.headless=true" />
           </exec>
           <exec dir="${jboss.dir}/bin" executable="${jboss.dir}/bin/standalone.bat" os="Windows 2000,Windows XP,Windows 7">
             <env key="JAVA_OPTS" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n" />
@@ -235,6 +235,17 @@
         <fileset dir="${deploy.dir}/ROOT.war/html/themes/_styled" />
       </copy>
 
+      <if>
+        <not>
+          <equals arg1="@{extend}" arg2=""/>
+        </not>
+        <then>
+          <copy todir="${output.dir}" overwrite="true" preservelastmodified="true">
+            <fileset dir="${deploy.dir}/@{extend}" />
+          </copy>
+        </then>
+      </if>
+      
       <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
 
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
