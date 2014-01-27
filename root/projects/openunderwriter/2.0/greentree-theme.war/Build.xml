@@ -7,7 +7,7 @@
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">
-    <delete-war-macro />
+    <delete-war-macro extend="openunderwriter-theme.war" />
   </target>
 
   <target name="_build">
