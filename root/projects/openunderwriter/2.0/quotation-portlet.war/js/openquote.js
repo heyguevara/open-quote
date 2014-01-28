@@ -182,7 +182,7 @@ function initialiseTinyMCE() {
 
 	tinymce.init({
 	    mode : "specific_textareas",
-	    editor_selector : "pageflow-note",
+	    editor_selector : "pf-note",
 	    plugins : "contextmenu",
 	    contextmenu : "undo redo | bold italic underline",
 	    content_css : themeCssHref,
