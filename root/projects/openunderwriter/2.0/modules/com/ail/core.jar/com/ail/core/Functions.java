@@ -314,17 +314,24 @@ public class Functions {
      * @param model The model to resolve variable references against
      */
     public static void expand(Writer writer, URL url, Type model) {
+        BufferedReader reader = null;
+        
         try {
-            BufferedReader reader=new BufferedReader(new InputStreamReader(url.openStream()));
+            reader=new BufferedReader(new InputStreamReader(url.openStream()));
             
             for(String line=reader.readLine() ; line!=null ; line=reader.readLine()) {
                 writer.write(expand(line, model));
             }
-
-            reader.close();
         }
         catch(Exception e) {
             new CoreProxy().logError("Failed to read URL: '"+url+"'", e);
+        }
+        finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                new CoreProxy().logError("Failure while reading URL: '"+url+"'", e);
+            }
         }
     }
 

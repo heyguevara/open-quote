@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0" xmlns:java="java">
     <xsl:import href="http://localhost:8080/openunderwriter-theme/documents/generic-layouts-fo.xsl"/>
-    <!--<xsl:import href="generic-insurance-objects-fo.xsl"/>-->
-    <!-- imported styles-->
     <xsl:param name="style-doc" select="'styles.xml'"/>
     <xsl:variable name="styles" select="document('http://localhost:8080/openunderwriter-theme/documents/styles.xml')"/>
-    <!-- imported styles-->
+
     <xsl:template match="/">
         <fo:root xsl:use-attribute-sets="normal-font">
             <fo:layout-master-set>
@@ -137,29 +135,43 @@
             <fo:table-column column-width="proportional-column-width({$column1})"/>
             <fo:table-column column-width="proportional-column-width({98-$column1*2})"/>
             <fo:table-column column-width="proportional-column-width({$column1})"/>
-            <fo:table-header>
-                <fo:table-row>
-                    <xsl:copy-of select="$empty-cell"/>
-                    <fo:table-cell border-color="{$colour}" xsl:use-attribute-sets="full-border-no-colour" background-color="{$colour}" padding="1mm">
-                        <fo:block xsl:use-attribute-sets="header-block">
-                            <xsl:value-of select="@title"/>&#x00A0;
-                        </fo:block>
-                    </fo:table-cell>
-                    <xsl:copy-of select="$empty-cell"/>
-                </fo:table-row>
-            </fo:table-header>
-            <fo:table-body>
-                <fo:table-row>
-                    <xsl:copy-of select="$empty-cell"/>
-                    <fo:table-cell border-color="{$colour}" xsl:use-attribute-sets="full-border-no-colour">
-<!-- RA Hack starts here -->
-													<fo:block>&#x00A0;</fo:block>
-<!-- RA hack ends here -->
-                        <xsl:apply-templates select="node()"/>&#x00A0;
-                    </fo:table-cell>
-                    <xsl:copy-of select="$empty-cell"/>
-                </fo:table-row>
-            </fo:table-body>
+
+            <xsl:if test="not(ancestor::block)">
+                <fo:table-header>
+                    <fo:table-row>
+                        <xsl:copy-of select="$empty-cell"/>
+                        <fo:table-cell padding="2mm">
+                            <fo:block xsl:use-attribute-sets="header-block">
+                                <xsl:value-of select="@title"/>&#x00A0;
+                            </fo:block>
+                        </fo:table-cell>
+                        <xsl:copy-of select="$empty-cell"/>
+                    </fo:table-row>
+                </fo:table-header>
+            
+                <fo:table-body>
+                    <fo:table-row>
+                        <xsl:copy-of select="$empty-cell"/>
+                        <fo:table-cell border-color="{$colour}" xsl:use-attribute-sets="full-border-no-colour">
+                            <xsl:apply-templates select="node()"/>&#x00A0;
+                        </fo:table-cell>
+                        <xsl:copy-of select="$empty-cell"/>
+                    </fo:table-row>
+                </fo:table-body>
+            </xsl:if>
+
+            <xsl:if test="ancestor::block">
+                <fo:table-body>
+                    <fo:table-row>
+                        <xsl:copy-of select="$empty-cell"/>
+                        <fo:table-cell border-width="0.5mm">
+                            <xsl:apply-templates select="node()"/>&#x00A0;
+                        </fo:table-cell>
+                        <xsl:copy-of select="$empty-cell"/>
+                    </fo:table-row>
+                </fo:table-body>
+            </xsl:if>
+
         </fo:table>
         <xsl:if test="not(ancestor::block)">
             <xsl:copy-of select="$fo-blankline"/>
@@ -223,230 +235,229 @@
     </xsl:template>
 
     <xsl:template match="itemData">
-        <!--        resolve classes-->
-        <xsl:if test="text()!=''">
-            
-        <xsl:variable name="column1">
-            <xsl:choose>
-                <xsl:when test="ancestor::repeatingData">1</xsl:when>
-                <xsl:when test="parent::block[@class='address']">1</xsl:when>
-                <xsl:otherwise>5</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="column2">
-            <xsl:choose>
-                <xsl:when test="ancestor::repeatingData">29</xsl:when>
-                <xsl:when test="parent::block[@class='address']">31</xsl:when>
-                <xsl:otherwise>30</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="column3">
-            <xsl:choose>
-                <xsl:when test="ancestor::repeatingData">70</xsl:when>
-                <xsl:when test="parent::block[@class='address']">69</xsl:when>
-                <xsl:otherwise>70</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <fo:table xsl:use-attribute-sets="base-table-layout">
-            <fo:table-column column-width="proportional-col umn-width({$column1})"/>
-            <fo:table-column column-width="proportional-column-width({$column2})"/>
-            <fo:table-column column-width="proportional-column-width({$column3})"/>
-            <fo:table-body>
+        <xsl:if test="text()!='' or @class='wording'">
+            <xsl:variable name="column1">
                 <xsl:choose>
-
-                    <xsl:when test="@class='wording'">
-                        <xsl:variable name="light-colour">
-                            <xsl:value-of select="$styles/Styles/Colours/@light-colour"/>
-                        </xsl:variable>
-                        <xsl:variable name="dark-colour">
-                            <xsl:value-of select="$styles/Styles/Colours/@dark-colour"/>
-                        </xsl:variable>
-                        <xsl:variable name="font-colour">
-                            <xsl:value-of select="$styles/Styles/Colours/@font-colour"/>
-                        </xsl:variable>
-                        <xsl:variable name="font-header-colour">
-                            <xsl:value-of select="$styles/Styles/Colours/@font-header"/>
-                        </xsl:variable>
-
-                        <xsl:for-each select="p">
-                            <fo:table-row height="0mm">
-                                <xsl:copy-of select="$empty-cell"/>
-                                <xsl:copy-of select="$empty-cell"/>
-                            </fo:table-row>
-                            <fo:table-row keep-with-previous="always">
-                                <xsl:choose>
-                                    <xsl:when test="@class='term-title'">
-                                        <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
-                                            <xsl:call-template name="set-term-border">
-                                                <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='label']"/>
-                                            </xsl:call-template>
-                                            <fo:block>&#x00A0;</fo:block>
-                                        </fo:table-cell>
-                                        <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
-                                            <xsl:call-template name="set-term-border">
-                                                <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='label']"/>
-                                            </xsl:call-template>
-                                            <fo:block xsl:use-attribute-sets="H2">
-                                                <xsl:value-of select="."/>
-                                            </fo:block>
-                                        </fo:table-cell>
-                                        <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
-                                            <xsl:call-template name="set-term-border">
-                                                <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='body']"/>
-                                            </xsl:call-template>
-                                            <fo:block>&#x00A0;</fo:block>
-                                        </fo:table-cell>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:copy-of select="$empty-cell"/>
-                                        <xsl:copy-of select="$empty-cell"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:choose>
-                                    <xsl:when test="@class='term-body'">
-                                        <fo:table-cell padding="1mm" xsl:use-attribute-sets="before-border after-border start-border end-border">
-                                            <xsl:call-template name="set-term-border">
-                                                <xsl:with-param name="border" select="$styles/Styles/Terms/Body/Border"/>
-                                            </xsl:call-template>
-                                            <fo:block>
-                                                <!--
-                                                    Need to add hyphenation xml documents
-                                                <xsl:if test="$styles/Styles/Terms/Body/@hyphenate!=''">
-                                                    <xsl:attribute name="hypenate">true</xsl:attribute>
-                                                    <xsl:attribute name="language">
-                                                        <xsl:value-of select="$styles/Styles/Terms/Body/@hyphenate"/>
-                                                    </xsl:attribute>
-                                                </xsl:if>-->
-                                                <xsl:apply-templates select="."/>
-                                            </fo:block>
-                                        </fo:table-cell>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
-                                            <xsl:call-template name="set-term-border">
-                                                <xsl:with-param name="border" select="$styles/Styles/Terms/Rest/Border"/>
-                                            </xsl:call-template>
-                                            <fo:block>&#x00A0;</fo:block>
-                                        </fo:table-cell>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </fo:table-row>
-                        </xsl:for-each>
-                    </xsl:when>
-
-                    <xsl:when test="@class='line'">
-                        <xsl:if test="text()!=''">
-                            <fo:table-row>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:if test="position()=1">
-                                            <xsl:value-of select="../@title"/>
-                                        </xsl:if>
-                                    </fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:value-of select="."/>
-                                    </fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </xsl:if>
-                    </xsl:when>
-
-                    <xsl:when test="@class='town'">
-                        <xsl:if test="text()!=''">
-                            <fo:table-row>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:value-of select="."/>
-                                    </fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </xsl:if>
-                    </xsl:when>
-
-                    <xsl:when test="@class='county'">
-                        <xsl:if test="text()!=''">
-                            <fo:table-row>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:value-of select="."/>
-                                    </fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </xsl:if>
-                    </xsl:when>
-
-                    <xsl:when test="@class='country'">
-                        <xsl:if test="text()!=''">
-                            <fo:table-row>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:value-of select="."/>
-                                    </fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </xsl:if>
-                    </xsl:when>
-
-                    <xsl:when test="@class='postcode'">
-                        <xsl:if test="text()!=''">
-                            <fo:table-row>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <xsl:copy-of select="$empty-cell"/>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:value-of select="."/>
-                                    </fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </xsl:if>
-                    </xsl:when>
-
-                    <xsl:when test="@class='email'">
-                        <xsl:variable name="value">
-                            <xsl:call-template name="email"/>
-                        </xsl:variable>
-                        <xsl:call-template name="title-variant">
-                            <xsl:with-param name="data" select="."/>
-                            <xsl:with-param name="value" select="$value"/>
-                        </xsl:call-template>
-                    </xsl:when>
-                    <xsl:when test="@class='phone'">
-                        <xsl:call-template name="title-variant">
-                            <xsl:with-param name="data" select="."/>
-                            <xsl:with-param name="value" select="."/>
-                        </xsl:call-template>
-                    </xsl:when>
-
-                    <xsl:when test="@class='currency'">
-                        <xsl:variable name="value">
-                            <xsl:value-of select="substring-after(.,' ')"/>
-                            <xsl:text>&#x00A0;</xsl:text>
-                            <xsl:value-of select="substring-before(.,' ')"/>
-                        </xsl:variable>
-                        <xsl:call-template name="title-variant">
-                            <xsl:with-param name="data" select="."/>
-                            <xsl:with-param name="value" select="$value"/>
-                        </xsl:call-template>
-                    </xsl:when>
-
-                    <xsl:otherwise>
-                        <xsl:call-template name="title-variant">
-                            <xsl:with-param name="data" select="."/>
-                            <xsl:with-param name="value" select="."/>
-                        </xsl:call-template>
-                    </xsl:otherwise>
+                    <xsl:when test="ancestor::repeatingData">1</xsl:when>
+                    <xsl:when test="parent::block[@class='address']">1</xsl:when>
+                    <xsl:otherwise>5</xsl:otherwise>
                 </xsl:choose>
-            </fo:table-body>
-        </fo:table>
+            </xsl:variable>
+            <xsl:variable name="column2">
+                <xsl:choose>
+                    <xsl:when test="ancestor::repeatingData">29</xsl:when>
+                    <xsl:when test="parent::block[@class='address']">31</xsl:when>
+                    <xsl:otherwise>30</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="column3">
+                <xsl:choose>
+                    <xsl:when test="ancestor::repeatingData">70</xsl:when>
+                    <xsl:when test="parent::block[@class='address']">69</xsl:when>
+                    <xsl:otherwise>70</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <fo:table xsl:use-attribute-sets="base-table-layout">
+                <fo:table-column column-width="proportional-column-width({$column1})"/>
+                <fo:table-column column-width="proportional-column-width({$column2})"/>
+                <fo:table-column column-width="proportional-column-width({$column3})"/>
+                <fo:table-body>
+                    <xsl:choose>
+    
+                        <xsl:when test="@class='wording'">
+                            <xsl:variable name="light-colour">
+                                <xsl:value-of select="$styles/Styles/Colours/@light-colour"/>
+                            </xsl:variable>
+                            <xsl:variable name="dark-colour">
+                                <xsl:value-of select="$styles/Styles/Colours/@dark-colour"/>
+                            </xsl:variable>
+                            <xsl:variable name="font-colour">
+                                <xsl:value-of select="$styles/Styles/Colours/@font-colour"/>
+                            </xsl:variable>
+                            <xsl:variable name="font-header-colour">
+                                <xsl:value-of select="$styles/Styles/Colours/@font-header"/>
+                            </xsl:variable>
+    
+                            <xsl:for-each select="p">
+                                <fo:table-row height="0mm">
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                </fo:table-row>
+                                <fo:table-row keep-with-previous="always">
+                                    <xsl:choose>
+                                        <xsl:when test="@class='term-title'">
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                                <xsl:call-template name="set-term-border">
+                                                    <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='label']"/>
+                                                </xsl:call-template>
+                                                <fo:block>&#x00A0;</fo:block>
+                                            </fo:table-cell>
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                                <xsl:call-template name="set-term-border">
+                                                    <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='label']"/>
+                                                </xsl:call-template>
+                                                <fo:block xsl:use-attribute-sets="H2">
+                                                    <xsl:value-of select="."/>
+                                                </fo:block>
+                                            </fo:table-cell>
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                                <xsl:call-template name="set-term-border">
+                                                    <xsl:with-param name="border" select="$styles/Styles/Terms/Title/Border[@type='body']"/>
+                                                </xsl:call-template>
+                                                <fo:block>&#x00A0;</fo:block>
+                                            </fo:table-cell>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:copy-of select="$empty-cell"/>
+                                            <xsl:copy-of select="$empty-cell"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:choose>
+                                        <xsl:when test="@class='term-body'">
+                                            <fo:table-cell padding="1mm" xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                                <xsl:call-template name="set-term-border">
+                                                    <xsl:with-param name="border" select="$styles/Styles/Terms/Body/Border"/>
+                                                </xsl:call-template>
+                                                <fo:block>
+                                                    <!--
+                                                        Need to add hyphenation xml documents
+                                                    <xsl:if test="$styles/Styles/Terms/Body/@hyphenate!=''">
+                                                        <xsl:attribute name="hypenate">true</xsl:attribute>
+                                                        <xsl:attribute name="language">
+                                                            <xsl:value-of select="$styles/Styles/Terms/Body/@hyphenate"/>
+                                                        </xsl:attribute>
+                                                    </xsl:if>-->
+                                                    <xsl:apply-templates select="."/>
+                                                </fo:block>
+                                            </fo:table-cell>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <fo:table-cell xsl:use-attribute-sets="before-border after-border start-border end-border">
+                                                <xsl:call-template name="set-term-border">
+                                                    <xsl:with-param name="border" select="$styles/Styles/Terms/Rest/Border"/>
+                                                </xsl:call-template>
+                                                <fo:block>&#x00A0;</fo:block>
+                                            </fo:table-cell>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </fo:table-row>
+                            </xsl:for-each>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='line'">
+                            <xsl:if test="text()!=''">
+                                <fo:table-row>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:if test="position()=1">
+                                                <xsl:value-of select="../@title"/>
+                                            </xsl:if>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:value-of select="."/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </xsl:if>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='town'">
+                            <xsl:if test="text()!=''">
+                                <fo:table-row>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:value-of select="."/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </xsl:if>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='county'">
+                            <xsl:if test="text()!=''">
+                                <fo:table-row>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:value-of select="."/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </xsl:if>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='country'">
+                            <xsl:if test="text()!=''">
+                                <fo:table-row>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:value-of select="."/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </xsl:if>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='postcode'">
+                            <xsl:if test="text()!=''">
+                                <fo:table-row>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <xsl:copy-of select="$empty-cell"/>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:value-of select="."/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </xsl:if>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='email'">
+                            <xsl:variable name="value">
+                                <xsl:call-template name="email"/>
+                            </xsl:variable>
+                            <xsl:call-template name="title-variant">
+                                <xsl:with-param name="data" select="."/>
+                                <xsl:with-param name="value" select="$value"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        
+                        <xsl:when test="@class='phone'">
+                            <xsl:call-template name="title-variant">
+                                <xsl:with-param name="data" select="."/>
+                                <xsl:with-param name="value" select="."/>
+                            </xsl:call-template>
+                        </xsl:when>
+    
+                        <xsl:when test="@class='currency'">
+                            <xsl:variable name="value">
+                                <xsl:value-of select="substring-after(.,' ')"/>
+                                <xsl:text>&#x00A0;</xsl:text>
+                                <xsl:value-of select="substring-before(.,' ')"/>
+                            </xsl:variable>
+                            <xsl:call-template name="title-variant">
+                                <xsl:with-param name="data" select="."/>
+                                <xsl:with-param name="value" select="$value"/>
+                            </xsl:call-template>
+                        </xsl:when>
+    
+                        <xsl:otherwise>
+                            <xsl:call-template name="title-variant">
+                                <xsl:with-param name="data" select="."/>
+                                <xsl:with-param name="value" select="."/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </fo:table-body>
+            </fo:table>
         </xsl:if>
     </xsl:template>
 
@@ -470,7 +481,7 @@
         <xsl:param name="data" select="."/>
         <xsl:param name="value" select="''"/>
 
-        <fo:table-row>
+        <fo:table-row line-height="2.0">
             <xsl:choose>
                 <xsl:when test="not($data/@title)">
                     <fo:table-cell number-columns-spanned="3">

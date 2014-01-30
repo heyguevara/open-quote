@@ -3,6 +3,7 @@
     <!--    Standard documents-->
     <xsl:param name="style-doc" select="'styles.xml'"/>
     <xsl:variable name="styles" select="document($style-doc)"/>
+
     <!--    UK  -->
     <xsl:attribute-set name="UkPageSize" use-attribute-sets="A4 Helvetica Non-print-margins"/>
     <xsl:variable name="ail-regions-first">
@@ -16,6 +17,7 @@
         <fo:region-start region-name="first-start" extent="0mm"/>
         <fo:region-end region-name="first-end" extent="0mm"/>
     </xsl:variable>
+    
     <xsl:variable name="ail-regions-blank">
         <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
             <xsl:attribute name="background-image">
@@ -27,6 +29,7 @@
         <fo:region-start region-name="blank-start" extent="0mm"/>
         <fo:region-end region-name="blank-end" extent="0mm"/>
     </xsl:variable>
+    
     <xsl:variable name="ail-regions-rest-right">
         <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
             <xsl:attribute name="background-image">
@@ -38,6 +41,7 @@
         <fo:region-start region-name="right-start" extent="0mm"/>
         <fo:region-end region-name="right-end" extent="5mm"/>
     </xsl:variable>
+    
     <xsl:variable name="ail-regions-rest-left">
         <fo:region-body region-name="body" border="0mm" margin-bottom="10mm" margin-top="25mm" margin-left="0mm" margin-right="5mm" padding="0mm" background-repeat="no-repeat" background-position-horizontal="center" background-position-vertical="center">
             <xsl:attribute name="background-image">
@@ -49,6 +53,7 @@
         <fo:region-start region-name="left-start" extent="5mm"/>
         <fo:region-end region-name="left-end" extent="0mm"/>
     </xsl:variable>
+    
     <xsl:variable name="UkLayout">
         <!-- page sequences -->
         <fo:page-sequence-master master-name="all-pages">
@@ -81,6 +86,7 @@
             <xsl:copy-of select="$ail-regions-blank"/>
         </fo:simple-page-master>
     </xsl:variable>
+    
     <!-- Page sizes -->
     <xsl:attribute-set name="A4">
         <xsl:attribute name="page-height">297mm</xsl:attribute>
@@ -100,6 +106,7 @@
         <xsl:attribute name="page-height">279mm</xsl:attribute>
         <xsl:attribute name="page-width">210mm</xsl:attribute>
     </xsl:attribute-set>
+
     <!-- Non printable margins-->
     <xsl:attribute-set name="Non-print-margins">
         <xsl:attribute name="margin-bottom">7mm</xsl:attribute>
@@ -107,6 +114,7 @@
         <xsl:attribute name="margin-right">7mm</xsl:attribute>
         <xsl:attribute name="margin-top">7mm</xsl:attribute>
     </xsl:attribute-set>
+
     <!--    Fonts-->
     <xsl:attribute-set name="Helvetica">
         <xsl:attribute name="font-family">Helvetica</xsl:attribute>
@@ -129,6 +137,7 @@
     <xsl:attribute-set name="I">
         <xsl:attribute name="font-style">italic</xsl:attribute>
     </xsl:attribute-set>
+
     <!--    XHTML Styles-->
     <xsl:attribute-set name="H1" use-attribute-sets="base-font B">
         <xsl:attribute name="font-size">18pt</xsl:attribute>
@@ -153,7 +162,8 @@
         <xsl:attribute name="font-size">10pt</xsl:attribute>
         <xsl:attribute name="color"><xsl:value-of select="$font-colour"/></xsl:attribute>
     </xsl:attribute-set>
-<!--    table layouts-->
+
+    <!--    table layouts-->
     <xsl:attribute-set name="base-table-layout">
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
         <xsl:attribute name="space-after.optimum">0mm</xsl:attribute>
@@ -250,7 +260,6 @@
     </xsl:template>
     
     <xsl:template match="p">
-        <!--<xsl:text>&#x00A0;&#x00A0;&#x00A0;&#x00A0;</xsl:text>-->
         <xsl:apply-templates select="node()"/>
         <xsl:call-template name="br"/>
     </xsl:template>
@@ -271,7 +280,7 @@
     
     <xsl:template match="font-size">
         <xsl:choose>
-            <!--      If a value ending in 'pt'-->
+            <!-- If a value ending in 'pt'-->
             <xsl:when test="substring(@value, string-length(@value)-2, 2)='pt'">
                 <fo:inline>
                     <xsl:attribute name="font-size"><xsl:value-of select="@value"/></xsl:attribute>
@@ -384,7 +393,7 @@
     
     <xsl:attribute-set name="full-border-no-colour">
         <xsl:attribute name="border-style">solid</xsl:attribute>
-        <xsl:attribute name="border-width">0.1mm</xsl:attribute>
+        <xsl:attribute name="border-width">0.2mm</xsl:attribute>
     </xsl:attribute-set>
 
     <xsl:attribute-set name="header-block">
