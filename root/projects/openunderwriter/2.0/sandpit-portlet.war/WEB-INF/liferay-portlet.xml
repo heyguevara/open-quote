@@ -11,6 +11,7 @@
         <header-portal-css>/quotation-portlet/css/pageflow.css</header-portal-css>
         <header-portlet-css>/css/sandpit.css</header-portlet-css>
         <header-portlet-css>/css/codemirror.css</header-portlet-css>
+        <header-portal-javascript>/quotation-portlet/js/jquery-2.1.0.min.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/main.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/numberformat.js</header-portal-javascript>
         <header-portal-javascript>/quotation-portlet/js/tinymce/tinymce.min.js</header-portal-javascript>

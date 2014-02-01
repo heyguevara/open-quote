@@ -40,6 +40,10 @@
     width: auto;
 }
 
+.pf-page-section .pf-section-body {
+	border: none
+}
+
 .pf-header {
 	border: 1px solid #1D8412;
 	border-radius: 5px 5px 5px 5px;
@@ -58,7 +62,7 @@
 	margin-right: 5px;
 }
 
-.pf-body {
+.pf-body, .pf-page-section {
 	border: 1px solid #1D8412;
 	border-radius: 5px 5px 5px 5px;
 	margin: 10px;
@@ -348,14 +352,23 @@
 
 .pf-proposer-details .pf-input-section {
     min-width: 385px;
+    padding-right: 3em;
 }
 
 .pf-proposer-details .pf-input-label {
-    min-width: 125px;
+    min-width: 10em;
 }
 
 .pf-proposer-details-address .pf-section {
     padding: 0;
+}
+
+.pf-proposer-details-company-name input[type="text"] {
+	min-width: 50em;
+}
+
+.pf-proposer-details-address input[name="postcode"] {
+    width: 6em;
 }
 
 /*

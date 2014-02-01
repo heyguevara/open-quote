@@ -109,9 +109,14 @@ function _addOption(selectbox, text, selected) {
  */
 function loadChoiceOptions(select, selected, array) {
     select.options.length=0;
+    var maxLength = 0;
     for (var i=1 ; i < array.length ; i++) {
         _addOption(select, array[i][0], selected==array[i][0]);
+        if (array[i][0].length > maxLength) {
+        	maxLength = array[i][0].length;
+        }
     }
+    select.style.width=maxLength+"em";
 }
 
 /* On page load, load the model options appropriate to whatever make is currently
