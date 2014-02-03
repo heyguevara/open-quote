@@ -29,7 +29,7 @@
 
       <pathify-product-name-macro property="product.subdir" value="@{product}/Test Suite" />
 
-      <java fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.33.0.jar" dir="@{product.dir}/${product.subdir}">
+      <java fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.39.0.jar" dir="@{product.dir}/${product.subdir}">
         <arg line="-singleWindow -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{product}.html" />
       </java>
     </sequential>

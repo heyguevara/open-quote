@@ -418,6 +418,10 @@
 	border: none;
 }
 
+.pf-attribute-field {
+    white-space: nowrap;
+}
+
 .pf-attribute-field-prefix {
 	min-width: 40px;
 	text-align: right;
