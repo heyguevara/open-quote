@@ -84,7 +84,6 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-beanutils-1.6.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-codec-1.2.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-digester-1.5.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-discovery-0.2.jar"/>
@@ -169,5 +168,10 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/ROOT.war/WEB-INF/lib/bnd.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/javax/servlet/jsp/api/main/jboss-jsp-api_2.2_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/org/jaxen/main/jaxen-1.1.3.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-codec-1.9.jar" sourcepath="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-codec-1.9-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/openunderwriter/target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-codec-1.9-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

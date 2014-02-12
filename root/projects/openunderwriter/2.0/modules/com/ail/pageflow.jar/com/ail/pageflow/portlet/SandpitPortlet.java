@@ -462,7 +462,7 @@ public class SandpitPortlet extends GenericPortlet {
 
         w.printf("<span id='view'>");
         w.printf("View:");
-        w.printf("<select name='selectedView' onChange='submit()' class='portlet-form-input-field'>%s</select>", getViewSelectOptions(getCurrentView(request)));
+        w.printf("<select name='selectedView' onChange='submit()' class='portlet-form-input-field'>%s</select>", buildViewSelectOptions(getCurrentView(request)));
         w.printf("</span>");
 
         w.printf("<span id='save'><input type='checkbox' name='saveAsTestcase' %s value='saveAsTestCase' class='portlet-form-input-field'/> Test case</span>", disableSaveAsTestCaseButton ? "disabled=disabled"
@@ -508,7 +508,7 @@ public class SandpitPortlet extends GenericPortlet {
      * @return HTML option list
      * @throws BaseException
      */
-    private String getViewSelectOptions(String view) throws BaseException {
+    private String buildViewSelectOptions(String view) throws BaseException {
         Collection<String> disabled=new ArrayList<String>();
         Policy policy = PageFlowContext.getPolicy();
          

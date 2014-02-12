@@ -16,9 +16,8 @@
  */
 package com.ail.pageflow;
 
-import static com.ail.pageflow.util.Functions.convertCsvToList;
-import static com.ail.pageflow.util.Functions.convertListToCsv;
-import static com.ail.pageflow.util.Functions.xpathToId;
+import static com.ail.pageflow.util.Functions.convertSemiColonStringToList;
+import static com.ail.pageflow.util.Functions.convertListToSemiColonString;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public class QuestionWithDetails extends Question {
      * @return List of answers for which the details field should be enabled.
      */
     public String getDetailsEnabledFor() {
-    	return convertListToCsv(detailsEnabledFor);
+    	return convertListToSemiColonString(detailsEnabledFor);
 	}
 
     /**
@@ -85,7 +84,7 @@ public class QuestionWithDetails extends Question {
      * @param detailsEnabledFor A comma separated list of answers for which the details field should be enabled.
      */
     public void setDetailsEnabledFor(String detailsEnabledFor) {
-		this.detailsEnabledFor = convertCsvToList(detailsEnabledFor);
+		this.detailsEnabledFor = convertSemiColonStringToList(detailsEnabledFor);
 	}
 
 	public String getDetailsBinding() {
@@ -204,8 +203,8 @@ public class QuestionWithDetails extends Question {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         RenderCommand command = buildRenderCommand("QuestionWithDetails", request, response, model, rowContext);
 
-        command.setDetailIdArg(xpathToId(rowContext + detailsBinding));
-        command.setRenderIdArg(xpathToId(rowContext + binding));
+        command.setDetailIdArg(encodeId(rowContext + detailsBinding));
+        command.setRenderIdArg(encodeId(rowContext + binding));
         
         return invokeRenderCommand(command);
     }

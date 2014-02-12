@@ -1,4 +1,4 @@
-/* 'item' is a string, 'list' is a string of comma separated values. This
+/* 'item' is a string, 'list' is a string of semi colon separated values. This
  * function returns true if 'item' appears in 'list'.
  */
 function isInList(item, list) {
@@ -53,18 +53,14 @@ function enableTargetIf(condition, targetName) {
  */
 function showDivDisplay(id)
 {
-   var mydiv = document.getElementById(id);
-   mydiv.style.visibility="";
-   mydiv.style.display="";
+	$('#'+id).fadeIn("slow");
 }
 
 /* Shrink and hide a div section.
  */
 function hideDivDisplay(id)
 {
-   var mydiv = document.getElementById(id);
-   mydiv.style.visibility="";
-   mydiv.style.display="none";
+	$('#'+id).hide("fade");
 }
 
 function showDivDisplayIf(condition, id) {
@@ -95,74 +91,49 @@ function showHideDivDisplayForRadioChoice(divId, enableForValues, questionId) {
 	}
 }
 
-function _addOption(selectbox, text, selected) {
-    var optn = document.createElement("OPTION");
-    optn.text = text;
-    optn.selected=selected;
-    // Below: "selectbox.options.add" would be nicer - but safari doesn't like it.
-    selectbox.options[selectbox.length]=optn;
+function _createOption(optionText, isSelected) {
+	if (isSelected)
+		return "<option selected>"+optionText+"</option>";
+	else 
+		return "<option>"+optionText+"</option>";
 }
 
 /* This method is called to load options into a choice (drop down menu). It'll be called once
  * for each row (in a rowscroller etc), it is also used to populate the 'Master' menu in a 
  * master/slave setup.
  */
-function loadChoiceOptions(select, selected, array) {
-    select.options.length=0;
-    var maxLength = 0;
+function loadChoiceOptions(selectName, selectedOption, array) {
+	var select="select[name='"+selectName+"']";
+	$(select).empty();
+    var maxWidth = 0;
     for (var i=1 ; i < array.length ; i++) {
-        _addOption(select, array[i][0], selected==array[i][0]);
-        if (array[i][0].length > maxLength) {
-        	maxLength = array[i][0].length;
-        }
+        $(select).append(_createOption(array[i][0], selectedOption==array[i][0]));
+        maxWidth=Math.max(array[i][0].length, maxWidth);
     }
-    select.style.width=maxLength+"em";
+    $(select).ccs("width", maxWidth+"em");
 }
 
-/* On page load, load the model options appropriate to whatever make is currently
+/* On page load, load the model options appropriate to whatever master is currently
  * selected.
  */
-function loadSlaveChoiceOptions(select, selected, array, master, slave) {
-    var masterSelectName = new String(select.name);
-    var masterSelectName = masterSelectName.replace('#'+slave+'#', '#'+master+'#');
-    var masterSelect = findElementsByName(masterSelectName)[0];
-    var masterSelectValue = masterSelect.options[masterSelect.selectedIndex].text;
+function loadSlaveChoiceOptions(masterSelectName, slaveSelectName, selectedOption, array) {
+	var master="select[name='"+masterSelectName+"']";
+	var slave="select[name='"+slaveSelectName+"']";
+    var masterValue = $(master).val();
     var maxLength = 0;
-    select.options.length=0;
+    $(slave).empty()
     for(var m=1 ; m<array.length ; m++) {
-        if (array[m][0]==masterSelectValue) {
-            _addOption(select,array[1][0], array[1][0]);
+        if (array[m][0]==masterValue) {
+            $(slave).append(_createOption(array[1][0], false));
             for(var i=1 ; i<array[m].length ; i++) {
-                _addOption(select, array[m][i], array[m][i]==selected);
+                $(slave).append(_createOption(array[m][i], array[m][i]==selectedOption));
             }
         }
         for(var i=1 ; i<array[m].length ; i++) {
-           if(array[m][i].length > maxLength) {
-        	   maxLength=array[m][i].length;
-           }
+        	maxLength=Math.max(array[m][i].length, maxLength);
         }
     }
-    select.style.width=maxLength+"em";
-}
-
-/* This is called from the onChange event from a 'master' dropdown in a 
- * master/slave relationship. It updates the slave's values appropriate
- * to the newly selected master value.
- */
-function updateSlaveChoiceOptions(masterSelect, array, master, slave) {
-    masterSelectValue=masterSelect.options[masterSelect.selectedIndex].text;
-    slaveSelectName=new String(masterSelect.name);
-    slaveSelectName=slaveSelectName.replace('#'+master+'#','#'+slave+'#');
-    slaveSelect=findElementsByName(slaveSelectName)[0];
-    slaveSelect.options.length=0;
-    for(var m=1 ; m<array.length ; m++) {
-        if (array[m][0]==masterSelectValue) {
-            _addOption(slaveSelect,array[1][0], array[1][0]);
-            for(var i=1 ; i<array[m].length ; i++) {
-                _addOption(slaveSelect, array[m][i], false);
-            }
-        }
-    }
+    $(slave).ccs("width", maxWidth+"em");
 }
 
 function formatnumber(obj, decimalSeparator, thousandsSeparator, places) {
@@ -195,7 +166,6 @@ function initialiseTinyMCE() {
 	    menubar : false,
 	    toolbar: false,
 	    statusbar : false,
-	    //resize : "both",
 	    browser_spellcheck : true 
 	});
 }

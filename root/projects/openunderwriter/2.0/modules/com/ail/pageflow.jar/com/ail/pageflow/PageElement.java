@@ -35,6 +35,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.ail.core.Attribute;
 import com.ail.core.BaseException;
 import com.ail.core.Identified;
@@ -780,6 +782,31 @@ public abstract class PageElement extends Type implements Identified, Comparable
         }
     }
     
+    /**
+     * @see encodeId
+     * @param HTML Id
+     * @return XPath expression
+     */
+    public String decodeId(String id) {
+        return new String(Base64.decodeBase64(id));
+    }
+
+    /** 
+     * Convert an XPath expression in to a format that will be accepted as an HTML element's id.
+     * The data binding mechanism used in openquote's UI is based on xpath. A field in a UI form
+     * is bound to the quote object by means of the field's 'id'; as the pages are generated the
+     * IDs are give the value of an xpath expression pointing into the quote model.<p>
+     * However, xpath expressions may contain characters that aren't compatible with HTML IDs (one 
+     * example being the single quote character). This method converts xpaths into a form that is
+     * safe to be used as IDs, and is also able to be converted back into a xpath by the {@link PageElement#decodeId(String)}
+     * method. 
+     * @param XPath expression
+     * @return HTML Id
+     */
+    public String encodeId(String xpath) {
+        return new String(Base64.encodeBase64URLSafe(xpath.getBytes()));
+    }
+
     /**
      * Utility method to expand 'variables' embedded in a string with respect to a model. Variables
      * are in the form '${&lt;xpath&gt;}', where xpath is an expression compatible with JXPath. The 

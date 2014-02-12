@@ -44,31 +44,6 @@ import com.ail.pageflow.PageElement;
 public class Functions {
     private static SimpleDateFormat longFormat=new SimpleDateFormat("d MMMMM, yyyy");
 
-    /** 
-     * Convert an XPath expression in to a format that will be accepted as an HTML element's id.
-     * The data binding mechanism used in openquote's UI is based on xpath. A field in a UI form
-     * is bound to the quote object by means of the field's 'id'; as the pages are generated the
-     * IDs are give the value of an xpath expression pointing into the quote model.<p>
-     * However, xpath expressions may contain characters that aren't compatible with HTML IDs (one 
-     * example being the single quote character). This method converts xpaths into a form that is
-     * safe to be used as IDs, and is also able to be converted back into a xpath by the {@link #idToXpath(String)}
-     * method. 
-     * @param XPath expression
-     * @return HTML Id
-     */
-    public static String xpathToId(String xpath) {
-        return xpath.replace('\'', '#');
-    }
-
-    /**
-     * @see #xpathToId(String)
-     * @param HTML Id
-     * @return XPath expression
-     */
-    public static String idToXpath(String id) {
-        return id.replace('#', '\'');
-    }
-
     /**
      * Determine if a String is empty - null or zero length
      * @param s String to check
@@ -339,7 +314,7 @@ public class Functions {
      * @param list List to be converted
      * @return semicolon separated list of values from the list.
      */
-    public static String convertListToCsv(List<String> list) {
+    public static String convertListToSemiColonString(List<String> list) {
     	StringBuffer ret=new StringBuffer();
     	
     	for(Iterator<String> e=list.iterator() ; e.hasNext() ; ) {
@@ -357,7 +332,7 @@ public class Functions {
      * @param csv String to be converted
      * @return List of strings
      */
-    public static List<String> convertCsvToList(String csv) {
+    public static List<String> convertSemiColonStringToList(String csv) {
     	return new ArrayList<String>(Arrays.asList(csv.split("[ \t]*+;[ \t]*+")));
     }
 }

@@ -86,7 +86,12 @@ public class ListToOptionService extends Service<ListToOptionService.ListToOptio
 
         if (!args.getExcludeUnknownArg() || args.getUnknownOptionArg() != null) {
             option = args.getUnknownOptionArg() != null ? args.getUnknownOptionArg() : "i18n_?";
-            markup.append("<option value='?'>").append(i18n(option)).append("</option>");
+            if (args.getSelectedArg()==null || option.equals(args.getSelectedArg())) {
+                markup.append("<option disabled='yes' selected='yes' value='?'>").append(i18n(option)).append("</option>");
+            }
+            else {
+                markup.append("<option disabled='yes' value='?'>").append(i18n(option)).append("</option>");
+            }
         }
         
         for (Object p : args.getOptionsArg()) {

@@ -16,9 +16,8 @@
  */
 package com.ail.pageflow;
 
-import static com.ail.pageflow.util.Functions.convertCsvToList;
-import static com.ail.pageflow.util.Functions.convertListToCsv;
-import static com.ail.pageflow.util.Functions.xpathToId;
+import static com.ail.pageflow.util.Functions.convertSemiColonStringToList;
+import static com.ail.pageflow.util.Functions.convertListToSemiColonString;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class QuestionWithSubSection extends Question {
 	private static final long serialVersionUID = 7118438575837087257L;
     private List<String> detailsEnabledFor;
 
-    /** PageElement to be rendered/filled if the Question is answered "Yes". */
+    /** PageElement to be rendered/filled if the sub section is enabled. */
     private List<PageElement> subSection=new ArrayList<PageElement>();
     
     public QuestionWithSubSection() {
@@ -70,17 +69,27 @@ public class QuestionWithSubSection extends Question {
      * @return List of answers for which the subsection should be enabled.
      */
     public String getDetailsEnabledFor() {
-    	return convertListToCsv(detailsEnabledFor);
+    	return convertListToSemiColonString(detailsEnabledFor);
 	}
 
     /**
      * Define the answers for which the subsection should be enabled.   
-     * @param detailsEnabledFor A comma separated list of answers for which the subsection should be enabled.
+     * @param detailsEnabledFor A semicolon separated list of answers for which the subsection should be enabled.
      */
     public void setDetailsEnabledFor(String detailsEnabledFor) {
-		this.detailsEnabledFor = convertCsvToList(detailsEnabledFor);
+		this.detailsEnabledFor = convertSemiColonStringToList(detailsEnabledFor);
 	}
-
+        
+    /**
+     * Determine if the sub section is enabled for a given model.
+     * @param model
+     * @return
+     */
+    public boolean isDetailsEnabled(Type model) {
+        com.ail.core.Attribute attr=(com.ail.core.Attribute)model.xpathGet(getBinding());
+        return detailsEnabledFor.contains(attr.getValue());
+    }
+    
     /**
      * PageElement to be rendered/filled if the Question is answered "Yes".
      * @return sub section page element
@@ -179,7 +188,7 @@ public class QuestionWithSubSection extends Question {
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model, String rowContext) throws IllegalStateException, IOException {
         RenderCommand command = buildRenderCommand("QuestionWithSubSection", request, response, model, rowContext);
 
-        command.setRenderIdArg(xpathToId(rowContext + binding));
+        command.setRenderIdArg(encodeId(rowContext + binding));
         
         return invokeRenderCommand(command);
     }

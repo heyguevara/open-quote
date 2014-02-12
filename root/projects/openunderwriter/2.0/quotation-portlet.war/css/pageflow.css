@@ -348,8 +348,13 @@
 .pf-proposer-details-address > .pf-input-section-title,
 .pf-proposer-details-address > .pf-section {
     display: table-cell;
+    vertical-align: middle;
 }
 
+.pf-input-label {
+	 min-width: 20em;
+}   
+    
 .pf-proposer-details .pf-input-section {
     min-width: 385px;
     padding-right: 3em;

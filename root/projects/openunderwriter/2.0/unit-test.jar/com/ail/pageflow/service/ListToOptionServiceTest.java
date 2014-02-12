@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.contains;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class ListToOptionServiceTest {
     @Test
     public void shouldReturnOptionListForHappyPath() throws BaseException {
         sut.invoke();
-        verify(args).setOptionMarkupRet(eq("<option value='?'>i18n_?</option><option value='one'>one</option><option value='two' selected='yes' >two</option><option value='three'>three</option>"));
+        verify(args).setOptionMarkupRet(eq("<option disabled='yes' value='?'>i18n_?</option><option value='one'>one</option><option value='two' selected='yes' >two</option><option value='three'>three</option>"));
     }
 
     @Test
@@ -48,6 +49,13 @@ public class ListToOptionServiceTest {
         doReturn(true).when(args).getExcludeUnknownArg();
         sut.invoke();
         verify(args).setOptionMarkupRet(eq("<option value='one'>one</option><option value='two' selected='yes' >two</option><option value='three'>three</option>"));
+    }
+    
+    @Test
+    public void unknownOptionShouldBeDisabled() throws BaseException {
+        doReturn("unknown").when(args).getUnknownOptionArg();
+        sut.invoke();
+        verify(args).setOptionMarkupRet(contains("disabled='yes'"));
     }
 }
 
