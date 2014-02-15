@@ -105,12 +105,12 @@ function _createOption(optionText, isSelected) {
 function loadChoiceOptions(selectName, selectedOption, array) {
 	var select="select[name='"+selectName+"']";
 	$(select).empty();
-    var maxWidth = 0;
+    var width = 0;
     for (var i=1 ; i < array.length ; i++) {
         $(select).append(_createOption(array[i][0], selectedOption==array[i][0]));
-        maxWidth=Math.max(array[i][0].length, maxWidth);
+        width=Math.max(array[i][0].length, width);
     }
-    $(select).ccs("width", maxWidth+"em");
+    $(select).ccs("width", width+"em");
 }
 
 /* On page load, load the model options appropriate to whatever master is currently
@@ -120,7 +120,7 @@ function loadSlaveChoiceOptions(masterSelectName, slaveSelectName, selectedOptio
 	var master="select[name='"+masterSelectName+"']";
 	var slave="select[name='"+slaveSelectName+"']";
     var masterValue = $(master).val();
-    var maxLength = 0;
+    var width = 0;
     $(slave).empty()
     for(var m=1 ; m<array.length ; m++) {
         if (array[m][0]==masterValue) {
@@ -130,10 +130,10 @@ function loadSlaveChoiceOptions(masterSelectName, slaveSelectName, selectedOptio
             }
         }
         for(var i=1 ; i<array[m].length ; i++) {
-        	maxLength=Math.max(array[m][i].length, maxLength);
+        	width=Math.max(array[m][i].length, width);
         }
     }
-    $(slave).ccs("width", maxWidth+"em");
+    $(slave).ccs("width", width+"em");
 }
 
 function formatnumber(obj, decimalSeparator, thousandsSeparator, places) {
