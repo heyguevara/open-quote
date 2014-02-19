@@ -708,3 +708,10 @@ p {
 	margin-left: 50px;
 	padding: 10px 10px 10px 76px;
 }
+
+.wiki-body code {
+	background-color: transparent;
+	border: none;
+	color: #1a1;
+	white-space: nowrap;
+}
