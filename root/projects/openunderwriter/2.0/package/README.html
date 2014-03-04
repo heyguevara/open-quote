@@ -32,31 +32,31 @@ h2 {
 <body>
 	<div id="banner">
 		<img alt=""
-			src="http://openquote.appliedindustriallogic.com/images/openquote/openquotelogo.png">
+			src="http://www.openunderwriter.com/images/logos/logo%20png%20OpenUnderwriter%20medium.png">
 	</div>
-	<h1>OpenUnderwriter 2.0 Early Access 2 - Installation Notes</h1>
-	<p>Welcome to OpenUnderwriter 2.0 EA2, and thank you for your interest in
+	<h1>OpenUnderwriter @major.version@.@minor.version@
+		@increment.version@ - Installation Notes</h1>
+	<p>Welcome to OpenUnderwriter and thank you for your interest in
 		this project.</p>
 	<p>The notes included here are intended to get you up and running
-		with OpenUnderwriter in the shortest possible time; around 10 minutes if you
-		already have the prerequisites installed.</p>
+		with OpenUnderwriter in the shortest possible time; around 10 minutes
+		if you already have the prerequisites installed.</p>
 	<p>Beyond this basic configuration there are a host of other more
-		detailed customizations that are possible; some of which would be
+		detailed customizations that are possible; some of which should be
 		considered necessary before you think about using OpenUnderwriter in a
-		production environment. For now however, the instruction here should be
-		enough to get you off the ground.</p>
+		production environment. For now however, the instruction here should
+		be enough to get you off the ground.</p>
 	<p>
-		Note: You will need to be happy working from a command line to
-		complete the installation. If you're not, consider taking a look at
-		our <a
-			href="http://openquotecommunity.org/portal">online
-			demo</a> instead.
+		Note: You will need to be happy working from a command line in order
+		to complete the installation. If you're not, please consider taking a
+		look at our <a href="http://openquotecommunity.org/portal">online
+			demonstration</a> instead.
 	</p>
 
 	<h2>Prerequisites</h2>
 	<ul>
-		<li>Java 6 Development Kit (aka Java SE) available from Oracle
-			or other sources depending on your platform.</li>
+		<li>Java 6 Development Kit (aka Java SE) available from Oracle or
+			other sources depending on your platform.</li>
 		<li>MySql Database server.</li>
 	</ul>
 	<h2>Installing the Java Development Kit</h2>
@@ -66,8 +66,8 @@ h2 {
 				6 downloads</a>.
 		</li>
 		<li>Select the appropriate Java SE download for your environment,
-			making sure it is Java SE 6.0, OpenUnderwriter is not currently compatible
-			with 7.0.</li>
+			making sure it is Java SE 6.0, OpenUnderwriter is not currently
+			compatible with 7.0.</li>
 		<li>Once downloaded, follow the installation wizard.</li>
 	</ul>
 	<h2>Installing MySql</h2>
@@ -75,15 +75,15 @@ h2 {
 		<li>Browse to <a href="http://dev.mysql.com/downloads">http://dev.mysql.com/downloads</a>.
 		</li>
 		<li>Select the appropriate download for your environment. You
-			will need version 5.1 or later.</li>
+			will need version 5.6 or later.</li>
 		<li>Once downloaded, follow the installation wizard - as part of
 			this you will be prompted to select a password. You will need this
 			later on.</li>
 	</ul>
 	<h2>Installing OpenUnderwriter</h2>
-	<p>OpenUnderwriter community is supplied as a zip file. Simply unpack
-		this zip file and follow the instructions below (described under
-		Starting the OpenUnderwriter server).</p>
+	<p>OpenUnderwriter community is supplied as a zip file. Simply
+		unpack this zip file and follow the instructions below (described
+		under Starting the OpenUnderwriter server).</p>
 	<p>If you are installing on Windows, we recommend that you don't
 		use Window's built-in zip file viewer. A number of issues have been
 		reported on the forums which seem to point at file corruption caused
@@ -93,21 +93,25 @@ h2 {
 	<h2>Starting the OpenUnderwriter server</h2>
 	<p>Command scripts are supplied which should be suitable for MS
 		Windows, and Unix users. From the command prompt, cd into
-		openquote/bin, then either execute run.sh on Unix, or run.bat on MS
-		Windows.</p>
-	<p>The first time you run OpenUnderwriter it will automatically setup
-		your environment for you. Most importantly, it will create and
-		populate a database in MySQL. During the setup process, you will be
-		prompted for the database password. At that prompt enter the MySql
-		root password (the password supplied during MySql installation.)</p>
+		openunderwriter-community-@major.version@.@minor.version@@increment.version@/bin,
+		then either execute run.sh on Unix, or run.bat on MS Windows.</p>
+	<p>The first time you run OpenUnderwriter it will automatically
+		setup your environment for you. Most importantly, it will create and
+		populate databases in MySQL. During the setup process, you will be
+		prompted for the database username and password. Use either the root
+		user and the password created during MySQL installation, or the
+		credentials of another use who has permission to create databases.</p>
 	<p>Depending on the spec. of your machine the server may take one
 		or two minutes to start up. It will output progress messages as it
 		starts. Start up is complete when a browser window opens showing the
-		OpenUnderwriter home page.</p>
+		OpenUnderwriter home page, you will also see the following message in
+		the console output:
+	<pre>07:45:57,502 INFO  [com.ail.core.configure.server.StartupBean] (EJB default - 10) OpenUnderwriter product repository started.</pre>
+	</p>
 	<h2>Accessing OpenUnderwriter</h2>
 	<p>
-		Once the server is running, you can access OpenUnderwriter by pointing your
-		browser at <a href="http://localhost:8080">http://localhost:8080</a>
+		Once the server is running, you can access OpenUnderwriter by pointing
+		your browser at <a href="http://localhost:8080">http://localhost:8080</a>
 	</p>
 	<h2>Stopping the OpenUnderwriter server</h2>
 	<p>Either closing the command prompt window, or hitting CTRL-C will
@@ -115,8 +119,8 @@ h2 {
 	<h2>Trouble shooting</h2>
 	<p>
 		If you have any issues during installation, or while you are using
-		OpenUnderwriter, the best place to start looking for information is in our
-		project forum <a
+		OpenUnderwriter, the best place to start looking for information is in
+		our project forum <a
 			href="http://openquote.opensourceinsurance.org/index.php/support/support-forum">project
 			forum</a>, and feel free to post a question if you can't find the answer
 		you need.

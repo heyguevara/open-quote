@@ -6,10 +6,9 @@
 <project name="BuildSettings" default="dummy">
   <!-- Release version numbers (BTW the build number comes from bamboo.) -->
   <property name="major.version" value="2" />
-  <property name="minor.version" value="1" />
+  <property name="minor.version" value="0" />
 
   <!-- Version of Liferay to use for this project, and the version of jboss bundled within it -->
-  <!--property name="liferay.version" value="6.1.1-ce-ga2" /-->
   <property name="liferay.version" value="6.2.0-ce-ga1" />
   <property name="jboss.version" value="7.1.1" />
 	

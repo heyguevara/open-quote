@@ -61,6 +61,7 @@ function showDivDisplay(id)
 function hideDivDisplay(id)
 {
 	$('#'+id).hide("fade");
+	$('#'+id).css("display", "none");
 }
 
 function showDivDisplayIf(condition, id) {

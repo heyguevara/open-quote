@@ -59,7 +59,7 @@ $theme.include($body_top_include)
 
     <footer id="footer" role="contentinfo">
         <p class="powered-by">
-            #language("powered-by") <a href="http://www.ail-ltd.co.uk" rel="external">OpenUnderwriter</a>
+            #language("powered-by") <a href="http://www.openunderwriter.com" rel="external">OpenUnderwriter</a>
         </p>
     </footer>
 </div>

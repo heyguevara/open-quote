@@ -9,7 +9,7 @@
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <header-portlet-css>/css/pageflow.css</header-portlet-css>
 		<header-portlet-css>/css/main.css</header-portlet-css>
-        <header-portal-javascript>/js/jquery-2.1.0.min.js</header-portal-javascript>
+        <header-portlet-javascript>/js/jquery-2.1.0.min.js</header-portlet-javascript>
         <header-portlet-javascript>/js/main.js</header-portlet-javascript>
         <header-portlet-javascript>/js/numberformat.js</header-portlet-javascript>
         <header-portlet-javascript>/js/tinymce/tinymce.min.js</header-portlet-javascript>

@@ -19,11 +19,6 @@ package com.ail.core;
 /**
  * Classes that implement this interface have identifiers, and can be safely compared with 
  * any other implementor.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
  */
 public interface Identified {
     String getId();

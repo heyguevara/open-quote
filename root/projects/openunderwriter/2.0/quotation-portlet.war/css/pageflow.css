@@ -281,25 +281,20 @@
 /*
  * Styles specific to the NavigationSection widget
  */
-.pf-navigation-section-quit,
-.pf-navigation-section-buttons {
-    display: inline-block;
-    vertical-align: bottom;
-}
-
-.pf-navigation-section-buttons {
-    width: 90%;
+.pf-navigation-section > .pf-section {
+    width: 100%;
+	text-align: centre;
 }
 
 .pf-navigation-section-quit {
     float: right;
+    display: inline-block;
 }
 
-
-.pf-navigation-section-quit > .pf-section,
-.pf-navigation-section-buttons > .pf-section {
-    display: table;
-	margin: auto;
+.pf-navigation-section-buttons {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /*
