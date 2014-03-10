@@ -31,6 +31,7 @@ import java.util.jar.JarFile;
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
+import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.command.Argument;
@@ -116,8 +117,9 @@ public class GetClassListService extends Service<GetClassListService.GetClassLis
      * TODO This really needs a good refactoring - it build up vectors of files, vectors of directories, and vectors of
      * classes. There's no need for any of them, the processing can be done on the fly without any lists - which would 
      * reduce the memory req. a lot.
+     * @throws  
      */
-    public void invoke() throws PreconditionException {
+    public void invoke() throws PreconditionException, PostconditionException {
         Class<?> classToCheck = null;
 
         if (args.getSearchClassArg() == null) {
@@ -151,8 +153,10 @@ public class GetClassListService extends Service<GetClassListService.GetClassLis
         // Search for implementors in the jars
         while (jars.size() > 0) {
             String name=(String)jars.remove(0);
+            JarFile jar = null;
+
             try {
-            	JarFile jar = new JarFile(name);
+            	jar = new JarFile(name);
                 for (Enumeration<JarEntry> entries = jar.entries(); entries.hasMoreElements();) {
                     String entryName = entries.nextElement().getName();
                 	allFiles.add(entryName);
@@ -164,6 +168,13 @@ public class GetClassListService extends Service<GetClassListService.GetClassLis
                     dirs.add(name);
                 }
                 // ignore this - probably just means the classpath is pointing at something that doesn't exist.
+            }
+            finally {
+                try {
+                    jar.close();
+                } catch (IOException e) {
+                    throw new PostconditionException("Failed to close jar file.");
+                }
             }
         }
 

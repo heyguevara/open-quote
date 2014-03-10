@@ -22,7 +22,10 @@ import org.mockito.MockitoAnnotations;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.configure.hook.Listener;
+import com.ail.core.configure.hook.Listener.EventType;
 import com.ail.core.product.ClearProductCacheService.ClearProductCacheCommand;
+import com.ail.core.product.RegisterProductService.RegisterProductCommand;
+import com.ail.core.product.RemoveProductService.RemoveProductCommand;
 import com.ail.core.product.ResetProductService.ResetProductCommand;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -37,6 +40,10 @@ public class ListenerTest {
     private ResetProductCommand mockQueuedResetProduct = null;
     @Mock
     private ClearProductCacheCommand mockClearProductCacheCommand = null;
+    @Mock
+    private RegisterProductCommand mockRegisterProductCommand;
+    @Mock
+    private RemoveProductCommand mockRemoveProductCommand;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -45,11 +52,13 @@ public class ListenerTest {
 
         doReturn(mockQueuedResetProduct).when(mockCoreProxy).newCommand(eq("QueuedResetProductCommand"), any(Class.class));
         doReturn(mockClearProductCacheCommand).when(mockCoreProxy).newCommand(eq("QueuedClearProductCacheCommand"), any(Class.class));
-
+        doReturn(mockRegisterProductCommand).when(mockCoreProxy).newCommand(eq("QueuedRegisterProductCommand"), any(Class.class));
+        doReturn(mockRemoveProductCommand).when(mockCoreProxy).newCommand(eq("QueuedRemoveProductCommand"), any(Class.class));
+        
         sut = spy(new Listener(mockCoreProxy));
     }
 
-    public DLFileEntry createMockStructure_Product_AIL_TestProduct_TestFile() throws Exception {
+    private DLFileEntry createMockStructure_Product_AIL_TestProduct_TestFile() throws Exception {
         DLFileEntry fileEntry = null;
         DLFolder folder = null;
 
@@ -62,7 +71,7 @@ public class ListenerTest {
         return fileEntry;
     }
 
-    public DLFileEntry createMockStructure_Product_AIL_TestProduct_Registry() throws Exception {
+    private DLFileEntry createMockStructure_Product_AIL_TestProduct_Registry() throws Exception {
         DLFileEntry fileEntry = null;
         DLFolder folder = null;
 
@@ -75,7 +84,7 @@ public class ListenerTest {
         return fileEntry;
     }
 
-    public DLFolder createMockStructure_Product_AIL_TestProduct() throws Exception {
+    private DLFolder createMockStructure_Product_AIL_TestProduct() throws Exception {
         DLFolder retFolder = null;
         DLFolder folder = null;
         DLFolder parent = null;
@@ -102,60 +111,31 @@ public class ListenerTest {
         return retFolder;
     }
 
-    public DLFolder createMockStructure_Product_AIL() throws Exception {
+    private DLFolder createMockStructure_Someplace_Outside_Product_Tree() throws Exception {
         DLFolder retFolder = null;
         DLFolder folder = null;
         DLFolder parent = null;
 
         parent = mock(DLFolder.class);
-        doReturn("AIL").when(parent).getName();
-        doReturn("/Product/AIL").when(parent).getPath();
+        doReturn("Tree").when(parent).getName();
+        doReturn("/Someplace/Outside/Tree").when(parent).getPath();
         doReturn(false).when(sut).isFolderAProductRoot(eq(parent));
         folder = parent;
         retFolder = parent;
 
         parent = mock(DLFolder.class);
         doReturn(parent).when(folder).getParentFolder();
-        doReturn("Product").when(parent).getName();
-        doReturn("/Product").when(parent).getPath();
+        doReturn("Outside").when(parent).getName();
+        doReturn("/Someplace/Outside").when(parent).getPath();
+        doReturn(false).when(sut).isFolderAProductRoot(eq(parent));
+        folder = parent;
+
+        parent = mock(DLFolder.class);
+        doReturn(parent).when(folder).getParentFolder();
+        doReturn("Someplace").when(parent).getName();
+        doReturn("/Someplace").when(parent).getPath();
         doReturn(true).when(parent).isRoot();
         doReturn(false).when(sut).isFolderAProductRoot(eq(parent));
-        folder = parent;
-
-        return retFolder;
-    }
-
-    public DLFolder createMockStructure_Product_AIL_TestProduct_Folder() throws Exception {
-        DLFolder retFolder = null;
-        DLFolder folder = null;
-        DLFolder parent = null;
-
-        parent = mock(DLFolder.class);
-        doReturn("Folder").when(parent).getName();
-        doReturn("/Product/AIL/TestProduct/Folder").when(parent).getPath();
-        doReturn(false).when(sut).isFolderAProductRoot(eq(parent));
-        retFolder = parent;
-        folder = parent;
-
-        parent = mock(DLFolder.class);
-        doReturn("TestProduct").when(parent).getName();
-        doReturn("/Product/AIL/TestProduct").when(parent).getPath();
-        doReturn(true).when(sut).isFolderAProductRoot(eq(parent));
-        doReturn(parent).when(folder).getParentFolder();
-        folder = parent;
-
-        parent = mock(DLFolder.class);
-        doReturn("AIL").when(parent).getName();
-        doReturn("/Product/AIL").when(parent).getPath();
-        doReturn(false).when(sut).isFolderAProductRoot(eq(parent));
-        doReturn(parent).when(folder).getParentFolder();
-        folder = parent;
-
-        parent = mock(DLFolder.class);
-        doReturn("Product").when(parent).getName();
-        doReturn("/Product").when(parent).getPath();
-        doReturn(false).when(sut).isFolderAProductRoot(eq(parent));
-        doReturn(parent).when(folder).getParentFolder();
         folder = parent;
 
         return retFolder;
@@ -164,25 +144,55 @@ public class ListenerTest {
     @Test
     public void testOnAfterRemoveClearsCache() throws Exception {
         DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_TestFile();
-        doReturn(true).when(sut).isChanged(mockFileEntry);
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.REMOVE);
         sut.onAfterRemove(mockFileEntry);
         verify(mockClearProductCacheCommand, times(1)).invoke();
+    }
+
+    @Test
+    public void testOnAfterRemoveResetsProduct() throws Exception {
+        DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_TestFile();
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.REMOVE);
+        sut.onAfterRemove(mockFileEntry);
         verify(mockQueuedResetProduct, never()).invoke();
     }
 
     @Test
-    public void testOnAfterUpdateClearsCacheAndResetsProduct() throws Exception {
+    public void testOnAfterRemoveRemovedProduct() throws Exception {
         DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_Registry();
-        doReturn(true).when(sut).isChanged(mockFileEntry);
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.REMOVE);
+        sut.onAfterRemove(mockFileEntry);
+        verify(mockRemoveProductCommand, times(1)).invoke();
+    }
+
+    @Test
+    public void testOnAfterUpdateClearsCache() throws Exception {
+        DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_Registry();
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.UPDATE);
         sut.onAfterUpdate(mockFileEntry);
         verify(mockClearProductCacheCommand, times(1)).invoke();
+    }
+
+    @Test
+    public void testOnAfterUpdateResetsProduct() throws Exception {
+        DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_Registry();
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.UPDATE);
+        sut.onAfterUpdate(mockFileEntry);
         verify(mockQueuedResetProduct, times(1)).invoke();
+    }
+
+    @Test
+    public void testOnAfterCreateRegistersProduct() throws Exception {
+        DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_Registry();
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.CREATE);
+        sut.onAfterCreate(mockFileEntry);
+        verify(mockRegisterProductCommand, times(1)).invoke();
     }
 
     @Test
     public void testOnAfterUpdateForNonRegistryClearsCacheAndResetsProduct() throws Exception {
         DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_TestFile();
-        doReturn(true).when(sut).isChanged(mockFileEntry);
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.UPDATE);
         sut.onAfterUpdate(mockFileEntry);
         verify(mockClearProductCacheCommand, times(1)).invoke();
         verify(mockQueuedResetProduct, never()).invoke();
@@ -202,7 +212,7 @@ public class ListenerTest {
     @Test
     public void testOnAfterUpdateForUnchangedNonRegistryDoesNotInvokeAnything() throws Exception {
         DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_TestFile();
-        doReturn(false).when(sut).isChanged(mockFileEntry);
+        doReturn(false).when(sut).isChangeEvent(mockFileEntry, EventType.UPDATE);
         sut.onAfterUpdate(mockFileEntry);
         verify(mockClearProductCacheCommand, never()).invoke();
         verify(mockQueuedResetProduct, never()).invoke();
@@ -211,9 +221,8 @@ public class ListenerTest {
     @Test
     public void testOnAfterCreateClearsCacheAndResetsProduct() throws Exception {
         DLFileEntry mockFileEntry = createMockStructure_Product_AIL_TestProduct_Registry();
-        doReturn(true).when(sut).isChanged(mockFileEntry);
+        doReturn(true).when(sut).isChangeEvent(mockFileEntry, EventType.CREATE);
         sut.onAfterCreate(mockFileEntry);
-        verify(mockClearProductCacheCommand, times(1)).invoke();
         verify(mockQueuedResetProduct, times(1)).invoke();
     }
 
@@ -283,19 +292,19 @@ public class ListenerTest {
 
     @Test
     public void testFileEntry2ProductName() throws Exception {
-        assertNull(sut.fileEntry2ProductName(null));
+        assertNull(sut.registryPath2ProductName(null));
 
-        DLFolder folder1 = createMockStructure_Product_AIL_TestProduct();
-        assertEquals("AIL.TestProduct", sut.fileEntry2ProductName(folder1));
-
-        DLFolder folder2 = createMockStructure_Product_AIL_TestProduct_Folder();
-        assertEquals("AIL.TestProduct", sut.fileEntry2ProductName(folder2));
+        assertEquals("AIL.TestProduct", sut.registryPath2ProductName("/Product/AIL/TestProduct/Registry.xml"));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testFileEntry2ProductNameOutsideOfTree() throws Exception {
-        DLFolder folder1 = createMockStructure_Product_AIL();
-        sut.fileEntry2ProductName(folder1);
+    public void testFileEntry2ProductNameWithoutRegistary() throws Exception {
+        assertEquals("AIL.TestProduct", sut.registryPath2ProductName("/Product/AIL/TestProduct"));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testRegistryPath2ProductNameOutsideOfTree() throws Exception {
+        sut.registryPath2ProductName("/SomePlaceElse/File");
     }
 
     @Test
@@ -304,5 +313,16 @@ public class ListenerTest {
         doReturn("1.0").when(fileEntry).getVersion();
         sut.onBeforeCreate(fileEntry);
         sut.onAfterCreate(fileEntry);
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void testFileEntry2ProductNameOutsideOfTree() throws Exception {
+        DLFolder folderEntry = createMockStructure_Someplace_Outside_Product_Tree();
+        sut.fileEntry2ProductName(folderEntry);
+    }
+    
+    @Test
+    public void testFullPathToProductName() throws Exception {
+        assertEquals("AIL.TestProduct.One", sut.registryPath2ProductName("/Product/AIL/TestProduct/One/Registry.xml"));
     }
 }

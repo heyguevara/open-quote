@@ -20,6 +20,7 @@ package com.ail.core.product;
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
 import com.ail.annotation.ServiceImplementation;
+import com.ail.core.BaseException;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
@@ -30,6 +31,7 @@ import com.ail.core.configure.Configuration;
 import com.ail.core.configure.ConfigurationHandler;
 import com.ail.core.configure.Group;
 import com.ail.core.configure.Parameter;
+import com.ail.core.product.ListProductsService.ListProductsCommand;
 
 @ServiceImplementation
 public class RegisterProductService extends Service<RegisterProductService.RegisterProductArgument> {
@@ -78,28 +80,46 @@ public class RegisterProductService extends Service<RegisterProductService.Regis
             throw new PreconditionException("args.getProductDetailsArg().getName()==null || args.getProductDetailsArg().getName().length()==0");
         }
         
-        // Select the product catalog namespace as our config
-        setConfigurationNamespace(ListProductsService.SERVICE_NAMESPACE);
-        String catalogNamespace=core.getParameterValue("productCatalogNamespace");
-        setConfigurationNamespace(catalogNamespace);
-
-        // Check that the product doesn't already exist
-        if (core.getParameter("products."+args.getProductDetailsArg().getName())!=null) {
-            throw new DuplicateProductException(args.getProductDetailsArg().getName());
+        if (!productIsAlreadyRegistered()) {
+            // Select the product catalog namespace as our config
+            setConfigurationNamespace(ListProductsService.SERVICE_NAMESPACE);
+            String catalogNamespace=core.getParameterValue("productCatalogNamespace");
+            setConfigurationNamespace(catalogNamespace);
+    
+            // The "Registry" is implemented as a group in the product catalog's configuration namespace - 
+            // add the new products details to the registry.
+            Configuration config=core.getConfiguration();
+            Group prods=config.findGroup("products");
+            Parameter prod=new Parameter();
+            prod.setName(args.getProductDetailsArg().getName());
+            prod.setValue(args.getProductDetailsArg().getDescription());
+            prods.addParameter(prod);
+            core.setConfiguration(config);
+    
+            // force the catalog to be reloaded on the next attempt to read it.
+            ConfigurationHandler.reset(catalogNamespace);
+    
+            core.logInfo("Product sucessfully registered: "+args.getProductDetailsArg().getName());
         }
-        
-        // The "Registry" is implemented as a group in the product catalog's configuration namespace - 
-        // add the new products details to the registry.
-        Configuration config=core.getConfiguration();
-        Group prods=config.findGroup("products");
-        Parameter prod=new Parameter();
-        prod.setName(args.getProductDetailsArg().getName());
-        prod.setValue(args.getProductDetailsArg().getDescription());
-        prods.addParameter(prod);
-        core.setConfiguration(config);
+        else {
+            core.logInfo("Product registered ignored: "+args.getProductDetailsArg().getName()+" is already registered");
+        }
+    }
 
-        // force the catalog to be reloaded on the next attempt to read it.
-        ConfigurationHandler.reset(catalogNamespace);
+    boolean productIsAlreadyRegistered() throws PreconditionException {
+        try {
+            ListProductsCommand listProductCommand=core.newCommand(ListProductsCommand.class);
+            listProductCommand.invoke();
+            for(ProductDetails productDetail: listProductCommand.getProductsRet()) {
+                if (productDetail.getName().equals(args.getProductDetailsArg().getName())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch(BaseException e) {
+            throw new PreconditionException("Failed to create ListProductsCommand service", e);
+        }
     }
 
     /**

@@ -18,6 +18,9 @@ package com.ail.core.configure.hook;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.product.ClearProductCacheService.ClearProductCacheCommand;
+import com.ail.core.product.ProductDetails;
+import com.ail.core.product.RegisterProductService.RegisterProductCommand;
+import com.ail.core.product.RemoveProductService.RemoveProductCommand;
 import com.ail.core.product.ResetProductService.ResetProductCommand;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,12 +45,17 @@ public class Listener extends BaseModelListener<DLFileEntry> {
     static ChangeDetector changeDetector = new ChangeDetector();
     private ResetProductCommand queuedResetProduct;
     private ClearProductCacheCommand queuedClearProductCache;
+    private RegisterProductCommand queuedRegisterProduct;
+    private RemoveProductCommand queuedRemoveProduct;
     private CoreProxy core;
+    enum EventType {CREATE, UPDATE, REMOVE};
 
     Listener(CoreProxy proxy) {
         core = proxy;
         queuedResetProduct = core.newCommand("QueuedResetProductCommand", ResetProductCommand.class);
         queuedClearProductCache = core.newCommand("QueuedClearProductCacheCommand", ClearProductCacheCommand.class);
+        queuedRegisterProduct = core.newCommand("QueuedRegisterProductCommand", RegisterProductCommand.class);
+        queuedRemoveProduct = core.newCommand("QueuedRemoveProductCommand", RemoveProductCommand.class);
     }
 
     public Listener() {
@@ -70,18 +78,25 @@ public class Listener extends BaseModelListener<DLFileEntry> {
     }
     
     @Override
+    public void onBeforeRemove(DLFileEntry fileEntry) throws ModelListenerException {
+        if (isFileAProductFile(fileEntry)) {
+            recordChange(fileEntry);
+        }
+    }
+
+    @Override
     public void onAfterRemove(DLFileEntry fileEntry) throws ModelListenerException {
-        handleOnAfterEvent(fileEntry, false);
+        handleEvent(fileEntry, EventType.REMOVE);
     }
 
     @Override
     public void onAfterCreate(DLFileEntry fileEntry) throws ModelListenerException {
-        handleOnAfterEvent(fileEntry, true);
+        handleEvent(fileEntry, EventType.CREATE);
     }
 
     @Override
     public void onAfterUpdate(DLFileEntry fileEntry) throws ModelListenerException {
-        handleOnAfterEvent(fileEntry, true);
+        handleEvent(fileEntry, EventType.UPDATE);
     }
     
     // Wrapper for static method call to aid testing
@@ -90,8 +105,10 @@ public class Listener extends BaseModelListener<DLFileEntry> {
     }
 
     // Wrapper for static method call to aid testing
-    boolean isChanged(DLFileEntry fileEntry) {
-        return changeDetector.isChanged(fileEntry);
+    boolean isChangeEvent(DLFileEntry fileEntry, EventType eventType) {
+        // CREATE and REMOVE events are always changes, and UPDATE event may not be
+        // so we need to refer to the changeDetector for them.
+        return !EventType.UPDATE.equals(eventType) || changeDetector.isChanged(fileEntry);
     }
 
     // Wrapper for static method call to aid testing
@@ -99,33 +116,39 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         return DLFileEntryServiceUtil.getFileEntry(groupId, folderId, title);
     }
 
-    void resetProductForFileEntry(DLFileEntry fileEntry) throws Exception {
-        core.setVersionEffectiveDateToNow();
-        String productName = fileEntry2ProductName(fileEntry.getFolder());
-        queuedResetProduct.setCallersCore(core);
-        queuedResetProduct.setProductNameArg(productName);
-        queuedResetProduct.invoke();
+    private boolean isInsideProductStructure(String path) {
+        return path.startsWith("/Product/");
     }
-
-    void clearProductCacheForFileEntry(DLFileEntry fileEntry) throws Exception {
-        core.setVersionEffectiveDateToNow();
-        String productName = fileEntry2ProductName(fileEntry.getFolder());
-        queuedClearProductCache.setCallersCore(core);
-        queuedClearProductCache.setProductNameArg(productName);
-        queuedClearProductCache.invoke();
+    
+    private boolean isProductRegistory(String path) {
+        return path.endsWith("/Registry.xml");
     }
-
-    void handleOnAfterEvent(DLFileEntry fileEntry, boolean allowResetProduct) throws ModelListenerException {
+    
+    void handleEvent(DLFileEntry fileEntry, EventType eventType) throws ModelListenerException {
         String fullPath = fileEntry2FullPath(fileEntry);
 
         try {
-            if (fullPath.startsWith("/Product/")) {
-                if (isChanged(fileEntry)) {
-                    if (allowResetProduct && fullPath.endsWith("/Registry.xml")) {
-                        resetProductForFileEntry(fileEntry);
+            if (isInsideProductStructure(fullPath)) {
+                if (isChangeEvent(fileEntry, eventType)) {
+                    if (isProductRegistory(fullPath)) {
+                        switch(eventType) {
+                        case CREATE:
+                            registerProduct(fullPath);
+                            resetProduct(fullPath);
+                            break;
+                        case UPDATE:
+                            resetProduct(fullPath);
+                            clearProductCache(fileEntry);
+                            break;
+                        case REMOVE:
+                            removeProduct(fullPath);
+                            clearProductCache(fileEntry);
+                            break;
+                        }
                     }
-
-                    clearProductCacheForFileEntry(fileEntry);
+                    else {
+                        clearProductCache(fileEntry);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -133,13 +156,6 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         }
     }
     
-    @Override
-    public void onBeforeRemove(DLFileEntry fileEntry) throws ModelListenerException {
-        if (isFileAProductFile(fileEntry)) {
-            recordChange(fileEntry);
-        }
-    }
-
     /**
      * Determine if a folder is the root of a product. If the folder contains a
      * Registry.xml file it is assumed to be a product root.
@@ -167,6 +183,38 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         return fileEntry2FullPath(fileEntry).startsWith("/Product/");
     }
 
+
+    String registryPath2ProductName(final String registryPath) {
+        if (registryPath==null) {
+            return null;
+        }
+        
+        if (!registryPath.endsWith("/Registry.xml")) {
+            throw new IllegalStateException("registryPath2ProductName can only be used on Registry files. '"+registryPath+"' is not a registry file.");
+        }
+        
+        StringBuffer productName=new StringBuffer(registryPath);
+
+        if (productName.indexOf("/Product/")==0) {
+            productName.delete(0, 9);
+        }
+        else {
+            throw new IllegalStateException("Cannot determin the product name for a folder. The folder does not appear to be in the product hierarchy.");
+        }
+
+        // Remove the file name from the path
+        productName.delete(productName.lastIndexOf("/"), productName.length());
+
+        // replace all occurrences of '/' with '.'
+        for (int i = 0; i < productName.length(); i++) {
+            if (productName.charAt(i) == '/') {
+                productName.setCharAt(i, '.');
+            }
+        }
+
+        return productName.toString();
+    }
+    
     /**
      * Convert a CMS full path into a product name. For example:
      * "/Product/AIL/Base/House/File.xml" becomes: "AIL.Base.House"
@@ -180,22 +228,7 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         }
 
         if (isFolderAProductRoot(folderEntry)) {
-
-            // if we get here, Registry.xml must exist which means that this is
-            // the product folder
-            StringBuffer productName = new StringBuffer(folderEntry.getPath());
-
-            // delete the "/Product/" from the front of the name
-            productName.delete(0, 9);
-
-            // replace all '/' chars with '.'
-            for (int i = 0; i < productName.length(); i++) {
-                if (productName.charAt(i) == '/') {
-                    productName.setCharAt(i, '.');
-                }
-            }
-
-            return productName.toString();
+            return registryPath2ProductName(folderEntry.getPath() + "/Registry.xml");
         } else {
             // stop now if we've reached the root folder, otherwise iterate into
             // the parent folder.
@@ -226,5 +259,40 @@ public class Listener extends BaseModelListener<DLFileEntry> {
         } catch (Exception e) {
             throw new ModelListenerException("Failed to derive full path for: " + fileEntry);
         }
+    }
+
+    void clearProductCache(DLFileEntry fileEntry) throws Exception {
+        core.setVersionEffectiveDateToNow();
+        String productName = fileEntry2ProductName(fileEntry.getFolder());
+        queuedClearProductCache.setCallersCore(core);
+        queuedClearProductCache.setProductNameArg(productName);
+        queuedClearProductCache.invoke();
+    }
+    
+    void resetProduct(String registryPath) throws Exception {
+        core.setVersionEffectiveDateToNow();
+        String productName = registryPath2ProductName(registryPath);
+        queuedResetProduct.setCallersCore(core);
+        queuedResetProduct.setProductNameArg(productName);
+        queuedResetProduct.invoke();
+    }
+
+    void registerProduct(String registryPath) throws Exception {
+        ProductDetails productsDetails=new ProductDetails();
+        productsDetails.setName(registryPath2ProductName(registryPath));
+        productsDetails.setDescription("Created by auto registration");
+        core.setVersionEffectiveDateToNow();
+        queuedRegisterProduct.setCallersCore(core);
+        queuedRegisterProduct.setProductDetailsArg(productsDetails);
+        queuedRegisterProduct.invoke();
+    }
+
+    void removeProduct(String registryPath) throws Exception {
+        ProductDetails productsDetails=new ProductDetails();
+        productsDetails.setName(registryPath2ProductName(registryPath));
+        core.setVersionEffectiveDateToNow();
+        queuedRemoveProduct.setCallersCore(core);
+        queuedRemoveProduct.setProductDetailsArg(productsDetails);
+        queuedRemoveProduct.invoke();
     }
 }

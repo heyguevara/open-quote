@@ -352,6 +352,10 @@ public class DataGenerator {
             dbUrl=args[1];
             dbUsername=args[2];
             dbPassword=args[3];
+            System.out.println("dbDriver:'"+dbDriver+"'");
+            System.out.println("dbUrl:'"+dbUrl+"'");
+            System.out.println("dbUsername:'"+dbUsername+"'");
+            System.out.println("dbPassword:'"+dbPassword+"'");
             populateConnection();
         }
         

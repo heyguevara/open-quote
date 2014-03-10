@@ -96,6 +96,8 @@ public class RemoveProductService extends Service<RemoveProductService.RemovePro
                 return;
             }
         }
+
+        core.logInfo("Product sucessfully removed: "+args.getProductDetailsArg().getName());
     }
 
     /**

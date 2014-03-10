@@ -36,6 +36,14 @@
       <parameter name="Service">com.ail.core.product.ResetProductService</parameter>
     </command>
 
+    <command name="RegisterProductArgumentImpl" builder="ClassBuilder" key="com.ail.core.product.RegisterProductCommandImpl">
+      <parameter name="Service">com.ail.core.product.RegisterProductService</parameter>
+    </command>
+
+    <command name="RemoveProductArgumentImpl" builder="ClassBuilder" key="com.ail.core.product.RemoveProductCommandImpl">
+      <parameter name="Service">com.ail.core.product.RemoveProductService</parameter>
+    </command>
+
     <!--======================================================================= -->
     <!-- Bind the command server's commands directly to an implementation; -->
     <!-- hibernate by default. This ensures that the command server won't -->

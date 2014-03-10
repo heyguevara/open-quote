@@ -139,5 +139,11 @@
         <command name="QueuedResetProductCommand" builder="ClassBuilder" key="com.ail.core.product.ResetProductCommandImpl">
             <parameter name="Service">JMSQueueService</parameter>
         </command>
+        <command name="QueuedRegisterProductCommand" builder="ClassBuilder" key="com.ail.core.product.RegisterProductCommandImpl">
+            <parameter name="Service">JMSQueueService</parameter>
+        </command>
+        <command name="QueuedRemoveProductCommand" builder="ClassBuilder" key="com.ail.core.product.RemoveProductCommandImpl">
+            <parameter name="Service">JMSQueueService</parameter>
+        </command>
     </types>
 </configuration>
