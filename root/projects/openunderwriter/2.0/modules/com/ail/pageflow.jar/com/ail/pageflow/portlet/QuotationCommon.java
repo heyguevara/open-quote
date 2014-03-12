@@ -20,8 +20,9 @@ import static ch.lambdaj.Lambda.extract;
 import static ch.lambdaj.Lambda.on;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -179,7 +180,7 @@ public class QuotationCommon {
      * @throws BaseException 
      */
     public String buildPageFlowSelectOptions(String product, String pageFlowName) throws BaseException {
-        List<String> pageFlowNames=new ArrayList<String>();
+        Set<String> pageFlowNames=new HashSet<String>();
 
         if (product!=null && product.length()!=0) {
             listPageFlowsForProductCommand.setCallersCore(new CoreUserImpl());

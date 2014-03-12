@@ -19,8 +19,8 @@ package com.ail.pageflow.service;
 
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.ail.annotation.ServiceArgument;
 import com.ail.annotation.ServiceCommand;
@@ -31,25 +31,35 @@ import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
+import com.ail.core.configure.Configuration;
 import com.ail.core.configure.Types;
 import com.ail.pageflow.PageFlow;
 
 /**
- * Fetch a list of the PageFlows supported by a named product
+ * Fetch a list of the PageFlows supported by a named product. The list will
+ * contain the names of all of the types defined in the product's namespace
+ * which are instances of PageFlow, it will also contain the PageFlow types
+ * defined in all of the parent namespaces. Only unique types are included;
+ * therefore if both the product and its parent define a PageFlow type named
+ * "NewBusiness", only one will be included in the returned list. This is
+ * consistent because it would not be possible, from the given namespace, to
+ * instantiate both the local type and the one defined by the parent.
  */
 @ServiceImplementation
 public class ListPageFlowsForProductService extends Service<ListPageFlowsForProductService.ListPageFlowsForProductArgument> {
-    public static String CONFIGURATION_NOT_FOUND="getCore().getConfiguration()==null";
-    
+    public static String CONFIGURATION_NOT_FOUND = "getCore().getConfiguration()==null";
+    private static final String PAGEFLOW_CLASSNAME = PageFlow.class.getName();
+    private String namespace;
+
     @ServiceArgument
     public interface ListPageFlowsForProductArgument extends Argument {
         void setProductNameArg(String productNameArg);
 
         String getProductNameArg();
 
-        void setPageFlowNameRet(List<String> pageFlowNameRet);
+        void setPageFlowNameRet(Set<String> pageFlowNameRet);
 
-        List<String> getPageFlowNameRet();
+        Set<String> getPageFlowNameRet();
     }
 
     @ServiceCommand(defaultServiceClass = ListPageFlowsForProductService.class)
@@ -58,7 +68,7 @@ public class ListPageFlowsForProductService extends Service<ListPageFlowsForProd
 
     @Override
     public String getConfigurationNamespace() {
-        return productNameToConfigurationNamespace(args.getProductNameArg());
+        return namespace;
     }
 
     @Override
@@ -67,24 +77,46 @@ public class ListPageFlowsForProductService extends Service<ListPageFlowsForProd
             throw new PreconditionException("args.getProductNameArg()==null || args.getProductNameArg().length()==0");
         }
 
-        if (getCore().getConfiguration() == null) {
-            throw new PreconditionException(CONFIGURATION_NOT_FOUND);
-        }
+        Set<String> results = new HashSet<String>();
 
-        List<String> results = new ArrayList<String>();
-
-        Types types = getCore().getConfiguration().getTypes();
-
-        for (int i = 0; i < types.getTypeCount(); i++) {
-            if (PageFlow.class.getName().equals(types.getType(i).getKey())) {
-                results.add(types.getType(i).getName());
-            }
-        }
+        appendPageFlowTypesToList(productNameToConfigurationNamespace(args.getProductNameArg()), results);
 
         args.setPageFlowNameRet(results);
 
         if (args.getPageFlowNameRet() == null) {
             throw new PostconditionException("args.getProductNameArg()==null");
+        }
+    }
+
+    /**
+     * Recursively add the pageflows from the named namespace, and all of that
+     * namespace's parent namespaces, to <code>result</code>.
+     * 
+     * @param namespace
+     * @param results
+     * @throws PreconditionException
+     */
+    private void appendPageFlowTypesToList(String namespace, Set<String> results) throws PreconditionException {
+        if (namespace != null) {
+            this.namespace = namespace;
+
+            Configuration config = getCore().getConfiguration();
+
+            if (config == null) {
+                throw new PreconditionException(CONFIGURATION_NOT_FOUND);
+            }
+
+            Types types = config.getTypes();
+
+            if (types != null) {
+                for (int i = 0; i < types.getTypeCount(); i++) {
+                    if (PAGEFLOW_CLASSNAME.equals(types.getType(i).getKey())) {
+                        results.add(types.getType(i).getName());
+                    }
+                }
+            }
+
+            appendPageFlowTypesToList(config.getParentNamespace(), results);
         }
     }
 }
