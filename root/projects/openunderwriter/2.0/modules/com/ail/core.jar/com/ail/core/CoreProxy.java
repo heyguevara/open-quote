@@ -51,7 +51,7 @@ public class CoreProxy implements CoreUser, ConfigurationOwner {
     private String namespace=null;
 
     /**
-     * Default constructor. This creates a core proxy with the default configation namespace ("com.ail.core.CoreProxy"),  
+     * Default constructor. This creates a core proxy with the default configuration namespace ("com.ail.core.CoreProxy"),  
      * a default version effective date of Date.now() and a security principal set to null.
      */
     public CoreProxy() {

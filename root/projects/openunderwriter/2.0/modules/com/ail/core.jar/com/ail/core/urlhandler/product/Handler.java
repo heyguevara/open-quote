@@ -23,11 +23,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.RunAsProductReader;
 import com.ail.core.ThreadLocale;
+import com.ail.core.configure.ConfigurationHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -35,20 +37,43 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 /**
- * The handler deals with URLs of the form: "product://". 
+ * The handler deals with URLs of the form: "product://".
+ * <p>
+ * This handler is sensitive to the structure of the product namespace hierarchy
+ * and will look for the content being referenced in the product namespace that
+ * the URL implies, and in all of that namespace's parents.
+ * </p>
+ * <p>
+ * A product URL contains within it the namespace of the product owning the
+ * content. For example:
+ * product://localhost:8080/AIL/Demo/LifePlus/Rules/SomeRulesResource.xml
+ * addresses content in the AIL.Demo.LifePlus product namespace. Where a
+ * namespace has a parent namespace, the content will be searched for using the
+ * exact URL supplied, but also in that namespace's ancestors.
+ * </p>
+ * <p>
+ * In the example above, the product has the parent AIL.Base. Therefore if the
+ * content "Rules/SomeRulesResource.xml" is not found in AIL.Demo.LifePlus the
+ * handler will search for it in AIL.Base - giving it the effective URL
+ * product://localhost:8080/AIL/Base/Rules/SomeRuleResource.xml.
+ * </p>
  */
 public class Handler extends URLStreamHandler {
-    private CoreProxy coreProxy;
     private Long repositoryId;
     private String root;
 
     public Handler() {
+        this(new CoreProxy());
+    }
+    
+    Handler(CoreProxy coreProxy) {
+        this(new Long(coreProxy.getParameterValue("ProductReader.RepositoryID")), coreProxy.getParameterValue("ProductReader.Root"));
+    }
+    
+    Handler(Long repositoryId, String root) {
         super();
-
-        coreProxy = new CoreProxy();
-
-        repositoryId = new Long(getCoreProxy().getParameterValue("ProductReader.RepositoryID"));
-        root = getCoreProxy().getParameterValue("ProductReader.Root");
+        this.repositoryId = repositoryId;
+        this.root = root;
     }
 
     protected URLConnection openConnection(URL productURL) throws IOException {
@@ -67,7 +92,13 @@ public class Handler extends URLStreamHandler {
                 
                 @Override
                 protected void doRun() throws Exception {
-                    FileEntry fileEntry = locateFileEntry(url.getPath());
+                    FileEntry fileEntry;
+                    if (url.getPath().endsWith("/Registry.xml")) {
+                        fileEntry = locateFileEntry(url.getPath());
+                    }
+                    else {
+                        fileEntry = locateFileEntryInNamespaceHierarchy(url.getPath());
+                    }
 
                     connection.setFileEntry(fileEntry);
                 }
@@ -79,6 +110,57 @@ public class Handler extends URLStreamHandler {
         return connection;
     }
 
+    /**
+     * Locate a file entry by walking up the namespace ancestor tree.
+     * @param urlPath
+     * @return Located file. 
+     * @throws PortalException The file was not found locally or in any ancestor namespace.
+     * @throws SystemException A system error occurred during the search
+     */
+    FileEntry locateFileEntryInNamespaceHierarchy(String urlPath) throws PortalException, SystemException {
+        String namespace = findNamespaceForUrlPath(urlPath);
+        return locateFileEntryFromNamespace(urlPath, namespace);
+    }
+
+    String findNamespaceForUrlPath(String urlPath) throws PortalException {
+        for (String namespace : fetchNamespaces()) {
+            String namespacePath = namespace.replace('.', '/').replace("/Registry", "/");
+            if (namespace.endsWith(".Registry") && urlPath.contains(namespacePath)) {
+                return namespace;
+            }
+        }
+
+        throw new PortalException("Product URL path (" + urlPath + ") is not withing a product.");
+    }
+
+    FileEntry locateFileEntryFromNamespace(String urlPath, String namespace) throws PortalException {
+        String namespacePath = namespace.replace('.', '/').replace("/Registry", "");
+
+        CoreProxy cp = createCoreProxyForNamespace(namespace);
+
+        for (String ancestorNamespace : cp.getConfigurationNamespaceParent()) {
+
+            String ancestorNamespacePath = ancestorNamespace.replace('.', '/');
+
+            String ancestorUrlPath = urlPath.replaceAll(namespacePath, ancestorNamespacePath).replace("/Registry/", "/");
+
+            try {
+                return locateFileEntry(ancestorUrlPath);
+            } catch (Throwable th) {
+                // Ignore this. continue to loop through the other ancestors
+            }
+        }
+
+        throw new PortalException("File not found: " + urlPath);
+    }
+    
+    /**
+     * Locate a file based on its urlPath.
+     * @param urlPath   
+     * @return
+     * @throws PortalException File could not be found.
+     * @throws SystemException An error occurred during the search.
+     */
     FileEntry locateFileEntry(String urlPath) throws PortalException, SystemException {
         String fullPath = root + "/" + urlPath;
 
@@ -103,19 +185,34 @@ public class Handler extends URLStreamHandler {
         for(name=pathElements.next() ; "".equals(name) ; name=pathElements.next());
 
         if (pathElements.hasNext()) {
-            long folderId = DLAppServiceUtil.getFolder(repositoryId, folder, name).getFolderId();
+            long folderId = getFolderId(folder, name);
             return findFileEntry(folderId, pathElements);
         } else {
             try {
-                String language = ThreadLocale.getThreadLocale().getLanguage();
-                return DLAppServiceUtil.getFileEntry(repositoryId, folder, name + "_" + language);
+                return getFileEntry(folder, name + "_" + getThreadLanguage());
             } catch (PortalException ex) {
-                return DLAppServiceUtil.getFileEntry(repositoryId, folder, name);
+                return getFileEntry(folder, name);
             }
         }
     }
 
-    CoreProxy getCoreProxy() {
-        return coreProxy;
+    String getThreadLanguage() {
+        return ThreadLocale.getThreadLocale().getLanguage();
+    }
+
+    FileEntry getFileEntry(long folder, String name) throws PortalException, SystemException {
+        return DLAppServiceUtil.getFileEntry(repositoryId, folder, name);
+    }
+
+    Long getFolderId(long folder, String name) throws PortalException, SystemException {
+        return DLAppServiceUtil.getFolder(repositoryId, folder, name).getFolderId();
+    }
+
+    Collection<String> fetchNamespaces() {
+        return ConfigurationHandler.getInstance().getNamespaces();
+    }
+
+    CoreProxy createCoreProxyForNamespace(String namespace) {
+        return new CoreProxy(namespace);
     }
 }

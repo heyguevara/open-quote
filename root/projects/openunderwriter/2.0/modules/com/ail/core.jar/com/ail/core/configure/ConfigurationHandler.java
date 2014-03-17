@@ -22,8 +22,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import com.ail.core.Core;
 import com.ail.core.CoreUser;
@@ -493,7 +495,7 @@ public class ConfigurationHandler {
      * @return The sources from which the configuration was loaded.
 	 */
     public Collection<String> getConfigurationSources(ConfigurationOwner owner, CoreUser user, Core core) {
-        ArrayList<String> sources=new ArrayList<String>();
+        Set<String> sources=new LinkedHashSet<String>();
         
         Configuration config=findConfiguration(owner.getConfigurationNamespace(), user, core);
         sources.add(config.getSource());
@@ -522,7 +524,7 @@ public class ConfigurationHandler {
      * @return The sources from which the configuration was loaded.
      */
     public Collection<String> getConfigurationNamespaceParent(ConfigurationOwner owner, CoreUser user, Core core) {
-        ArrayList<String> sources=new ArrayList<String>();
+        Set<String> sources=new LinkedHashSet<String>();
         
         Configuration config=findConfiguration(owner.getConfigurationNamespace(), user, core);
         sources.add(config.getNamespace());

@@ -32,7 +32,7 @@
         <parameter name="Host">localhost</parameter>
         <parameter name="Port">8080</parameter>
         <parameter name="Username">producthandler</parameter>
-        <parameter name="TestPath">http://localhost:8080/documents/10197/14308/ProductCatalog.xml/ef76f483-7214-465b-98a1-a82a94dce56d</parameter>
+        <parameter name="TestPath">http://localhost:8080/documents/10197/14316/Registry.xml/89de3cd1-e72d-45bd-a1aa-1a599b27193c</parameter>
     </group>
     
     <group name="JEEAccessorContext">
