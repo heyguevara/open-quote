@@ -3,6 +3,7 @@ package com.ail.core.urlhandler.product;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -48,7 +49,7 @@ public class HandlerTest {
         sut = spy(new Handler(1234L, "ROOT"));
 
         doReturn(namespaces).when(sut).fetchNamespaces();
-        doReturn(coreProxy).when(sut).createCoreProxyForNamespace(eq("AIL.Demo.SampleProduct.Registry"));
+        doReturn(coreProxy).when(sut).createCoreProxyForNamespace(anyString());
         doReturn(ancestors).when(coreProxy).getConfigurationNamespaceParent();
     }
     
@@ -65,6 +66,8 @@ public class HandlerTest {
         doReturn(2L).when(sut).getFolderId(eq(1L), eq("AIL"));
         doReturn(3L).when(sut).getFolderId(eq(2L), eq("Base"));
         doReturn(fileEntry).when(sut).getFileEntry(eq(3L), eq("Resource_en"));
+        
+        doThrow(new PortalException()).when(sut).getFolderId(eq(2L), eq("Demo"));
         
         FileEntry fe=sut.locateFileEntryInNamespaceHierarchy("/AIL/Base/Resource");
 
