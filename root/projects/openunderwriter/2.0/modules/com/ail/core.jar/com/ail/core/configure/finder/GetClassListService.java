@@ -171,7 +171,9 @@ public class GetClassListService extends Service<GetClassListService.GetClassLis
             }
             finally {
                 try {
-                    jar.close();
+                    if (jar!=null) {
+                        jar.close();
+                    }
                 } catch (IOException e) {
                     throw new PostconditionException("Failed to close jar file.");
                 }
