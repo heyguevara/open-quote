@@ -312,6 +312,20 @@ hr, .separator {
 	clear: both;
 }
 
+p.powered-by,
+p.feedback {
+	display: inline-block;
+}
+
+p.feedback {
+	margin-left: 1em;
+}
+
+.feedback > a {
+    background: url("/openunderwriter-theme/images/feedback.gif") no-repeat scroll 48px 0 rgba(0, 0, 0, 0);
+    padding-right: 30px;
+}
+
 /* ---------- Site breadcrumbs ---------- */
 
 .site-breadcrumbs {

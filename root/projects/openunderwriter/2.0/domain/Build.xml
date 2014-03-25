@@ -37,8 +37,11 @@
     </copy>
 
     <update-dependencies-macro todir="${tmp.dir}" pattern="[artifact](-[classifier]).[ext]" />
-    <move file="${tmp.dir}/jboss-modules.jar" todir="${jboss.dir}" overwrite="yes"/>
-    <move file="${tmp.dir}/mysql-connector-java.jar" tofile="${jboss.dir}/modules/com/liferay/portal/main/mysql.jar" overwrite="yes"/>
+    <move file="${tmp.dir}/jboss-modules.jar" todir="${jboss.dir}" overwrite="yes" />
+    <move file="${tmp.dir}/mysql-connector-java.jar" tofile="${jboss.dir}/modules/com/liferay/portal/main/mysql.jar" overwrite="yes" />
+    <move file="${tmp.dir}/web-form-ce.lpkg" todir="${liferay.dir}/deploy" />
+    <move file="${tmp.dir}/birt.war" todir="${jboss.dir}/standalone/deployments" />
+    <touch file="${jboss.dir}/standalone/deployments/birt.war.dodeploy" />
   </target>
 
   <target name="teardown" description="undo whatever setup did">

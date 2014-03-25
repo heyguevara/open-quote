@@ -59,14 +59,23 @@ $theme.include($body_top_include)
 
     <footer id="footer" role="contentinfo">
         <p class="powered-by">
-            #language("powered-by") <a href="http://www.openunderwriter.com" rel="external">OpenUnderwriter</a>
+            #language("powered-by") <a href="http://www.openunderwriter.com" rel="external">OpenUnderwriter</a>.
         </p>
+		<p class="feedback">
+			Please let us have your <a href="/web/guest/feedback">feedback</a>
+		</p>
     </footer>
 </div>
 
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
+
+<script type="text/javascript" src="/openunderwriter-theme/js/feedback.js"></script>
+
+<div class="yui3-skin-sam">
+  <div id="modal"></div>
+</div>
 
 </body>
 
