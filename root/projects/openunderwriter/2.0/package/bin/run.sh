@@ -44,7 +44,17 @@ if [ ! -f "$TMP/setup" ]; then
     [ "x$DB_USERNAME" = "x" ] && DB_USERNAME="root"
     [ "x$DB_PASSWORD" != "x" ] && PW_OPTION="--password=$DB_PASSWORD"
     
-    echo
+	SETUP_CLASSPATH=$SETUP_CLASSPATH:$JBOSS_HOME/modules/com/ail/insurance/main/insurance.jar
+	SETUP_CLASSPATH=$SETUP_CLASSPATH:$JBOSS_HOME/modules/com/ail/core/main/core.jar
+	SETUP_CLASSPATH=$SETUP_CLASSPATH:$JBOSS_HOME/modules/com/liferay/portal/main/mysql.jar
+	SETUP_CLASSPATH=$SETUP_CLASSPATH:$JBOSS_HOME/modules/com/ail/core/main/bsh-2.0b5.jar
+	
+	echo
+	echo "Checking environment..."
+	
+	java -cp $SETUP_CLASSPATH bsh.Interpreter $BIN/port-checker.bsh "$DB_USERNAME" "$DB_PASSWORD"
+	[ "$?" = "1" ] && exit 1
+
     echo "Running database scripts..."
 
 	cd $LIB
@@ -52,11 +62,7 @@ if [ ! -f "$TMP/setup" ]; then
     [ "$?" = "1" ] && cd $BIN && echo "Failed to execute the MySQL database setup script." && exit 1
 
 	cd $BIN
-	GEN_CLASSPATH=$GEN_CLASSPATH:$JBOSS_HOME/modules/com/ail/insurance/main/insurance.jar
-	GEN_CLASSPATH=$GEN_CLASSPATH:$JBOSS_HOME/modules/com/ail/core/main/core.jar
-	GEN_CLASSPATH=$GEN_CLASSPATH:$JBOSS_HOME/modules/com/liferay/portal/main/mysql.jar
-	
-	java -cp $GEN_CLASSPATH com.ail.insurance.actuarial.DataGenerator \
+	java -cp $SETUP_CLASSPATH com.ail.insurance.actuarial.DataGenerator \
 		com.mysql.jdbc.Driver \
 		jdbc:mysql://localhost/openunderwriter_2_0_AIL_Base_DataSource_Master_Motor \
 		"$DB_USERNAME" \

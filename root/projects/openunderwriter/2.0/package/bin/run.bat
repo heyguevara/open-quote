@@ -46,7 +46,17 @@ set /p DB_PASSWORD="Please enter your MySQL password (leave blank for no passwor
 if "x%DB_USERNAME%" == "x" (set DB_USERNAME="root") 
 if "x%DB_PASSWORD%" == "x" (set PW_OPTION="") else (set PW_OPTION=--password=%DB_PASSWORD%) 
 
+set SETUP_CLASSPATH=%SETUP_CLASSPATH%;%JBOSS_HOME%\modules\com\ail\insurance\main\insurance.jar
+set SETUP_CLASSPATH=%SETUP_CLASSPATH%;%JBOSS_HOME%\modules\com\ail\core\main\core.jar
+set SETUP_CLASSPATH=%SETUP_CLASSPATH%;%JBOSS_HOME%\modules\com\liferay\portal\main\mysql.jar
+set SETUP_CLASSPATH=%SETUP_CLASSPATH%;%JBOSS_HOME%\modules\com\ail\core\main\bsh-2.0b5.jar
+
 echo.
+echo Checking environment...
+
+java -cp %SETUP_CLASSPATH% bsh.Interpreter %BIN%\port-checker.bsh %DB_USERNAME% "%DB_PASSWORD%"
+if "%ERRORLEVEL%" = "1" ( goto:eof )
+
 echo Running database scripts...
 
 cd %LIB%
@@ -54,11 +64,8 @@ mysql -u %DB_USERNAME% %PW_OPTION% < "%LIB%\Master-Setup.sql"
 if "%ERRORLEVEL%" == "1" (cd %BIN% & echo "Failed to execute the MySQL database setup script." & goto:eof)
     
 cd %BIN%
-set GEN_CLASSPATH=%GEN_CLASSPATH%;%JBOSS_HOME%\modules\com\ail\insurance\main\insurance.jar
-set GEN_CLASSPATH=%GEN_CLASSPATH%;%JBOSS_HOME%\modules\com\ail\core\main\core.jar
-set GEN_CLASSPATH=%GEN_CLASSPATH%;%JBOSS_HOME%\modules\com\liferay\portal\main\mysql.jar
 
-java -cp %GEN_CLASSPATH% com.ail.insurance.actuarial.DataGenerator ^
+java -cp %SETUP_CLASSPATH% com.ail.insurance.actuarial.DataGenerator ^
 	com.mysql.jdbc.Driver ^
 	jdbc:mysql://localhost/openunderwriter_2_0_AIL_Base_DataSource_Master_Motor ^
 	%DB_USERNAME% ^

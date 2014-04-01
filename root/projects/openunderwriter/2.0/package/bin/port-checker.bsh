@@ -1,0 +1,53 @@
+import java.net.*;
+import java.util.*;
+import java.sql.*;
+
+JBOSS_PORTS = new int[]{8080,3528,4447,9990,9999,8443,5445,5455};
+
+boolean portsAreInUse() {
+	
+	inUse = "";
+	
+	for(i=0 ; i<JBOSS_PORTS.length ; i++) {
+		try {
+			new ServerSocket(JBOSS_PORTS[i],1,InetAddress.getByName("localhost"));
+		}
+		catch(BindException e) {
+			inUse=inUse+", "+JBOSS_PORTS[i];
+		}
+	}
+	
+	if (inUse.length() > 0) {
+		print("The following port(s) are in use by other applications. Please quit them and then restart OpenUnderwriter.");
+		print("\t"+inUse.substring(2));
+		return true;
+	}
+
+	return false;
+}
+
+boolean mysqlIsNotAccessible(String user, String password) {
+	connectionOk=false;
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://localhost/mysql?user="+user+"&password="+password);
+		connectionOk=connection.isValid(0);
+		connection.close();
+	}
+	catch(Throwable t) {
+		connectionOk=false;
+	}
+	
+	if (!connectionOk) {
+		print("MySQL does not appear to be running. Please check you MySQL installation.");
+	}
+
+	return !connectionOk;
+}
+
+if (portsAreInUse() || mysqlIsNotAccessible(bsh.args[0], bsh.args[1])) {
+	System.exit(1);
+}
+else {
+	System.exit(0);
+}
