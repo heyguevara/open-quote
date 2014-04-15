@@ -721,7 +721,7 @@ public class Attribute extends Type implements Identified {
                     (max!=null && new Double(max) < new Double(value)));
         }
 
-        if (isStringType() | isNoteType()) {
+        if (isStringType() || isNoteType()) {
             String min=getFormatOption("min");
             String max=getFormatOption("max");
             String regex=getFormatOption("pattern");

@@ -141,6 +141,10 @@ public class VersionEffectiveDate extends Type {
 
         return (that.ved.equals(this.ved));
     }
+    
+    public int hashCode() {
+        return (int)ved.getTime();
+    }
 
     /**
      * @see java.util.Date#toString

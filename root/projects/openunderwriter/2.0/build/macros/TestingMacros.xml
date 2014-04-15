@@ -7,6 +7,24 @@
 
   <target name="dummy" />
 
+  <macrodef name="run-system-tests-macro">
+    <attribute name="name" />
+    <attribute name="url" default="${server.base.url}" />
+    <attribute name="suite" default="./Suite.html" />
+    <attribute name="selenium.htmlSuite" default="${selenium.htmlSuite}" />
+    <sequential>
+      <_set-product.mountpoint-property-macro />
+
+      <mkdir dir="${test.dir}/reports" />
+
+      <pathify-product-name-macro property="product.subdir" value="@{name}/Test Suite" />
+
+      <java fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.39.0.jar" dir="@{name}">
+        <arg line="-singleWindow -port 4445 -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} ${test.dir}/reports/@{name}.html" />
+      </java>
+    </sequential>
+  </macrodef>
+
   <macrodef name="run-product-tests-macro">
     <attribute name="product" />
     <attribute name="url" default="${server.base.url}" />

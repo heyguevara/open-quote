@@ -328,7 +328,9 @@ public class Functions {
         }
         finally {
             try {
-                reader.close();
+                if (reader!=null) {
+                    reader.close();
+                }
             } catch (IOException e) {
                 new CoreProxy().logError("Failure while reading URL: '"+url+"'", e);
             }

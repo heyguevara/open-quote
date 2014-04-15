@@ -63,7 +63,7 @@ public class CurrencyAmount extends Type {
      * @param currency The currency
      */
     public CurrencyAmount(BigDecimal amount, Currency currency) {
-        amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
+        amount = amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
         setAmount(amount);
         setCurrency(currency);
     }
@@ -135,7 +135,7 @@ public class CurrencyAmount extends Type {
         this.amount = new BigDecimal(new BigInteger(integerVal.toString()), scale);
 
         if (currency != null) {
-            this.amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
+            this.amount = this.amount.setScale(currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
         }
     }
 
@@ -249,7 +249,7 @@ public class CurrencyAmount extends Type {
     private void setCurrencyAsString(String currency) throws IndexOutOfBoundsException {
         this.currency=Currency.valueOf(currency);
         if (amount!=null) {
-            amount.setScale(this.currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
+            amount = amount.setScale(this.currency.getFractionDigits(), BigDecimal.ROUND_HALF_UP);
         }
     }
 
@@ -309,7 +309,6 @@ public class CurrencyAmount extends Type {
      */
     public CurrencyAmount apply(Rate rate) {
         CurrencyAmount ret=new CurrencyAmount(rate.applyTo(amount, getCurrency().getFractionDigits(), BigDecimal.ROUND_HALF_UP), getCurrency());
-        ret.getAmount().setScale(getCurrency().getFractionDigits(), BigDecimal.ROUND_HALF_UP);
         return ret;
     }
 
@@ -331,6 +330,7 @@ public class CurrencyAmount extends Type {
      * @param that Amount to check equality with
      * @return true if this has the same currency and value as that.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof CurrencyAmount) {
             CurrencyAmount that=(CurrencyAmount)obj;
@@ -339,5 +339,10 @@ public class CurrencyAmount extends Type {
         else {
             return false;
         }            
+    }
+    
+    @Override
+    public int hashCode() {
+        return currency.hashCode() + amount.hashCode();
     }
 }

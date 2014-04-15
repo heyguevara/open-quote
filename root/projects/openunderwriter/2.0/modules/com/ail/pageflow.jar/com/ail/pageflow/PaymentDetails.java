@@ -62,7 +62,6 @@ import com.ail.pageflow.util.Functions;
  */
 public class PaymentDetails extends PageElement {
 	private static final long serialVersionUID = -4810599045554021748L;
-    private static SimpleDateFormat monthYearFormat=new SimpleDateFormat("MMyy");
 
 	@Override
     public Type applyRequestValues(ActionRequest request, ActionResponse response, Type model) {
@@ -70,6 +69,7 @@ public class PaymentDetails extends PageElement {
  
         for(MoneyProvision mp: quote.getPaymentDetails().getMoneyProvision()) {
             if (mp.getPaymentMethod() instanceof PaymentCard) {
+                SimpleDateFormat monthYearFormat=new SimpleDateFormat("MMyy");
                 PaymentCard pc=(PaymentCard)mp.getPaymentMethod();
                 pc.setCardNumber(request.getParameter("cardNumber"));
                 pc.setIssueNumber(request.getParameter("issueNumber"));

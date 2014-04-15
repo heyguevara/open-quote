@@ -43,7 +43,6 @@ import com.ail.pageflow.render.RenderService.RenderArgument;
  */
 public class Answer extends PageElement {
     private static final long serialVersionUID = -1048535311696230109L;
-    private static SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
     
     public Answer() {
     }
@@ -55,6 +54,7 @@ public class Answer extends PageElement {
             return (String)answer;
         }
         else if (answer instanceof Date) {
+            SimpleDateFormat dateFormat=new SimpleDateFormat("d MMMMM, yyyy");
             return dateFormat.format((Date)answer);
         }
         else if (answer instanceof com.ail.core.Attribute) {

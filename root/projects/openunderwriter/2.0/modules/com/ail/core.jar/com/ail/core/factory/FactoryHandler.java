@@ -127,7 +127,7 @@ public class FactoryHandler {
         return newInstance;
 	}
 
-    public static FactoryHandler getInstance() {
+    public static synchronized FactoryHandler getInstance() {
         if (instance == null) {
             instance = new FactoryHandler();
         }
