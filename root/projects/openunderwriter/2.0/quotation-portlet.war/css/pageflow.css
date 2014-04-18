@@ -281,6 +281,10 @@
 /*
  * Styles specific to the NavigationSection widget
  */
+.pf-navigation-section {
+	overflow: auto;
+}
+
 .pf-navigation-section > .pf-section {
     width: 100%;
 	text-align: centre;
@@ -325,6 +329,10 @@
 
 .pf-payment-option-selector .pf-section-description {
     display: inline;
+}
+
+.pf-payment-details-direct-debit input[name^=sc] {
+	width: 1.5em;
 }
 
 /*
@@ -545,15 +553,38 @@
 /*
  * Styles specific to the SectionScroller widget
  */
-.pf-section-scroller > .pf-section-body {
-    border: medium none;
-} 
-
-.pf-section-scroller > .pf-section-body > .pf-section {
-    display: block;
+.pf-section-scroller {
+	margin: 10px;
+	padding: 0;
 }
 
-.pf-section-scroller-heading,
+.pf-section-scroller .pf-section-body {
+	border: 1px solid #1D8412;
+	border-radius: 5px;
+}
+
+.pf-section-scroller > .pf-section-body > .pf-section {
+	display: block;
+	position: relative;
+}
+
+.pf-section-scroller-heading {
+	display: inline-block;
+}
+
 .pf-section-scroller .pf-delete {
-    display: inline-block;
+	display: inline-block;
+	position: absolute;
+	right: 1em;
+	top: 2em;
+}
+
+.pf-section-scroller .pf-add > input {
+	background: no-repeat url(/quotation-portlet/images/add.gif) 0 1px;
+	border: none;
+	padding-left: 20px;
+	margin-left: 1em;
+	margin-bottom: 5px;
+	min-height: 19px;
+	display: inline-block;
 }

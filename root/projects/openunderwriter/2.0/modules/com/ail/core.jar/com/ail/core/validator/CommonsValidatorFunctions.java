@@ -387,34 +387,10 @@ public class CommonsValidatorFunctions {
 		}
 		
 		else if(type.equals(FIELD_TEST_INTEGER)){
-			Integer minInt = Integer.valueOf(minString,10);
-			Integer maxInt = Integer.valueOf(maxString,10);
-			Integer valueInt = Integer.valueOf(valueString,10);
+            Integer minInt = Integer.valueOf(minString, 10);
+            Integer maxInt = Integer.valueOf(maxString, 10);
+            Integer valueInt = Integer.valueOf(valueString, 10);
 	
-			// check for error
-			if(minInt==null || maxInt==null || valueInt==null){
-				String error = "ERROR: ";
-				if(minInt==null){
-					minString = minString==null ? "NULL" : minString;
-					error = error+field.getKey()+".minimumValue="+minString;
-				}
-				if(minInt==null && maxInt==null){
-					error = error+",";
-				}
-				if(maxInt==null){
-					maxString = maxString==null ? "NULL" : maxString;
-					error = error+field.getKey()+".maximumValue="+maxString;
-				}
-				if((minInt==null || maxInt==null) && valueInt==null){
-					error = error+",";
-				}
-				if(valueInt==null){
-					valueString = valueString==null ? "NULL" : valueString;
-					error = error+field.getKey()+"="+valueString;
-				}
-				throw new ValidationException(error);		
-			}				
-
 			return GenericValidator.isInRange(valueInt.intValue(), minInt.intValue(), maxInt.intValue());
 		}
 		
@@ -455,30 +431,6 @@ public class CommonsValidatorFunctions {
 			Short maxShort = Short.valueOf(maxString,10);
 			Short valueShort = Short.valueOf(valueString,10);
 	
-			// check for error
-			if(minShort==null || maxShort==null || valueShort==null){
-				String error = "ERROR: ";
-				if(minShort==null){
-					minString = minString==null ? "NULL" : minString;
-					error = error+field.getKey()+".minimumValue="+minString;
-				}
-				if(minShort==null && maxShort==null){
-					error = error+",";
-				}
-				if(maxShort==null){
-					maxString = maxString==null ? "NULL" : maxString;
-					error = error+field.getKey()+".maximumValue="+maxString;
-				}
-				if((minShort==null || maxShort==null) && valueShort==null){
-					error = error+",";
-				}
-				if(valueShort==null){
-					valueString = valueString==null ? "NULL" : valueString;
-					error = error+field.getKey()+"="+valueString;
-				}
-				throw new ValidationException(error);		
-			}				
-
 			return GenericValidator.isInRange(valueShort.shortValue(), minShort.shortValue(), maxShort.shortValue());
 		}
 		
