@@ -17,6 +17,7 @@
   <target name="test" description="run tests defined in this project">
     <run-system-tests-macro name="demo product accessibility" />
     <run-system-tests-macro name="test menu access rights" />
+    <run-system-tests-macro name="feedback" />
   </target>
 
 </project>
