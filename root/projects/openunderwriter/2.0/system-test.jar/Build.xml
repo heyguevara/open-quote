@@ -18,6 +18,7 @@
     <run-system-tests-macro name="demo product accessibility" />
     <run-system-tests-macro name="test menu access rights" />
     <run-system-tests-macro name="feedback" />
+    <run-system-tests-macro name="organisation administrator access" />
   </target>
 
 </project>
