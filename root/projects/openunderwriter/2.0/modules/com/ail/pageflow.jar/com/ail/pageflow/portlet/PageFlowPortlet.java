@@ -127,7 +127,7 @@ public class PageFlowPortlet extends GenericPortlet {
         if (!"?".equals(request.getParameter("productName"))) {
             String oldValue = prefs.getValue(PRODUCT_PORTLET_PREFERENCE_NAME, "?");
             String newValue = request.getParameter("productName");
-            if (!oldValue.equals(newValue)) {
+            if (oldValue==null || !oldValue.equals(newValue)) {
                 prefs.setValue(PRODUCT_PORTLET_PREFERENCE_NAME, newValue);
                 prefs.setValue(PAGEFLOW_PORTLET_PREFERENCE_NAME, null);
             }
