@@ -1002,7 +1002,7 @@ public class AssessmentSheet extends Type {
      * can be made. This allows the sheet to know who is making entries and to associate the entries with that actor.
      * @return Value of the lockingActor property
      */
-    public String getLockingActor() {
+    public synchronized String getLockingActor() {
         return lockingActor;
     }
 

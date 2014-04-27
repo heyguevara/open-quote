@@ -152,7 +152,7 @@ public class Listener extends BaseModelListener<DLFileEntry> {
                 }
             }
         } catch (Exception e) {
-            throw new ModelListenerException("Failed to handle product file update.", e);
+            throw new ModelListenerException("Failed to handle product file update for file: "+fullPath, e);
         }
     }
     
