@@ -24,6 +24,7 @@
   </target>
 
   <target name="setup" description="run all the one-time-only steps - like copying libs into place">
+	<update-module-dependencies-macro />
   </target>
 
   <target name="teardown" description="undo whatever setup did">

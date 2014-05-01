@@ -151,6 +151,8 @@ public class Listener extends BaseModelListener<DLFileEntry> {
                     }
                 }
             }
+        } catch (IllegalStateException e) {
+            core.logWarning(e.getMessage());
         } catch (Exception e) {
             throw new ModelListenerException("Failed to handle product file update for file: "+fullPath, e);
         }

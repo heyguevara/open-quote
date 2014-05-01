@@ -1,0 +1,7 @@
+<ivy-module version="2.0">
+  <info organisation="com.ail" module="commercial" />
+  <dependencies>
+    <dependency org="com.paypal.sdk" name="rest-api-sdk" rev="0.7.1" />
+  </dependencies>
+</ivy-module>
+    

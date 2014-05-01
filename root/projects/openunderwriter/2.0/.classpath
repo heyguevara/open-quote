@@ -175,5 +175,11 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/openunderwriter/target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/commons-codec-1.9-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/rest-api-sdk-0.7.1.jar" sourcepath="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/rest-api-sdk-0.7.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/openunderwriter/target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/rest-api-sdk-0.7.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/paypal-core-1.4.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
