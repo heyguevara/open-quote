@@ -35,7 +35,7 @@
   <property name="selenium.htmlSuite" value="*firefox" />
   <property name="text.filetypes" value="**/*.MF, **/*.bat, **/*.bs, **/*.conf, **/*.css, **/*.scss, **/*.drl, **/*.dsl, **/*.ftl, **/*.html, **/*.janino, **/*.jnlp, **/*.js, **/*.jsp, **/*.properties, **/*.rule, **/*.sh, **/*.tld, **/*.txt, **/*.vm, **/*.wsdl, **/*.xml, **/*.xsl, **/*.xslt"/>
   <property name="binary.filetypes" value="**/*.Processor, **/*.eot, **/*.gif, **/*.ico, **/*.jpg, **/*.keystore, **/*.md, **/*.pdf, **/*.png, **/*.svg, **/*.swf, **/*.ttf, **/*.woff, **/*.war, **/*.dodeploy, **/*.xls" />
-
+  <property name="test.results.file" value="${test.dir}/test-status.properties" />
   <target name="dummy" />
 
   <classfileset includes="${buildlib.dir}/*.jar" />

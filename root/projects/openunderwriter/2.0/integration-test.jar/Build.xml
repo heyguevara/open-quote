@@ -39,10 +39,10 @@
     <delete dir="${test.dir}" failonerror="no" />
   </target>
 
-  <target name="test" description="run tests defined in this project">
+  <target name="_test">
     <run-integration-tests-macro>
       <junit-classpath>
-        <fileset dir="${test.dir}/lib" includes="*.jar" excludes="selenium*.jar"/>
+        <fileset dir="${test.dir}/lib" includes="*.jar" excludes="selenium*.jar" />
         <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <dirset dir="${jboss.dir}/standalone/deployments" includes="*-ejb.jar" />
@@ -57,4 +57,30 @@
     </run-integration-tests-macro>
   </target>
 
+  <target name="test" description="run tests defined in this project">
+    <parallel>
+      <start-liferay-macro />
+
+      <sequential>
+        <wait-for-liferay-to-start-macro />
+
+        <sleep minutes="1" />
+
+        <antcall target="_test" />
+        
+        <stop-liferay-macro />
+
+        <if>
+          <or>
+            <istrue value="${integration-test-errored}" />
+            <istrue value="${integration-test-failed}" />
+          </or>
+          <then>
+            <fail message="Integration test errors/failures" />
+          </then>
+        </if>
+
+      </sequential>
+    </parallel>
+  </target>
 </project>
