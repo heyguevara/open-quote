@@ -63,9 +63,8 @@
 
         <sleep minutes="1" />
 
-		<!-- commented out until we have firefox running headless on the build server -->
-        <!--ant dir="./system-test.jar" antfile="Build.xml" target="_test" />
-        <ant dir="./product-test.jar" antfile="Build.xml" target="_test" /-->
+        <ant dir="./system-test.jar" antfile="Build.xml" target="_test" />
+        <ant dir="./product-test.jar" antfile="Build.xml" target="_test" />
         <ant dir="./integration-test.jar" antfile="Build.xml" target="_test" />
 
         <stop-liferay-macro />
