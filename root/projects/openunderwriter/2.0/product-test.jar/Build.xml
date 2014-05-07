@@ -22,7 +22,7 @@
     <run-product-tests-macro product="AIL.Demo.IrishBrokerPI" />
     <run-product-tests-macro product="AIL.Demo.WidgetShowcase" />
   </target>
-  
+
   <target name="test" description="run tests defined in this project">
     <parallel>
       <start-liferay-macro />
@@ -33,7 +33,7 @@
         <sleep minutes="1" />
 
         <antcall target="_test" />
-        
+
         <stop-liferay-macro />
 
         <if>
@@ -48,6 +48,6 @@
 
       </sequential>
     </parallel>
-  </target>  
+  </target>
 
 </project>

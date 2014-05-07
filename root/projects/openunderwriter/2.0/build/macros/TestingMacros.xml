@@ -25,7 +25,7 @@
 
       <loadfile property="system.test.results" srcFile="${test.dir}/reports/@{name}.html" />
       <if>
-        <contains string="${system.test.results}" substring="&gt;failed&lt;" />
+        <contains string="${system.test.results}" substring='class="  status_failed"' />
         <then>
           <property name="system-test-failed" value="true" />
         </then>
@@ -77,21 +77,21 @@
 
       <loadfile property="product.test.results" srcFile="${test.dir}/reports/@{product}.html" />
       <if>
-        <contains string="${product.test.results}" substring="&gt;failed&lt;" />" />
+        <contains string="${product.test.results}" substring='class="  status_failed"' />
         <then>
           <property name="product-test-failed" value="true" />
         </then>
       </if>
 
       <if>
-        <istrue property="${product-test-failed}" />
+        <istrue value="${product-test-failed}" />
         <then>
           <echo message="${line.separator}product-test-failed=true" file="${test.results.file}" append="yes" />
         </then>
       </if>
 
       <if>
-        <isset property="product-test-errored" />
+        <istrue value="${product-test-errored}" />
         <then>
           <echo message="${line.separator}product-test-errored=true" file="${test.results.file}" append="yes" />
         </then>

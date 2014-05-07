@@ -15,10 +15,10 @@
   <target name="teardown" description="undo whatever setup did" />
 
   <target name="_test" description="run tests defined in this project">
-    <!--run-system-tests-macro name="demo product accessibility" />
+    <run-system-tests-macro name="demo product accessibility" />
     <run-system-tests-macro name="test menu access rights" />
     <run-system-tests-macro name="feedback" />
-    <run-system-tests-macro name="organisation administrator access" /-->
+    <run-system-tests-macro name="organisation administrator access" />
     <run-system-tests-macro name="report access" />
   </target>
 

@@ -33,7 +33,7 @@
   <property name="package.dir" value="${target.dir}/openunderwriter-community-${major.version}.${minor.version}${increment.version}" />
   <property name="package.file" value="${package.dir}.zip" />
   <property name="selenium.htmlSuite" value="*firefox" />
-  <property name="text.filetypes" value="**/*.MF, **/*.bat, **/*.bs, **/*.conf, **/*.css, **/*.scss, **/*.drl, **/*.dsl, **/*.ftl, **/*.html, **/*.janino, **/*.jnlp, **/*.js, **/*.jsp, **/*.properties, **/*.rule, **/*.sh, **/*.tld, **/*.txt, **/*.vm, **/*.wsdl, **/*.xml, **/*.xsl, **/*.xslt"/>
+  <property name="text.filetypes" value="**/*.MF, **/*.bat, **/*.bs, **/*.conf, **/*.css, **/*.scss, **/*.drl, **/*.dsl, **/*.ftl, **/*.html, **/*.janino, **/*.jnlp, **/*.js, **/*.jsp, **/*.properties, **/*.rule, **/*.sh, **/*.tld, **/*.txt, **/*.vm, **/*.wsdl, **/*.xml, **/*.xsl, **/*.xslt" />
   <property name="binary.filetypes" value="**/*.Processor, **/*.eot, **/*.gif, **/*.ico, **/*.jpg, **/*.keystore, **/*.md, **/*.pdf, **/*.png, **/*.svg, **/*.swf, **/*.ttf, **/*.woff, **/*.war, **/*.dodeploy, **/*.xls" />
   <property name="test.results.file" value="${test.dir}/test-status.properties" />
   <target name="dummy" />
@@ -68,16 +68,21 @@
     <sequential>
       <_initialise-ant-contribs-macro />
       <if>
-        <os family="windows" />
+        <not><isset property="product.mountpoint" /></not>
         <then>
-          <property name="product.mountpoint" value="P:/" />
+          <if>
+            <os family="windows" />
+            <then>
+              <property name="product.mountpoint" value="P:/" />
+            </then>
+            <elseif>
+              <os family="unix" />
+              <then>
+                <property name="product.mountpoint" value="/Volumes/Product" />
+              </then>
+            </elseif>
+          </if>
         </then>
-        <elseif>
-          <os family="unix" />
-          <then>
-            <property name="product.mountpoint" value="/Volumes/Product" />
-          </then>
-        </elseif>
       </if>
     </sequential>
   </macrodef>
@@ -263,10 +268,10 @@
         <!--jvmarg value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y" / -->
         <arg line="-s ${config.search.file} -o ${module.dir}/com/ail/core/main/core.jar!com/ail/core/AnnotatedTypeConfig.xml" />
       </java>
-      
+
       <!-- tidy up the temp file -->
       <delete file="${config.search.file}" />
-      
+
     </sequential>
   </macrodef>
 
