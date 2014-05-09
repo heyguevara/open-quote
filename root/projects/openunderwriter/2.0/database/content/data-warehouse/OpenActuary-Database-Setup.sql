@@ -9,9 +9,9 @@ grant select on ##dbname##_AIL_Base_DataSource_Master_Motor.* to 'sophie'@'local
 grant select on ##dbname##_AIL_Base_DataSource_Master_Motor.* to 'thomas'@'localhost' identified by 'X1CoTB+jvP8UZAUBfzauwaEKnjg=';
 grant select on ##dbname##_AIL_Base_DataSource_Master_Motor.* to 'report'@'localhost' identified by 'e98d2f001da5678b39482efbdf5770dc';
 use ##dbname##_AIL_Base_DataSource_Master_Motor;
-source ./content/OpenActuary-Table-Setup.sql
-source ./content/OpenActuary-Standing-Data-Setup.sql
-source ./content/OpenActuary-Trigger-Setup.sql
+source ./content/data-warehouse/OpenActuary-Table-Setup.sql
+source ./content/data-warehouse/OpenActuary-Standing-Data-Setup.sql
+source ./content/data-warehouse/OpenActuary-Trigger-Setup.sql
 
 create database if not exists ##dbname##_MetropolitanInsurance_Motor_Staging character set utf8;
 grant insert,select,update,delete on ##dbname##_MetropolitanInsurance_Motor_Staging.* to 'charlie'@'localhost' identified by '2M0QuSDcvbUWPKAYXkAjV7wnwmU=';
@@ -19,9 +19,9 @@ grant select on ##dbname##_MetropolitanInsurance_Motor_Staging.* to 'lily'@'loca
 grant select on ##dbname##_MetropolitanInsurance_Motor_Staging.* to 'oliver'@'localhost' identified by 'xTkVO6H5R71Lb5ECY7lnxKCmI1c=';
 grant select on ##dbname##_MetropolitanInsurance_Motor_Staging.* to 'report'@'localhost' identified by 'e98d2f001da5678b39482efbdf5770dc';
 use ##dbname##_MetropolitanInsurance_Motor_Staging;
-source ./content/OpenActuary-Table-Setup.sql
-source ./content/OpenActuary-Standing-Data-Setup.sql
-source ./content/OpenActuary-Trigger-Setup.sql
+source ./content/data-warehouse/OpenActuary-Table-Setup.sql
+source ./content/data-warehouse/OpenActuary-Standing-Data-Setup.sql
+source ./content/data-warehouse/OpenActuary-Trigger-Setup.sql
 
 create database if not exists ##dbname##_StarInsurance_Motor_Staging  character set utf8;
 grant insert,select,update,delete on ##dbname##_StarInsurance_Motor_Staging.* to 'ethan'@'localhost' identified by 'CifhLQYq1xZz1X+cJ5myB68xaIU=';
@@ -29,9 +29,9 @@ grant select on ##dbname##_StarInsurance_Motor_Staging.* to 'sophie'@'localhost'
 grant select on ##dbname##_StarInsurance_Motor_Staging.* to 'thomas'@'localhost' identified by 'X1CoTB+jvP8UZAUBfzauwaEKnjg=';
 grant select on ##dbname##_StarInsurance_Motor_Staging.* to 'report'@'localhost' identified by 'e98d2f001da5678b39482efbdf5770dc';
 use ##dbname##_StarInsurance_Motor_Staging;
-source ./content/OpenActuary-Table-Setup.sql
-source ./content/OpenActuary-Standing-Data-Setup.sql
-source ./content/OpenActuary-Trigger-Setup.sql
+source ./content/data-warehouse/OpenActuary-Table-Setup.sql
+source ./content/data-warehouse/OpenActuary-Standing-Data-Setup.sql
+source ./content/data-warehouse/OpenActuary-Trigger-Setup.sql
 
 create database if not exists ##dbname##_AIL_Base_DataSource_Test character set utf8;
 grant insert,select,update,delete on ##dbname##_AIL_Base_DataSource_Test.* to 'adam'@'localhost' identified by 'Dhj0TB/sA+xAg0IstYumoJrE+yo=';

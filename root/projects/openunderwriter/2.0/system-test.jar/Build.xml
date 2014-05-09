@@ -20,6 +20,7 @@
     <run-system-tests-macro name="feedback" />
     <run-system-tests-macro name="organisation administrator access" />
     <run-system-tests-macro name="report access" />
+    <run-system-tests-macro name="dashboard checks" />
   </target>
 
   <target name="test" description="run tests defined in this project">

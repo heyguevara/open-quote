@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>Actuary</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Actuary</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://localhost:8080</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='login-strip']/div/div[3]/div[2]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://localhost:8080/web/oa</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a[role~='menuitem'][href$='/dashboard']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//iframe[@src=&quot;/birt/frameset?__report=http://localhost:8080/documents/10197/19990/widget_motor_claimspremiums.rptdesign/4654e515-a205-414b-99f2-1dbbd780538f&amp;&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//iframe[@src=&quot;/birt/frameset?__report=http://localhost:8080/documents/10197/19990/widget_motor_lossratio.rptdesign/9ec22b59-871f-4984-972e-afdfaba818db&amp;&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//iframe[@src=&quot;/birt/frameset?__report=http://localhost:8080/documents/10197/19990/widget_motor_newbusiness.rptdesign/f26f0c7f-a0bf-435c-b5ed-efc85c4bd0d9&amp;&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a[role~='menuitem'][href$='/logout']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>Welcome - OpenUnderwriter</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
