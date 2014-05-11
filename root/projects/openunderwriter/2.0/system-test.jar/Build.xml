@@ -14,39 +14,12 @@
 
   <target name="teardown" description="undo whatever setup did" />
 
-  <target name="_test" description="run tests defined in this project">
+  <target name="test" description="run tests defined in this project">
     <run-system-tests-macro name="demo product accessibility" />
     <run-system-tests-macro name="test menu access rights" />
     <run-system-tests-macro name="feedback" />
     <run-system-tests-macro name="organisation administrator access" />
     <run-system-tests-macro name="report access" />
     <run-system-tests-macro name="dashboard checks" />
-  </target>
-
-  <target name="test" description="run tests defined in this project">
-    <parallel>
-      <start-liferay-macro />
-
-      <sequential>
-        <wait-for-liferay-to-start-macro />
-
-        <sleep minutes="1" />
-
-        <antcall target="_test" />
-        
-        <stop-liferay-macro />
-
-        <if>
-          <or>
-            <istrue value="${system-test-errored}" />
-            <istrue value="${system-test-failed}" />
-          </or>
-          <then>
-            <fail message="System test errors/failures" />
-          </then>
-        </if>
-
-      </sequential>
-    </parallel>
   </target>
 </project>

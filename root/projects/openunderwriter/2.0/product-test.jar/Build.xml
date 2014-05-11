@@ -14,40 +14,13 @@
 
   <target name="teardown" description="undo whatever setup did" />
 
-  <target name="_test">
+  <target name="test">
     <run-product-tests-macro product="AIL.Demo.MotorPlus" />
     <run-product-tests-macro product="AIL.Demo.LifePlus" />
     <run-product-tests-macro product="AIL.Demo.FreightPlus" />
     <run-product-tests-macro product="AIL.Demo.EquinePlus" />
     <run-product-tests-macro product="AIL.Demo.IrishBrokerPI" />
     <run-product-tests-macro product="AIL.Demo.WidgetShowcase" />
-  </target>
-
-  <target name="test" description="run tests defined in this project">
-    <parallel>
-      <start-liferay-macro />
-
-      <sequential>
-        <wait-for-liferay-to-start-macro />
-
-        <sleep minutes="1" />
-
-        <antcall target="_test" />
-
-        <stop-liferay-macro />
-
-        <if>
-          <or>
-            <istrue value="${product-test-errored}" />
-            <istrue value="${product-test-failed}" />
-          </or>
-          <then>
-            <fail message="Product test errors/failures" />
-          </then>
-        </if>
-
-      </sequential>
-    </parallel>
   </target>
 
 </project>

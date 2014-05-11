@@ -63,10 +63,9 @@
 
         <sleep minutes="1" />
 
-        <ant dir="./system-test.jar" antfile="Build.xml" target="_test" />
-		<!-- Product test excluded until webdav is proven on the build server. -->
-        <!--ant dir="./product-test.jar" antfile="Build.xml" target="_test" /-->
-        <ant dir="./integration-test.jar" antfile="Build.xml" target="_test" />
+        <ant dir="./system-test.jar" antfile="Build.xml" target="test" />
+        <ant dir="./product-test.jar" antfile="Build.xml" target="test" />
+        <ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
 
         <stop-liferay-macro />
 
