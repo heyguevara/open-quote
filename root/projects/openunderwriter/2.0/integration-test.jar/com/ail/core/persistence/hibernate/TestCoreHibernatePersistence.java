@@ -30,6 +30,7 @@ import java.util.Properties;
 
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.ail.core.Attribute;
@@ -513,6 +514,7 @@ public class TestCoreHibernatePersistence extends CoreUserBaseCase {
     }
 
     @Test
+    @Ignore
     public void testAttributesWithinAttributes() {
         Attribute attr=new Attribute("PARENT", "JOE", "string");
 
@@ -557,6 +559,7 @@ public class TestCoreHibernatePersistence extends CoreUserBaseCase {
      * </ol>
      */
     @Test
+    @Ignore
     public void testDeepTypeHierarchy() {
         long groupId;
         
