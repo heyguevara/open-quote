@@ -67,6 +67,12 @@ if [ ! -f "$TMP/setup" ]; then
 		jdbc:mysql://localhost/openunderwriter_2_0_AIL_Base_DataSource_Master_Motor \
 		"$DB_USERNAME" \
 		"$DB_PASSWORD"
+		
+	java -cp $SETUP_CLASSPATH com.ail.insurance.policy.DataGenerator \
+		com.mysql.jdbc.Driver \
+		jdbc:mysql://localhost/openunderwriter_2_0 \
+		"$DB_USERNAME" \
+		"$DB_PASSWORD"
 
 	mkdir $TMP 2>/dev/null
 	touch $TMP/setup
