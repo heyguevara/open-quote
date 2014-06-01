@@ -122,33 +122,6 @@ public class TestAcceptance extends CoreUserBaseCase {
 	}
 
 	/**
-	 * Test collect premium from on risk status & payment details
-	 * @throws Exception
-	 */
-    @Test
-	public void testCollectPremiumSuccess(){
-
-		// create policy
-		Policy policy = new Policy();
-		policy.setId("pol1");
-		policy.setPolicyNumber("pol1");
-		policy.setStatus(PolicyStatus.ON_RISK);
-		PaymentSchedule payment = new PaymentSchedule();
-		policy.setPaymentDetails(payment);
-
-		// run command
-		PremiumCollectionRequestCommand command = getCore().newCommand(PremiumCollectionRequestCommand.class);
-		command.setPolicyArgRet(policy);
-		try {
-			command.invoke();
-		} catch (BaseException e) {
-			e.printStackTrace();
-			fail("collect premium failed");
-		}
-
-	}
-
-	/**
 	 * Test collect premium from on risk status & no payment details
 	 * @throws Exception
 	 */
