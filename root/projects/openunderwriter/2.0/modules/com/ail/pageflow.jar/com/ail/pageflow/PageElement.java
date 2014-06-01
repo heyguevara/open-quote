@@ -587,8 +587,8 @@ public abstract class PageElement extends Type implements Identified, Comparable
      * @param response Portlet response
      * @param model The type representing the data to be rendered
      * @param rowContext Unique string representing the row being rendered
-     * @param onChange javascript to be attached to any onchange event
-     * @param onLoad javascript to be attached to any onload event
+     * @param onChange JavaScript to be attached to any onchange event
+     * @param onLoad JavaScript to be attached to any onload event
      * @return
      * @throws IllegalStateException
      * @throws IOException
@@ -653,6 +653,10 @@ public abstract class PageElement extends Type implements Identified, Comparable
     }
     
     protected Type invokeRenderCommand(RenderCommand command) {
+        if (!conditionIsMet(PageFlowContext.getPolicy())) {
+            return command.getModelArgRet();
+        }
+
         try {
             command.invoke();
             return command.getModelArgRet();

@@ -21,6 +21,21 @@ import com.ail.annotation.ServiceImplementation;
 import com.ail.core.Service;
 import com.ail.payment.PaymentCancelledService;
 
+/**
+ * Implementation of the payment cancelled service for PayPal. In the case
+ * of PayPal there is no further action to be taken. 
+ *
+ * The PayPal payment process starts with a PayPalPaymentRequestService. This
+ * returns a URL to forward to in order to get user authorisation. That will
+ * either succeed and lead to the PayPalPaymentApprovedService being called; or,
+ * fail and lead to PayPalPaymentCancelledService being called. Following the
+ * PayPalPaymentApprovedService call, the PayPalPaymentExecutionServer must be
+ * called to execute the payment.
+ * 
+ * Once the process is complete, the transaction is said to be a "sale" in
+ * PayPal terminology. It will appear in the user's and merchant's transaction
+ * history and is available for refunds etc.
+ */
 @ServiceImplementation
 public class PayPalPaymentCancelledService extends Service<PaymentCancelledService.PaymentCancelledArgument> {
     @Override

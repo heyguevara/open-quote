@@ -25,7 +25,7 @@ import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.StatelessComponent;
 import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationArgument;
-import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumArgument;
+import com.ail.insurance.acceptance.PremiumCollectionRequestService.PremiumCollectionRequestArgument;
 import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationArgument;
 import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
@@ -65,7 +65,7 @@ public class AcceptanceBean extends StatelessComponent {
      * @return Return value from the service
      * @throws BaseServerException In response to exceptions thrown by the service.
      */
-    public CollectPremiumArgument collectPremium(CollectPremiumArgument argument) {
+    public PremiumCollectionRequestArgument collectPremium(PremiumCollectionRequestArgument argument) {
         return invokeCommand("CollectPremium", argument);
     }
 

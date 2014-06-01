@@ -18,20 +18,15 @@
 package com.ail.core.urlhandler;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.ail.core.Functions;
 
 /**
  * The core provides a number of URL handlers to simplify access to resources. The tests

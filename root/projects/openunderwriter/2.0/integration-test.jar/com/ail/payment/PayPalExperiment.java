@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Ignore;
+import org.junit.Test;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Links;
@@ -22,10 +22,10 @@ import com.paypal.core.rest.OAuthTokenCredential;
 import com.paypal.core.rest.PayPalRESTException;
 
 public class PayPalExperiment {
-    private final String PAYPAL_CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID_HERE";
-    private final String PAYPAL_CLIENT_SECRET = "YOUR_PAYPAL_SECRET_HERE";
+    private final String PAYPAL_CLIENT_ID = "AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd";
+    private final String PAYPAL_CLIENT_SECRET = "EL1tVxAjhT7cJimnz5-Nsx9k2reTKSVfErNQF-CmrwJgxRtylkGTKlU4RvrX";
 
-    @Ignore
+    @Test
     public void runIntegrationWithPayPal() throws PayPalRESTException, MalformedURLException {
         String accessToken = getAccessToken();
         assertNotNull(accessToken);

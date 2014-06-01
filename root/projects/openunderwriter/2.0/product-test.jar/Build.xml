@@ -20,6 +20,7 @@
     <run-product-tests-macro product="AIL.Demo.FreightPlus" />
     <run-product-tests-macro product="AIL.Demo.EquinePlus" />
     <run-product-tests-macro product="AIL.Demo.IrishBrokerPI" />
+    <run-product-tests-macro product="AIL.Demo.TradePL.TradeQB" />
     <run-product-tests-macro product="AIL.Demo.WidgetShowcase" />
   </target>
 

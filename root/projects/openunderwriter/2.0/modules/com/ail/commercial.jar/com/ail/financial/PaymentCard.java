@@ -95,6 +95,10 @@ public class PaymentCard extends PaymentMethod {
         }
     }
 
+    public String getId() {
+        return getMaskedCardNumber();
+    }
+    
     public String getIssueNumber() {
         return issueNumber;
     }

@@ -18,9 +18,11 @@ package com.ail.core.configure.server;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.management.ManagementFactory;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -69,7 +71,7 @@ public class StartupBean {
             if (!isProductRepoAvailable()) {
                 setRetryTimer(RETRY_TIMEOUT_MS);
             } else {
-                coreProxy.logInfo("OpenUnderwriter product repository started.");
+                outputStartupMessage();
             }
         }
     }
@@ -77,7 +79,7 @@ public class StartupBean {
     private boolean configurationResetFails() {
         if (isProductRepoAvailable()) {
             new ServerBean().resetAllConfigurations();
-            coreProxy.logInfo("OpenUnderwriter product repository started.");
+            outputStartupMessage();
             return false;
         } else {
             return true;
@@ -136,4 +138,16 @@ public class StartupBean {
             }
         }
     }
+
+    private void outputStartupMessage() {
+        long upTime = ManagementFactory.getRuntimeMXBean().getUptime();
+
+        String message = String.format("OpenUnderwriter startup completed in %d min, %d sec.", 
+                TimeUnit.MILLISECONDS.toMinutes(upTime),
+                TimeUnit.MILLISECONDS.toSeconds(upTime) - 
+                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(upTime)));
+
+        coreProxy.logInfo(message);
+    }
+
 }

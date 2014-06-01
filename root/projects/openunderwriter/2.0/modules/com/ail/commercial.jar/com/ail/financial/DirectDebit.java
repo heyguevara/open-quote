@@ -59,6 +59,10 @@ public class DirectDebit extends PaymentMethod {
         }
     }
     
+    public String getId() {
+        return getMaskedAccountNumber();
+    }
+    
     /**
      * Setter to update the value of the accountNumber property. The bank account's number
      * @param accountNumber New value for the accountNumber property

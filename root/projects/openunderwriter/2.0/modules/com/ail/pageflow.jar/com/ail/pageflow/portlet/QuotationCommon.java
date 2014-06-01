@@ -158,7 +158,9 @@ public class QuotationCommon {
 
         List<String> productNames=extract(listProductsCommand.getProductsRet(), on(ProductDetails.class).getName());
         
+        // TODO: This should be data driven!!
         productNames.remove("AIL.Base");
+        productNames.remove("AIL.Demo.TradePL.GenericQB");
         
         listToOptionCommand.setOptionsArg(productNames);
         listToOptionCommand.setSelectedArg(product);

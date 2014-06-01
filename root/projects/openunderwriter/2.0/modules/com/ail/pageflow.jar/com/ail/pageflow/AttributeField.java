@@ -171,7 +171,7 @@ public class AttributeField extends PageElement {
     }
 
     /**
-     * Javascript to be executed when the page loads.
+     * JavasSript to be executed when the page loads.
      * 
      * @return java script
      */
@@ -250,7 +250,7 @@ public class AttributeField extends PageElement {
             throws IllegalStateException, IOException {
         // If we're not bound to anything, output nothing.
         // If our condition isn't met, output nothing.
-        if (boundTo == null || !conditionIsMet(model)) {
+        if (boundTo == null || !conditionIsMet(PageFlowContext.getPolicy())) {
             return model;
         }
 

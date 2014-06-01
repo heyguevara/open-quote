@@ -2,6 +2,7 @@
   <info organisation="com.ail" module="commercial" />
   <dependencies>
     <dependency org="com.paypal.sdk" name="rest-api-sdk" rev="0.7.1" />
+    <exclude org="javax.servlet" />
   </dependencies>
 </ivy-module>
     

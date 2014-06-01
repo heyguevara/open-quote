@@ -235,7 +235,7 @@
 
 
     <!-- Mappings for financial model types -->
-    <class name="com.ail.financial.CurrencyAmount" extends="com.ail.core.Type">
+    <class name="com.ail.financial.CurrencyAmount" extends="com.ail.core.Type" verify-constructable="false">
         <field name="amount" type="string" get-method="getAmountAsString" set-method="%1">
             <bind-xml node="attribute" />
         </field>
@@ -260,6 +260,9 @@
         <field name="paymentsEndDate" type="date" />
         <field name="amount" type="com.ail.financial.CurrencyAmount" />
         <field name="paymentMethod" type="com.ail.financial.PaymentMethod" />
+        <field name="status" type="com.ail.financial.MoneyProvisionStatus" />
+        <field name="paymentId" type="string" />
+        <field name="saleId" type="string" />
     </class>
 
     <class name="com.ail.financial.DirectDebit" extends="com.ail.financial.PaymentMethod">
@@ -282,6 +285,35 @@
         <map-to xml="paymentSchedule" />
         <field name="description" type="string" />
         <field name="moneyProvision" type="com.ail.financial.MoneyProvision" collection="arraylist" />
+    </class>
+    
+    <class name="com.ail.financial.PayPal" extends="com.ail.financial.PaymentMethod">
+        <map-to xml="payPal"/>
+    </class>
+
+    <class name="com.ail.financial.PaymentRecord" extends="com.ail.core.Type" verify-constructable="false">
+        <map-to xml="paymentRecord"/>
+        <field name="amount" type="string" set-method="%1" get-method="getAmountAsString">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="currency" type="string" set-method="%2" get-method="getCurrencyAsString">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="transactionReference" type="string" set-method="%3" get-method="getTransactionReference">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="methodIdentifer" type="string" set-method="%4" get-method="getMethodIdentifier">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="type" type="string" set-method="%5" get-method="getTypeAsString">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="date" type="string" set-method="%6" get-method="getDateAsString">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="description" type="string" method="%7" get-method="getDescription">
+            <bind-xml node="attribute" />
+        </field>
     </class>
 
     <!-- document model mappings start here -->
@@ -591,6 +623,7 @@
         <field name="wording" type="com.ail.insurance.policy.Wording" collection="arraylist" />
         <field name="quotationNumber" type="string" />
         <field name="paymentDetails" type="com.ail.financial.PaymentSchedule" />
+        <field name="paymentHistory" type="com.ail.financial.PaymentRecord" collection="arraylist" />
         <field name="policyHolder" type="com.ail.party.Party" />
         <field name="clause" type="com.ail.insurance.policy.Clause" collection="arraylist" />
         <field name="locale" type="com.ail.core.ThreadLocale" />
@@ -887,6 +920,16 @@
             <bind-xml node="attribute" />
         </field>
         <field name="immediate" type="boolean">
+            <bind-xml node="attribute" />
+        </field>
+    </class>
+
+    <class name="com.ail.pageflow.BuyNowWithPayPalButtonAction" extends="com.ail.pageflow.CommandButtonAction">
+        <map-to xml="buyNowWithPayPalButtonAction" />
+        <field name="destinationOnSuccessPageId" type="string" required="true">
+            <bind-xml node="attribute" />
+        </field>
+        <field name="destinationOnFailurePageId" type="string" required="true">
             <bind-xml node="attribute" />
         </field>
     </class>

@@ -32,11 +32,9 @@ import com.ail.core.Core;
 import com.ail.core.CoreUserBaseCase;
 import com.ail.core.PreconditionException;
 import com.ail.core.VersionEffectiveDate;
-import com.ail.financial.Currency;
-import com.ail.financial.CurrencyAmount;
 import com.ail.financial.PaymentSchedule;
 import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationCommand;
-import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumCommand;
+import com.ail.insurance.acceptance.PremiumCollectionRequestService.PremiumCollectionRequestCommand;
 import com.ail.insurance.acceptance.PolicyDocumentation;
 import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationCommand;
 import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskCommand;
@@ -139,8 +137,8 @@ public class TestAcceptance extends CoreUserBaseCase {
 		policy.setPaymentDetails(payment);
 
 		// run command
-		CollectPremiumCommand command = getCore().newCommand(CollectPremiumCommand.class);
-		command.setPolicyArg(policy);
+		PremiumCollectionRequestCommand command = getCore().newCommand(PremiumCollectionRequestCommand.class);
+		command.setPolicyArgRet(policy);
 		try {
 			command.invoke();
 		} catch (BaseException e) {
@@ -149,37 +147,6 @@ public class TestAcceptance extends CoreUserBaseCase {
 		}
 
 	}
-
-
-	/**
-	 * Test collect premium from on risk status & pre payment
-	 * @throws Exception
-	 */
-    @Test
-	public void testCollectPremiumSuccessPrePayemt(){
-
-		// create policy
-		Policy policy = new Policy();
-		policy.setId("pol1");
-		policy.setPolicyNumber("pol1");
-		policy.setStatus(PolicyStatus.ON_RISK);
-
-		// create prepayment
-		CurrencyAmount amount = new CurrencyAmount(100, Currency.GBP);
-
-		// run command
-		CollectPremiumCommand command = getCore().newCommand(CollectPremiumCommand.class);
-		command.setPolicyArg(policy);
-        command.setPrePaymentArg(amount);
-		try {
-			command.invoke();
-		} catch (BaseException e) {
-			e.printStackTrace();
-			fail("collect premium failed");
-		}
-
-	}
-
 
 	/**
 	 * Test collect premium from on risk status & no payment details
@@ -195,8 +162,8 @@ public class TestAcceptance extends CoreUserBaseCase {
 		policy.setStatus(PolicyStatus.ON_RISK);
 
 		// run command
-		CollectPremiumCommand command = getCore().newCommand(CollectPremiumCommand.class);
-		command.setPolicyArg(policy);
+		PremiumCollectionRequestCommand command = getCore().newCommand(PremiumCollectionRequestCommand.class);
+		command.setPolicyArgRet(policy);
 		try {
 			command.invoke();
             fail("collect premium should fail due to no payment details");

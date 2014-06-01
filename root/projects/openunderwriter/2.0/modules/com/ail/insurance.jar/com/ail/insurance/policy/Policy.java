@@ -31,6 +31,7 @@ import com.ail.core.ExceptionRecord;
 import com.ail.core.Type;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.financial.CurrencyAmount;
+import com.ail.financial.PaymentRecord;
 import com.ail.financial.PaymentSchedule;
 import com.ail.core.PageVisit;
 import com.ail.party.Party;
@@ -43,6 +44,8 @@ import com.ail.core.ThreadLocale;
  */
 @TypeDefinition
 public class Policy extends Type {
+    public static final String TOTAL_PREMIUM_ASSESSMENT_LINE_NAME = "total premium";
+
     static final long serialVersionUID = 3175904078936470552L;
 
     private VersionEffectiveDate versionEffectiveDate=null;
@@ -52,6 +55,7 @@ public class Policy extends Type {
     private List<Section> section = new ArrayList<Section>();
     private List<Coverage> coverage = new ArrayList<Coverage>();
     private List<Clause> clause = new ArrayList<Clause>();
+    private List<PaymentRecord> paymentHistory=new ArrayList<PaymentRecord>();
     private String id = null;
     private PolicyStatus status = null;
     private AssessmentSheet assessmentSheet = null;
@@ -877,7 +881,7 @@ public class Policy extends Type {
      * @return true if a total premium is defined, false otherwise.
      */
     public boolean isTotalPremiumDefined() {
-        return assessmentSheet!=null && assessmentSheet.findLineById("total premium")!=null;
+        return assessmentSheet!=null && assessmentSheet.findLineById(TOTAL_PREMIUM_ASSESSMENT_LINE_NAME)!=null;
     }
     
     /**
@@ -888,7 +892,7 @@ public class Policy extends Type {
      */
     public CurrencyAmount getTotalPremium() {
         if (assessmentSheet!=null) {
-            CalculationLine line=(CalculationLine)assessmentSheet.findLineById("total premium");
+            CalculationLine line=(CalculationLine)assessmentSheet.findLineById(TOTAL_PREMIUM_ASSESSMENT_LINE_NAME);
             if (line!=null) {
                 return line.getAmount();
             }
@@ -1199,7 +1203,9 @@ public class Policy extends Type {
     }
     
     /**
-     * Fetch the list of clauses associated with this policy. An empty list may be returned, but a null will never be returned.
+     * Fetch the list of clauses associated with this policy. An empty list may
+     * be returned, but a null will never be returned.
+     * 
      * @return the clause
      */
     public List<Clause> getClause() {
@@ -1216,11 +1222,15 @@ public class Policy extends Type {
     }
 
     /**
-     * Get the locale <b>currently</b> associated with this policy. This indicates the locale for which the policy
-     * is currently being processed, so it may change through the life time of the policy. It is intended to influence
-     * the way in which the policy is presented. For example, when a US policy is being administered by a US office, you
-     * would expect all presentation, documentation etc to render US$ amounts simply as '$'. However, if the same policy
-     * was being administered in a office in Canada, a US$ amount should be shown as US$, and not '$'.
+     * Get the locale <b>currently</b> associated with this policy. This
+     * indicates the locale for which the policy is currently being processed,
+     * so it may change through the life time of the policy. It is intended to
+     * influence the way in which the policy is presented. For example, when a
+     * US policy is being administered by a US office, you would expect all
+     * presentation, documentation etc to render US$ amounts simply as '$'.
+     * However, if the same policy was being administered in a office in Canada,
+     * a US$ amount should be shown as US$, and not '$'.
+     * 
      * @return Locale being used for processing
      */
     public ThreadLocale getLocale() {
@@ -1310,6 +1320,30 @@ public class Policy extends Type {
         this.pageVisit.add(pageVisit);
     }
 
+    /**
+     * The payment history is a record of the payment events that have occurred
+     * with respect to this policy. This record not only includes the details of
+     * actual transactions, it also records the details of requests made to
+     * payment services (e.g. PayPal), and the outcome of those requests. An
+     * empty list may be returned, but a null will never be returned.
+     * 
+     * @return Payment History
+     */
+    public List<PaymentRecord> getPaymentHistory() {
+        if (paymentHistory == null) {
+            paymentHistory = new ArrayList<PaymentRecord>();
+        }
+        return paymentHistory;
+    }
+
+    /**
+     * @See #getPaymentHistory()
+     * @param paymentHistory
+     */
+    public void setPaymentHistory(List<PaymentRecord> paymentHistory) {
+        this.paymentHistory = paymentHistory;
+    }
+    
     /**
      * The version effective date to be used when processing this policy. This will be used
      * to select the appropriate configurations to use during processing. 

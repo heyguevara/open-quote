@@ -20,7 +20,7 @@ package com.ail.insurance.acceptance;
 import javax.ejb.Remote;
 
 import com.ail.insurance.acceptance.AcceptQuotationService.AcceptQuotationArgument;
-import com.ail.insurance.acceptance.CollectPremiumService.CollectPremiumArgument;
+import com.ail.insurance.acceptance.PremiumCollectionRequestService.PremiumCollectionRequestArgument;
 import com.ail.insurance.acceptance.ProduceDocumentationService.ProduceDocumentationArgument;
 import com.ail.insurance.acceptance.PutOnRiskService.PutOnRiskArgument;
 
@@ -30,7 +30,7 @@ public interface AcceptanceRemote {
 
     PutOnRiskArgument putOnRisk(PutOnRiskArgument argument);
 
-    CollectPremiumArgument collectPremium(CollectPremiumArgument argument);
+    PremiumCollectionRequestArgument collectPremium(PremiumCollectionRequestArgument argument);
 
     AcceptQuotationArgument acceptQuotation(AcceptQuotationArgument argument);
 }

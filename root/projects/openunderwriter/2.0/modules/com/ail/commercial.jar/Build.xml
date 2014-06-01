@@ -11,7 +11,7 @@
   </target>
 
   <target name="_build">
-    <compile-jar-macro module="yes" dependencies="com.ail.core">
+    <compile-jar-macro module="yes" dependencies="com.ail.core, javax.api">
       <javac-classpath>
         <dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
         <fileset dir="${module.dir}/com/ail" includes="**/*.jar" />

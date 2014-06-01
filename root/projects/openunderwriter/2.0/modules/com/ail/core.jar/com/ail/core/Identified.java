@@ -18,7 +18,7 @@ package com.ail.core;
 
 /**
  * Classes that implement this interface have identifiers, and can be safely compared with 
- * any other implementor.
+ * any other implementors.
  */
 public interface Identified {
     String getId();

@@ -709,11 +709,11 @@ p {
 	margin-top: 30px;
 }
 
-.wiki-body .tip {
+.tip {
 	margin: 20px 160px 0 50px;
 }
 
-.wiki-body .tip td {
+.tip td {
 	background-color: #FFFFAA;
 	background-image: url("../images/wiki/bulb.png");
 	background-position: 5px 5px;

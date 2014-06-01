@@ -39,12 +39,10 @@ public class CurrencyAmount extends Type {
     private BigDecimal amount=null;
     private Currency currency=null;
 
-    /**
-     * @deprecated This constructor is not safe. It only exists to satisfy frameworks
-     * like Castor which insist on a default constructor. Use one of the other 
-     * constructors instead.
+    /** 
+     * Package private no-args constructor to satisfy castor/hibernate etc.
      */
-    public CurrencyAmount() {
+    CurrencyAmount() {
     }
     
     /**
