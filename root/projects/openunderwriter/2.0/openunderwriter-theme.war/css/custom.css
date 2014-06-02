@@ -594,10 +594,9 @@ p {
 
 /* OpenUnderwriter specific styles */
 .ou-icon-strip {
-    background-color: #F7F7F7;
     border: 1px solid #555555;
     border-radius: 5px;
-    box-shadow: 3px 3px 10px 0 #CCCCCC inset;
+    box-shadow: 2px 2px 5px 0 #CCCCCC inset;
     font-size: 0.85em;
     line-height: 1.5;
     margin: 0 auto;
