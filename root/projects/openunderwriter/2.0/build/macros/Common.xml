@@ -28,6 +28,8 @@
   <!-- password to use when creating DB's etc. Bamboo overrides this on the build server -->
   <property name="mysql.root.password" value="" />
   <property name="mysql.setup.file" value="${project.dir}/database/content/OpenUnderwriter-Liferay-Setup.sql" />
+  <property name="mysql.driver" value="com.mysql.jdbc.Driver" />
+  <property name="mysql.connection" value="jdbc:mysql://localhost:3306/${dbname}" />
   <property name="content.setup.file" value="${project.dir}/database/content/OpenUnderwriter-Liferay-Content.zip" />
   <property name="module.dir" value="${jboss.dir}/modules/" />
   <property name="package.dir" value="${target.dir}/openunderwriter-community-${major.version}.${minor.version}${increment.version}" />

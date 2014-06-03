@@ -6,28 +6,24 @@
 <project default="" name="openquote:commands">
   <import file="./BuildSettings.xml" />
 
-  <target name="liferay: start server" description="start the liferay server">
+  <target name="start" description="start the liferay server">
     <start-liferay-macro />
   </target>
 
-  <target name="liferay: stop server" description="start the liferay server">
+  <target name="stop" description="stop the liferay server">
     <stop-liferay-macro />
   </target>
 
-  <target name="liferay: restart server" description="restart the liferay server">
+  <target name="restart" description="restart the liferay server">
     <stop-liferay-macro />
     <start-liferay-macro />
   </target>
 
-  <target name="liferay: export repository" description="Export the content repository into the source tree">
-     <content-download-export-macro />
-   </target>
+  <target name="export" description="Export the content repository into the source tree">
+    <content-download-export-macro />
+  </target>
 
-  <target name="liferay: webdav mount" description="Mount the products folds over WEBDAV">
-     <mount-product-space-macro />
-   </target>
-
-  <target name="liferay: webdav unmount" description="Unmount the product folder">
-     <unmount-product-space-macro />
-   </target>
+  <target name="generate" description="Generate sample reporting data">
+	<generate-sample-data-macro />
+  </target>
 </project>

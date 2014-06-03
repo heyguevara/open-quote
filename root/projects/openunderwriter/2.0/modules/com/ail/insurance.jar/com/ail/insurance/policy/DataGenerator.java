@@ -124,27 +124,25 @@ public class DataGenerator {
         for (int i = 0; i < NUMBER_OF_RECORDS; i++) {
             setupContext();
 
-            System.out.print("generating record "+(i+1)+" of "+NUMBER_OF_RECORDS+"\r");
+            if (!context.quiet) {
+                System.out.print("generating record "+(i+1)+" of "+NUMBER_OF_RECORDS+"\r");
+            }
             generateBordereau();
             
         }
         
-        System.out.println("Generation of dummy bordereau data complete.");
+        if (!context.quiet) {
+            System.out.println("Generation of dummy bordereau data complete.");
+        }
     }
 
     public static void main(String[] args) {
-        if (args.length != 3 && args.length != 4) {
-            System.err.println("Usage: DataGenerator <JDBC Driver Class Name> <JDBC Connection URL> <Database Username> <Database Password>");
+        try {
+            new DataGenerator().run(args);
+        }
+        catch(Throwable e) {
+            e.printStackTrace(System.err);
             System.exit(1);
-        } 
-        else {
-            try {
-                new DataGenerator().run(args);
-            }
-            catch(Throwable e) {
-                e.printStackTrace(System.err);
-                System.exit(1);
-            }
         }
     }
 
@@ -168,6 +166,7 @@ public class DataGenerator {
     }
         
     private class Context {
+        private boolean quiet = false;
         private Connection connection;
         private long policyNumber;
         private long inceptionDate;
@@ -178,13 +177,29 @@ public class DataGenerator {
         private String dbPassword = "";;
         
         private Context(String[] args) {
-            dbDriver=args[0];
-            dbUrl=args[1];
-            dbUsername=args[2];
-            if (args.length == 4) {
-                dbPassword=args[3];
+            int arg=0;
+            
+            if ("-q".equals(args[arg])) {
+                quiet=true;
+                arg++;
             }
+            
+            dbDriver=args[arg++];
+            
+            dbUrl=args[arg++];
+            
+            dbUsername=args[arg++];
+            
+            if (args.length != arg) {
+                dbPassword=args[arg++];
+            }
+            
             populateConnection();
+            
+            if (dbDriver==null || dbUrl==null || dbUsername==null) {
+                System.err.println("Usage: DataGenerator [-q] <JDBC Driver Class Name> <JDBC Connection URL> <Database Username> [<Database Password>]");
+                System.exit(1);
+            }
         }
         
         private void populateConnection() {
