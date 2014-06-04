@@ -65,8 +65,8 @@
 
         <sleep minutes="1" />
 
-        <!--ant dir="./system-test.jar" antfile="Build.xml" target="test" />
-        <ant dir="./product-test.jar" antfile="Build.xml" target="test" /-->
+        <ant dir="./system-test.jar" antfile="Build.xml" target="test" />
+        <!--ant dir="./product-test.jar" antfile="Build.xml" target="test" /-->
         <ant dir="./integration-test.jar" antfile="Build.xml" target="test" />
 
         <stop-liferay-macro />

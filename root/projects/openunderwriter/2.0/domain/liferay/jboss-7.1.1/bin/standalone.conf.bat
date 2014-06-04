@@ -72,7 +72,12 @@ rem set "JAVA_OPTS=%JAVA_OPTS% -Djboss.modules.lockless=true"
 
 :JAVA_OPTS_SET
 				
-set "JAVA_OPTS=%JAVA_OPTS% -Djboss.protocol.handler.modules=com.ail.core -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT"
+rem OpenUnderwriter specific options. These are always applied.
+set "JAVA_OPTS=%JAVA_OPTS% -Djboss.protocol.handler.modules=com.ail.core"
+set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8"
+set "JAVA_OPTS=%JAVA_OPTS% -Djava.net.preferIPv4Stack=true"
+set "JAVA_OPTS=%JAVA_OPTS% -Duser.timezone=GMT"
+set "JAVA_OPTS=%JAVA_OPTS% -XX:+UseCodeCacheFlushing -XX:ReservedCodeCacheSize=128m"
 
 				
 			
