@@ -32,6 +32,8 @@ import com.ail.core.Service;
 import com.ail.payment.PaymentRequestService;
 import com.ail.payment.implementation.FetchPayPalAccessTokenService.FetchPayPalAccessTokenCommand;
 import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Item;
+import com.paypal.api.payments.ItemList;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.Payment;
@@ -124,8 +126,15 @@ public class PayPalPaymentRequestService extends Service<PaymentRequestService.P
         amount.setCurrency(args.getAmountArg().getCurrencyAsString());
         amount.setTotal(args.getAmountArg().getAmountAsString());
 
+        List<Item> items=new ArrayList<Item>();
+        items.add(new Item("1", "Premium", amount.getTotal(), amount.getCurrency()));
+
+        ItemList itemList=new ItemList();
+        itemList.setItems(items);
+        
         Transaction transaction = new Transaction();
         transaction.setDescription(args.getDescriptionArg());
+        transaction.setItemList(itemList);
         transaction.setAmount(amount);
 
         List<Transaction> transactions = new ArrayList<Transaction>();
