@@ -126,6 +126,10 @@
   <!-- Macro to export content from the liferay repository into the source tree. -->
   <macrodef name="_content-export-macro">
     <sequential>
+      
+      <!-- If mysql isn't the right version, the dump files will be hard/impossible to diff. -->
+      <verify-mysql-version-macro required="5.6" severity="fail"/>
+
       <stop-liferay-macro />
 
       <!-- List of tables that should _not_ be included in the backup. This list -->

@@ -18,7 +18,7 @@
 
     <set-mysql-running-property-macro />
 
-	<verify-mysql-version-macro required="5.6"/>
+	<verify-mysql-version-macro required="5.6" severity="warning"/>
     
     <!-- copy package files with variables expanded -->
     <mkdir dir="${package.dir}/lib" />
