@@ -1,0 +1,55 @@
+/* Copyright Applied Industrial Logic Limited 2007. All rights reserved. */
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import com.ail.core.command.CommandInvocationError;
+import com.ail.core.CoreProxy;
+import com.ail.core.VersionEffectiveDate;
+import com.ail.financial.CurrencyAmount;
+import com.ail.pageflow.ExecutePageActionService.ExecutePageActionArgument;
+import com.ail.pageflow.ExecutePageActionService.ExecutePageActionCommand;
+import com.ail.pageflow.util.PageFlowContext;
+import com.ail.insurance.policy.FixedSum;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
+
+public class SavedQuotationsUpdateAndSaveService {
+    public static void invoke(ExecutePageActionArgument args) {
+    	try {
+	    	DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+	    	CoreProxy coreProxy=PageFlowContext.getCoreProxy();
+	    	
+	    	String quotationNumber = PageFlowContext.getRequest().getParameter("quotation-number-override");
+	    	String quotationDateString = PageFlowContext.getRequest().getParameter("quotation-date-override");
+	    	String expiryDateString = PageFlowContext.getRequest().getParameter("expiry-date-override");
+	    	String premium = PageFlowContext.getRequest().getParameter("premium-override");
+	    	
+	    	PageFlowContext.setPolicy(null);
+	    	
+	    	ExecutePageActionCommand command=(ExecutePageActionCommand)coreProxy.newCommand("CreateNewBusinessQuotationCommand", ExecutePageActionCommand.class);
+	    	command.setPortletRequestArg(args.getPortletRequestArg());
+	    	command.invoke();
+	    	
+	    	Policy policy=(Policy)command.getModelArgRet();
+
+	    	policy.setQuotationNumber(quotationNumber);
+    		policy.setQuotationDate(dateFormat.parse(quotationDateString));
+    		policy.setQuotationExpiryDate(dateFormat.parse(expiryDateString));
+	        policy.setUserSaved(true);
+	        policy.setUsername(PageFlowContext.getRequest().getRemoteUser());
+	        policy.setVersionEffectiveDate(new VersionEffectiveDate());
+
+	    	((FixedSum)policy.getAssessmentSheet().findLineById("total premium")).setAmount(new CurrencyAmount(premium, "GBP"));
+
+	        SavedPolicy sq=new SavedPolicy(policy);
+	        sq=(SavedPolicy)PageFlowContext.getCoreProxy().update(sq);
+
+	        policy.setSystemId(sq.getSystemId());
+	        policy.setSerialVersion(sq.getSerialVersion());
+	        
+	        args.setModelArgRet(policy);
+    	}
+    	catch(Exception e) {
+    		throw new CommandInvocationError("Failed to create saved quotation for testing", e);
+    	}
+    }
+}

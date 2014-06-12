@@ -1,0 +1,159 @@
+## Copyright Applied Industrial Logic Limited 2012. All rights Reserved 
+##
+## This program is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free Software
+## Foundation; either version 2 of the License, or (at your option) any later 
+## version.
+##
+## This program is distributed in the hope that it will be useful, but WITHOUT
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+## more details.
+##
+## You should have received a copy of the GNU General Public License along with
+## this program; if not, write to the Free Software Foundation, Inc., 51 
+## Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+##
+#set( $quote = $args.ModelArgRet)
+#set( $broker = $quote.Broker )
+#set( $proposer = $quote.Proposer )
+#set( $status = $quote.Status.Name )
+#set( $renderId = $args.RenderIdArg )
+#set( $pageElement = $args.PageElementArg )
+##
+<style type='text/css'>
+
+</style>
+
+<div class='pf-broker-quotation-summary' id='$renderId'>
+    <div class='pf-header'>
+        <div class='pf-header-title'>
+            $quote.Status.longName $quote.QuotationNumber
+        </div>
+        #if ($status=="SUBMITTED" || $status=="QUOTATION")
+            <div class='pf-header-summary'>
+                $pageElement.i18n("i18n_broker_quotation_summary_premium_title") $quote.TotalPremium
+            </div>
+        #end
+    </div>
+    <div class='pf-body'>    
+    	<div class='pf-section pf-broker-quotation-summary-section'>
+	        <div class='pf-section-title'>
+	            $pageElement.i18n("i18n_broker_quotation_summary_title")
+	        </div>
+	        <div class='pf-section-body'>
+	            #summaryRow("i18n_broker_quotation_summary_product_label" $quote.ProductName)
+	            #summaryRow("i18n_broker_quotation_summary_quotation_date_label" ${quote.xpathGet("u:longDate(/quotationDate)")})
+	            #summaryRow("i18n_broker_quotation_summary_quotation_expiry_date_label" ${quote.xpathGet("u:longDate(/quotationExpiryDate)")})
+	            #summaryRow("i18n_broker_quotation_summary_cover_start_date_label" ${quote.xpathGet("u:longDate(/inceptionDate)")})
+	            #summaryRow("i18n_broker_quotation_summary_cover_end_date_label" ${quote.xpathGet("u:longDate(/expiryDate)")})
+	        </div>
+	    </div>
+        <div class='pf-section pf-broker-quotation-summary-proposer-section'>
+            <div class='pf-section-title'>$pageElement.i18n("i18n_broker_quotation_summary_proposer_title")</div>
+            <div class='pf-section-body'>
+                #if( $proposer.Class.Name == "com.ail.insurance.policy.CommercialProposer" )
+                    #contactElement("i18n_broker_quotation_summary_contact_label" ${proposer.contact.LegalName})
+                    #contactElement("i18n_broker_quotation_summary_address_label" ${proposer.LegalName})
+                    #contactElement("" ${proposer.Address.Line1})
+                #elseif( $proposer.Class.Name == "com.ail.insurance.policy.PersonalProposer" )
+                    #contactElement("i18n_broker_quotation_summary_legal_name_label" ${proposer.LegalName})
+                    #contactElement("i18n_broker_quotation_summary_address_label" ${proposer.Address.Line1})
+                #end
+                #contactElement("&nbsp;" ${proposer.Address.Line2})
+                #contactElement("&nbsp;" ${proposer.Address.Town})
+                #contactElement("&nbsp;" ${proposer.Address.County})
+                #contactElement("&nbsp;" ${proposer.Address.Postcode})
+                #contactElement("i18n_broker_quotation_summary_phone_label" ${proposer.TelephoneNumber})
+                #contactElement("i18n_broker_quotation_summary_email_label" "<a href='mailto:${proposer.EmailAddress}'>${proposer.EmailAddress}</a>")
+            </div>
+        </div>
+        <div class='pf-section pf-broker-quotation-summary-premium-section'>
+        #if ($status=="SUBMITTED" || $status == "QUOTATION")
+            <div class='pf-section-title'>$pageElement.i18n("i18n_broker_quotation_summary_total_premium_detail_title")</div>
+            <div class='pf-section-description'>$pageElement.i18n("i18n_broker_quotation_summary_premium_message")</div>
+            <div class='pf-section-body'>
+	            #foreach( $line in $quote.AssessmentSheet.behaviourLines() )
+	                #set( $type = $line.Type.Name )
+	                #if( $type == "TAX" || $type == "COMMISSION" || $type == "MANAGEMENT_CHARGE" || $type == "BROKERAGE")
+	                    <div class='pf-item'>
+	                        <div class='pf-item-value'>$line.Type.LongName</div>
+	                        <div class='pf-item-value'>$line.Reason</div>
+	                        <div class='pf-item-value'>$!line.Rate.Rate</div>
+	                        <div class='pf-item-value'>$line.AmountAsString</div>
+	                    </div>
+	                #end
+	            #end
+	        </div>
+        #end
+        #if ( $status=="REFERRED" || $status=="DECLINED")
+            <div class='pf-section-title'>$pageElement.i18n("i18n_broker_quotation_summary_assessment_sheet_title")</div>
+            <div class='pf-section-body'>
+	            #foreach( $line in $quote.AssessmentSheet.markerLines() )
+	                #set( $type = $line.Type.Name )
+	                #if( $type == "REFER" || $type == "DECLINE" || $type == "SUBJECTIVITY" )
+	                    <div class='pf-item'>
+	                        <div class='pf-item-value'>$line.Type.LongName</div>
+	                        <div class='pf-item-value'>$line.Reason</div>
+	                    </div>
+	                #end
+	            #end
+	        </div>
+        #end
+        </div>
+        #if( $quote.PaymentDetails && $quote.PaymentDetails.MoneyProvision.size() != 0 )
+            <div class='pf-section pf-broker-quotation-summary-payment-section'>
+                <div class='pf-section-title'>
+                    $pageElement.i18n("i18n_broker_quotation_summary_payments_title")
+                </div>
+                <div class='pf-section-description'>
+                    $quote.PaymentDetails.Description
+                </div>
+                <div class='pf-section-body'>
+                    #foreach( $provision in $quote.PaymentDetails.MoneyProvision)
+                        #set( $method = $provision.PaymentMethod )
+                        #if( $method.Class.Name == "com.ail.financial.PaymentCard" )
+                            <div class='pf-item-title'>$pageElement.i18n("i18n_broker_quotation_summary_card_details_title")</div>
+                            <div class='pf-item'>
+                                #paymentDetailRow("i18n_broker_quotation_summary_card_number_label" $method.CardNumber)
+                                #paymentDetailRow("i18n_broker_quotation_summary_name_on_card_label" $method.CardHoldersName)
+                                #paymentDetailRow("i18n_broker_quotation_summary_issue_number_label" $method.IssueNumber)
+                                #paymentDetailRow("i18n_broker_quotation_summary_start_date_label" $method.FormattedStartDate)
+                                #paymentDetailRow("i18n_broker_quotation_summary_expiry_date_label" $method.FormattedExpiryDate)
+                            </div> 
+                        #elseif( $method.Class.Name == "com.ail.financial.DirectDebit" )
+                            <div class='pf-item-title'>$pageElement.i18n("i18n_broker_quotation_summary_account_details_title")</div>
+                            <div class='pf-item'>
+                                #paymentDetailRow("i18n_broker_quotation_summary_account_number_label" $method.AccountNumber)
+                                #paymentDetailRow("i18n_broker_quotation_summary_sort_code_label" $method.SortCode)
+                            </div>
+                        #end
+                    #end
+                </div>
+            </div>
+        #end
+    </div>
+</div>
+##
+#macro(contactElement $label $value)
+    #if(${value} && ${value}!="")
+        <div class='pf-item'>
+            <div class='pf-item-label'>$pageElement.i18n($label)</div>
+            <div class='pf-item-value'>${value}</div>
+        </div>
+    #end
+#end
+##
+#macro(summaryRow $label $value)
+    <div class='pf-item'>
+        <div class='pf-item-label'>$pageElement.i18n($label)</div>
+        <div class='pf-item-value'>$value</div>
+    </div>
+#end
+##
+#macro(paymentDetailRow $label $value)
+    <div class='pf-item'>
+        <div class='pf-item-label'>$pageElement.i18n($label)</div>
+        <div class='pf-item-value'>$!value</div>
+    </div>
+#end

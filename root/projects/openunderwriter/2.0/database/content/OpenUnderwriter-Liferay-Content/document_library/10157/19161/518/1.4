@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageFlow id="QuotationPageFlow" xsi:type="java:com.ail.pageflow.PageFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<questionPage id="Welcome" title="Welcome to the LifePlus quotation wizard">
+		<savedQuotations id="SavedQuotes" requoteDestinationPageId="QuestionPage" />
+		<navigationSection id="Navigation" order="2" quitDisabled="true">
+			<commandButtonAction id="Quote" label="i18n_quote_button_label" destinationPageId="QuestionPage">
+				<action when="onProcessActions" commandName="CreateNewBusinessQuotationCommand" />
+                <action when="onProcessActions" commandName="InitialiseQuotationCommand" />
+			</commandButtonAction>
+		</navigationSection>
+	</questionPage>
+
+	<questionPage id="QuestionPage" title="About You - The Insured">
+		<questionSection title="Some questions to help us:">
+			<question title="How old were you on your last birthday?" binding="/asset/attribute[id='age']" />
+			<question title="What gender are you?" binding="/asset/attribute[id='gender']" />
+			<question title="Are you currently a smoker?" binding="/asset/attribute[id='smoker']" />
+			<question title="Do you take regular exercise?" binding="/asset/attribute[id='exercise']" />
+		</questionSection>
+
+		<navigationSection>
+			<commandButtonAction label="Quote" destinationPageId="Referral">
+				<action when="onProcessActions" commandName="PremiumCalculation" />
+				<pageForwardAction when="onProcessActions" condition="i:test(status[.='QUOTATION'])" destinationPageId="Quotation" />
+			</commandButtonAction>
+		</navigationSection>
+	</questionPage>
+
+	<informationPage id="Quotation">
+		<quotationSummary termsAndConditionsUrl="~/HTML/TermsAndConditions.html" requoteDestinationPageId="QuestionPage"
+			saveDestinationPageId="SavedQuotes" confirmAndPayDestinationPageId="Proposer">
+			<answerSection title="Summary of your cover">
+				<answer title="Start date" binding="/inceptionDate" />
+				<answer title="End date" binding="/expiryDate" />
+			</answerSection>
+			<answerSection title="Summary of answers">
+				<answerScroller binding="/asset">
+					<answer title="Age" binding="attribute[id='age']" />
+					<answer title="Gender" binding="attribute[id='gender']" />
+					<answer title="Are you a smoker" binding="attribute[id='smoker']" />
+					<answer title="Do you take regular exercise" binding="attribute[id='exercise']" />
+				</answerScroller>
+			</answerSection>
+			<navigationSection>
+				<saveButtonAction destinationPageId="SavedQuotes" />
+				<requoteButtonAction destinationPageId="Welcome" />
+				<commandButtonAction id="Confirm and Pay" label="i18n_confirm_and_pay_button_label" destinationPageId="Proposer" />
+			</navigationSection>
+		</quotationSummary>
+	</informationPage>
+
+	<questionPage id="Referral" title="Referral">
+		<referralSummary referralNotificationUrl="~/HTML/ReferralNotification.html" requoteDestinationPageId="QuestionPage">
+			<answerSection title="Summary of your cover">
+				<answer title="Start date" binding="inceptionDate" />
+				<answer title="End date" binding="expiryDate" />
+			</answerSection>
+			<answerSection title="Summary of answers">
+				<answer binding="/asset" xsi:type="answerScroller">
+					<answer title="Age" binding="attribute[id='age']" />
+					<answer title="Gender" binding="attribute[id='gender']" />
+					<answer title="Are you a smoker" binding="attribute[id='smoker']" />
+					<answer title="Do you take regular exercise" binding="attribute[id='exercise']" />
+				</answer>
+			</answerSection>
+		</referralSummary>
+	</questionPage>
+
+	<questionPage id="Proposer" title="Contact Details">
+		<navigationSection id="Navigation">
+			<commandButtonAction id="Next" destinationPageId="CollectPaymentDetails" />
+		</navigationSection>
+	</questionPage>
+
+	<questionPage id="CollectPaymentDetails" title="Payment Details">
+		<action when="onRenderResponse" commandName="AssessPaymentOptions" />
+	</questionPage>
+
+	<questionPage id="Finish" title="Thank you">
+		<action when="onRenderResponse" commandName="AddPolicyNumberAction" />
+		<navigationSection id="Navigation" order="2" quitDisabled="true">
+			<viewQuotationButtonAction label="View quotation document" order="0" />
+		</navigationSection>
+	</questionPage>
+</pageFlow>

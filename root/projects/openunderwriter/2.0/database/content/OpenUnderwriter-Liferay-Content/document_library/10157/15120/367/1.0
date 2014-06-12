@@ -1,0 +1,105 @@
+## Copyright Applied Industrial Logic Limited 2012. All rights Reserved 
+##
+## This program is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free Software
+## Foundation; either version 2 of the License, or (at your option) any later 
+## version.
+##
+## This program is distributed in the hope that it will be useful, but WITHOUT
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+## more details.
+##
+## You should have received a copy of the GNU General Public License along with
+## this program; if not, write to the Free Software Foundation, Inc., 51 
+## Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+##
+#####
+##
+## Template for the RowScroller widget.
+##
+#set( $model = $args.ModelArgRet)
+#set( $rowScroller = $args.PageElementArg )
+#set( $request = $args.RequestArg )
+#set( $response = $args.ResponseArgRet )
+#set( $renderId = $args.RenderIdArg )
+##
+#set( $title = $rowScroller.formattedTitle($args) ) 
+#set( $columns = $rowScroller.Item.size() )
+##
+<div class='pf-row-scroller' id='${renderId}'>
+    #if( $title )
+        <div class='pf-section-heading'>
+            $title
+        </div>
+    #end
+    <div class='pf-row-scroller-table'>
+        ##
+    	## Render heading row
+        ##
+        <div class='pf-row-scroller-table-header-row'>
+        	#set( $col=0 )
+            #foreach( $a in $rowScroller.Item )
+                <div class='pf-row-scroller-table-header-cell'>
+                	<div class='pf-row-scroller-header-title'>
+		                #if( $rowScroller.isBoundToRequiredColumnAttribute($model, $rowScroller.Binding, $col) )
+		                    <div class='pf-input-required'></div>
+		                #else
+                            <div class='pf-input-optional'></div>
+		                #end
+                		$a.formattedTitle($args)
+               		</div>
+                    <div class='pf-row-scroller-header-sub-title'>
+                    	$!a.formattedSubTitle($args)
+                    </div>
+                </div> 
+                #set( $col = $col + 1 )           	
+            #end
+            #if( $rowScroller.AddAndDeleteEnabled )
+                <div class='pf-row-scroller-table-header-cell'></div>
+            #end
+        </div>
+        ##
+        ## Render data rows
+        ##
+        #set( $rowCount = 0 )
+	    #foreach( $t in ${model.xpathIterate($rowScroller.Binding)} )
+            <div class='pf-row-scroller-table-data-row'>
+	            #foreach( $a in $rowScroller.Item )
+                    <div class='pf-row-scroller-table-data-cell'>
+	                    #set( $model = $a.renderResponse($request, $response, $t, "${rowScroller.Binding}[${rowCount}]") )
+	                </div>
+	            #end
+	            #if( $rowScroller.AddAndDeleteEnabled )
+                    <div class='pf-row-scroller-table-data-cell'>
+	                    #if( $rowCount >= $rowScroller.MinRows )
+	                    	<div class='pf-delete'>
+    	                        <input id='delete' type='image' src='/quotation-portlet/images/delete.gif' name='op=delete:id=${rowScroller.Id}:row=${rowCount}:immediate=true:'/>
+    	                    </div>
+	                    #end
+	                </div>
+	            #end
+	        </div>
+	        #set( $rowCount = $rowCount + 1 )
+	    #end
+	    ##
+	    ## If Add and Delete are enabled, put an 'Add' button to the bottom right of the scroller.
+	    ##
+	    #if( $rowScroller.AddAndDeleteEnabled )
+            #foreach( $a in $rowScroller.Item )
+                <div class='pf-row-scroller-table-data-cell'></div>
+            #end
+	        <div class='pf-row-scroller-add-section pf-row-scroller-table-data-cell'>
+	            #if( $rowScroller.MaxRows != -1 && $rowScroller.MaxRows == $rowCount )
+                    <div class='pf-add-disabled'>
+    	                <input id="add-disabled" type="image" src="/quotation-portlet/images/add-disabled.gif" name="op=add:id=${rowScroller.Id}:immediate=true:" disabled="true"/>
+    	            </div>
+	            #else
+                    <div class='pf-add'>
+	                   <input id="add" type="image" src="/quotation-portlet/images/add.gif" name="op=add:id=${rowScroller.Id}:immediate=true:"/>
+	                </div>
+	            #end
+	        </div>
+	    #end
+    </div>  
+</div>

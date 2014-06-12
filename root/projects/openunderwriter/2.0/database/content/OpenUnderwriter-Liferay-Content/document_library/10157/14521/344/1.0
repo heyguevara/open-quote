@@ -1,0 +1,10 @@
+import java.text.MessageFormat;
+
+import com.ail.insurance.quotation.GenerateQuoteNumberService.GenerateQuoteNumberArgument;
+
+public class GenerateQuoteNumberService {
+    public static void invoke(GenerateQuoteNumberArgument args) {
+        Object[] a = new Object[] { new Integer(args.getUniqueNumberArg()) };
+        args.setQuoteNumberRet(MessageFormat.format("QF{0,number,0000}", a));
+    }
+}

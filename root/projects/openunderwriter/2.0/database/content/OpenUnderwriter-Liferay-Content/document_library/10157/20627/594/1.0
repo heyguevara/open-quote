@@ -1,0 +1,24 @@
+<div>
+    <p>The SavedQuotations widget is different from most other widgets in that it doesn't work within the context of a quote, but
+    instead creates its own context of a list of saved quotation. The form below can be used to add new saved quotations to the
+    system which will appear in the SavedQuotations widget at the foot of the screen.</p>
+    
+	<div style="display:table; margin: 0px 350px;" >
+        <div style="display:table-row">
+            <div style="display:table-cell">Quotation number:</div>
+            <div style="display:table-cell"><input value="" name="quotation-number-override" type="text"/></div>
+        </div>
+        <div style="display:table-row">
+            <div style="display:table-cell">Quotation date override:</div>
+            <div style="display:table-cell"><input value="dd/mm/yyyy" name="quotation-date-override" type="text"/></div>
+        </div>
+	    <div style="display:table-row">
+	        <div style="display:table-cell">Expiry date override:</div>
+	        <div style="display:table-cell"><input value="dd/mm/yyyy" name="expiry-date-override" type="text"/></div>
+	    </div>
+	    <div style="display:table-row">
+	        <div style="display:table-cell">Premium override:</div>
+	        <div style="display:table-cell"><input value="0.00" name="premium-override" type="text"/></div>
+	    </div>
+	</div>
+</div>

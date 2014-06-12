@@ -1,0 +1,6 @@
+<asset assetTypeId='AccidentHistoryAsset' xsi:type="java:com.ail.insurance.policy.Asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <attribute id="driver" value="?" format="choice"/>
+    <attribute id="date" value="" format="date,pattern=dd/MM/yyyy"/>
+    <attribute id="atFault" value="?" format="yesorno"/>
+    <attribute id="value" value="0" format="currency" unit="GBP"/>
+</asset>

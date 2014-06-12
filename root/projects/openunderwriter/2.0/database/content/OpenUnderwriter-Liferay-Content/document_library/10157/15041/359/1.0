@@ -1,0 +1,16 @@
+import com.ail.insurance.policy.AssessmentSheet;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.PolicyStatus;
+import com.ail.insurance.quotation.EnforcePolicyComplianceService.EnforcePolicyComplianceArgument;
+
+public class EnforcePolicyComplianceRule {
+    public static void invoke(EnforcePolicyComplianceArgument args) {
+        Policy quote=args.getPolicyArg();
+        AssessmentSheet sheet=args.getAssessmentSheetArgRet();
+        
+        if (sheet.findLineById("total premium")==null) {
+           sheet.addReferral("Calculation of total premium failed (line not found in assessment sheet)", null);
+           quote.setStatus(PolicyStatus.REFERRED);
+        }
+    }
+}

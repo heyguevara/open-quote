@@ -1,0 +1,39 @@
+import com.ail.core.CoreProxy;
+import com.ail.pageflow.ExecutePageActionService.ExecutePageActionArgument;
+import com.ail.pageflow.util.PageFlowContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.quotation.AddQuoteNumberService.AddQuoteNumberCommand;
+
+/**
+ * <p>
+ * This page action service adds a quotation number to the current quote. If the
+ * quote already contains a quotation number, an error will be written to the
+ * console.
+ * </p>
+ * <p>
+ * This action can be invoked from a page flow as follows:
+ * 
+ * <pre>
+ * &lt;questionPage id="..."&gt;
+ * &nbsp;&lt;action when="onRenderResponse" commandName="AddQuoteNumberAction"/&gt;
+ *  ...
+ * &lt;/questionPage&gt;
+ * </pre>
+ * 
+ * </p>
+ */
+public class AddQuoteNumberActionService {
+    public static void invoke(ExecutePageActionArgument args) {
+        CoreProxy core = PageFlowContext.getCoreProxy();
+
+        try {
+            Policy policy = (Policy) args.getModelArgRet();
+            AddQuoteNumberCommand command = (AddQuoteNumberCommand) core.newCommand(AddQuoteNumberCommand.class);
+            command.setPolicyArgRet(policy);
+            command.invoke();
+            args.setModelArgRet(command.getPolicyArgRet());
+        } catch (Exception e) {
+            core.logError("Error in AddPolicyNumberActionService: " + e);
+        }
+    }
+}

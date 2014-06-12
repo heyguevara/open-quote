@@ -20,7 +20,7 @@
   </target>
 
   <target name="export" description="Export the content repository into the source tree">
-    <content-download-export-macro />
+    <_content-export-macro />
   </target>
 
   <target name="generate" description="Generate sample reporting data">

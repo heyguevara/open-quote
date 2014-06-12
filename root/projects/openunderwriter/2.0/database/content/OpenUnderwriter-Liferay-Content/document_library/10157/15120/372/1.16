@@ -1,0 +1,86 @@
+## Copyright Applied Industrial Logic Limited 2012. All rights Reserved 
+##
+## This program is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free Software
+## Foundation; either version 2 of the License, or (at your option) any later 
+## version.
+##
+## This program is distributed in the hope that it will be useful, but WITHOUT
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+## more details.
+##
+## You should have received a copy of the GNU General Public License along with
+## this program; if not, write to the Free Software Foundation, Inc., 51 
+## Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+##
+#####
+##
+## Template for the QuestionWithSubSection widget.
+##
+#set( $policy = $args.ModelArgRet)
+#set( $questionWithSubSection = $args.PageElementArg )
+#set( $request = $args.RequestArg )
+#set( $response = $args.ResponseArgRet )
+#set( $renderId = $args.RenderIdArg )
+#set( $rowContext = $args.RowContextArg )
+#set( $renderHint = $args.RenderHintArg )
+##
+#set( $binding = $questionWithSubSection.Binding )
+#set( $onLoad = $questionWithSubSection.OnLoad )
+#set( $title = $questionWithSubSection.formattedTitle($args) )
+#set( $attribute = ${policy.xpathGet($questionWithSubSection.Binding)} )
+##
+#set( $Q = '"' )
+##
+#set( $handlerFuctionName=${questionWithSubSection.Id.replace('-','_')} )
+#set( $onChange = "${handlerFuctionName}()" )
+#set( $subSectionId = "pf-${renderId}-sub" )
+##
+<div class='pf-question-with-subsection' id='pf-${renderId}'>
+    <div class='pf-input-label'>
+        #if( $attribute.Required )
+            <div class='pf-input-required'></div>
+        #else
+            <div class='pf-input-optional'></div>
+        #end
+        ${title}
+    </div>
+    <div class='pf-input-field'>
+        #set( $args.ModelArgRet = $questionWithSubSection.renderAttribute($request, $response, $policy, $binding, $rowContext, $onChange, $onLoad, $renderHint) )
+    </div>
+</div>
+<div id="$subSectionId" class="pf-subsection" style="display: table-row">
+	<div style="display: table-cell">
+		&nbsp;
+	</div>
+	<div style="display: table-cell">
+		<div class="pf-page-section" style="margin-left:-19em">
+            #foreach( $ss in $questionWithSubSection.SubSection ) 
+                #set( $policy = $ss.renderResponse($request, $response, $policy) )
+			#end
+		</div>
+	</div>
+</div>
+##
+<script type='text/javascript'>
+    function ${handlerFuctionName}() {
+        #if( $renderHint == "radio" )
+            showHideDivDisplayForRadioChoice("${subSectionId}", "${questionWithSubSection.DetailsEnabledFor}", "${renderId}");
+        #elseif( $renderHint == "checkbox" )
+	        cbox=findElementsByName("$renderId")[0];
+	       	showHideDivDisplay(cbox.checked, !cbox.checked, "${subSectionId}");
+        #else
+	        opt=findElementsByName("$renderId")[0];
+	        showHideDivDisplay(
+	            isInList(opt.options[opt.selectedIndex].value, "$questionWithSubSection.DetailsEnabledFor"),
+	            !isInList(opt.options[opt.selectedIndex].value, "$questionWithSubSection.DetailsEnabledFor"), 
+	            "${subSectionId}");
+	    #end
+	}
+
+    #if( !${questionWithSubSection.isDetailsEnabled($policy)} )
+		jQuery("#${subSectionId}").hide();
+	#end
+	
+</script>

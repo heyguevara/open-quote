@@ -1,0 +1,7 @@
+import com.ail.insurance.quotation.GeneratePolicyNumberService.GeneratePolicyNumberArgument;
+
+public class GeneratePolicyNumberService {
+    public static void invoke(GeneratePolicyNumberArgument args) {
+        args.setPolicyNumberRet("POL" + args.getUniqueNumberArg());
+    }
+}

@@ -15,7 +15,11 @@
     <!-- Unpack the cached zip into the dev tree -->
     <mkdir dir="${target.dir}" />
     <unzip overwrite="yes" dest="${target.dir}" src="${liferay.zip}" />
-    <unzip overwrite="yes" dest="${liferay.dir}" src="${content.setup.file}" />
+
+    <copy todir="${liferay.dir}/data" preservelastmodified="yes">
+      <fileset dir="${content.setup.dir}" includes="document_library/**"/>
+    </copy>
+
     <exec os="Linux,Mac OS X,Solaris,Sun OS" executable="sh" dir="${jboss.dir}/bin">
       <arg line="-c 'chmod 755 *.sh'" />
     </exec>
@@ -69,7 +73,7 @@
       <_initialise-ant-contribs-macro />
 
       <property name="liferay.javaopts" value="-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"/>
-      
+
       <if>
         <not>
           <socket server="localhost" port="8080" />
@@ -119,38 +123,8 @@
     </sequential>
   </macrodef>
 
-  <target name="_mount-product-space-Mac OS X">
-    <_set-product.mountpoint-property-macro />
-    <mkdir dir="${product.mountpoint}" />
-    <exec os="Mac OS X" executable="mount_webdav" failonerror="yes">
-      <arg value="http://${server.base.url}/webdav/global/document_library/Product" />
-      <arg value="${product.mountpoint}" />
-    </exec>
-    <echo message="Product space mounted on ${product.mountpoint}" />
-  </target>
-
-  <target name="_unmount-product-space-Mac OS X">
-    <_set-product.mountpoint-property-macro />
-    <exec os="Mac OS X" executable="umount" failonerror="yes">
-      <arg value="${product.mountpoint}" />
-    </exec>
-    <delete dir="${product.mountpoint}" />
-    <echo message="Product space unmounted from ${product.mountpoint}" />
-  </target>
-
-  <macrodef name="mount-product-space-macro">
-    <sequential>
-      <antcall target="_mount-product-space-${os.name}" />
-    </sequential>
-  </macrodef>
-
-  <macrodef name="unmount-product-space-macro">
-    <sequential>
-      <antcall target="_unmount-product-space-${os.name}" />
-    </sequential>
-  </macrodef>
-
-  <macrodef name="_content-download-export-macro-database">
+  <!-- Macro to export content from the liferay repository into the source tree. -->
+  <macrodef name="_content-export-macro">
     <sequential>
       <stop-liferay-macro />
 
@@ -161,6 +135,7 @@
           --ignore-table ${dbname}.config
           --ignore-table ${dbname}.saved_policy
           --ignore-table ${dbname}.saved_policy_summary          
+          --ignore-table ${dbname}.bordereau
           --ignore-table ${dbname}.commercial_address
           --ignore-table ${dbname}.commercial_addressbook
           --ignore-table ${dbname}.commercial_company
@@ -194,21 +169,30 @@
         </filterchain>
       </loadresource>
 
+      <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${dbname}" userid="root" password="${mysql.root.password}">
+        <classpath>
+          <fileset dir="${buildlib.dir}" includes="*.jar" />
+        </classpath>
+        update AssetEntry set viewCount=0;
+        update DLFileEntry set readCount=0;
+        update DLFileRank set createDate="2014-06-10";
+        update Release_ set modifiedDate=createDate,buildDate=createDate;
+        update Marketplace_App set createDate="2014-06-10",modifiedDate="2014-06-10";
+        update Group_ as g1, (select typeSettings from Group_ where name="OpenQuote") as g2 set g1.typeSettings=g2.typeSettings where g1.name="Guest";
+      </sql>
+        
       <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">
-        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} ${oneLineIgnoreTableList} --opt ${dbname} > ${mysql.setup.file}"' />
+        <arg line='-l -c "mysqldump --user=root --password=${mysql.root.password} ${oneLineIgnoreTableList} --opt --dump-date=FALSE --extended-insert=FALSE ${dbname} > ${mysql.setup.file}"' />
       </exec>
 
-      <zip file="${content.setup.file}">
-        <fileset dir="${liferay.dir}" includes="data/document_library/**, data/lucene/**, data/jackrabbit/**" />
-      </zip>
+      <exec executable="cmd" dir="." os="Windows 2000,Windows XP,Windows 7, Windows 8">
+        <arg line='/c "mysqldump --user=root --password=${mysql.root.password} ${oneLineIgnoreTableList} --opt --dump-date=FALSE --extended-insert=FALSE ${dbname} > ${mysql.setup.file}"' />
+      </exec>
 
-    </sequential>
-  </macrodef>
+      <sync todir="${content.setup.dir}/document_library" verbose="yes">
+        <fileset dir="${liferay.dir}/data/document_library" />
+      </sync>
 
-  <!-- Macro to export content from the liferay repository into the source tree. -->
-  <macrodef name="content-download-export-macro">
-    <sequential>
-      <_content-download-export-macro-database />
     </sequential>
   </macrodef>
 
@@ -247,7 +231,7 @@
           </copy>
         </then>
       </if>
-      
+
       <_copy-resources-macro srcdir="./WEB-INF/src" destdir="${output.dir}/WEB-INF/classes" />
 
       <_copy-resources-macro srcdir="." destdir="${output.dir}" />
@@ -265,7 +249,7 @@
       <path id="sass2css.classpath">
         <pathelement location="${deploy.dir}/ROOT.war/WEB-INF/classes" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="*.jar" />
-      	<fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="*.jar" excludes="lucene*"/>
+        <fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="*.jar" excludes="lucene*"/>
         <fileset dir="${buildlib.dir}" includes="activation-1.1.jar,jargs-1.0.jar,servlet-api-2.4-20040521.jar,jsp-api-2.0-20040521.jarqdox-1.6.jar" />
       </path>
 

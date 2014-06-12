@@ -1,0 +1,241 @@
+## Copyright Applied Industrial Logic Limited 2012. All rights Reserved 
+##
+## This program is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free Software
+## Foundation; either version 2 of the License, or (at your option) any later 
+## version.
+##
+## This program is distributed in the hope that it will be useful, but WITHOUT
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+## more details.
+##
+## You should have received a copy of the GNU General Public License along with
+## this program; if not, write to the Free Software Foundation, Inc., 51 
+## Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+##
+#####
+##
+## Template for the AttributeField widget.
+##
+#set( $attr = $args.ModelArgRet)              ## Instance of com.ail.core.Attribute
+#set( $attrField = $args.PageElementArg )     ## Instance of com.ail.pageflow.AttributeField
+#set( $request = $args.RequestArg )           ## Instance of javax.portlet.RenderRequest
+#set( $response = $args.ResponseArgRet )      ## Instance of javax.portlet.RenderResponse
+#set( $rowContext = $args.RowContextArg )     ## If we're rendering into a scroller, this'll be the row number in xpath predicate format (e.g. "[1]"). Otherwise ""
+#set( $onChange = $args.OnChangeArg )         ## onChange as defined in the pageflow (if any, null if none is defined)
+#set( $onLoad = $args.OnLoadArg )             ## onLoad as defined in the pageflow (if any, null if none is defined)
+#set( $renderId = $args.RenderIdArg )
+#set( $renderHint = $args.RenderHintArg )
+##
+#set( $Q = '"' )
+##
+<div class='pf-attribute-field'>
+	#if( ${onChange} )
+		#set( $onChangeAttr = "onchange='${onChange}'" )
+	#else 
+		#set( $onChangeAttr = "" )
+	#end
+	#if( !${attr} )
+		undefined: ${attrField.Binding}
+	#else
+		#if( ${attr.isStringType()} )
+	    	#set( $sizeAttr = "" )
+			#set( $sizeStyle = "" )
+			#set( $sizeOption = $attr.getFormatOption("size") )
+			#set( $maxOption = $attr.getFormatOption("max") )
+		    #if( $maxOption )
+		    	#set( $sizeAttr = "size='$maxOption'" )
+		    	#set( $sizeStyle = "style='width:${maxOption}em'" )
+			#end
+			#if(  $sizeOption )
+		    	#set( $sizeAttr = "size='$sizeOption'" )
+		    	#set( $sizeStyle = "style='width:${sizeOption}em'" )
+			#end
+			#set( $typeValue = "text" )
+			#if( ${renderHint} )
+				#set( $typeValue = ${renderHint} )
+			#end
+			<div class='pf-attribute-field-prefix'>
+		    </div>
+		    <div class='pf-attribute-field-input'>
+                <input class='pf-string' name="${renderId}" ${sizeAttr} ${sizeStyle} ${onChangeAttr} type='${typeValue}' value='${attr.Value}' />
+			</div>
+			<div class='pf-attribute-field-suffix'>
+			</div>
+		#elseif( ${attr.isNumberType()} )
+			#set( $size = 7 )
+			#set( $sizeOption = $attr.getFormatOption("size") )
+			#set( $patternOption = $attr.getFormatOption("pattern") )
+			#set( $placeholderOption = ${attr.getPlaceholder()} )
+			#if( $placeholderOption != "" ) 
+				#set( $size = ${placeholderOption.length()} )
+			#end
+			#if( $patternOption ) 
+				#set( $size = ${patternOption.length()} )
+			#end
+		    #if(  $sizeOption ) 
+				#set( $size = $sizeOption )
+			#end
+		    #set( $format = $attr.formatter() )
+		    #set( $decimalSeparator = $format.DecimalFormatSymbols.DecimalSeparator )
+		    #set( $gropingSeparator = $format.DecimalFormatSymbols.GroupingSeparator )
+		    #set( $minimumFractionDigits = $format.MinimumFractionDigits )
+			#if( ${attr.getFormatOption("percent")} )
+			    #set( $val = ${attr.Value} )
+			#else
+	            #set( $val = ${attr.formattedValue} )
+			#end
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+    			<input class='pf-number' name="${renderId}" size="${size}" style="width:${size}em" onchange="formatnumber(this,'$decimalSeparator','$gropingSeparator',$minimumFractionDigits);$!{onChange}" type='text' value='${val}'/>
+    		</div>
+    		<div class='pf-attribute-field-suffix'>
+                #if( $attr.getFormatOption("percent") )%#end
+            </div>
+		#elseif( ${attr.isCurrencyType()} )
+		    #set( $split = $attr.CurrencySplitValue )
+		    #set( $format = $attr.formatter() )
+		    #set( $decimalSeparator = $format.DecimalFormatSymbols.DecimalSeparator )
+		    #set( $gropingSeparator = $format.DecimalFormatSymbols.GroupingSeparator )
+		    #set( $maximumFractionDigits = $format.MaximumFractionDigits )
+			#set( $size = 7 )
+			#set( $sizeOption = $attr.getFormatOption("size") )
+		    #if(  $sizeOption ) 
+		    	#set( $size = $sizeOption )
+		    #end
+            <div class='pf-attribute-field-prefix'>
+                ${split.get(0)}
+            </div>
+            <div class='pf-attribute-field-input'>
+    			<input class='pf-currency' name="${renderId}" onchange="formatnumber(this,'$decimalSeparator','$gropingSeparator',$maximumFractionDigits);$!{onChange}" size="${size}" style="width:${size}em" type='text' value='${split.get(1)}'/>
+    		</div>
+            <div class='pf-attribute-field-suffix'>
+    			${split.get(2)}
+    		</div>
+		#elseif( ${attr.isChoiceMasterType()} )
+			#set( $slaveId = ${attrField.getSlavesBinding($attr)} )
+			#set( $slaveId = ${attrField.encodeId("${rowContext}${slaveId}")} )
+			#set( $onLoad = "loadChoiceOptions('${renderId}', '${attr.Value}', ${attr.ChoiceTypeName})" )
+			#set( $onChange = "loadSlaveChoiceOptions('${renderId}', '${slaveId}', null, ${attr.ChoiceTypeName})" )
+            #set( $sizeOption = $attr.getFormatOption("size") )
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+    		    <select class='pf-choice pf-choice-master' #if($sizeOption)size="${sizeOption}" style="width:${sizeOption}em"#end name="${renderId}" onchange="${onChange}"></select>
+    		</div>
+    		<div class='pf-attribute-field-suffix'>
+		    </div>
+		#elseif( ${attr.isChoiceSlaveType()} )
+			#set( $masterId = ${attrField.getMastersBinding($attr)} )
+			#set( $masterId = ${attrField.encodeId("${rowContext}${masterId}")} )
+	        #set( $onLoad = "loadSlaveChoiceOptions('${masterId}', '${renderId}', '${attr.Value}', ${attr.ChoiceTypeName})" )
+            #set( $sizeOption = $attr.getFormatOption("size") )
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+    	        <select class='pf-choice pf-choice-slave' #if($sizeOption)size="${sizeOption}" style="width:${sizeOption}em"#end name="${renderId}"></select>
+    	    </div>
+            <div class='pf-attribute-field-suffix'>
+            </div>
+		#elseif( ${attr.isChoiceType()} )
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+				#if( !${attr.getFormatOption("type")} )
+					#if( "radio" == ${renderHint} )
+						#foreach( ${opts} in ${attr.getFormatOption("options").split("[|]")} )
+							#set( $opt = ${opts.split("[#]").get(1)} )
+							#if( ${opt} != "?" )
+								<input class='pf-choice' type='radio' name="${renderId}" value='${opt}' #if( ${opt} == ${attr.Value} )checked='checked'#end>&nbsp;${attrField.i18n($opt)}</input>
+							#end 
+						#end
+					#else
+                        #set( $sizeOption = $attr.getFormatOption("size") )
+						#foreach( $opts in ${attr.getFormatOption("options").split("[|]")} )
+							#set( $opt = ${opts.split("[#]").get(1)} )
+							#if( !$width || $width < ${opt.length()} )
+								#set( $width = ${opt.length()} )
+							#end
+						#end 
+						#set( $width = $width + 1 )
+						<select class='pf-choice' #if($sizeOption)size="${sizeOption}"#end style="width:${width}em" name="${renderId}" $!{onChangeAttr}>
+							#foreach( $opts in ${attr.getFormatOption("options").split("[|]")} )
+								#set( $opt = ${opts.split("[#]").get(1)} )
+								<option value='${opt}' #if( ${opt} == ${attr.Value} )selected='yes'#end>${attrField.i18n($opt)}</option>
+							#end 
+						</select> 
+					#end
+				#else
+					#set( $onLoad = "loadChoiceOptions('${renderId}', '${attr.Value}', ${attr.ChoiceTypeName})" )
+					<select name="${renderId}" class="pf-choice"></select>
+				#end
+			</div>
+            <div class='pf-attribute-field-suffix'>
+            </div>
+		#elseif( ${attr.isDateType()} )
+			#set( $size = 10 )
+			#set( $placeholderOption = ${attr.getPlaceholder()} )
+			#set( $sizeOption = ${attr.getFormatOption("size")} )
+			#set( $patternOption = ${attr.getFormatOption("pattern")} )
+            #if( $placeholderOption )
+            	#set( $size = ${placeholderOption.length()})
+			#end
+			#if( $patternOption )
+            	#set( $size = ${patternOption.length()})
+			#end
+			#if( ${sizeOption} ) 
+                #set( $size = $sizeOption )
+            #end
+				
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+    			<input class='pf-date' name="${renderId}" $!{onChangeAttr} size="${size}" style="width:${size}em" placeholder="$!{placeholderOption}" type='text' value='${attr.Value}'/>
+    		</div>
+            <div class='pf-attribute-field-suffix'>
+            </div>
+		#elseif( ${attr.isYesornoType()} )
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+		    	#if ("checkbox" == ${renderHint} )
+		    		<input class='pf-yesorno' name="${renderId}" type='checkbox' value='Yes' class='pn-normal' #if( "Yes" == "${attr.Value}" )checked='checked'#end $!{onChangeAttr}/>
+		    	#elseif ( "radio" == ${renderHint} )
+		    		<input name="${renderId}" type='radio' value='No' class='pf-yesorno'  #if( "No" == "${attr.Value}" )checked='checked'#end $!{onChangeAttr}>&nbsp;$attrField.i18n("i18n_No")</input>
+		    		<input name="${renderId}" type='radio' value='Yes' class='pf-yesorno'  #if( "Yes" == "${attr.Value}" )checked='checked'#end $!{onChangeAttr}>&nbsp;$attrField.i18n("i18n_Yes")</input>
+				#else
+					#set( $width = ${attrField.i18n("i18n_?").length()} + 1 )
+					#if( $width < ${attrField.i18n("i18n_No").length()} )
+						#set( $width = ${attrField.i18n("i18n_No").length()} + 1 )
+					#end
+					#if( $width < ${attrField.i18n("i18n_Yes").length()} )
+						#set( $width = ${attrField.i18n("i18n_Yes").length()} + 1 )
+					#end
+		    		<select name="${renderId}" class='pf-yesorno' style="width:${width}em" $!{onChangeAttr}>
+		    			<option #if( !${attr.Value} || "?" == "${attr.Value}" )selected='yes'#end>$attrField.i18n("i18n_?")</option>
+		    			<option #if( ${attr.Value} && "No" == "${attr.Value}" )selected='yes'#end>$attrField.i18n("i18n_No")</option>
+		    			<option #if( ${attr.Value} && "Yes" == "${attr.Value}" )selected='yes'#end>$attrField.i18n("i18n_Yes")</option>
+		    		</select> 
+		    	#end
+		    </div>
+            <div class='pf-attribute-field-suffix'>
+            </div>
+		#elseif( ${attr.isNoteType()} )
+            <div class='pf-attribute-field-prefix'>
+            </div>
+            <div class='pf-attribute-field-input'>
+    			<textarea name="${renderId}" class='pf-note' $!{onChangeAttr} rows='3' style='width:100%'>${attr.Value}</textarea>
+    		</div>
+            <div class='pf-attribute-field-suffix'>
+            </div>
+		#end
+	#end
+	#if( $attrField.hasErrorMarker($attr) )
+	    <div class='pf-input-error'>$attrField.findErrors($attr, $attrField)</div>
+	#end
+	#if( ${onLoad} )
+		<script type='text/javascript'>${onLoad}</script>
+	#end
+</div>

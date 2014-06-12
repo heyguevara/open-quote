@@ -1,0 +1,38 @@
+import com.ail.core.CoreProxy;
+import com.ail.core.Functions;
+import com.ail.pageflow.ExecutePageActionService.ExecutePageActionArgument;
+import com.ail.pageflow.util.PageFlowContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.quotation.AddQuoteNumberService.AddQuoteNumberCommand;
+import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumCommand;
+import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceCommand;
+
+public class PremiumCalculationService {
+    public static void invoke(ExecutePageActionArgument args) throws Exception {
+        Policy policy = (Policy) args.getModelArgRet();
+
+        CoreProxy core = PageFlowContext.getCoreProxy();
+
+        AddQuoteNumberCommand aqnc = (AddQuoteNumberCommand) core.newCommand(AddQuoteNumberCommand.class);
+        aqnc.setPolicyArgRet(policy);
+        aqnc.invoke();
+        policy = aqnc.getPolicyArgRet();
+
+        /*
+         * CalculatePremium automatically calls CalculateTax,
+         * CalculateBrokerage, CalculateCommission and CalculateManagementCharge
+         * before processing the assessment sheets to arrive at a premium.
+         */
+        CalculatePremiumCommand cpc = (CalculatePremiumCommand) core.newCommand(CalculatePremiumCommand.class);
+        cpc.setPolicyArgRet(policy);
+        cpc.invoke();
+        policy = cpc.getPolicyArgRet();
+
+        EnforceComplianceCommand ecc = (EnforceComplianceCommand) core.newCommand(EnforceComplianceCommand.class);
+        ecc.setPolicyArgRet(policy);
+        ecc.invoke();
+        policy = ecc.getPolicyArgRet();
+
+        args.setModelArgRet(policy);
+    }
+}

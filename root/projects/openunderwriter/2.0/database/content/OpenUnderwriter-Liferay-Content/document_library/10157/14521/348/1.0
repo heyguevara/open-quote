@@ -1,0 +1,29 @@
+import com.ail.core.CoreProxy;
+import com.ail.core.Functions;
+import com.ail.pageflow.ExecutePageActionService.ExecutePageActionArgument;
+import com.ail.pageflow.util.PageFlowContext;
+import com.ail.insurance.policy.Policy;
+import com.ail.insurance.quotation.NotifyProposerByEmailService.NotifyProposerByEmailCommand;
+
+public class SendProposerEmailNotificationService {
+    public static void invoke(ExecutePageActionArgument args) {
+        CoreProxy core = PageFlowContext.getCoreProxy();
+
+    	Policy policy=(Policy)args.getModelArgRet();
+
+    	/*
+         * use the policy's product type as a namespace so we get the product's
+         * configuration.
+         */
+    	String productName = policy.getProductTypeId();
+    	String namespace = Functions.productNameToConfigurationNamespace(productName);
+
+        try {
+            NotifyProposerByEmailCommand command = (NotifyProposerByEmailCommand) core.newCommand("NotifyProposerByEmail", NotifyProposerByEmailCommand.class);
+            command.setQuotationNumberArg(policy.getQuotationNumber());
+            command.invoke();
+        } catch (Exception e) {
+            core.logError("Error in SendProposerEmailNotificationService:" + e);
+        }
+    }
+}
