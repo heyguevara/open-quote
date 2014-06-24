@@ -14,12 +14,17 @@
 
   <target name="teardown" description="undo whatever setup did" />
 
-  <target name="test" description="run tests defined in this project">
+  <target name="_test">
     <run-system-tests-macro name="demo product accessibility" />
     <run-system-tests-macro name="test menu access rights" />
     <run-system-tests-macro name="feedback" />
     <run-system-tests-macro name="organisation administrator access" />
+    <run-system-tests-macro name="organisation structure" />
     <run-system-tests-macro name="report access" />
     <run-system-tests-macro name="dashboard checks" />
+  </target>
+
+  <target name="test" depends="_test" description="run tests defined in this project">
+	<fail-on-system-test-error-macro />
   </target>
 </project>

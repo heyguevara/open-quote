@@ -42,6 +42,18 @@ import com.ail.pageflow.service.ListToOptionService.ListToOptionCommand;
 import com.ail.pageflow.service.PersistPolicyService.PersistPolicyCommand;
 import com.ail.pageflow.util.Functions;
 import com.ail.pageflow.util.PageFlowContext;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.service.ThemeLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 
 /**
@@ -142,7 +154,28 @@ public class QuotationCommon {
     Policy persistQuotation(Policy quote) throws BaseException {
         persistPolicyCommand.setPolicyArgRet(quote);
         persistPolicyCommand.invoke();
+        //updateAssetEntry(quote);
         return (Policy)persistPolicyCommand.getPolicyArgRet();
+    }
+    
+    void updateAssetEntry(Policy policy) {
+        try {
+            User user=PortalUtil.getUser(PageFlowContext.getRequest());
+            long userId = user.getUserId();
+            long groupId = user.getGroupId();
+            String className = Policy.class.getName();
+            long classPK = policy.getSerialVersion();
+            long[] categoryIds = null;
+            String[] tagNames = null;
+
+            AssetEntryLocalServiceUtil.updateEntry(userId, groupId, className, classPK, categoryIds, tagNames);
+        } catch (SystemException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (PortalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -39,7 +39,7 @@
     <delete dir="${test.dir}" failonerror="no" />
   </target>
 
-  <target name="test">
+  <target name="_test">
     <run-integration-tests-macro>
       <junit-classpath>
         <fileset dir="${test.dir}/lib" includes="*.jar" excludes="selenium*.jar" />
@@ -56,5 +56,9 @@
       </junit-classpath>
     </run-integration-tests-macro>
   </target>
+  
+  <target name="test">
+ 	<fail-on-integration-test-error-macro />
+ </target>
 
 </project>

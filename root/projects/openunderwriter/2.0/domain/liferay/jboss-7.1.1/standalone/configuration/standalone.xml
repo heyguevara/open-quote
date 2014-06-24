@@ -80,6 +80,9 @@
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
+            <logger category="net.htmlparser.jericho">
+                <level name="WARN"/>
+            </logger>
             <logger category="org.apache.tomcat.util.modeler">
                 <level name="WARN"/>
             </logger>

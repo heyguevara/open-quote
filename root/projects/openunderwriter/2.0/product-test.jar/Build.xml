@@ -14,7 +14,7 @@
 
   <target name="teardown" description="undo whatever setup did" />
 
-  <target name="test">
+  <target name="_test">
     <run-product-tests-macro product="AIL.Demo.MotorPlus" />
     <run-product-tests-macro product="AIL.Demo.LifePlus" />
     <run-product-tests-macro product="AIL.Demo.FreightPlus" />
@@ -24,4 +24,7 @@
     <run-product-tests-macro product="AIL.Demo.WidgetShowcase" />
   </target>
 
+  <target name="test" depends="_test" description="run tests defined in this project">
+ 	<fail-on-product-test-error-macro />
+   </target>
 </project>

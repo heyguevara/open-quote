@@ -128,7 +128,7 @@
     <sequential>
       
       <!-- If mysql isn't the right version, the dump files will be hard/impossible to diff. -->
-      <verify-mysql-version-macro required="5.6" severity="fail"/>
+      <verify-mysql-version-macro required="5.6" />
 
       <stop-liferay-macro />
 
