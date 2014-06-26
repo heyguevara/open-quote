@@ -52,6 +52,7 @@
     <subant-macro target="teardown" includes="build/Build.xml" />
     <delete dir="./.apt_generated" />
     <delete dir="${target.dir}" />
+  	<delete dir="${java.io.tmpdir}/liferay" />
   </target>
 
   <target name="test" description="run unit tests and integration tests">

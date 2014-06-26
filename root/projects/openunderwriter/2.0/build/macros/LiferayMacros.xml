@@ -253,7 +253,7 @@
       <path id="sass2css.classpath">
         <pathelement location="${deploy.dir}/ROOT.war/WEB-INF/classes" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="portal-service.jar, portlet.jar" />
-        <fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="portal-impl.jar, commons-lang.jar, commons-logging.jar, commons-configuration.jar, commons-beanutils.jar, commons-digester.jar, commons-collections.jar, struts.jar, spring-web.jar, spring-context.jar, spring-beans.jar, spring-core.jar, jruby.jar, ant.jar, xstream.jar, kxml2.jar, util-java.jar, easyconf.jar" />
+        <fileset dir="${deploy.dir}/ROOT.war/WEB-INF/lib" includes="jodd.jar, ruby-gems.jar, portal-impl.jar, commons-lang.jar, commons-logging.jar, commons-configuration.jar, commons-beanutils.jar, commons-digester.jar, commons-collections.jar, struts.jar, spring-web.jar, spring-context.jar, spring-beans.jar, spring-core.jar, jruby.jar, ant.jar, xstream.jar, kxml2.jar, util-java.jar, easyconf.jar" />
         <fileset dir="${buildlib.dir}" includes="activation-1.1.jar,jargs-1.0.jar,servlet-api-2.4-20040521.jar,jsp-api-2.0-20040521.jarqdox-1.6.jar" />
       </path>
 
