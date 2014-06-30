@@ -1,8 +1,8 @@
 <ivy-module version="2.0">
     <info organisation="com.openunderwriter" module="ghana-theme.war" />
     <dependencies>
-        <dependency org="com.liferay.portal" name="util-java" rev="6.1.1"/>
-        <dependency org="com.liferay.portal" name="util-bridges" rev="6.1.1"/>
-        <dependency org="com.liferay.portal" name="util-taglib" rev="6.1.1"/>
+        <dependency org="com.liferay.portal" name="util-java" rev="${liferay.util.version}"/>
+        <dependency org="com.liferay.portal" name="util-bridges" rev="${liferay.util.version}"/>
+        <dependency org="com.liferay.portal" name="util-taglib" rev="${liferay.util.version}"/>
     </dependencies>
 </ivy-module>

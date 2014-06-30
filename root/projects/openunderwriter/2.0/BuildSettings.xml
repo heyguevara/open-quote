@@ -10,6 +10,7 @@
 
   <!-- Version of Liferay to use for this project, and the version of jboss bundled within it -->
   <property name="liferay.version" value="6.2.0-ce-ga1" />
+  <property name="liferay.util.version" value="6.2.0-ga1" />
   <property name="jboss.version" value="7.1.1" />
 	
   <!-- Define which database we're working with -->

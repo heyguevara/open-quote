@@ -2,6 +2,6 @@
     <info organisation="com.openquote" module="product-manager.war" />
     <dependencies>
         <dependency name="commons-logging" org="commons-logging" rev="1.1.1" />
-        <dependency org="com.liferay.portal" name="util-java" rev="6.1.1"/>
+        <dependency org="com.liferay.portal" name="util-java" rev="${liferay.util.version}"/>
     </dependencies>
 </ivy-module>
