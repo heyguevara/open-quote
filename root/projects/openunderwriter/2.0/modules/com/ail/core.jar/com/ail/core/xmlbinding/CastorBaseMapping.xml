@@ -1139,6 +1139,17 @@
             <bind-xml node="attribute" />
         </field>
     </class>
+    
+    <class name="com.ail.pageflow.TriggerNewBusinessReferralWorkflow" extends="com.ail.pageflow.Action">
+        <map-to xml="triggerNewBusinessReferralWorkflow" />
+    </class>
+
+    <class name="com.ail.pageflow.TriggerNamedWorkflow" extends="com.ail.pageflow.Action">
+        <map-to xml="triggerNamedWorkflow" />
+        <field name="workflowCommandName" type="string" >
+            <bind-xml node="attribute" />
+        </field>
+    </class>
 
     <class name="com.ail.insurance.quotation.NotifyBrokerByEmailArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
         <field name="quotationNumberArg" type="string" />

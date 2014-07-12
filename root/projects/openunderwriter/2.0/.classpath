@@ -7,6 +7,7 @@
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/core.jar" path="modules/com/ail/core.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/commercial.jar" path="modules/com/ail/commercial.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/insurance/main/insurance.jar" path="modules/com/ail/insurance.jar"/>
+	<classpathentry kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/workflow/main/workflow.jar" path="modules/com/ail/workflow.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/pageflow/main/pageflow.jar" path="modules/com/ail/pageflow.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/acceptance-ejb.jar" path="acceptance-ejb.jar"/>
 	<classpathentry kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/command-server-ejb.jar" path="command-server-ejb.jar"/>
@@ -17,11 +18,9 @@
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/quotation-ejb.jar" path="quotation-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/subrogation-ejb.jar" path="subrogation-ejb.jar"/>
 	<classpathentry excluding="WEB-INF/src/" kind="src" path="configure-hook.war"/>
-	<classpathentry kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/configure-hook.war/WEB-INF/classes" path="configure-hook.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/" kind="src" path="sandpit-portlet.war"/>
 	<classpathentry kind="src" path="sandpit-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="WEB-INF/src/|js/tiny_mce/" kind="src" path="quotation-portlet.war"/>
-	<classpathentry kind="src" path="quotation-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml|Ivy.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openunderwriter-theme.war"/>
 	<classpathentry kind="src" path="greentree-theme.war"/>
 	<classpathentry kind="src" path="bluestone-theme.war"/>
@@ -153,7 +152,7 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/xstream-1.4.1.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/bin/client/jboss-client.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/liferay/portal/main/mysql.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/liferay/portal/main/portal-service.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/liferay/portal/main/portal-service.jar" sourcepath="/scratch/liferay-portal-src-6.2.0-ce-ga1/portal-service/src"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/liferay/portal/main/portlet.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/javax/annotation/api/main/jboss-annotations-api_1.1_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/javax/ejb/api/main/jboss-ejb-api_3.1_spec-1.0.1.Final.jar"/>

@@ -57,7 +57,7 @@
     </run-integration-tests-macro>
   </target>
   
-  <target name="test">
+  <target name="test" depends="_test">
  	<fail-on-integration-test-error-macro />
  </target>
 

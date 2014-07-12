@@ -1,0 +1,7 @@
+<ivy-module version="2.0">
+  <info organisation="com.ail" module="workflow" />
+  <dependencies>
+    <dependency org="com.liferay.portal" name="portal-service" rev="${liferay.util.version}" />
+  </dependencies>
+</ivy-module>
+    
