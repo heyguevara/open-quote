@@ -27,9 +27,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
+
+import org.bouncycastle.util.Strings;
 
 public class DataGenerator {
     
+    
+    private static final String APPLICATION = "APPLICATION";
+    private static final String REFERRAL = "REFERRAL";
+    private static final String QUOTE = "QUOTATION";
+    private static final String RENEWAL = "RENEWAL";
+    private static final String CANCEL = "CANCELLATION";
+    private static final String CLAIM = "CLAIM";
+    private static final String NEW = "NEW_BUSINESS";
     
     // Records will be generated between START_DATE and END_DATE
     private static final Long ONE_DAY = (long) (24 * 60 * 60 * 1000); // Milliseconds in a day
@@ -40,9 +51,14 @@ public class DataGenerator {
     private static final Long NUMBER_OF_RECORDS = 1000L;
 
     // Enum definitions
-    private static final String[] REASONS =  {"NEW_BUSINESS", "CLAIM", "CANCELLATION", "RENEWAL", "RENEWAL", "RENEWAL"}; 
-    private static final String[] PRODUCTS = { "MotorPlus", "LifePlus", "WaterSports" };
-    private static final String[] BROKERS = { "Harvey Munx Ltd", "Berkley Thames-Valley", "James Hewel & Co", "Shark, Graham & Timpson", "Salvador Rush" };
+    private static final String[] BORDEREAU_REASONS =  {NEW, NEW, CLAIM, CANCEL, RENEWAL, RENEWAL, RENEWAL}; 
+    private static final String[] SUMMARY_REASONS =  {NEW, CLAIM, CANCEL, RENEWAL, RENEWAL, QUOTE, QUOTE, QUOTE, QUOTE, QUOTE, QUOTE, QUOTE}; 
+    private static final String[] UNCOMPLETED_REASONS =  {REFERRAL, APPLICATION, QUOTE, QUOTE}; 
+    
+    private static final String[] PAGE =  {"QuestionPage", "Quotation", "Conditions", "Proposer", "History"};
+
+    private static final String[] PRODUCTS = { "MotorPlus", "MotorPlus", "LifePlus", "WaterSports", "PetPlus" };
+    private static final String[] BROKERS = { "Harvey Monceux Ltd", "Berkley Thames-Valley", "James Hewel & Co", "Shark, Graham & Timpson", "Salvador Rush" };
     private static final String[] FIRST_NAMES = { "John", "Tim", "Sarah", "Hillary", "Bill", "Samuel", "Daisy", "Harvey", "Jane", "Morris", "Claire" };
     private static final String[] LAST_NAMES = { "Johnson", "Baites", "Smith", "Jones", "Hall", "Robson", "Bryson", "Britten", "Hilliard", "Garvey", "Brompton", "Palmer", "Plant", "Selbey", "Dawson"};
         
@@ -63,13 +79,37 @@ public class DataGenerator {
         return new SimpleDateFormat("yy-MM-dd").format(new Date(date));
     }
     
+    private void outputSummaryRecord() throws SQLException {
+        
+        String reason = selectFrom(SUMMARY_REASONS);
+        int premium = getPremium(reason);
+    
+        String sql = "insert into report_summary ("+
+                "broker,"+
+                "quote_date,"+
+                "accepted_date,"+
+                "status,"+
+                "premium_amount,"+
+                "premium_currency,"+
+                "product"+
+            ")"+
+            " values ("+
+                "'"+selectFrom(BROKERS)+"', "+
+                "'"+sqlDate(context.quoteDate)+"', "+
+                "'"+sqlDate(context.inceptionDate)+"', "+
+                "'"+reason.replace('_', ' ')+"', "+
+                ""+premium+", "+
+                "'GBP', "+
+                "'"+selectFrom(PRODUCTS)+"'"+
+            ");";
+                
+        executeSQL(sql);
+    }
+
     private void outputBordereauRecord() throws SQLException {
         
-        String reason = selectFrom(REASONS);
-        int premium = (int)(300 + (context.policyNumber % 2000));
-        if ("CLAIM".equals(reason) || "CANCELLATION".equals(reason)) {
-            premium = premium * -1;
-        }
+        String reason = selectFrom(BORDEREAU_REASONS);
+        int premium = getPremium(reason);
     
         String sql = "insert into bordereau ("+
                 "broker,"+
@@ -99,6 +139,58 @@ public class DataGenerator {
                 
         executeSQL(sql);
     }
+    
+private void outputUncompletedRecord() throws SQLException {
+        
+        String reason = selectFrom(UNCOMPLETED_REASONS);
+        int premium = getPremium(reason);
+        String first = selectFrom(FIRST_NAMES);
+        String last = selectFrom(LAST_NAMES);
+    
+        String sql = "insert into pre_policy ("+
+                "broker,"+
+                "quote_number,"+
+                "quote_date,"+
+                "status,"+
+                "page,"+
+                "policy_holder_name,"+
+                "policy_holder_number,"+
+                "policy_holder_email,"+
+                "premium_amount,"+
+                "premium_currency,"+
+                "product"+
+            ")"+
+            " values ("+
+                "'"+selectFrom(BROKERS)+"', "+
+                "'QF"+context.policyNumber+"', "+
+                "'"+sqlDate(context.quoteDate)+"', "+
+                "'"+reason.replace('_', ' ')+"', "+
+                "'"+selectFrom(PAGE)+"', "+
+                "'"+ first + " " + last + "', "+
+                "'0" + new Random().nextInt(9999) + " " + new Random().nextInt(999999) + "', " +
+                "'"+ Strings.toLowerCase(first) + "@" + Strings.toLowerCase(last) + ".com', "+
+                ""+premium+", "+
+                "'GBP', "+
+                "'"+selectFrom(PRODUCTS)+"'"+
+            ");";
+                
+        executeSQL(sql);
+    }
+    
+    private int getPremium(String reason) {
+        
+        int premium = 0;
+        
+        if (!REFERRAL.equals(reason) && !APPLICATION.equals(reason)) {
+            
+            premium = (int)(300 + (context.policyNumber % 2000));
+                    
+            if (CLAIM.equals(reason) || CANCEL.equals(reason)) {
+                premium = premium * -1;
+            } 
+        }
+        return premium;
+    }
 
     private void executeSQL(String sql) throws SQLException {
         PreparedStatement statement=context.connection.prepareStatement(sql);
@@ -108,6 +200,14 @@ public class DataGenerator {
     
     private void generateBordereau() throws SQLException {
         outputBordereauRecord();
+    }
+    
+    private void generateSummary() throws SQLException {
+        outputSummaryRecord();
+    }
+    
+    private void generateUncompleted() throws SQLException {
+        outputUncompletedRecord();
     }
 
     void setupContext() {
@@ -119,7 +219,7 @@ public class DataGenerator {
     private void run(String args[]) throws SQLException {
         context=new Context(args);
 
-        System.out.println("Generating dummy bordereau data...");
+        System.out.println("Generating dummy Bordereau, Summary and Uncompleted quote data...");
         
         for (int i = 0; i < NUMBER_OF_RECORDS; i++) {
             setupContext();
@@ -128,11 +228,13 @@ public class DataGenerator {
                 System.out.print("generating record "+(i+1)+" of "+NUMBER_OF_RECORDS+"\r");
             }
             generateBordereau();
+            generateSummary();
+            generateUncompleted();
             
         }
         
         if (!context.quiet) {
-            System.out.println("Generation of dummy bordereau data complete.");
+            System.out.println("Generation of dummy data complete.");
         }
     }
 
