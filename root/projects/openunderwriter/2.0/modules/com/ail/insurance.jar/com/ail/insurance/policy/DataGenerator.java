@@ -48,7 +48,7 @@ public class DataGenerator {
     private static final Long START_DATE = System.currentTimeMillis() - (1 * ONE_YEAR); // 1 years ago today
     private static final Long END_DATE = System.currentTimeMillis();
     
-    private static final Long NUMBER_OF_RECORDS = 1000L;
+    private static final Long NUMBER_OF_RECORDS = 5000L;
 
     // Enum definitions
     private static final String[] BORDEREAU_REASONS =  {NEW, NEW, CLAIM, CANCEL, RENEWAL, RENEWAL, RENEWAL}; 

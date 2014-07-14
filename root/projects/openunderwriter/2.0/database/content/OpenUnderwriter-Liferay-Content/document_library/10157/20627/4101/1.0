@@ -1,0 +1,6 @@
+<p>PageFlows provide a set of widgets which trigger the execution of
+	workflows.</p>
+
+<p>In this sample page workflows are attached to buttons to make
+	testing easier. However, it is probably more common to invoke them
+	conditionally on entry to, or exit from, a page.</p>
