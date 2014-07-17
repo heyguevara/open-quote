@@ -4,6 +4,6 @@
         <dependency org="org.jboss.modules" name="jboss-modules" rev="1.1.2.GA" />
         <dependency org="mysql" name="mysql-connector-java" rev="5.1.24"/>
         <dependency org="liferay" name="web-form-ce" rev="2.0.1" />
-        <dependency org="eclipse" name="birt" rev="4.3.2-ail" />
+        <dependency org="eclipse" name="birt" rev="4.3.2-ail-2.0" />
     </dependencies>
 </ivy-module>
