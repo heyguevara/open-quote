@@ -3,7 +3,7 @@
  Build file for the openunderwriter greentree-theme.war project
 -->
 
-<project default="build" name="openquote:greentree-theme.war">
+<project default="build" name="openunderwriter:greentree-theme.war">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

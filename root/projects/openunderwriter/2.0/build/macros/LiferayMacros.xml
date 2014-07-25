@@ -183,6 +183,13 @@
         update Release_ set modifiedDate=createDate,buildDate=createDate;
         update Marketplace_App set createDate="2014-06-10",modifiedDate="2014-06-10";
         update Group_ as g1, (select typeSettings from Group_ where name="OpenQuote") as g2 set g1.typeSettings=g2.typeSettings where g1.name="Guest";
+        delete from UserNotificationEvent;
+        delete from KaleoInstanceToken;
+        delete from KaleoLog;
+        delete from KaleoTaskAssignmentInstance;
+        delete from KaleoTimerInstanceToken;
+        delete from KaleoInstance;
+        delete from WorkflowInstanceLink;
       </sql>
         
       <exec executable="bash" dir="." os="Linux,Mac OS X,Solaris,Sun OS">

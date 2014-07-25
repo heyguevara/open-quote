@@ -21,13 +21,14 @@
     <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
     <parallel>
+      <ant dir="./workflow.war" antfile="Build.xml" target="_build" />
       <ant dir="./configure-hook.war" antfile="Build.xml" target="_build" />
       <ant dir="./quotation-portlet.war" antfile="Build.xml" target="_build" />
       <ant dir="./sandpit-portlet.war" antfile="Build.xml" target="_build" />
       <ant dir="./openunderwriter-theme.war" antfile="Build.xml" target="_build" />
-      <ant dir="./bluestone-theme.war" antfile="Build.xml" target="_build" />
     </parallel>
     <parallel>
+      <ant dir="./bluestone-theme.war" antfile="Build.xml" target="_build" />
       <ant dir="./greentree-theme.war" antfile="Build.xml" target="_build" />
       <ant dir="./ghana-theme.war" antfile="Build.xml" target="_build" />
       <ant dir="./narrowbar-theme.war" antfile="Build.xml" target="_build" />

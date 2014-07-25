@@ -3,7 +3,7 @@
  Build file for the openunderwriter openunderwriter-theme.war project
 -->
 
-<project default="build" name="openquote:openunderwriter-theme.war">
+<project default="build" name="openunderwriter:openunderwriter-theme.war">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

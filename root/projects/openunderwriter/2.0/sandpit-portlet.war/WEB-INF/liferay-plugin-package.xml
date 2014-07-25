@@ -3,7 +3,7 @@
 
 <plugin-package>
     <name>Sandpit Portlet</name>
-    <module-id>liferay/sandpit-portlet/2.0.1/war</module-id>
+    <module-id>openunderwriter/sandpit-portlet/2.0.1/war</module-id>
     <recommended-deployment-context>sandpit-portlet</recommended-deployment-context>
     <required-deployment-contexts></required-deployment-contexts>
     <types>

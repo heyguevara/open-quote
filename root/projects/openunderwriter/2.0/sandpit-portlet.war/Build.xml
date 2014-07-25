@@ -3,7 +3,7 @@
  Build file for the product manager war project
 -->
 
-<project default="build" name="openquote:sandpit-portlet.war">
+<project default="build" name="openunderwriter:sandpit-portlet.war">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

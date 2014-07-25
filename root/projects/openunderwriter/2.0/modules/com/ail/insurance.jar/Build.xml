@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Build file for the insurance jar project -->
 
-<project default="build" name="openquote:modules/com/ail/insurance.jar">
+<project default="build" name="openunderwriter:modules/com/ail/insurance.jar">
 	<import file="../../../../BuildSettings.xml" />
 
 	<target name="clean" description="delete everything that the build can generate">

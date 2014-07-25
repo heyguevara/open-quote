@@ -19,7 +19,7 @@
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>view</portlet-mode>
     </supports>
-    <resource-bundle>Resources</resource-bundle>
+    <resource-bundle>QuotationResources</resource-bundle>
     <portlet-info>
       <title>quotation</title>
       <short-title>quotation</short-title>

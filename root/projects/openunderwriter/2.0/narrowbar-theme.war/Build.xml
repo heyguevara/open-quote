@@ -3,7 +3,7 @@
  Build file for the openunderwriter narrowbar-theme.war project
 -->
 
-<project default="build" name="openquote:narrowbar-theme.war">
+<project default="build" name="openunderwriter:narrowbar-theme.war">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

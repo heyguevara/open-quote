@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Build file for the integration test jar project -->
 
-<project default="build" name="openquote:integration-test.jar">
+<project default="build" name="openunderwriter:integration-test.jar">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

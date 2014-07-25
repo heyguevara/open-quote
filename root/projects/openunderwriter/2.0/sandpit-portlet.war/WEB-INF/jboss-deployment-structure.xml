@@ -18,6 +18,7 @@
             <module name="org.jboss.modules" />
             <module name="deployment.persistence-server-ejb.jar" />
             <module name="deployment.acceptance-ejb.jar" />
+            <module name="deployment.workflow.war" />
         </dependencies> 
     </deployment>
 </jboss-deployment-structure>

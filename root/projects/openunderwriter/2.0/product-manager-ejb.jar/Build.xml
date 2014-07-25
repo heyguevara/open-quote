@@ -3,7 +3,7 @@
  Build file for the product manager EJB jar
 -->
 
-<project default="build" name="openquote:product-manager-ejb.jar">
+<project default="build" name="openunderwriter:product-manager-ejb.jar">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

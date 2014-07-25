@@ -3,7 +3,7 @@
  Build file for the persistence server EJB jar
 -->
 
-<project default="build" name="openquote:persistence-server-ejb.jar">
+<project default="build" name="openunderwriter:persistence-server-ejb.jar">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

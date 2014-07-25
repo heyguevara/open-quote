@@ -3,7 +3,7 @@
  Build file for the onrisk EJB jar
 -->
 
-<project default="build" name="openquote:onrisk-ejb.jar">
+<project default="build" name="openunderwriter:onrisk-ejb.jar">
   <import file="${basedir}/../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

@@ -3,7 +3,7 @@
  Build file for the quotation portlet
 -->
 
-<project default="build" name="openquote:quotation-portlet.war">
+<project default="build" name="openunderwriter:quotation-portlet.war">
   <import file="../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

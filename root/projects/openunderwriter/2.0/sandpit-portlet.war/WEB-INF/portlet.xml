@@ -10,7 +10,7 @@
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
     </supports>
-    <resource-bundle>Resources</resource-bundle>
+    <resource-bundle>SandpitResources</resource-bundle>
     <portlet-info>
       <title>sandpit</title>
       <short-title>sandpit</short-title>

@@ -3,7 +3,7 @@
  Build file for the command server EJB jar
 -->
 
-<project default="build" name="openquote:command-server-ejb.jar">
+<project default="build" name="openunderwriter:command-server-ejb.jar">
   <import file="${basedir}/../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate">

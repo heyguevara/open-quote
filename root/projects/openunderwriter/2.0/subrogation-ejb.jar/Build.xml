@@ -3,7 +3,7 @@
  Build file for the subrogation EJB jar
 -->
 
-<project default="build" name="openquote:subrogation-ejb.jar">
+<project default="build" name="openunderwriter:subrogation-ejb.jar">
   <import file="${basedir}/../BuildSettings.xml"/>
 
   <target name="clean" description="delete everything that the build can generate">

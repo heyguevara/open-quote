@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project default="build" name="openquote:system-test.jar">
+<project default="build" name="openunderwriter:system-test.jar">
   <import file="../BuildSettings.xml" />
 
   <target name="clean" description="delete everything that the build can generate" />
@@ -22,6 +22,7 @@
     <run-system-tests-macro name="organisation structure" />
     <run-system-tests-macro name="report access" />
     <run-system-tests-macro name="dashboard checks" />
+    <run-system-tests-macro name="add application" />
   </target>
 
   <target name="test" depends="_test" description="run tests defined in this project">
