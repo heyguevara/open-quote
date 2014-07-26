@@ -23,8 +23,7 @@
     <parallel>
       <ant dir="./workflow.war" antfile="Build.xml" target="_build" />
       <ant dir="./configure-hook.war" antfile="Build.xml" target="_build" />
-      <ant dir="./quotation-portlet.war" antfile="Build.xml" target="_build" />
-      <ant dir="./sandpit-portlet.war" antfile="Build.xml" target="_build" />
+      <ant dir="./pageflow-portlet.war" antfile="Build.xml" target="_build" />
       <ant dir="./openunderwriter-theme.war" antfile="Build.xml" target="_build" />
     </parallel>
     <parallel>

@@ -17,8 +17,7 @@
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/quotation-ejb.jar" path="quotation-ejb.jar"/>
 	<classpathentry excluding="Build.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/subrogation-ejb.jar" path="subrogation-ejb.jar"/>
 	<classpathentry excluding="WEB-INF/src/" kind="src" path="configure-hook.war"/>
-	<classpathentry excluding="WEB-INF/src/" kind="src" path="sandpit-portlet.war"/>
-	<classpathentry excluding="WEB-INF/src/|js/tiny_mce/" kind="src" path="quotation-portlet.war"/>
+	<classpathentry excluding="Build.xml|Ivy.xml|WEB-INF/src/|css/|images/|js/" kind="src" path="pageflow-portlet.war"/>
 	<classpathentry excluding="Build.xml|Ivy.xml|WEB-INF/src/" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/workflow.war" path="workflow.war"/>
 	<classpathentry kind="src" path="workflow.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml|Ivy.xml" kind="src" output="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/openquote-theme.war" path="openunderwriter-theme.war"/>
