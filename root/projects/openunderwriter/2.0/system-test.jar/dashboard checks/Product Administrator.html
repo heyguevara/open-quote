@@ -22,13 +22,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='login-strip']/div/div/div[5]/a/div</td>
-	<td></td>
+	<td>type</td>
+	<td>id=_58_login</td>
+	<td>katie@openunderwriter.org</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>http://localhost:8080/web/oq</td>
+	<td>type</td>
+	<td>id=_58_password</td>
+	<td>katie</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[text()=&quot; Sign In &quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,19 +42,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>css=input[type=&quot;submit&quot;]</td>
-	<td>Convert</td>
+	<td>verifyElementPresent</td>
+	<td>//div[contains(@class,&quot;portlet-workflow-tasks&quot;)]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>css=input[title=&quot;Search&quot;]</td>
-	<td>Search</td>
+	<td>//form[contains(@action, &quot;unit_converter&quot;)]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>css=#_61_fm &gt; input[type=&quot;submit&quot;]</td>
-	<td>Calculate</td>
+	<td>verifyElementPresent</td>
+	<td>//iframe[contains(@src,&quot;widget_motor_lossratio&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//iframe[contains(@src,&quot;widget_motor_newbusiness&quot;)]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

@@ -22,13 +22,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>css=#p_p_id_56_INSTANCE_x0C04wd31Mni_ &gt; div.portlet-borderless-container &gt; div.portlet-body &gt; div.journal-content-article &gt; #login-strip &gt; div &gt; div.ou-icon-strip-section &gt; div.ou-icon-strip-icon &gt; a &gt; img</td>
-	<td></td>
+	<td>type</td>
+	<td>id=_58_login</td>
+	<td>adam@openunderwriter.org</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>http://localhost:8080/web/oa</td>
+	<td>type</td>
+	<td>id=_58_password</td>
+	<td>adam</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[text()=&quot; Sign In &quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,17 +48,22 @@
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>//iframe[@src=&quot;/birt/frameset?__report=http://localhost:8080/documents/10197/19990/widget_motor_claimspremiums.rptdesign/4654e515-a205-414b-99f2-1dbbd780538f&amp;&amp;&quot;]</td>
+	<td>//div[contains(@class,&quot;portlet-workflow-tasks&quot;)]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>//iframe[@src=&quot;/birt/frameset?__report=http://localhost:8080/documents/10197/19990/widget_motor_lossratio.rptdesign/9ec22b59-871f-4984-972e-afdfaba818db&amp;&amp;&quot;]</td>
+	<td>//form[contains(@action, &quot;unit_converter&quot;)]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>//iframe[@src=&quot;/birt/frameset?__report=http://localhost:8080/documents/10197/19990/widget_motor_newbusiness.rptdesign/f26f0c7f-a0bf-435c-b5ed-efc85c4bd0d9&amp;&amp;&quot;]</td>
+	<td>//iframe[contains(@src,&quot;widget_motor_lossratio&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//iframe[contains(@src,&quot;widget_motor_newbusiness&quot;)]</td>
 	<td></td>
 </tr>
 <tr>

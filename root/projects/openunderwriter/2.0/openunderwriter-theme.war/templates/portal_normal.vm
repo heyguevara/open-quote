@@ -62,7 +62,7 @@ $theme.include($body_top_include)
             #language("powered-by") <a href="http://www.openunderwriter.com" rel="external">OpenUnderwriter</a>.
         </p>
 		<p class="feedback">
-			Please let us have your <a href="/web/guest/feedback">feedback</a>
+			Please let us have your <a href="/web/ou/feedback">feedback</a>
 		</p>
     </footer>
 </div>
