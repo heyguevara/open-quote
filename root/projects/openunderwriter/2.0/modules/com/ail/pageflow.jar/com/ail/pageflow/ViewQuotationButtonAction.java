@@ -69,7 +69,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
 	                PageFlowContext.setPolicy(savedPolicy.getPolicy());
                 }
 
-                response.sendRedirect("/quotation-portlet/DisplayQuotationServlet?quoteNumber="+quoteNumber);
+                response.sendRedirect("/pageflow-portlet/DisplayQuotationServlet?quoteNumber="+quoteNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display quote", e);

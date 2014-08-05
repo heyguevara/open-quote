@@ -69,7 +69,7 @@ public class ViewCertificateButtonAction extends CommandButtonAction {
 	                PageFlowContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
-                response.sendRedirect("/quotation-portlet/DisplayCertificateServlet?policyNumber="+policyNumber);
+                response.sendRedirect("/pageflow-portlet/DisplayCertificateServlet?policyNumber="+policyNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display certificate", e);

@@ -69,7 +69,7 @@ public class ViewWordingButtonAction extends CommandButtonAction {
 	                PageFlowContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
-                response.sendRedirect("/quotation-portlet/DisplayWordingServlet?policyNumber="+policyNumber);
+                response.sendRedirect("/pageflow-portlet/DisplayWordingServlet?policyNumber="+policyNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display wording", e);

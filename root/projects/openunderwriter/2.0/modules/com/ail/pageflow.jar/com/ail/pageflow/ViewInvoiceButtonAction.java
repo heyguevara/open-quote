@@ -69,7 +69,7 @@ public class ViewInvoiceButtonAction extends CommandButtonAction {
 	                PageFlowContext.setPolicy(savedPolicy.getPolicy());
                 }
                 
-                response.sendRedirect("/quotation-portlet/DisplayInvoiceServlet?policyNumber="+policyNumber);
+                response.sendRedirect("/pageflow-portlet/DisplayInvoiceServlet?policyNumber="+policyNumber);
             }
             catch(Exception e) {
                 throw new RenderingError("Failed to generate/display invoice", e);

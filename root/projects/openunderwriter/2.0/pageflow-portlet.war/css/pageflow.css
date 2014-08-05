@@ -582,7 +582,7 @@
 }
 
 .pf-section-scroller .pf-add > input {
-	background: no-repeat url(/quotation-portlet/images/add.gif) 0 1px;
+	background: no-repeat url(/pageflow-portlet/images/add.gif) 0 1px;
 	border: none;
 	padding-left: 20px;
 	margin-left: 1em;
@@ -592,7 +592,7 @@
 }
 
 .pf-paypal-button {
-	background-image: url(/quotation-portlet/images/buy-now-with-paypal.png);
+	background-image: url(/pageflow-portlet/images/buy-now-with-paypal.png);
 	min-width:142px;
 	min-height:27px;
 	border:none;
