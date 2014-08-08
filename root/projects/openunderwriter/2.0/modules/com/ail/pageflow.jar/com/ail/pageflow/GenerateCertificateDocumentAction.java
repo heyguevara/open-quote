@@ -25,7 +25,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateCommand;
+import com.ail.insurance.onrisk.FetchCertificateDocumentService.FetchCertificateDocumentCommand;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.PageFlowContext;
@@ -62,7 +62,7 @@ public class GenerateCertificateDocumentAction extends Action {
                 Policy quote=(Policy)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchCertificateCommand cmd=proxy.newCommand(FetchCertificateCommand.class);
+                FetchCertificateDocumentCommand cmd=proxy.newCommand(FetchCertificateDocumentCommand.class);
                 cmd.setPolicyNumberArg(quote.getPolicyNumber());
                 cmd.invoke();
                 

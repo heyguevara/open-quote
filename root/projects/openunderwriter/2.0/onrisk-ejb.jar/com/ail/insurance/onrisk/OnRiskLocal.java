@@ -20,9 +20,9 @@ package com.ail.insurance.onrisk;
 import javax.ejb.Local;
 
 import com.ail.core.BaseServerException;
-import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
-import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
-import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
+import com.ail.insurance.onrisk.GenerateCertificateDocumentService.GenerateCertificateDocumentArgument;
+import com.ail.insurance.onrisk.GenerateInvoiceDocumentService.GenerateInvoiceDocumentArgument;
+import com.ail.insurance.onrisk.GenerateWordingDocumentService.GenerateWordingDocumentArgument;
 
 @Local
 public interface OnRiskLocal {
@@ -32,7 +32,7 @@ public interface OnRiskLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument);
+    GenerateCertificateDocumentArgument generateCertificate(GenerateCertificateDocumentArgument argument);
 
     /**
      * Service wrapper business method for the GenerateInvoiceCommand service.
@@ -40,7 +40,7 @@ public interface OnRiskLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument);
+    GenerateInvoiceDocumentArgument generateInvoice(GenerateInvoiceDocumentArgument argument);
 
     /**
      * Service wrapper business method for the GenerateWordingCommand service.
@@ -48,7 +48,7 @@ public interface OnRiskLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateWordingArgument generateWording(GenerateWordingArgument argument);
+    GenerateWordingDocumentArgument generateWording(GenerateWordingDocumentArgument argument);
 }
 
 

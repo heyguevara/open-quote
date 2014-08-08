@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceCommand;
+import com.ail.insurance.onrisk.FetchInvoiceDocumentService.FetchInvoiceDocumentCommand;
 
 public class DisplayInvoiceServlet extends HttpServlet {
     
@@ -39,7 +39,7 @@ public class DisplayInvoiceServlet extends HttpServlet {
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy=new CoreProxy();
-        FetchInvoiceCommand cmd=proxy.newCommand(FetchInvoiceCommand.class);
+        FetchInvoiceDocumentCommand cmd=proxy.newCommand(FetchInvoiceDocumentCommand.class);
         cmd.setPolicyNumberArg(policyNumber);
 
         try {

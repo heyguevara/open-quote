@@ -26,7 +26,7 @@ public class BlockData extends ItemContainer {
     private String watermark; 
 
     /**
-     * Return an indicator detailiing which where this block is applicable (should be shown) in the document.
+     * Return an indicator detailing which where this block is applicable (should be shown) in the document.
      * @return Applicability indicator.
      */
     public Applicability getApplicability() {

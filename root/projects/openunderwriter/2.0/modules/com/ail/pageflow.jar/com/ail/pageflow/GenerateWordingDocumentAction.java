@@ -25,9 +25,9 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.onrisk.FetchWordingService.FetchWordingCommand;
-import com.ail.insurance.policy.SavedPolicy;
+import com.ail.insurance.onrisk.FetchWordingDocumentService.FetchWordingDocumentCommand;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 import com.ail.pageflow.util.PageFlowContext;
 
 /**
@@ -62,7 +62,7 @@ public class GenerateWordingDocumentAction extends Action {
                 Policy quote=(Policy)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchWordingCommand cmd=proxy.newCommand(FetchWordingCommand.class);
+                FetchWordingDocumentCommand cmd=proxy.newCommand(FetchWordingDocumentCommand.class);
                 cmd.setPolicyNumberArg(quote.getQuotationNumber());
                 cmd.invoke();
                 

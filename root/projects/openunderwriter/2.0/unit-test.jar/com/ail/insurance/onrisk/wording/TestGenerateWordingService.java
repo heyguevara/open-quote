@@ -15,23 +15,23 @@ import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.document.RenderDocumentService.RenderDocumentCommand;
 import com.ail.core.document.model.DocumentDefinition;
-import com.ail.insurance.onrisk.GenerateWordingArgumentImpl;
-import com.ail.insurance.onrisk.GenerateWordingService;
-import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
+import com.ail.insurance.onrisk.GenerateWordingDocumentArgumentImpl;
+import com.ail.insurance.onrisk.GenerateWordingDocumentService;
+import com.ail.insurance.onrisk.GenerateWordingDocumentService.GenerateWordingDocumentArgument;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 
 public class TestGenerateWordingService {
-    GenerateWordingService service;
-    GenerateWordingArgument args;
+    GenerateWordingDocumentService service;
+    GenerateWordingDocumentArgument args;
     Core mockCore;
     Policy mockPolicy;
 
     @Before
     public void setUp() {
         mockCore = mock(Core.class);
-        service = new GenerateWordingService();
-        args = new GenerateWordingArgumentImpl();
+        service = new GenerateWordingDocumentService();
+        args = new GenerateWordingDocumentArgumentImpl();
         mockPolicy = mock(Policy.class);
         service.setArgs(args);
         service.setCore(mockCore);

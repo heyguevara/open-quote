@@ -21,17 +21,17 @@ import com.ail.core.document.model.DocumentDefinition;
 import com.ail.financial.CurrencyAmount;
 import com.ail.financial.MoneyProvision;
 import com.ail.financial.PaymentSchedule;
-import com.ail.insurance.onrisk.GenerateInvoiceArgumentImpl;
-import com.ail.insurance.onrisk.GenerateInvoiceService;
-import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
+import com.ail.insurance.onrisk.GenerateInvoiceDocumentArgumentImpl;
+import com.ail.insurance.onrisk.GenerateInvoiceDocumentService;
+import com.ail.insurance.onrisk.GenerateInvoiceDocumentService.GenerateInvoiceDocumentArgument;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.PolicyStatus;
 import com.ail.party.Party;
 
 public class TestGenerateInvoiceService {
-    GenerateInvoiceService service;
+    GenerateInvoiceDocumentService service;
 
-    GenerateInvoiceArgument args;
+    GenerateInvoiceDocumentArgument args;
 
     Core mockCore;
 
@@ -44,9 +44,9 @@ public class TestGenerateInvoiceService {
     @Before
     public void setUp() {
         mockCore = mock(Core.class);
-        service = new GenerateInvoiceService();
+        service = new GenerateInvoiceDocumentService();
         service.setCore(mockCore);
-        args = new GenerateInvoiceArgumentImpl();
+        args = new GenerateInvoiceDocumentArgumentImpl();
         mockPolicy = mock(Policy.class);
         mockPaymentSchedule = mock(PaymentSchedule.class);
         mockMoneyProvision = new ArrayList<MoneyProvision>();

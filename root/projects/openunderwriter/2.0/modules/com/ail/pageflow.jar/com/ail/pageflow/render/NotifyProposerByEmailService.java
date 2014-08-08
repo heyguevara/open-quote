@@ -42,7 +42,7 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.Broker;
 import com.ail.insurance.policy.Proposer;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
 import com.ail.insurance.quotation.NotifyProposerByEmailService.NotifyProposerByEmailArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 import com.ail.pageflow.util.PageFlowContext;

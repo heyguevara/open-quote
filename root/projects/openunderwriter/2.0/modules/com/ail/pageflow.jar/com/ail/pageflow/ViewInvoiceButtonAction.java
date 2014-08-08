@@ -25,7 +25,7 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
-import com.ail.insurance.onrisk.FetchInvoiceService.FetchInvoiceCommand;
+import com.ail.insurance.onrisk.FetchInvoiceDocumentService.FetchInvoiceDocumentCommand;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
@@ -58,7 +58,7 @@ public class ViewInvoiceButtonAction extends CommandButtonAction {
                 String policyNumber=Functions.getOperationParameters(request).getProperty("id");
 
                 // This will force the invoice do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchInvoiceCommand cmd=proxy.newCommand(FetchInvoiceCommand.class);
+                FetchInvoiceDocumentCommand cmd=proxy.newCommand(FetchInvoiceDocumentCommand.class);
                 cmd.setPolicyNumberArg(policyNumber);
                 cmd.invoke();
                 

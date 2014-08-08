@@ -29,7 +29,7 @@ import com.ail.insurance.quotation.CalculateManagementChargeService.CalculateMan
 import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumArgument;
 import com.ail.insurance.quotation.CalculateTaxService.CalculateTaxArgument;
 import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceArgument;
-import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument;
+import com.ail.insurance.quotation.GenerateQuoteDocumentService.GenerateQuoteDocumentArgument;
 
 @Local
 public interface QuotationLocal {
@@ -111,7 +111,7 @@ public interface QuotationLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    GenerateDocumentArgument generateDocument(GenerateDocumentArgument arg);
+    GenerateQuoteDocumentArgument generateDocument(GenerateQuoteDocumentArgument arg);
 }
 
 

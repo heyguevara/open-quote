@@ -23,9 +23,9 @@ import javax.ejb.Stateless;
 import com.ail.annotation.Configurable;
 import com.ail.core.BaseServerException;
 import com.ail.core.StatelessComponent;
-import com.ail.insurance.onrisk.GenerateCertificateService.GenerateCertificateArgument;
-import com.ail.insurance.onrisk.GenerateInvoiceService.GenerateInvoiceArgument;
-import com.ail.insurance.onrisk.GenerateWordingService.GenerateWordingArgument;
+import com.ail.insurance.onrisk.GenerateCertificateDocumentService.GenerateCertificateDocumentArgument;
+import com.ail.insurance.onrisk.GenerateInvoiceDocumentService.GenerateInvoiceDocumentArgument;
+import com.ail.insurance.onrisk.GenerateWordingDocumentService.GenerateWordingDocumentArgument;
 
 @Configurable
 @Stateless
@@ -42,7 +42,7 @@ public class OnRiskBean extends StatelessComponent implements OnRiskLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateCertificateArgument generateCertificate(GenerateCertificateArgument argument) {
+    public GenerateCertificateDocumentArgument generateCertificate(GenerateCertificateDocumentArgument argument) {
         return invokeCommand("GenerateCertificate", argument);
     }
     
@@ -52,7 +52,7 @@ public class OnRiskBean extends StatelessComponent implements OnRiskLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateInvoiceArgument generateInvoice(GenerateInvoiceArgument argument) {
+    public GenerateInvoiceDocumentArgument generateInvoice(GenerateInvoiceDocumentArgument argument) {
         return invokeCommand("GenerateInvoice", argument);
     }
     
@@ -62,7 +62,7 @@ public class OnRiskBean extends StatelessComponent implements OnRiskLocal {
      * @return The objects returned from the service.
      * @throws BaseServerException In response to any exception thrown by the service.
      */
-    public GenerateWordingArgument generateWording(GenerateWordingArgument argument) {
+    public GenerateWordingDocumentArgument generateWording(GenerateWordingDocumentArgument argument) {
         return invokeCommand("GenerateWording", argument);
     }
 }

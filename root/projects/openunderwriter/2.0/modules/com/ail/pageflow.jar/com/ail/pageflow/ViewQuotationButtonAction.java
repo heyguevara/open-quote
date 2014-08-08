@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
 import com.ail.pageflow.util.PageFlowContext;

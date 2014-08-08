@@ -42,7 +42,7 @@ import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
 import com.ail.insurance.quotation.NotifyBrokerByEmailService.NotifyBrokerByEmailArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 import com.ail.pageflow.util.PageFlowContext;

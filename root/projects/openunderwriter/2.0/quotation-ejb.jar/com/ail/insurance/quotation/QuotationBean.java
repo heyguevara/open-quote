@@ -32,7 +32,7 @@ import com.ail.insurance.quotation.CalculateManagementChargeService.CalculateMan
 import com.ail.insurance.quotation.CalculatePremiumService.CalculatePremiumArgument;
 import com.ail.insurance.quotation.CalculateTaxService.CalculateTaxArgument;
 import com.ail.insurance.quotation.EnforceComplianceService.EnforceComplianceArgument;
-import com.ail.insurance.quotation.GenerateQuoteService.GenerateDocumentArgument;
+import com.ail.insurance.quotation.GenerateQuoteDocumentService.GenerateQuoteDocumentArgument;
 
 @Configurable
 @Stateless
@@ -169,7 +169,7 @@ public class QuotationBean extends StatelessComponent implements QuotationLocal 
      * @throws BaseServerException
      *             In response to exceptions thrown by the service.
      */
-    public GenerateDocumentArgument generateDocument(GenerateDocumentArgument arg) {
+    public GenerateQuoteDocumentArgument generateDocument(GenerateQuoteDocumentArgument arg) {
         return invokeCommand("GenerateDocument", arg);
     }
 }

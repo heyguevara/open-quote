@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.onrisk.FetchCertificateService.FetchCertificateCommand;
+import com.ail.insurance.onrisk.FetchCertificateDocumentService.FetchCertificateDocumentCommand;
 
 public class DisplayCertificateServlet extends HttpServlet {
 
@@ -34,12 +34,12 @@ public class DisplayCertificateServlet extends HttpServlet {
         String policyNumber = request.getParameter("policyNumber");
 
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment;filename=\"Certificate" + policyNumber + ".pdf\"");
+        response.setHeader("Content-Disposition", "attachment;filename=\"Certificate-" + policyNumber + ".pdf\"");
         response.setHeader("Pragma", "private");
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy = new CoreProxy();
-        FetchCertificateCommand cmd = proxy.newCommand(FetchCertificateCommand.class);
+        FetchCertificateDocumentCommand cmd = proxy.newCommand(FetchCertificateDocumentCommand.class);
         cmd.setPolicyNumberArg(policyNumber);
 
         try {

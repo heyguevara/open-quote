@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documentDefinition xsi:type="java:com.ail.core.document.model.DocumentDefinition" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <mergeCommand>MergeDocumentDataCommand</mergeCommand>
+    <styleCommand></styleCommand>
+    <renderCommand>RenderIndustrialStyleDocumentCommand</renderCommand>
+    
+    <documentData>
+        <watermark>product://localhost:8080/AIL/Base/Documents/OpenQuoteWatermark.png</watermark>
+    
+        <headerData applicability="all">
+            <modelData id='head' class='string'>${/productName} quotation number: ${/quotationNumber}</modelData>
+        </headerData>
+        
+        <chapterData id="c1" title="Basic Details">
+            <blockData pd="prop" placement="body" applicability="all" title="Proposer">
+                <modelData id='pn' title="Proposer&apos;s name" class='string'>${/proposer/actualTitle} ${/proposer/firstName} ${proposer/surname}</modelData>
+                <blockData title="Proposer&apos;s address" class='address'>
+                    <modelData id="line1" class="line" binding="/proposer/address/line1"/>
+                    <modelData id="line2" class="line" binding="/proposer/address/line2"/>
+                    <modelData id="line3" class="line" binding="/proposer/address/line3"/>
+                    <modelData id="line4" class="line" binding="/proposer/address/line4"/>
+                    <modelData id="line5" class="line" binding="/proposer/address/line5"/>
+                    <modelData id="town" class="town" binding="/proposer/address/town"/>
+                    <modelData id="county" class="county" binding="/proposer/address/county"/>
+                    <modelData id="country" class="country" binding="/proposer/address/country"/>
+                    <modelData id="postcode" class="postcode" binding="/proposer/address/postcode"/>
+                </blockData>
+                <modelData id='pn' title='Phone number' class='phone' binding="/proposer/telephoneNumber"/>
+                <modelData id='em' title='Email address' class='email' binding="/proposer/emailAddress"/>
+            </blockData>
+            
+        </chapterData>
+    </documentData> 
+</documentDefinition>

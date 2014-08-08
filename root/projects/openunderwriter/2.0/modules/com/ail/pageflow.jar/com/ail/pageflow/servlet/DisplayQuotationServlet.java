@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.quotation.FetchQuoteService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
 
 public class DisplayQuotationServlet extends HttpServlet {
     
@@ -34,7 +34,7 @@ public class DisplayQuotationServlet extends HttpServlet {
         String quoteNumber=request.getParameter("quoteNumber");
         
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment;filename=\"Policy"+quoteNumber+".pdf\"");
+        response.setHeader("Content-Disposition", "attachment;filename=\"Quotation-"+quoteNumber+".pdf\"");
         response.setHeader("Pragma", "private");
         response.setHeader("Cache-Control", "private");
 

@@ -135,8 +135,8 @@ public class GenerateDocumentService extends Service<GenerateDocumentService.Gen
             subject=core.toXML(args.getModelArg());
         }
         
-        // 2nd step: apply style
-        if (docDef.getStyleCommand()!=null) {
+        // 2nd step: apply style (if configured)
+        if (docDef.getStyleCommand()!=null && docDef.getStyleCommand().length()!=0) {
             StyleDocumentCommand style=core.newCommand(docDef.getStyleCommand(), StyleDocumentCommand.class);
             style.setMergedDataArg(subject);
             style.invoke();
