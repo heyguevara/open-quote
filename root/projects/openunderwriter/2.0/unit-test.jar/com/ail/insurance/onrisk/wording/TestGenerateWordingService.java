@@ -1,10 +1,11 @@
 package com.ail.insurance.onrisk.wording;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -13,8 +14,7 @@ import org.junit.Test;
 import com.ail.core.Core;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
-import com.ail.core.document.RenderDocumentService.RenderDocumentCommand;
-import com.ail.core.document.model.DocumentDefinition;
+import com.ail.core.document.GenerateDocumentService.GenerateDocumentCommand;
 import com.ail.insurance.onrisk.GenerateWordingDocumentArgumentImpl;
 import com.ail.insurance.onrisk.GenerateWordingDocumentService;
 import com.ail.insurance.onrisk.GenerateWordingDocumentService.GenerateWordingDocumentArgument;
@@ -80,20 +80,20 @@ public class TestGenerateWordingService {
 
     @Test
     public void testHappyPath() throws Exception {
+        byte[] dummyDocument = new byte[1];
+
         when(mockPolicy.getStatus()).thenReturn(PolicyStatus.ON_RISK);
         when(mockPolicy.getProductTypeId()).thenReturn("ProductTypeID");
         args.setPolicyArg(mockPolicy);
 
-        DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("WordingDocument"))).thenReturn(mockDocumentDefinition);
-
-        RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
-        when(mockCore.newCommand(anyString(), eq(RenderDocumentCommand.class))).thenReturn(mockRenderDocumentCommand);
-        when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(new byte[1]);
+        GenerateDocumentCommand mockGenerateDocumentCommand = mock(GenerateDocumentCommand.class);
+        when(mockCore.newCommand(eq(GenerateDocumentCommand.class))).thenReturn(mockGenerateDocumentCommand);
+        when(mockGenerateDocumentCommand.getRenderedDocumentRet()).thenReturn(dummyDocument);
 
         service.invoke();
         
-        assertTrue(mockRenderDocumentCommand.getRenderedDocumentRet().length == 1);
+        verify(mockGenerateDocumentCommand, times(1)).setDocumentDefinitionArg(eq("WordingDocument"));;
+        assertEquals(args.getDocumentRet(), dummyDocument);
     }
 
     @Test
@@ -102,12 +102,9 @@ public class TestGenerateWordingService {
         when(mockPolicy.getProductTypeId()).thenReturn("ProductTypeID");
         args.setPolicyArg(mockPolicy);
 
-        DocumentDefinition mockDocumentDefinition = mock(DocumentDefinition.class);
-        when(mockCore.newProductType(anyString(), eq("WordingDocument"))).thenReturn(mockDocumentDefinition);
-
-        RenderDocumentCommand mockRenderDocumentCommand = mock(RenderDocumentCommand.class);
-        when(mockCore.newCommand(anyString(), eq(RenderDocumentCommand.class))).thenReturn(mockRenderDocumentCommand);
-        when(mockRenderDocumentCommand.getRenderedDocumentRet()).thenReturn(null);
+        GenerateDocumentCommand mockGenerateDocumentCommand = mock(GenerateDocumentCommand.class);
+        when(mockCore.newCommand(eq(GenerateDocumentCommand.class))).thenReturn(mockGenerateDocumentCommand);
+        when(mockGenerateDocumentCommand.getRenderedDocumentRet()).thenReturn(null);
 
         try {
             service.invoke();
