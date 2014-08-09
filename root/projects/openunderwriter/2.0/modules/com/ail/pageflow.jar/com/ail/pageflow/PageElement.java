@@ -50,7 +50,6 @@ import com.ail.pageflow.util.ErrorText;
 import com.ail.pageflow.util.Functions;
 import com.ail.pageflow.util.HelpText;
 import com.ail.pageflow.util.I18N;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * Base class for all UI elements. Base properties common to all elements are implemented here along

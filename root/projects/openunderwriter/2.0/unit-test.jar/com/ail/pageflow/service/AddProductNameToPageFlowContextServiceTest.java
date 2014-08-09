@@ -23,7 +23,7 @@ import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.pageflow.ExecutePageActionService;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 public class AddProductNameToPageFlowContextServiceTest {
     AddProductNameToPageFlowContextService sut;

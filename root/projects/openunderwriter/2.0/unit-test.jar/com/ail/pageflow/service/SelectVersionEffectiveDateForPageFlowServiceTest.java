@@ -24,8 +24,8 @@ import com.ail.core.CoreProxy;
 import com.ail.core.VersionEffectiveDate;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.ExecutePageActionService;
+import com.ail.pageflow.PageFlowContext;
 import com.ail.pageflow.service.SelectVersionEffectiveDateForPageFlowService;
-import com.ail.pageflow.util.PageFlowContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(PageFlowContext.class)

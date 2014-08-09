@@ -22,7 +22,7 @@ import com.ail.core.BaseException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.pageflow.ExecutePageActionService;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 /**
  * Add the portlet request to the page flow context.

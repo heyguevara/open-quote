@@ -25,7 +25,6 @@ import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Adds a quit button to a page. By default this button will close the current quote

@@ -20,7 +20,6 @@ import com.ail.insurance.acceptance.PremiumCollectionCancelledService.PremiumCol
 import com.ail.insurance.acceptance.PremiumCollectionAuthorisedService.PremiumCollectionConfirmationCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageFlowContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.util.PortalUtil;

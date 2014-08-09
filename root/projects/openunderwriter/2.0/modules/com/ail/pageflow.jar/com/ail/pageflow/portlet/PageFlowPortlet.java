@@ -38,7 +38,7 @@ import javax.portlet.ValidatorException;
 import com.ail.core.BaseException;
 import com.ail.core.ExceptionRecord;
 import com.ail.insurance.policy.Policy;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 import static com.ail.pageflow.service.AddPageFlowNameToPageFlowContextService.PAGEFLOW_PORTLET_PREFERENCE_NAME;
 import static com.ail.pageflow.service.AddProductNameToPageFlowContextService.PRODUCT_PORTLET_PREFERENCE_NAME;

@@ -27,7 +27,7 @@ import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 @ServiceImplementation
 public class PersistPolicyService extends Service<PersistPolicyService.PersistPolicyArgument> {

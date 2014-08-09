@@ -29,7 +29,6 @@ import com.ail.insurance.onrisk.FetchWordingDocumentService.FetchWordingDocument
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Adds a "view wording" button to a page. When selected this button will open a new window containing

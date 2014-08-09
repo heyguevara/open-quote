@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import static java.util.Arrays.asList;
 
 import javax.portlet.ActionRequest;
@@ -45,9 +46,9 @@ import com.ail.insurance.policy.SavedPolicy;
 import com.ail.pageflow.AssessmentSheetDetails;
 import com.ail.pageflow.Page;
 import com.ail.pageflow.PageFlow;
+import com.ail.pageflow.PageFlowContext;
+import com.ail.pageflow.PageFlowContextError;
 import com.ail.pageflow.service.ListToOptionService.ListToOptionCommand;
-import com.ail.pageflow.util.PageFlowContext;
-import com.ail.pageflow.util.PageFlowContextError;
 
 import static ch.lambdaj.Lambda.extract;
 import static ch.lambdaj.Lambda.on;

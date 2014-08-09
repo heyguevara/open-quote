@@ -28,7 +28,6 @@ import com.ail.core.Type;
 import com.ail.insurance.onrisk.FetchWordingDocumentService.FetchWordingDocumentCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * PageFlow action to generate the wording document for the current quotation.

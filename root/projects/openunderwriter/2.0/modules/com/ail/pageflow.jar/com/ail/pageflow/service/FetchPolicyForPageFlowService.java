@@ -17,10 +17,10 @@
 
 package com.ail.pageflow.service;
 
-import static com.ail.pageflow.util.PageFlowContext.getProductName;
-import static com.ail.pageflow.util.PageFlowContext.setPolicy;
-import static com.ail.pageflow.util.PageFlowContext.getPolicy;
-import static com.ail.pageflow.util.PageFlowContext.getPageFlow;
+import static com.ail.pageflow.PageFlowContext.getPageFlow;
+import static com.ail.pageflow.PageFlowContext.getPolicy;
+import static com.ail.pageflow.PageFlowContext.getProductName;
+import static com.ail.pageflow.PageFlowContext.setPolicy;
 
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;

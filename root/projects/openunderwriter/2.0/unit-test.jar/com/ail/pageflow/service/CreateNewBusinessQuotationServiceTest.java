@@ -27,7 +27,7 @@ import com.ail.core.PreconditionException;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.ExecutePageActionService;
 import com.ail.pageflow.PageFlow;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(PageFlowContext.class)

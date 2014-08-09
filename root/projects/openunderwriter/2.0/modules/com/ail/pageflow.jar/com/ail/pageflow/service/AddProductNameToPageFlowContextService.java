@@ -28,7 +28,7 @@ import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.pageflow.ExecutePageActionService;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 /**
  * Get the name of the product we're working for. This comes from one of three

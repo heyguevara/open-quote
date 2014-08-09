@@ -29,7 +29,6 @@ import com.ail.insurance.onrisk.FetchCertificateDocumentService.FetchCertificate
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>Adds a "view certificate" button to a page. When selected this button will open a new window containing

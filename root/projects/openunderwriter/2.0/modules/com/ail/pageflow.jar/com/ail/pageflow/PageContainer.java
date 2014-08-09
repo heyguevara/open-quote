@@ -24,7 +24,6 @@ import javax.portlet.ActionResponse;
 
 import com.ail.core.Type;
 import com.ail.pageflow.util.OrderedLinkedList;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * An abstract UI element which provides support for any concrete page element which itself contains other page

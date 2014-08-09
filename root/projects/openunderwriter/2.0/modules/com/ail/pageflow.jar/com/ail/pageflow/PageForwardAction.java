@@ -26,7 +26,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.pageflow.util.PageFlowContext;
 /**
  * A page action than conditionally moves the context to a specified page. PageForwardActions may be nested inside
  * {@link CommandButtonAction CommandButtonActions} in order to override the CommandButtonAction's default

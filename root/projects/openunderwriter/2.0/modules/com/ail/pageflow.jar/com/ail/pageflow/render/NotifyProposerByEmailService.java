@@ -44,8 +44,8 @@ import com.ail.insurance.policy.Proposer;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
 import com.ail.insurance.quotation.NotifyProposerByEmailService.NotifyProposerByEmailArgument;
+import com.ail.pageflow.PageFlowContext;
 import com.ail.pageflow.render.RenderService.RenderCommand;
-import com.ail.pageflow.util.PageFlowContext;
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
  */

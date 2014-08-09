@@ -17,8 +17,8 @@
 
 package com.ail.pageflow.service;
 
-import static com.ail.pageflow.util.PageFlowContext.getCoreProxy;
-import static com.ail.pageflow.util.PageFlowContext.getPolicy;
+import static com.ail.pageflow.PageFlowContext.getCoreProxy;
+import static com.ail.pageflow.PageFlowContext.getPolicy;
 
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;

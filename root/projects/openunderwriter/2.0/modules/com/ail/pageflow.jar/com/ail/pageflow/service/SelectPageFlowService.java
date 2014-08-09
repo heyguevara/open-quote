@@ -24,7 +24,7 @@ import com.ail.core.Service;
 import com.ail.core.ThreadLocale;
 import com.ail.pageflow.ExecutePageActionService;
 import com.ail.pageflow.PageFlow;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 /**
  * Fetch the page flow associated with this session if there is one. If there is

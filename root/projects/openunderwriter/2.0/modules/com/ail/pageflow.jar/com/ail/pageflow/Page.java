@@ -22,7 +22,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * An abstract UI element providing default handler methods common to its concrete sub-classes.

@@ -7,7 +7,7 @@ import com.ail.core.VersionEffectiveDate;
 import com.ail.financial.CurrencyAmount;
 import com.ail.pageflow.ExecutePageActionService.ExecutePageActionArgument;
 import com.ail.pageflow.ExecutePageActionService.ExecutePageActionCommand;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 import com.ail.insurance.policy.FixedSum;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;

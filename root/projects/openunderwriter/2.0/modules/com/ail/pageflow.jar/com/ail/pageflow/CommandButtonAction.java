@@ -26,7 +26,6 @@ import javax.portlet.RenderResponse;
 import com.ail.core.Type;
 import com.ail.pageflow.render.RenderService.RenderArgument;
 import com.ail.pageflow.util.Functions;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * <p>This page element renders itself as a button, typically within a {@link NavigationSection}. When clicked the

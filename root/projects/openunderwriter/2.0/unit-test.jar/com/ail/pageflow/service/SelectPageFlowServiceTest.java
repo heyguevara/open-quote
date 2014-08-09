@@ -29,7 +29,7 @@ import com.ail.core.PreconditionException;
 import com.ail.core.ThreadLocale;
 import com.ail.pageflow.ExecutePageActionService;
 import com.ail.pageflow.PageFlow;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ PageFlowContext.class, SelectPageFlowService.class, ThreadLocale.class })

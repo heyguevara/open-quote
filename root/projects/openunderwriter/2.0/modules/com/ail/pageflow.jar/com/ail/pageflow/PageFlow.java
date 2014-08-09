@@ -25,7 +25,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.ail.core.Type;
-import com.ail.pageflow.util.PageFlowContext;
 
 /**
  * The PageFlow class is the root of the openquote product UI concept. It

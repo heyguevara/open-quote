@@ -1,6 +1,6 @@
 package com.ail.pageflow.service;
 
-import static com.ail.pageflow.util.PageFlowContext.SessionAttributes.POLICY_ATTRIBUTE;
+import static com.ail.pageflow.PageFlowContext.SessionAttributes.POLICY_ATTRIBUTE;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -30,8 +30,8 @@ import com.ail.core.ThreadLocale;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.ExecutePageActionService;
 import com.ail.pageflow.PageFlow;
+import com.ail.pageflow.PageFlowContext;
 import com.ail.pageflow.service.FetchPolicyForPageFlowService;
-import com.ail.pageflow.util.PageFlowContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(PageFlowContext.class)

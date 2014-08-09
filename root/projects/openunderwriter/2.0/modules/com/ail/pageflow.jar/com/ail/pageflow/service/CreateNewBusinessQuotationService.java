@@ -24,7 +24,7 @@ import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.ExecutePageActionService;
-import com.ail.pageflow.util.PageFlowContext;
+import com.ail.pageflow.PageFlowContext;
 
 @ServiceImplementation
 public class CreateNewBusinessQuotationService extends Service<ExecutePageActionService.ExecutePageActionArgument> {

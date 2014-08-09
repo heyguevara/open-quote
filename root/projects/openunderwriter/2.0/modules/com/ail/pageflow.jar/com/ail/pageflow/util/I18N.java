@@ -17,6 +17,7 @@
 package com.ail.pageflow.util;
 
 import com.ail.core.language.Translations;
+import com.ail.pageflow.PageFlowContext;
 
 /**
  * Implements a wrapper to the Core's language translation service to simplify common
