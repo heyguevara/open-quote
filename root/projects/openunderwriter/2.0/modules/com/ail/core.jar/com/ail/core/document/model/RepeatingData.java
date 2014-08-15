@@ -16,10 +16,12 @@
  */
 package com.ail.core.document.model;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import com.ail.annotation.TypeDefinition;
 import com.ail.core.Type;
+
 import static com.ail.core.document.model.Placement.BODY;
 import static com.ail.core.document.model.Placement.HEADER;
 import static com.ail.core.document.model.Placement.FOOTER;
@@ -33,6 +35,8 @@ public class RepeatingData extends ItemContainer {
     public void render(RenderContext context) {
         context.getOutput().printf("<repeatingData%s%s%s%s>", idAsAttribute(), styleClassAsAttribute(), orderAsAttribute(), titleAsAttribute());
 
+        Collections.sort(getItem());
+        
         for(ItemData idata: getItem()) {
             if (idata instanceof BlockData && HEADER.equals(((BlockData)idata).getPlacement())) {
                 idata.render(context);

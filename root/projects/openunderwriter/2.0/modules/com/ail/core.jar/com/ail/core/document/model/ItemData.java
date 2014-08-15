@@ -20,15 +20,16 @@ import com.ail.core.Identified;
 import com.ail.core.Type;
 
 /**
- * Node of the document structure object graph. 
+ * Node of the document structure object graph.
  */
-public abstract class ItemData extends Type implements Identified {
+public abstract class ItemData extends Type implements Identified, Comparable<ItemData> {
     private String id;
     private String title;
+
     private Long order;
     private String value;
-    private String style="string";
-    
+    private String style = "string";
+
     public String getStyle() {
         return style;
     }
@@ -46,8 +47,9 @@ public abstract class ItemData extends Type implements Identified {
     }
 
     /**
-     * The <i>order</i> of this item with respect to other items owned by the same parent.
-     * Note: lower order items appear first.
+     * The <i>order</i> of this item with respect to other items owned by the
+     * same parent. Note: lower order items appear first.
+     * 
      * @return container's order
      */
     public Long getOrder() {
@@ -61,14 +63,13 @@ public abstract class ItemData extends Type implements Identified {
     public void setOrder(Long order) {
         this.order = order;
     }
-    
-    
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id=id;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -80,27 +81,39 @@ public abstract class ItemData extends Type implements Identified {
     }
 
     protected String idAsAttribute() {
-        return (id!=null) ? " id=\""+id+"\"" : "";
+        return (id != null) ? " id=\"" + id + "\"" : "";
     }
-    
+
     protected String titleAsAttribute() {
-        return (title!=null) ? " title=\""+title+"\"" : "";
+        return (title != null) ? " title=\"" + title + "\"" : "";
     }
 
     protected String orderAsAttribute() {
-        return (order!=null) ? " order=\""+order+"\"" : "";
+        return (order != null) ? " order=\"" + order + "\"" : "";
     }
 
     protected String styleClassAsAttribute() {
-        return (style!=null) ? " class=\""+style+"\"" : "";
+        return (style != null) ? " class=\"" + style + "\"" : "";
     }
 
     public boolean compareById(Object that) {
         if (that instanceof ItemData) {
-            return (id!=null && id.endsWith(((ItemData)that).getId()));
-        }
-        else {
+            return (id != null && id.endsWith(((ItemData) that).getId()));
+        } else {
             return false;
+        }
+    }
+
+    @Override
+    public int compareTo(ItemData that) {
+        if (this.order == null && that.order == null) {
+            return 0;
+        } else if (this.order != null && that.order == null) {
+            return 1;
+        } else if (this.order == null && that.order != null) {
+            return -1;
+        } else {
+            return (int) (this.order - that.order);
         }
     }
 

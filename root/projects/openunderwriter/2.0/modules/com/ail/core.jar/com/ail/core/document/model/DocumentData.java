@@ -17,6 +17,7 @@
 package com.ail.core.document.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.ail.annotation.TypeDefinition;
@@ -38,13 +39,19 @@ public class DocumentData extends ItemData {
             context.getOutput().printf("<watermark>%s</watermark>", getWatermark());
         }
     
+        Collections.sort(headerData);
+        
         for(HeaderData s: headerData) {
             s.render(context);
         }
     
+        Collections.sort(footerData);
+        
         for(FooterData s: footerData) {
             s.render(context);
         }
+        
+        Collections.sort(chapterData);
         
         for(ChapterData s: chapterData) {
             s.render(context);

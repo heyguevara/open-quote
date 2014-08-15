@@ -21,13 +21,7 @@ import com.ail.core.Functions;
 import com.ail.core.TypeEnum;
 
 /**
- * This class represents an enumeration ofdocument positions.
- * @version $Revision$
- * @author $Author$
- * @state $State$
- * @date $Date$
- * @source $Source$
- * @stereotype enumeration
+ * This class represents an enumeration of document positions.
  */
 public enum Placement implements TypeEnum {
     HEADER,

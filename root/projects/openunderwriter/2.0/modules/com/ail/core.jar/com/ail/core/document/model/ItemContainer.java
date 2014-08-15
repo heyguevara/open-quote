@@ -17,6 +17,7 @@
 package com.ail.core.document.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +32,9 @@ public abstract class ItemContainer extends ItemData {
      */
     @Override
     public void render(RenderContext context) {
+        
+        Collections.sort(item);
+        
         for(ItemData it: item) {
             it.render(context);
         }

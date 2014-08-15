@@ -17,6 +17,8 @@ package com.ail.core.document.model;
 
 import static com.ail.core.document.model.Placement.HEADER;
 
+import java.util.Collections;
+
 import com.ail.annotation.TypeDefinition;
 
 @TypeDefinition
@@ -40,6 +42,8 @@ public class HeaderData extends BlockData {
         if (rightLogo!=null) {
             context.getOutput().printf("<rightLogo>%s</rightLogo>", getRightLogo());
         }
+        
+        Collections.sort(getItem());
         
         for(ItemData it: getItem()) {
             it.render(context);

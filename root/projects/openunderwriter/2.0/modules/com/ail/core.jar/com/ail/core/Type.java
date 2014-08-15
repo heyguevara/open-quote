@@ -286,13 +286,8 @@ public class Type implements Serializable, Cloneable {
                     // JXPath will point into the thing we cloned!
                     ((Type)cloneObject).jXPathContext=null;
                     
-                    // If the field is is a primitive, a String, a static, transient, or a core...
-                    if (fieldType.isPrimitive()
-                    ||  fieldType==String.class
-                    ||  fieldType==Object.class
-                    ||  Modifier.isStatic(field.getModifiers())
-                    ||  Modifier.isTransient(field.getModifiers())
-                    ||  Core.class.isAssignableFrom(fieldType)) {
+                    // If the field is a primitive, a String, a static, transient, or a core...
+                    if (cloneWasHandledByJava(field, fieldType)) {
                         // ...ignore it - super.clone() will have handled primitives, and
                         // cores and statics can be ignored altogether.
                         continue;
@@ -422,6 +417,16 @@ public class Type implements Serializable, Cloneable {
                 }
             }
             return cloneObject;
+    }
+
+    protected boolean cloneWasHandledByJava(Field field, Class<?> fieldType) {
+        return fieldType.isPrimitive()
+        ||  fieldType==String.class
+        ||  fieldType==Object.class
+        ||  Modifier.isStatic(field.getModifiers())
+        ||  Modifier.isTransient(field.getModifiers())
+        ||  Core.class.isAssignableFrom(fieldType)
+        ||  Number.class.isAssignableFrom(fieldType);
     }
     
 	/**
