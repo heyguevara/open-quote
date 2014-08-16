@@ -21,12 +21,12 @@ import com.ail.core.Functions;
 import com.ail.core.TypeXPathException;
 
 /**
- * Node of the document structure object graph. 
+ * Node of the document structure object graph.
  */
 @TypeDefinition
 public class ModelData extends ItemData {
     private String binding;
-    
+
     public String getBinding() {
         return binding;
     }
@@ -36,25 +36,22 @@ public class ModelData extends ItemData {
     }
 
     public void render(RenderContext context) {
-        String out=null;
-        
-        if (binding!=null) {
+        String out = null;
+
+        if (binding != null) {
             try {
-                out=context.getModel().xpathGet(binding, String.class);
+                out = context.getModel().xpathGet(binding, String.class);
+            } catch (TypeXPathException e) {
+                out = "undefined: " + binding;
             }
-            catch(TypeXPathException e) {
-                // ignore this - out will still be null.
+
+            if (out == null && getValue() != null) {
+                out = Functions.expand(getValue(), context.getModel());
             }
-            
-            if (out==null && getValue()!=null) {
-                out=Functions.expand(getValue(), context.getModel());
-            }
+        } else {
+            out = Functions.expand(getValue(), context.getModel());
         }
-        else {
-            out=Functions.expand(getValue(), context.getModel());
-        }
-        
-        context.getOutput().printf("<itemData%s%s%s%s>%s</itemData>", 
-                    idAsAttribute(), titleAsAttribute(), styleClassAsAttribute(), orderAsAttribute(), out!=null ? out : "undefined:"+binding);
+
+        context.getOutput().printf("<itemData%s%s%s%s>%s</itemData>", idAsAttribute(), titleAsAttribute(), styleClassAsAttribute(), orderAsAttribute(), out != null ? out : "");
     }
 }
