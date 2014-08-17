@@ -120,7 +120,7 @@ public class TestGenerateDocument extends CoreUserBaseCase {
         assertTrue(sw.toString().contains("<itemData id=\"nm1\" title=\"Version\" class=\"string\">"));
         assertTrue(sw.toString().contains("<itemData id=\"nm2\" title=\"Not configuration Name\" class=\"string\">Default</itemData>"));
         assertTrue(sw.toString().contains("<itemData id=\"nm3\" title=\"Default configuration Name\" class=\"string\">Default</itemData>"));
-        assertTrue(sw.toString().contains("<itemData id=\"nm4\" title=\"Bad configuration Name\" class=\"string\">undefined:/niim</itemData>"));
+        assertTrue(sw.toString().contains("<itemData id=\"nm4\" title=\"Bad configuration Name\" class=\"string\">undefined: /niim</itemData>"));
         
         // check that the repeating data section has all the rows it should have
         assertTrue(sw.toString().contains("Thing One"));
