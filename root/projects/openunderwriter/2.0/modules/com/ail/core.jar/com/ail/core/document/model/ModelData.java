@@ -42,7 +42,12 @@ public class ModelData extends ItemData {
             try {
                 out = context.getModel().xpathGet(binding, String.class);
             } catch (TypeXPathException e) {
-                out = "undefined: " + binding;
+                if (getValue()!=null) {
+                    out = Functions.expand(getValue(), context.getModel());
+                }
+                else {
+                    out = "undefined: " + binding;
+                }
             }
 
             if (out == null && getValue() != null) {
