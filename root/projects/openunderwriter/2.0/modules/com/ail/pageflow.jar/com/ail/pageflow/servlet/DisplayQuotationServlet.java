@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ail.core.BaseException;
 import com.ail.core.CoreProxy;
-import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteDocumentCommand;
 
 public class DisplayQuotationServlet extends HttpServlet {
     
@@ -39,7 +39,7 @@ public class DisplayQuotationServlet extends HttpServlet {
         response.setHeader("Cache-Control", "private");
 
         CoreProxy proxy=new CoreProxy();
-        FetchQuoteCommand cmd=proxy.newCommand(FetchQuoteCommand.class);
+        FetchQuoteDocumentCommand cmd=proxy.newCommand(FetchQuoteDocumentCommand.class);
         cmd.setQuotationNumberArg(quoteNumber);
 
         try {

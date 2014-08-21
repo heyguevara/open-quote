@@ -93,9 +93,9 @@
         <arg line="-singleWindow -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} '${test.dir}/reports/@{product}.html'" />
       </java>
 
-      <loadfile property="product.test.results@{name}" srcFile="${test.dir}/reports/@{product}.html" />
+      <loadfile property="product.test.results@{product}" srcFile="${test.dir}/reports/@{product}.html" />
       <if>
-        <contains string="${product.test.results@{name}}" substring='class="  status_failed"' />
+        <contains string="${product.test.results@{product}}" substring='class="  status_failed"' />
         <then>
           <property name="product-test-failed" value="true" />
         </then>

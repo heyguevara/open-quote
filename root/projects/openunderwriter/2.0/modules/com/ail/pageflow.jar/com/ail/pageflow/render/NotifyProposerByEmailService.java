@@ -42,7 +42,7 @@ import com.ail.core.Service;
 import com.ail.insurance.policy.Broker;
 import com.ail.insurance.policy.Proposer;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteDocumentCommand;
 import com.ail.insurance.quotation.NotifyProposerByEmailService.NotifyProposerByEmailArgument;
 import com.ail.pageflow.PageFlowContext;
 import com.ail.pageflow.render.RenderService.RenderCommand;
@@ -196,7 +196,7 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
     private BodyPart createQuoteDocumentAttachment(SavedPolicy quotation) throws BaseException, MessagingException {
     	// Only attached the document if it has already been generated - don't generate it
     	if (quotation.getQuotationDocument()!=null) {
-	        FetchQuoteCommand cmd=getCore().newCommand(FetchQuoteCommand.class);
+	        FetchQuoteDocumentCommand cmd=getCore().newCommand(FetchQuoteDocumentCommand.class);
 	        cmd.setQuotationNumberArg(args.getQuotationNumberArg());
 	        cmd.invoke();
 	

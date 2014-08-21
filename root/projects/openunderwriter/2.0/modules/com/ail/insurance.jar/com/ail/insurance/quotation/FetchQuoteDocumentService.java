@@ -30,11 +30,11 @@ import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.GenerateQuoteDocumentService.GenerateQuoteDocumentCommand;
 
 @ServiceImplementation
-public class FetchQuoteDocumentService extends Service<FetchQuoteDocumentService.FetchQuoteArgument> {
+public class FetchQuoteDocumentService extends Service<FetchQuoteDocumentService.FetchQuoteDocumentArgument> {
     private static final long serialVersionUID = 3198893603833694389L;
 
     @ServiceArgument
-    public interface FetchQuoteArgument extends Argument {
+    public interface FetchQuoteDocumentArgument extends Argument {
         /**
          * The number of the quotation for which a document should be returned
          * @return quotation number.
@@ -73,7 +73,7 @@ public class FetchQuoteDocumentService extends Service<FetchQuoteDocumentService
     }
 
     @ServiceCommand(defaultServiceClass=FetchQuoteDocumentService.class)
-    public interface FetchQuoteCommand extends Command, FetchQuoteArgument {
+    public interface FetchQuoteDocumentCommand extends Command, FetchQuoteDocumentArgument {
     }
 
     /**

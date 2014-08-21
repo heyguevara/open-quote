@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteDocumentCommand;
 import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.util.Functions;
 
@@ -57,7 +57,7 @@ public class ViewQuotationButtonAction extends CommandButtonAction {
                 String quoteNumber=Functions.getOperationParameters(request).getProperty("id");
 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchQuoteCommand cmd=proxy.newCommand(FetchQuoteCommand.class);
+                FetchQuoteDocumentCommand cmd=proxy.newCommand(FetchQuoteDocumentCommand.class);
                 cmd.setQuotationNumberArg(quoteNumber);
                 cmd.invoke();
                 

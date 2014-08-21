@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 import com.ail.core.CoreProxy;
 import com.ail.core.Type;
 import com.ail.insurance.policy.SavedPolicy;
-import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteCommand;
+import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteDocumentCommand;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -61,7 +61,7 @@ public class GenerateQuotationDocumentAction extends Action {
                 Policy quote=(Policy)model;
                 
                 // This will force the quote do to be generated if it hasn't been already, and will do nothing otherwise.
-                FetchQuoteCommand cmd=proxy.newCommand(FetchQuoteCommand.class);
+                FetchQuoteDocumentCommand cmd=proxy.newCommand(FetchQuoteDocumentCommand.class);
                 cmd.setQuotationNumberArg(quote.getQuotationNumber());
                 cmd.invoke();
                 
