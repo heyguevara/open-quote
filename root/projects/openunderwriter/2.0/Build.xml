@@ -60,8 +60,6 @@
 
     <echo file="${test.results.file}" message="# test results file${line.separator}" />
 
-	<format-unit-test-results-macro/>
-
     <ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
 
     <parallel>
@@ -86,6 +84,9 @@
 		<fail-on-integration-test-error-macro/>
       </sequential>
     </parallel>
+
+    <format-unit-test-results-macro/>
+
   </target>
 
   <target name="bamboo-build">
