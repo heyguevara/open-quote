@@ -46,7 +46,7 @@
       </if>
     </sequential>
   </macrodef>
-  
+
   <macrodef name="fail-on-system-test-error-macro">
     <sequential>
       <_initialise-ant-contribs-macro />
@@ -177,6 +177,17 @@
         </then>
       </if>
 
+    </sequential>
+  </macrodef>
+
+  <macrodef name="format-unit-test-results-macro">
+    <sequential>
+      <junitreport todir="${test.dir}/reports">
+        <fileset dir="${test.dir}/reports">
+          <include name="TEST-*.xml" />
+        </fileset>
+        <report format="frames" todir="${test.dir}/reports/html" />
+      </junitreport>
     </sequential>
   </macrodef>
 

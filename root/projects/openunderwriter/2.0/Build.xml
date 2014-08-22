@@ -60,12 +60,15 @@
 
     <echo file="${test.results.file}" message="# test results file${line.separator}" />
 
+	<format-unit-test-results-macro/>
+
     <ant dir="./unit-test.jar" antfile="Build.xml" target="test" />
 
     <parallel>
       <start-liferay-macro />
 
       <sequential>
+
         <wait-for-liferay-to-start-macro />
 
         <sleep minutes="1" />
@@ -76,7 +79,9 @@
 
         <stop-liferay-macro />
 
-		<fail-on-system-test-error-macro/>
+		<format-unit-test-results-macro/>
+        
+        <fail-on-system-test-error-macro/>
 		<fail-on-product-test-error-macro/>
 		<fail-on-integration-test-error-macro/>
       </sequential>
