@@ -298,6 +298,7 @@
     <sequential>
       <path id="generate.classpath">
         <fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
+        <fileset dir="${module.dir}/com/ail/insurance/main" includes="*.jar" />
         <fileset dir="${module.dir}/com/liferay/portal/main" includes="mysql.jar" />
         <dirset dir="${module.dir}/com/ail/core/main" includes="core.jar" />
         <dirset dir="${module.dir}/com/ail/insurance/main" includes="insurance.jar" />
