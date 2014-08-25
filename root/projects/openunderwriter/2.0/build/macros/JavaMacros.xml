@@ -198,6 +198,24 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="gwt-compile-macro">
+  	<attribute name="gwtModule" />
+    <sequential>
+      <_set-output-dir-property-macro />
+      <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+      	<arg value="-war" />
+      	<arg value="${output.dir}" />
+      	<classpath>
+      	  <!--pathelement location="${basedir}/WEB-INF/src/com/ail/ui"/-->
+      	  <pathelement location="${basedir}/WEB-INF/src"/>
+      	  <fileset dir="${output.dir}/WEB-INF/lib" />
+    	</classpath>
+    	<jvmarg value="-Xmx512M" />
+    	<arg value="@{gwtModule}" />
+      </java>
+    </sequential>
+  </macrodef>
+	
   <!-- Delete an exploded jar projects output folder -->
   <macrodef name="delete-jar-macro">
     <sequential>
