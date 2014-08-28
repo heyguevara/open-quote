@@ -180,8 +180,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/paypal-core-1.4.4.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/ui/main/gwt-dev-2.3.0.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/ui/main/gwt-servlet-2.3.0.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/ui/main/gwt-user-2.3.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/gwtui-portlet.war/WEB-INF/lib/gwt-dev-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/gwtui-portlet.war/WEB-INF/lib/gwt-servlet-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/gwtui-portlet.war/WEB-INF/lib/gwt-user-2.6.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
