@@ -49,6 +49,7 @@ public class SearchResultPanel extends VerticalPanel {
             add(grid);
             
         } else {
+            
             add(new Label("No results found"));
         }
         
