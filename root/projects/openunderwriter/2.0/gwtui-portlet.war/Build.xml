@@ -5,8 +5,13 @@
 	<target name="clean" description="delete everything that the build can generate">
 		<delete-war-macro />
 	</target>
- 
-	<target name="_build" >
+
+	<target name="_build">
+		<antcall target="gwt-compile" />
+		<antcall target="build-deploy-war" />
+	</target>
+
+	<target name="build-deploy-war" description="GWT compile to JavaScript">
 		<compile-war-macro>
 			<javac-classpath>
 				<dirset dir="${module.dir}/com/ail" includes="**/*.jar" />

@@ -20,11 +20,12 @@
     <ant dir="./onrisk-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./subrogation-ejb.jar" antfile="Build.xml" target="_build" />
     <ant dir="./command-server-ejb.jar" antfile="Build.xml" target="_build" />
+  	<ant dir="./gwtui-portlet.war" antfile="Build.xml" target="_build" />
     <parallel>
       <ant dir="./workflow.war" antfile="Build.xml" target="_build" />
       <ant dir="./configure-hook.war" antfile="Build.xml" target="_build" />
       <ant dir="./pageflow-portlet.war" antfile="Build.xml" target="_build" />
-      <ant dir="./gwtui-portlet.war" antfile="Build.xml" target="_build" />
+      
       <ant dir="./openunderwriter-theme.war" antfile="Build.xml" target="_build" />
     </parallel>
     <parallel>

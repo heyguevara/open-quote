@@ -37,7 +37,7 @@ public class SearchResultPanel extends VerticalPanel {
     public SearchResultPanel display() {
         
         if (detail.isInitialised()) {
-            grid.setCellPadding(5);
+            grid.setCellPadding(3);
             
             addRow("Quote Number", detail.getQuotationNumber());
             addRow("Policy Number", detail.getPolicyNumber());
@@ -57,7 +57,7 @@ public class SearchResultPanel extends VerticalPanel {
 
     private void addRow(String label, String value) {
         int row = grid.getRowCount();
-        grid.setText(row, 0, label + ": ");
+        grid.setText(row, 0, label + ":");
         grid.setText(row, 1, value);
     }
 }
