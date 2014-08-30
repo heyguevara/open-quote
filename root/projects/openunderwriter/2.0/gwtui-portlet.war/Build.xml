@@ -28,7 +28,7 @@
 		<gwt-compile-macro gwtModule="quicksearch" />
 	</target>
 
-	<target name="build" depends="gwt-compile" description="compile (generate, copy, etc) all build outputs">
+	<target name="build" description="compile (generate, copy, etc) all build outputs">
 		<antcall target="_build" />
 	</target>
 

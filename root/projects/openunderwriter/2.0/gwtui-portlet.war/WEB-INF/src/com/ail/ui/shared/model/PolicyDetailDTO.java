@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 20014. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2014. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,14 +17,19 @@
 package com.ail.ui.shared.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class PolicyDetailDTO implements Serializable{
+public class PolicyDetailDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     private String policyNumber;
     
     private String quotationNumber;
+    
+    private String policyHolderName;
+    
+    private List<String> policyHolderAddress;
     
     private String quoteDate;
     
@@ -41,6 +46,8 @@ public class PolicyDetailDTO implements Serializable{
 
     public PolicyDetailDTO(String policyNumber, 
                             String quotationNumber, 
+                            String policyHolderName,
+                            List<String> policyHolderAddress,
                             String quoteDate, 
                             String expiryDate, 
                             String product, 
@@ -48,6 +55,8 @@ public class PolicyDetailDTO implements Serializable{
         
         this.policyNumber = policyNumber;
         this.quotationNumber = quotationNumber;
+        this.policyHolderName = policyHolderName;
+        this.policyHolderAddress = policyHolderAddress;
         this.quoteDate = quoteDate;
         this.expiryDate = expiryDate;
         this.product = product;
@@ -61,6 +70,14 @@ public class PolicyDetailDTO implements Serializable{
 
     public String getQuotationNumber() {
         return quotationNumber;
+    }
+
+    public String getPolicyHolderName() {
+        return policyHolderName;
+    }
+
+    public List<String> getPolicyHolderAddress() {
+        return policyHolderAddress;
     }
 
     public String getQuoteDate() {

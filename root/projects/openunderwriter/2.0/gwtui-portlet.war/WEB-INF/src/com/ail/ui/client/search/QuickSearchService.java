@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 20014. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2014. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -16,6 +16,7 @@
  */
 package com.ail.ui.client.search;
 
+import com.ail.ui.shared.ServiceException;
 import com.ail.ui.shared.model.PolicyDetailDTO;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -32,5 +33,5 @@ public interface QuickSearchService extends RemoteService {
      * @param search Search string
      * @return Populated PolicyDetailDTO
      */
-    PolicyDetailDTO quickSearchServer(String search) throws IllegalArgumentException;
+    PolicyDetailDTO quickSearchServer(String search) throws ServiceException;
 }

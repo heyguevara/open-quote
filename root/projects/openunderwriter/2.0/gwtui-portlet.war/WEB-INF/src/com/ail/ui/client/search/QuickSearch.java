@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 20014. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2014. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -16,9 +16,10 @@
  */
 package com.ail.ui.client.search;
 
-import com.ail.ui.client.AbstractEntryPoint;
+import com.ail.ui.client.i18n.Messages;
 import com.ail.ui.shared.model.PolicyDetailDTO;
 import com.ail.ui.shared.validation.FieldVerifier;
+import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -38,56 +39,43 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * GWT entry point class for Quick Search.
  */
-public class QuickSearch extends AbstractEntryPoint {
+public class QuickSearch implements EntryPoint {
 
+    // Proxy used to interact with the server
 	private final QuickSearchServiceAsync quickSearchService = GWT.create(QuickSearchService.class);
-
+	
+	private final Messages messages = GWT.create(Messages.class);
+	
+	private final Button searchButton = new Button(messages.search());
+	private final TextBox searchField = new TextBox();
+	private final Label validationLabel = new Label();
+	private final Panel mainPanel = new VerticalPanel();
+	private final DialogBox dialogBox = new DialogBox();
+	private final Button closeButton = new Button(messages.close());
+	private final HTML serverResponseLabel = new HTML();
+	private final VerticalPanel dialogVPanel = new VerticalPanel();
+	
 	/**
 	 * Called on load
 	 */
 	@Override
 	public void onModuleLoad() {
-	    
-		final Button sendButton = new Button("Send");
-		final TextBox searchField = new TextBox();
-		final Label validationLabel = new Label();
-		final Panel mainPanel = new VerticalPanel();
 
 		// Retrieve elements from jsp
 		RootPanel.get("searchFieldContainer").add(searchField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
+		RootPanel.get("sendButtonContainer").add(searchButton);
 		RootPanel.get("errorLabelContainer").add(validationLabel);
-
-
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Quick Search");
-		dialogBox.setAnimationEnabled(true);
 		
-		final Button closeButton = new Button("Close");
-		closeButton.getElement().setId("closeButton");
-		
-		final HTML serverResponseLabel = new HTML();
-		serverResponseLabel.addStyleName("serverResponseLabelError");
-		
-		VerticalPanel dialogVPanel = new VerticalPanel();
 		dialogVPanel.addStyleName("dialogVPanel");
-		
 		dialogVPanel.add(mainPanel);
 		dialogVPanel.add(serverResponseLabel);
-		
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
+		
+		dialogBox.setText(messages.quickSearch());
+        dialogBox.setAnimationEnabled(true);
 		dialogBox.setWidget(dialogVPanel);
 		
-
-		// Add a handler to close the DialogBox
-		closeButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
-			}
-		});
 
 		// Handler for the sendButton and searchField
 		class SearchHandler implements ClickHandler, KeyUpHandler {
@@ -107,12 +95,12 @@ public class QuickSearch extends AbstractEntryPoint {
 
 			private void callServer() {
 
-			    resetDialog();
+			    resetControls();
                 
 				String searchInput = searchField.getText();
 				if (!FieldVerifier.hasLength(searchInput)) {
-					validationLabel.setText("Please enter a valid quote or policy number");
-					sendButton.setEnabled(true);
+					validationLabel.setText(messages.quickSearchValidation());
+					enableInputControls(true);
 					return;
 				}
 				
@@ -125,28 +113,47 @@ public class QuickSearch extends AbstractEntryPoint {
 							}
 							
 							public void onFailure(Throwable caught) {
-                                serverResponseLabel.setHTML(SERVER_ERROR);
+                                serverResponseLabel.setHTML(messages.serverError());
                                 initDialog();
                             }
 						});
 			}
-
-			private void initDialog() {
-                dialogBox.center();
-                closeButton.setFocus(true);
-            }
-			
-            private void resetDialog() {
-                validationLabel.setText("");
-                serverResponseLabel.setText("");
-			    mainPanel.clear();
-                sendButton.setEnabled(false);
-            }
+            
 		}
 
 		SearchHandler handler = new SearchHandler();
-		sendButton.addClickHandler(handler);
+		searchButton.addClickHandler(handler);
 		searchField.addKeyUpHandler(handler);
-		searchField.setFocus(true);
+		searchField.getElement().setId("quickSearchInput");
+		
+		closeButton.getElement().setId("closeButton");
+		closeButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                dialogBox.hide();
+                enableInputControls(true);
+            }
+        });
+		
+		serverResponseLabel.addStyleName("serverResponseLabelError");
 	}
+	
+	private void initDialog() {
+        dialogBox.center();
+        closeButton.setFocus(true);
+    }
+    
+	// clear error messages and disable input controls
+    private void resetControls() {
+        validationLabel.setText("");
+        serverResponseLabel.setText("");
+        mainPanel.clear();
+        enableInputControls(false);
+    }
+    
+	private void enableInputControls(boolean enabled) {
+        searchField.setEnabled(enabled);
+        searchButton.setEnabled(enabled);
+        searchButton.setFocus(enabled);
+    }
+	
 }

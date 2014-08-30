@@ -1,4 +1,4 @@
-/* Copyright Applied Industrial Logic Limited 20014. All rights Reserved */
+/* Copyright Applied Industrial Logic Limited 2014. All rights Reserved */
 /*
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -19,10 +19,11 @@ package com.ail.ui.server.search;
 import java.util.List;
 
 import com.ail.core.CoreProxy;
-import com.ail.insurance.policy.SavedPolicySummary;
+import com.ail.insurance.policy.SavedPolicy;
 import com.ail.ui.client.search.QuickSearchService;
 import com.ail.ui.server.UIUtil;
 import com.ail.ui.server.transformer.PolicyDetailTransformer;
+import com.ail.ui.shared.ServiceException;
 import com.ail.ui.shared.model.PolicyDetailDTO;
 import com.ail.ui.shared.validation.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -39,10 +40,11 @@ public class QuickSearchServiceImpl extends RemoteServiceServlet implements Quic
      * @param search Search string
      * @return Populated PolicyDetailDTO
      */
-	public PolicyDetailDTO quickSearchServer(String search) throws IllegalArgumentException {
+	public PolicyDetailDTO quickSearchServer(String search) throws ServiceException {
 
 	    if (!FieldVerifier.hasLength(search)) {
-			throw new IllegalArgumentException();
+			throw new ServiceException(
+			        this.getClass().getName() + ":Invalid seach input", new IllegalArgumentException());
 		}
 
 		search = UIUtil.escapeHtml(search);
@@ -55,16 +57,17 @@ public class QuickSearchServiceImpl extends RemoteServiceServlet implements Quic
             
         if (policies.size() != 0) {
             for(Object policy: policies) {
-                return new PolicyDetailTransformer().apply((SavedPolicySummary)policy);
+                try {
+                    return new PolicyDetailTransformer().apply((SavedPolicy)policy);
+                } catch (Exception e) {
+                    core.logError(this.getClass().getName() , e);
+                    throw new ServiceException(e);
+                }
             }
         } 
         
         return new PolicyDetailDTO();
         
 	}
-	
-	
-	
-
 	
 }
