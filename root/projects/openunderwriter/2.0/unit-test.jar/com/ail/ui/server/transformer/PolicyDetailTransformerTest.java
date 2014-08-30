@@ -1,22 +1,13 @@
 package com.ail.ui.server.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-
-import java.text.DateFormat;
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.ail.financial.Currency;
-import com.ail.financial.CurrencyAmount;
 import com.ail.insurance.policy.Policy;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.party.Party;
-import com.ail.ui.shared.model.PolicyDetailDTO;
 
 public class PolicyDetailTransformerTest {
 
