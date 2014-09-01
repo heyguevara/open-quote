@@ -76,6 +76,38 @@
 	<td>//iframe[contains(@src,&quot;PoliciesByProduct_Qtr&quot;)]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>verifyElementPresent</td>
+	<td>xpath=//span[@id=&quot;gui-quicksearch-search-field-container&quot;] </td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//span[@id=&quot;gui-quicksearch-search-button-container&quot;]/button[text()=&quot;Search&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>xpath=//div[text()=&quot;Please enter a valid quote or policy number&quot;]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>id=gui-quick-search-input</td>
+	<td>XXX</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//span[@id=&quot;gui-quicksearch-search-button-container&quot;]/button[text()=&quot;Search&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>xpath=//div[text()=&quot;No Results Found&quot;]</td> 
+	<td></td>
+</tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>css=a[role~='menuitem'][href$='/logout']</td>
