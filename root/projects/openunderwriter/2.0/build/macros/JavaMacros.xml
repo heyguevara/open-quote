@@ -223,7 +223,6 @@
   </target>
 	
   <target name="create-webinf" depends="check-webinf-dir" unless="webinf.dir.present">
-  	<echo message="Creating dir ${output.dir}/WEB-INF"/>
   	<mkdir dir="${output.dir}/WEB-INF"/>
   </target>
 	
