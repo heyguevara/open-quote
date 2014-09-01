@@ -203,6 +203,10 @@
   	<attribute name="module" />
     <sequential>
       <_set-output-dir-property-macro />
+      <mkdir dir="${output.dir}" />
+      <mkdir dir="${output.dir}/@{gwtModule}" />
+      <mkdir dir="${output.dir}/WEB-INF" />
+      <mkdir dir="${output.dir}/WEB-INF/deploy" />
       <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
       	<arg value="-war" />
       	<arg value="${output.dir}" />
