@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="Build.xml" kind="src" output="target/test/unit-test.jar" path="unit-test.jar"/>
+	<classpathentry kind="src" path="modules/com/ail/gwtui.jar"/>
 	<classpathentry kind="src" path="gwtui-portlet.war/WEB-INF/src"/>
 	<classpathentry excluding="Build.xml|com/ail/core/persistence/hibernate/HibernateConfiguration.xml" kind="src" output="target/test/integration-test.jar" path="integration-test.jar"/>
 	<classpathentry excluding="Build.xml|Ivy.xml" kind="src" path="product-test.jar"/>
@@ -180,8 +181,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/commercial/main/paypal-core-1.4.4.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/gwtui-portlet.war/WEB-INF/lib/gwt-dev-2.6.0.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/gwtui-portlet.war/WEB-INF/lib/gwt-servlet-2.6.0.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/standalone/deployments/gwtui-portlet.war/WEB-INF/lib/gwt-user-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/gwtui/main/gwt-dev-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/gwtui/main/gwt-servlet-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/gwtui/main/gwt-user-2.6.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

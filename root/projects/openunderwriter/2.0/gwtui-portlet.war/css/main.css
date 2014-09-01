@@ -1,35 +1,60 @@
-
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+.gui-title-text {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	text-transform: uppercase;
+	color: #333;
 }
 
-.sendButton {
-  display: block;
-  font-size: 14pt;
+.gui-standard-text {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #333;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+.gui-cell-border {
+	border: 1px solid #e5e5e5;
+	webkit-border-radius: 2px;
+	moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
-.dialogVPanel {
-  margin: 5px;
+.gui-standard-cell {
+	vertical-align: top;
+	padding: 7px;
 }
 
-.serverResponseLabelError {
-  color: red;
+.gui-error-label {
+	color: red;
 }
 
-#closeButton {
-  margin: 15px 6px 6px;
+.gui-text-box {
+	margin: 0px !important;
 }
 
-#sendButtonContainer {
-  vertical-align: top;
-  height: 30px;
+.gui-button {
+	margin: 0px !important;
 }
+
+
+#gui-quicksearch-dialog {
+	height: 240px;
+	width: 380px;
+	margin: 10px;
+	margin-left: auto;
+    margin-right: auto;
+    width: 97%;
+}
+
+#gui-quicksearch-dialog-close-button {
+	height: 30px;
+	width: 370px;
+	margin-top: 20px;
+	margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+
+
+
+
+

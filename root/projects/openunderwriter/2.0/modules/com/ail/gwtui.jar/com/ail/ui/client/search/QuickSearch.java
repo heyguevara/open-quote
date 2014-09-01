@@ -29,7 +29,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -47,13 +47,14 @@ public class QuickSearch implements EntryPoint {
 	private final Messages messages = GWT.create(Messages.class);
 	
 	private final Button searchButton = new Button(messages.search());
+	private final Button closeButton = new Button(messages.close());
 	private final TextBox searchField = new TextBox();
+	private final Label serverResponseLabel = new Label();
 	private final Label validationLabel = new Label();
 	private final Panel mainPanel = new VerticalPanel();
 	private final DialogBox dialogBox = new DialogBox();
-	private final Button closeButton = new Button(messages.close());
-	private final HTML serverResponseLabel = new HTML();
-	private final VerticalPanel dialogVPanel = new VerticalPanel();
+	private final VerticalPanel resultsDialogPanel = new VerticalPanel();
+	private final Panel closeButtonPanel = new HorizontalPanel();
 	
 	/**
 	 * Called on load
@@ -62,21 +63,21 @@ public class QuickSearch implements EntryPoint {
 	public void onModuleLoad() {
 
 		// Retrieve elements from jsp
-		RootPanel.get("searchFieldContainer").add(searchField);
-		RootPanel.get("sendButtonContainer").add(searchButton);
-		RootPanel.get("errorLabelContainer").add(validationLabel);
+		RootPanel.get("gui-quicksearch-search-field-container").add(searchField);
+		RootPanel.get("gui-quicksearch-search-button-container").add(searchButton);
+		RootPanel.get("gui-quicksearch-error-label-container").add(validationLabel);
 		
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(mainPanel);
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
+		setComponentStyles();
 		
-		dialogBox.setText(messages.quickSearch());
+		closeButtonPanel.add(closeButton);
+		resultsDialogPanel.add(mainPanel);
+		resultsDialogPanel.add(serverResponseLabel);
+		resultsDialogPanel.add(closeButtonPanel);
+		
+		dialogBox.setText(messages.quickSearchResults().toUpperCase());
         dialogBox.setAnimationEnabled(true);
-		dialogBox.setWidget(dialogVPanel);
+		dialogBox.setWidget(resultsDialogPanel);
 		
-
 		// Handler for the sendButton and searchField
 		class SearchHandler implements ClickHandler, KeyUpHandler {
 			
@@ -108,12 +109,17 @@ public class QuickSearch implements EntryPoint {
 						new AsyncCallback<PolicyDetailDTO>() {
 
 							public void onSuccess(PolicyDetailDTO result) {
-								mainPanel.add(new SearchResultPanel(result).display());
-								initDialog();
+							    if (result.isInitialised()) {
+    								mainPanel.add(new SearchResultPanel(result).display());
+    								initDialog();
+							    } else {
+							        validationLabel.setText(messages.noResultsFound());
+							        enableInputControls(true);
+							    }
 							}
 							
 							public void onFailure(Throwable caught) {
-                                serverResponseLabel.setHTML(messages.serverError());
+                                serverResponseLabel.setText(messages.serverError());
                                 initDialog();
                             }
 						});
@@ -124,9 +130,7 @@ public class QuickSearch implements EntryPoint {
 		SearchHandler handler = new SearchHandler();
 		searchButton.addClickHandler(handler);
 		searchField.addKeyUpHandler(handler);
-		searchField.getElement().setId("quickSearchInput");
 		
-		closeButton.getElement().setId("closeButton");
 		closeButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 dialogBox.hide();
@@ -134,9 +138,8 @@ public class QuickSearch implements EntryPoint {
             }
         });
 		
-		serverResponseLabel.addStyleName("serverResponseLabelError");
 	}
-	
+
 	private void initDialog() {
         dialogBox.center();
         closeButton.setFocus(true);
@@ -154,6 +157,15 @@ public class QuickSearch implements EntryPoint {
         searchField.setEnabled(enabled);
         searchButton.setEnabled(enabled);
         searchButton.setFocus(enabled);
+    }
+	
+	private void setComponentStyles() {
+        serverResponseLabel.addStyleName("gui-error-label gui-error-label");
+        validationLabel.addStyleName("gui-error-label gui-error-label");
+        searchField.setStylePrimaryName("gui-text-box");
+        resultsDialogPanel.getElement().setId("gui-quicksearch-dialog");
+        closeButtonPanel.getElement().setId("gui-quicksearch-dialog-close-button");
+        searchField.getElement().setId("gui-quick-search-input");
     }
 	
 }

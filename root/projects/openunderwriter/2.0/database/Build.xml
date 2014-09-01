@@ -31,7 +31,7 @@
       <isset property="mysql-running" />
       <then>
         <exec dir="${package.dir}/lib" executable="bash" os="Linux,Mac OS X,Solaris,Sun OS" >
-          <arg line="-l -c 'cat Master-Setup.sql|mysql -u root --password=${mysql.root.password}'"/>
+          <arg line="-l -c 'cat Master-Setup.sql|/usr/local/mysql/bin/mysql -u root --password=${mysql.root.password}'"/>
         </exec>
         <exec dir="${package.dir}/lib" executable="cmd" os="Windows 2000,Windows XP,Windows 7">
           <arg line='/c "type Master-Setup.sql|mysql -u root --password=${mysql.root.password}"'/>
@@ -57,7 +57,7 @@
       </and>
       <then>
         <exec dir="${package.dir}/lib" executable="bash" os="Linux,Mac OS X,Solaris,Sun OS" >
-          <arg line="-l -c 'cat Master-Teardown.sql | mysql -u root --password=${mysql.root.password}'"/>
+          <arg line="-l -c 'cat Master-Teardown.sql | /usr/local/mysql/bin/mysql -u root --password=${mysql.root.password}'"/>
         </exec>
         <exec dir="${package.dir}/lib" executable="cmd" os="Windows 2000,Windows XP,Windows 7">
           <arg line='/c "type Master-Teardown.sql | mysql -u root --password=${mysql.root.password}"'/>

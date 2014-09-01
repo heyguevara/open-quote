@@ -15,10 +15,12 @@
       <module name="com.liferay.portal" />
       <module name="javax.mail.api" />
       <module name="javax.jms.api" />
+      <module name="javax.servlet.jsp.api" />
       <module name="org.jboss.modules" />
       <module name="deployment.persistence-server-ejb.jar" />
       <module name="deployment.acceptance-ejb.jar" />
       <module name="deployment.workflow.war" />
+      <module name="com.ail.gwtui" />
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

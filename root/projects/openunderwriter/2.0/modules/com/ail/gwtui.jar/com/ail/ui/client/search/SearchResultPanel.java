@@ -20,7 +20,6 @@ import com.ail.ui.client.i18n.Messages;
 import com.ail.ui.shared.model.PolicyDetailDTO;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
@@ -41,30 +40,24 @@ public class SearchResultPanel extends VerticalPanel {
 
     public SearchResultPanel display() {
         
-        if (detail.isInitialised()) {
-            grid.setCellPadding(3);
+        grid.setCellPadding(4);
             
-            addRow(messages.quoteNumber(), detail.getQuotationNumber());
-            addRow(messages.policyNumber(), detail.getPolicyNumber());
-            addRow(messages.name(), detail.getPolicyHolderName());
-            
-            if (!detail.getPolicyHolderAddress().isEmpty()) {
-                addRow(messages.address(), detail.getPolicyHolderAddress().get(0)); // address first line
-                for (int i = 1; i < detail.getPolicyHolderAddress().size(); i++) {
-                    addRow("", detail.getPolicyHolderAddress().get(i)); // rest of address
-                }
+        addRow(messages.quoteNumber(), detail.getQuotationNumber());
+        addRow(messages.policyNumber(), detail.getPolicyNumber());
+        addRow(messages.name(), detail.getPolicyHolderName());
+        
+        if (!detail.getPolicyHolderAddress().isEmpty()) {
+            addRow(messages.address(), detail.getPolicyHolderAddress().get(0)); // address first line
+            for (int i = 1; i < detail.getPolicyHolderAddress().size(); i++) {
+                addRow("", detail.getPolicyHolderAddress().get(i)); // rest of address
             }
-            addRow(messages.quoteDate(), detail.getQuoteDate());
-            addRow(messages.expiryDate(), detail.getExpiryDate());
-            addRow(messages.product(), detail.getProduct());
-            addRow(messages.grossPremium(), detail.getPremium());
-            
-            add(grid);
-            
-        } else {
-            
-            add(new Label(messages.noResultsFound()));
         }
+        addRow(messages.quoteDate(), detail.getQuoteDate());
+        addRow(messages.expiryDate(), detail.getExpiryDate());
+        addRow(messages.product(), detail.getProduct());
+        addRow(messages.grossPremium(), detail.getPremium());
+        
+        add(grid);
         
         return this;
     }
@@ -73,5 +66,11 @@ public class SearchResultPanel extends VerticalPanel {
         int row = grid.getRowCount();
         grid.setText(row, 0, label);
         grid.setText(row, 1, value);
+        grid.getCellFormatter().setWidth(row, 0,"130px");
+        grid.getCellFormatter().setWidth(row, 1,"230px");
+
+        grid.getCellFormatter().setStyleName(row, 0, "gui-standard-text gui-cell-border");
+        grid.getCellFormatter().setStyleName(row, 1, "gui-standard-text gui-cell-border");
+
     }
 }

@@ -7,13 +7,14 @@
 	</target>
 
 	<target name="_build">
-		<antcall target="gwt-compile" />
 		<antcall target="build-deploy-war" />
+		<antcall target="gwt-compile" />
 	</target>
 
-	<target name="build-deploy-war" description="GWT compile to JavaScript">
+	<target name="build-deploy-war" description="Build war">
 		<compile-war-macro>
 			<javac-classpath>
+				<pathelement location="${project.dir}/modules/com/ail/gwtui.jar"/>
 				<dirset dir="${module.dir}/com/ail" includes="**/*.jar" />
 				<fileset dir="${module.dir}/com/ail" includes="**/*.jar" />
 				<fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />
@@ -25,7 +26,7 @@
 	</target>
 
 	<target name="gwt-compile" description="GWT compile to JavaScript">
-		<gwt-compile-macro gwtModule="quicksearch" />
+		<gwt-compile-macro gwtModule="quicksearch" module="gwtui" />
 	</target>
 
 	<target name="build" description="compile (generate, copy, etc) all build outputs">
@@ -33,7 +34,6 @@
 	</target>
 
 	<target name="setup" description="run all the one-time-only steps - like copying libs into place">
-		<update-dependencies-macro todir="${output.dir}/WEB-INF/lib" />
 	</target>
 
 	<target name="teardown" description="undo whatever setup did">

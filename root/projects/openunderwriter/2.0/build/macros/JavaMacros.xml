@@ -200,15 +200,16 @@
 
   <macrodef name="gwt-compile-macro">
   	<attribute name="gwtModule" />
+  	<attribute name="module" />
     <sequential>
       <_set-output-dir-property-macro />
       <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
       	<arg value="-war" />
       	<arg value="${output.dir}" />
       	<classpath>
-      	  <!--pathelement location="${basedir}/WEB-INF/src/com/ail/ui"/-->
       	  <pathelement location="${basedir}/WEB-INF/src"/>
-      	  <fileset dir="${output.dir}/WEB-INF/lib" />
+      	  <pathelement location="${project.dir}/modules/com/ail/@{module}.jar"/>
+      	  <fileset dir="${module.dir}/com/ail/@{module}/main" />
     	</classpath>
     	<jvmarg value="-Xmx512M" />
     	<arg value="@{gwtModule}" />

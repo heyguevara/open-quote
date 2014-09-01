@@ -17,6 +17,7 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
     String close();
     String quickSearchValidation();
     String serverError();
+    String quickSearchResults();
     
 
 }

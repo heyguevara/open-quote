@@ -5,20 +5,22 @@
 <portlet:defineObjects />
 
 	<fmt:setBundle basename="com.ail.ui.client.i18n.Messages" var="lang"/>
-	<h2>
-		<fmt:message key="quickSearch" bundle="${lang}"/>
-	</h2>
 
-	<table align="center">
-		<tr>
-			<td colspan="2" style="font-weight: bold;"><fmt:message key="enterQuoteNumber" bundle="${lang}"/></td>
+	<table class="gui-cell-border" width="100%">
+		<tr class="gui-cell-border">
+			<td class="gui-title-text gui-standard-cell"><fmt:message key="quickSearch" bundle="${lang}"/></td>
 		</tr>
 		<tr>
-			<td id="searchFieldContainer"></td>
-			<td id="sendButtonContainer"></td>
+			<td class="gui-standard-text gui-standard-cell"><fmt:message key="enterQuoteNumber" bundle="${lang}"/></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="color: red;" id="errorLabelContainer"></td>
+			<td class="gui-standard-text gui-standard-cell">
+				<span id="gui-quicksearch-search-field-container"></span>
+				<span id="gui-quicksearch-search-button-container"></span>
+			</td>
+		</tr>
+		<tr>
+			<td id="gui-quicksearch-error-label-container" class="gui-standard-text" align="center"></td>
 		</tr>
 	</table>
 
