@@ -203,9 +203,7 @@
   	<attribute name="module" />
     <sequential>
       <_set-output-dir-property-macro />
-      <mkdir dir="${output.dir}/@{gwtModule}" failonerror="false"/>
-      <mkdir dir="${output.dir}/WEB-INF" failonerror="false" />
-      <mkdir dir="${output.dir}/WEB-INF/deploy" failonerror="false" />
+      <antcall target="create-webinf" />
       <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
       	<arg value="-war" />
       	<arg value="${output.dir}" />
@@ -219,6 +217,16 @@
       </java>
     </sequential>
   </macrodef>
+	
+  <target name="check-webinf-dir">
+	<available file="${output.dir}/WEB-INF" type="dir" property="webinf.dir.present"/>
+  	<echo message="${output.dir}/WEB-INF present = ${webinf.dir.present}"/>
+  </target>
+	
+  <target name="create-webinf" depends="check-webinf-dir" unless="webinf.dir.present">
+  	<echo message="Creating dir ${output.dir}/WEB-INF"/>
+  	<mkdir dir="${output.dir}/WEB-INF"/>
+  </target>
 	
   <!-- Delete an exploded jar projects output folder -->
   <macrodef name="delete-jar-macro">
