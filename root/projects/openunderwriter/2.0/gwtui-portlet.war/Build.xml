@@ -7,8 +7,8 @@
 	</target>
 
 	<target name="_build">
-		<antcall target="build-deploy-war" />
 		<antcall target="gwt-compile" />
+		<antcall target="build-deploy-war" />
 	</target>
 
 	<target name="build-deploy-war" description="Build war">

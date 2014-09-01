@@ -220,7 +220,6 @@
 	
   <target name="check-webinf-dir">
 	<available file="${output.dir}/WEB-INF" type="dir" property="webinf.dir.present"/>
-  	<echo message="${output.dir}/WEB-INF present = ${webinf.dir.present}"/>
   </target>
 	
   <target name="create-webinf" depends="check-webinf-dir" unless="webinf.dir.present">
