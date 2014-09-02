@@ -25,7 +25,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.ail.core.BaseException;
 import com.ail.core.Type;
+import com.ail.core.product.ProductUrlToExternalUrlService.ProductUrlToExternalUrlCommand;
 import com.ail.insurance.policy.Policy;
 
 /**
@@ -164,12 +166,17 @@ public class QuotationSummary extends PageContainer {
      * @param request Request being rendered
      * @return External form URL
      * @throws MalformedURLException
+     * @throws BaseException 
      */
-    public String getWordingUrlExternalForm(QuotationSummary qs, Policy policy, RenderRequest request) throws MalformedURLException {
+    public String getWordingUrlExternalForm(QuotationSummary qs, Policy policy, RenderRequest request) throws MalformedURLException, BaseException {
         String url;
         url = expandRelativeUrlToProductUrl(qs.getWordingsUrl(), request, policy.getProductTypeId());
-        url = convertProductUrlToExternalForm(new URL(url)).toExternalForm();
-        return url.toString();
+        
+        ProductUrlToExternalUrlCommand puteu=PageFlowContext.getCoreProxy().newCommand(ProductUrlToExternalUrlCommand.class);
+        puteu.setProductUrlArg(new URL(url));
+        puteu.invoke();
+        
+        return puteu.getExternalUrlRet();
     }
     
     /**

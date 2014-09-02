@@ -51,8 +51,8 @@ class ConfigurationResetHandler {
     boolean resetFromProductResource() {
 
         try {
-            String host = core.getParameterValue("ProductReader.Host");
-            String port = core.getParameterValue("ProductReader.Port");
+            String host = core.getParameterValue("ProductRepository.Host");
+            String port = core.getParameterValue("ProductRepository.Port");
 
             String productPath = "product://" + host + ":" + port + "/" + name.replace('.', '/') + ".xml";
 

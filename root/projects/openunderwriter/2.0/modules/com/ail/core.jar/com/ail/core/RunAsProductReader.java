@@ -33,8 +33,8 @@ public abstract class RunAsProductReader {
     public RunAsProductReader() {
         coreProxy = new CoreProxy();
 
-        companyId = new Long(getCoreProxy().getParameterValue("ProductReader.CompanyID"));
-        username = getCoreProxy().getParameterValue("ProductReader.Username");
+        companyId = new Long(getCoreProxy().getParameterValue("ProductRepository.CompanyID"));
+        username = getCoreProxy().getParameterValue("ProductRepository.Username");
     }
 
     protected CoreProxy getCoreProxy() {

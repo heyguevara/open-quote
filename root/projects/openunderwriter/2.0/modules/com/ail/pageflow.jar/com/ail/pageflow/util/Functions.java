@@ -17,8 +17,6 @@
 package com.ail.pageflow.util;
 
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -278,18 +276,6 @@ public class Functions {
         }
     }
 
-    /**
-     * Product URLs (using the "product" protocol) are only accessible within the OpenQuote
-     * server, by virtue of {@link com.ail.code.urlhandler.product.Handler Handler}. This 
-     * method converts a product URL into a form which can be used externally.
-     * @param url URL to be converted
-     * @return External URL
-     * @throws MalformedURLException 
-     */
-    public static URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
-    	return new URL("http", productUrl.getHost(), productUrl.getPort(), "/webdav/global/document_library/Product"+productUrl.getPath()); 
-    }
-    
     /**
      * Products frequently refer to content from their Registry or Pageflows by "relative" URLs. This method
      * expands relative URLs into absolute product URLs - i.e. a URL using the "product:" protocol. A relative URL 

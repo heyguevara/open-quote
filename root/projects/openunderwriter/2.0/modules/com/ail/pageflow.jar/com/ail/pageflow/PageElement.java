@@ -22,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -47,7 +46,6 @@ import com.ail.pageflow.portlet.QuotationCommon;
 import com.ail.pageflow.render.RenderService.RenderArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 import com.ail.pageflow.util.ErrorText;
-import com.ail.pageflow.util.Functions;
 import com.ail.pageflow.util.HelpText;
 import com.ail.pageflow.util.I18N;
 
@@ -754,18 +752,6 @@ public abstract class PageElement extends Type implements Identified, Comparable
         return false;
     }
 
-    /**
-     * Product URLs (using the "product" protocol) are only accessible within the OpenQuote
-     * server, by virtue of {@link com.ail.code.urlhandler.product.Handler Handler}. This 
-     * method converts a product URL into a form which can be used externally.
-     * @param url URL to be converted
-     * @return External URL
-     * @throws MalformedURLException 
-     */
-    public URL convertProductUrlToExternalForm(URL productUrl) throws MalformedURLException {
-        return Functions.convertProductUrlToExternalForm(productUrl);
-    }
-    
     /**
      * Products frequently refer to content from their Registry or Pageflows by "relative" URLs. This method
      * expands relative URLs into absolute product URLs - i.e. a URL using the "product:" protocol. A relative URL 

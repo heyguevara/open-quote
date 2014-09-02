@@ -24,7 +24,7 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
 import com.ail.core.CoreProxy;
-import com.ail.core.urlhandler.product.ProductRepositoryService.ProductRepositoryCommand;
+import com.ail.core.product.ProductUrlToConnectionService.ProductUrlToConnectionCommand;
 
 /**
  * The handler deals with URLs of the form: "product://".
@@ -51,18 +51,18 @@ import com.ail.core.urlhandler.product.ProductRepositoryService.ProductRepositor
 public class Handler extends URLStreamHandler {
 
     protected URLConnection openConnection(URL productURL) throws IOException {
-        ProductRepositoryCommand productRepositoryCommand;
+        ProductUrlToConnectionCommand productUrlToConnectionCommand;
 
-        productRepositoryCommand=new CoreProxy().newCommand(ProductRepositoryCommand.class);
+        productUrlToConnectionCommand=new CoreProxy().newCommand(ProductUrlToConnectionCommand.class);
         
-        productRepositoryCommand.setProductUrlArg(productURL);
+        productUrlToConnectionCommand.setProductUrlArg(productURL);
 
         try {
-            productRepositoryCommand.invoke();
+            productUrlToConnectionCommand.invoke();
         } catch (Throwable e) {
             throw new FileNotFoundException(productURL.toString());
         }
         
-        return productRepositoryCommand.getURLConnectionRet();
+        return productUrlToConnectionCommand.getURLConnectionRet();
     }
 }

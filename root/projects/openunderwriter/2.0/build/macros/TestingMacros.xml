@@ -19,6 +19,8 @@
 
       <pathify-product-name-macro property="product.subdir" value="@{name}/Test Suite" />
 
+      <echo message="Running: @{name}" />
+      
       <java errorproperty="system-test-errored" fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.39.0.jar" dir="@{name}">
         <arg line="-singleWindow -port 4445 -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} '${test.dir}/reports/@{name}.html'" />
       </java>
@@ -34,6 +36,7 @@
       <if>
         <istrue value="${system-test-failed}" />
         <then>
+          <echo message="Test failed: @{name}. Log is here: ${test.dir}/reports/@{name}.html'" />
           <echo message="${line.separator}system-test-failed=true" file="${test.results.file}" append="yes" />
         </then>
       </if>
@@ -41,6 +44,7 @@
       <if>
         <istrue value="${system-test-errored}" />
         <then>
+          <echo message="Test error @{name}. Log is here: ${test.dir}/reports/@{name}.html'" />
           <echo message="${line.separator}system-test-errored=true" file="${test.results.file}" append="yes" />
         </then>
       </if>
@@ -89,6 +93,8 @@
 
       <pathify-product-name-macro property="product.subdir" value="@{product}/Test Suite" />
 
+      <echo message="Running product tests for: @{product}" />
+
       <java errorproperty="product-test-errored" fork="yes" jar="${test.dir}/lib/selenium-server-standalone-2.39.0.jar" dir="@{product.dir}/${product.subdir}">
         <arg line="-singleWindow -htmlSuite @{selenium.htmlSuite} http://@{url} @{suite} '${test.dir}/reports/@{product}.html'" />
       </java>
@@ -104,6 +110,7 @@
       <if>
         <istrue value="${product-test-failed}" />
         <then>
+          <echo message="Test failed: @{product}. Log is here: ${test.dir}/reports/@{product}.html" />
           <echo message="${line.separator}product-test-failed=true" file="${test.results.file}" append="yes" />
         </then>
       </if>
@@ -111,6 +118,7 @@
       <if>
         <istrue value="${product-test-errored}" />
         <then>
+          <echo message="Test errored: @{product}. Log is here: ${test.dir}/reports/@{product}.html" />
           <echo message="${line.separator}product-test-errored=true" file="${test.results.file}" append="yes" />
         </then>
       </if>

@@ -1,0 +1,144 @@
+<pageFlow id="EquinePlusQuotation" startPage="Welcome" xsi:type="java:com.ail.pageflow.PageFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <questionPage id="Welcome" title="Equine Plus - Online Horse Insurance">
+        <pageSection>
+            <parsedUrlContent id="Content" url="~/HTML/Welcome.html" />
+        </pageSection>
+        <savedQuotations requoteDestinationPageId="HorseDetails" confirmAndPayDestinationPageId="SelectPaymentOption"/>
+        <navigationSection quitDisabled='true'>
+            <commandButtonAction label="Get A Quote" destinationPageId="Proposer">
+                <action when="onProcessActions" commandName="CreateNewBusinessQuotationCommand" />
+            </commandButtonAction>
+        </navigationSection>
+    </questionPage>
+    
+    <questionPage id="Proposer" title="About You - The Proposer">
+        <proposerDetails binding="/proposer"/>
+        <navigationSection>
+            <commandButtonAction label="Next" destinationPageId="HorseDetails"/>
+        </navigationSection>
+    </questionPage>
+    
+    <questionPage id="HorseDetails" title="About Your Horse">
+        <questionSection binding="/asset[assetTypeId='HorseAsset']">
+            <question title="What is the name of the horse?" binding="attribute[id='name']"/>
+            <question title="How old is the horse?" binding="attribute[id='ageDescription']"/>
+            <question title="What is the horse's gender?" binding="attribute[id='gender']"/>
+            <question title="What colour is the horse?" binding="attribute[id='colour']"/>
+            <question title="What is the horse's height (in hands and inches)?" binding="attribute[id='height']"/>
+            <question title="What is the freeze brand?" binding="attribute[id='freezebrand']"/>
+            <question title="What is the horse's passport number" binding="attribute[id='passport']"/>
+            <question title="On what basis do you owned the horse" binding="attribute[id='owned']"/>
+            <question title="On what date did you buy (or start the loan of) the horse?" binding="attribute[id='datebought']"/>
+            <question title="What is the current value of the horse?" binding="attribute[id='currentvalue']"/>
+        </questionSection>
+        <navigationSection>
+            <commandButtonAction label="Previous" destinationPageId="Proposer" immediate="true"/>
+            <commandButtonAction label="Next" destinationPageId="TypesOfUse">
+                <action commandName="CalculateHorsesAge"/>
+            </commandButtonAction>
+        </navigationSection>
+    </questionPage> 
+
+    <questionPage id="TypesOfUse" title="Activities">
+        <questionSection title="What Class of Activities will you be participating in:">
+            <question title="Please select a class of use (see below):" binding="/asset[assetTypeId='HorseAsset']/attribute[id='typeOfUse']"/>
+		</questionSection>
+        <pageSection>
+            <parsedUrlContent url="~/HTML/TypesOfUseDescription.html"/>
+        </pageSection>
+        <navigationSection>
+            <commandButtonAction label="Previous" destinationPageId="HorseDetails" immediate="true"/>
+            <commandButtonAction label="Next" destinationPageId="Covers"/>
+        </navigationSection>
+    </questionPage> 
+
+   <questionPage id="Covers" title="Cover">
+        <questionSection title="What level of cover is required:" binding="/asset[assetTypeId='CoverageAsset']">
+            <question title="What level of cover you require in the event of the death of the horse?" binding="attribute[id='death']"/>
+            <question title="What public liability cover do you require?" binding="attribute[id='publicLiability']"/>
+            <question title="What cover do you require in the event of the theft or loss of the horse?" binding="attribute[id='theft']"/>
+            <question title="What level of personal injury cover do you require?" binding="attribute[id='personalInjury']"/>
+            <question title="What dental fees cover do you require?" binding="attribute[id='dental']"/>
+            <question title="What cover do you require for stablling?" binding="attribute[id='stables']"/>
+            <question title="What level of cover do you require for vets fees?" binding="attribute[id='vetFees']"/>
+            <question title="What saddlery and tack cover do you require?" binding="attribute[id='saddlery']"/>
+		</questionSection>
+        <navigationSection>
+            <commandButtonAction label="Previous" destinationPageId="TypesOfUse" immediate="true"/>
+            <commandButtonAction label="Next" destinationPageId="Referral">
+                <action when="onProcessActions" commandName="PremiumCalculation"/>
+                <pageForwardAction when="onProcessActions" condition="i:test(status[.='QUOTATION'])" destinationPageId="Quotation"/>
+            </commandButtonAction>
+        </navigationSection>
+    </questionPage> 
+    
+
+    <informationPage id="Quotation">
+        <quotationSummary termsAndConditionsUrl="~/HTML/TermsAndConditions.html" 
+            requoteDestinationPageId="HorseDetails"
+            saveDestinationPageId="SavedQuotes"
+            confirmAndPayDestinationPageId="CollectPaymentDetails">
+
+            <answerSection title="Summary of your cover">
+                <answer title="Usage" binding="asset[assetTypeId='HorseAsset']/attribute[id='typeOfUse']"/>
+                <answer title="Start date" binding="inceptionDate"/>
+                <answer title="End date" binding="expiryDate"/>
+            </answerSection>
+            
+            <answerSection title="Horse(s)">
+	            <answer title="Name:" binding="/asset[id='horse1']/attribute[id='name']"/>
+	            <answer title="Age:" binding="/asset[id='horse1']/attribute[id='age']"/>
+	            <answer title="Gender:" binding="/asset[id='horse1']/attribute[id='gender']"/>
+	            <answer title="Colour:" binding="/asset[id='horse1']/attribute[id='colour']"/>
+	            <answer title="Height:" binding="/asset[id='horse1']/attribute[id='height']"/>
+	            <answer title="Freeze brand:" binding="/asset[id='horse1']/attribute[id='freezebrand']"/>
+	            <answer title="Passport:" binding="/asset[id='horse1']/attribute[id='passport']"/>
+	            <answer title="Owned:" binding="/asset[id='horse1']/attribute[id='owned']"/>
+	            <answer title="Date bought/start of loan:" binding="/asset[id='horse1']/attribute[id='datebought']"/>
+	            <answer title="Purchase price/value:" binding="/asset[id='horse1']/attribute[id='currentvalue']"/>
+            </answerSection>
+        </quotationSummary>
+    </informationPage>
+
+    <questionPage id="Referral" title="Referral">
+        <referralSummary referralNotificationUrl="~/HTML/ReferralNotification.html" requoteDestinationPageId="HorseDetails">
+            <answerSection title="Summary of your application">
+                <answer title="Usage" binding="asset[assetTypeId='HorseAsset']/attribute[id='typeOfUse']"/>
+                <answer title="Start date" binding="inceptionDate"/>
+                <answer title="End date" binding="expiryDate"/>
+            </answerSection>
+            
+            <answerSection title="Horse(s)">
+                <answer title="Name:" binding="/asset[id='horse1']/attribute[id='name']"/>
+                <answer title="Age:" binding="/asset[id='horse1']/attribute[id='age']"/>
+                <answer title="Gender:" binding="/asset[id='horse1']/attribute[id='gender']"/>
+                <answer title="Colour:" binding="/asset[id='horse1']/attribute[id='colour']"/>
+                <answer title="Height:" binding="/asset[id='horse1']/attribute[id='height']"/>
+                <answer title="Freeze brand:" binding="/asset[id='horse1']/attribute[id='freezebrand']"/>
+                <answer title="Passport:" binding="/asset[id='horse1']/attribute[id='passport']"/>
+                <answer title="Owned:" binding="/asset[id='horse1']/attribute[id='owned']"/>
+                <answer title="Date bought/start of loan:" binding="/asset[id='horse1']/attribute[id='datebought']"/>
+                <answer title="Purchase price/value:" binding="/asset[id='horse1']/attribute[id='currentvalue']"/>
+            </answerSection>
+        </referralSummary>
+    </questionPage>
+
+    <questionPage id="CollectPaymentDetails" title="Payment details">
+        <action when="onRenderResponse" commandName="AssessPaymentOptions"/>
+        <paymentDetails/>
+        <navigationSection>
+            <commandButtonAction label="Previous" immediate='true' destinationPageId="Quotation"/>
+            <commandButtonAction label="Next" destinationPageId="Finish"/>
+        </navigationSection>
+    </questionPage>
+
+    <questionPage id="Finish" title="Thank you">
+        <pageSection>
+            <parsedUrlContent url="~/HTML/ThankYou.html"/>
+        </pageSection>
+        <navigationSection >
+            <quitButtonAction label="Finish" destinationPageId="Finish"/>
+        </navigationSection>
+    </questionPage>
+</pageFlow>

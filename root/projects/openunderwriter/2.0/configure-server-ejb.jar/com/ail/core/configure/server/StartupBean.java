@@ -99,7 +99,7 @@ public class StartupBean {
 
     /**
      * Check that the product repository is online. There is a good chance that the repository will start
-     * sometime after this bean. This check uses the value of CoreConfig's ProductReader.TestPath to poll
+     * sometime after this bean. This check uses the value of CoreConfig's ProductRepository.TestPath to poll
      * the repository.
      * @return true if the repository is online, false otherwise.
      */
@@ -110,14 +110,14 @@ public class StartupBean {
         // If we can open the stream then return true - the repo is available.
         // Otherwise return false.
         try {
-            String testPath = coreProxy.getParameterValue("ProductReader.TestPath");
+            String testPath = coreProxy.getParameterValue("ProductRepository.TestPath");
             repoTestURL = new URL(testPath);
             testStream = repoTestURL.openStream();
             testStream.close();
             coreProxy.logInfo("Product repository is ready.");
             return true;
         } catch (MalformedURLException e) {
-            coreProxy.logError("ProductReader.TestPath is not configured correctly in CoreDefaultConfig.xml");
+            coreProxy.logError("ProductRepository.TestPath is not configured correctly in CoreDefaultConfig.xml");
             return false;
         }
         catch (ConnectException e) {
