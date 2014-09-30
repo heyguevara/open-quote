@@ -1,4 +1,4 @@
-<%@page import="com.ail.pageflow.portlet.QuotationCommon"%>
+<%@page import="com.ail.pageflow.portlet.PageFlowCommon"%>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
 <jsp:useBean class="java.lang.String" id="productNameURL" scope="request" />
 <jsp:useBean class="java.lang.String" id="productName" scope="request" />
@@ -21,7 +21,7 @@
 							<span class="aui-field-content"> 
 								<label class="aui-field-label" for="productName"> Product </label> 
 								<span class="aui-field-element"> 
-									<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="productName" onchange="this.form.submit()"><%=new QuotationCommon().buildProductSelectOptions(productName)%></select>
+									<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="productName" onchange="this.form.submit()"><%=new PageFlowCommon().buildProductSelectOptions(productName)%></select>
 								</span>
 							</span>
 						</span> 
@@ -29,7 +29,7 @@
 							<span class="aui-field-content"> 
 								<label class="aui-field-label" for="type"> Page Flow </label> 
 								<span class="aui-field-element">
-						    		<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="pageFlowName"><%=new QuotationCommon().buildPageFlowSelectOptions(productName, pageFlowName)%></select>
+						    		<select class="aui-field-input aui-field-input-select aui-field-input-menu" name="pageFlowName"><%=new PageFlowCommon().buildPageFlowSelectOptions(productName, pageFlowName)%></select>
 								</span>
 							</span>
 						</span> 

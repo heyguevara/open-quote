@@ -35,6 +35,8 @@
     <exclude org="ant" />
     <exclude org="javax.jms" />
     <exclude org="javax.security" />
+    <exclude org="javax.activation" />
+    <exclude org="javax.mail" />
     <exclude org="org.apache.ant" />
     <exclude org="xerces" module="xerces" />
     <exclude org="xml-apis" />

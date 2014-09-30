@@ -75,12 +75,12 @@ public class SandpitPortlet extends GenericPortlet {
     private String statusMessage = null;
     private ListToOptionCommand listToOptionCommand;
     private AssessmentSheetDetails assessmentSheetDetails = new AssessmentSheetDetails();
-    private QuotationCommon quotationCommon = null;
+    private PageFlowCommon pageFlowCommon = null;
 
     public SandpitPortlet() {
         coreProxy = new CoreProxy();
         listToOptionCommand = coreProxy.newCommand(ListToOptionCommand.class);
-        quotationCommon = new QuotationCommon();
+        pageFlowCommon = new PageFlowCommon();
     }
 
     @Override
@@ -177,7 +177,7 @@ public class SandpitPortlet extends GenericPortlet {
                 Policy quote = PageFlowContext.getPolicy();
                 int exceptionCount = (quote != null) ? quote.getException().size() : 0;
 
-                quotationCommon.processAction(request, response);
+                pageFlowCommon.processAction(request, response);
 
                 try {
                     if (PageFlowContext.getPolicy() != null && PageFlowContext.getPolicy().getException().size() != exceptionCount) {
@@ -209,7 +209,7 @@ public class SandpitPortlet extends GenericPortlet {
             quote.addException(new ExceptionRecord(cause));
 
             try {
-                quotationCommon.persistQuotation(quote);
+                pageFlowCommon.persistQuotation(quote);
             } catch (Throwable th) {
                 // Switch to the exception view for 'cause' - not th. The user is probably
                 // more interested in what error cause us to be handling exceptions in the
@@ -221,6 +221,9 @@ public class SandpitPortlet extends GenericPortlet {
             }
 
             session.setAttribute("view", EXCEPTION_MODE);
+        }
+        finally {
+            PageFlowContext.destroy();
         }
     }
 
@@ -254,6 +257,9 @@ public class SandpitPortlet extends GenericPortlet {
         catch (Throwable t) {
             handleSandpitException(request, response, t);
         }
+        finally {
+            PageFlowContext.destroy();
+        }
     }
 
     private void renderSandpitMessage(RenderResponse response, String message, String help) throws IOException {
@@ -278,7 +284,7 @@ public class SandpitPortlet extends GenericPortlet {
         }
     }
 
-    private void renderPageFlowView(RenderRequest request, RenderResponse response) throws IOException {
+    private void renderPageFlowView(RenderRequest request, RenderResponse response) throws IOException, BaseException {
         PortletSession session = PageFlowContext.getRequest().getPortletSession();
         PrintWriter outs = response.getWriter();
 
@@ -286,7 +292,7 @@ public class SandpitPortlet extends GenericPortlet {
 
         int exceptionCount = (PageFlowContext.getPolicy() != null) ? PageFlowContext.getPolicy().getException().size() : 0;
 
-        quotationCommon.doView(request, response);
+        pageFlowCommon.doView(request, response);
 
         if (PageFlowContext.getPolicy() != null && PageFlowContext.getPolicy().getException().size() != exceptionCount) {
             session.setAttribute("view", EXCEPTION_MODE);
@@ -316,7 +322,7 @@ public class SandpitPortlet extends GenericPortlet {
             // If we fail to persist the quote now then things must be very
             // broken. Add the details of this exception to the quote too.
             try {
-                quotationCommon.persistQuotation(policy);
+                pageFlowCommon.persistQuotation(policy);
             } catch (Throwable th) {
                 // ignore this, we're in the sandpit handling an error anyway,
                 // capturing
@@ -451,8 +457,8 @@ public class SandpitPortlet extends GenericPortlet {
         w.printf("<form name='productDebug' action='%s' method='post'>", response.createActionURL());
         w.printf("<div class='sandpit-debug-panel'>");
         w.printf("<span id='navigator'>");
-        w.printf("<select id='selectedProduct' name='selectedProduct' onChange='submit()' class='portlet-form-input-field'>%s</select>", quotationCommon.buildProductSelectOptions(product));
-        w.printf("<select id='selectedPageFlow' name='selectedPageFlow' %s onChange='submit()' class='portlet-form-input-field'>%s</select>", disabledPageFlowList ? "disabled=disabled" : "", quotationCommon.buildPageFlowSelectOptions(product, pageFlowName));
+        w.printf("<select id='selectedProduct' name='selectedProduct' onChange='submit()' class='portlet-form-input-field'>%s</select>", pageFlowCommon.buildProductSelectOptions(product));
+        w.printf("<select id='selectedPageFlow' name='selectedPageFlow' %s onChange='submit()' class='portlet-form-input-field'>%s</select>", disabledPageFlowList ? "disabled=disabled" : "", pageFlowCommon.buildPageFlowSelectOptions(product, pageFlowName));
         w.printf("<select id='selectedPage' name='selectedPage' %s onChange='submit()' class='portlet-form-input-field'>%s</select>", disablePageList ? "disabled=disabled" : "", buildPageSelectOptioon());
         w.printf("</span>");
 

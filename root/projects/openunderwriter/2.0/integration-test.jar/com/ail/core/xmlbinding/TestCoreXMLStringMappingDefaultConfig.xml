@@ -11,7 +11,7 @@
     	<definition><![CDATA[
 <mapping>
     <class name="com.ail.core.document.StyleDocumentCommandImpl">
-        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorEmbeddedXMLFieldHandler">
             <bind-xml type="any" node="element"/> 
         </field>
         <field name="styledDocumentRet" type="com.ail.core.XMLString"/>

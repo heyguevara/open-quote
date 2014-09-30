@@ -27,6 +27,7 @@ import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
+import com.ail.core.VersionEffectiveDate;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.core.configure.Configuration;
@@ -63,6 +64,15 @@ public class GenerateUniqueKeyService extends Service<GenerateUniqueKeyService.G
     public String getConfigurationNamespace() {
         return configurationNamespace;
     }
+
+    /**
+     * The version effective date for this service is always "now".
+     */
+    @Override
+    public VersionEffectiveDate getVersionEffectiveDate() {
+        return new VersionEffectiveDate();
+    }
+
 
 
     /** The 'business logic' of the entry point. */

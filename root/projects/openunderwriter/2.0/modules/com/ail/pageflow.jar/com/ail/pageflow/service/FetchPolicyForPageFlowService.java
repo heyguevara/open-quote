@@ -18,17 +18,20 @@
 package com.ail.pageflow.service;
 
 import static com.ail.pageflow.PageFlowContext.getPageFlow;
-import static com.ail.pageflow.PageFlowContext.getPolicy;
+import static com.ail.pageflow.PageFlowContext.getPolicySystemId;
 import static com.ail.pageflow.PageFlowContext.getProductName;
 import static com.ail.pageflow.PageFlowContext.setPolicy;
 
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
+import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.ThreadLocale;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 import com.ail.pageflow.ExecutePageActionService;
+import com.ail.pageflow.PageFlowContext;
 
 /**
  * Fetch the policy associated with this PageFlow if there is one. If there is a
@@ -50,11 +53,20 @@ public class FetchPolicyForPageFlowService extends Service<ExecutePageActionServ
         if (args.getPortletRequestArg() == null) {
             throw new PreconditionException("args.getPortletRequestArg() == null");
         }
+        
+        if (PageFlowContext.getCoreProxy() == null) {
+            throw new PreconditionException("PageFlowContext.getCoreProxy() == null");
+        }
 
-        // If the session already has a policy object in it, then use it.
-        if (getPolicy() != null) {
-            Policy policy = getPolicy();
+        // If the session already has a policy system id associated with it, then load the policy
+        // into the PageFlowContext.
+        if (getPolicySystemId() != null) {
+            CoreProxy proxy=PageFlowContext.getCoreProxy();
+            
+            SavedPolicy savedPolicy = (SavedPolicy)proxy.queryUnique("get.savedPolicy.by.systemId", getPolicySystemId());
 
+            Policy policy=savedPolicy.getPolicy();
+            
             // The request's ThreadLocale could change from one request to the
             // next,if the user switches their browser settings for example, so
             // always use the current settings.

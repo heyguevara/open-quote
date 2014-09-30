@@ -49,7 +49,6 @@
 	<classpathentry kind="lib" path="target/test/lib/powermock-api-mockito-1.5.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/powermock-api-support-1.5.jar"/>
 	<classpathentry kind="lib" path="target/test/lib/powermock-reflect-1.5.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/antlr-3.3.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/antlr-runtime-3.3.jar"/>
@@ -128,7 +127,6 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/lambdaj-2.3.3.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/logkit-2.0.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/mail-1.4.4.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/mvel2-2.1.0.drools16.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/objenesis-1.2.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/org.osgi.compendium-1.4.0.jar"/>
@@ -143,7 +141,7 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/slf4j-simple-1.6.1.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/stax-api-1.0-2.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/stringtemplate-3.2.1.jar"/>
-	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/velocity-1.7.jar" sourcepath="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/velocity-1.7-sources.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/werken-xpath-0.9.4.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/core/main/xml-apis-2.11.0.jar"/>
@@ -184,5 +182,6 @@
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/gwtui/main/gwt-dev-2.6.0.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/gwtui/main/gwt-servlet-2.6.0.jar"/>
 	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/com/ail/gwtui/main/gwt-user-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/liferay-portal-6.2.0-ce-ga1/jboss-7.1.1/modules/javax/activation/api/main/activation-1.1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

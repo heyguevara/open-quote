@@ -128,10 +128,10 @@
     </class>
 
     <class name="com.ail.core.document.StyleDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
-        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+        <field name="mergedDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorEmbeddedXMLFieldHandler">
             <bind-xml type="any" node="element" />
         </field>
-        <field name="styledDocumentRet" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+        <field name="styledDocumentRet" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorEmbeddedXMLFieldHandler">
             <bind-xml type="any" node="element" />
         </field>
     </class>
@@ -658,7 +658,7 @@
 
     <class name="com.ail.party.Party" extends="com.ail.core.Type">
         <field name="address" type="com.ail.party.Address" />
-        <field name="legalName" type="string" />
+        <field name="legalName" type="string" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler"/>
     </class>
 
     <class name="com.ail.party.Person" extends="com.ail.party.Party">
@@ -1162,7 +1162,7 @@
     </class>
 
     <class name="com.ail.core.document.RenderDocumentArgumentImpl" extends="com.ail.core.command.ArgumentImpl">
-        <field name="sourceDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorXMLStringFieldHandler">
+        <field name="sourceDataArg" type="org.exolab.castor.types.AnyNode" handler="com.ail.core.xmlbinding.CastorEmbeddedXMLFieldHandler">
             <bind-xml type="any" node="element" />
         </field>
         <field name="renderOptionsArg" type="string" />

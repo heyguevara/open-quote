@@ -1,7 +1,7 @@
 package com.ail.pageflow.service;
 
-import static com.ail.pageflow.PageFlowContext.SessionAttributes.POLICY_ATTRIBUTE;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
@@ -28,16 +28,17 @@ import com.ail.core.CoreProxy;
 import com.ail.core.PreconditionException;
 import com.ail.core.ThreadLocale;
 import com.ail.insurance.policy.Policy;
+import com.ail.insurance.policy.SavedPolicy;
 import com.ail.pageflow.ExecutePageActionService;
 import com.ail.pageflow.PageFlow;
 import com.ail.pageflow.PageFlowContext;
-import com.ail.pageflow.service.FetchPolicyForPageFlowService;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(PageFlowContext.class)
 public class FetchPolicyForPageFlowServiceTest {
     private static final String TEST_PRODUCT_NAME = "TEST PRODUCT";
     private static final String TEST_START_PAGE = "TEST_PAGE";
+    private static final Long POLICY_SYSTEM_ID = 1234L;
 
     FetchPolicyForPageFlowService sut;
     Locale locale=Locale.CANADA;
@@ -50,6 +51,8 @@ public class FetchPolicyForPageFlowServiceTest {
     PortletRequest portletRequest;
     @Mock
     PortletSession portletSession;
+    @Mock
+    SavedPolicy savedPolicy;
     @Mock
     Policy policy;
     @Mock
@@ -66,14 +69,16 @@ public class FetchPolicyForPageFlowServiceTest {
 
         doReturn(portletSession).when(argument).getPortletSessionArg();
         doReturn(portletRequest).when(argument).getPortletRequestArg();
-        doReturn(policy).when(portletSession).getAttribute(eq(POLICY_ATTRIBUTE));
         doReturn(TEST_START_PAGE).when(pageflow).getStartPage();
         doReturn(locale).when(portletRequest).getLocale();
         
         when(PageFlowContext.getCoreProxy()).thenReturn(coreProxy);
         when(PageFlowContext.getProductName()).thenReturn(TEST_PRODUCT_NAME);
         when(PageFlowContext.getPageFlow()).thenReturn(pageflow);
-        when(PageFlowContext.getPolicy()).thenReturn(policy);
+        when(PageFlowContext.getPolicySystemId()).thenReturn(POLICY_SYSTEM_ID);
+        
+        doReturn(savedPolicy).when(coreProxy).queryUnique(anyString(), eq(POLICY_SYSTEM_ID));
+        doReturn(policy).when(savedPolicy).getPolicy();
     }
 
     @Test(expected = PreconditionException.class)
@@ -113,5 +118,13 @@ public class FetchPolicyForPageFlowServiceTest {
     public void testModelArgRetIsPopulated() throws BaseException {
         sut.invoke();
         verify(argument).setModelArgRet(eq(policy));
+    }
+    
+    @Test
+    public void checkThatNothingHappensWhenGetPolicySystemIdIsNull() throws BaseException {
+        when(PageFlowContext.getPolicySystemId()).thenReturn(null);
+        sut.invoke();
+        PowerMockito.verifyStatic(never());
+        PageFlowContext.setPolicy(eq(policy));
     }
 }

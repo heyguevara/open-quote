@@ -18,9 +18,12 @@ package com.ail.pageflow.render;
 import static com.ail.core.Functions.productNameToConfigurationNamespace;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
-
+ 
 import javax.activation.DataHandler;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
@@ -37,6 +40,8 @@ import javax.mail.util.ByteArrayDataSource;
 
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
+import com.ail.core.CoreProxy;
+import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.insurance.policy.Broker;
@@ -45,6 +50,7 @@ import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteDocumentCommand;
 import com.ail.insurance.quotation.NotifyProposerByEmailService.NotifyProposerByEmailArgument;
 import com.ail.pageflow.PageFlowContext;
+import com.ail.pageflow.ProposerQuotationSummary;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 /**
  * Send a notification of an event relating to a quote to the broker associated with the product 
@@ -102,11 +108,8 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
         try {
             emailNotification(savedPolicy);
         }
-        catch(MessagingException e) {
-        	throw new PreconditionException("Failed to send notification email to: "+getCore().getParameterValue("smtp-server", "localhost")+" for quote: "+savedPolicy.getQuotationNumber()+". "+e.toString(), e);
-        }
         catch(Exception e) {
-            e.printStackTrace();
+        	throw new PreconditionException("Failed to send notification email for quote: "+savedPolicy.getQuotationNumber()+". "+e.toString(), e);
         }
     }
 
@@ -116,7 +119,9 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
         MimeMultipart multipart=null;
         Authenticator authenticator=null;
 
-    	PageFlowContext.setPolicy(savedPolicy.getPolicy());
+        PageFlowContext.setProductName(savedPolicy.getProduct());
+        PageFlowContext.setCoreProxy(new CoreProxy(getCore()));
+        PageFlowContext.setPolicy(savedPolicy.getPolicy());
 
         Proposer proposer = (Proposer) savedPolicy.getPolicy().getProposer();
         Broker broker = savedPolicy.getPolicy().getBroker();
@@ -166,14 +171,21 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
      * @return BodyPart containing rendered output.
      * @throws MessagingException
      * @throws BaseException 
+     * @throws IOException 
+     * @throws MalformedURLException 
      */
-    private BodyPart createSummaryAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException {
+    private BodyPart createSummaryAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException, MalformedURLException, IOException {
         // Use the UI's rendered to create the HTML output - email is a kind of UI after all!
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
 
+        addStyleSheet(writer);
+        
         RenderCommand rbqs=getCore().newCommand("ProposerQuotationSummary", "text/html", RenderCommand.class);
+        rbqs.setWriterArg(writer);
         rbqs.setModelArgRet(savedPolicy.getPolicy());
+        rbqs.setRenderIdArg("email");
+        rbqs.setPageElementArg(new ProposerQuotationSummary());
         rbqs.invoke();
 
         writer.append(rbqs.getRenderedOutputRet());
@@ -182,9 +194,18 @@ public class NotifyProposerByEmailService extends Service<NotifyProposerByEmailA
         
         BodyPart bp=new MimeBodyPart();
         bp.setHeader("Content-ID", "<summary.html>");
-        bp.setContent(content, "text/html");
+        bp.setContent(content, "text/html; charset=utf-8");
 
         return bp;
+    }
+
+    private void addStyleSheet(PrintWriter writer) throws IOException, MalformedURLException {
+        String host=PageFlowContext.getCoreProxy().getParameterValue("ProductRepository.Host");
+        String port=PageFlowContext.getCoreProxy().getParameterValue("ProductRepository.Port");
+        
+        writer.append("<style type='text/css'>");
+        writer.append(Functions.loadUrlContentAsString(new URL("http://"+host+":"+port+"/pageflow-portlet/css/pageflow.css?minifierType=css")));
+        writer.append("</style>");
     }
 
     /**

@@ -20,6 +20,8 @@ import static com.ail.core.Functions.productNameToConfigurationNamespace;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -38,12 +40,15 @@ import javax.mail.util.ByteArrayDataSource;
 
 import com.ail.annotation.ServiceImplementation;
 import com.ail.core.BaseException;
+import com.ail.core.CoreProxy;
+import com.ail.core.Functions;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
 import com.ail.core.XMLException;
 import com.ail.insurance.policy.SavedPolicy;
 import com.ail.insurance.quotation.FetchQuoteDocumentService.FetchQuoteDocumentCommand;
 import com.ail.insurance.quotation.NotifyBrokerByEmailService.NotifyBrokerByEmailArgument;
+import com.ail.pageflow.BrokerQuotationSummary;
 import com.ail.pageflow.PageFlowContext;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 /**
@@ -102,11 +107,8 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailArgum
         try {
             emailNotification(savedPolicy);
         }
-        catch(MessagingException e) {
-        	throw new PreconditionException("Failed to send notification email to: "+getCore().getParameterValue("smtp-server", "localhost")+" for quote: "+savedPolicy.getQuotationNumber()+". "+e.toString(), e);
-        }
         catch(Exception e) {
-            e.printStackTrace();
+        	throw new PreconditionException("Failed to send notification email for quote: "+savedPolicy.getQuotationNumber()+". "+e.toString(), e);
         }
     }
 
@@ -116,12 +118,16 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailArgum
         MimeMultipart multipart=null;
         Authenticator authenticator=null;
 
+        PageFlowContext.setProductName(savedPolicy.getProduct());
+        PageFlowContext.setCoreProxy(new CoreProxy(getCore()));
     	PageFlowContext.setPolicy(savedPolicy.getPolicy());
 
-        String toAddress = savedPolicy.getPolicy().getBroker().getQuoteEmailAddress();
-        String fromAddress = getCore().getParameterValue("from-address", "openquote@openquote");
-        
         final Properties props=getCore().getGroup("SMTPServerProperties").getParameterAsProperties();
+        
+    	String defaultFromAddress=props.getProperty("mail.smtp.user")+"@"+props.getProperty("mail.smtp.host");
+    	
+    	String toAddress = savedPolicy.getPolicy().getBroker().getQuoteEmailAddress();
+        String fromAddress = getCore().getParameterValue("from-address", defaultFromAddress);
         
         if ("true".equals(props.getProperty("mail.smtp.auth"))) {
             authenticator=new Authenticator() {
@@ -168,25 +174,42 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailArgum
      * @return BodyPart containing rendered output.
      * @throws MessagingException
      * @throws BaseException 
+     * @throws IOException 
+     * @throws MalformedURLException 
      */
-    private BodyPart createBrokerSummaryAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException {
+    private BodyPart createBrokerSummaryAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException, MalformedURLException, IOException {
         // Use the UI's rendered to create the HTML output - email is a kind of UI after all!
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
 
+        addStyleSheet(writer);
+        
         RenderCommand rbqs=getCore().newCommand("BrokerQuotationSummary", "text/html", RenderCommand.class);
+        rbqs.setWriterArg(writer);
         rbqs.setModelArgRet(savedPolicy.getPolicy());
+        rbqs.setRenderIdArg("email");
+        rbqs.setPageElementArg(new BrokerQuotationSummary());
+
         rbqs.invoke();
 
-        writer.append(rbqs.getRenderedOutputRet());
         writer.close();
         String content=new String(baos.toByteArray());
         
         BodyPart bp=new MimeBodyPart();
         bp.setHeader("Content-ID", "<summary.html>");
-        bp.setContent(content, "text/html");
+        bp.setContent(content, "text/html; charset=UTF-8;");
 
         return bp;
+    }
+
+    private void addStyleSheet(PrintWriter writer) throws IOException, MalformedURLException {
+        String host=PageFlowContext.getCoreProxy().getParameterValue("ProductRepository.Host");
+        String port=PageFlowContext.getCoreProxy().getParameterValue("ProductRepository.Port");
+        
+        writer.append("<style type='text/css'>");
+        writer.append(Functions.loadUrlContentAsString(new URL("http://"+host+":"+port+"/openunderwriter-theme/css/main.css?&minifierType=css")));
+        writer.append(Functions.loadUrlContentAsString(new URL("http://"+host+":"+port+"/pageflow-portlet/css/pageflow.css?minifierType=css")));
+        writer.append("</style>");
     }
 
     /**
@@ -220,26 +243,31 @@ public class NotifyBrokerByEmailService extends Service<NotifyBrokerByEmailArgum
      * @param savedPolicy Quote to render the assessment sheet for.
      * @return BodyPart containing rendered output.
      * @throws MessagingException
+     * @throws MalformedURLException 
      * @throws XMLException
      * @throws IOException 
      */
-    private BodyPart createAssessmentSheetAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException {
+    private BodyPart createAssessmentSheetAttachment(SavedPolicy savedPolicy) throws MessagingException, BaseException, MalformedURLException, IOException {
         // Use the UI's rendered to create the HTML output - email is a kind of UI after all!
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PrintWriter writer=new PrintWriter(baos);
 
-        RenderCommand rbqs=getCore().newCommand("RenderBrokerQuotationSummary", "text/html", RenderCommand.class);
+        addStyleSheet(writer);
+
+        RenderCommand rbqs=getCore().newCommand("AssessmentSheetDetails", "text/html", RenderCommand.class);
         rbqs.setModelArgRet(savedPolicy.getPolicy());
+        rbqs.setWriterArg(writer);
+        rbqs.setRenderIdArg("email");
+        rbqs.setPageElementArg(new BrokerQuotationSummary());
         rbqs.invoke();
         
-        writer.append(rbqs.getRenderedOutputRet());
         writer.close();
-        String content=new String(baos.toByteArray());
+        String content=new String(baos.toByteArray(), "UTF-8");
         
         BodyPart bp=new MimeBodyPart();
         bp.setHeader("Content-ID", "<assessment.html>");
         bp.setHeader("Content-Disposition", "attachment");
-        bp.setContent(content, "text/html");
+        bp.setContent(content, "text/html; charset=UTF-8;");
         bp.setFileName(savedPolicy.getQuotationNumber()+" Assessment.html");
 
         return bp;

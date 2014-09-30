@@ -29,7 +29,6 @@ import com.ail.core.Functions;
 import com.ail.core.PostconditionException;
 import com.ail.core.PreconditionException;
 import com.ail.core.Service;
-import com.ail.core.XMLString;
 import com.ail.core.command.Argument;
 import com.ail.core.command.Command;
 import com.ail.core.document.GenerateDocumentService.GenerateDocumentCommand;

@@ -9,7 +9,7 @@
 	</target>
 
 	<target name="_build">
-		<compile-jar-macro module="yes" dependencies="com.liferay.portal, javax.jms.api, javax.xml.rpc.api, javax.ejb.api, org.apache.xalan, org.apache.httpcomponents, org.hornetq">
+		<compile-jar-macro module="yes" dependencies="com.liferay.portal, org.apache.xalan, org.apache.httpcomponents, org.hornetq, javax.jms.api, javax.xml.rpc.api, javax.activation.api, javax.ejb.api, javax.mail.api">
 			<javac-classpath>
 				<fileset dir="${module.dir}/com/ail/core/main" includes="*.jar" />
 				<fileset dir="${module.dir}/com/liferay/portal" includes="**/*.jar" />

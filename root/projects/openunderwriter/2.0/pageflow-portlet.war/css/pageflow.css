@@ -459,6 +459,7 @@
 
 .pf-quotation-summary-cover-section {
     float: right;
+    max-width: 40%;
 }
 
 .pf-quotation-summary-cover-section .pf-answer-section {

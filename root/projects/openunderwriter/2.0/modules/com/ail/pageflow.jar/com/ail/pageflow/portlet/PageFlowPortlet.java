@@ -57,10 +57,10 @@ import static com.ail.pageflow.service.AddProductNameToPageFlowContextService.PR
 public class PageFlowPortlet extends GenericPortlet {
     private String editJSP = null;
     private String configureJSP = null;
-    private QuotationCommon quotationCommon = null;
+    private PageFlowCommon pageFlowCommon = null;
 
     public PageFlowPortlet() {
-        quotationCommon=new QuotationCommon();
+        pageFlowCommon=new PageFlowCommon();
     }
     
     @Override
@@ -106,6 +106,8 @@ public class PageFlowPortlet extends GenericPortlet {
         PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(editJSP);
         
         portletRequestDispatcher.include(request, response);
+        
+        PageFlowContext.destroy();
     }
 
     @Override
@@ -146,10 +148,11 @@ public class PageFlowPortlet extends GenericPortlet {
     }
 
     private void doProcessQuotationAction(ActionRequest request, ActionResponse response) {
-        PageFlowContext.initialise(request, response);
 
         try {
-            quotationCommon.processAction(request, response);
+            PageFlowContext.initialise(request, response);
+
+            pageFlowCommon.processAction(request, response);
         } catch (Throwable t) {
             Policy policy = PageFlowContext.getPolicy();
 
@@ -158,7 +161,7 @@ public class PageFlowPortlet extends GenericPortlet {
             } else {
                 policy.addException(new ExceptionRecord(t));
                 try {
-                    quotationCommon.persistQuotation(policy);
+                    pageFlowCommon.persistQuotation(policy);
                 } catch (BaseException e) {
                     // TODO Forward to an error page
                     e.printStackTrace();
@@ -167,13 +170,17 @@ public class PageFlowPortlet extends GenericPortlet {
 
             // TODO Forward to an error page
         }
+        finally {
+            PageFlowContext.destroy();
+        }
     }
 
     private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
-        PageFlowContext.initialise(request, response);
 
         try {
-            quotationCommon.doView(request, response);
+            PageFlowContext.initialise(request, response);
+
+            pageFlowCommon.doView(request, response);
         } catch (Throwable t) {
             Policy policy = PageFlowContext.getPolicy();
 
@@ -182,7 +189,7 @@ public class PageFlowPortlet extends GenericPortlet {
             } else {
                 policy.addException(new ExceptionRecord(t));
                 try {
-                    quotationCommon.persistQuotation(policy);
+                    pageFlowCommon.persistQuotation(policy);
                 } catch (BaseException e) {
                     // TODO Forward to an error page
                     e.printStackTrace();
@@ -190,6 +197,9 @@ public class PageFlowPortlet extends GenericPortlet {
             }
 
             // TODO Forward to an error page
+        }
+        finally {
+            PageFlowContext.destroy();
         }
     }
 

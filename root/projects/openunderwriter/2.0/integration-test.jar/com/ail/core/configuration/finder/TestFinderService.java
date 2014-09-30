@@ -30,6 +30,7 @@ import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestFinderService extends CoreUserBaseCase {
@@ -125,6 +126,7 @@ public class TestFinderService extends CoreUserBaseCase {
      */
     @Test
     @SuppressWarnings("rawtypes")
+    @Ignore
     public void testForClassesOutsideComAil() throws Exception {
         GetClassListCommand command = getCore().newCommand(GetClassListCommand.class);
         command.setSearchClassArg("java.io.Serializable");

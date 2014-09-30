@@ -58,7 +58,7 @@ public class I18N {
 	    	try {
 	    		String product=PageFlowContext.getProductName();
 	    		
-	    		if (product==null) {
+	    		if (product==null || product.length()==0) {
 	    		    product="AIL.Base";
 	    		}
 	    		

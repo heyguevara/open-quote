@@ -42,7 +42,7 @@ import com.ail.core.Identified;
 import com.ail.core.Type;
 import com.ail.core.command.VelocityServiceError;
 import com.ail.pageflow.portlet.PageFlowPortlet;
-import com.ail.pageflow.portlet.QuotationCommon;
+import com.ail.pageflow.portlet.PageFlowCommon;
 import com.ail.pageflow.render.RenderService.RenderArgument;
 import com.ail.pageflow.render.RenderService.RenderCommand;
 import com.ail.pageflow.util.ErrorText;
@@ -414,7 +414,7 @@ public abstract class PageElement extends Type implements Identified, Comparable
 	
     /**
      * Life-cycle method invoked following {@link #applyRequestValues(ActionRequest, ActionResponse, Type)}. This 
-     * event is only invoked if the request is marked as {@link QuotationCommon#immediate(ActionRequest) immediate}, or
+     * event is only invoked if the request is marked as {@link PageFlowCommon#immediate(ActionRequest) immediate}, or
      * {@link #processValidations(ActionRequest, ActionResponse, Type)} returned false - indicating that there are no
      * page errors.
      * @param request
