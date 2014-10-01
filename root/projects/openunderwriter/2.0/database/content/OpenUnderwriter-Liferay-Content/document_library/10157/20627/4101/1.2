@@ -6,7 +6,7 @@
 	conditionally on entry to, or exit from, a page.</p>
 
 <u>PageFlow</u>
-<p>Specific trigger are provided for common workflows (e.g. new
+<p>Specific triggers are provided for common workflows (e.g. new
 	business referral). In general these do not require any additional
 	arguments:
 <p>
@@ -35,7 +35,7 @@
 	the referral page is displayed:</p>
 <pre>
     &lt;questionPage id="Referral" title="Referral"&gt;
-        &lt;triggerNewBusinessReferralWorkflow /&gt;
+        &lt;triggerNewBusinessReferralWorkflow when="onRenderResponse" /&gt;
         ...
     &lt;questionPage&gt;
 </pre>
@@ -43,7 +43,7 @@
 <p>
 <pre>
     &lt;questionPage id="..." title="..."&gt;
-        &lt;triggerNewBusinessReferralWorkflow condition=""i:test(status[.='REFERRED'])"/&gt;
+        &lt;triggerNewBusinessReferralWorkflow when="onRenderResponse" condition=""i:test(status[.='REFERRED'])"/&gt;
         ...
     &lt;questionPage&gt;
 </pre>
