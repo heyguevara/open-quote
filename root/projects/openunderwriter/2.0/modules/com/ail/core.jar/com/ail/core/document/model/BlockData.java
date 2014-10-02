@@ -24,6 +24,31 @@ public class BlockData extends ItemContainer {
     private Placement placement=Placement.BODY;
     private Applicability applicability=Applicability.ALL;
     private String watermark; 
+    private boolean border=false;  
+
+    /**
+     * Return an indicator detailing which whether this block has a border.
+     * @return the {@linkplain #border}
+     */
+    public boolean isBorder() {
+        return this.border;
+    }
+
+    /**
+     * @see #isBorder()
+     * @param assign _border to {@linkplain #border}
+     */
+    public void setBorder(boolean _border) {
+        this.border = _border;
+    }
+
+    /**
+     * @see #isBorder()
+     * @param assign _border to {@linkplain #border}
+     */
+    public String getBorderAsString() {
+        return Boolean.toString(this.border).toLowerCase();
+    }
 
     /**
      * Return an indicator detailing which where this block is applicable (should be shown) in the document.
@@ -91,9 +116,9 @@ public class BlockData extends ItemContainer {
 
     @Override
     public void render(RenderContext context) {
-        context.getOutput().printf("<block%s%s%s%s placement=\"%s\" applicability=\"%s\">", 
+        context.getOutput().printf("<block%s%s%s%s placement=\"%s\" applicability=\"%s\" border=\"%s\">", 
                                                     idAsAttribute(), titleAsAttribute(), styleClassAsAttribute(), orderAsAttribute(),
-                                                    getPlacementAsString(), getApplicabilityAsString());
+                                                    getPlacementAsString(), getApplicabilityAsString(), getBorderAsString());
         super.render(context);
         context.getOutput().println("</block>");
     }

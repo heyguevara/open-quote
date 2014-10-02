@@ -123,7 +123,10 @@
         <xsl:variable name="colour">
             <xsl:choose>
                 <xsl:when test="ancestor::block">
-                    <xsl:value-of select="$light-colour"/>
+                    <xsl:value-of select="$no-colour"/>
+                </xsl:when>
+                <xsl:when test="@border='false'">
+                    <xsl:value-of select="$no-colour"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$dark-colour"/>
@@ -265,6 +268,9 @@
                     <xsl:choose>
     
                         <xsl:when test="@class='wording'">
+                            <xsl:variable name="no-colour">
+                                <xsl:value-of select="$styles/Styles/Colours/@no-colour"/>
+                            </xsl:variable>
                             <xsl:variable name="light-colour">
                                 <xsl:value-of select="$styles/Styles/Colours/@light-colour"/>
                             </xsl:variable>
@@ -319,14 +325,6 @@
                                                     <xsl:with-param name="border" select="$styles/Styles/Terms/Body/Border"/>
                                                 </xsl:call-template>
                                                 <fo:block>
-                                                    <!--
-                                                        Need to add hyphenation xml documents
-                                                    <xsl:if test="$styles/Styles/Terms/Body/@hyphenate!=''">
-                                                        <xsl:attribute name="hypenate">true</xsl:attribute>
-                                                        <xsl:attribute name="language">
-                                                            <xsl:value-of select="$styles/Styles/Terms/Body/@hyphenate"/>
-                                                        </xsl:attribute>
-                                                    </xsl:if>-->
                                                     <xsl:apply-templates select="."/>
                                                 </fo:block>
                                             </fo:table-cell>
@@ -506,6 +504,4 @@
             </xsl:choose>
         </fo:table-row>
     </xsl:template>
-
-
 </xsl:stylesheet>

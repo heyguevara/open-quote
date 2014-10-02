@@ -360,6 +360,9 @@
         <field name="applicability" get-method="getApplicabilityAsString" set-method="setApplicabilityAsString" type="string">
             <bind-xml node="attribute" />
         </field>
+        <field name="border" get-method="isBorder" set-method="setBorder" type="boolean">
+            <bind-xml node="attribute" />
+        </field>
     </class>
 
     <class name="com.ail.core.document.model.HeaderData" extends="com.ail.core.document.model.ItemContainer">

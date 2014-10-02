@@ -332,6 +332,11 @@
                     <xsl:apply-templates select="node()"/>
                 </fo:inline>
             </xsl:when>
+            <xsl:when test="@value='green'">
+                <fo:inline color="green">
+                    <xsl:apply-templates select="node()"/>
+                </fo:inline>
+            </xsl:when>
             <xsl:when test="starts-with(@value,'#')">
                 <fo:inline>
                     <xsl:attribute name="color"><xsl:value-of select="@value"/></xsl:attribute>
@@ -412,6 +417,9 @@
     </xsl:variable>
     <xsl:variable name="dark-colour">
         <xsl:value-of select="$styles/Styles/Colours/@dark-colour"/>
+    </xsl:variable>
+    <xsl:variable name="no-colour">
+        <xsl:value-of select="$styles/Styles/Colours/@no-colour"/>
     </xsl:variable>
     <xsl:variable name="font-colour">
         <xsl:value-of select="$styles/Styles/Colours/@font-colour"/>
