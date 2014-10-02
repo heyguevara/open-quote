@@ -148,7 +148,7 @@ public class BuyNowWithPayPalButtonAction extends CommandButtonAction {
 
     @Override
     public Type renderResponse(RenderRequest request, RenderResponse response, Type model) throws IllegalStateException, IOException {
-        return executeTemplateCommand("BuyNowWithPayPalButtonCommand", request, response, model);
+        return executeTemplateCommand("BuyNowWithPayPalButton", request, response, model);
     }
 
     public String getDestinationOnSuccessPageId() {

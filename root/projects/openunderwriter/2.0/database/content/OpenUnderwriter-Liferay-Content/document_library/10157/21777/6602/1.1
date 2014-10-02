@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>BuyNowWithPayPalButtonAction</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BuyNowWithPayPalButtonAction</td></tr>
+</thead><tbody>
+<tr>
+	<td>setTimeout</td>
+	<td></td>
+	<td>60000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=resetQuote</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>name=selectedPage</td>
+	<td>label=BuyNowWithPayPalButtonAction</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>BuyNowWithPayPalButtonAction</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=op=buy-now-with-paypal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>Pay with a PayPal account – PayPal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=login_email</td>
+	<td>jane@openunderwriter.org</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=login_password</td>
+	<td>openunderwriter</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submitLogin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>Review your information – PayPal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=span[class=accessAid]</td>
+	<td>Premium</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li.secondary &gt; span</td>
+	<td>Item price: £276.58</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='miniCart']/div[3]/ul/li/span</td>
+	<td>Total £276.58 GBP</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=continue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>Sandpit - OpenUnderwriter</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1[id=paypal-success]</td>
+	<td>Request successfully sent to PayPal.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=div.pf-navigation-section-buttons &gt; #reset</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=op=buy-now-with-paypal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>Pay with a PayPal account – PayPal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=cancel_return</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1[id=paypal-cancelled]</td>
+	<td>PayPal request was cancelled.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
