@@ -160,6 +160,8 @@ public class PageFlow extends PageElement {
             for (Action action : getAction()) {
                 model = action.executeAction(request, model, ActionType.ON_PAGE_FLOW_ENTRY);
             }
+            
+            PageFlowContext.setPageFlowInitliased(true);
         }
 
         // Execute the render response page flow actions
@@ -199,7 +201,7 @@ public class PageFlow extends PageElement {
     }
 
     private String targetPage(Type model) {
-        return getCurrentPage();
+        return (getCurrentPage() != null) ? getCurrentPage() : getStartPage();
     }
 
     public String getCurrentPage() {
@@ -219,7 +221,7 @@ public class PageFlow extends PageElement {
     }
     
     public boolean isEnteringPageFlow() {
-        return getCurrentPage()==null && getNextPage()!=null;
+        return !PageFlowContext.isPageFlowInitialised();
     }
     
     public boolean isAdvancingPage() {

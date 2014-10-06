@@ -77,7 +77,7 @@ public class PersistPolicyService extends Service<PersistPolicyService.PersistPo
 
     // Wrapped static PageFlowContext call to help testability
     protected String getCurrentPageFromPageFlowContext() {
-        return PageFlowContext.getPageFlow().getCurrentPage();
+        return PageFlowContext.getCurrentPageName();
     }
 
     // Wrapped static PageFlowContext call to help testability

@@ -16,6 +16,9 @@
  */
 package com.ail.pageflow.portlet;
 
+import static com.ail.pageflow.service.AddPageFlowNameToPageFlowContextService.PAGEFLOW_PORTLET_PREFERENCE_NAME;
+import static com.ail.pageflow.service.AddProductNameToPageFlowContextService.PRODUCT_PORTLET_PREFERENCE_NAME;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,13 +38,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ValidatorException;
 
-import com.ail.core.BaseException;
 import com.ail.core.ExceptionRecord;
-import com.ail.insurance.policy.Policy;
 import com.ail.pageflow.PageFlowContext;
-
-import static com.ail.pageflow.service.AddPageFlowNameToPageFlowContextService.PAGEFLOW_PORTLET_PREFERENCE_NAME;
-import static com.ail.pageflow.service.AddProductNameToPageFlowContextService.PRODUCT_PORTLET_PREFERENCE_NAME;
 
 /**
  * This Portlet acts as the controller (in MVC terms) for the quotation process.
@@ -57,6 +55,7 @@ import static com.ail.pageflow.service.AddProductNameToPageFlowContextService.PR
 public class PageFlowPortlet extends GenericPortlet {
     private String editJSP = null;
     private String configureJSP = null;
+    private String errorJSP = null;
     private PageFlowCommon pageFlowCommon = null;
 
     public PageFlowPortlet() {
@@ -67,6 +66,7 @@ public class PageFlowPortlet extends GenericPortlet {
     public void init() throws PortletException {
         editJSP = getInitParameter("edit-jsp");
         configureJSP = getInitParameter("configure-jsp");
+        errorJSP = getInitParameter("error-jsp");
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PageFlowPortlet extends GenericPortlet {
         }
 
         if (PortletMode.VIEW.equals(request.getPortletMode())) {
-            doProcessQuotationAction(request, response);
+            doProcessPageFlowAction(request, response);
         }
     }
 
@@ -113,7 +113,7 @@ public class PageFlowPortlet extends GenericPortlet {
     @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         if (isProductSelected(request)) {
-            doDisplayQuotationView(request, response);
+            doDisplayPageFlowView(request, response);
         } else {
             doDisplayConfigureView(request, response);
         }
@@ -147,59 +147,53 @@ public class PageFlowPortlet extends GenericPortlet {
         portletRequestDispatcher.include(request, response);
     }
 
-    private void doProcessQuotationAction(ActionRequest request, ActionResponse response) {
+    private void doProcessPageFlowAction(ActionRequest request, ActionResponse response) {
 
         try {
             PageFlowContext.initialise(request, response);
 
             pageFlowCommon.processAction(request, response);
         } catch (Throwable t) {
-            Policy policy = PageFlowContext.getPolicy();
-
-            if (policy == null) {
-                t.printStackTrace();
-            } else {
-                policy.addException(new ExceptionRecord(t));
-                try {
-                    pageFlowCommon.persistQuotation(policy);
-                } catch (BaseException e) {
-                    // TODO Forward to an error page
-                    e.printStackTrace();
-                }
-            }
-
-            // TODO Forward to an error page
+            handleError(t);
         }
         finally {
             PageFlowContext.destroy();
         }
     }
 
-    private void doDisplayQuotationView(RenderRequest request, RenderResponse response) {
+    private void doDisplayPageFlowView(RenderRequest request, RenderResponse response) {
 
         try {
             PageFlowContext.initialise(request, response);
 
             pageFlowCommon.doView(request, response);
         } catch (Throwable t) {
-            Policy policy = PageFlowContext.getPolicy();
-
-            if (policy == null) {
-                t.printStackTrace();
-            } else {
-                policy.addException(new ExceptionRecord(t));
-                try {
-                    pageFlowCommon.persistQuotation(policy);
-                } catch (BaseException e) {
-                    // TODO Forward to an error page
-                    e.printStackTrace();
-                }
-            }
-
-            // TODO Forward to an error page
+            handleError(t);
         }
         finally {
             PageFlowContext.destroy();
+        }
+    }
+
+    private void handleError(Throwable t) {
+        try {
+            PageFlowContext.getPolicy().addException(new ExceptionRecord(t));
+
+            pageFlowCommon.persistQuotation(PageFlowContext.getPolicy());
+
+            String errorMessage = t.getClass() + " thrown while processing policy (systemId=" + PageFlowContext.getPolicySystemId() + "): [" + t.getMessage()+"]. Full details have been persisited with the policy.";
+
+            PageFlowContext.getCoreProxy().logError(errorMessage);
+        } catch (Throwable x) {
+            PageFlowContext.getCoreProxy().logError(t.toString(), t);
+        }
+        finally {
+            PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(errorJSP);
+            try {
+                portletRequestDispatcher.forward(PageFlowContext.getRequest(), PageFlowContext.getResponse());
+            } catch (Exception e) {
+                // We've done everything we can!
+            }
         }
     }
 

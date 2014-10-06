@@ -13,6 +13,10 @@
       <name>configure-jsp</name>
       <value>/configure.jsp</value>
     </init-param>
+    <init-param>
+      <name>error-jsp</name>
+      <value>/error.jsp</value>
+    </init-param>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>

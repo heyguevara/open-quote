@@ -37,7 +37,8 @@ public class PageFlowContext {
     private static ThreadLocal<CoreProxy> coreProxy = new ThreadLocal<CoreProxy>();
     private static ThreadLocal<Policy> policy = new ThreadLocal<Policy>();
     private static ThreadLocal<StringBuffer> productName = new ThreadLocal<StringBuffer>();
-
+    private static SessionWrapper sessionWrapper = new SessionWrapper();
+    
     /**
      * Initialize the PageFlowContext for the current thread.
      * 
@@ -79,11 +80,11 @@ public class PageFlowContext {
     }
 
     public static void setPolicySystemId(Long policySystemId) {
-        SessionWrapper.setPolicySystemId(policySystemId);
+        sessionWrapper.setPolicySystemId(policySystemId);
     }
     
     public static Long getPolicySystemId() {
-        return SessionWrapper.getPolicySystemId();
+        return sessionWrapper.getPolicySystemId();
     }
     
     public static CoreProxy getCoreProxy() {
@@ -111,11 +112,11 @@ public class PageFlowContext {
     }
 
     public static PageFlow getPageFlow() {
-        return SessionWrapper.getPageFlow();
+        return sessionWrapper.getPageFlow();
     }
 
     public static void setPageFlow(PageFlow pageFlowArg) {
-        SessionWrapper.setPageFlow(pageFlowArg);
+        sessionWrapper.setPageFlow(pageFlowArg);
     }
 
     /**
@@ -127,7 +128,7 @@ public class PageFlowContext {
      * @return pageflow name, or null.
      */
     public static String getPageFlowName() {
-        return SessionWrapper.getPageFlowName();
+        return sessionWrapper.getPageFlowName();
     }
 
     /**
@@ -135,7 +136,7 @@ public class PageFlowContext {
      * @param pageFlowName
      */
     public static void setPageFlowName(String pageFlowNameArg) {
-        SessionWrapper.setPageFlowName(pageFlowNameArg);
+        sessionWrapper.setPageFlowName(pageFlowNameArg);
     }
 
     /**
@@ -147,8 +148,8 @@ public class PageFlowContext {
      * @return product name, or null.
      */
     public static String getProductName() {
-        if (SessionWrapper.getProductName() != null) {
-            return SessionWrapper.getProductName();
+        if (sessionWrapper.getProductName() != null) {
+            return sessionWrapper.getProductName();
         }
         else if (productName.get()!=null) {
             return productName.get().toString();
@@ -163,26 +164,34 @@ public class PageFlowContext {
      * @param productName
      */
     public static void setProductName(String productNameArg) {
-        SessionWrapper.setProductName(productNameArg);
+        sessionWrapper.setProductName(productNameArg);
         productName.set(productNameArg==null ? null : new StringBuffer(productNameArg));
     }
 
     public static String getCurrentPageName() {
-        return SessionWrapper.getCurrentPageName();
+        return sessionWrapper.getCurrentPageName();
     }
     
     public static void setCurrentPageName(String pageName) {
-        SessionWrapper.setCurrentPageName(pageName);
+        sessionWrapper.setCurrentPageName(pageName);
     }
     
     public static String getNextPageName() {
-        return SessionWrapper.getNextPageName();
+        return sessionWrapper.getNextPageName();
     }
     
     public static void setNextPageName(String pageName) {
-        SessionWrapper.setNextPageName(pageName);
+        sessionWrapper.setNextPageName(pageName);
+    }
+    
+    public static Boolean isPageFlowInitialised() {
+        return sessionWrapper.isPageFlowInitialised();
     }
 
+    public static void setPageFlowInitliased(Boolean initialised) {
+        sessionWrapper.setPageFlowInitialised(true);
+    }
+    
     public static void selectProductName(String productName) {
         clear();
         setProductName(productName);
@@ -204,15 +213,16 @@ public class PageFlowContext {
      */
     public static void restart() {
         setPolicy(null);
-        SessionWrapper.setCurrentPageName(null);
-        SessionWrapper.setNextPageName(null);
+        sessionWrapper.setCurrentPageName(null);
+        sessionWrapper.setNextPageName(null);
+        sessionWrapper.setPageFlowInitialised(false);
     }
     
     private static void clear() {
         restart();
-        SessionWrapper.setProductName(null);
-        SessionWrapper.setPageFlowName(null);
-        SessionWrapper.setPageFlow(null);
+        sessionWrapper.setProductName(null);
+        sessionWrapper.setPageFlowName(null);
+        sessionWrapper.setPageFlow(null);
     }
 
     /**
@@ -225,11 +235,12 @@ public class PageFlowContext {
         public static final String PAGEFLOW_NAME_SESSION_ATTRIBUTE = "pageflow-name";
         public static final String CURRENT_PAGE_NAME_ATTRIBUTE = "current-page";
         public static final String NEXT_PAGE_NAME_ATTRIBUTE = "next-page";
-        public static final String PAGE_FLOW_ATTRIBUTE = "pageflow";
+        public static final String PAGEFLOW_ATTRIBUTE = "pageflow";
         public static final String POLICY_SYSTEM_ID_ATTRIBUTE = "policy-system-id";
+        public static final String PAGEFLOW_INITIALISED_ATTRIBUTE = "pageflow-initialised";
         
         @SuppressWarnings("unchecked")
-        private static <T extends Object> T get(String name, Class<T> clazz) {
+        private <T extends Object> T get(String name, Class<T> clazz) {
             if (PageFlowContext.getRequest()!=null) {
                 try {
                     return (T)PageFlowContext.getRequest().getPortletSession().getAttribute(name);
@@ -242,7 +253,7 @@ public class PageFlowContext {
             return null;
         }
         
-        private static void set(String name, Object value) {
+        private void set(String name, Object value) {
             if (PageFlowContext.getRequest()!=null) {
                 try {
                     PageFlowContext.getRequest().getPortletSession().setAttribute(name, value);
@@ -253,52 +264,61 @@ public class PageFlowContext {
             }
         }
         
-        private static String getPageFlowName() {
+        private String getPageFlowName() {
             return get(PAGEFLOW_NAME_SESSION_ATTRIBUTE, String.class);
         }
         
-        private static void setPageFlowName(String pageFlow) {
+        private void setPageFlowName(String pageFlow) {
             set(PAGEFLOW_NAME_SESSION_ATTRIBUTE, pageFlow);
         }
 
-        private static String getProductName() {
+        private String getProductName() {
             return get(PRODUCT_NAME_SESSION_ATTRIBUTE, String.class);
         }
         
-        private static void setProductName(String productName) {
+        private void setProductName(String productName) {
             set(PRODUCT_NAME_SESSION_ATTRIBUTE, productName);
         }
         
-        public static String getCurrentPageName() {
+        public String getCurrentPageName() {
             return get(CURRENT_PAGE_NAME_ATTRIBUTE, String.class);
         }
         
-        private static void setCurrentPageName(String pageName) {
+        private void setCurrentPageName(String pageName) {
             set(CURRENT_PAGE_NAME_ATTRIBUTE, pageName);
         }
 
-        private static String getNextPageName() {
+        private String getNextPageName() {
             return get(NEXT_PAGE_NAME_ATTRIBUTE, String.class);
         }
         
-        private static void setNextPageName(String pageName) {
+        private void setNextPageName(String pageName) {
             set(NEXT_PAGE_NAME_ATTRIBUTE, pageName);
         }
         
-        private static PageFlow getPageFlow() {
-            return get(PAGE_FLOW_ATTRIBUTE, PageFlow.class);
+        private PageFlow getPageFlow() {
+            return get(PAGEFLOW_ATTRIBUTE, PageFlow.class);
         }
         
-        private static void setPageFlow(PageFlow pageFlow) {
-            set(PAGE_FLOW_ATTRIBUTE, pageFlow);
+        private void setPageFlow(PageFlow pageFlow) {
+            set(PAGEFLOW_ATTRIBUTE, pageFlow);
         }
 
-        private static Long getPolicySystemId() {
+        private Long getPolicySystemId() {
             return get(POLICY_SYSTEM_ID_ATTRIBUTE, Long.class);
         }
         
-        private static void setPolicySystemId(Long policySystemId) {
+        private void setPolicySystemId(Long policySystemId) {
             set(POLICY_SYSTEM_ID_ATTRIBUTE, policySystemId);
+        }
+        
+        private Boolean isPageFlowInitialised() {
+            Boolean state = get(PAGEFLOW_INITIALISED_ATTRIBUTE, Boolean.class);
+            return state==null ? false : state;
+        }
+        
+        private void setPageFlowInitialised(Boolean initialised) {
+            set(PAGEFLOW_INITIALISED_ATTRIBUTE, initialised);
         }
     }
 }
