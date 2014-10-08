@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<deployments>
-    <deployment>
-        <instance>
-            <instance-id>ContentBrowserInstance</instance-id>
-            <portlet-ref>ContentBrowserPortlet</portlet-ref>
-        </instance>
-    </deployment>
-</deployments>

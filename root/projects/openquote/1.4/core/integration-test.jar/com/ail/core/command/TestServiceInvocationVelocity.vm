@@ -1,6 +1,0 @@
-#set( $total = $args.X + $args.Y )
-Hello from Velocity
-
-The value of X is: ${args.X}
-The value of Y is: $args.Y
-Total is: ${total}

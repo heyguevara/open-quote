@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<jboss>
-    <enterprise-beans>
-        <message-driven>
-            <ejb-name>CommandServer</ejb-name>
-            <destination-jndi-name>queue/AilCommandQueue</destination-jndi-name>
-        </message-driven>
-    </enterprise-beans>
-</jboss>

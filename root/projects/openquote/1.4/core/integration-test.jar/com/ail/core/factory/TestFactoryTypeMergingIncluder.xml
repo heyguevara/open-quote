@@ -1,3 +1,0 @@
-<history xsi:type="java:com.ail.core.History" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<xi:include href="classpath://com.ail.core.factory/TestFactoryTypeMergingIncluded.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-</history>
